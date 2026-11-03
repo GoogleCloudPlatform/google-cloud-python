@@ -957,8 +957,8 @@ class EntitySignalsMappingServiceRestTransport(
 
                 Args:
                     request (~.entity_signals_mapping_service.CreateEntitySignalsMappingRequest):
-                        The request object. Request object for
-                    'CreateEntitySignalsMapping' method.
+                        The request object. Request object for ``CreateEntitySignalsMapping``
+                    method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
                     timeout (float): The timeout for this request.
@@ -1425,8 +1425,8 @@ class EntitySignalsMappingServiceRestTransport(
 
                 Args:
                     request (~.entity_signals_mapping_service.UpdateEntitySignalsMappingRequest):
-                        The request object. Request object for
-                    'UpdateEntitySignalsMapping' method.
+                        The request object. Request object for ``UpdateEntitySignalsMapping``
+                    method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
                     timeout (float): The timeout for this request.

@@ -369,7 +369,7 @@ class DocumentReference(BaseDocumentReference):
         timeout: float | None = None,
         *,
         read_time: datetime.datetime | None = None,
-    ) -> DocumentSnapshot:
+    ) -> DocumentSnapshot[DocumentReference]:
         """Retrieve a snapshot of the current document.
 
         See :meth:`~google.cloud.firestore_v1.base_client.BaseClient.field_path` for

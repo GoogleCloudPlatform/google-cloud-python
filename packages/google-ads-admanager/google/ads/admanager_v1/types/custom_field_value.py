@@ -56,23 +56,31 @@ class CustomFieldValue(proto.Message):
 
         Attributes:
             dropdown_value (int):
-                The custom_field_option_id, if the CustomFieldDataType is
-                DROPDOWN.
+                The custom_field_option_id, if the
+                [CustomFieldDataType][google.ads.admanager.v1.CustomFieldDataTypeEnum.CustomFieldDataType]
+                is
+                [DROPDOWN][CustomFieldDataTypeEnum.CustomFieldDataType.DROPDOWN].
 
                 This field is a member of `oneof`_ ``value``.
             string_value (str):
-                The value, if the CustomFieldDataType is
-                STRING.
+                The value, if the
+                [CustomFieldDataType][google.ads.admanager.v1.CustomFieldDataTypeEnum.CustomFieldDataType]
+                is
+                [STRING][google.ads.admanager.v1.CustomFieldDataTypeEnum.CustomFieldDataType.STRING].
 
                 This field is a member of `oneof`_ ``value``.
             number_value (float):
-                The value, if the CustomFieldDataType is
-                NUMBER.
+                The value, if the
+                [CustomFieldDataType][google.ads.admanager.v1.CustomFieldDataTypeEnum.CustomFieldDataType]
+                is
+                [NUMBER][google.ads.admanager.v1.CustomFieldDataTypeEnum.CustomFieldDataType.NUMBER].
 
                 This field is a member of `oneof`_ ``value``.
             toggle_value (bool):
-                The value, if the CustomFieldDataType is
-                TOGGLE.
+                The value, if the
+                [CustomFieldDataType][google.ads.admanager.v1.CustomFieldDataTypeEnum.CustomFieldDataType]
+                is
+                [TOGGLE][google.ads.admanager.v1.CustomFieldDataTypeEnum.CustomFieldDataType.TOGGLE].
 
                 This field is a member of `oneof`_ ``value``.
         """

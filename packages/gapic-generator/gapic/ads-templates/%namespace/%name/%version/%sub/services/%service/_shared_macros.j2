@@ -64,9 +64,9 @@ except ImportError:  # pragma: NO COVER
 {% endmacro %}
 
 {% macro create_metadata(method) %}
+    {% if not method.client_streaming %}
     {% if method.explicit_routing %}
         header_params: dict[str, str] = {}
-        {% if not method.client_streaming %}
         {% for routing_param in method.routing_rule.routing_parameters %}
         {% if routing_param.path_template %} {# Need to match. #}
 
@@ -82,7 +82,6 @@ except ImportError:  # pragma: NO COVER
 
         {% endif %}
         {% endfor %} {# method.routing_rule.routing_parameters #}
-        {% endif %} {# if not method.client_streaming #}
 
         if header_params:
             metadata = tuple(metadata) + (
@@ -94,14 +93,13 @@ except ImportError:  # pragma: NO COVER
         # add these here.
         metadata = tuple(metadata) + (
             gapic_v1.routing_header.to_grpc_metadata((
-                {% if not method.client_streaming %}
                 {% for field_header in method.field_headers %}
                 ("{{ field_header.raw }}", request.{{ field_header.disambiguated }}),
                 {% endfor %}{# for field_header in method.field_headers #}
-                {% endif %}{# not method.client_streaming #}
             )),
         )
     {% endif %}{# method.explicit_routing #}
+    {% endif %}{# not method.client_streaming #}
 {% endmacro %}{# create_metadata #}
 
 {% macro add_api_version_header_to_metadata(service_version) %}

@@ -74,6 +74,14 @@ class AppTopologyRestInterceptor:
 
     .. code-block:: python
         class MyCustomAppTopologyInterceptor(AppTopologyRestInterceptor):
+            def pre_explore_schema(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_explore_schema(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_generate_discovered_resources_topology(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -111,6 +119,52 @@ class AppTopologyRestInterceptor:
 
 
     """
+
+    def pre_explore_schema(
+        self,
+        request: service.ExploreSchemaRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[service.ExploreSchemaRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Pre-rpc interceptor for explore_schema
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AppTopology server.
+        """
+        return request, metadata
+
+    def post_explore_schema(
+        self, response: service.ExploreSchemaResponse
+    ) -> service.ExploreSchemaResponse:
+        """Post-rpc interceptor for explore_schema
+
+        DEPRECATED. Please use the `post_explore_schema_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AppTopology server but before
+        it is returned to user code. This `post_explore_schema` interceptor runs
+        before the `post_explore_schema_with_metadata` interceptor.
+        """
+        return response
+
+    def post_explore_schema_with_metadata(
+        self,
+        response: service.ExploreSchemaResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[service.ExploreSchemaResponse, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for explore_schema
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AppTopology server but before it is returned to user code.
+
+        We recommend only using this `post_explore_schema_with_metadata`
+        interceptor in new development instead of the `post_explore_schema` interceptor.
+        When both interceptors are used, this `post_explore_schema_with_metadata` interceptor runs after the
+        `post_explore_schema` interceptor. The (possibly modified) response returned by
+        `post_explore_schema` will be passed to
+        `post_explore_schema_with_metadata`.
+        """
+        return response, metadata
 
     def pre_generate_discovered_resources_topology(
         self,
@@ -533,6 +587,153 @@ class AppTopologyRestTransport(_BaseAppTopologyRestTransport):
             self._session.configure_mtls_channel(client_cert_source_for_mtls)
         self._interceptor = interceptor or AppTopologyRestInterceptor()
         self._prep_wrapped_messages(client_info)
+
+    class _ExploreSchema(
+        _BaseAppTopologyRestTransport._BaseExploreSchema, AppTopologyRestStub
+    ):
+        def __hash__(self):
+            return hash("AppTopologyRestTransport.ExploreSchema")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: service.ExploreSchemaRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> service.ExploreSchemaResponse:
+            r"""Call the explore schema method over HTTP.
+
+            Args:
+                request (~.service.ExploreSchemaRequest):
+                    The request object. Request for ExploreSchema.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.service.ExploreSchemaResponse:
+                    Response for ExploreSchema.
+            """
+
+            http_options = (
+                _BaseAppTopologyRestTransport._BaseExploreSchema._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_explore_schema(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAppTopologyRestTransport._BaseExploreSchema,
+                    "_BaseExploreSchema__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.apptopology_v1.AppTopologyClient.ExploreSchema",
+                    extra={
+                        "serviceName": "google.cloud.apptopology.v1.AppTopology",
+                        "rpcName": "ExploreSchema",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AppTopologyRestTransport._ExploreSchema._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = service.ExploreSchemaResponse()
+            pb_resp = service.ExploreSchemaResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_explore_schema(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_explore_schema_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = service.ExploreSchemaResponse.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.apptopology_v1.AppTopologyClient.explore_schema",
+                    extra={
+                        "serviceName": "google.cloud.apptopology.v1.AppTopology",
+                        "rpcName": "ExploreSchema",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
 
     class _GenerateDiscoveredResourcesTopology(
         _BaseAppTopologyRestTransport._BaseGenerateDiscoveredResourcesTopology,
@@ -1130,6 +1331,14 @@ class AppTopologyRestTransport(_BaseAppTopologyRestTransport):
                     },
                 )
             return resp
+
+    @property
+    def explore_schema(
+        self,
+    ) -> Callable[[service.ExploreSchemaRequest], service.ExploreSchemaResponse]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ExploreSchema(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def generate_discovered_resources_topology(

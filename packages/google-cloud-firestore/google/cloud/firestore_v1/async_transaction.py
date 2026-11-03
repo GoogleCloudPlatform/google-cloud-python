@@ -174,7 +174,7 @@ class AsyncTransaction(async_batch.AsyncWriteBatch, BaseTransaction):
         timeout: float | None = None,
         *,
         read_time: datetime.datetime | None = None,
-    ) -> AsyncGenerator[DocumentSnapshot, Any]:
+    ) -> AsyncGenerator[DocumentSnapshot[AsyncDocumentReference], Any]:
         """Retrieves multiple documents from Firestore.
 
         Args:
@@ -206,7 +206,10 @@ class AsyncTransaction(async_batch.AsyncWriteBatch, BaseTransaction):
         *,
         explain_options: Optional[ExplainOptions] = None,
         read_time: Optional[datetime.datetime] = None,
-    ) -> AsyncGenerator[DocumentSnapshot, Any] | AsyncStreamGenerator[DocumentSnapshot]:
+    ) -> (
+        AsyncGenerator[DocumentSnapshot[AsyncDocumentReference], Any]
+        | AsyncStreamGenerator[DocumentSnapshot[AsyncDocumentReference]]
+    ):
         """
         Retrieve a document or a query result from the database.
 

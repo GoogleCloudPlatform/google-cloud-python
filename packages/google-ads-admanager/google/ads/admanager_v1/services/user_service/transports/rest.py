@@ -73,6 +73,46 @@ class UserServiceRestInterceptor:
 
     .. code-block:: python
         class MyCustomUserServiceInterceptor(UserServiceRestInterceptor):
+            def pre_batch_activate_users(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_activate_users(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_batch_create_users(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_create_users(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_batch_deactivate_users(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_deactivate_users(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_batch_update_users(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_update_users(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_create_user(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_create_user(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_get_user(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -81,11 +121,273 @@ class UserServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_list_users(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_users(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_user(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_user(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
         transport = UserServiceRestTransport(interceptor=MyCustomUserServiceInterceptor())
         client = UserServiceClient(transport=transport)
 
 
     """
+
+    def pre_batch_activate_users(
+        self,
+        request: user_service.BatchActivateUsersRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        user_service.BatchActivateUsersRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for batch_activate_users
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the UserService server.
+        """
+        return request, metadata
+
+    def post_batch_activate_users(
+        self, response: user_service.BatchActivateUsersResponse
+    ) -> user_service.BatchActivateUsersResponse:
+        """Post-rpc interceptor for batch_activate_users
+
+        DEPRECATED. Please use the `post_batch_activate_users_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the UserService server but before
+        it is returned to user code. This `post_batch_activate_users` interceptor runs
+        before the `post_batch_activate_users_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_activate_users_with_metadata(
+        self,
+        response: user_service.BatchActivateUsersResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        user_service.BatchActivateUsersResponse, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for batch_activate_users
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the UserService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_activate_users_with_metadata`
+        interceptor in new development instead of the `post_batch_activate_users` interceptor.
+        When both interceptors are used, this `post_batch_activate_users_with_metadata` interceptor runs after the
+        `post_batch_activate_users` interceptor. The (possibly modified) response returned by
+        `post_batch_activate_users` will be passed to
+        `post_batch_activate_users_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_batch_create_users(
+        self,
+        request: user_service.BatchCreateUsersRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        user_service.BatchCreateUsersRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for batch_create_users
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the UserService server.
+        """
+        return request, metadata
+
+    def post_batch_create_users(
+        self, response: user_service.BatchCreateUsersResponse
+    ) -> user_service.BatchCreateUsersResponse:
+        """Post-rpc interceptor for batch_create_users
+
+        DEPRECATED. Please use the `post_batch_create_users_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the UserService server but before
+        it is returned to user code. This `post_batch_create_users` interceptor runs
+        before the `post_batch_create_users_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_create_users_with_metadata(
+        self,
+        response: user_service.BatchCreateUsersResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        user_service.BatchCreateUsersResponse, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for batch_create_users
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the UserService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_create_users_with_metadata`
+        interceptor in new development instead of the `post_batch_create_users` interceptor.
+        When both interceptors are used, this `post_batch_create_users_with_metadata` interceptor runs after the
+        `post_batch_create_users` interceptor. The (possibly modified) response returned by
+        `post_batch_create_users` will be passed to
+        `post_batch_create_users_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_batch_deactivate_users(
+        self,
+        request: user_service.BatchDeactivateUsersRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        user_service.BatchDeactivateUsersRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_deactivate_users
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the UserService server.
+        """
+        return request, metadata
+
+    def post_batch_deactivate_users(
+        self, response: user_service.BatchDeactivateUsersResponse
+    ) -> user_service.BatchDeactivateUsersResponse:
+        """Post-rpc interceptor for batch_deactivate_users
+
+        DEPRECATED. Please use the `post_batch_deactivate_users_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the UserService server but before
+        it is returned to user code. This `post_batch_deactivate_users` interceptor runs
+        before the `post_batch_deactivate_users_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_deactivate_users_with_metadata(
+        self,
+        response: user_service.BatchDeactivateUsersResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        user_service.BatchDeactivateUsersResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for batch_deactivate_users
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the UserService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_deactivate_users_with_metadata`
+        interceptor in new development instead of the `post_batch_deactivate_users` interceptor.
+        When both interceptors are used, this `post_batch_deactivate_users_with_metadata` interceptor runs after the
+        `post_batch_deactivate_users` interceptor. The (possibly modified) response returned by
+        `post_batch_deactivate_users` will be passed to
+        `post_batch_deactivate_users_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_batch_update_users(
+        self,
+        request: user_service.BatchUpdateUsersRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        user_service.BatchUpdateUsersRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for batch_update_users
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the UserService server.
+        """
+        return request, metadata
+
+    def post_batch_update_users(
+        self, response: user_service.BatchUpdateUsersResponse
+    ) -> user_service.BatchUpdateUsersResponse:
+        """Post-rpc interceptor for batch_update_users
+
+        DEPRECATED. Please use the `post_batch_update_users_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the UserService server but before
+        it is returned to user code. This `post_batch_update_users` interceptor runs
+        before the `post_batch_update_users_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_update_users_with_metadata(
+        self,
+        response: user_service.BatchUpdateUsersResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        user_service.BatchUpdateUsersResponse, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for batch_update_users
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the UserService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_update_users_with_metadata`
+        interceptor in new development instead of the `post_batch_update_users` interceptor.
+        When both interceptors are used, this `post_batch_update_users_with_metadata` interceptor runs after the
+        `post_batch_update_users` interceptor. The (possibly modified) response returned by
+        `post_batch_update_users` will be passed to
+        `post_batch_update_users_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_create_user(
+        self,
+        request: user_service.CreateUserRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[user_service.CreateUserRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Pre-rpc interceptor for create_user
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the UserService server.
+        """
+        return request, metadata
+
+    def post_create_user(self, response: user_messages.User) -> user_messages.User:
+        """Post-rpc interceptor for create_user
+
+        DEPRECATED. Please use the `post_create_user_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the UserService server but before
+        it is returned to user code. This `post_create_user` interceptor runs
+        before the `post_create_user_with_metadata` interceptor.
+        """
+        return response
+
+    def post_create_user_with_metadata(
+        self,
+        response: user_messages.User,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[user_messages.User, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for create_user
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the UserService server but before it is returned to user code.
+
+        We recommend only using this `post_create_user_with_metadata`
+        interceptor in new development instead of the `post_create_user` interceptor.
+        When both interceptors are used, this `post_create_user_with_metadata` interceptor runs after the
+        `post_create_user` interceptor. The (possibly modified) response returned by
+        `post_create_user` will be passed to
+        `post_create_user_with_metadata`.
+        """
+        return response, metadata
 
     def pre_get_user(
         self,
@@ -128,6 +430,96 @@ class UserServiceRestInterceptor:
         `post_get_user` interceptor. The (possibly modified) response returned by
         `post_get_user` will be passed to
         `post_get_user_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_list_users(
+        self,
+        request: user_service.ListUsersRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[user_service.ListUsersRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Pre-rpc interceptor for list_users
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the UserService server.
+        """
+        return request, metadata
+
+    def post_list_users(
+        self, response: user_service.ListUsersResponse
+    ) -> user_service.ListUsersResponse:
+        """Post-rpc interceptor for list_users
+
+        DEPRECATED. Please use the `post_list_users_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the UserService server but before
+        it is returned to user code. This `post_list_users` interceptor runs
+        before the `post_list_users_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_users_with_metadata(
+        self,
+        response: user_service.ListUsersResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[user_service.ListUsersResponse, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for list_users
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the UserService server but before it is returned to user code.
+
+        We recommend only using this `post_list_users_with_metadata`
+        interceptor in new development instead of the `post_list_users` interceptor.
+        When both interceptors are used, this `post_list_users_with_metadata` interceptor runs after the
+        `post_list_users` interceptor. The (possibly modified) response returned by
+        `post_list_users` will be passed to
+        `post_list_users_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_user(
+        self,
+        request: user_service.UpdateUserRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[user_service.UpdateUserRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Pre-rpc interceptor for update_user
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the UserService server.
+        """
+        return request, metadata
+
+    def post_update_user(self, response: user_messages.User) -> user_messages.User:
+        """Post-rpc interceptor for update_user
+
+        DEPRECATED. Please use the `post_update_user_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the UserService server but before
+        it is returned to user code. This `post_update_user` interceptor runs
+        before the `post_update_user_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_user_with_metadata(
+        self,
+        response: user_messages.User,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[user_messages.User, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_user
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the UserService server but before it is returned to user code.
+
+        We recommend only using this `post_update_user_with_metadata`
+        interceptor in new development instead of the `post_update_user` interceptor.
+        When both interceptors are used, this `post_update_user_with_metadata` interceptor runs after the
+        `post_update_user` interceptor. The (possibly modified) response returned by
+        `post_update_user` will be passed to
+        `post_update_user_with_metadata`.
         """
         return response, metadata
 
@@ -273,6 +665,753 @@ class UserServiceRestTransport(_BaseUserServiceRestTransport):
         self._interceptor = interceptor or UserServiceRestInterceptor()
         self._prep_wrapped_messages(client_info)
 
+    class _BatchActivateUsers(
+        _BaseUserServiceRestTransport._BaseBatchActivateUsers, UserServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("UserServiceRestTransport.BatchActivateUsers")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: user_service.BatchActivateUsersRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> user_service.BatchActivateUsersResponse:
+            r"""Call the batch activate users method over HTTP.
+
+            Args:
+                request (~.user_service.BatchActivateUsersRequest):
+                    The request object. Request message for ``BatchActivateUsers`` method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.user_service.BatchActivateUsersResponse:
+                    Response object for ``BatchActivateUsers`` method.
+            """
+
+            http_options = _BaseUserServiceRestTransport._BaseBatchActivateUsers._get_http_options()
+            request, metadata = self._interceptor.pre_batch_activate_users(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserServiceRestTransport._BaseBatchActivateUsers,
+                    "_BaseBatchActivateUsers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.UserServiceClient.BatchActivateUsers",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.UserService",
+                        "rpcName": "BatchActivateUsers",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = UserServiceRestTransport._BatchActivateUsers._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = user_service.BatchActivateUsersResponse()
+            pb_resp = user_service.BatchActivateUsersResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_activate_users(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_batch_activate_users_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = user_service.BatchActivateUsersResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.UserServiceClient.batch_activate_users",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.UserService",
+                        "rpcName": "BatchActivateUsers",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _BatchCreateUsers(
+        _BaseUserServiceRestTransport._BaseBatchCreateUsers, UserServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("UserServiceRestTransport.BatchCreateUsers")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: user_service.BatchCreateUsersRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> user_service.BatchCreateUsersResponse:
+            r"""Call the batch create users method over HTTP.
+
+            Args:
+                request (~.user_service.BatchCreateUsersRequest):
+                    The request object. Request object for ``BatchCreateUsers`` method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.user_service.BatchCreateUsersResponse:
+                    Response object for ``BatchCreateUsers`` method.
+            """
+
+            http_options = (
+                _BaseUserServiceRestTransport._BaseBatchCreateUsers._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_batch_create_users(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserServiceRestTransport._BaseBatchCreateUsers,
+                    "_BaseBatchCreateUsers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.UserServiceClient.BatchCreateUsers",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.UserService",
+                        "rpcName": "BatchCreateUsers",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = UserServiceRestTransport._BatchCreateUsers._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = user_service.BatchCreateUsersResponse()
+            pb_resp = user_service.BatchCreateUsersResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_create_users(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_batch_create_users_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = user_service.BatchCreateUsersResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.UserServiceClient.batch_create_users",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.UserService",
+                        "rpcName": "BatchCreateUsers",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _BatchDeactivateUsers(
+        _BaseUserServiceRestTransport._BaseBatchDeactivateUsers, UserServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("UserServiceRestTransport.BatchDeactivateUsers")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: user_service.BatchDeactivateUsersRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> user_service.BatchDeactivateUsersResponse:
+            r"""Call the batch deactivate users method over HTTP.
+
+            Args:
+                request (~.user_service.BatchDeactivateUsersRequest):
+                    The request object. Request message for ``BatchDeactivateUsers`` method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.user_service.BatchDeactivateUsersResponse:
+                    Response object for ``BatchDeactivateUsers`` method.
+            """
+
+            http_options = _BaseUserServiceRestTransport._BaseBatchDeactivateUsers._get_http_options()
+            request, metadata = self._interceptor.pre_batch_deactivate_users(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserServiceRestTransport._BaseBatchDeactivateUsers,
+                    "_BaseBatchDeactivateUsers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.UserServiceClient.BatchDeactivateUsers",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.UserService",
+                        "rpcName": "BatchDeactivateUsers",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = UserServiceRestTransport._BatchDeactivateUsers._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = user_service.BatchDeactivateUsersResponse()
+            pb_resp = user_service.BatchDeactivateUsersResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_deactivate_users(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_batch_deactivate_users_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        user_service.BatchDeactivateUsersResponse.to_json(response)
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.UserServiceClient.batch_deactivate_users",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.UserService",
+                        "rpcName": "BatchDeactivateUsers",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _BatchUpdateUsers(
+        _BaseUserServiceRestTransport._BaseBatchUpdateUsers, UserServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("UserServiceRestTransport.BatchUpdateUsers")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: user_service.BatchUpdateUsersRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> user_service.BatchUpdateUsersResponse:
+            r"""Call the batch update users method over HTTP.
+
+            Args:
+                request (~.user_service.BatchUpdateUsersRequest):
+                    The request object. Request object for ``BatchUpdateUsers`` method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.user_service.BatchUpdateUsersResponse:
+                    Response object for ``BatchUpdateUsers`` method.
+            """
+
+            http_options = (
+                _BaseUserServiceRestTransport._BaseBatchUpdateUsers._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_batch_update_users(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserServiceRestTransport._BaseBatchUpdateUsers,
+                    "_BaseBatchUpdateUsers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.UserServiceClient.BatchUpdateUsers",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.UserService",
+                        "rpcName": "BatchUpdateUsers",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = UserServiceRestTransport._BatchUpdateUsers._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = user_service.BatchUpdateUsersResponse()
+            pb_resp = user_service.BatchUpdateUsersResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_update_users(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_batch_update_users_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = user_service.BatchUpdateUsersResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.UserServiceClient.batch_update_users",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.UserService",
+                        "rpcName": "BatchUpdateUsers",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _CreateUser(
+        _BaseUserServiceRestTransport._BaseCreateUser, UserServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("UserServiceRestTransport.CreateUser")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: user_service.CreateUserRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> user_messages.User:
+            r"""Call the create user method over HTTP.
+
+            Args:
+                request (~.user_service.CreateUserRequest):
+                    The request object. Request object for ``CreateUser`` method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.user_messages.User:
+                    The User resource.
+            """
+
+            http_options = (
+                _BaseUserServiceRestTransport._BaseCreateUser._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_create_user(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserServiceRestTransport._BaseCreateUser,
+                    "_BaseCreateUser__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.UserServiceClient.CreateUser",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.UserService",
+                        "rpcName": "CreateUser",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = UserServiceRestTransport._CreateUser._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = user_messages.User()
+            pb_resp = user_messages.User.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_create_user(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_create_user_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = user_messages.User.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.UserServiceClient.create_user",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.UserService",
+                        "rpcName": "CreateUser",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _GetUser(_BaseUserServiceRestTransport._BaseGetUser, UserServiceRestStub):
         def __hash__(self):
             return hash("UserServiceRestTransport.GetUser")
@@ -416,11 +1555,369 @@ class UserServiceRestTransport(_BaseUserServiceRestTransport):
                 )
             return resp
 
+    class _ListUsers(_BaseUserServiceRestTransport._BaseListUsers, UserServiceRestStub):
+        def __hash__(self):
+            return hash("UserServiceRestTransport.ListUsers")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: user_service.ListUsersRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> user_service.ListUsersResponse:
+            r"""Call the list users method over HTTP.
+
+            Args:
+                request (~.user_service.ListUsersRequest):
+                    The request object. Request object for ListUsers method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.user_service.ListUsersResponse:
+                    Response object for ListUsersRequest
+                containing matching User resources.
+
+            """
+
+            http_options = (
+                _BaseUserServiceRestTransport._BaseListUsers._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_list_users(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserServiceRestTransport._BaseListUsers,
+                    "_BaseListUsers__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.UserServiceClient.ListUsers",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.UserService",
+                        "rpcName": "ListUsers",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = UserServiceRestTransport._ListUsers._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = user_service.ListUsersResponse()
+            pb_resp = user_service.ListUsersResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_users(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_list_users_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = user_service.ListUsersResponse.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.UserServiceClient.list_users",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.UserService",
+                        "rpcName": "ListUsers",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _UpdateUser(
+        _BaseUserServiceRestTransport._BaseUpdateUser, UserServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("UserServiceRestTransport.UpdateUser")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: user_service.UpdateUserRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> user_messages.User:
+            r"""Call the update user method over HTTP.
+
+            Args:
+                request (~.user_service.UpdateUserRequest):
+                    The request object. Request object for ``UpdateUser`` method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.user_messages.User:
+                    The User resource.
+            """
+
+            http_options = (
+                _BaseUserServiceRestTransport._BaseUpdateUser._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_update_user(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseUserServiceRestTransport._BaseUpdateUser,
+                    "_BaseUpdateUser__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.UserServiceClient.UpdateUser",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.UserService",
+                        "rpcName": "UpdateUser",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = UserServiceRestTransport._UpdateUser._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = user_messages.User()
+            pb_resp = user_messages.User.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_user(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_user_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = user_messages.User.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.UserServiceClient.update_user",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.UserService",
+                        "rpcName": "UpdateUser",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    @property
+    def batch_activate_users(
+        self,
+    ) -> Callable[
+        [user_service.BatchActivateUsersRequest],
+        user_service.BatchActivateUsersResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchActivateUsers(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def batch_create_users(
+        self,
+    ) -> Callable[
+        [user_service.BatchCreateUsersRequest], user_service.BatchCreateUsersResponse
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchCreateUsers(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def batch_deactivate_users(
+        self,
+    ) -> Callable[
+        [user_service.BatchDeactivateUsersRequest],
+        user_service.BatchDeactivateUsersResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchDeactivateUsers(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def batch_update_users(
+        self,
+    ) -> Callable[
+        [user_service.BatchUpdateUsersRequest], user_service.BatchUpdateUsersResponse
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchUpdateUsers(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def create_user(
+        self,
+    ) -> Callable[[user_service.CreateUserRequest], user_messages.User]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._CreateUser(self._session, self._host, self._interceptor)  # type: ignore
+
     @property
     def get_user(self) -> Callable[[user_service.GetUserRequest], user_messages.User]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._GetUser(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def list_users(
+        self,
+    ) -> Callable[[user_service.ListUsersRequest], user_service.ListUsersResponse]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListUsers(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def update_user(
+        self,
+    ) -> Callable[[user_service.UpdateUserRequest], user_messages.User]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateUser(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def cancel_operation(self):

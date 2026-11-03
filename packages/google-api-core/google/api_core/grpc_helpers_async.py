@@ -21,7 +21,7 @@ functions. This module is implementing the same surface with AsyncIO semantics.
 import asyncio
 import functools
 import warnings
-from typing import AsyncGenerator, Generic, Iterator, Optional, TypeVar
+from typing import AsyncGenerator, Generic, Iterator, Optional, Sequence, TypeVar
 
 import grpc
 from grpc import aio
@@ -219,6 +219,7 @@ def create_channel(
     default_host=None,
     compression=None,
     attempt_direct_path: Optional[bool] = False,
+    attempt_direct_path_xds_over_interconnect: Optional[bool] = None,
     **kwargs,
 ):
     """Create an AsyncIO secure channel with credentials.
@@ -270,6 +271,12 @@ def create_channel(
               `False` as the Service may not support Direct Path.
             - Using `ssl_credentials` with `attempt_direct_path` set to `True` will
               result in `ValueError` as this combination  is not yet supported.
+        attempt_direct_path_xds_over_interconnect (Optional[bool]): If set,
+            DirectPath over Cloud Interconnect will be attempted using standard
+            TLS credentials and ``?force-xds`` C2P target resolution. If None
+            (default), the setting is resolved from the
+            ``GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT``
+            environment variable.
 
         kwargs: Additional key-word args passed to :func:`aio.secure_channel`.
 
@@ -277,35 +284,87 @@ def create_channel(
         aio.Channel: The created channel.
 
     Raises:
-        google.api_core.DuplicateCredentialArgs: If both a credentials object and credentials_file are passed.
-        ValueError: If `ssl_credentials` is set and `attempt_direct_path` is set to `True`.
+        google.api_core.DuplicateCredentialArgs: If both a credentials object
+            and credentials_file are passed.
+        ValueError: If `ssl_credentials` is set and `attempt_direct_path` is
+            set to `True` without `attempt_direct_path_xds_over_interconnect`.
     """
 
     if credentials_file is not None:
         warnings.warn(general_helpers._CREDENTIALS_FILE_WARNING, DeprecationWarning)
 
-    # If `ssl_credentials` is set and `attempt_direct_path` is set to `True`,
-    # raise ValueError as this is not yet supported.
-    # See https://github.com/googleapis/python-api-core/issues/590
-    if ssl_credentials and attempt_direct_path:
-        raise ValueError("Using ssl_credentials with Direct Path is not supported")
-
-    composite_credentials = grpc_helpers._create_composite_credentials(
-        credentials=credentials,
-        credentials_file=credentials_file,
-        scopes=scopes,
-        default_scopes=default_scopes,
-        ssl_credentials=ssl_credentials,
-        quota_project_id=quota_project_id,
-        default_host=default_host,
+    target, composite_credentials, kwargs = (
+        grpc_helpers._setup_direct_path_and_credentials(
+            target=target,
+            credentials=credentials,
+            scopes=scopes,
+            ssl_credentials=ssl_credentials,
+            credentials_file=credentials_file,
+            quota_project_id=quota_project_id,
+            default_scopes=default_scopes,
+            default_host=default_host,
+            attempt_direct_path=attempt_direct_path,
+            attempt_direct_path_xds_over_interconnect=attempt_direct_path_xds_over_interconnect,
+            **kwargs,
+        )
     )
-
-    if attempt_direct_path:
-        target = grpc_helpers._modify_target_for_direct_path(target)
 
     return aio.secure_channel(
         target, composite_credentials, compression=compression, **kwargs
     )
+
+
+def apply_channel_interceptors(
+    channel: aio.Channel,
+    interceptors: Optional[Sequence[aio.ClientInterceptor]] = None,
+) -> aio.Channel:
+    """Applies client interceptors to a gRPC AsyncIO channel.
+
+    In grpc.aio, channels maintain internal interceptor lists
+    (_unary_unary_interceptors, etc.). To preserve the public API contract for
+    callers who supply their own pre-instantiated ``channel`` object or a custom
+    channel factory callable (which does not accept ``interceptors``), we attach
+    interceptors post-instantiation directly to the channel's interceptor lists.
+
+    Args:
+        channel (aio.Channel): The async gRPC channel to intercept.
+        interceptors (Optional[Sequence[aio.ClientInterceptor]]):
+            Additional interceptors to apply to the channel.
+
+    Returns:
+        aio.Channel: The channel with interceptors attached, or the original channel
+            if no interceptors were provided.
+    """
+    if not interceptors:
+        return channel
+
+    mapping = (
+        ("intercept_unary_unary", "_unary_unary_interceptors"),
+        ("intercept_unary_stream", "_unary_stream_interceptors"),
+        ("intercept_stream_unary", "_stream_unary_interceptors"),
+        ("intercept_stream_stream", "_stream_stream_interceptors"),
+    )
+    for interceptor in interceptors:
+        matched = False
+        for method_name, attr_name in mapping:
+            if hasattr(interceptor, method_name) and hasattr(channel, attr_name):
+                target_list = getattr(channel, attr_name)
+                if isinstance(target_list, list):
+                    if interceptor not in target_list:
+                        target_list.append(interceptor)
+                    matched = True
+                elif hasattr(target_list, "append"):
+                    target_list.append(interceptor)
+                    matched = True
+        if not matched and hasattr(channel, "_unary_unary_interceptors"):
+            unary_interceptors = channel._unary_unary_interceptors
+            if isinstance(unary_interceptors, list):
+                if interceptor not in unary_interceptors:
+                    unary_interceptors.append(interceptor)
+            elif hasattr(unary_interceptors, "append"):
+                unary_interceptors.append(interceptor)
+
+    return channel
 
 
 class FakeUnaryUnaryCall(_WrappedUnaryUnaryCall):

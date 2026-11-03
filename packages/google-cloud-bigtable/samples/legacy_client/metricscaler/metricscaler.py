@@ -38,7 +38,7 @@ def get_cpu_load(bigtable_instance, bigtable_cluster):
     Returns:
           float: The most recent Cloud Bigtable CPU usage metric
     """
-    # [START bigtable_cpu]
+    # [START bigtable_cpu_legacy]
     client = monitoring_v3.MetricServiceClient()
     cpu_query = query.Query(
         client,
@@ -51,7 +51,7 @@ def get_cpu_load(bigtable_instance, bigtable_cluster):
     )
     cpu = next(cpu_query.iter())
     return cpu.points[0].value.double_value
-    # [END bigtable_cpu]
+    # [END bigtable_cpu_legacy]
 
 
 def get_storage_utilization(bigtable_instance, bigtable_cluster):
@@ -60,7 +60,7 @@ def get_storage_utilization(bigtable_instance, bigtable_cluster):
     Returns:
           float: The most recent Cloud Bigtable storage utilization metric
     """
-    # [START bigtable_metric_scaler_storage_utilization]
+    # [START bigtable_metric_scaler_storage_utilization_legacy]
     client = monitoring_v3.MetricServiceClient()
     utilization_query = query.Query(
         client,
@@ -73,7 +73,7 @@ def get_storage_utilization(bigtable_instance, bigtable_cluster):
     )
     utilization = next(utilization_query.iter())
     return utilization.points[0].value.double_value
-    # [END bigtable_metric_scaler_storage_utilization]
+    # [END bigtable_metric_scaler_storage_utilization_legacy]
 
 
 def scale_bigtable(bigtable_instance, bigtable_cluster, scale_up):
@@ -105,7 +105,7 @@ def scale_bigtable(bigtable_instance, bigtable_cluster, scale_up):
     # The number of nodes to change the cluster by.
     size_change_step = 3
 
-    # [START bigtable_scale]
+    # [START bigtable_scale_legacy]
     bigtable_client = bigtable.Client(admin=True)
     instance = bigtable_client.instance(bigtable_instance)
     instance.reload()
@@ -140,7 +140,7 @@ def scale_bigtable(bigtable_instance, bigtable_cluster, scale_up):
                     current_node_count, new_node_count, response.name
                 )
             )
-    # [END bigtable_scale]
+    # [END bigtable_scale_legacy]
 
 
 def main(

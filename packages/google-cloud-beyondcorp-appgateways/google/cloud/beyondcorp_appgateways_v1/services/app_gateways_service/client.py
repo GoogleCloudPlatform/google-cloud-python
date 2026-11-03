@@ -138,6 +138,10 @@ class AppGatewaysServiceClient(metaclass=AppGatewaysServiceClientMeta):
 
     The AppGatewaysService service provides methods to manage
     (create/read/update/delete) BeyondCorp AppGateways.
+
+    Deprecated: App Connector is deprecated and creation of new App
+    Connector resources is no longer permitted. Use Security Gateway
+    instead.
     """
 
     # Note: DEFAULT_ENDPOINT is deprecated. Use _DEFAULT_ENDPOINT_TEMPLATE instead.
@@ -691,6 +695,11 @@ class AppGatewaysServiceClient(metaclass=AppGatewaysServiceClientMeta):
                 automatically.
 
         """
+        warnings.warn(
+            "AppGatewaysServiceClient.list_app_gateways is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.
@@ -818,6 +827,10 @@ class AppGatewaysServiceClient(metaclass=AppGatewaysServiceClientMeta):
                 single AppGateway.
 
         """
+        warnings.warn(
+            "AppGatewaysServiceClient.get_app_gateway is deprecated", DeprecationWarning
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.
@@ -965,6 +978,11 @@ class AppGatewaysServiceClient(metaclass=AppGatewaysServiceClientMeta):
                    authorised for a single AppGateway.
 
         """
+        warnings.warn(
+            "AppGatewaysServiceClient.create_app_gateway is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.
@@ -1101,6 +1119,11 @@ class AppGatewaysServiceClient(metaclass=AppGatewaysServiceClientMeta):
                       }
 
         """
+        warnings.warn(
+            "AppGatewaysServiceClient.delete_app_gateway is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.

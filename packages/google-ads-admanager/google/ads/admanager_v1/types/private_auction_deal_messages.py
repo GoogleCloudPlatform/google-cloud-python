@@ -53,12 +53,12 @@ class PrivateAuctionDeal(proto.Message):
             This field is a member of `oneof`_ ``_private_auction_deal_id``.
         private_auction_id (int):
             Immutable. The ID of the
-            `PrivateAuction <google.ads.admanager.v1.PrivateAuction>`__.
+            [PrivateAuction][google.ads.admanager.v1.PrivateAuction].
 
             This field is a member of `oneof`_ ``_private_auction_id``.
         private_auction_display_name (str):
             Output only. The display name of the
-            `PrivateAuction <google.ads.admanager.v1.PrivateAuction>`__.
+            [PrivateAuction][google.ads.admanager.v1.PrivateAuction].
 
             This field is a member of `oneof`_ ``_private_auction_display_name``.
         buyer_account_id (int):

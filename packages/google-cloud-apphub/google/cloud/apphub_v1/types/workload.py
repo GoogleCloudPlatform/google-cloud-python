@@ -21,6 +21,7 @@ import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
 
 from google.cloud.apphub_v1.types import attributes as gca_attributes
+from google.cloud.apphub_v1.types import properties
 
 __protobuf__ = proto.module(
     package="google.cloud.apphub.v1",
@@ -182,6 +183,17 @@ class WorkloadProperties(proto.Message):
             Output only. The location that the underlying
             compute resource resides in if it is zonal (for
             example, us-west1-a).
+        functional_type (google.cloud.apphub_v1.types.FunctionalType):
+            Output only. The type of the workload.
+        extended_metadata (MutableMapping[str, google.cloud.apphub_v1.types.ExtendedMetadata]):
+            Output only. Additional metadata specific to the resource
+            type. The key is a string that identifies the type of
+            metadata and the value is the metadata contents specific to
+            that type. Key format:
+            ``apphub.googleapis.com/{metadataType}``
+        identity (google.cloud.apphub_v1.types.Identity):
+            Output only. The identity associated with the
+            workload.
     """
 
     gcp_project: str = proto.Field(
@@ -195,6 +207,24 @@ class WorkloadProperties(proto.Message):
     zone: str = proto.Field(
         proto.STRING,
         number=3,
+    )
+    functional_type: properties.FunctionalType = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message=properties.FunctionalType,
+    )
+    extended_metadata: MutableMapping[str, properties.ExtendedMetadata] = (
+        proto.MapField(
+            proto.STRING,
+            proto.MESSAGE,
+            number=5,
+            message=properties.ExtendedMetadata,
+        )
+    )
+    identity: properties.Identity = proto.Field(
+        proto.MESSAGE,
+        number=6,
+        message=properties.Identity,
     )
 
 

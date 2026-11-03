@@ -263,7 +263,12 @@ class TestBigQuery(unittest.TestCase):
                 break
             time.sleep(0.1)
 
-        self.assertLessEqual(conn_count_end, conn_count_start)
+        self.assertLessEqual(
+            conn_count_end,
+            conn_count_start,
+            f"opened: {set(conn_end) - set(conn_start)}, "
+            f"closed: {set(conn_start) - set(conn_end)}",
+        )
 
     def test_create_dataset(self):
         DATASET_ID = _make_dataset_id("create_dataset")

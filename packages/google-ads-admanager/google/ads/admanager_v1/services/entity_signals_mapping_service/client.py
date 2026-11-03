@@ -911,8 +911,8 @@ class EntitySignalsMappingServiceClient(
 
         Args:
             request (Union[google.ads.admanager_v1.types.CreateEntitySignalsMappingRequest, dict]):
-                The request object. Request object for
-                'CreateEntitySignalsMapping' method.
+                The request object. Request object for ``CreateEntitySignalsMapping``
+                method.
             parent (str):
                 Required. The parent resource where this
                 EntitySignalsMapping will be created. Format:
@@ -1043,8 +1043,8 @@ class EntitySignalsMappingServiceClient(
 
         Args:
             request (Union[google.ads.admanager_v1.types.UpdateEntitySignalsMappingRequest, dict]):
-                The request object. Request object for
-                'UpdateEntitySignalsMapping' method.
+                The request object. Request object for ``UpdateEntitySignalsMapping``
+                method.
             entity_signals_mapping (google.ads.admanager_v1.types.EntitySignalsMapping):
                 Required. The ``EntitySignalsMapping`` to update.
 

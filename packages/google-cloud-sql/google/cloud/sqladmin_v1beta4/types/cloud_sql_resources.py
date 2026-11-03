@@ -61,6 +61,7 @@ __protobuf__ = proto.module(
         "SyncFlags",
         "InstanceReference",
         "DatabaseInstance",
+        "BlueGreenDeploymentInfo",
         "DnsNameMapping",
         "GeminiInstanceConfig",
         "ReplicationCluster",
@@ -144,6 +145,10 @@ __protobuf__ = proto.module(
         "ReadPoolAutoScaleConfig",
         "ConnectionPoolConfig",
         "AcquireSsrsLeaseContext",
+        "StartWorkloadCaptureContext",
+        "StopWorkloadCaptureContext",
+        "StartWorkloadReplayContext",
+        "StopWorkloadReplayContext",
     },
 )
 
@@ -398,6 +403,9 @@ class SqlInstanceType(proto.Enum):
             read-replica.
         READ_POOL_INSTANCE (5):
             A Cloud SQL read pool.
+        GREEN_INSTANCE (7):
+            A Cloud SQL instance acting as a Blue-Green
+            deployment target primary. (MySQL only)
     """
 
     SQL_INSTANCE_TYPE_UNSPECIFIED = 0
@@ -405,6 +413,7 @@ class SqlInstanceType(proto.Enum):
     ON_PREMISES_INSTANCE = 2
     READ_REPLICA_INSTANCE = 3
     READ_POOL_INSTANCE = 5
+    GREEN_INSTANCE = 7
 
 
 class SqlDatabaseVersion(proto.Enum):
@@ -2114,6 +2123,12 @@ class DatabaseInstance(proto.Message):
             instance is initiated.
 
             This field is a member of `oneof`_ ``_include_replicas_for_major_version_upgrade``.
+        skip_precheck (google.protobuf.wrappers_pb2.BoolValue):
+            Optional. Input only. Determines whether the
+            precheck step is skipped during a major version
+            upgrade.
+
+            This field is a member of `oneof`_ ``_skip_precheck``.
         tags (MutableMapping[str, str]):
             Optional. Input only. Immutable. Tag keys and tag values
             that are bound to this instance. You must represent each
@@ -2139,6 +2154,12 @@ class DatabaseInstance(proto.Message):
         dns_names (MutableSequence[google.cloud.sqladmin_v1beta4.types.DnsNameMapping]):
             Output only. The list of DNS names used by
             this instance.
+        deployment_info (google.cloud.sqladmin_v1beta4.types.BlueGreenDeploymentInfo):
+            Output only. Deployment info for the
+            instance. This is set if the instance is
+            currently part of any blue-green setup.
+
+            This field is a member of `oneof`_ ``_deployment_info``.
         database_center_integration_enabled (google.protobuf.wrappers_pb2.BoolValue):
             Optional. If true, instance metadata is sent
             to the Database Center. If false, instance
@@ -2670,6 +2691,12 @@ class DatabaseInstance(proto.Message):
         optional=True,
         message=wrappers_pb2.BoolValue,
     )
+    skip_precheck: wrappers_pb2.BoolValue = proto.Field(
+        proto.MESSAGE,
+        number=77,
+        optional=True,
+        message=wrappers_pb2.BoolValue,
+    )
     tags: MutableMapping[str, str] = proto.MapField(
         proto.STRING,
         proto.STRING,
@@ -2690,6 +2717,12 @@ class DatabaseInstance(proto.Message):
         number=67,
         message="DnsNameMapping",
     )
+    deployment_info: "BlueGreenDeploymentInfo" = proto.Field(
+        proto.MESSAGE,
+        number=73,
+        optional=True,
+        message="BlueGreenDeploymentInfo",
+    )
     database_center_integration_enabled: wrappers_pb2.BoolValue = proto.Field(
         proto.MESSAGE,
         number=72,
@@ -2700,6 +2733,123 @@ class DatabaseInstance(proto.Message):
         number=76,
         optional=True,
         enum=DatabaseCenterIntegration,
+    )
+
+
+class BlueGreenDeploymentInfo(proto.Message):
+    r"""Blue-green deployment metadata for a database instance. In a
+    blue-green deployment, we maintain two environments, one of
+    which is live. This message contains details about the
+    blue-green deployment.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        deployment_id (str):
+            Output only. The resource ID of the
+            blue-green deployment.
+
+            This field is a member of `oneof`_ ``_deployment_id``.
+        source (google.cloud.sqladmin_v1beta4.types.BlueGreenDeploymentInfo.SourceRole):
+            Output only. The source instance for the
+            Blue-Green deployment.
+
+            This field is a member of `oneof`_ ``role_details``.
+        target (google.cloud.sqladmin_v1beta4.types.BlueGreenDeploymentInfo.TargetRole):
+            Output only. The target instance for the
+            Blue-Green deployment.
+
+            This field is a member of `oneof`_ ``role_details``.
+        state (google.cloud.sqladmin_v1beta4.types.BlueGreenDeploymentInfo.State):
+            Output only. The current state of
+            blue-green-deployment for UI tags
+
+            This field is a member of `oneof`_ ``_state``.
+    """
+
+    class State(proto.Enum):
+        r"""The state of blue-green-deployment for UI tags
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                The state of the deployment is unknown.
+            PRE_SWITCHOVER (1):
+                The deployment is pre-switchover.
+            POST_SWITCHOVER (2):
+                The deployment is post-switchover.
+        """
+
+        STATE_UNSPECIFIED = 0
+        PRE_SWITCHOVER = 1
+        POST_SWITCHOVER = 2
+
+    class SourceRole(proto.Message):
+        r"""The source instance for the Blue-Green deployment.
+
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+        Attributes:
+            target_id (google.cloud.sqladmin_v1beta4.types.InstanceReference):
+                Output only. The target instance paired with
+                this source instance in a blue-green deployment.
+
+                This field is a member of `oneof`_ ``_target_id``.
+        """
+
+        target_id: "InstanceReference" = proto.Field(
+            proto.MESSAGE,
+            number=1,
+            optional=True,
+            message="InstanceReference",
+        )
+
+    class TargetRole(proto.Message):
+        r"""The target instance for the Blue-Green deployment.
+
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+        Attributes:
+            source_id (google.cloud.sqladmin_v1beta4.types.InstanceReference):
+                Output only. The source instance paired with
+                this target instance in a blue-green deployment.
+
+                This field is a member of `oneof`_ ``_source_id``.
+        """
+
+        source_id: "InstanceReference" = proto.Field(
+            proto.MESSAGE,
+            number=1,
+            optional=True,
+            message="InstanceReference",
+        )
+
+    deployment_id: str = proto.Field(
+        proto.STRING,
+        number=1,
+        optional=True,
+    )
+    source: SourceRole = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        oneof="role_details",
+        message=SourceRole,
+    )
+    target: TargetRole = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        oneof="role_details",
+        message=TargetRole,
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=4,
+        optional=True,
+        enum=State,
     )
 
 
@@ -4312,6 +4462,11 @@ class InstancesRestoreBackupRequest(proto.Message):
             restore_instance_settings, changes any instance settings
             stored in the backup you are restoring from. With the
             difference that these fields are cleared in the settings.
+        ignore_maintenance_version (bool):
+            Optional. If true, the restore operation
+            proceeds even if the target instance's
+            maintenance version is older than the source
+            instance's maintenance version.
     """
 
     restore_backup_context: "RestoreBackupContext" = proto.Field(
@@ -4337,6 +4492,10 @@ class InstancesRestoreBackupRequest(proto.Message):
             proto.STRING,
             number=5,
         )
+    )
+    ignore_maintenance_version: bool = proto.Field(
+        proto.BOOL,
+        number=6,
     )
 
 
@@ -4627,6 +4786,8 @@ class PreCheckResponse(proto.Message):
 class PreCheckMajorVersionUpgradeContext(proto.Message):
     r"""Pre-check major version upgrade context.
 
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
     Attributes:
         target_database_version (google.cloud.sqladmin_v1beta4.types.SqlDatabaseVersion):
             Required. The target database version to
@@ -4637,6 +4798,11 @@ class PreCheckMajorVersionUpgradeContext(proto.Message):
         kind (str):
             Optional. This is always
             ``sql#preCheckMajorVersionUpgradeContext``.
+        max_runtime (google.protobuf.duration_pb2.Duration):
+            Optional. The maximum allowed runtime for the
+            precheck operation.
+
+            This field is a member of `oneof`_ ``_max_runtime``.
     """
 
     target_database_version: "SqlDatabaseVersion" = proto.Field(
@@ -4652,6 +4818,12 @@ class PreCheckMajorVersionUpgradeContext(proto.Message):
     kind: str = proto.Field(
         proto.STRING,
         number=3,
+    )
+    max_runtime: duration_pb2.Duration = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        optional=True,
+        message=duration_pb2.Duration,
     )
 
 
@@ -4925,6 +5097,15 @@ class SqlExternalSyncSettingError(proto.Message):
                 privileges to setup DDL replication. (e.g.
                 CREATE EVENT TRIGGER, CREATE SCHEMA) for
                 PostgreSQL.
+            WRITABLE_DESTINATION_REPLICA_RECREATION_DOWNTIME (59):
+                Read replicas of the Writable Destination
+                instance will be recreated after external
+                synchronization is complete, causing downtime on
+                read replicas.
+            WRITABLE_DESTINATION_STORAGE_AUTO_INCREASE_DISABLED (60):
+                A warning that disk storage auto increase is
+                disabled on the destination instance for a
+                Writable Destination migration.
         """
 
         SQL_EXTERNAL_SYNC_SETTING_ERROR_TYPE_UNSPECIFIED = 0
@@ -4986,6 +5167,8 @@ class SqlExternalSyncSettingError(proto.Message):
         PROMPT_DELETE_EXISTING = 56
         WILL_DELETE_EXISTING = 57
         PG_DDL_REPLICATION_INSUFFICIENT_PRIVILEGE = 58
+        WRITABLE_DESTINATION_REPLICA_RECREATION_DOWNTIME = 59
+        WRITABLE_DESTINATION_STORAGE_AUTO_INCREASE_DISABLED = 60
 
     kind: str = proto.Field(
         proto.STRING,
@@ -5288,8 +5471,7 @@ class PscConfig(proto.Message):
             Optional. The network attachment of the
             consumer network that the Private Service
             Connect enabled Cloud SQL instance is authorized
-            to connect via PSC interface.
-            format:
+            to connect using the PSC interface. format:
             projects/PROJECT/regions/REGION/networkAttachments/ID
         psc_auto_dns_enabled (bool):
             Optional. Indicates whether Private Service
@@ -5919,11 +6101,28 @@ class OnPremisesConfiguration(proto.Message):
 class DiskEncryptionConfiguration(proto.Message):
     r"""Disk encryption configuration for an instance.
 
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
     Attributes:
         kms_key_name (str):
             Resource name of KMS key for disk encryption
         kind (str):
             This is always ``sql#diskEncryptionConfiguration``.
+        confidential_mode (bool):
+            Optional. If true, enables Confidential Mode
+            for the instance's Hyperdisk Balanced volumes.
+            Only supported for zonal C4A instances
+            currently.
+
+            This field is a member of `oneof`_ ``_confidential_mode``.
+        cmek_source_log_encryption_enforced (bool):
+            Optional. Whether to enforce CMEK log
+            encryption at source. When enforced, transaction
+            logs are encrypted prior to being uploaded to
+            Cloud Storage. If not enforced, then CMEK logs
+            are encrypted by the Cloud Storage service.
+
+            This field is a member of `oneof`_ ``_cmek_source_log_encryption_enforced``.
     """
 
     kms_key_name: str = proto.Field(
@@ -5933,6 +6132,16 @@ class DiskEncryptionConfiguration(proto.Message):
     kind: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+    confidential_mode: bool = proto.Field(
+        proto.BOOL,
+        number=3,
+        optional=True,
+    )
+    cmek_source_log_encryption_enforced: bool = proto.Field(
+        proto.BOOL,
+        number=4,
+        optional=True,
     )
 
 
@@ -6042,6 +6251,25 @@ class Operation(proto.Message):
             the details for that pre-check, such as the target database
             version for the upgrade and the results of the check
             (including any warnings or errors found).
+        start_workload_capture_context (google.cloud.sqladmin_v1beta4.types.StartWorkloadCaptureContext):
+            The context for the ``StartWorkloadCapture`` operation,
+            which contains details to start recording the workload (SQL
+            queries) on a Cloud SQL instance.
+        stop_workload_capture_context (google.cloud.sqladmin_v1beta4.types.StopWorkloadCaptureContext):
+            The context for the ``StopWorkloadCapture`` operation, which
+            contains details to stop recording the workload (SQL
+            queries) on a Cloud SQL instance.
+        start_workload_replay_context (google.cloud.sqladmin_v1beta4.types.StartWorkloadReplayContext):
+            The context for the ``StartWorkloadReplay`` operation, which
+            contains details about starting the execution of a captured
+            workload (recorded read and write SQL queries) on a replay
+            instance (the Cloud SQL instance where the recorded SQL
+            queries are executed).
+        stop_workload_replay_context (google.cloud.sqladmin_v1beta4.types.StopWorkloadReplayContext):
+            The context for the ``StopWorkloadReplay`` operation, which
+            contains details about stopping the execution of a captured
+            workload (recorded read and write SQL queries) on a replay
+            instance.
         name (str):
             An identifier that uniquely identifies the
             operation. You can use this identifier to
@@ -6214,6 +6442,12 @@ class Operation(proto.Message):
                 Creates a Cloud SQL read pool instance.
             PRE_CHECK_MAJOR_VERSION_UPGRADE (54):
                 Pre-checks for major version upgrade.
+            CREATE_BLUE_GREEN_DEPLOYMENT (55):
+                Creates a new Blue-Green deployment.
+            SWITCHOVER_BLUE_GREEN_DEPLOYMENT (56):
+                Switches over a Blue-Green deployment.
+            DELETE_BLUE_GREEN_DEPLOYMENT (57):
+                Deletes a Blue-Green deployment.
             SETUP_MIGRATION (58):
                 This operation type represents individual
                 steps in a multi-step setup migration workflow:
@@ -6277,6 +6511,9 @@ class Operation(proto.Message):
         REPAIR_READ_POOL = 52
         CREATE_READ_POOL = 53
         PRE_CHECK_MAJOR_VERSION_UPGRADE = 54
+        CREATE_BLUE_GREEN_DEPLOYMENT = 55
+        SWITCHOVER_BLUE_GREEN_DEPLOYMENT = 56
+        DELETE_BLUE_GREEN_DEPLOYMENT = 57
         SETUP_MIGRATION = 58
         AGENT_SEND_MESSAGE = 59
 
@@ -6368,6 +6605,26 @@ class Operation(proto.Message):
             number=50,
             message="PreCheckMajorVersionUpgradeContext",
         )
+    )
+    start_workload_capture_context: "StartWorkloadCaptureContext" = proto.Field(
+        proto.MESSAGE,
+        number=56,
+        message="StartWorkloadCaptureContext",
+    )
+    stop_workload_capture_context: "StopWorkloadCaptureContext" = proto.Field(
+        proto.MESSAGE,
+        number=57,
+        message="StopWorkloadCaptureContext",
+    )
+    start_workload_replay_context: "StartWorkloadReplayContext" = proto.Field(
+        proto.MESSAGE,
+        number=58,
+        message="StartWorkloadReplayContext",
+    )
+    stop_workload_replay_context: "StopWorkloadReplayContext" = proto.Field(
+        proto.MESSAGE,
+        number=59,
+        message="StopWorkloadReplayContext",
     )
     name: str = proto.Field(
         proto.STRING,
@@ -6881,7 +7138,7 @@ class Settings(proto.Message):
             for Postgres.
         password_validation_policy (google.cloud.sqladmin_v1beta4.types.PasswordValidationPolicy):
             The local user password validation policy of
-            the instance.
+            the instance for PostgreSQL and MySQL.
         sql_server_audit_config (google.cloud.sqladmin_v1beta4.types.SqlServerAuditConfig):
             SQL Server specific audit configuration.
         edition (google.cloud.sqladmin_v1beta4.types.Settings.Edition):
@@ -8137,6 +8394,112 @@ class AcquireSsrsLeaseContext(proto.Message):
         optional=True,
         message=duration_pb2.Duration,
     )
+
+
+class StartWorkloadCaptureContext(proto.Message):
+    r"""The context for the ``StartWorkloadCapture`` operation, which
+    contains details to start recording the workload (SQL queries) on a
+    Cloud SQL instance.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        enable_live_replay (bool):
+            Optional. If true, the captured workload is simultaneously
+            executed on a separate, ephemeral Cloud SQL instance. This
+            "live replay" instance is automatically provisioned and is
+            cloned from the source instance. If false (the default), the
+            workload is only stored and no live replay occurs. It can be
+            replayed later using a separate
+            ``StartWorkloadReplayRequest``. Note: The workload capture
+            runs continuously until an explicit
+            ``StopWorkloadCaptureRequest`` is issued.
+        replay_instance (str):
+            Optional. Required if ``enable_live_replay`` is true. The
+            name of the Cloud SQL instance where the captured workload
+            (SQL queries) is being executed, excluding the project ID
+            (for example, ``my-replay-instance``). The instance name
+            must start with a lowercase letter and contain only
+            lowercase letters, numbers, and hyphens. The combined length
+            of ``project-ID:instance-name`` must be 98 characters or
+            less.
+
+            This field is a member of `oneof`_ ``_replay_instance``.
+    """
+
+    enable_live_replay: bool = proto.Field(
+        proto.BOOL,
+        number=1,
+    )
+    replay_instance: str = proto.Field(
+        proto.STRING,
+        number=2,
+        optional=True,
+    )
+
+
+class StopWorkloadCaptureContext(proto.Message):
+    r"""The context for the ``StopWorkloadCapture`` operation, which
+    contains details to stop recording the workload (SQL queries) on a
+    Cloud SQL instance.
+
+    Attributes:
+        abort_live_replay (bool):
+            Optional. If true, immediately aborts the
+            concurrent live replay and discards any
+            un-replayed traffic alongside stopping the
+            capture. If false (the default), the capture
+            stops recording new traffic, but the live replay
+            will continue executing until the entire backlog
+            of captured traffic has been replayed.
+    """
+
+    abort_live_replay: bool = proto.Field(
+        proto.BOOL,
+        number=1,
+    )
+
+
+class StartWorkloadReplayContext(proto.Message):
+    r"""The context for the ``StartWorkloadReplay`` operation, which
+    contains details about starting the execution of a captured workload
+    (recorded read and write SQL queries) on a replay instance (the
+    Cloud SQL instance where the recorded SQL queries are executed).
+
+    Attributes:
+        replay_instance (str):
+            Required. The name of the Cloud SQL instance where the
+            captured workload (SQL queries) is being executed, excluding
+            the project ID (for example, ``my-replay-instance``). The
+            instance name must start with a lowercase letter and contain
+            only lowercase letters, numbers, and hyphens. The combined
+            length of ``project-ID:instance-name`` must be 98 characters
+            or less.
+        workload_id (str):
+            Output only. The ID of the workload to start executing on
+            the replay instance. Each workload capture generates a
+            unique ID in the format ``workload-<epoch_timestamp>`` (for
+            example, ``workload-1786046400``). Use this ID to start
+            executing the recorded SQL queries.
+    """
+
+    replay_instance: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    workload_id: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class StopWorkloadReplayContext(proto.Message):
+    r"""The context for the ``StopWorkloadReplay`` operation, which
+    represents an operation that stops an active workload replay on a
+    target Cloud SQL replay instance.
+
+    """
 
 
 __all__ = tuple(sorted(__protobuf__.manifest))

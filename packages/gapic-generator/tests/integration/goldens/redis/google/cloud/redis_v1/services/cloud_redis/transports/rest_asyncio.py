@@ -23,16 +23,18 @@ try:
 except ImportError as e:  # pragma: NO COVER
     raise ImportError("`rest_asyncio` transport requires the library to be installed with the `async_rest` extra. Install the library with the `async_rest` extra using `pip install google-cloud-redis[async_rest]`") from e
 
+from google.auth import credentials as ga_credentials  # type: ignore
 from google.auth.aio import credentials as ga_credentials_async  # type: ignore
 
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
+from google.api_core.client_options import ClientOptions
 from google.api_core import operations_v1
 from google.cloud.location import locations_pb2 # type: ignore
 from google.api_core import retry_async as retries
 from google.api_core import rest_helpers
 from google.api_core import rest_streaming_async  # type: ignore
-from google.cloud.redis_v1._compat import transcode_request
+from google.cloud.redis_v1._compat import transcode_request, trace_http_request
 
 import google.protobuf
 
@@ -735,6 +737,7 @@ class AsyncCloudRedisRestStub:
     _session: AsyncAuthorizedSession
     _host: str
     _interceptor: AsyncCloudRedisRestInterceptor
+    _client_options: Optional[ClientOptions] = None
 
 class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
     """Asynchronous REST backend transport for CloudRedis.
@@ -770,10 +773,12 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
     def __init__(self,
             *,
             host: str = 'redis.googleapis.com',
-            credentials: Optional[ga_credentials_async.Credentials] = None,
+            credentials: Optional[Union[ga_credentials.Credentials, ga_credentials_async.Credentials]] = None,
             client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
             url_scheme: str = 'https',
             interceptor: Optional[AsyncCloudRedisRestInterceptor] = None,
+            client_options: Optional[ClientOptions] = None,
+            **kwargs,
             ) -> None:
         """Instantiate the transport.
 
@@ -784,7 +789,7 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
         Args:
             host (Optional[str]):
                  The hostname to connect to (default: 'redis.googleapis.com').
-            credentials (Optional[google.auth.aio.credentials.Credentials]): The
+            credentials (Optional[Union[google.auth.credentials.Credentials, google.auth.aio.credentials.Credentials]]): The
                 authorization credentials to attach to requests. These
                 credentials identify the application to the service; if none
                 are specified, the client will attempt to ascertain the
@@ -799,6 +804,9 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 "http" can be specified.
             interceptor (Optional[AsyncCloudRedisRestInterceptor]): Interceptor used
                 to manipulate requests, request metadata, and responses.
+            client_options (Optional[google.api_core.client_options.ClientOptions]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
         # Run the base constructor
         super().__init__(
@@ -807,113 +815,130 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
             client_info=client_info,
             always_use_jwt_access=False,
             url_scheme=url_scheme,
-            api_audience=None
+            api_audience=None,
+            client_options=client_options,
+            **kwargs,
         )
         self._session = AsyncAuthorizedSession(self._credentials)  # type: ignore
         self._interceptor = interceptor or AsyncCloudRedisRestInterceptor()
-        self._wrap_with_kind = True
         self._prep_wrapped_messages(client_info)
         self._operations_client: Optional[operations_v1.AsyncOperationsRestClient] = None
 
     def _prep_wrapped_messages(self, client_info):
-        """ Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.list_instances: self._wrap_method(
+            self.list_instances: self._wrap_async_method(
                 self.list_instances,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.v1.CloudRedis/ListInstances",
             ),
-            self.get_instance: self._wrap_method(
+            self.get_instance: self._wrap_async_method(
                 self.get_instance,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.v1.CloudRedis/GetInstance",
             ),
-            self.get_instance_auth_string: self._wrap_method(
+            self.get_instance_auth_string: self._wrap_async_method(
                 self.get_instance_auth_string,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.v1.CloudRedis/GetInstanceAuthString",
             ),
-            self.create_instance: self._wrap_method(
+            self.create_instance: self._wrap_async_method(
                 self.create_instance,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.v1.CloudRedis/CreateInstance",
             ),
-            self.update_instance: self._wrap_method(
+            self.update_instance: self._wrap_async_method(
                 self.update_instance,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.v1.CloudRedis/UpdateInstance",
             ),
-            self.upgrade_instance: self._wrap_method(
+            self.upgrade_instance: self._wrap_async_method(
                 self.upgrade_instance,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.v1.CloudRedis/UpgradeInstance",
             ),
-            self.import_instance: self._wrap_method(
+            self.import_instance: self._wrap_async_method(
                 self.import_instance,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.v1.CloudRedis/ImportInstance",
             ),
-            self.export_instance: self._wrap_method(
+            self.export_instance: self._wrap_async_method(
                 self.export_instance,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.v1.CloudRedis/ExportInstance",
             ),
-            self.failover_instance: self._wrap_method(
+            self.failover_instance: self._wrap_async_method(
                 self.failover_instance,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.v1.CloudRedis/FailoverInstance",
             ),
-            self.delete_instance: self._wrap_method(
+            self.delete_instance: self._wrap_async_method(
                 self.delete_instance,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.redis.v1.CloudRedis/DeleteInstance",
             ),
-            self.reschedule_maintenance: self._wrap_method(
+            self.reschedule_maintenance: self._wrap_async_method(
                 self.reschedule_maintenance,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.redis.v1.CloudRedis/RescheduleMaintenance",
             ),
-            self.get_location: self._wrap_method(
+            self.get_location: self._wrap_async_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: self._wrap_method(
+            self.list_locations: self._wrap_async_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.cancel_operation: self._wrap_method(
+            self.cancel_operation: self._wrap_async_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: self._wrap_method(
+            self.delete_operation: self._wrap_async_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: self._wrap_method(
+            self.list_operations: self._wrap_async_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
-            self.wait_operation: self._wrap_method(
+            self.wait_operation: self._wrap_async_method(
                 self.wait_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/WaitOperation",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     class _CreateInstance(_BaseCloudRedisRestTransport._BaseCreateInstance, AsyncCloudRedisRestStub):
         def __hash__(self):
@@ -927,20 +952,35 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = await getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = await getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         async def __call__(self,
                     request: cloud_redis.CreateInstanceRequest, *,
@@ -1007,7 +1047,17 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 )
 
             # Send the request
-            response = await AsyncCloudRedisRestTransport._CreateInstance._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = await AsyncCloudRedisRestTransport._CreateInstance._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1060,19 +1110,34 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = await getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = await getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         async def __call__(self,
                     request: cloud_redis.DeleteInstanceRequest, *,
@@ -1139,7 +1204,16 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 )
 
             # Send the request
-            response = await AsyncCloudRedisRestTransport._DeleteInstance._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = await AsyncCloudRedisRestTransport._DeleteInstance._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1192,20 +1266,35 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = await getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = await getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         async def __call__(self,
                     request: cloud_redis.ExportInstanceRequest, *,
@@ -1272,7 +1361,17 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 )
 
             # Send the request
-            response = await AsyncCloudRedisRestTransport._ExportInstance._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = await AsyncCloudRedisRestTransport._ExportInstance._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1325,20 +1424,35 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = await getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = await getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         async def __call__(self,
                     request: cloud_redis.FailoverInstanceRequest, *,
@@ -1405,7 +1519,17 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 )
 
             # Send the request
-            response = await AsyncCloudRedisRestTransport._FailoverInstance._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = await AsyncCloudRedisRestTransport._FailoverInstance._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1458,19 +1582,34 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = await getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = await getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         async def __call__(self,
                     request: cloud_redis.GetInstanceRequest, *,
@@ -1534,7 +1673,16 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 )
 
             # Send the request
-            response = await AsyncCloudRedisRestTransport._GetInstance._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = await AsyncCloudRedisRestTransport._GetInstance._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1587,19 +1735,34 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = await getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = await getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         async def __call__(self,
                     request: cloud_redis.GetInstanceAuthStringRequest, *,
@@ -1663,7 +1826,16 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 )
 
             # Send the request
-            response = await AsyncCloudRedisRestTransport._GetInstanceAuthString._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = await AsyncCloudRedisRestTransport._GetInstanceAuthString._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1716,20 +1888,35 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = await getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = await getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         async def __call__(self,
                     request: cloud_redis.ImportInstanceRequest, *,
@@ -1796,7 +1983,17 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 )
 
             # Send the request
-            response = await AsyncCloudRedisRestTransport._ImportInstance._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = await AsyncCloudRedisRestTransport._ImportInstance._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1849,19 +2046,34 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = await getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = await getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         async def __call__(self,
                     request: cloud_redis.ListInstancesRequest, *,
@@ -1927,7 +2139,16 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 )
 
             # Send the request
-            response = await AsyncCloudRedisRestTransport._ListInstances._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = await AsyncCloudRedisRestTransport._ListInstances._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1980,20 +2201,35 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = await getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = await getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         async def __call__(self,
                     request: cloud_redis.RescheduleMaintenanceRequest, *,
@@ -2060,7 +2296,17 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 )
 
             # Send the request
-            response = await AsyncCloudRedisRestTransport._RescheduleMaintenance._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = await AsyncCloudRedisRestTransport._RescheduleMaintenance._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2113,20 +2359,35 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = await getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = await getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         async def __call__(self,
                     request: cloud_redis.UpdateInstanceRequest, *,
@@ -2193,7 +2454,17 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 )
 
             # Send the request
-            response = await AsyncCloudRedisRestTransport._UpdateInstance._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = await AsyncCloudRedisRestTransport._UpdateInstance._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2246,20 +2517,35 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = await getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = await getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         async def __call__(self,
                     request: cloud_redis.UpgradeInstanceRequest, *,
@@ -2326,7 +2612,17 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 )
 
             # Send the request
-            response = await AsyncCloudRedisRestTransport._UpgradeInstance._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = await AsyncCloudRedisRestTransport._UpgradeInstance._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2427,71 +2723,71 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
     def create_instance(self) -> Callable[
             [cloud_redis.CreateInstanceRequest],
             operations_pb2.Operation]:
-        return self._CreateInstance(self._session, self._host, self._interceptor)  # type: ignore
+        return self._CreateInstance(self._session, self._host, self._interceptor, getattr(self, "_client_options", None))  # type: ignore
 
     @property
     def delete_instance(self) -> Callable[
             [cloud_redis.DeleteInstanceRequest],
             operations_pb2.Operation]:
-        return self._DeleteInstance(self._session, self._host, self._interceptor)  # type: ignore
+        return self._DeleteInstance(self._session, self._host, self._interceptor, getattr(self, "_client_options", None))  # type: ignore
 
     @property
     def export_instance(self) -> Callable[
             [cloud_redis.ExportInstanceRequest],
             operations_pb2.Operation]:
-        return self._ExportInstance(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ExportInstance(self._session, self._host, self._interceptor, getattr(self, "_client_options", None))  # type: ignore
 
     @property
     def failover_instance(self) -> Callable[
             [cloud_redis.FailoverInstanceRequest],
             operations_pb2.Operation]:
-        return self._FailoverInstance(self._session, self._host, self._interceptor)  # type: ignore
+        return self._FailoverInstance(self._session, self._host, self._interceptor, getattr(self, "_client_options", None))  # type: ignore
 
     @property
     def get_instance(self) -> Callable[
             [cloud_redis.GetInstanceRequest],
             cloud_redis.Instance]:
-        return self._GetInstance(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetInstance(self._session, self._host, self._interceptor, getattr(self, "_client_options", None))  # type: ignore
 
     @property
     def get_instance_auth_string(self) -> Callable[
             [cloud_redis.GetInstanceAuthStringRequest],
             cloud_redis.InstanceAuthString]:
-        return self._GetInstanceAuthString(self._session, self._host, self._interceptor)  # type: ignore
+        return self._GetInstanceAuthString(self._session, self._host, self._interceptor, getattr(self, "_client_options", None))  # type: ignore
 
     @property
     def import_instance(self) -> Callable[
             [cloud_redis.ImportInstanceRequest],
             operations_pb2.Operation]:
-        return self._ImportInstance(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ImportInstance(self._session, self._host, self._interceptor, getattr(self, "_client_options", None))  # type: ignore
 
     @property
     def list_instances(self) -> Callable[
             [cloud_redis.ListInstancesRequest],
             cloud_redis.ListInstancesResponse]:
-        return self._ListInstances(self._session, self._host, self._interceptor)  # type: ignore
+        return self._ListInstances(self._session, self._host, self._interceptor, getattr(self, "_client_options", None))  # type: ignore
 
     @property
     def reschedule_maintenance(self) -> Callable[
             [cloud_redis.RescheduleMaintenanceRequest],
             operations_pb2.Operation]:
-        return self._RescheduleMaintenance(self._session, self._host, self._interceptor)  # type: ignore
+        return self._RescheduleMaintenance(self._session, self._host, self._interceptor, getattr(self, "_client_options", None))  # type: ignore
 
     @property
     def update_instance(self) -> Callable[
             [cloud_redis.UpdateInstanceRequest],
             operations_pb2.Operation]:
-        return self._UpdateInstance(self._session, self._host, self._interceptor)  # type: ignore
+        return self._UpdateInstance(self._session, self._host, self._interceptor, getattr(self, "_client_options", None))  # type: ignore
 
     @property
     def upgrade_instance(self) -> Callable[
             [cloud_redis.UpgradeInstanceRequest],
             operations_pb2.Operation]:
-        return self._UpgradeInstance(self._session, self._host, self._interceptor)  # type: ignore
+        return self._UpgradeInstance(self._session, self._host, self._interceptor, getattr(self, "_client_options", None))  # type: ignore
 
     @property
     def get_location(self):
-        return self._GetLocation(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetLocation(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _GetLocation(_BaseCloudRedisRestTransport._BaseGetLocation, AsyncCloudRedisRestStub):
         def __hash__(self):
@@ -2505,19 +2801,34 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = await getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = await getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         async def __call__(self,
             request: locations_pb2.GetLocationRequest, *,
@@ -2580,7 +2891,16 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 )
 
             # Send the request
-            response = await AsyncCloudRedisRestTransport._GetLocation._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = await AsyncCloudRedisRestTransport._GetLocation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2618,7 +2938,7 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
 
     @property
     def list_locations(self):
-        return self._ListLocations(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListLocations(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _ListLocations(_BaseCloudRedisRestTransport._BaseListLocations, AsyncCloudRedisRestStub):
         def __hash__(self):
@@ -2632,19 +2952,34 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = await getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = await getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         async def __call__(self,
             request: locations_pb2.ListLocationsRequest, *,
@@ -2707,7 +3042,16 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 )
 
             # Send the request
-            response = await AsyncCloudRedisRestTransport._ListLocations._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = await AsyncCloudRedisRestTransport._ListLocations._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2745,7 +3089,7 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
 
     @property
     def cancel_operation(self):
-        return self._CancelOperation(self._session, self._host, self._interceptor) # type: ignore
+        return self._CancelOperation(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _CancelOperation(_BaseCloudRedisRestTransport._BaseCancelOperation, AsyncCloudRedisRestStub):
         def __hash__(self):
@@ -2759,19 +3103,34 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = await getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = await getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         async def __call__(self,
             request: operations_pb2.CancelOperationRequest, *,
@@ -2831,7 +3190,16 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 )
 
             # Send the request
-            response = await AsyncCloudRedisRestTransport._CancelOperation._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = await AsyncCloudRedisRestTransport._CancelOperation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2846,7 +3214,7 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
 
     @property
     def delete_operation(self):
-        return self._DeleteOperation(self._session, self._host, self._interceptor) # type: ignore
+        return self._DeleteOperation(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _DeleteOperation(_BaseCloudRedisRestTransport._BaseDeleteOperation, AsyncCloudRedisRestStub):
         def __hash__(self):
@@ -2860,19 +3228,34 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = await getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = await getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         async def __call__(self,
             request: operations_pb2.DeleteOperationRequest, *,
@@ -2932,7 +3315,16 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 )
 
             # Send the request
-            response = await AsyncCloudRedisRestTransport._DeleteOperation._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = await AsyncCloudRedisRestTransport._DeleteOperation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2947,7 +3339,7 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
 
     @property
     def get_operation(self):
-        return self._GetOperation(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetOperation(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _GetOperation(_BaseCloudRedisRestTransport._BaseGetOperation, AsyncCloudRedisRestStub):
         def __hash__(self):
@@ -2961,19 +3353,34 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = await getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = await getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         async def __call__(self,
             request: operations_pb2.GetOperationRequest, *,
@@ -3036,7 +3443,16 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 )
 
             # Send the request
-            response = await AsyncCloudRedisRestTransport._GetOperation._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = await AsyncCloudRedisRestTransport._GetOperation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3074,7 +3490,7 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
 
     @property
     def list_operations(self):
-        return self._ListOperations(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListOperations(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _ListOperations(_BaseCloudRedisRestTransport._BaseListOperations, AsyncCloudRedisRestStub):
         def __hash__(self):
@@ -3088,19 +3504,34 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = await getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = await getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         async def __call__(self,
             request: operations_pb2.ListOperationsRequest, *,
@@ -3163,7 +3594,16 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 )
 
             # Send the request
-            response = await AsyncCloudRedisRestTransport._ListOperations._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = await AsyncCloudRedisRestTransport._ListOperations._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3201,7 +3641,7 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
 
     @property
     def wait_operation(self):
-        return self._WaitOperation(self._session, self._host, self._interceptor) # type: ignore
+        return self._WaitOperation(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _WaitOperation(_BaseCloudRedisRestTransport._BaseWaitOperation, AsyncCloudRedisRestStub):
         def __hash__(self):
@@ -3215,20 +3655,35 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = await getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = await getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         async def __call__(self,
             request: operations_pb2.WaitOperationRequest, *,
@@ -3291,7 +3746,17 @@ class AsyncCloudRedisRestTransport(_BaseCloudRedisRestTransport):
                 )
 
             # Send the request
-            response = await AsyncCloudRedisRestTransport._WaitOperation._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = await AsyncCloudRedisRestTransport._WaitOperation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.

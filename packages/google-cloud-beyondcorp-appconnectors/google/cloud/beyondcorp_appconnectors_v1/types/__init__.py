@@ -27,10 +27,14 @@ from .app_connectors_service import (
     ListAppConnectorsRequest,
     ListAppConnectorsResponse,
     ReportStatusRequest,
+    ResolveInstanceConfigRequest,
+    ResolveInstanceConfigResponse,
     UpdateAppConnectorRequest,
 )
 from .resource_info import (
+    ContainerHealthDetails,
     HealthStatus,
+    RemoteAgentDetails,
     ResourceInfo,
 )
 
@@ -46,7 +50,11 @@ __all__ = (
     "ListAppConnectorsRequest",
     "ListAppConnectorsResponse",
     "ReportStatusRequest",
+    "ResolveInstanceConfigRequest",
+    "ResolveInstanceConfigResponse",
     "UpdateAppConnectorRequest",
+    "ContainerHealthDetails",
+    "RemoteAgentDetails",
     "ResourceInfo",
     "HealthStatus",
 )

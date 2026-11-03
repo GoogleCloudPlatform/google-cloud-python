@@ -210,3 +210,20 @@ class TestBucketMetadataCache(unittest.TestCase):
 
         self.assertNotIn("b1", cache._cache)
         self.assertNotIn("b1", cache._inflight_checks)
+
+    @mock.patch("threading.Thread")
+    def test_thread_spawned_outside_lock(self, mock_thread):
+        client = mock.Mock()
+        cache = BucketMetadataCache(client)
+        lock_states_at_start = []
+
+        def record_lock_state():
+            lock_states_at_start.append(cache._lock.locked())
+
+        mock_thread.return_value.start.side_effect = record_lock_state
+
+        cache.get_or_queue_fetch("b1")
+        cache.update_cache("b2", "dest2", "loc2")
+        cache.check_and_evict("b2")
+
+        self.assertEqual(lock_states_at_start, [False, False])

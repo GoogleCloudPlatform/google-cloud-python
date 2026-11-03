@@ -52,7 +52,7 @@ class ExecuteOntapPostRequest(proto.Message):
                  }
                }
         ontap_path (str):
-            Required. The resource path of the ONTAP resource. Format:
+            Required. The path of the ONTAP resource. Format:
             ``projects/{project_number}/locations/{location_id}/storagePools/{storage_pool_id}/ontap/{ontap_resource_path}``.
             For example:
             ``projects/123456789/locations/us-central1/storagePools/my-storage-pool/ontap/api/storage/volumes``.

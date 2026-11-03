@@ -120,6 +120,7 @@ MIGRATION_TEST_DEPENDENCIES = [
 
 SQLALCHEMY_14_DEPENDENCIES = [
     "sqlalchemy>=1.4,<2.0",
+    "alembic<1.20.0",
 ]
 
 SQLALCHEMY_20_DEPENDENCIES = [
@@ -131,7 +132,7 @@ ALL_PYTHON = list(UNIT_TEST_PYTHON_VERSIONS)
 SYSTEM_TEST_PYTHON_VERSIONS = ["3.12"]
 SYSTEM_COMPLIANCE_MIGRATION_TEST_PYTHON_VERSIONS = ["3.12", "3.14"]
 DEFAULT_PYTHON_VERSION = "3.14"
-DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20 = "3.14"
+DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20 = "3.15"
 
 
 nox.options.sessions = [
@@ -139,12 +140,11 @@ nox.options.sessions = [
     "compliance_test_14",
     "compliance_test_20",
     "migration_test",
-    "_migration_test",
     "mockserver",
 ]
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20)
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def lint(session):
     """Run linters.
 
@@ -181,7 +181,7 @@ def lint(session):
     )
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20)
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def lint_setup_py(session):
     """Verify that setup.py is valid (including RST check)."""
     session.install("docutils", "pygments", "setuptools")
@@ -206,13 +206,7 @@ def compliance_test_14(session):
 
     try:
         session.install(*SYSTEM_TEST_STANDARD_DEPENDENCIES)
-        session.install(".[tracing]")
-        session.run(
-            "pip",
-            "install",
-            *SQLALCHEMY_14_DEPENDENCIES,
-            "--force-reinstall",
-        )
+        session.install(".[tracing]", *SQLALCHEMY_14_DEPENDENCIES)
         session.run(
             "python",
             "create_test_database.py",
@@ -335,20 +329,27 @@ def mockserver(session):
     )
 
 
-@nox.session(python=SYSTEM_COMPLIANCE_MIGRATION_TEST_PYTHON_VERSIONS[0])
-def migration_test(session):
-    """Test migrations with SQLAlchemy v1.4 and Alembic"""
-    session.run(
-        "pip",
-        "install",
-        *SQLALCHEMY_14_DEPENDENCIES,
-        "--force-reinstall",
-    )
-    _migration_test(session)
+@nox.session
+@nox.parametrize(
+    ("python", "extra_dependencies"),
+    [
+        (
+            SYSTEM_COMPLIANCE_MIGRATION_TEST_PYTHON_VERSIONS[0],
+            SQLALCHEMY_14_DEPENDENCIES,
+        ),
+        (
+            DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20,
+            SQLALCHEMY_20_DEPENDENCIES,
+        ),
+    ],
+    ids=["14", "20"],
+)
+def migration_test(session, extra_dependencies):
+    """Test migrations with SQLAlchemy and Alembic."""
+    _run_migration_test(session, extra_dependencies=extra_dependencies)
 
 
-@nox.session(python=SYSTEM_COMPLIANCE_MIGRATION_TEST_PYTHON_VERSIONS[-1])
-def _migration_test(session):
+def _run_migration_test(session, extra_dependencies=()):
     """Migrate with SQLAlchemy and Alembic and check the result."""
     import glob
     import os
@@ -356,8 +357,7 @@ def _migration_test(session):
 
     config_file = f"test_migration_{session.python}_{uuid.uuid4().hex[:6]}.cfg"
 
-    session.install(*MIGRATION_TEST_DEPENDENCIES)
-    session.install(".")
+    session.install(*MIGRATION_TEST_DEPENDENCIES, *extra_dependencies, ".")
 
     try:
         session.run(
@@ -429,7 +429,9 @@ def unit(session, test_type):
         test_type == "mockserver"
         and session.python != DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20
     ):
-        session.skip("mockserver tests only run on python 3.14")
+        session.skip(
+            f"mockserver tests only run on python {DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20}"
+        )
 
     if test_type == "mockserver":
         mockserver(session)
@@ -482,9 +484,13 @@ def system(session, test_type):
     elif test_type == "compliance_20":
         return compliance_test_20(session)
     elif test_type == "migration_14":
-        return migration_test(session)
+        return _run_migration_test(
+            session, extra_dependencies=SQLALCHEMY_14_DEPENDENCIES
+        )
     elif test_type == "migration_20":
-        return _migration_test(session)
+        return _run_migration_test(
+            session, extra_dependencies=SQLALCHEMY_20_DEPENDENCIES
+        )
 
     config_file = f"test_{test_type}_{session.python}_{uuid.uuid4().hex[:6]}.cfg"
 

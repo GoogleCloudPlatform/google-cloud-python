@@ -536,3 +536,67 @@ def test_read_rows_to_dataframe_with_wide_table(client_and_types, project_id):
     some_rows = next(pages_iter)
 
     assert all(len(row["tract_geom"].as_py()) > 0 for row in some_rows)
+
+
+def _arrow_table(responses):
+    import pyarrow
+
+    schema, batches = None, []
+    for response in responses:
+        if schema is None and response.arrow_schema.serialized_schema:
+            schema = pyarrow.ipc.read_schema(
+                pyarrow.py_buffer(response.arrow_schema.serialized_schema)
+            )
+        if response.arrow_record_batch.serialized_record_batch:
+            batches.append(
+                pyarrow.ipc.read_record_batch(
+                    pyarrow.py_buffer(
+                        response.arrow_record_batch.serialized_record_batch
+                    ),
+                    schema,
+                )
+            )
+    return pyarrow.Table.from_batches(batches, schema=schema)
+
+
+@pytest.fixture(scope="module")
+def job_default_stream(bq_client):
+    job = bq_client.query(
+        "SELECT x, REPEAT('A', 1000) AS repeated_str "
+        "FROM UNNEST(GENERATE_ARRAY(1, 20000)) AS x ORDER BY x"
+    )
+    job.result()
+    return (
+        f"projects/{job.project}/locations/{job.location}"
+        f"/jobs/{job.job_id}/streams/_default"
+    )
+
+
+@pytest.mark.parametrize("codec", ["LZ4_FRAME", "ZSTD"])
+def test_read_rows_job_stream_with_arrow_serialization_options(
+    client_v1, job_default_stream, codec
+):
+    plain = list(client_v1.read_rows(job_default_stream))
+    compressed = list(
+        client_v1.read_rows(
+            job_default_stream,
+            arrow_serialization_options={"buffer_compression": codec},
+        )
+    )
+
+    def size(responses):
+        return sum(len(r.arrow_record_batch.serialized_record_batch) for r in responses)
+
+    assert size(compressed) < size(plain)
+    assert _arrow_table(compressed).equals(_arrow_table(plain))
+
+
+def test_read_rows_job_stream_cancel(client_v1, job_default_stream):
+    stream = client_v1.read_rows(job_default_stream)
+    messages = iter(stream)
+    first = next(messages)
+
+    stream.cancel()
+
+    assert first.row_count > 0
+    assert list(messages) == []

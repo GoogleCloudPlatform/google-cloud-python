@@ -695,7 +695,7 @@ class ViewabilityProviderServiceClient(metaclass=ViewabilityProviderServiceClien
 
         Args:
             request (Union[google.ads.admanager_v1.types.GetViewabilityProviderRequest, dict]):
-                The request object. Request object for [GetViewabilityProvider][] method.
+                The request object. Request object for ``GetViewabilityProvider`` method.
             name (str):
                 Required. The resource name of the
                 [ViewabilityProvider][google.ads.admanager.v1.ViewabilityProvider].
@@ -816,10 +816,10 @@ class ViewabilityProviderServiceClient(metaclass=ViewabilityProviderServiceClien
 
         Args:
             request (Union[google.ads.admanager_v1.types.ListViewabilityProvidersRequest, dict]):
-                The request object. Request object for [ListViewabilityProviders][] method.
+                The request object. Request object for ``ListViewabilityProviders`` method.
             parent (str):
                 Required. The parent, which owns this collection of
-                [ViewabilityProvider][google.ads.admanager.v1.ViewabilityProvider]s.
+                [ViewabilityProviders][google.ads.admanager.v1.ViewabilityProvider].
                 Format: ``networks/{network_code}``
 
                 This corresponds to the ``parent`` field
@@ -835,7 +835,7 @@ class ViewabilityProviderServiceClient(metaclass=ViewabilityProviderServiceClien
 
         Returns:
             google.ads.admanager_v1.services.viewability_provider_service.pagers.ListViewabilityProvidersPager:
-                Response object for [ListViewabilityProviders][] containing matching
+                Response object for ListViewabilityProviders containing matching
                    [ViewabilityProvider][google.ads.admanager.v1.ViewabilityProvider]
                    objects.
 
@@ -952,7 +952,7 @@ class ViewabilityProviderServiceClient(metaclass=ViewabilityProviderServiceClien
 
         Args:
             request (Union[google.ads.admanager_v1.types.CreateViewabilityProviderRequest, dict]):
-                The request object. Request object for [CreateViewabilityProvider][] method.
+                The request object. Request object for ``CreateViewabilityProvider`` method.
             parent (str):
                 Required. The parent resource where this
                 [ViewabilityProvider][google.ads.admanager.v1.ViewabilityProvider]
@@ -1095,11 +1095,11 @@ class ViewabilityProviderServiceClient(metaclass=ViewabilityProviderServiceClien
 
         Args:
             request (Union[google.ads.admanager_v1.types.BatchCreateViewabilityProvidersRequest, dict]):
-                The request object. Request object for [BatchCreateViewabilityProviders][]
+                The request object. Request object for ``BatchCreateViewabilityProviders``
                 method.
             parent (str):
                 Required. The parent resource where
-                [ViewabilityProvider][google.ads.admanager.v1.ViewabilityProvider]s
+                [ViewabilityProviders][google.ads.admanager.v1.ViewabilityProvider]
                 will be created. Format: ``networks/{network_code}`` The
                 parent field in the CreateViewabilityProviderRequest
                 must match this field.
@@ -1126,7 +1126,7 @@ class ViewabilityProviderServiceClient(metaclass=ViewabilityProviderServiceClien
 
         Returns:
             google.ads.admanager_v1.types.BatchCreateViewabilityProvidersResponse:
-                Response object for [BatchCreateViewabilityProviders][]
+                Response object for BatchCreateViewabilityProviders
                 method.
 
         """
@@ -1231,7 +1231,7 @@ class ViewabilityProviderServiceClient(metaclass=ViewabilityProviderServiceClien
 
         Args:
             request (Union[google.ads.admanager_v1.types.UpdateViewabilityProviderRequest, dict]):
-                The request object. Request object for [UpdateViewabilityProvider][] method.
+                The request object. Request object for ``UpdateViewabilityProvider`` method.
             viewability_provider (google.ads.admanager_v1.types.ViewabilityProvider):
                 Required. The
                 [ViewabilityProvider][google.ads.admanager.v1.ViewabilityProvider]
@@ -1377,11 +1377,11 @@ class ViewabilityProviderServiceClient(metaclass=ViewabilityProviderServiceClien
 
         Args:
             request (Union[google.ads.admanager_v1.types.BatchUpdateViewabilityProvidersRequest, dict]):
-                The request object. Request object for [BatchUpdateViewabilityProviders][]
+                The request object. Request object for ``BatchUpdateViewabilityProviders``
                 method.
             parent (str):
                 Required. The parent resource where
-                [ViewabilityProvider][google.ads.admanager.v1.ViewabilityProvider]s
+                [ViewabilityProviders][google.ads.admanager.v1.ViewabilityProvider]
                 will be updated. Format: ``networks/{network_code}`` The
                 parent field in the UpdateViewabilityProviderRequest
                 must match this field.
@@ -1408,7 +1408,7 @@ class ViewabilityProviderServiceClient(metaclass=ViewabilityProviderServiceClien
 
         Returns:
             google.ads.admanager_v1.types.BatchUpdateViewabilityProvidersResponse:
-                Response object for [BatchUpdateViewabilityProviders][]
+                Response object for BatchUpdateViewabilityProviders
                 method.
 
         """

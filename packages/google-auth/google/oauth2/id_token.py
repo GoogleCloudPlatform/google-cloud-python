@@ -236,7 +236,7 @@ def verify_firebase_token(id_token, request, audience=None, clock_skew_in_second
     )
 
 
-def fetch_id_token_credentials(audience, request=None):
+def fetch_id_token_credentials(audience, request=None, bind_id_token=None):
     """Create the ID Token credentials from the current environment.
 
     This function acquires ID token from the environment in the following order.
@@ -272,6 +272,19 @@ def fetch_id_token_credentials(audience, request=None):
         audience (str): The audience that this ID token is intended for.
         request (Optional[google.auth.transport.Request]): A callable used to make
             HTTP requests. A request object will be created if not provided.
+        bind_id_token (Optional[bool]): Controls whether to request a
+            certificate-bound ID token from the metadata server identity
+            endpoint. If ``True``, requests a bound token whenever a valid
+            Agent Identity certificate is available and token binding is not
+            disabled via ``GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN``, falling back
+            to an unbound token otherwise (or raising
+            :class:`~google.auth.exceptions.RefreshError` if a configured
+            certificate is not found after retries). If ``False``, always
+            requests an unbound token. If ``None`` (default), token binding is
+            determined automatically by the library. Set ``True`` or ``False``
+            explicitly if your application requires a specific behavior. Has no
+            effect when credentials are loaded from
+            ``GOOGLE_APPLICATION_CREDENTIALS``.
 
     Returns:
         google.auth.credentials.Credentials: The ID token credentials.
@@ -335,7 +348,10 @@ def fetch_id_token_credentials(audience, request=None):
 
         if _metadata.ping(request):
             return compute_engine.IDTokenCredentials(
-                request, audience, use_metadata_identity_endpoint=True
+                request,
+                audience,
+                use_metadata_identity_endpoint=True,
+                bind_id_token=bind_id_token,
             )
     except (ImportError, exceptions.TransportError):
         pass
@@ -345,7 +361,7 @@ def fetch_id_token_credentials(audience, request=None):
     )
 
 
-def fetch_id_token(request, audience):
+def fetch_id_token(request, audience, bind_id_token=None):
     """Fetch the ID Token from the current environment.
 
     This function acquires ID token from the environment in the following order.
@@ -374,6 +390,19 @@ def fetch_id_token(request, audience):
         request (google.auth.transport.Request): A callable used to make
             HTTP requests.
         audience (str): The audience that this ID token is intended for.
+        bind_id_token (Optional[bool]): Controls whether to request a
+            certificate-bound ID token from the metadata server identity
+            endpoint. If ``True``, requests a bound token whenever a valid
+            Agent Identity certificate is available and token binding is not
+            disabled via ``GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN``, falling back
+            to an unbound token otherwise (or raising
+            :class:`~google.auth.exceptions.RefreshError` if a configured
+            certificate is not found after retries). If ``False``, always
+            requests an unbound token. If ``None`` (default), token binding is
+            determined automatically by the library. Set ``True`` or ``False``
+            explicitly if your application requires a specific behavior. Has no
+            effect when credentials are loaded from
+            ``GOOGLE_APPLICATION_CREDENTIALS``.
 
     Returns:
         str: The ID token.
@@ -382,7 +411,12 @@ def fetch_id_token(request, audience):
         ~google.auth.exceptions.DefaultCredentialsError:
             If metadata server doesn't exist and no valid service account
             credentials are found.
+        ~google.auth.exceptions.RefreshError:
+            If an error occurred while fetching the ID token or if a required
+            certificate file is not found after retries.
     """
-    id_token_credentials = fetch_id_token_credentials(audience, request=request)
+    id_token_credentials = fetch_id_token_credentials(
+        audience, request=request, bind_id_token=bind_id_token
+    )
     id_token_credentials.refresh(request)
     return id_token_credentials.token

@@ -140,6 +140,25 @@ class _BaseMemorystoreRestTransport(MemorystoreTransport):
             ]
             return http_options
 
+    class _BaseCreateAclPolicy:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
+            "aclPolicyId": "",
+        }
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=projects/*/locations/*}/aclPolicies",
+                    "body": "acl_policy",
+                },
+            ]
+            return http_options
+
     class _BaseCreateInstance:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -155,6 +174,22 @@ class _BaseMemorystoreRestTransport(MemorystoreTransport):
                     "method": "post",
                     "uri": "/v1/{parent=projects/*/locations/*}/instances",
                     "body": "instance",
+                },
+            ]
+            return http_options
+
+    class _BaseDeleteAclPolicy:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "delete",
+                    "uri": "/v1/{name=projects/*/locations/*/aclPolicies/*}",
                 },
             ]
             return http_options
@@ -253,6 +288,38 @@ class _BaseMemorystoreRestTransport(MemorystoreTransport):
                     "method": "post",
                     "uri": "/v1/{name=projects/*/locations/*/instances/*}:finishMigration",
                     "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseGetAclPolicy:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/aclPolicies/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseGetAclPolicyRevision:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/aclPolicies/*/revisions/*}",
                 },
             ]
             return http_options
@@ -369,6 +436,38 @@ class _BaseMemorystoreRestTransport(MemorystoreTransport):
             ]
             return http_options
 
+    class _BaseListAclPolicies:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{parent=projects/*/locations/*}/aclPolicies",
+                },
+            ]
+            return http_options
+
+    class _BaseListAclPolicyRevisions:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{parent=projects/*/locations/*/aclPolicies/*}/revisions",
+                },
+            ]
+            return http_options
+
     class _BaseListAuthTokens:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -479,6 +578,23 @@ class _BaseMemorystoreRestTransport(MemorystoreTransport):
                     "method": "post",
                     "uri": "/v1/{name=projects/*/locations/*/instances/*}:startMigration",
                     "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseUpdateAclPolicy:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{acl_policy.name=projects/*/locations/*/aclPolicies/*}",
+                    "body": "acl_policy",
                 },
             ]
             return http_options

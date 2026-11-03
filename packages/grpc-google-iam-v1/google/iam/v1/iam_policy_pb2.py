@@ -44,7 +44,7 @@ from google.iam.v1 import options_pb2 as google_dot_iam_dot_v1_dot_options__pb2
 from google.iam.v1 import policy_pb2 as google_dot_iam_dot_v1_dot_policy__pb2
 
 DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(
-    b'\n\x1egoogle/iam/v1/iam_policy.proto\x12\rgoogle.iam.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/iam/v1/options.proto\x1a\x1agoogle/iam/v1/policy.proto\x1a google/protobuf/field_mask.proto"\x8f\x01\n\x13SetIamPolicyRequest\x12\x1b\n\x08resource\x18\x01 \x01(\tB\t\xe0\x41\x02\xfa\x41\x03\n\x01*\x12*\n\x06policy\x18\x02 \x01(\x0b\x32\x15.google.iam.v1.PolicyB\x03\xe0\x41\x02\x12/\n\x0bupdate_mask\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.FieldMask"d\n\x13GetIamPolicyRequest\x12\x1b\n\x08resource\x18\x01 \x01(\tB\t\xe0\x41\x02\xfa\x41\x03\n\x01*\x12\x30\n\x07options\x18\x02 \x01(\x0b\x32\x1f.google.iam.v1.GetPolicyOptions"R\n\x19TestIamPermissionsRequest\x12\x1b\n\x08resource\x18\x01 \x01(\tB\t\xe0\x41\x02\xfa\x41\x03\n\x01*\x12\x18\n\x0bpermissions\x18\x02 \x03(\tB\x03\xe0\x41\x02"1\n\x1aTestIamPermissionsResponse\x12\x13\n\x0bpermissions\x18\x01 \x03(\t2\xb4\x03\n\tIAMPolicy\x12t\n\x0cSetIamPolicy\x12".google.iam.v1.SetIamPolicyRequest\x1a\x15.google.iam.v1.Policy")\x82\xd3\xe4\x93\x02#"\x1e/v1/{resource=**}:setIamPolicy:\x01*\x12t\n\x0cGetIamPolicy\x12".google.iam.v1.GetIamPolicyRequest\x1a\x15.google.iam.v1.Policy")\x82\xd3\xe4\x93\x02#"\x1e/v1/{resource=**}:getIamPolicy:\x01*\x12\x9a\x01\n\x12TestIamPermissions\x12(.google.iam.v1.TestIamPermissionsRequest\x1a).google.iam.v1.TestIamPermissionsResponse"/\x82\xd3\xe4\x93\x02)"$/v1/{resource=**}:testIamPermissions:\x01*\x1a\x1e\xca\x41\x1biam-meta-api.googleapis.comB|\n\x11\x63om.google.iam.v1B\x0eIamPolicyProtoP\x01Z)cloud.google.com/go/iam/apiv1/iampb;iampb\xaa\x02\x13Google.Cloud.Iam.V1\xca\x02\x13Google\\Cloud\\Iam\\V1b\x06proto3'
+    b'\n\x1egoogle/iam/v1/iam_policy.proto\x12\rgoogle.iam.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/iam/v1/options.proto\x1a\x1agoogle/iam/v1/policy.proto\x1a google/protobuf/field_mask.proto"\x91\x01\n\x13SetIamPolicyRequest\x12\x1c\n\x08resource\x18\x01 \x01(\tB\n\xe2\x41\x01\x02\xfa\x41\x03\n\x01*\x12+\n\x06policy\x18\x02 \x01(\x0b\x32\x15.google.iam.v1.PolicyB\x04\xe2\x41\x01\x02\x12/\n\x0bupdate_mask\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.FieldMask"e\n\x13GetIamPolicyRequest\x12\x1c\n\x08resource\x18\x01 \x01(\tB\n\xe2\x41\x01\x02\xfa\x41\x03\n\x01*\x12\x30\n\x07options\x18\x02 \x01(\x0b\x32\x1f.google.iam.v1.GetPolicyOptions"T\n\x19TestIamPermissionsRequest\x12\x1c\n\x08resource\x18\x01 \x01(\tB\n\xe2\x41\x01\x02\xfa\x41\x03\n\x01*\x12\x19\n\x0bpermissions\x18\x02 \x03(\tB\x04\xe2\x41\x01\x02"1\n\x1aTestIamPermissionsResponse\x12\x13\n\x0bpermissions\x18\x01 \x03(\t2\xb4\x03\n\tIAMPolicy\x12t\n\x0cSetIamPolicy\x12".google.iam.v1.SetIamPolicyRequest\x1a\x15.google.iam.v1.Policy")\x82\xd3\xe4\x93\x02#"\x1e/v1/{resource=**}:setIamPolicy:\x01*\x12t\n\x0cGetIamPolicy\x12".google.iam.v1.GetIamPolicyRequest\x1a\x15.google.iam.v1.Policy")\x82\xd3\xe4\x93\x02#"\x1e/v1/{resource=**}:getIamPolicy:\x01*\x12\x9a\x01\n\x12TestIamPermissions\x12(.google.iam.v1.TestIamPermissionsRequest\x1a).google.iam.v1.TestIamPermissionsResponse"/\x82\xd3\xe4\x93\x02)"$/v1/{resource=**}:testIamPermissions:\x01*\x1a\x1e\xca\x41\x1biam-meta-api.googleapis.comB|\n\x11\x63om.google.iam.v1B\x0eIamPolicyProtoP\x01Z)cloud.google.com/go/iam/apiv1/iampb;iampb\xaa\x02\x13Google.Cloud.Iam.V1\xca\x02\x13Google\\Cloud\\Iam\\V1b\x06proto3'
 )
 
 _globals = globals()
@@ -60,27 +60,27 @@ if not _descriptor._USE_C_DESCRIPTORS:
     _globals["_SETIAMPOLICYREQUEST"].fields_by_name["resource"]._loaded_options = None
     _globals["_SETIAMPOLICYREQUEST"].fields_by_name[
         "resource"
-    ]._serialized_options = b"\340A\002\372A\003\n\001*"
+    ]._serialized_options = b"\342A\001\002\372A\003\n\001*"
     _globals["_SETIAMPOLICYREQUEST"].fields_by_name["policy"]._loaded_options = None
     _globals["_SETIAMPOLICYREQUEST"].fields_by_name[
         "policy"
-    ]._serialized_options = b"\340A\002"
+    ]._serialized_options = b"\342A\001\002"
     _globals["_GETIAMPOLICYREQUEST"].fields_by_name["resource"]._loaded_options = None
     _globals["_GETIAMPOLICYREQUEST"].fields_by_name[
         "resource"
-    ]._serialized_options = b"\340A\002\372A\003\n\001*"
+    ]._serialized_options = b"\342A\001\002\372A\003\n\001*"
     _globals["_TESTIAMPERMISSIONSREQUEST"].fields_by_name[
         "resource"
     ]._loaded_options = None
     _globals["_TESTIAMPERMISSIONSREQUEST"].fields_by_name[
         "resource"
-    ]._serialized_options = b"\340A\002\372A\003\n\001*"
+    ]._serialized_options = b"\342A\001\002\372A\003\n\001*"
     _globals["_TESTIAMPERMISSIONSREQUEST"].fields_by_name[
         "permissions"
     ]._loaded_options = None
     _globals["_TESTIAMPERMISSIONSREQUEST"].fields_by_name[
         "permissions"
-    ]._serialized_options = b"\340A\002"
+    ]._serialized_options = b"\342A\001\002"
     _globals["_IAMPOLICY"]._loaded_options = None
     _globals["_IAMPOLICY"]._serialized_options = b"\312A\033iam-meta-api.googleapis.com"
     _globals["_IAMPOLICY"].methods_by_name["SetIamPolicy"]._loaded_options = None
@@ -102,13 +102,13 @@ if not _descriptor._USE_C_DESCRIPTORS:
         b'\202\323\344\223\002)"$/v1/{resource=**}:testIamPermissions:\001*'
     )
     _globals["_SETIAMPOLICYREQUEST"]._serialized_start = 256
-    _globals["_SETIAMPOLICYREQUEST"]._serialized_end = 399
-    _globals["_GETIAMPOLICYREQUEST"]._serialized_start = 401
-    _globals["_GETIAMPOLICYREQUEST"]._serialized_end = 501
-    _globals["_TESTIAMPERMISSIONSREQUEST"]._serialized_start = 503
-    _globals["_TESTIAMPERMISSIONSREQUEST"]._serialized_end = 585
-    _globals["_TESTIAMPERMISSIONSRESPONSE"]._serialized_start = 587
-    _globals["_TESTIAMPERMISSIONSRESPONSE"]._serialized_end = 636
-    _globals["_IAMPOLICY"]._serialized_start = 639
-    _globals["_IAMPOLICY"]._serialized_end = 1075
+    _globals["_SETIAMPOLICYREQUEST"]._serialized_end = 401
+    _globals["_GETIAMPOLICYREQUEST"]._serialized_start = 403
+    _globals["_GETIAMPOLICYREQUEST"]._serialized_end = 504
+    _globals["_TESTIAMPERMISSIONSREQUEST"]._serialized_start = 506
+    _globals["_TESTIAMPERMISSIONSREQUEST"]._serialized_end = 590
+    _globals["_TESTIAMPERMISSIONSRESPONSE"]._serialized_start = 592
+    _globals["_TESTIAMPERMISSIONSRESPONSE"]._serialized_end = 641
+    _globals["_IAMPOLICY"]._serialized_start = 644
+    _globals["_IAMPOLICY"]._serialized_end = 1080
 # @@protoc_insertion_point(module_scope)

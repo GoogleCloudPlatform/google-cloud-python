@@ -11,9 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import logging
+
 import mock
 import pytest
 from google.api.distribution_pb2 import Distribution
+from google.api_core import exceptions as api_exceptions
 from google.cloud.monitoring_v3 import (
     Point,
     TimeSeries,
@@ -38,6 +41,8 @@ from google.cloud.bigtable.data._metrics.handlers.gcp_exporter import (
 from google.cloud.bigtable.data._metrics.handlers.opentelemetry import (
     _OpenTelemetryInstruments,
 )
+
+EXPORTER_LOGGER = "google.cloud.bigtable.data._metrics.handlers.gcp_exporter"
 
 
 class TestGoogleCloudMetricsHandler:
@@ -120,9 +125,116 @@ class TestGoogleCloudMetricsHandler:
 
     def test_close(self):
         mock_instance = mock.Mock()
+        mock_instance._exporter.shutting_down = False
+
+        def _shutdown():
+            # the exporter must be flagged before shutdown runs the final export
+            assert mock_instance._exporter.shutting_down is True
+
+        mock_instance.meter_provider.shutdown.side_effect = _shutdown
         assert mock_instance.meter_provider.shutdown.call_count == 0
         GoogleCloudMetricsHandler.close(mock_instance)
         assert mock_instance.meter_provider.shutdown.call_count == 1
+        assert mock_instance._exporter.shutting_down is True
+
+
+BIGTABLE_DATA_SCOPE = "https://www.googleapis.com/auth/bigtable.data"
+BIGTABLE_ADMIN_SCOPE = "https://www.googleapis.com/auth/bigtable.admin"
+MONITORING_WRITE_SCOPE = "https://www.googleapis.com/auth/monitoring.write"
+
+
+def _make_service_account_credentials(**kwargs):
+    import google.auth.crypt
+    from google.oauth2 import service_account
+
+    return service_account.Credentials(
+        mock.Mock(spec=google.auth.crypt.Signer),
+        "sa@example.iam.gserviceaccount.com",
+        "https://oauth2.googleapis.com/token",
+        **kwargs,
+    )
+
+
+class Test_get_monitoring_credentials:
+    @staticmethod
+    def _call_fut(credentials):
+        from google.cloud.bigtable.data._metrics.handlers.gcp_exporter import (
+            _get_monitoring_credentials,
+        )
+
+        return _get_monitoring_credentials(credentials)
+
+    def test_none(self):
+        assert self._call_fut(None) is None
+
+    def test_non_scopable_credentials(self):
+        """credentials that can't be re-scoped (e.g. user credentials) pass through"""
+        from google.auth.credentials import AnonymousCredentials
+        from google.oauth2 import credentials as user_credentials
+
+        anonymous = AnonymousCredentials()
+        assert self._call_fut(anonymous) is anonymous
+        user = user_credentials.Credentials(token="token")
+        assert self._call_fut(user) is user
+
+    def test_unscoped_credentials(self):
+        """
+        credentials that still accept default scopes are left alone;
+        MetricServiceClient will apply its own defaults to them
+        """
+        credentials = _make_service_account_credentials()
+        assert credentials.requires_scopes
+        assert self._call_fut(credentials) is credentials
+
+    @pytest.mark.parametrize(
+        "pinned_scopes",
+        [
+            (BIGTABLE_DATA_SCOPE,),
+            (BIGTABLE_DATA_SCOPE, BIGTABLE_ADMIN_SCOPE),
+            ["https://www.googleapis.com/auth/bigtable.data.readonly"],
+        ],
+    )
+    def test_credentials_pinned_to_bigtable_scopes(self, pinned_scopes):
+        """
+        credentials already pinned to non-monitoring scopes (e.g. by the legacy
+        client) should be replaced by a copy that can write to Cloud Monitoring
+        """
+        credentials = _make_service_account_credentials(
+            scopes=pinned_scopes, quota_project_id="quota-project"
+        )
+        result = self._call_fut(credentials)
+        assert result is not credentials
+        assert list(result.scopes) == [MONITORING_WRITE_SCOPE]
+        # identity and other settings are preserved
+        assert result.service_account_email == credentials.service_account_email
+        assert result.quota_project_id == "quota-project"
+        # original credentials are left untouched for bigtable traffic
+        assert tuple(credentials.scopes) == tuple(pinned_scopes)
+
+    def test_compute_engine_credentials_pinned_to_bigtable_scopes(self):
+        from google.auth import compute_engine
+
+        credentials = compute_engine.Credentials(scopes=[BIGTABLE_DATA_SCOPE])
+        assert not credentials.requires_scopes
+        result = self._call_fut(credentials)
+        assert result is not credentials
+        assert list(result.scopes) == [MONITORING_WRITE_SCOPE]
+        assert list(credentials.scopes) == [BIGTABLE_DATA_SCOPE]
+
+    @pytest.mark.parametrize(
+        "scopes",
+        [
+            ["https://www.googleapis.com/auth/cloud-platform"],
+            ["https://www.googleapis.com/auth/monitoring"],
+            [MONITORING_WRITE_SCOPE],
+            [BIGTABLE_DATA_SCOPE, MONITORING_WRITE_SCOPE],
+            (BIGTABLE_DATA_SCOPE, "https://www.googleapis.com/auth/cloud-platform"),
+        ],
+    )
+    def test_credentials_already_cover_monitoring(self, scopes):
+        credentials = _make_service_account_credentials(scopes=scopes)
+        assert not credentials.requires_scopes
+        assert self._call_fut(credentials) is credentials
 
 
 class TestBigtableMetricsExporter:
@@ -164,6 +276,8 @@ class TestBigtableMetricsExporter:
         instance = self._make_one()
         assert instance.prefix == "bigtable.googleapis.com/internal/client"
         assert isinstance(instance.client, MetricServiceClient)
+        assert instance._disabled is False
+        assert instance.shutting_down is False
 
     def test_ctor_mocks(self):
         with mock.patch(
@@ -175,6 +289,46 @@ class TestBigtableMetricsExporter:
             instance = self._make_one(*args, **kwargs)
             assert instance.prefix == "bigtable.googleapis.com/internal/client"
             mock_client.assert_called_once_with(*args, **kwargs)
+
+    def test_ctor_rescopes_pinned_credentials(self):
+        """
+        credentials pinned to bigtable-only scopes (e.g. from the legacy client)
+        should be re-scoped for Cloud Monitoring before building the client
+        """
+        credentials = _make_service_account_credentials(
+            scopes=[BIGTABLE_DATA_SCOPE, BIGTABLE_ADMIN_SCOPE]
+        )
+        with mock.patch(
+            "google.cloud.bigtable.data._metrics.handlers.gcp_exporter.MetricServiceClient"
+        ) as mock_client:
+            instance = self._make_one(credentials=credentials, client_options=None)
+            assert instance.client is mock_client.return_value
+            mock_client.assert_called_once()
+            _, kwargs = mock_client.call_args
+            assert kwargs["client_options"] is None
+            monitoring_credentials = kwargs["credentials"]
+            assert monitoring_credentials is not credentials
+            assert list(monitoring_credentials.scopes) == [MONITORING_WRITE_SCOPE]
+        # original credentials are untouched
+        assert list(credentials.scopes) == [BIGTABLE_DATA_SCOPE, BIGTABLE_ADMIN_SCOPE]
+
+    @pytest.mark.parametrize(
+        "credentials",
+        [
+            None,
+            _make_service_account_credentials(),
+            _make_service_account_credentials(
+                scopes=["https://www.googleapis.com/auth/cloud-platform"]
+            ),
+        ],
+    )
+    def test_ctor_passes_through_usable_credentials(self, credentials):
+        """credentials that can already reach Cloud Monitoring are passed as-is"""
+        with mock.patch(
+            "google.cloud.bigtable.data._metrics.handlers.gcp_exporter.MetricServiceClient"
+        ) as mock_client:
+            self._make_one(credentials=credentials)
+            mock_client.assert_called_once_with(credentials=credentials)
 
     @pytest.mark.parametrize(
         "value,expected_field",
@@ -443,3 +597,137 @@ class TestBigtableMetricsExporter:
         metrics_data = MetricsData(resource_metrics=[resource_metric])
         result = instance.export(metrics_data)
         assert result == MetricExportResult.FAILURE
+        # generic errors may be transient; keep exporting on later intervals
+        assert instance._disabled is False
+
+    @staticmethod
+    def _make_metrics_data(project_id="project"):
+        """build a MetricsData object with one valid data point"""
+        attributes = {
+            "resource_project": project_id,
+            "resource_instance": "instance1",
+            "resource_cluster": "cluster1",
+            "resource_table": "table1",
+            "resource_zone": "zone1",
+        }
+        data_point = NumberDataPoint(
+            attributes=attributes,
+            start_time_unix_nano=100,
+            time_unix_nano=200,
+            value=123,
+        )
+        metric = Metric(
+            name="operation_latencies",
+            description="",
+            unit="ms",
+            data=Sum(
+                data_points=[data_point],
+                aggregation_temporality=AggregationTemporality.CUMULATIVE,
+                is_monotonic=False,
+            ),
+        )
+        scope_metric = ScopeMetrics(
+            scope=mock.Mock(), metrics=[metric], schema_url=None
+        )
+        resource_metric = ResourceMetrics(
+            resource=mock.Mock(), scope_metrics=[scope_metric], schema_url=None
+        )
+        return MetricsData(resource_metrics=[resource_metric])
+
+    @pytest.mark.parametrize(
+        "exc_type",
+        [
+            api_exceptions.Unauthenticated,
+            api_exceptions.PermissionDenied,
+        ],
+    )
+    def test_export_auth_error_disables_exporter(self, exc_type, caplog):
+        """
+        auth errors are not transient. The exporter should log a single, explanatory
+        warning and stop exporting, without affecting the rest of the client
+        """
+        project_id = "my-project"
+        exc = exc_type("Request had invalid authentication credentials.")
+        instance = self._make_one()
+        instance.client = mock.Mock()
+        instance.client.create_service_time_series.side_effect = exc
+        metrics_data = self._make_metrics_data(project_id)
+        with caplog.at_level(logging.WARNING, logger=EXPORTER_LOGGER):
+            result = instance.export(metrics_data)
+        assert result == MetricExportResult.FAILURE
+        assert instance._disabled is True
+        assert instance.client.create_service_time_series.call_count == 1
+        # one warning that explains the consequences
+        warnings = [r for r in caplog.records if r.levelno == logging.WARNING]
+        assert len(warnings) == 1
+        message = warnings[0].getMessage()
+        assert "Client-side metrics are now disabled" in message
+        assert "Bigtable data operations are not affected" in message
+        assert project_id in message
+        assert "Request had invalid authentication credentials" in message
+        # auth failures shouldn't dump a full traceback at warning level
+        assert warnings[0].exc_info is None
+        # later exports are skipped without touching the client or logging again
+        caplog.clear()
+        with caplog.at_level(logging.WARNING, logger=EXPORTER_LOGGER):
+            result = instance.export(self._make_metrics_data(project_id))
+        assert result == MetricExportResult.FAILURE
+        assert instance.client.create_service_time_series.call_count == 1
+        assert not caplog.records
+
+    def test_export_when_disabled(self):
+        """a disabled exporter should not attempt to convert or write metrics"""
+        instance = self._make_one()
+        instance._disabled = True
+        instance._batch_write = mock.Mock()
+        with mock.patch.object(instance, "_to_point") as to_point_mock:
+            result = instance.export(self._make_metrics_data())
+        assert result == MetricExportResult.FAILURE
+        to_point_mock.assert_not_called()
+        instance._batch_write.assert_not_called()
+
+    @staticmethod
+    def _make_sampling_period_error():
+        return api_exceptions.FailedPrecondition(
+            "One or more TimeSeries could not be written: One or more points "
+            "were written more frequently than the maximum sampling period "
+            "configured for the metric."
+        )
+
+    def test_export_failed_precondition_during_shutdown(self, caplog):
+        """
+        the final export triggered by shutdown is expected to be rejected for
+        series written within the sampling period. That must not be logged as a
+        warning, and must not disable the exporter
+        """
+        instance = self._make_one()
+        instance.client = mock.Mock()
+        instance.client.create_service_time_series.side_effect = (
+            self._make_sampling_period_error()
+        )
+        instance.shutting_down = True
+        with caplog.at_level(logging.DEBUG, logger=EXPORTER_LOGGER):
+            result = instance.export(self._make_metrics_data())
+        assert result == MetricExportResult.FAILURE
+        assert instance._disabled is False
+        assert instance.client.create_service_time_series.call_count == 1
+        assert not [r for r in caplog.records if r.levelno >= logging.WARNING]
+        debug_messages = [
+            r.getMessage() for r in caplog.records if r.levelno == logging.DEBUG
+        ]
+        assert any("shutdown" in m and "sampling period" in m for m in debug_messages)
+
+    def test_export_failed_precondition_while_running(self, caplog):
+        """outside of shutdown, FAILED_PRECONDITION is still a warning"""
+        instance = self._make_one()
+        instance.client = mock.Mock()
+        instance.client.create_service_time_series.side_effect = (
+            self._make_sampling_period_error()
+        )
+        with caplog.at_level(logging.WARNING, logger=EXPORTER_LOGGER):
+            result = instance.export(self._make_metrics_data())
+        assert result == MetricExportResult.FAILURE
+        assert instance._disabled is False
+        warnings = [r for r in caplog.records if r.levelno == logging.WARNING]
+        assert len(warnings) == 1
+        assert "sampling period" in warnings[0].getMessage()

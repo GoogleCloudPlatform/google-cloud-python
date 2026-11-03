@@ -151,8 +151,8 @@ class StreamedResultSet(object):
             decoder = self._decoders[0]
             self._rows.extend(
                 [
-                    [None if value.HasField("null_value") else decoder(value)]
-                    for value in values[values_offset:batch_end]
+                    [None if cell.HasField("null_value") else decoder(cell)]
+                    for cell in values[values_offset:batch_end]
                 ]
             )
         else:
@@ -163,33 +163,71 @@ class StreamedResultSet(object):
                 rows_append(
                     [
                         None
-                        if values[row_start + column_index].HasField("null_value")
-                        else decoders[column_index](values[row_start + column_index])
+                        if (cell := values[row_start + column_index]).HasField(
+                            "null_value"
+                        )
+                        else decoders[column_index](cell)
                         for column_index in column_indices
                     ]
                 )
 
+    def _append_single_row(self, values, width):
+        """Decode and append a single complete row on the fast path."""
+        if self._lazy_decode:
+            self._rows.append(values[:width])
+        elif width == 1:
+            cell = values[0]
+            self._rows.append(
+                [None if cell.HasField("null_value") else self._decoders[0](cell)]
+            )
+        else:
+            decoders = self._decoders
+            self._rows.append(
+                [
+                    None
+                    if (cell := values[i]).HasField("null_value")
+                    else decoders[i](cell)
+                    for i in range(width)
+                ]
+            )
+
+    def _complete_partial_row(self, values, width, total_values):
+        """Complete a pending partial row from a previous chunk.
+
+        :returns: The number of values consumed to complete or fill the partial row."""
+        needed = width - len(self._current_row)
+        fill_count = min(needed, total_values)
+        self._append_to_current_row(values[:fill_count])
+        if len(self._current_row) == width:
+            self._rows.append(self._current_row)
+            self._current_row = []
+        return fill_count
+
     def _merge_values(self, values):
         """Merge values into rows.
 
-        :type values: list of :class:`~google.protobuf.struct_pb2.Value`
+        :type values: list or RepeatedCompositeContainer of :class:`~google.protobuf.struct_pb2.Value`
         :param values: non-chunked values from partial result set."""
         if not values:
             return
         width = len(self.fields)
         if width == 0:
             return
-        values_offset = 0
         total_values = len(values)
+        if not self._current_row:
+            if total_values == width:
+                self._append_single_row(values, width)
+                return
+            if total_values % width == 0:
+                if self._lazy_decode:
+                    self._decode_lazy_rows(values, 0, total_values, width)
+                else:
+                    self._decode_eager_rows(values, 0, total_values, width)
+                return
+        values_offset = 0
         if self._current_row:
-            needed = width - len(self._current_row)
-            fill_count = min(needed, total_values)
-            self._append_to_current_row(values[:fill_count])
-            values_offset = fill_count
-            if len(self._current_row) == width:
-                self._rows.append(self._current_row)
-                self._current_row = []
-            else:
+            values_offset = self._complete_partial_row(values, width, total_values)
+            if self._current_row:
                 return
         remaining_values = total_values - values_offset
         if remaining_values == 0:
@@ -214,25 +252,31 @@ class StreamedResultSet(object):
             self._metadata = response_pb.metadata
         if response_pb.HasField("stats"):
             self._stats = response.stats
-        values = list(response_pb.values)
-        if self._pending_chunk is not None:
-            values[0] = self._merge_chunk(values[0])
-        if response_pb.chunked_value:
-            self._pending_chunk = values.pop()
+        if self._pending_chunk is not None or response_pb.chunked_value:
+            values = list(response_pb.values)
+            if self._pending_chunk is not None:
+                values[0] = self._merge_chunk(values[0])
+            if response_pb.chunked_value:
+                self._pending_chunk = values.pop()
+        else:
+            values = response_pb.values
         self._merge_values(values)
         if response_pb.last:
             self._done = True
 
     def __iter__(self):
         while True:
+            if not self._rows:
+                if self._done:
+                    return
+                try:
+                    self._consume_next()
+                except StopIteration:
+                    return
             iter_rows, self._rows = (self._rows, [])
             for row in iter_rows:
                 yield row
             if self._done:
-                return
-            try:
-                self._consume_next()
-            except StopIteration:
                 return
 
     def decode_row(self, row: []) -> []:
@@ -283,16 +327,16 @@ class StreamedResultSet(object):
             raise RuntimeError(
                 "Can not call `.one` or `.one_or_none` after stream consumption has already started."
             )
-        iterator = self.__iter__()
-        try:
-            answer = iterator.__next__()
-        except StopIteration:
+        while not self._done and len(self._rows) < 2:
+            try:
+                self._consume_next()
+            except StopIteration:
+                break
+        if len(self._rows) == 1:
+            return self._rows.pop()
+        if not self._rows:
             return None
-        try:
-            iterator.__next__()
-            raise ValueError("Expected one result; got more.")
-        except StopIteration:
-            return answer
+        raise ValueError("Expected one result; got more.")
 
     def to_dict_list(self):
         """Return the result of a query as a list of dictionaries.
@@ -303,15 +347,13 @@ class StreamedResultSet(object):
            :class:`list of dict`
         :returns: result rows as a list of dictionaries"""
         rows = []
+        column_names = None
         for row in self:
-            rows.append(
-                {
-                    column: value
-                    for column, value in zip(
-                        [column.name for column in self._metadata.row_type.fields], row
-                    )
-                }
-            )
+            if column_names is None:
+                column_names = [
+                    column.name for column in self._metadata.row_type.fields
+                ]
+            rows.append(dict(zip(column_names, row)))
         return rows
 
 

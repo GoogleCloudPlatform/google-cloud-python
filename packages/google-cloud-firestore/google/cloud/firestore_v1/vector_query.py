@@ -34,6 +34,7 @@ from google.cloud.firestore_v1.stream_generator import StreamGenerator
 if TYPE_CHECKING:  # pragma: NO COVER
     from google.cloud.firestore_v1 import transaction
     from google.cloud.firestore_v1.base_document import DocumentSnapshot
+    from google.cloud.firestore_v1.document import DocumentReference
     from google.cloud.firestore_v1.query_profile import ExplainMetrics, ExplainOptions
 
 
@@ -60,7 +61,7 @@ class VectorQuery(BaseVectorQuery):
         timeout: Optional[float] = None,
         *,
         explain_options: Optional[ExplainOptions] = None,
-    ) -> QueryResultsList[DocumentSnapshot]:
+    ) -> QueryResultsList[DocumentSnapshot[DocumentReference]]:
         """Runs the vector query.
 
         This sends a ``RunQuery`` RPC and returns a list of document messages.
@@ -124,7 +125,7 @@ class VectorQuery(BaseVectorQuery):
         retry: retries.Retry | object | None = gapic_v1.method.DEFAULT,
         timeout: Optional[float] = None,
         explain_options: Optional[ExplainOptions] = None,
-    ) -> Generator[DocumentSnapshot, Any, Optional[ExplainMetrics]]:
+    ) -> Generator[DocumentSnapshot[DocumentReference], Any, Optional[ExplainMetrics]]:
         """Reads the documents in the collection that match this query.
 
         This sends a ``RunQuery`` RPC and then returns a generator which
@@ -195,7 +196,7 @@ class VectorQuery(BaseVectorQuery):
         timeout: Optional[float] = None,
         *,
         explain_options: Optional[ExplainOptions] = None,
-    ) -> StreamGenerator[DocumentSnapshot]:
+    ) -> StreamGenerator[DocumentSnapshot[DocumentReference]]:
         """Reads the documents in the collection that match this query.
 
         This sends a ``RunQuery`` RPC and then returns a generator which

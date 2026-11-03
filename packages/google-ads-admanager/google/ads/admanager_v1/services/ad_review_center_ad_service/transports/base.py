@@ -159,6 +159,16 @@ class AdReviewCenterAdServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.fetch_ad_review_center_custom_labels: gapic_v1.method.wrap_method(
+                self.fetch_ad_review_center_custom_labels,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_apply_ad_review_center_custom_labels: gapic_v1.method.wrap_method(
+                self.batch_apply_ad_review_center_custom_labels,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.cancel_operation: gapic_v1.method.wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
@@ -212,6 +222,34 @@ class AdReviewCenterAdServiceTransport(abc.ABC):
     ) -> Callable[
         [ad_review_center_ad_service.BatchBlockAdReviewCenterAdsRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def fetch_ad_review_center_custom_labels(
+        self,
+    ) -> Callable[
+        [ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsRequest],
+        Union[
+            ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse,
+            Awaitable[
+                ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse
+            ],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_apply_ad_review_center_custom_labels(
+        self,
+    ) -> Callable[
+        [ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsRequest],
+        Union[
+            ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse,
+            Awaitable[
+                ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse
+            ],
+        ],
     ]:
         raise NotImplementedError()
 

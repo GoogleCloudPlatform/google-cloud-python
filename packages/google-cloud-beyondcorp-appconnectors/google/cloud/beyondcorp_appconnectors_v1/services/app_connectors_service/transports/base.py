@@ -171,6 +171,11 @@ class AppConnectorsServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.resolve_instance_config: gapic_v1.method.wrap_method(
+                self.resolve_instance_config,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.report_status: gapic_v1.method.wrap_method(
                 self.report_status,
                 default_timeout=None,
@@ -285,6 +290,18 @@ class AppConnectorsServiceTransport(abc.ABC):
     ) -> Callable[
         [app_connectors_service.DeleteAppConnectorRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def resolve_instance_config(
+        self,
+    ) -> Callable[
+        [app_connectors_service.ResolveInstanceConfigRequest],
+        Union[
+            app_connectors_service.ResolveInstanceConfigResponse,
+            Awaitable[app_connectors_service.ResolveInstanceConfigResponse],
+        ],
     ]:
         raise NotImplementedError()
 

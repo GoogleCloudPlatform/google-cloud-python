@@ -13,17 +13,91 @@
 # limitations under the License.
 
 
-import grpc
-from unittest import mock
+import contextlib
 import os
+from pathlib import Path
+from typing import Sequence, Tuple
+from unittest import mock
+
+import google.api_core
+import grpc
 import pytest
 import pytest_asyncio
-from requests.adapters import HTTPAdapter
-
-from typing import Sequence, Tuple
-
 from google.api_core.client_options import ClientOptions  # type: ignore
 from google.showcase_v1beta1.services.echo.transports import EchoRestInterceptor
+from requests.adapters import HTTPAdapter
+
+try:
+    from google.api_core import _observability
+except ImportError:
+    _observability = None
+
+
+def _installed_core_matches_monorepo() -> bool:
+    """Returns True if the installed google.api_core matches the monorepo source.
+
+    When running Showcase tests against PyPI dependencies (e.g. non-canary CI jobs),
+    the installed `google-api-core` release may lag behind unreleased changes in
+    `packages/google-api-core`. Comparing the installed package files against the
+    monorepo source allows system tests to still execute end-to-end RPCs against
+    PyPI `google-api-core` while deferring strict monorepo-specific assertions to
+    `showcase-canary` (`INSTALL_LOCAL_CORE=true`).
+    """
+    repo_root = Path(__file__).resolve().parents[4]
+    monorepo_core_dir = (
+        repo_root / "packages" / "google-api-core" / "google" / "api_core"
+    )
+    installed_core_init = getattr(google.api_core, "__file__", None)
+
+    # Are we running outside the monorepo (e.g. in a standalone export)
+    # where the sibling `packages/google-api-core` directory does not exist?
+    # If so, there is no local monorepo source to compare against, so do not skip tests.
+    has_monorepo_source = monorepo_core_dir.is_dir() and installed_core_init is not None
+    if not has_monorepo_source:
+        return True
+
+    # Was `google-api-core` installed in editable mode (`pip install -e`)
+    # or via PYTHONPATH directly from the monorepo (`showcase-canary`)?
+    # If both paths resolve to the same directory, the code is guaranteed to match.
+    installed_core_dir = Path(installed_core_init).resolve().parent
+    is_editable_monorepo_install = installed_core_dir == monorepo_core_dir
+    if is_editable_monorepo_install:
+        return True
+
+    # Is `google-api-core` installed from PyPI into `site-packages`.
+    # Because `version.py` on `main` is not bumped until release time, we cannot
+    # rely on `__version__` to detect unreleased commits. Instead, verify that every
+    # Python file in the monorepo exists in the installed package with identical text.
+    for monorepo_file in monorepo_core_dir.rglob("*.py"):
+        relative_path = monorepo_file.relative_to(monorepo_core_dir)
+        installed_file = installed_core_dir / relative_path
+        if not installed_file.is_file():
+            return False
+
+        monorepo_code = monorepo_file.read_text(encoding="utf-8")
+        installed_code = installed_file.read_text(encoding="utf-8")
+        if monorepo_code != installed_code:
+            return False
+
+    return True
+
+
+INSTALLED_CORE_MATCHES_MONOREPO = _installed_core_matches_monorepo()
+
+
+@contextlib.contextmanager
+def skip_on_core_mismatch():
+    """Runs assertions and skips only if they fail while PyPI google-api-core lags monorepo."""
+    try:
+        yield
+    except AssertionError:
+        if not INSTALLED_CORE_MATCHES_MONOREPO:
+            pytest.skip(
+                "Installed PyPI google-api-core differs from monorepo source; "
+                "validated by showcase-canary (INSTALL_LOCAL_CORE=true)."
+            )
+        raise
+
 
 try:
     from google.auth.aio import credentials as ga_credentials_async
@@ -34,20 +108,26 @@ except ImportError:  # pragma: NO COVER
     HAS_GOOGLE_AUTH_AIO = False
 import google.auth
 from google.auth import credentials as ga_credentials
-from google.showcase import EchoClient
-from google.showcase import IdentityClient
-from google.showcase import MessagingClient
+from google.showcase import EchoClient, IdentityClient, MessagingClient
 
+try:
+    from google.showcase import ResumableUploadServiceClient
+
+    HAS_RESUMABLE_UPLOAD_CLIENT = True
+except ImportError:
+    HAS_RESUMABLE_UPLOAD_CLIENT = False
+
+HAS_ASYNC_REST_RESUMABLE_UPLOAD_TRANSPORT = False
 if os.environ.get("GAPIC_PYTHON_ASYNC", "true") == "true":
-    from grpc.experimental import aio
     import asyncio
-    from google.showcase import EchoAsyncClient
-    from google.showcase import IdentityAsyncClient
+
+    from google.showcase import EchoAsyncClient, IdentityAsyncClient
+    from grpc.experimental import aio
 
     try:
         from google.showcase_v1beta1.services.echo.transports import (
-            AsyncEchoRestTransport,
             AsyncEchoRestInterceptor,
+            AsyncEchoRestTransport,
         )
 
         HAS_ASYNC_REST_ECHO_TRANSPORT = True
@@ -61,6 +141,16 @@ if os.environ.get("GAPIC_PYTHON_ASYNC", "true") == "true":
         HAS_ASYNC_REST_IDENTITY_TRANSPORT = True
     except:
         HAS_ASYNC_REST_IDENTITY_TRANSPORT = False
+    try:
+        from google.showcase import ResumableUploadServiceAsyncClient
+        from google.showcase_v1beta1.services.resumable_upload_service.transports.rest_asyncio import (
+            AsyncResumableUploadServiceRestInterceptor,
+            AsyncResumableUploadServiceRestTransport,
+        )
+
+        HAS_ASYNC_REST_RESUMABLE_UPLOAD_TRANSPORT = True
+    except:
+        HAS_ASYNC_REST_RESUMABLE_UPLOAD_TRANSPORT = False
 
     _GRPC_VERSION = grpc.__version__
 
@@ -81,7 +171,9 @@ if os.environ.get("GAPIC_PYTHON_ASYNC", "true") == "true":
 
     @pytest.fixture
     def event_loop():
-        return asyncio.get_event_loop()
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        return loop
 
     @pytest_asyncio.fixture(params=["grpc_asyncio", "rest_asyncio"])
     def async_echo(use_mtls, request, event_loop):
@@ -132,8 +224,8 @@ def callback():
     return cert, key
 
 
-client_options = ClientOptions()
-client_options.client_cert_source = callback
+default_mtls_client_options = ClientOptions()
+default_mtls_client_options.client_cert_source = callback
 
 
 def pytest_addoption(parser):
@@ -141,7 +233,9 @@ def pytest_addoption(parser):
         "--mtls", action="store_true", help="Run system test with mutual TLS channel"
     )
     parser.addoption(
-        "--tls", action="store_true", help="Run system test with standard one-way TLS channel"
+        "--tls",
+        action="store_true",
+        help="Run system test with standard one-way TLS channel",
     )
 
 
@@ -153,6 +247,7 @@ def construct_client(
     channel_creator=grpc.insecure_channel,  # for grpc,grpc_asyncio only
     credentials=ga_credentials.AnonymousCredentials(),
     transport_endpoint="localhost:7469",
+    client_options=None,
 ):
     if use_mtls:
         with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
@@ -162,7 +257,7 @@ def construct_client(
                 mock_ssl_cred.return_value = ssl_credentials
                 client = client_class(
                     credentials=credentials,
-                    client_options=client_options,
+                    client_options=client_options or default_mtls_client_options,
                 )
                 mock_ssl_cred.assert_called_once_with(
                     certificate_chain=cert, private_key=key
@@ -173,21 +268,24 @@ def construct_client(
         if transport_name in ["grpc", "grpc_asyncio"]:
             # TODO(gapic-generator-python/issues/1914): Need to test grpc transports without a channel_creator
             assert channel_creator
-            transport = transport_cls(
-                credentials=credentials,
-                channel=channel_creator(transport_endpoint),
-            )
+            transport_kwargs = {
+                "credentials": credentials,
+                "channel": channel_creator(transport_endpoint),
+                "client_options": client_options,
+            }
+            transport = transport_cls(**transport_kwargs)
         elif transport_name in ["rest", "rest_asyncio"]:
             # The custom host explicitly bypasses https.
             transport = transport_cls(
                 credentials=credentials,
                 host=transport_endpoint,
                 url_scheme="http",
+                client_options=client_options,
             )
         else:
             raise RuntimeError(f"Unexpected transport type: {transport_name}")
 
-        client = client_class(transport=transport)
+        client = client_class(transport=transport, client_options=client_options)
         return client
 
 
@@ -288,6 +386,33 @@ class EchoMetadataClientRestInterceptor(EchoRestInterceptor):
         return request, metadata
 
 
+if HAS_RESUMABLE_UPLOAD_CLIENT:
+    try:
+        from google.showcase_v1beta1.services.resumable_upload_service.transports import (
+            ResumableUploadServiceRestInterceptor,
+        )
+
+        class ResumableUploadMetadataClientRestInterceptor(
+            ResumableUploadServiceRestInterceptor
+        ):
+            request_metadata: Sequence[Tuple[str, str]] = []
+            response_metadata: Sequence[Tuple[str, str]] = []
+
+            def pre_upload_media(self, request, metadata):
+                self.request_metadata = metadata
+                return request, metadata
+
+            def post_upload_media_with_metadata(self, request, metadata):
+                self.response_metadata = metadata
+                return request, metadata
+
+        HAS_RESUMABLE_UPLOAD_INTERCEPTOR = True
+    except ImportError:
+        HAS_RESUMABLE_UPLOAD_INTERCEPTOR = False
+else:
+    HAS_RESUMABLE_UPLOAD_INTERCEPTOR = False
+
+
 if HAS_ASYNC_REST_ECHO_TRANSPORT:
 
     class EchoMetadataClientRestAsyncInterceptor(AsyncEchoRestInterceptor):
@@ -308,6 +433,19 @@ if HAS_ASYNC_REST_ECHO_TRANSPORT:
 
         async def post_expand_with_metadata(self, request, metadata):
             self.response_metadata = metadata
+            return request, metadata
+
+
+if HAS_ASYNC_REST_RESUMABLE_UPLOAD_TRANSPORT:
+
+    class ResumableUploadMetadataClientRestAsyncInterceptor(
+        AsyncResumableUploadServiceRestInterceptor
+    ):
+        request_metadata: Sequence[Tuple[str, str]] = []
+        response_metadata: Sequence[Tuple[str, str]] = []
+
+        async def pre_upload_media(self, request, metadata):
+            self.request_metadata = metadata
             return request, metadata
 
 
@@ -340,7 +478,9 @@ class EchoMetadataClientGrpcInterceptor(
     def intercept_unary_unary(self, continuation, client_call_details, request):
         self._add_request_metadata(client_call_details)
         response = continuation(client_call_details, request)
-        metadata = [(k, str(v)) for k, v in response.initial_metadata()] + [(k, str(v)) for k, v in response.trailing_metadata()]
+        metadata = [(k, str(v)) for k, v in response.initial_metadata()] + [
+            (k, str(v)) for k, v in response.trailing_metadata()
+        ]
         self.response_metadata = metadata
         return response
 
@@ -399,7 +539,9 @@ class EchoMetadataClientGrpcAsyncInterceptor(
     async def intercept_unary_unary(self, continuation, client_call_details, request):
         await self._add_request_metadata(client_call_details)
         response = await continuation(client_call_details, request)
-        metadata = [(k, str(v)) for k, v in await response.initial_metadata()] + [(k, str(v)) for k, v in await response.trailing_metadata()]
+        metadata = [(k, str(v)) for k, v in await response.initial_metadata()] + [
+            (k, str(v)) for k, v in await response.trailing_metadata()
+        ]
         self.response_metadata = metadata
         return response
 
@@ -458,9 +600,13 @@ async def intercepted_echo_grpc_async(use_mtls, use_tls):
     )
     host = "localhost:7469"
     if use_mtls:
-        channel = grpc.aio.secure_channel(host, ssl_credentials, interceptors=[interceptor])
+        channel = grpc.aio.secure_channel(
+            host, ssl_credentials, interceptors=[interceptor]
+        )
     elif use_tls:
-        channel = grpc.aio.secure_channel(host, tls_credentials, interceptors=[interceptor])
+        channel = grpc.aio.secure_channel(
+            host, tls_credentials, interceptors=[interceptor]
+        )
     else:
         channel = grpc.aio.insecure_channel(host, interceptors=[interceptor])
     transport = EchoAsyncClient.get_transport_class("grpc_asyncio")(
@@ -472,6 +618,7 @@ async def intercepted_echo_grpc_async(use_mtls, use_tls):
 
 class HostNameIgnoringAdapter(HTTPAdapter):
     """Custom HTTPAdapter that disables hostname verification for local self-signed certs."""
+
     def cert_verify(self, conn, url, verify, cert):
         super().cert_verify(conn, url, verify, cert)
         conn.assert_hostname = False
@@ -516,3 +663,184 @@ def intercepted_echo_rest_async():
     )
 
     return EchoAsyncClient(transport=transport), interceptor
+
+
+@pytest.fixture
+def intercepted_resumable_upload_rest(use_mtls, use_tls):
+    if not HAS_RESUMABLE_UPLOAD_CLIENT or not HAS_RESUMABLE_UPLOAD_INTERCEPTOR:
+        pytest.skip("ResumableUploadServiceClient not available.")
+
+    transport_name = "rest"
+    transport_cls = ResumableUploadServiceClient.get_transport_class(transport_name)
+    interceptor = ResumableUploadMetadataClientRestInterceptor()
+
+    url_scheme = "https" if (use_mtls or use_tls) else "http"
+    transport = transport_cls(
+        credentials=ga_credentials.AnonymousCredentials(),
+        host="localhost:7469",
+        url_scheme=url_scheme,
+        interceptor=interceptor,
+    )
+    if use_mtls or use_tls:
+        transport._session.verify = CERT_PATH
+        transport._session.mount("https://", HostNameIgnoringAdapter())
+    if use_mtls:
+        transport._session.cert = (CERT_PATH, KEY_PATH)
+
+    return ResumableUploadServiceClient(transport=transport), interceptor
+
+
+@pytest.fixture
+def intercepted_resumable_upload_rest_async():
+    if not HAS_ASYNC_REST_RESUMABLE_UPLOAD_TRANSPORT:
+        pytest.skip("Skipping test with async rest.")
+
+    interceptor = ResumableUploadMetadataClientRestAsyncInterceptor()
+
+    transport = AsyncResumableUploadServiceRestTransport(
+        credentials=async_anonymous_credentials(),
+        host="localhost:7469",
+        url_scheme="http",
+        interceptor=interceptor,
+    )
+
+    return ResumableUploadServiceAsyncClient(transport=transport), interceptor
+
+
+try:
+    from google.api_core.resumable_transfer import (
+        ResumableUploadConfig,
+        ResumableUploadSession,
+    )
+except ImportError:
+    ResumableUploadConfig = None
+    ResumableUploadSession = None
+
+
+def make_resumable_upload(
+    transport,
+    request_body,
+    stream,
+    upload_url,
+    size=None,
+    config=None,
+    **kwargs,
+):
+    content_type = kwargs.pop("content_type", "application/octet-stream")
+    response_type = kwargs.pop("response_type", None)
+    retry = kwargs.pop("retry", None)
+    timeout = kwargs.pop("timeout", None)
+
+    if config is None:
+        config = ResumableUploadConfig(**kwargs)
+    elif kwargs:
+        for k, v in kwargs.items():
+            if hasattr(config, k):
+                setattr(config, k, v)
+
+    # ``make_resumable_upload`` instantiates ``ResumableUploadSession`` directly
+    # rather than calling the generated GAPIC client method (``client.upload_media``).
+    # Unlike the generated GAPIC REST transport, ``ResumableUploadSession`` in
+    # ``google-api-core`` is payload-format agnostic and does not set
+    # ``Content-Type: application/json`` on the start request automatically.
+    headers = dict(config.start_headers or [])
+    if request_body and "Content-Type" not in headers:
+        headers["Content-Type"] = "application/json"
+        config.headers = headers
+
+    session = ResumableUploadSession(
+        upload_url=upload_url,
+        config=config,
+        content_type=content_type,
+        response_type=response_type,
+        transport=transport,
+    )
+    return session.upload(
+        stream=stream,
+        request_body=request_body,
+        content_type=content_type,
+        size=size,
+        transport=transport,
+        retry=retry,
+        timeout=timeout,
+    )
+
+
+def resume_resumable_upload(
+    transport,
+    upload_url,
+    stream,
+    size=None,
+    config=None,
+    **kwargs,
+):
+    content_type = kwargs.pop("content_type", None)
+    response_type = kwargs.pop("response_type", None)
+    retry = kwargs.pop("retry", None)
+    timeout = kwargs.pop("timeout", None)
+
+    if config is None:
+        config = ResumableUploadConfig(**kwargs)
+    elif kwargs:
+        for k, v in kwargs.items():
+            if hasattr(config, k):
+                setattr(config, k, v)
+
+    session = ResumableUploadSession(
+        upload_url=upload_url,
+        config=config,
+        transport=transport,
+        content_type=content_type,
+        response_type=response_type,
+    )
+    return session.resume(
+        upload_url=upload_url,
+        stream=stream,
+        size=size,
+        transport=transport,
+        retry=retry,
+        timeout=timeout,
+    )
+
+
+def pytest_terminal_summary(terminalreporter, exitstatus, config):
+    """Prints a Telemetry Span Compliance summary to the console.
+
+    Enables developers to view and copy all compliance test names and
+    pass/fail/error states directly from CI/console output without enabling
+    verbose output for unrelated tests.
+    """
+    reports = (
+        terminalreporter.getreports("passed")
+        + terminalreporter.getreports("failed")
+        + terminalreporter.getreports("skipped")
+        + terminalreporter.getreports("error")
+    )
+    compliance_reports = [
+        r
+        for r in reports
+        if "test_span_compliance.py" in r.nodeid
+        and (r.when == "call" or r.failed or r.skipped)
+    ]
+    if not compliance_reports:
+        return
+
+    # Aggregate status per test nodeid so setup/call/teardown don't
+    # produce duplicate lines. Priority: ERROR > FAILED > SKIPPED > PASSED
+    status_by_test = {}
+    for rep in compliance_reports:
+        test_name = rep.nodeid.split("::")[-1]
+        if rep.when != "call" and rep.failed:
+            rep_status = "ERROR"
+        else:
+            rep_status = rep.outcome.upper()
+
+        current = status_by_test.get(test_name)
+        if current is None or rep_status in ("ERROR", "FAILED"):
+            status_by_test[test_name] = rep_status
+
+    terminalreporter.section(
+        "Telemetry Span Compliance Verification", sep="=", green=True
+    )
+    for test_name, status in status_by_test.items():
+        terminalreporter.write_line(f"[{status:6}] {test_name}")

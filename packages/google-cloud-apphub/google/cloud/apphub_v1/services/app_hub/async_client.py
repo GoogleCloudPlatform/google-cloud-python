@@ -61,11 +61,14 @@ from google.cloud.apphub_v1.types import (
     apphub_service,
     application,
     attributes,
+    boundary,
+    extended_metadata_schema,
     service,
     service_project_attachment,
     workload,
 )
 from google.cloud.apphub_v1.types import application as gca_application
+from google.cloud.apphub_v1.types import boundary as gca_boundary
 from google.cloud.apphub_v1.types import service as gca_service
 from google.cloud.apphub_v1.types import (
     service_project_attachment as gca_service_project_attachment,
@@ -100,6 +103,8 @@ class AppHubAsyncClient:
 
     application_path = staticmethod(AppHubClient.application_path)
     parse_application_path = staticmethod(AppHubClient.parse_application_path)
+    boundary_path = staticmethod(AppHubClient.boundary_path)
+    parse_boundary_path = staticmethod(AppHubClient.parse_boundary_path)
     discovered_service_path = staticmethod(AppHubClient.discovered_service_path)
     parse_discovered_service_path = staticmethod(
         AppHubClient.parse_discovered_service_path
@@ -107,6 +112,12 @@ class AppHubAsyncClient:
     discovered_workload_path = staticmethod(AppHubClient.discovered_workload_path)
     parse_discovered_workload_path = staticmethod(
         AppHubClient.parse_discovered_workload_path
+    )
+    extended_metadata_schema_path = staticmethod(
+        AppHubClient.extended_metadata_schema_path
+    )
+    parse_extended_metadata_schema_path = staticmethod(
+        AppHubClient.parse_extended_metadata_schema_path
     )
     service_path = staticmethod(AppHubClient.service_path)
     parse_service_path = staticmethod(AppHubClient.parse_service_path)
@@ -1940,7 +1951,7 @@ class AppHubAsyncClient:
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
-                Required. Field mask is used to specify the fields to be
+                Optional. Field mask is used to specify the fields to be
                 overwritten in the Service resource by the update. The
                 fields specified in the update_mask are relative to the
                 resource, not the full request. The API changes the
@@ -2991,7 +3002,7 @@ class AppHubAsyncClient:
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
-                Required. Field mask is used to specify the fields to be
+                Optional. Field mask is used to specify the fields to be
                 overwritten in the Workload resource by the update. The
                 fields specified in the update_mask are relative to the
                 resource, not the full request. The API changes the
@@ -3668,7 +3679,7 @@ class AppHubAsyncClient:
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
-                Required. Field mask is used to specify the fields to be
+                Optional. Field mask is used to specify the fields to be
                 overwritten in the Application resource by the update.
                 The fields specified in the update_mask are relative to
                 the resource, not the full request. The API changes the
@@ -3890,6 +3901,505 @@ class AppHubAsyncClient:
             self._client._transport.operations_client,
             empty_pb2.Empty,
             metadata_type=apphub_service.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def get_boundary(
+        self,
+        request: Optional[Union[apphub_service.GetBoundaryRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> boundary.Boundary:
+        r"""Gets a Boundary.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import apphub_v1
+
+            async def sample_get_boundary():
+                # Create a client
+                client = apphub_v1.AppHubAsyncClient()
+
+                # Initialize request argument(s)
+                request = apphub_v1.GetBoundaryRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = await client.get_boundary(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.apphub_v1.types.GetBoundaryRequest, dict]]):
+                The request object. Request message for
+                AppHub.GetBoundary.
+            name (:class:`str`):
+                Required. The name of the boundary to retrieve. Format:
+                ``projects/{project}/locations/{location}/boundary``.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.apphub_v1.types.Boundary:
+                Application management boundary.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, apphub_service.GetBoundaryRequest):
+            request = apphub_service.GetBoundaryRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.get_boundary
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def update_boundary(
+        self,
+        request: Optional[Union[apphub_service.UpdateBoundaryRequest, dict]] = None,
+        *,
+        boundary: Optional[gca_boundary.Boundary] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Updates a Boundary.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import apphub_v1
+
+            async def sample_update_boundary():
+                # Create a client
+                client = apphub_v1.AppHubAsyncClient()
+
+                # Initialize request argument(s)
+                boundary = apphub_v1.Boundary()
+                boundary.crm_node = "crm_node_value"
+
+                request = apphub_v1.UpdateBoundaryRequest(
+                    boundary=boundary,
+                )
+
+                # Make the request
+                operation = await client.update_boundary(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.apphub_v1.types.UpdateBoundaryRequest, dict]]):
+                The request object. Request message for
+                AppHub.UpdateBoundary.
+            boundary (:class:`google.cloud.apphub_v1.types.Boundary`):
+                Required. The boundary to update.
+                This corresponds to the ``boundary`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Optional. Field mask is used to specify the fields to be
+                overwritten in the Boundary resource by the update. The
+                fields specified in the update_mask are relative to the
+                resource, not the full request. A field will be
+                overwritten if it is in the mask. If the user does not
+                provide a mask then all fields will be overwritten.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.apphub_v1.types.Boundary`
+                Application management boundary.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [boundary, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, apphub_service.UpdateBoundaryRequest):
+            request = apphub_service.UpdateBoundaryRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if boundary is not None:
+            request.boundary = boundary
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_boundary
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("boundary.name", request.boundary.name),)
+            ),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            gca_boundary.Boundary,
+            metadata_type=apphub_service.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def get_extended_metadata_schema(
+        self,
+        request: Optional[
+            Union[apphub_service.GetExtendedMetadataSchemaRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> extended_metadata_schema.ExtendedMetadataSchema:
+        r"""Gets an Extended Metadata Schema.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import apphub_v1
+
+            async def sample_get_extended_metadata_schema():
+                # Create a client
+                client = apphub_v1.AppHubAsyncClient()
+
+                # Initialize request argument(s)
+                request = apphub_v1.GetExtendedMetadataSchemaRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = await client.get_extended_metadata_schema(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.apphub_v1.types.GetExtendedMetadataSchemaRequest, dict]]):
+                The request object. Request for
+                GetExtendedMetadataSchema.
+            name (:class:`str`):
+                Required. Schema resource name. Format:
+                ``projects/{project}/locations/{location}/extendedMetadataSchemas/{extended_metadata_schema}``.
+
+                ``{extended_metadata_schema}`` has the format
+                ``"apphub.googleapis.com/{SchemaName}"``.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.apphub_v1.types.ExtendedMetadataSchema:
+                ExtendedMetadataSchema represents a
+                schema for extended metadata of a
+                service or workload.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, apphub_service.GetExtendedMetadataSchemaRequest):
+            request = apphub_service.GetExtendedMetadataSchemaRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.get_extended_metadata_schema
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def list_extended_metadata_schemas(
+        self,
+        request: Optional[
+            Union[apphub_service.ListExtendedMetadataSchemasRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListExtendedMetadataSchemasAsyncPager:
+        r"""Lists Extended Metadata Schemas available in a host
+        project and location.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import apphub_v1
+
+            async def sample_list_extended_metadata_schemas():
+                # Create a client
+                client = apphub_v1.AppHubAsyncClient()
+
+                # Initialize request argument(s)
+                request = apphub_v1.ListExtendedMetadataSchemasRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_extended_metadata_schemas(request=request)
+
+                # Handle the response
+                async for response in page_result:
+                    print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.apphub_v1.types.ListExtendedMetadataSchemasRequest, dict]]):
+                The request object. Request for
+                ListExtendedMetadataSchemas.
+            parent (:class:`str`):
+                Required. Project and location to list Extended Metadata
+                Schemas on. Expected format:
+                ``projects/{project}/locations/{location}``.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.apphub_v1.services.app_hub.pagers.ListExtendedMetadataSchemasAsyncPager:
+                Response for
+                ListExtendedMetadataSchemas.
+                Iterating over this object will yield
+                results and resolve additional pages
+                automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, apphub_service.ListExtendedMetadataSchemasRequest):
+            request = apphub_service.ListExtendedMetadataSchemasRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.list_extended_metadata_schemas
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__aiter__` convenience method.
+        response = pagers.ListExtendedMetadataSchemasAsyncPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
         )
 
         # Done; return the response.

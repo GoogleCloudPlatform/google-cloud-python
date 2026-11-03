@@ -24,9 +24,14 @@ This directory contains code samples for Cloud Bigtable, which may be used as a 
    python main.py $GOOGLE_CLOUD_PROJECT $BIGTABLE_INSTANCE
    ```
 
-3. To run sample tests using Nox:
+3. To run the sample tests using Nox, from the `packages/google-cloud-bigtable` directory:
    ```bash
-   nox -s py-3.14
+   nox -s samples
+   ```
+   This installs the library from the repository checkout, so the samples are
+   tested against the code at HEAD. To run a subset, pass a path:
+   ```bash
+   nox -s samples -- samples/legacy_client/quickstart
    ```
 
 ## Additional Information

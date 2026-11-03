@@ -4053,7 +4053,7 @@ class SqlInstancesServiceRestTransport(_BaseSqlInstancesServiceRestTransport):
 
             Returns:
                 ~.cloud_sql.SqlInstancesExecuteSqlResponse:
-                    Execute SQL statements response.
+
             """
 
             http_options = _BaseSqlInstancesServiceRestTransport._BaseExecuteSql._get_http_options()

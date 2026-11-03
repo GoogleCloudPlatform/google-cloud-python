@@ -28,7 +28,8 @@ __protobuf__ = proto.module(
 
 
 class RequestPlatformEnum(proto.Message):
-    r"""Wrapper message for [RequestPlatform].
+    r"""Wrapper message for
+    [RequestPlatform][google.ads.admanager.v1.RequestPlatformEnum.RequestPlatform].
 
     Describes the platform from which a request is made and on which the
     ad is rendered. In the event of multiple platforms, the platform

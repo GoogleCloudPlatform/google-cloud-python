@@ -1060,7 +1060,9 @@ class NetworkServiceClient(metaclass=NetworkServiceClientMeta):
         timeout: Union[float, object] = gapic_v1.method.DEFAULT,
         metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
     ) -> network_messages.DefaultThirdPartyDataDeclaration:
-        r"""Returns the [DefaultThirdPartyDataDeclaration] for this network.
+        r"""Returns the
+        [DefaultThirdPartyDataDeclaration][google.ads.admanager.v1.DefaultThirdPartyDataDeclaration]
+        for this network.
 
         .. code-block:: python
 

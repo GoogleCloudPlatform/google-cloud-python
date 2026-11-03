@@ -539,7 +539,14 @@ class TestSessionsMtls:
         await session.close()
 
     @pytest.mark.asyncio
-    async def test_non_mtls_url_bypasses_rotation(self):
+    @pytest.mark.parametrize(
+        "non_mtls_url",
+        [
+            "https://pubsub.googleapis.com/test",
+            "https://my-service-xyz-uc.a.run.app/test",
+        ],
+    )
+    async def test_non_mtls_url_bypasses_rotation(self, non_mtls_url):
         """Verifies that standard non-mTLS URLs bypass certificate rotation."""
         mock_creds = mock.AsyncMock(spec=credentials.Credentials)
         mock_creds.before_request = mock.AsyncMock(return_value=None)
@@ -570,7 +577,7 @@ class TestSessionsMtls:
                 session, "configure_mtls_channel", new_callable=mock.AsyncMock
             ) as mock_conf,
         ):
-            resp = await session.request("GET", "https://pubsub.googleapis.com/test")
+            resp = await session.request("GET", non_mtls_url)
 
             assert resp == mock_resp_200
             mock_check.assert_not_called()
@@ -862,7 +869,14 @@ class TestSessionsMtls:
         await session.close()
 
     @pytest.mark.asyncio
-    async def test_cert_rotation_with_completed_mtls_init_task(self):
+    @pytest.mark.parametrize(
+        "mtls_url",
+        [
+            "https://pubsub.mtls.googleapis.com/test",
+            "https://my-service-123456.us-central1.mtls.run.app/test",
+        ],
+    )
+    async def test_cert_rotation_with_completed_mtls_init_task(self, mtls_url):
         """
         Verifies that when _mtls_init_task is already completed, receiving a 401
         with rotated certificates properly resets _mtls_init_task and reconfigures mTLS.
@@ -904,10 +918,8 @@ class TestSessionsMtls:
             ) as mock_conf,
         ):
             mock_check.return_value = (new_cert, new_key, b"old_fp", b"new_fp")
-            # Must use a hostname matching _MTLS_URL_PREFIXES (e.g. *.mtls.googleapis.com)
-            resp = await session.request(
-                "GET", "https://pubsub.mtls.googleapis.com/test"
-            )
+            # Must use a hostname matching _mtls_helper.is_mtls_endpoint
+            resp = await session.request("GET", mtls_url)
             assert resp == mock_resp_200
             mock_conf.assert_called_once()
             # Verify the previous completed task was cleared during rotation

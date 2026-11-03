@@ -675,6 +675,43 @@ class TestSession(OpenTelemetryBase):
         "google.cloud.spanner_v1._opentelemetry_tracing._get_cloud_region",
         return_value="global",
     )
+    def test_ping_invokes_metrics_capture(self, mock_region):
+        gax_api = self._make_spanner_api()
+        gax_api.execute_sql.return_value = "1"
+        database = self._make_database()
+        database.spanner_api = gax_api
+        session = self._make_one(database)
+        session._session_id = self.SESSION_ID
+
+        with mock.patch(
+            "google.cloud.spanner_v1.session.MetricsCapture"
+        ) as mock_capture:
+            session.ping()
+            mock_capture.assert_called_once_with(session._resource_info)
+
+    def test_resource_info_fallback_when_database_lacks_resource_info(self):
+        database = mock.Mock(spec=["_instance", "database_id"])
+        database.database_id = "test-db"
+        instance = mock.Mock(spec=["_client", "instance_id"])
+        instance.instance_id = "test-inst"
+        client = mock.Mock(spec=["project"])
+        client.project = "test-proj"
+        instance._client = client
+        database._instance = instance
+
+        session = self._make_one(database)
+        self.assertEqual(
+            session._resource_info,
+            {"project": "test-proj", "instance": "test-inst", "database": "test-db"},
+        )
+
+        session._database = None
+        self.assertIsNone(session._resource_info)
+
+    @mock.patch(
+        "google.cloud.spanner_v1._opentelemetry_tracing._get_cloud_region",
+        return_value="global",
+    )
     def test_ping_miss(self, mock_region):
         gax_api = self._make_spanner_api()
         gax_api.execute_sql.side_effect = NotFound("testing")
@@ -1151,9 +1188,11 @@ class TestSession(OpenTelemetryBase):
             list(transaction.read(TABLE_NAME, COLUMNS, KEYSET))
 
         session.create()
-        session.run_in_transaction(unit_of_work)
+        with mock.patch("google.cloud.spanner_v1._helpers.time.sleep") as sleep_mock:
+            session.run_in_transaction(unit_of_work)
 
         self.assertEqual(begin_transaction.call_count, 2)
+        sleep_mock.assert_called_once()
 
         begin_transaction.assert_called_with(
             request=BeginTransactionRequest(
@@ -1191,10 +1230,12 @@ class TestSession(OpenTelemetryBase):
             list(transaction.read(TABLE_NAME, COLUMNS, KEYSET))
 
         session.create()
-        session.run_in_transaction(unit_of_work)
+        with mock.patch("google.cloud.spanner_v1._helpers.time.sleep") as sleep_mock:
+            session.run_in_transaction(unit_of_work)
 
         # Verify retried BeginTransaction API call.
         self.assertEqual(begin_transaction.call_count, 2)
+        sleep_mock.assert_called_once()
 
         begin_transaction.assert_called_with(
             request=BeginTransactionRequest(
@@ -1236,10 +1277,12 @@ class TestSession(OpenTelemetryBase):
             list(transaction.read(TABLE_NAME, COLUMNS, KEYSET))
 
         session.create()
-        session.run_in_transaction(unit_of_work)
+        with mock.patch("google.cloud.spanner_v1._helpers.time.sleep") as sleep_mock:
+            session.run_in_transaction(unit_of_work)
 
         # Verify retried BeginTransaction API call.
         self.assertEqual(begin_transaction.call_count, 2)
+        sleep_mock.assert_called_once()
 
         begin_transaction.assert_called_with(
             request=BeginTransactionRequest(
@@ -1312,7 +1355,6 @@ class TestSession(OpenTelemetryBase):
             session=self.SESSION_NAME,
             mutations=txn._mutations,
             transaction_id=TRANSACTION_ID,
-            request_options=RequestOptions(),
         )
         gax_api.commit.assert_called_once_with(
             request=request,
@@ -1381,7 +1423,6 @@ class TestSession(OpenTelemetryBase):
                 session=session.name,
                 mutations=txn._mutations,
                 transaction_id=begin_transaction.return_value.id,
-                request_options=RequestOptions(),
             ),
             metadata=[
                 ("google-cloud-resource-prefix", database.name),
@@ -1466,7 +1507,6 @@ class TestSession(OpenTelemetryBase):
             session=self.SESSION_NAME,
             mutations=txn._mutations,
             transaction_id=TRANSACTION_ID,
-            request_options=RequestOptions(),
         )
         self.assertEqual(
             gax_api.commit.call_args_list,
@@ -1524,7 +1564,7 @@ class TestSession(OpenTelemetryBase):
             called_with.append((txn, args, kw))
             txn.insert(TABLE_NAME, COLUMNS, VALUES)
 
-        with mock.patch("time.sleep") as sleep_mock:
+        with mock.patch("google.cloud.spanner_v1._helpers.time.sleep") as sleep_mock:
             session.run_in_transaction(unit_of_work, "abc", some_arg="def")
 
         sleep_mock.assert_called_once_with(RETRY_SECONDS + RETRY_NANOS / 1.0e9)
@@ -1580,7 +1620,6 @@ class TestSession(OpenTelemetryBase):
             session=self.SESSION_NAME,
             mutations=txn._mutations,
             transaction_id=TRANSACTION_ID,
-            request_options=RequestOptions(),
         )
         self.assertEqual(
             gax_api.commit.call_args_list,
@@ -1639,7 +1678,7 @@ class TestSession(OpenTelemetryBase):
                 raise _make_rpc_error(Aborted, trailing_metadata)
             txn.insert(TABLE_NAME, COLUMNS, VALUES)
 
-        with mock.patch("time.sleep") as sleep_mock:
+        with mock.patch("google.cloud.spanner_v1._helpers.time.sleep") as sleep_mock:
             session.run_in_transaction(unit_of_work)
 
         sleep_mock.assert_called_once_with(RETRY_SECONDS + RETRY_NANOS / 1.0e9)
@@ -1673,7 +1712,6 @@ class TestSession(OpenTelemetryBase):
             session=self.SESSION_NAME,
             mutations=txn._mutations,
             transaction_id=TRANSACTION_ID,
-            request_options=RequestOptions(),
         )
         gax_api.commit.assert_called_once_with(
             request=request,
@@ -1726,8 +1764,10 @@ class TestSession(OpenTelemetryBase):
                 return _results[0]
             return 1.0
 
-        with mock.patch("time.time", _time):
-            with mock.patch("time.sleep") as sleep_mock:
+        with mock.patch("google.cloud.spanner_v1._helpers.time.time", _time):
+            with mock.patch(
+                "google.cloud.spanner_v1._helpers.time.sleep"
+            ) as sleep_mock:
                 # Exception has request_id attribute added
                 with self.assertRaises(Aborted) as context:
                     session.run_in_transaction(unit_of_work, "abc", timeout_secs=1)
@@ -1760,7 +1800,6 @@ class TestSession(OpenTelemetryBase):
             session=self.SESSION_NAME,
             mutations=txn._mutations,
             transaction_id=TRANSACTION_ID,
-            request_options=RequestOptions(),
         )
         gax_api.commit.assert_called_once_with(
             request=request,
@@ -1803,11 +1842,11 @@ class TestSession(OpenTelemetryBase):
             return 1.0
 
         with (
-            mock.patch("time.time", _time),
+            mock.patch("google.cloud.spanner_v1._helpers.time.time", _time),
             mock.patch(
                 "google.cloud.spanner_v1._helpers.random.random", return_value=0
             ),
-            mock.patch("time.sleep") as sleep_mock,
+            mock.patch("google.cloud.spanner_v1._helpers.time.sleep") as sleep_mock,
         ):
             # Exception has request_id attribute added
             with self.assertRaises(Aborted) as context:
@@ -1884,7 +1923,6 @@ class TestSession(OpenTelemetryBase):
             session=self.SESSION_NAME,
             mutations=txn._mutations,
             transaction_id=TRANSACTION_ID,
-            request_options=RequestOptions(),
         )
         self.assertEqual(
             gax_api.commit.call_args_list,
@@ -1975,7 +2013,6 @@ class TestSession(OpenTelemetryBase):
             mutations=txn._mutations,
             transaction_id=TRANSACTION_ID,
             return_commit_stats=True,
-            request_options=RequestOptions(),
         )
         gax_api.commit.assert_called_once_with(
             request=request,
@@ -2040,7 +2077,6 @@ class TestSession(OpenTelemetryBase):
             mutations=txn._mutations,
             transaction_id=TRANSACTION_ID,
             return_commit_stats=True,
-            request_options=RequestOptions(),
         )
         gax_api.commit.assert_called_once_with(
             request=request,
@@ -2175,7 +2211,6 @@ class TestSession(OpenTelemetryBase):
             session=self.SESSION_NAME,
             mutations=txn._mutations,
             transaction_id=TRANSACTION_ID,
-            request_options=RequestOptions(),
         )
         gax_api.commit.assert_called_once_with(
             request=request,
@@ -2219,7 +2254,7 @@ class TestSession(OpenTelemetryBase):
             called_with.append((txn, args, kw))
             txn.insert(TABLE_NAME, COLUMNS, VALUES)
 
-        with mock.patch("time.sleep") as sleep_mock:
+        with mock.patch("google.cloud.spanner_v1._helpers.time.sleep") as sleep_mock:
             session.run_in_transaction(
                 unit_of_work,
                 "abc",
@@ -2282,7 +2317,6 @@ class TestSession(OpenTelemetryBase):
             session=self.SESSION_NAME,
             mutations=txn._mutations,
             transaction_id=TRANSACTION_ID,
-            request_options=RequestOptions(),
         )
         self.assertEqual(
             gax_api.commit.call_args_list,
@@ -2669,16 +2703,128 @@ class TestSession(OpenTelemetryBase):
             return 3
 
         # check if current time > deadline
-        with mock.patch("time.time", _time_func):
+        with mock.patch("google.cloud.spanner_v1._helpers.time.time", _time_func):
             with self.assertRaises(Exception):
                 _delay_until_retry(exc_mock, 2, 1, default_retry_delay=0)
 
-        with mock.patch("time.time", _time_func):
+        with mock.patch("google.cloud.spanner_v1._helpers.time.time", _time_func):
             with mock.patch(
                 "google.cloud.spanner_v1._helpers._get_retry_delay"
             ) as get_retry_delay_mock:
-                with mock.patch("time.sleep") as sleep_mock:
+                with mock.patch(
+                    "google.cloud.spanner_v1._helpers.time.sleep"
+                ) as sleep_mock:
                     get_retry_delay_mock.return_value = None
 
                     _delay_until_retry(exc_mock, 6, 1)
                     sleep_mock.assert_not_called()
+
+    def test_run_in_transaction_tracing_events_attached_to_parent_span(self):
+        from opentelemetry.sdk.trace import TracerProvider
+        from opentelemetry.sdk.trace.export import SimpleSpanProcessor
+        from opentelemetry.sdk.trace.export.in_memory_span_exporter import (
+            InMemorySpanExporter,
+        )
+        from opentelemetry.sdk.trace.sampling import ALWAYS_ON
+
+        tracer_provider = TracerProvider(sampler=ALWAYS_ON)
+        trace_exporter = InMemorySpanExporter()
+        tracer_provider.add_span_processor(SimpleSpanProcessor(trace_exporter))
+        tracer = tracer_provider.get_tracer("test")
+
+        transaction_pb = TransactionPB(id=TRANSACTION_ID)
+        now = datetime.datetime.now(timezone.utc).replace(tzinfo=UTC)
+        now_pb = _datetime_to_pb_timestamp(now)
+        aborted = _make_rpc_error(Aborted, trailing_metadata=[])
+        response = CommitResponse(commit_timestamp=now_pb)
+        gax_api = self._make_spanner_api()
+        gax_api.begin_transaction.return_value = transaction_pb
+        gax_api.commit.side_effect = [aborted, response]
+        database = self._make_database()
+        database.spanner_api = gax_api
+        session = self._make_one(database)
+        session._session_id = self.SESSION_ID
+
+        def unit_of_work(transaction, *args, **kwargs):
+            transaction.insert(TABLE_NAME, COLUMNS, VALUES)
+            return "answer"
+
+        with tracer.start_as_current_span("ParentSpan"):
+            return_value = session.run_in_transaction(
+                unit_of_work,
+                transaction_tag="test-tag",
+                default_retry_delay=0,
+            )
+
+        self.assertEqual(return_value, "answer")
+        finished_spans = trace_exporter.get_finished_spans()
+        self.assertEqual(len(finished_spans), 1)
+        parent_span = finished_spans[0]
+        self.assertEqual(parent_span.name, "ParentSpan")
+        self.assertIsNone(parent_span.attributes.get("transaction.tag"))
+        event_names = [event.name for event in parent_span.events]
+        self.assertIn(
+            "Transaction was aborted during commit, retrying",
+            event_names,
+        )
+        retry_event = next(
+            event
+            for event in parent_span.events
+            if event.name == "Transaction was aborted during commit, retrying"
+        )
+        self.assertEqual(retry_event.attributes.get("attempt"), 1)
+
+    def test_run_in_transaction_tracing_events_aborted_without_inner_errors(
+        self,
+    ):
+        from opentelemetry.sdk.trace import TracerProvider
+        from opentelemetry.sdk.trace.export import SimpleSpanProcessor
+        from opentelemetry.sdk.trace.export.in_memory_span_exporter import (
+            InMemorySpanExporter,
+        )
+        from opentelemetry.sdk.trace.sampling import ALWAYS_ON
+
+        tracer_provider = TracerProvider(sampler=ALWAYS_ON)
+        trace_exporter = InMemorySpanExporter()
+        tracer_provider.add_span_processor(SimpleSpanProcessor(trace_exporter))
+        tracer = tracer_provider.get_tracer("test")
+
+        transaction_pb = TransactionPB(id=TRANSACTION_ID)
+        now = datetime.datetime.now(timezone.utc).replace(tzinfo=UTC)
+        now_pb = _datetime_to_pb_timestamp(now)
+        # Aborted raised without inner errors (defaults to empty tuple in GoogleAPICallError)
+        aborted = Aborted("aborted without inner errors")
+        response = CommitResponse(commit_timestamp=now_pb)
+        gax_api = self._make_spanner_api()
+        gax_api.begin_transaction.return_value = transaction_pb
+        gax_api.commit.side_effect = [aborted, response]
+        database = self._make_database()
+        database.spanner_api = gax_api
+        session = self._make_one(database)
+        session._session_id = self.SESSION_ID
+
+        def unit_of_work(transaction, *args, **kwargs):
+            transaction.insert(TABLE_NAME, COLUMNS, VALUES)
+            return "answer"
+
+        with tracer.start_as_current_span("ParentSpan"):
+            return_value = session.run_in_transaction(
+                unit_of_work,
+                default_retry_delay=0,
+            )
+
+        self.assertEqual(return_value, "answer")
+        finished_spans = trace_exporter.get_finished_spans()
+        self.assertEqual(len(finished_spans), 1)
+        parent_span = finished_spans[0]
+        event_names = [event.name for event in parent_span.events]
+        self.assertIn(
+            "Transaction was aborted during commit, retrying",
+            event_names,
+        )
+        retry_event = next(
+            event
+            for event in parent_span.events
+            if event.name == "Transaction was aborted during commit, retrying"
+        )
+        self.assertEqual(retry_event.attributes.get("attempt"), 1)

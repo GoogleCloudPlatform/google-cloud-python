@@ -32,6 +32,7 @@ from google.cloud.firestore_v1.query_results import QueryResultsList
 if TYPE_CHECKING:  # pragma: NO COVER
     import google.cloud.firestore_v1.types.query_profile as query_profile_pb
     from google.cloud.firestore_v1 import transaction
+    from google.cloud.firestore_v1.async_document import AsyncDocumentReference
     from google.cloud.firestore_v1.base_document import DocumentSnapshot
     from google.cloud.firestore_v1.query_profile import ExplainMetrics, ExplainOptions
 
@@ -58,7 +59,7 @@ class AsyncVectorQuery(BaseVectorQuery):
         timeout: Optional[float] = None,
         *,
         explain_options: Optional[ExplainOptions] = None,
-    ) -> QueryResultsList[DocumentSnapshot]:
+    ) -> QueryResultsList[DocumentSnapshot[AsyncDocumentReference]]:
         """Runs the vector query.
 
         This sends a ``RunQuery`` RPC and returns a list of document messages.
@@ -109,7 +110,9 @@ class AsyncVectorQuery(BaseVectorQuery):
         retry: retries.AsyncRetry | object | None = gapic_v1.method.DEFAULT,
         timeout: Optional[float] = None,
         explain_options: Optional[ExplainOptions] = None,
-    ) -> AsyncGenerator[DocumentSnapshot | query_profile_pb.ExplainMetrics, Any]:
+    ) -> AsyncGenerator[
+        DocumentSnapshot[AsyncDocumentReference] | query_profile_pb.ExplainMetrics, Any
+    ]:
         """Internal method for stream(). Read the documents in the collection
         that match this query.
 
@@ -177,7 +180,7 @@ class AsyncVectorQuery(BaseVectorQuery):
         timeout: Optional[float] = None,
         *,
         explain_options: Optional[ExplainOptions] = None,
-    ) -> AsyncStreamGenerator[DocumentSnapshot]:
+    ) -> AsyncStreamGenerator[DocumentSnapshot[AsyncDocumentReference]]:
         """Reads the documents in the collection that match this query.
 
         This sends a ``RunQuery`` RPC and then returns an iterator which

@@ -1279,6 +1279,42 @@ class TestQueryJob(_Base):
             timeout=DEFAULT_GET_JOB_TIMEOUT,
         )
 
+    def test_result_with_done_jobs_query_response_keeps_arrow_first_page(self):
+        """An ARROW response from jobs.query is kept as the first page, like
+        rows are, so the stream can continue after it.
+        """
+        job_resource = self._make_resource(started=True, ended=True, location="EU")
+        conn = make_connection(job_resource)
+        client = _make_client(self.PROJECT, connection=conn)
+        query_resource_done = {
+            "jobComplete": True,
+            "jobReference": {"projectId": self.PROJECT, "jobId": self.JOB_ID},
+            "arrowSchema": {"serializedSchema": "c2NoZW1h"},
+            "arrowRecordBatch": {"serializedRecordBatch": "YmF0Y2g="},
+            "pageRowCount": "1",
+            "totalRows": "2",
+        }
+        job = google.cloud.bigquery._job_helpers._to_query_job(
+            client,
+            "SELECT 1",
+            request_config=None,
+            query_response=query_resource_done,
+        )
+
+        result = job.result(page_size=0)
+
+        self.assertEqual(
+            result._first_page_response["arrowRecordBatch"],
+            query_resource_done["arrowRecordBatch"],
+        )
+        # Only jobs.get, no jobs.getQueryResults.
+        conn.api_request.assert_called_once_with(
+            method="GET",
+            path=f"/projects/{self.PROJECT}/jobs/{self.JOB_ID}",
+            query_params={"projection": "full"},
+            timeout=DEFAULT_GET_JOB_TIMEOUT,
+        )
+
     def test_result_with_none_timeout(self):
         # Verifies that with an intentional None timeout, get job uses None
         # instead of the default timeout.
@@ -1631,6 +1667,59 @@ class TestQueryJob(_Base):
         self.assertEqual(
             tabledata_list_request_2[1]["query_params"]["maxResults"], page_size
         )
+
+    def test_result_with_start_index_and_max_results_multi_page(self):
+        # When only max_results and start_index are set, the server may still
+        # split the result into several pages (e.g. when a page would exceed
+        # the response size limit). The follow-up requests carry a page token,
+        # so they must not carry start_index as well, because the server only
+        # allows one of them.
+        query_resource = {
+            "jobComplete": True,
+            "jobReference": {"projectId": self.PROJECT, "jobId": self.JOB_ID},
+            "schema": {"fields": [{"name": "col1", "type": "STRING"}]},
+            "totalRows": "7",
+        }
+        tabledata_resource_1 = {
+            "totalRows": "7",
+            "pageToken": "page_token_1",
+            "rows": [
+                {"f": [{"v": "abc"}]},
+                {"f": [{"v": "def"}]},
+            ],
+        }
+        tabledata_resource_2 = {
+            "totalRows": "7",
+            "rows": [
+                {"f": [{"v": "ghi"}]},
+                {"f": [{"v": "jkl"}]},
+            ],
+        }
+
+        connection = make_connection(
+            query_resource, tabledata_resource_1, tabledata_resource_2
+        )
+        client = _make_client(self.PROJECT, connection=connection)
+        resource = self._make_resource(ended=True)
+        job = self._get_target_class().from_api_repr(resource, client)
+
+        start_index = 1
+        max_results = 4
+
+        rows = list(job.result(max_results=max_results, start_index=start_index))
+
+        self.assertEqual([row.col1 for row in rows], ["abc", "def", "ghi", "jkl"])
+        self.assertEqual(len(connection.api_request.call_args_list), 3)
+
+        tabledata_list_request_1 = connection.api_request.call_args_list[1]
+        self.assertEqual(
+            tabledata_list_request_1[1]["query_params"]["startIndex"], start_index
+        )
+
+        tabledata_list_request_2 = connection.api_request.call_args_list[2]
+        query_params_2 = tabledata_list_request_2[1]["query_params"]
+        self.assertEqual(query_params_2["pageToken"], "page_token_1")
+        self.assertNotIn("startIndex", query_params_2)
 
     def test_result_error(self):
         from google.cloud import exceptions

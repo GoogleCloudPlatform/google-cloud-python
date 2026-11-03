@@ -53,7 +53,8 @@ dependencies = [
 ]
 extras = {
     "async_rest": [
-        "google-auth[aiohttp] >= 2.35.0, <3.0.0"
+        "google-auth[aiohttp] >= 2.60.0, <3.0.0",
+        "google-api-core >= 2.41.0, <3.0.0",
     ],
 }
 url = "https://github.com/googleapis/google-cloud-python/tree/main/packages/google-cloud-redis"

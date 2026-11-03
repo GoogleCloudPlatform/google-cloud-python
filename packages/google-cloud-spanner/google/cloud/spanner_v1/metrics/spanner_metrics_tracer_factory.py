@@ -18,6 +18,7 @@
 import contextvars
 import logging
 import os
+from typing import Optional
 
 from .constants import SPANNER_SERVICE_NAME
 from .metrics_tracer_factory import MetricsTracerFactory
@@ -51,7 +52,7 @@ class SpannerMetricsTracerFactory(MetricsTracerFactory):
         "current_metrics_tracer", default=None
     )
 
-    def __new__(cls, enabled: bool = True) -> "SpannerMetricsTracerFactory":
+    def __new__(cls, enabled: Optional[bool] = None) -> "SpannerMetricsTracerFactory":
         """
         Create a new instance of SpannerMetricsTracerFactory if it doesn't already exist.
 
@@ -60,14 +61,17 @@ class SpannerMetricsTracerFactory(MetricsTracerFactory):
         if it hasn't been created yet.
 
         Args:
-            enabled (bool): A flag indicating whether metrics tracing is enabled. Defaults to True.
+            enabled (bool, optional): A flag indicating whether metrics tracing is enabled.
+                Defaults to None (which defaults to True upon initial creation, and preserves
+                existing state on subsequent calls).
 
         Returns:
             SpannerMetricsTracerFactory: The singleton instance of SpannerMetricsTracerFactory.
         """
         if cls._metrics_tracer_factory is None:
+            init_enabled = True if enabled is None else enabled
             cls._metrics_tracer_factory = MetricsTracerFactory(
-                enabled, SPANNER_SERVICE_NAME
+                init_enabled, SPANNER_SERVICE_NAME
             )
             if not HAS_OPENTELEMETRY_INSTALLED:
                 return cls._metrics_tracer_factory
@@ -80,9 +84,8 @@ class SpannerMetricsTracerFactory(MetricsTracerFactory):
                 cls._generate_client_hash(client_uid)
             )
             cls._metrics_tracer_factory.set_location(_get_cloud_region())
-
-            if cls._metrics_tracer_factory.enabled != enabled:
-                cls._metrics_tracer_factory.enabled = enabled
+        elif enabled is not None and cls._metrics_tracer_factory.enabled != enabled:
+            cls._metrics_tracer_factory.enabled = enabled
 
         return cls._metrics_tracer_factory
 

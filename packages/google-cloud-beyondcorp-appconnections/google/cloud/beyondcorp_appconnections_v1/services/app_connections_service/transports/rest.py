@@ -678,6 +678,10 @@ class AppConnectionsServiceRestTransport(_BaseAppConnectionsServiceRestTransport
     The AppConnectionsService service provides methods to manage
     (create/read/update/delete) BeyondCorp AppConnections.
 
+    Deprecated: App Connector is deprecated and creation of new App
+    Connector resources is no longer permitted. Use Security Gateway
+    instead.
+
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
     and call it.
@@ -776,11 +780,20 @@ class AppConnectionsServiceRestTransport(_BaseAppConnectionsServiceRestTransport
                         "uri": "/v1/{name=projects/*/locations/*/operations/*}:cancel",
                         "body": "*",
                     },
+                    {
+                        "method": "post",
+                        "uri": "/v1/{name=organizations/*/locations/*/operations/*}:cancel",
+                        "body": "*",
+                    },
                 ],
                 "google.longrunning.Operations.DeleteOperation": [
                     {
                         "method": "delete",
                         "uri": "/v1/{name=projects/*/locations/*/operations/*}",
+                    },
+                    {
+                        "method": "delete",
+                        "uri": "/v1/{name=organizations/*/locations/*/operations/*}",
                     },
                 ],
                 "google.longrunning.Operations.GetOperation": [
@@ -788,11 +801,19 @@ class AppConnectionsServiceRestTransport(_BaseAppConnectionsServiceRestTransport
                         "method": "get",
                         "uri": "/v1/{name=projects/*/locations/*/operations/*}",
                     },
+                    {
+                        "method": "get",
+                        "uri": "/v1/{name=organizations/*/locations/*/operations/*}",
+                    },
                 ],
                 "google.longrunning.Operations.ListOperations": [
                     {
                         "method": "get",
                         "uri": "/v1/{name=projects/*/locations/*}/operations",
+                    },
+                    {
+                        "method": "get",
+                        "uri": "/v1/{name=organizations/*/locations/*}/operations",
                     },
                 ],
             }
@@ -1174,7 +1195,7 @@ class AppConnectionsServiceRestTransport(_BaseAppConnectionsServiceRestTransport
                 It creates all the necessary GCP
                 components needed for creating a
                 BeyondCorp protected AppConnection.
-                Multiple connectors can be authorised
+                Multiple connectors can be authorized
                 for a single AppConnection.
 
             """

@@ -82,7 +82,7 @@ class _ReadRowsOperation:
 
     def __init__(
         self,
-        query: ReadRowsQuery,
+        query: ReadRowsQuery | dict[str, object],
         target: TargetType,
         operation_timeout: float,
         attempt_timeout: float,

@@ -72,6 +72,7 @@ __protobuf__ = proto.module(
         "MessageAnnotation",
         "SuggestionInput",
         "AssistQueryParameters",
+        "ResponseMessage",
         "SuggestKnowledgeAssistRequest",
         "SuggestKnowledgeAssistResponse",
         "IngestedContextReferenceDebugInfo",
@@ -314,6 +315,8 @@ class Message(proto.Message):
         content (str):
             Optional. The message content. Only one of ``content`` and
             ``companion_query`` should be set - not both.
+        response_messages (MutableSequence[google.cloud.dialogflow_v2.types.ResponseMessage]):
+            Optional. Automated agent responses.
         language_code (str):
             Optional. The message language. This should be a
             `BCP-47 <https://www.rfc-editor.org/rfc/bcp/bcp47.txt>`__
@@ -344,6 +347,11 @@ class Message(proto.Message):
     content: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+    response_messages: MutableSequence["ResponseMessage"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=11,
+        message="ResponseMessage",
     )
     language_code: str = proto.Field(
         proto.STRING,
@@ -1657,6 +1665,30 @@ class AutomatedAgentReply(proto.Message):
             Response of the Dialogflow
             [Sessions.DetectIntent][google.cloud.dialogflow.v2.Sessions.DetectIntent]
             call.
+        response_messages (MutableSequence[google.cloud.dialogflow_v2.types.ResponseMessage]):
+            Response messages from the automated agent.
+        intent (str):
+            Name of the intent if an intent is matched for the query.
+            For a V2 query, the value format is
+            ``projects/<Project ID>/locations/ <Location ID>/agent/intents/<Intent ID>``.
+            For a V3 query, the value format is
+            ``projects/<Project ID>/locations/ <Location ID>/agents/<Agent ID>/intents/<Intent ID>``.
+        event (str):
+            Event name if an event is triggered for the
+            query.
+        match_confidence (float):
+            The confidence of the match. Values range
+            from 0.0 (completely uncertain) to 1.0
+            (completely certain). This value is for
+            informational purpose only and is only used to
+            help match the best intent within the
+            classification threshold. This value may change
+            for the same end-user expression at any time due
+            to a model retraining or change in
+            implementation.
+        parameters (google.protobuf.struct_pb2.Struct):
+            The collection of current parameters at the
+            time of this response.
         automated_agent_reply_type (google.cloud.dialogflow_v2.types.AutomatedAgentReply.AutomatedAgentReplyType):
             AutomatedAgentReply type.
         allow_cancellation (bool):
@@ -1669,6 +1701,9 @@ class AutomatedAgentReply(proto.Message):
             The unique identifier of the current Dialogflow CX
             conversation page. Format:
             ``projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/pages/<Page ID>``.
+        call_companion_auth_code (bytes):
+            The auth code for accessing Call Companion
+            UI.
     """
 
     class AutomatedAgentReplyType(proto.Enum):
@@ -1695,6 +1730,28 @@ class AutomatedAgentReply(proto.Message):
         number=1,
         message=session.DetectIntentResponse,
     )
+    response_messages: MutableSequence["ResponseMessage"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=3,
+        message="ResponseMessage",
+    )
+    intent: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    event: str = proto.Field(
+        proto.STRING,
+        number=5,
+    )
+    match_confidence: float = proto.Field(
+        proto.FLOAT,
+        number=9,
+    )
+    parameters: struct_pb2.Struct = proto.Field(
+        proto.MESSAGE,
+        number=10,
+        message=struct_pb2.Struct,
+    )
     automated_agent_reply_type: AutomatedAgentReplyType = proto.Field(
         proto.ENUM,
         number=7,
@@ -1707,6 +1764,10 @@ class AutomatedAgentReply(proto.Message):
     cx_current_page: str = proto.Field(
         proto.STRING,
         number=11,
+    )
+    call_companion_auth_code: bytes = proto.Field(
+        proto.BYTES,
+        number=12,
     )
 
 
@@ -2210,6 +2271,231 @@ class AssistQueryParameters(proto.Message):
         proto.STRING,
         proto.STRING,
         number=1,
+    )
+
+
+class ResponseMessage(proto.Message):
+    r"""Response messages from an automated agent.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        text (google.cloud.dialogflow_v2.types.ResponseMessage.Text):
+            Returns a text response.
+
+            This field is a member of `oneof`_ ``message``.
+        payload (google.protobuf.struct_pb2.Struct):
+            Returns a response containing a custom,
+            platform-specific payload.
+
+            This field is a member of `oneof`_ ``message``.
+        live_agent_handoff (google.cloud.dialogflow_v2.types.ResponseMessage.LiveAgentHandoff):
+            Hands off conversation to a live agent.
+
+            This field is a member of `oneof`_ ``message``.
+        end_interaction (google.cloud.dialogflow_v2.types.ResponseMessage.EndInteraction):
+            A signal that indicates the interaction with
+            the Dialogflow agent has ended.
+
+            This field is a member of `oneof`_ ``message``.
+        mixed_audio (google.cloud.dialogflow_v2.types.ResponseMessage.MixedAudio):
+            An audio response message composed of both
+            the synthesized Dialogflow agent responses and
+            the audios hosted in places known to the client.
+
+            This field is a member of `oneof`_ ``message``.
+        telephony_transfer_call (google.cloud.dialogflow_v2.types.ResponseMessage.TelephonyTransferCall):
+            A signal that the client should transfer the
+            phone call connected to this agent to a
+            third-party endpoint.
+
+            This field is a member of `oneof`_ ``message``.
+    """
+
+    class Text(proto.Message):
+        r"""The text response message.
+
+        Attributes:
+            text (MutableSequence[str]):
+                A collection of text response variants. If
+                multiple variants are defined, only one text
+                response variant is returned at runtime.
+        """
+
+        text: MutableSequence[str] = proto.RepeatedField(
+            proto.STRING,
+            number=1,
+        )
+
+    class LiveAgentHandoff(proto.Message):
+        r"""Indicates that the conversation should be handed off to a human
+        agent.
+
+        Dialogflow only uses this to determine which conversations were
+        handed off to a human agent for measurement purposes. What else to
+        do with this signal is up to you and your handoff procedures.
+
+        You may set this, for example:
+
+        - In the entry fulfillment of a CX Page if entering the page
+          indicates something went extremely wrong in the conversation.
+        - In a webhook response when you determine that the customer issue
+          can only be handled by a human.
+
+        Attributes:
+            metadata (google.protobuf.struct_pb2.Struct):
+                Custom metadata for your handoff procedure.
+                Dialogflow doesn't impose any structure on this.
+        """
+
+        metadata: struct_pb2.Struct = proto.Field(
+            proto.MESSAGE,
+            number=1,
+            message=struct_pb2.Struct,
+        )
+
+    class EndInteraction(proto.Message):
+        r"""Indicates that interaction with the Dialogflow agent has
+        ended.
+
+        """
+
+    class MixedAudio(proto.Message):
+        r"""Represents an audio message that is composed of both segments
+        synthesized from the Dialogflow agent prompts and ones hosted
+        externally at the specified URIs.
+
+        Attributes:
+            segments (MutableSequence[google.cloud.dialogflow_v2.types.ResponseMessage.MixedAudio.Segment]):
+                Segments this audio response is composed of.
+        """
+
+        class Segment(proto.Message):
+            r"""Represents one segment of audio.
+
+            This message has `oneof`_ fields (mutually exclusive fields).
+            For each oneof, at most one member field can be set at the same time.
+            Setting any member of the oneof automatically clears all other
+            members.
+
+            .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+            Attributes:
+                audio (bytes):
+                    Raw audio synthesized from the Dialogflow
+                    agent's response using the output config
+                    specified in the request.
+
+                    This field is a member of `oneof`_ ``content``.
+                uri (str):
+                    Client-specific URI that points to an audio
+                    clip accessible to the client.
+
+                    This field is a member of `oneof`_ ``content``.
+                allow_playback_interruption (bool):
+                    Whether the playback of this segment can be
+                    interrupted by the end user's speech and the
+                    client should then start the next Dialogflow
+                    request.
+            """
+
+            audio: bytes = proto.Field(
+                proto.BYTES,
+                number=1,
+                oneof="content",
+            )
+            uri: str = proto.Field(
+                proto.STRING,
+                number=2,
+                oneof="content",
+            )
+            allow_playback_interruption: bool = proto.Field(
+                proto.BOOL,
+                number=3,
+            )
+
+        segments: MutableSequence["ResponseMessage.MixedAudio.Segment"] = (
+            proto.RepeatedField(
+                proto.MESSAGE,
+                number=1,
+                message="ResponseMessage.MixedAudio.Segment",
+            )
+        )
+
+    class TelephonyTransferCall(proto.Message):
+        r"""Represents the signal that telles the client to transfer the
+        phone call connected to the agent to a third-party endpoint.
+
+        This message has `oneof`_ fields (mutually exclusive fields).
+        For each oneof, at most one member field can be set at the same time.
+        Setting any member of the oneof automatically clears all other
+        members.
+
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+        Attributes:
+            phone_number (str):
+                Transfer the call to a phone number in `E.164
+                format <https://en.wikipedia.org/wiki/E.164>`__.
+
+                This field is a member of `oneof`_ ``endpoint``.
+            sip_uri (str):
+                Transfer the call to a SIP endpoint.
+
+                This field is a member of `oneof`_ ``endpoint``.
+        """
+
+        phone_number: str = proto.Field(
+            proto.STRING,
+            number=1,
+            oneof="endpoint",
+        )
+        sip_uri: str = proto.Field(
+            proto.STRING,
+            number=2,
+            oneof="endpoint",
+        )
+
+    text: Text = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        oneof="message",
+        message=Text,
+    )
+    payload: struct_pb2.Struct = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        oneof="message",
+        message=struct_pb2.Struct,
+    )
+    live_agent_handoff: LiveAgentHandoff = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        oneof="message",
+        message=LiveAgentHandoff,
+    )
+    end_interaction: EndInteraction = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        oneof="message",
+        message=EndInteraction,
+    )
+    mixed_audio: MixedAudio = proto.Field(
+        proto.MESSAGE,
+        number=5,
+        oneof="message",
+        message=MixedAudio,
+    )
+    telephony_transfer_call: TelephonyTransferCall = proto.Field(
+        proto.MESSAGE,
+        number=6,
+        oneof="message",
+        message=TelephonyTransferCall,
     )
 
 
@@ -3322,6 +3608,11 @@ class BidiStreamingAnalyzeContentRequest(proto.Message):
                     inherited from the ConversationProfile.
 
                     This field is a member of `oneof`_ ``_use_gemini_asr``.
+                disable_interim_input_transcripts (bool):
+                    Optional. Disables emission of interim input transcriptions
+                    when set to ``true``.
+
+                    This field is a member of `oneof`_ ``_disable_interim_input_transcripts``.
             """
 
             input_audio_encoding: gcd_audio_config.AudioEncoding = proto.Field(
@@ -3360,6 +3651,11 @@ class BidiStreamingAnalyzeContentRequest(proto.Message):
             use_gemini_asr: bool = proto.Field(
                 proto.BOOL,
                 number=25,
+                optional=True,
+            )
+            disable_interim_input_transcripts: bool = proto.Field(
+                proto.BOOL,
+                number=26,
                 optional=True,
             )
 

@@ -42,6 +42,7 @@ import google.api_core.operation_async as operation_async  # type: ignore
 import google.auth
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
+import google.protobuf.struct_pb2 as struct_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 from google.api_core import (
     client_options,
@@ -76,11 +77,15 @@ from google.cloud.apphub_v1.types import (
     apphub_service,
     application,
     attributes,
+    boundary,
+    extended_metadata_schema,
+    properties,
     service,
     service_project_attachment,
     workload,
 )
 from google.cloud.apphub_v1.types import application as gca_application
+from google.cloud.apphub_v1.types import boundary as gca_boundary
 from google.cloud.apphub_v1.types import service as gca_service
 from google.cloud.apphub_v1.types import (
     service_project_attachment as gca_service_project_attachment,
@@ -2004,7 +2009,6 @@ def test_create_service_project_attachment_non_empty_request_with_auto_populated
     request = apphub_service.CreateServiceProjectAttachmentRequest(
         parent="parent_value",
         service_project_attachment_id="service_project_attachment_id_value",
-        request_id="request_id_value",
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
@@ -2020,7 +2024,6 @@ def test_create_service_project_attachment_non_empty_request_with_auto_populated
         request_msg = apphub_service.CreateServiceProjectAttachmentRequest(
             parent="parent_value",
             service_project_attachment_id="service_project_attachment_id_value",
-            request_id="request_id_value",
         )
         assert args[0] == request_msg
 
@@ -2751,7 +2754,6 @@ def test_delete_service_project_attachment_non_empty_request_with_auto_populated
     # if they meet the requirements of AIP 4235.
     request = apphub_service.DeleteServiceProjectAttachmentRequest(
         name="name_value",
-        request_id="request_id_value",
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
@@ -2766,7 +2768,6 @@ def test_delete_service_project_attachment_non_empty_request_with_auto_populated
         _, args, _ = call.mock_calls[0]
         request_msg = apphub_service.DeleteServiceProjectAttachmentRequest(
             name="name_value",
-            request_id="request_id_value",
         )
         assert args[0] == request_msg
 
@@ -5225,7 +5226,6 @@ def test_create_service_non_empty_request_with_auto_populated_field():
     request = apphub_service.CreateServiceRequest(
         parent="parent_value",
         service_id="service_id_value",
-        request_id="request_id_value",
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
@@ -5239,7 +5239,6 @@ def test_create_service_non_empty_request_with_auto_populated_field():
         request_msg = apphub_service.CreateServiceRequest(
             parent="parent_value",
             service_id="service_id_value",
-            request_id="request_id_value",
         )
         assert args[0] == request_msg
 
@@ -5914,9 +5913,7 @@ def test_update_service_non_empty_request_with_auto_populated_field():
     # Populate all string fields in the request which are not UUID4
     # since we want to check that UUID4 are populated automatically
     # if they meet the requirements of AIP 4235.
-    request = apphub_service.UpdateServiceRequest(
-        request_id="request_id_value",
-    )
+    request = apphub_service.UpdateServiceRequest()
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client.transport.update_service), "__call__") as call:
@@ -5926,9 +5923,7 @@ def test_update_service_non_empty_request_with_auto_populated_field():
         client.update_service(request=request)
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        request_msg = apphub_service.UpdateServiceRequest(
-            request_id="request_id_value",
-        )
+        request_msg = apphub_service.UpdateServiceRequest()
         assert args[0] == request_msg
 
 
@@ -6254,7 +6249,6 @@ def test_delete_service_non_empty_request_with_auto_populated_field():
     # if they meet the requirements of AIP 4235.
     request = apphub_service.DeleteServiceRequest(
         name="name_value",
-        request_id="request_id_value",
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
@@ -6267,7 +6261,6 @@ def test_delete_service_non_empty_request_with_auto_populated_field():
         _, args, _ = call.mock_calls[0]
         request_msg = apphub_service.DeleteServiceRequest(
             name="name_value",
-            request_id="request_id_value",
         )
         assert args[0] == request_msg
 
@@ -8370,7 +8363,6 @@ def test_create_workload_non_empty_request_with_auto_populated_field():
     request = apphub_service.CreateWorkloadRequest(
         parent="parent_value",
         workload_id="workload_id_value",
-        request_id="request_id_value",
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
@@ -8384,7 +8376,6 @@ def test_create_workload_non_empty_request_with_auto_populated_field():
         request_msg = apphub_service.CreateWorkloadRequest(
             parent="parent_value",
             workload_id="workload_id_value",
-            request_id="request_id_value",
         )
         assert args[0] == request_msg
 
@@ -9059,9 +9050,7 @@ def test_update_workload_non_empty_request_with_auto_populated_field():
     # Populate all string fields in the request which are not UUID4
     # since we want to check that UUID4 are populated automatically
     # if they meet the requirements of AIP 4235.
-    request = apphub_service.UpdateWorkloadRequest(
-        request_id="request_id_value",
-    )
+    request = apphub_service.UpdateWorkloadRequest()
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client.transport.update_workload), "__call__") as call:
@@ -9071,9 +9060,7 @@ def test_update_workload_non_empty_request_with_auto_populated_field():
         client.update_workload(request=request)
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        request_msg = apphub_service.UpdateWorkloadRequest(
-            request_id="request_id_value",
-        )
+        request_msg = apphub_service.UpdateWorkloadRequest()
         assert args[0] == request_msg
 
 
@@ -9399,7 +9386,6 @@ def test_delete_workload_non_empty_request_with_auto_populated_field():
     # if they meet the requirements of AIP 4235.
     request = apphub_service.DeleteWorkloadRequest(
         name="name_value",
-        request_id="request_id_value",
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
@@ -9412,7 +9398,6 @@ def test_delete_workload_non_empty_request_with_auto_populated_field():
         _, args, _ = call.mock_calls[0]
         request_msg = apphub_service.DeleteWorkloadRequest(
             name="name_value",
-            request_id="request_id_value",
         )
         assert args[0] == request_msg
 
@@ -10285,7 +10270,6 @@ def test_create_application_non_empty_request_with_auto_populated_field():
     request = apphub_service.CreateApplicationRequest(
         parent="parent_value",
         application_id="application_id_value",
-        request_id="request_id_value",
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
@@ -10301,7 +10285,6 @@ def test_create_application_non_empty_request_with_auto_populated_field():
         request_msg = apphub_service.CreateApplicationRequest(
             parent="parent_value",
             application_id="application_id_value",
-            request_id="request_id_value",
         )
         assert args[0] == request_msg
 
@@ -10992,9 +10975,7 @@ def test_update_application_non_empty_request_with_auto_populated_field():
     # Populate all string fields in the request which are not UUID4
     # since we want to check that UUID4 are populated automatically
     # if they meet the requirements of AIP 4235.
-    request = apphub_service.UpdateApplicationRequest(
-        request_id="request_id_value",
-    )
+    request = apphub_service.UpdateApplicationRequest()
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -11006,9 +10987,7 @@ def test_update_application_non_empty_request_with_auto_populated_field():
         client.update_application(request=request)
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        request_msg = apphub_service.UpdateApplicationRequest(
-            request_id="request_id_value",
-        )
+        request_msg = apphub_service.UpdateApplicationRequest()
         assert args[0] == request_msg
 
 
@@ -11350,7 +11329,6 @@ def test_delete_application_non_empty_request_with_auto_populated_field():
     # if they meet the requirements of AIP 4235.
     request = apphub_service.DeleteApplicationRequest(
         name="name_value",
-        request_id="request_id_value",
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
@@ -11365,7 +11343,6 @@ def test_delete_application_non_empty_request_with_auto_populated_field():
         _, args, _ = call.mock_calls[0]
         request_msg = apphub_service.DeleteApplicationRequest(
             name="name_value",
-            request_id="request_id_value",
         )
         assert args[0] == request_msg
 
@@ -11648,6 +11625,1578 @@ async def test_delete_application_flattened_error_async():
             apphub_service.DeleteApplicationRequest(),
             name="name_value",
         )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        apphub_service.GetBoundaryRequest(),
+        {},
+    ],
+)
+def test_get_boundary(request_type, transport: str = "grpc"):
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.get_boundary), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = boundary.Boundary(
+            name="name_value",
+            type_=boundary.Boundary.Type.AUTOMATIC,
+            crm_node="crm_node_value",
+        )
+        response = client.get_boundary(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = apphub_service.GetBoundaryRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, boundary.Boundary)
+    assert response.name == "name_value"
+    assert response.type_ == boundary.Boundary.Type.AUTOMATIC
+
+
+def test_get_boundary_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = apphub_service.GetBoundaryRequest(
+        name="name_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.get_boundary), "__call__") as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.get_boundary(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = apphub_service.GetBoundaryRequest(
+            name="name_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_get_boundary_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = AppHubClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._transport.get_boundary in client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.get_boundary] = mock_rpc
+        request = {}
+        client.get_boundary(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.get_boundary(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_get_boundary_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = AppHubAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.get_boundary
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.get_boundary
+        ] = mock_rpc
+
+        request = {}
+        await client.get_boundary(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.get_boundary(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        apphub_service.GetBoundaryRequest(),
+        {},
+    ],
+)
+async def test_get_boundary_async(request_type, transport: str = "grpc_asyncio"):
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.get_boundary), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            boundary.Boundary(
+                name="name_value",
+                type_=boundary.Boundary.Type.AUTOMATIC,
+            )
+        )
+        response = await client.get_boundary(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = apphub_service.GetBoundaryRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, boundary.Boundary)
+    assert response.name == "name_value"
+    assert response.type_ == boundary.Boundary.Type.AUTOMATIC
+
+
+def test_get_boundary_field_headers():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = apphub_service.GetBoundaryRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.get_boundary), "__call__") as call:
+        call.return_value = boundary.Boundary()
+        client.get_boundary(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_get_boundary_field_headers_async():
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = apphub_service.GetBoundaryRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.get_boundary), "__call__") as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(boundary.Boundary())
+        await client.get_boundary(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_get_boundary_flattened():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.get_boundary), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = boundary.Boundary()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.get_boundary(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+def test_get_boundary_flattened_error():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.get_boundary(
+            apphub_service.GetBoundaryRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_get_boundary_flattened_async():
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.get_boundary), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = boundary.Boundary()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(boundary.Boundary())
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.get_boundary(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_get_boundary_flattened_error_async():
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.get_boundary(
+            apphub_service.GetBoundaryRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        apphub_service.UpdateBoundaryRequest(),
+        {},
+    ],
+)
+def test_update_boundary(request_type, transport: str = "grpc"):
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.update_boundary), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/spam")
+        response = client.update_boundary(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = apphub_service.UpdateBoundaryRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_update_boundary_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = apphub_service.UpdateBoundaryRequest()
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.update_boundary), "__call__") as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.update_boundary(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = apphub_service.UpdateBoundaryRequest()
+        assert args[0] == request_msg
+
+
+def test_update_boundary_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = AppHubClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._transport.update_boundary in client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.update_boundary] = mock_rpc
+        request = {}
+        client.update_boundary(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.update_boundary(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_update_boundary_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = AppHubAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.update_boundary
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.update_boundary
+        ] = mock_rpc
+
+        request = {}
+        await client.update_boundary(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        await client.update_boundary(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        apphub_service.UpdateBoundaryRequest(),
+        {},
+    ],
+)
+async def test_update_boundary_async(request_type, transport: str = "grpc_asyncio"):
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.update_boundary), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        response = await client.update_boundary(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = apphub_service.UpdateBoundaryRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_update_boundary_field_headers():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = apphub_service.UpdateBoundaryRequest()
+
+    request.boundary.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.update_boundary), "__call__") as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.update_boundary(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "boundary.name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_update_boundary_field_headers_async():
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = apphub_service.UpdateBoundaryRequest()
+
+    request.boundary.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.update_boundary), "__call__") as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/op")
+        )
+        await client.update_boundary(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "boundary.name=name_value",
+    ) in kw["metadata"]
+
+
+def test_update_boundary_flattened():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.update_boundary), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.update_boundary(
+            boundary=gca_boundary.Boundary(crm_node="crm_node_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].boundary
+        mock_val = gca_boundary.Boundary(crm_node="crm_node_value")
+        assert arg == mock_val
+        arg = args[0].update_mask
+        mock_val = field_mask_pb2.FieldMask(paths=["paths_value"])
+        assert arg == mock_val
+
+
+def test_update_boundary_flattened_error():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.update_boundary(
+            apphub_service.UpdateBoundaryRequest(),
+            boundary=gca_boundary.Boundary(crm_node="crm_node_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+
+
+@pytest.mark.asyncio
+async def test_update_boundary_flattened_async():
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.update_boundary), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.update_boundary(
+            boundary=gca_boundary.Boundary(crm_node="crm_node_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].boundary
+        mock_val = gca_boundary.Boundary(crm_node="crm_node_value")
+        assert arg == mock_val
+        arg = args[0].update_mask
+        mock_val = field_mask_pb2.FieldMask(paths=["paths_value"])
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_update_boundary_flattened_error_async():
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.update_boundary(
+            apphub_service.UpdateBoundaryRequest(),
+            boundary=gca_boundary.Boundary(crm_node="crm_node_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        apphub_service.GetExtendedMetadataSchemaRequest(),
+        {},
+    ],
+)
+def test_get_extended_metadata_schema(request_type, transport: str = "grpc"):
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_extended_metadata_schema), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = extended_metadata_schema.ExtendedMetadataSchema(
+            name="name_value",
+            json_schema="json_schema_value",
+            schema_version=1494,
+        )
+        response = client.get_extended_metadata_schema(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = apphub_service.GetExtendedMetadataSchemaRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, extended_metadata_schema.ExtendedMetadataSchema)
+    assert response.name == "name_value"
+    assert response.json_schema == "json_schema_value"
+    assert response.schema_version == 1494
+
+
+def test_get_extended_metadata_schema_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = apphub_service.GetExtendedMetadataSchemaRequest(
+        name="name_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_extended_metadata_schema), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.get_extended_metadata_schema(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = apphub_service.GetExtendedMetadataSchemaRequest(
+            name="name_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_get_extended_metadata_schema_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = AppHubClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.get_extended_metadata_schema
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.get_extended_metadata_schema
+        ] = mock_rpc
+        request = {}
+        client.get_extended_metadata_schema(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.get_extended_metadata_schema(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_get_extended_metadata_schema_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = AppHubAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.get_extended_metadata_schema
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.get_extended_metadata_schema
+        ] = mock_rpc
+
+        request = {}
+        await client.get_extended_metadata_schema(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.get_extended_metadata_schema(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        apphub_service.GetExtendedMetadataSchemaRequest(),
+        {},
+    ],
+)
+async def test_get_extended_metadata_schema_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_extended_metadata_schema), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            extended_metadata_schema.ExtendedMetadataSchema(
+                name="name_value",
+                json_schema="json_schema_value",
+                schema_version=1494,
+            )
+        )
+        response = await client.get_extended_metadata_schema(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = apphub_service.GetExtendedMetadataSchemaRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, extended_metadata_schema.ExtendedMetadataSchema)
+    assert response.name == "name_value"
+    assert response.json_schema == "json_schema_value"
+    assert response.schema_version == 1494
+
+
+def test_get_extended_metadata_schema_field_headers():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = apphub_service.GetExtendedMetadataSchemaRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_extended_metadata_schema), "__call__"
+    ) as call:
+        call.return_value = extended_metadata_schema.ExtendedMetadataSchema()
+        client.get_extended_metadata_schema(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_get_extended_metadata_schema_field_headers_async():
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = apphub_service.GetExtendedMetadataSchemaRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_extended_metadata_schema), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            extended_metadata_schema.ExtendedMetadataSchema()
+        )
+        await client.get_extended_metadata_schema(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_get_extended_metadata_schema_flattened():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_extended_metadata_schema), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = extended_metadata_schema.ExtendedMetadataSchema()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.get_extended_metadata_schema(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+def test_get_extended_metadata_schema_flattened_error():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.get_extended_metadata_schema(
+            apphub_service.GetExtendedMetadataSchemaRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_get_extended_metadata_schema_flattened_async():
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_extended_metadata_schema), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = extended_metadata_schema.ExtendedMetadataSchema()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            extended_metadata_schema.ExtendedMetadataSchema()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.get_extended_metadata_schema(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_get_extended_metadata_schema_flattened_error_async():
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.get_extended_metadata_schema(
+            apphub_service.GetExtendedMetadataSchemaRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        apphub_service.ListExtendedMetadataSchemasRequest(),
+        {},
+    ],
+)
+def test_list_extended_metadata_schemas(request_type, transport: str = "grpc"):
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_extended_metadata_schemas), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = apphub_service.ListExtendedMetadataSchemasResponse(
+            next_page_token="next_page_token_value",
+        )
+        response = client.list_extended_metadata_schemas(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = apphub_service.ListExtendedMetadataSchemasRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.ListExtendedMetadataSchemasPager)
+    assert response.next_page_token == "next_page_token_value"
+
+
+def test_list_extended_metadata_schemas_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = apphub_service.ListExtendedMetadataSchemasRequest(
+        parent="parent_value",
+        page_token="page_token_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_extended_metadata_schemas), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.list_extended_metadata_schemas(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = apphub_service.ListExtendedMetadataSchemasRequest(
+            parent="parent_value",
+            page_token="page_token_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_list_extended_metadata_schemas_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = AppHubClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.list_extended_metadata_schemas
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.list_extended_metadata_schemas
+        ] = mock_rpc
+        request = {}
+        client.list_extended_metadata_schemas(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.list_extended_metadata_schemas(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_list_extended_metadata_schemas_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = AppHubAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.list_extended_metadata_schemas
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.list_extended_metadata_schemas
+        ] = mock_rpc
+
+        request = {}
+        await client.list_extended_metadata_schemas(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.list_extended_metadata_schemas(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        apphub_service.ListExtendedMetadataSchemasRequest(),
+        {},
+    ],
+)
+async def test_list_extended_metadata_schemas_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_extended_metadata_schemas), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                next_page_token="next_page_token_value",
+            )
+        )
+        response = await client.list_extended_metadata_schemas(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = apphub_service.ListExtendedMetadataSchemasRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.ListExtendedMetadataSchemasAsyncPager)
+    assert response.next_page_token == "next_page_token_value"
+
+
+def test_list_extended_metadata_schemas_field_headers():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = apphub_service.ListExtendedMetadataSchemasRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_extended_metadata_schemas), "__call__"
+    ) as call:
+        call.return_value = apphub_service.ListExtendedMetadataSchemasResponse()
+        client.list_extended_metadata_schemas(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_list_extended_metadata_schemas_field_headers_async():
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = apphub_service.ListExtendedMetadataSchemasRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_extended_metadata_schemas), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            apphub_service.ListExtendedMetadataSchemasResponse()
+        )
+        await client.list_extended_metadata_schemas(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+def test_list_extended_metadata_schemas_flattened():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_extended_metadata_schemas), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = apphub_service.ListExtendedMetadataSchemasResponse()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.list_extended_metadata_schemas(
+            parent="parent_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+
+
+def test_list_extended_metadata_schemas_flattened_error():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.list_extended_metadata_schemas(
+            apphub_service.ListExtendedMetadataSchemasRequest(),
+            parent="parent_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_list_extended_metadata_schemas_flattened_async():
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_extended_metadata_schemas), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = apphub_service.ListExtendedMetadataSchemasResponse()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            apphub_service.ListExtendedMetadataSchemasResponse()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.list_extended_metadata_schemas(
+            parent="parent_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_list_extended_metadata_schemas_flattened_error_async():
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.list_extended_metadata_schemas(
+            apphub_service.ListExtendedMetadataSchemasRequest(),
+            parent="parent_value",
+        )
+
+
+def test_list_extended_metadata_schemas_pager(transport_name: str = "grpc"):
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_extended_metadata_schemas), "__call__"
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                ],
+                next_page_token="abc",
+            ),
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[],
+                next_page_token="def",
+            ),
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                ],
+                next_page_token="ghi",
+            ),
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                ],
+            ),
+            RuntimeError,
+        )
+
+        expected_metadata = ()
+        retry = retries.Retry()
+        timeout = 5
+        expected_metadata = tuple(expected_metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", ""),)),
+        )
+        pager = client.list_extended_metadata_schemas(
+            request={}, retry=retry, timeout=timeout
+        )
+
+        assert pager._metadata == expected_metadata
+        assert pager._retry == retry
+        assert pager._timeout == timeout
+
+        assert pager.next_page_token == "abc"
+        assert str(pager).startswith(f"{pager.__class__.__name__}<")
+
+        results = list(pager)
+        assert len(results) == 6
+        assert all(
+            isinstance(i, extended_metadata_schema.ExtendedMetadataSchema)
+            for i in results
+        )
+
+
+def test_list_extended_metadata_schemas_pages(transport_name: str = "grpc"):
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_extended_metadata_schemas), "__call__"
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                ],
+                next_page_token="abc",
+            ),
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[],
+                next_page_token="def",
+            ),
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                ],
+                next_page_token="ghi",
+            ),
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                ],
+            ),
+            RuntimeError,
+        )
+        pages = list(client.list_extended_metadata_schemas(request={}).pages)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+@pytest.mark.asyncio
+async def test_list_extended_metadata_schemas_async_pager():
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_extended_metadata_schemas),
+        "__call__",
+        new_callable=mock.AsyncMock,
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                ],
+                next_page_token="abc",
+            ),
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[],
+                next_page_token="def",
+            ),
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                ],
+                next_page_token="ghi",
+            ),
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                ],
+            ),
+            RuntimeError,
+        )
+        async_pager = await client.list_extended_metadata_schemas(
+            request={},
+        )
+        assert async_pager.next_page_token == "abc"
+        assert str(async_pager).startswith(f"{async_pager.__class__.__name__}<")
+
+        responses = []
+        async for response in async_pager:  # pragma: no branch
+            responses.append(response)
+
+        assert len(responses) == 6
+        assert all(
+            isinstance(i, extended_metadata_schema.ExtendedMetadataSchema)
+            for i in responses
+        )
+
+
+@pytest.mark.asyncio
+async def test_list_extended_metadata_schemas_async_pages():
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_extended_metadata_schemas),
+        "__call__",
+        new_callable=mock.AsyncMock,
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                ],
+                next_page_token="abc",
+            ),
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[],
+                next_page_token="def",
+            ),
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                ],
+                next_page_token="ghi",
+            ),
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                ],
+            ),
+            RuntimeError,
+        )
+        pages = []
+        async for page_ in (
+            await client.list_extended_metadata_schemas(request={})
+        ).pages:
+            pages.append(page_)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
 
 
 def test_lookup_service_project_attachment_rest_use_cached_wrapped_rpc():
@@ -16997,6 +18546,786 @@ def test_delete_application_rest_flattened_error(transport: str = "rest"):
         )
 
 
+def test_get_boundary_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = AppHubClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._transport.get_boundary in client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.get_boundary] = mock_rpc
+
+        request = {}
+        client.get_boundary(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.get_boundary(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_get_boundary_rest_required_fields(
+    request_type=apphub_service.GetBoundaryRequest,
+):
+    transport_class = transports.AppHubRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseGetBoundary,
+        "_BaseGetBoundary__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["name"] = "name_value"
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = boundary.Boundary()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = boundary.Boundary.pb(return_value)
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.get_boundary(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_get_boundary_rest_flattened():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = boundary.Boundary()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"name": "projects/sample1/locations/sample2/boundary"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = boundary.Boundary.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.get_boundary(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{name=projects/*/locations/*/boundary}" % client.transport._host,
+            args[1],
+        )
+
+
+def test_get_boundary_rest_flattened_error(transport: str = "rest"):
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.get_boundary(
+            apphub_service.GetBoundaryRequest(),
+            name="name_value",
+        )
+
+
+def test_update_boundary_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = AppHubClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._transport.update_boundary in client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.update_boundary] = mock_rpc
+
+        request = {}
+        client.update_boundary(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods build a cached wrapper on first rpc call
+        # subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.update_boundary(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_update_boundary_rest_required_fields(
+    request_type=apphub_service.UpdateBoundaryRequest,
+):
+    transport_class = transports.AppHubRestTransport
+
+    request_init = {}
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseUpdateBoundary,
+        "_BaseUpdateBoundary__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(
+        (
+            "requestId",
+            "updateMask",
+        )
+    )
+
+    # verify required fields with non-default values are left alone
+
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = operations_pb2.Operation(name="operations/spam")
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "patch",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.update_boundary(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_update_boundary_rest_flattened():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "boundary": {"name": "projects/sample1/locations/sample2/boundary"}
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            boundary=gca_boundary.Boundary(crm_node="crm_node_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.update_boundary(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{boundary.name=projects/*/locations/*/boundary}"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_update_boundary_rest_flattened_error(transport: str = "rest"):
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.update_boundary(
+            apphub_service.UpdateBoundaryRequest(),
+            boundary=gca_boundary.Boundary(crm_node="crm_node_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+
+
+def test_get_extended_metadata_schema_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = AppHubClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.get_extended_metadata_schema
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.get_extended_metadata_schema
+        ] = mock_rpc
+
+        request = {}
+        client.get_extended_metadata_schema(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.get_extended_metadata_schema(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_get_extended_metadata_schema_rest_required_fields(
+    request_type=apphub_service.GetExtendedMetadataSchemaRequest,
+):
+    transport_class = transports.AppHubRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseGetExtendedMetadataSchema,
+        "_BaseGetExtendedMetadataSchema__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["name"] = "name_value"
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = extended_metadata_schema.ExtendedMetadataSchema()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = extended_metadata_schema.ExtendedMetadataSchema.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.get_extended_metadata_schema(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_get_extended_metadata_schema_rest_flattened():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = extended_metadata_schema.ExtendedMetadataSchema()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/extendedMetadataSchemas/sample3"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = extended_metadata_schema.ExtendedMetadataSchema.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.get_extended_metadata_schema(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{name=projects/*/locations/*/extendedMetadataSchemas/**}"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_get_extended_metadata_schema_rest_flattened_error(transport: str = "rest"):
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.get_extended_metadata_schema(
+            apphub_service.GetExtendedMetadataSchemaRequest(),
+            name="name_value",
+        )
+
+
+def test_list_extended_metadata_schemas_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = AppHubClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.list_extended_metadata_schemas
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.list_extended_metadata_schemas
+        ] = mock_rpc
+
+        request = {}
+        client.list_extended_metadata_schemas(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.list_extended_metadata_schemas(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_list_extended_metadata_schemas_rest_required_fields(
+    request_type=apphub_service.ListExtendedMetadataSchemasRequest,
+):
+    transport_class = transports.AppHubRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseListExtendedMetadataSchemas,
+        "_BaseListExtendedMetadataSchemas__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(
+        (
+            "pageSize",
+            "pageToken",
+        )
+    )
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = apphub_service.ListExtendedMetadataSchemasResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = apphub_service.ListExtendedMetadataSchemasResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.list_extended_metadata_schemas(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_list_extended_metadata_schemas_rest_flattened():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = apphub_service.ListExtendedMetadataSchemasResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "projects/sample1/locations/sample2"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = apphub_service.ListExtendedMetadataSchemasResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.list_extended_metadata_schemas(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=projects/*/locations/*}/extendedMetadataSchemas"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_list_extended_metadata_schemas_rest_flattened_error(transport: str = "rest"):
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.list_extended_metadata_schemas(
+            apphub_service.ListExtendedMetadataSchemasRequest(),
+            parent="parent_value",
+        )
+
+
+def test_list_extended_metadata_schemas_rest_pager(transport: str = "rest"):
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # TODO(kbandes): remove this mock unless there's a good reason for it.
+        # with mock.patch.object(path_template, 'transcode') as transcode:
+        # Set the response as a series of pages
+        response = (
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                ],
+                next_page_token="abc",
+            ),
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[],
+                next_page_token="def",
+            ),
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                ],
+                next_page_token="ghi",
+            ),
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                extended_metadata_schemas=[
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                    extended_metadata_schema.ExtendedMetadataSchema(),
+                ],
+            ),
+        )
+        # Two responses for two calls
+        response = response + response
+
+        # Wrap the values into proper Response objs
+        response = tuple(
+            apphub_service.ListExtendedMetadataSchemasResponse.to_json(x)
+            for x in response
+        )
+        return_values = tuple(Response() for i in response)
+        for return_val, response_val in zip(return_values, response):
+            return_val._content = response_val.encode("UTF-8")
+            return_val.status_code = 200
+        req.side_effect = return_values
+
+        sample_request = {"parent": "projects/sample1/locations/sample2"}
+
+        pager = client.list_extended_metadata_schemas(request=sample_request)
+
+        assert pager.next_page_token == "abc"
+        assert str(pager).startswith(f"{pager.__class__.__name__}<")
+
+        results = list(pager)
+        assert len(results) == 6
+        assert all(
+            isinstance(i, extended_metadata_schema.ExtendedMetadataSchema)
+            for i in results
+        )
+
+        pages = list(
+            client.list_extended_metadata_schemas(request=sample_request).pages
+        )
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
 def test_credentials_transport_error():
     # It is an error to provide credentials and a transport instance.
     transport = transports.AppHubGrpcTransport(
@@ -17672,6 +20001,90 @@ def test_delete_application_empty_call_grpc():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = apphub_service.DeleteApplicationRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_get_boundary_empty_call_grpc():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.get_boundary), "__call__") as call:
+        call.return_value = boundary.Boundary()
+        client.get_boundary(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = apphub_service.GetBoundaryRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_update_boundary_empty_call_grpc():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.update_boundary), "__call__") as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.update_boundary(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = apphub_service.UpdateBoundaryRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_get_extended_metadata_schema_empty_call_grpc():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_extended_metadata_schema), "__call__"
+    ) as call:
+        call.return_value = extended_metadata_schema.ExtendedMetadataSchema()
+        client.get_extended_metadata_schema(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = apphub_service.GetExtendedMetadataSchemaRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_list_extended_metadata_schemas_empty_call_grpc():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_extended_metadata_schemas), "__call__"
+    ) as call:
+        call.return_value = apphub_service.ListExtendedMetadataSchemasResponse()
+        client.list_extended_metadata_schemas(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = apphub_service.ListExtendedMetadataSchemasRequest()
         assert args[0] == request_msg
 
 
@@ -18413,6 +20826,115 @@ async def test_delete_application_empty_call_grpc_asyncio():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = apphub_service.DeleteApplicationRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_get_boundary_empty_call_grpc_asyncio():
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.get_boundary), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            boundary.Boundary(
+                name="name_value",
+                type_=boundary.Boundary.Type.AUTOMATIC,
+            )
+        )
+        await client.get_boundary(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = apphub_service.GetBoundaryRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_update_boundary_empty_call_grpc_asyncio():
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.update_boundary), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        await client.update_boundary(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = apphub_service.UpdateBoundaryRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_get_extended_metadata_schema_empty_call_grpc_asyncio():
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_extended_metadata_schema), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            extended_metadata_schema.ExtendedMetadataSchema(
+                name="name_value",
+                json_schema="json_schema_value",
+                schema_version=1494,
+            )
+        )
+        await client.get_extended_metadata_schema(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = apphub_service.GetExtendedMetadataSchemaRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_list_extended_metadata_schemas_empty_call_grpc_asyncio():
+    client = AppHubAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_extended_metadata_schemas), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            apphub_service.ListExtendedMetadataSchemasResponse(
+                next_page_token="next_page_token_value",
+            )
+        )
+        await client.list_extended_metadata_schemas(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = apphub_service.ListExtendedMetadataSchemasRequest()
         assert args[0] == request_msg
 
 
@@ -19890,6 +22412,10 @@ def test_create_service_rest_call_success(request_type):
             "gcp_project": "gcp_project_value",
             "location": "location_value",
             "zone": "zone_value",
+            "functional_type": {"type_": 1},
+            "registration_type": {"type_": 1},
+            "extended_metadata": {},
+            "identity": {"principal": "principal_value"},
         },
         "attributes": {
             "criticality": {"type_": 1},
@@ -20249,6 +22775,10 @@ def test_update_service_rest_call_success(request_type):
             "gcp_project": "gcp_project_value",
             "location": "location_value",
             "zone": "zone_value",
+            "functional_type": {"type_": 1},
+            "registration_type": {"type_": 1},
+            "extended_metadata": {},
+            "identity": {"principal": "principal_value"},
         },
         "attributes": {
             "criticality": {"type_": 1},
@@ -21128,6 +23658,9 @@ def test_create_workload_rest_call_success(request_type):
             "gcp_project": "gcp_project_value",
             "location": "location_value",
             "zone": "zone_value",
+            "functional_type": {"type_": 1},
+            "extended_metadata": {},
+            "identity": {"principal": "principal_value"},
         },
         "discovered_workload": "discovered_workload_value",
         "attributes": {
@@ -21489,6 +24022,9 @@ def test_update_workload_rest_call_success(request_type):
             "gcp_project": "gcp_project_value",
             "location": "location_value",
             "zone": "zone_value",
+            "functional_type": {"type_": 1},
+            "extended_metadata": {},
+            "identity": {"principal": "principal_value"},
         },
         "discovered_workload": "discovered_workload_value",
         "attributes": {
@@ -21975,6 +24511,8 @@ def test_create_application_rest_call_success(request_type):
         "scope": {"type_": 1},
         "uid": "uid_value",
         "state": 1,
+        "application_properties": {"extended_metadata": {}},
+        "application_type": {"type_": 1},
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -22328,6 +24866,8 @@ def test_update_application_rest_call_success(request_type):
         "scope": {"type_": 1},
         "uid": "uid_value",
         "state": 1,
+        "application_properties": {"extended_metadata": {}},
+        "application_type": {"type_": 1},
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -22590,6 +25130,608 @@ def test_delete_application_rest_interceptors(null_interceptor):
         post_with_metadata.return_value = operations_pb2.Operation(), metadata
 
         client.delete_application(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_get_boundary_rest_bad_request(request_type=apphub_service.GetBoundaryRequest):
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"name": "projects/sample1/locations/sample2/boundary"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.get_boundary(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        apphub_service.GetBoundaryRequest,
+        dict,
+    ],
+)
+def test_get_boundary_rest_call_success(request_type):
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"name": "projects/sample1/locations/sample2/boundary"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = boundary.Boundary(
+            name="name_value",
+            type_=boundary.Boundary.Type.AUTOMATIC,
+            crm_node="crm_node_value",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = boundary.Boundary.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.get_boundary(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, boundary.Boundary)
+    assert response.name == "name_value"
+    assert response.type_ == boundary.Boundary.Type.AUTOMATIC
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_get_boundary_rest_interceptors(null_interceptor):
+    transport = transports.AppHubRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.AppHubRestInterceptor(),
+    )
+    client = AppHubClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.AppHubRestInterceptor, "post_get_boundary"
+        ) as post,
+        mock.patch.object(
+            transports.AppHubRestInterceptor, "post_get_boundary_with_metadata"
+        ) as post_with_metadata,
+        mock.patch.object(transports.AppHubRestInterceptor, "pre_get_boundary") as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = apphub_service.GetBoundaryRequest.pb(
+            apphub_service.GetBoundaryRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = boundary.Boundary.to_json(boundary.Boundary())
+        req.return_value.content = return_value
+
+        request = apphub_service.GetBoundaryRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = boundary.Boundary()
+        post_with_metadata.return_value = boundary.Boundary(), metadata
+
+        client.get_boundary(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_update_boundary_rest_bad_request(
+    request_type=apphub_service.UpdateBoundaryRequest,
+):
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"boundary": {"name": "projects/sample1/locations/sample2/boundary"}}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.update_boundary(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        apphub_service.UpdateBoundaryRequest,
+        dict,
+    ],
+)
+def test_update_boundary_rest_call_success(request_type):
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"boundary": {"name": "projects/sample1/locations/sample2/boundary"}}
+    request_init["boundary"] = {
+        "crm_node": "crm_node_value",
+        "name": "projects/sample1/locations/sample2/boundary",
+        "create_time": {"seconds": 751, "nanos": 543},
+        "update_time": {},
+        "type_": 1,
+    }
+    # The version of a generated dependency at test runtime may differ from the version used during generation.
+    # Delete any fields which are not present in the current runtime dependency
+    # See https://github.com/googleapis/gapic-generator-python/issues/1748
+
+    # Determine if the message type is proto-plus or protobuf
+    test_field = apphub_service.UpdateBoundaryRequest.meta.fields["boundary"]
+
+    def get_message_fields(field):
+        # Given a field which is a message (composite type), return a list with
+        # all the fields of the message.
+        # If the field is not a composite type, return an empty list.
+        message_fields = []
+
+        if hasattr(field, "message") and field.message:
+            is_field_type_proto_plus_type = not hasattr(field.message, "DESCRIPTOR")
+
+            if is_field_type_proto_plus_type:
+                message_fields = field.message.meta.fields.values()
+            # Add `# pragma: NO COVER` because there may not be any `*_pb2` field types
+            else:  # pragma: NO COVER
+                message_fields = field.message.DESCRIPTOR.fields
+        return message_fields
+
+    runtime_nested_fields = [
+        (field.name, nested_field.name)
+        for field in get_message_fields(test_field)
+        for nested_field in get_message_fields(field)
+    ]
+
+    subfields_not_in_runtime = []
+
+    # For each item in the sample request, create a list of sub fields which are not present at runtime
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for field, value in request_init["boundary"].items():  # pragma: NO COVER
+        result = None
+        is_repeated = False
+        # For repeated fields
+        if isinstance(value, list) and len(value):
+            is_repeated = True
+            result = value[0]
+        # For fields where the type is another message
+        if isinstance(value, dict):
+            result = value
+
+        if result and hasattr(result, "keys"):
+            for subfield in result.keys():
+                if (field, subfield) not in runtime_nested_fields:
+                    subfields_not_in_runtime.append(
+                        {
+                            "field": field,
+                            "subfield": subfield,
+                            "is_repeated": is_repeated,
+                        }
+                    )
+
+    # Remove fields from the sample request which are not present in the runtime version of the dependency
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for subfield_to_delete in subfields_not_in_runtime:  # pragma: NO COVER
+        field = subfield_to_delete.get("field")
+        field_repeated = subfield_to_delete.get("is_repeated")
+        subfield = subfield_to_delete.get("subfield")
+        if subfield:
+            if field_repeated:
+                for i in range(0, len(request_init["boundary"][field])):
+                    del request_init["boundary"][field][i][subfield]
+            else:
+                del request_init["boundary"][field][subfield]
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.update_boundary(request)
+
+    # Establish that the response is the type that we expect.
+    json_return_value = json_format.MessageToJson(return_value)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_update_boundary_rest_interceptors(null_interceptor):
+    transport = transports.AppHubRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.AppHubRestInterceptor(),
+    )
+    client = AppHubClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(operation.Operation, "_set_result_from_operation"),
+        mock.patch.object(
+            transports.AppHubRestInterceptor, "post_update_boundary"
+        ) as post,
+        mock.patch.object(
+            transports.AppHubRestInterceptor, "post_update_boundary_with_metadata"
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.AppHubRestInterceptor, "pre_update_boundary"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = apphub_service.UpdateBoundaryRequest.pb(
+            apphub_service.UpdateBoundaryRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = json_format.MessageToJson(operations_pb2.Operation())
+        req.return_value.content = return_value
+
+        request = apphub_service.UpdateBoundaryRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = operations_pb2.Operation()
+        post_with_metadata.return_value = operations_pb2.Operation(), metadata
+
+        client.update_boundary(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_get_extended_metadata_schema_rest_bad_request(
+    request_type=apphub_service.GetExtendedMetadataSchemaRequest,
+):
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/extendedMetadataSchemas/sample3"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.get_extended_metadata_schema(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        apphub_service.GetExtendedMetadataSchemaRequest,
+        dict,
+    ],
+)
+def test_get_extended_metadata_schema_rest_call_success(request_type):
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/extendedMetadataSchemas/sample3"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = extended_metadata_schema.ExtendedMetadataSchema(
+            name="name_value",
+            json_schema="json_schema_value",
+            schema_version=1494,
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = extended_metadata_schema.ExtendedMetadataSchema.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.get_extended_metadata_schema(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, extended_metadata_schema.ExtendedMetadataSchema)
+    assert response.name == "name_value"
+    assert response.json_schema == "json_schema_value"
+    assert response.schema_version == 1494
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_get_extended_metadata_schema_rest_interceptors(null_interceptor):
+    transport = transports.AppHubRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.AppHubRestInterceptor(),
+    )
+    client = AppHubClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.AppHubRestInterceptor, "post_get_extended_metadata_schema"
+        ) as post,
+        mock.patch.object(
+            transports.AppHubRestInterceptor,
+            "post_get_extended_metadata_schema_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.AppHubRestInterceptor, "pre_get_extended_metadata_schema"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = apphub_service.GetExtendedMetadataSchemaRequest.pb(
+            apphub_service.GetExtendedMetadataSchemaRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = extended_metadata_schema.ExtendedMetadataSchema.to_json(
+            extended_metadata_schema.ExtendedMetadataSchema()
+        )
+        req.return_value.content = return_value
+
+        request = apphub_service.GetExtendedMetadataSchemaRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = extended_metadata_schema.ExtendedMetadataSchema()
+        post_with_metadata.return_value = (
+            extended_metadata_schema.ExtendedMetadataSchema(),
+            metadata,
+        )
+
+        client.get_extended_metadata_schema(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_list_extended_metadata_schemas_rest_bad_request(
+    request_type=apphub_service.ListExtendedMetadataSchemasRequest,
+):
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "projects/sample1/locations/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.list_extended_metadata_schemas(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        apphub_service.ListExtendedMetadataSchemasRequest,
+        dict,
+    ],
+)
+def test_list_extended_metadata_schemas_rest_call_success(request_type):
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "projects/sample1/locations/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = apphub_service.ListExtendedMetadataSchemasResponse(
+            next_page_token="next_page_token_value",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = apphub_service.ListExtendedMetadataSchemasResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.list_extended_metadata_schemas(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.ListExtendedMetadataSchemasPager)
+    assert response.next_page_token == "next_page_token_value"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_list_extended_metadata_schemas_rest_interceptors(null_interceptor):
+    transport = transports.AppHubRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.AppHubRestInterceptor(),
+    )
+    client = AppHubClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.AppHubRestInterceptor, "post_list_extended_metadata_schemas"
+        ) as post,
+        mock.patch.object(
+            transports.AppHubRestInterceptor,
+            "post_list_extended_metadata_schemas_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.AppHubRestInterceptor, "pre_list_extended_metadata_schemas"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = apphub_service.ListExtendedMetadataSchemasRequest.pb(
+            apphub_service.ListExtendedMetadataSchemasRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = apphub_service.ListExtendedMetadataSchemasResponse.to_json(
+            apphub_service.ListExtendedMetadataSchemasResponse()
+        )
+        req.return_value.content = return_value
+
+        request = apphub_service.ListExtendedMetadataSchemasRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = apphub_service.ListExtendedMetadataSchemasResponse()
+        post_with_metadata.return_value = (
+            apphub_service.ListExtendedMetadataSchemasResponse(),
+            metadata,
+        )
+
+        client.list_extended_metadata_schemas(
             request,
             metadata=[
                 ("key", "val"),
@@ -23723,6 +26865,86 @@ def test_delete_application_empty_call_rest():
         assert args[0] == request_msg
 
 
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_get_boundary_empty_call_rest():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.get_boundary), "__call__") as call:
+        client.get_boundary(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = apphub_service.GetBoundaryRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_update_boundary_empty_call_rest():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.update_boundary), "__call__") as call:
+        client.update_boundary(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = apphub_service.UpdateBoundaryRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_get_extended_metadata_schema_empty_call_rest():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_extended_metadata_schema), "__call__"
+    ) as call:
+        client.get_extended_metadata_schema(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = apphub_service.GetExtendedMetadataSchemaRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_list_extended_metadata_schemas_empty_call_rest():
+    client = AppHubClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_extended_metadata_schemas), "__call__"
+    ) as call:
+        client.list_extended_metadata_schemas(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = apphub_service.ListExtendedMetadataSchemasRequest()
+        assert args[0] == request_msg
+
+
 def test_app_hub_rest_lro_client():
     client = AppHubClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -23800,6 +27022,10 @@ def test_app_hub_base_transport():
         "get_application",
         "update_application",
         "delete_application",
+        "get_boundary",
+        "update_boundary",
+        "get_extended_metadata_schema",
+        "list_extended_metadata_schemas",
         "set_iam_policy",
         "get_iam_policy",
         "test_iam_permissions",
@@ -24157,6 +27383,18 @@ def test_app_hub_client_transport_session_collision(transport_name):
     session1 = client1.transport.delete_application._session
     session2 = client2.transport.delete_application._session
     assert session1 != session2
+    session1 = client1.transport.get_boundary._session
+    session2 = client2.transport.get_boundary._session
+    assert session1 != session2
+    session1 = client1.transport.update_boundary._session
+    session2 = client2.transport.update_boundary._session
+    assert session1 != session2
+    session1 = client1.transport.get_extended_metadata_schema._session
+    session2 = client2.transport.get_extended_metadata_schema._session
+    assert session1 != session2
+    session1 = client1.transport.list_extended_metadata_schemas._session
+    session2 = client2.transport.list_extended_metadata_schemas._session
+    assert session1 != session2
 
 
 def test_app_hub_grpc_transport_channel():
@@ -24340,10 +27578,33 @@ def test_parse_application_path():
     assert expected == actual
 
 
-def test_discovered_service_path():
+def test_boundary_path():
     project = "cuttlefish"
     location = "mussel"
-    discovered_service = "winkle"
+    expected = "projects/{project}/locations/{location}/boundary".format(
+        project=project,
+        location=location,
+    )
+    actual = AppHubClient.boundary_path(project, location)
+    assert expected == actual
+
+
+def test_parse_boundary_path():
+    expected = {
+        "project": "winkle",
+        "location": "nautilus",
+    }
+    path = AppHubClient.boundary_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = AppHubClient.parse_boundary_path(path)
+    assert expected == actual
+
+
+def test_discovered_service_path():
+    project = "scallop"
+    location = "abalone"
+    discovered_service = "squid"
     expected = "projects/{project}/locations/{location}/discoveredServices/{discovered_service}".format(
         project=project,
         location=location,
@@ -24355,9 +27616,9 @@ def test_discovered_service_path():
 
 def test_parse_discovered_service_path():
     expected = {
-        "project": "nautilus",
-        "location": "scallop",
-        "discovered_service": "abalone",
+        "project": "clam",
+        "location": "whelk",
+        "discovered_service": "octopus",
     }
     path = AppHubClient.discovered_service_path(**expected)
 
@@ -24367,9 +27628,9 @@ def test_parse_discovered_service_path():
 
 
 def test_discovered_workload_path():
-    project = "squid"
-    location = "clam"
-    discovered_workload = "whelk"
+    project = "oyster"
+    location = "nudibranch"
+    discovered_workload = "cuttlefish"
     expected = "projects/{project}/locations/{location}/discoveredWorkloads/{discovered_workload}".format(
         project=project,
         location=location,
@@ -24383,9 +27644,9 @@ def test_discovered_workload_path():
 
 def test_parse_discovered_workload_path():
     expected = {
-        "project": "octopus",
-        "location": "oyster",
-        "discovered_workload": "nudibranch",
+        "project": "mussel",
+        "location": "winkle",
+        "discovered_workload": "nautilus",
     }
     path = AppHubClient.discovered_workload_path(**expected)
 
@@ -24394,11 +27655,39 @@ def test_parse_discovered_workload_path():
     assert expected == actual
 
 
+def test_extended_metadata_schema_path():
+    project = "scallop"
+    location = "abalone"
+    extended_metadata_schema = "squid"
+    expected = "projects/{project}/locations/{location}/extendedMetadataSchemas/{extended_metadata_schema}".format(
+        project=project,
+        location=location,
+        extended_metadata_schema=extended_metadata_schema,
+    )
+    actual = AppHubClient.extended_metadata_schema_path(
+        project, location, extended_metadata_schema
+    )
+    assert expected == actual
+
+
+def test_parse_extended_metadata_schema_path():
+    expected = {
+        "project": "clam",
+        "location": "whelk",
+        "extended_metadata_schema": "octopus",
+    }
+    path = AppHubClient.extended_metadata_schema_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = AppHubClient.parse_extended_metadata_schema_path(path)
+    assert expected == actual
+
+
 def test_service_path():
-    project = "cuttlefish"
-    location = "mussel"
-    application = "winkle"
-    service = "nautilus"
+    project = "oyster"
+    location = "nudibranch"
+    application = "cuttlefish"
+    service = "mussel"
     expected = "projects/{project}/locations/{location}/applications/{application}/services/{service}".format(
         project=project,
         location=location,
@@ -24411,10 +27700,10 @@ def test_service_path():
 
 def test_parse_service_path():
     expected = {
-        "project": "scallop",
-        "location": "abalone",
-        "application": "squid",
-        "service": "clam",
+        "project": "winkle",
+        "location": "nautilus",
+        "application": "scallop",
+        "service": "abalone",
     }
     path = AppHubClient.service_path(**expected)
 
@@ -24424,9 +27713,9 @@ def test_parse_service_path():
 
 
 def test_service_project_attachment_path():
-    project = "whelk"
-    location = "octopus"
-    service_project_attachment = "oyster"
+    project = "squid"
+    location = "clam"
+    service_project_attachment = "whelk"
     expected = "projects/{project}/locations/{location}/serviceProjectAttachments/{service_project_attachment}".format(
         project=project,
         location=location,
@@ -24440,9 +27729,9 @@ def test_service_project_attachment_path():
 
 def test_parse_service_project_attachment_path():
     expected = {
-        "project": "nudibranch",
-        "location": "cuttlefish",
-        "service_project_attachment": "mussel",
+        "project": "octopus",
+        "location": "oyster",
+        "service_project_attachment": "nudibranch",
     }
     path = AppHubClient.service_project_attachment_path(**expected)
 
@@ -24452,10 +27741,10 @@ def test_parse_service_project_attachment_path():
 
 
 def test_workload_path():
-    project = "winkle"
-    location = "nautilus"
-    application = "scallop"
-    workload = "abalone"
+    project = "cuttlefish"
+    location = "mussel"
+    application = "winkle"
+    workload = "nautilus"
     expected = "projects/{project}/locations/{location}/applications/{application}/workloads/{workload}".format(
         project=project,
         location=location,
@@ -24468,10 +27757,10 @@ def test_workload_path():
 
 def test_parse_workload_path():
     expected = {
-        "project": "squid",
-        "location": "clam",
-        "application": "whelk",
-        "workload": "octopus",
+        "project": "scallop",
+        "location": "abalone",
+        "application": "squid",
+        "workload": "clam",
     }
     path = AppHubClient.workload_path(**expected)
 
@@ -24481,7 +27770,7 @@ def test_parse_workload_path():
 
 
 def test_common_billing_account_path():
-    billing_account = "oyster"
+    billing_account = "whelk"
     expected = "billingAccounts/{billing_account}".format(
         billing_account=billing_account,
     )
@@ -24491,7 +27780,7 @@ def test_common_billing_account_path():
 
 def test_parse_common_billing_account_path():
     expected = {
-        "billing_account": "nudibranch",
+        "billing_account": "octopus",
     }
     path = AppHubClient.common_billing_account_path(**expected)
 
@@ -24501,7 +27790,7 @@ def test_parse_common_billing_account_path():
 
 
 def test_common_folder_path():
-    folder = "cuttlefish"
+    folder = "oyster"
     expected = "folders/{folder}".format(
         folder=folder,
     )
@@ -24511,7 +27800,7 @@ def test_common_folder_path():
 
 def test_parse_common_folder_path():
     expected = {
-        "folder": "mussel",
+        "folder": "nudibranch",
     }
     path = AppHubClient.common_folder_path(**expected)
 
@@ -24521,7 +27810,7 @@ def test_parse_common_folder_path():
 
 
 def test_common_organization_path():
-    organization = "winkle"
+    organization = "cuttlefish"
     expected = "organizations/{organization}".format(
         organization=organization,
     )
@@ -24531,7 +27820,7 @@ def test_common_organization_path():
 
 def test_parse_common_organization_path():
     expected = {
-        "organization": "nautilus",
+        "organization": "mussel",
     }
     path = AppHubClient.common_organization_path(**expected)
 
@@ -24541,7 +27830,7 @@ def test_parse_common_organization_path():
 
 
 def test_common_project_path():
-    project = "scallop"
+    project = "winkle"
     expected = "projects/{project}".format(
         project=project,
     )
@@ -24551,7 +27840,7 @@ def test_common_project_path():
 
 def test_parse_common_project_path():
     expected = {
-        "project": "abalone",
+        "project": "nautilus",
     }
     path = AppHubClient.common_project_path(**expected)
 
@@ -24561,8 +27850,8 @@ def test_parse_common_project_path():
 
 
 def test_common_location_path():
-    project = "squid"
-    location = "clam"
+    project = "scallop"
+    location = "abalone"
     expected = "projects/{project}/locations/{location}".format(
         project=project,
         location=location,
@@ -24573,8 +27862,8 @@ def test_common_location_path():
 
 def test_parse_common_location_path():
     expected = {
-        "project": "whelk",
-        "location": "octopus",
+        "project": "squid",
+        "location": "clam",
     }
     path = AppHubClient.common_location_path(**expected)
 

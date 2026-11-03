@@ -51,9 +51,16 @@ from .types.app_connectors_service import (
     ListAppConnectorsRequest,
     ListAppConnectorsResponse,
     ReportStatusRequest,
+    ResolveInstanceConfigRequest,
+    ResolveInstanceConfigResponse,
     UpdateAppConnectorRequest,
 )
-from .types.resource_info import HealthStatus, ResourceInfo
+from .types.resource_info import (
+    ContainerHealthDetails,
+    HealthStatus,
+    RemoteAgentDetails,
+    ResourceInfo,
+)
 
 __all__ = (
     "AppConnectorsServiceAsyncClient",
@@ -61,6 +68,7 @@ __all__ = (
     "AppConnectorInstanceConfig",
     "AppConnectorOperationMetadata",
     "AppConnectorsServiceClient",
+    "ContainerHealthDetails",
     "CreateAppConnectorRequest",
     "DeleteAppConnectorRequest",
     "GetAppConnectorRequest",
@@ -69,7 +77,10 @@ __all__ = (
     "ListAppConnectorsRequest",
     "ListAppConnectorsResponse",
     "NotificationConfig",
+    "RemoteAgentDetails",
     "ReportStatusRequest",
+    "ResolveInstanceConfigRequest",
+    "ResolveInstanceConfigResponse",
     "ResourceInfo",
     "UpdateAppConnectorRequest",
 )

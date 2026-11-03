@@ -352,7 +352,7 @@ class AdUnitSize(proto.Message):
         companions (MutableSequence[google.ads.admanager_v1.types.Size]):
             The companions for this ad unit size. Companions are only
             valid if the environment is
-            [VIDEO_PLAYER][google.ads.admanager.v1.EnvironmentTypeEnum.EnvironmentType].
+            [VIDEO_PLAYER][google.ads.admanager.v1.EnvironmentTypeEnum.EnvironmentType.VIDEO_PLAYER].
     """
 
     size: gaa_size.Size = proto.Field(

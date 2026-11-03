@@ -20,7 +20,7 @@ from cryptography.hazmat import backends
 from cryptography.hazmat.primitives import serialization
 
 try:
-    import rsa as rsa_lib
+    import rsa as rsa_lib  # type: ignore
 
     from google.auth.crypt import _python_rsa
 except ImportError:

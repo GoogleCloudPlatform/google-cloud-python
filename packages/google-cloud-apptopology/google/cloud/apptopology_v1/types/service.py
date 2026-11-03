@@ -30,6 +30,8 @@ __protobuf__ = proto.module(
         "GenerateDiscoveredResourcesTopologyRequest",
         "GenerateDiscoveredResourcesTopologyResponse",
         "GetSchemaRequest",
+        "ExploreSchemaRequest",
+        "ExploreSchemaResponse",
         "GetDomainRequest",
         "ListDomainsRequest",
         "ListDomainsResponse",
@@ -172,6 +174,123 @@ class GetSchemaRequest(proto.Message):
     name: str = proto.Field(
         proto.STRING,
         number=1,
+    )
+
+
+class ExploreSchemaRequest(proto.Message):
+    r"""Request for ExploreSchema.
+
+    Attributes:
+        name (str):
+            Required. The name of the singleton domain schema resource.
+            Format:
+            ``projects/{project}/locations/{location}/domains/{domain}/schema``
+        start_labels (MutableSequence[str]):
+            Optional. Starting label names to begin traversal.
+            Substring, case-insensitive matches are performed against
+            allowed label names in the schema. A maximum of 10
+            ``start_labels`` can be specified; providing more will
+            result in an ``INVALID_ARGUMENT`` error. If ``start_labels``
+            is unset or empty, all authorized node types will be used as
+            the starting set.
+        depth (int):
+            Optional. The maximum depth of BFS traversal
+            hops to perform from the starting node types or
+            label names. Defaults to 0 if unspecified.
+        page_size (int):
+            Optional. The maximum number of schema elements to return in
+            a single page.
+
+            - The service might return fewer elements than this value if
+              adding another edge and its required endpoint nodes
+              exceeds ``page_size``.
+            - If omitted or set to 0, default (100) will be used.
+            - Minimum page_size is 3 to ensure at least one edge and its
+              endpoint nodes fit on a page; values below 3 (e.g. 1 or 2)
+              are changed to 3.
+            - Maximum value is 500.
+        page_token (str):
+            Optional. A page token received from a previous
+            ``ExploreSchema`` call. Provide this to retrieve the
+            subsequent page.
+
+            When paginating, all other parameters (except page_size)
+            provided to ``ExploreSchema`` must match the call that
+            provided the page token.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    start_labels: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+    depth: int = proto.Field(
+        proto.INT32,
+        number=4,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=5,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=6,
+    )
+
+
+class ExploreSchemaResponse(proto.Message):
+    r"""Response for ExploreSchema.
+
+    Attributes:
+        node_types (MutableSequence[google.cloud.apptopology_v1.types.NodeType]):
+            A list of ``NodeType``\ s defined within this schema. Refer
+            to the documentation of ``NodeType`` for more details.
+        edge_types (MutableSequence[google.cloud.apptopology_v1.types.EdgeType]):
+            A list of ``EdgeType``\ s defined within this schema. Refer
+            to the documentation of ``EdgeType`` for more details.
+        label_properties (MutableSequence[google.cloud.apptopology_v1.types.LabelProperties]):
+            A list of supported labels and corresponding
+            properties.
+        edge_rules (MutableSequence[google.cloud.apptopology_v1.types.EdgeRule]):
+            Edge rules. These will indicate which node types can be
+            connected and through what edge type. This is a list of
+            (source_node_type, edge_type, destination_node_type) tuples.
+        next_page_token (str):
+            A token to retrieve the next page of results,
+            or empty if there are no more results in the
+            traversal set.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    node_types: MutableSequence[schema.NodeType] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=schema.NodeType,
+    )
+    edge_types: MutableSequence[schema.EdgeType] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message=schema.EdgeType,
+    )
+    label_properties: MutableSequence[schema.LabelProperties] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=3,
+        message=schema.LabelProperties,
+    )
+    edge_rules: MutableSequence[schema.EdgeRule] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=4,
+        message=schema.EdgeRule,
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=5,
     )
 
 

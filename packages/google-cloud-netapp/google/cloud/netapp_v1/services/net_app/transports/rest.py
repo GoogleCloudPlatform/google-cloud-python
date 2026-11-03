@@ -401,6 +401,14 @@ class NetAppRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_get_split_status(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_get_split_status(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_get_storage_pool(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -422,6 +430,14 @@ class NetAppRestInterceptor:
                 return request, metadata
 
             def post_list_active_directories(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_list_backup_configs(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_backup_configs(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -513,6 +529,14 @@ class NetAppRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_restore_volume(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_restore_volume(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_resume_replication(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -534,6 +558,14 @@ class NetAppRestInterceptor:
                 return request, metadata
 
             def post_revert_volume(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_start_split(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_start_split(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -574,6 +606,14 @@ class NetAppRestInterceptor:
                 return request, metadata
 
             def post_update_backup(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_backup_config(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_backup_config(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -2466,6 +2506,50 @@ class NetAppRestInterceptor:
         """
         return response, metadata
 
+    def pre_get_split_status(
+        self,
+        request: volume.GetSplitStatusRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[volume.GetSplitStatusRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Pre-rpc interceptor for get_split_status
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the NetApp server.
+        """
+        return request, metadata
+
+    def post_get_split_status(self, response: volume.SplitStatus) -> volume.SplitStatus:
+        """Post-rpc interceptor for get_split_status
+
+        DEPRECATED. Please use the `post_get_split_status_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the NetApp server but before
+        it is returned to user code. This `post_get_split_status` interceptor runs
+        before the `post_get_split_status_with_metadata` interceptor.
+        """
+        return response
+
+    def post_get_split_status_with_metadata(
+        self,
+        response: volume.SplitStatus,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[volume.SplitStatus, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for get_split_status
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the NetApp server but before it is returned to user code.
+
+        We recommend only using this `post_get_split_status_with_metadata`
+        interceptor in new development instead of the `post_get_split_status` interceptor.
+        When both interceptors are used, this `post_get_split_status_with_metadata` interceptor runs after the
+        `post_get_split_status` interceptor. The (possibly modified) response returned by
+        `post_get_split_status` will be passed to
+        `post_get_split_status_with_metadata`.
+        """
+        return response, metadata
+
     def pre_get_storage_pool(
         self,
         request: storage_pool.GetStoragePoolRequest,
@@ -2605,6 +2689,56 @@ class NetAppRestInterceptor:
         `post_list_active_directories` interceptor. The (possibly modified) response returned by
         `post_list_active_directories` will be passed to
         `post_list_active_directories_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_list_backup_configs(
+        self,
+        request: volume.ListBackupConfigsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        volume.ListBackupConfigsRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for list_backup_configs
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the NetApp server.
+        """
+        return request, metadata
+
+    def post_list_backup_configs(
+        self, response: volume.ListBackupConfigsResponse
+    ) -> volume.ListBackupConfigsResponse:
+        """Post-rpc interceptor for list_backup_configs
+
+        DEPRECATED. Please use the `post_list_backup_configs_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the NetApp server but before
+        it is returned to user code. This `post_list_backup_configs` interceptor runs
+        before the `post_list_backup_configs_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_backup_configs_with_metadata(
+        self,
+        response: volume.ListBackupConfigsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        volume.ListBackupConfigsResponse, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for list_backup_configs
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the NetApp server but before it is returned to user code.
+
+        We recommend only using this `post_list_backup_configs_with_metadata`
+        interceptor in new development instead of the `post_list_backup_configs` interceptor.
+        When both interceptors are used, this `post_list_backup_configs_with_metadata` interceptor runs after the
+        `post_list_backup_configs` interceptor. The (possibly modified) response returned by
+        `post_list_backup_configs` will be passed to
+        `post_list_backup_configs_with_metadata`.
         """
         return response, metadata
 
@@ -3141,6 +3275,52 @@ class NetAppRestInterceptor:
         """
         return response, metadata
 
+    def pre_restore_volume(
+        self,
+        request: volume.RestoreVolumeRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[volume.RestoreVolumeRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Pre-rpc interceptor for restore_volume
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the NetApp server.
+        """
+        return request, metadata
+
+    def post_restore_volume(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for restore_volume
+
+        DEPRECATED. Please use the `post_restore_volume_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the NetApp server but before
+        it is returned to user code. This `post_restore_volume` interceptor runs
+        before the `post_restore_volume_with_metadata` interceptor.
+        """
+        return response
+
+    def post_restore_volume_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for restore_volume
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the NetApp server but before it is returned to user code.
+
+        We recommend only using this `post_restore_volume_with_metadata`
+        interceptor in new development instead of the `post_restore_volume` interceptor.
+        When both interceptors are used, this `post_restore_volume_with_metadata` interceptor runs after the
+        `post_restore_volume` interceptor. The (possibly modified) response returned by
+        `post_restore_volume` will be passed to
+        `post_restore_volume_with_metadata`.
+        """
+        return response, metadata
+
     def pre_resume_replication(
         self,
         request: replication.ResumeReplicationRequest,
@@ -3281,6 +3461,52 @@ class NetAppRestInterceptor:
         `post_revert_volume` interceptor. The (possibly modified) response returned by
         `post_revert_volume` will be passed to
         `post_revert_volume_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_start_split(
+        self,
+        request: volume.StartSplitRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[volume.StartSplitRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Pre-rpc interceptor for start_split
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the NetApp server.
+        """
+        return request, metadata
+
+    def post_start_split(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for start_split
+
+        DEPRECATED. Please use the `post_start_split_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the NetApp server but before
+        it is returned to user code. This `post_start_split` interceptor runs
+        before the `post_start_split_with_metadata` interceptor.
+        """
+        return response
+
+    def post_start_split_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for start_split
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the NetApp server but before it is returned to user code.
+
+        We recommend only using this `post_start_split_with_metadata`
+        interceptor in new development instead of the `post_start_split` interceptor.
+        When both interceptors are used, this `post_start_split_with_metadata` interceptor runs after the
+        `post_start_split` interceptor. The (possibly modified) response returned by
+        `post_start_split` will be passed to
+        `post_start_split_with_metadata`.
         """
         return response, metadata
 
@@ -3521,6 +3747,54 @@ class NetAppRestInterceptor:
         `post_update_backup` interceptor. The (possibly modified) response returned by
         `post_update_backup` will be passed to
         `post_update_backup_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_backup_config(
+        self,
+        request: volume.UpdateBackupConfigRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        volume.UpdateBackupConfigRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for update_backup_config
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the NetApp server.
+        """
+        return request, metadata
+
+    def post_update_backup_config(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for update_backup_config
+
+        DEPRECATED. Please use the `post_update_backup_config_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the NetApp server but before
+        it is returned to user code. This `post_update_backup_config` interceptor runs
+        before the `post_update_backup_config_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_backup_config_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_backup_config
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the NetApp server but before it is returned to user code.
+
+        We recommend only using this `post_update_backup_config_with_metadata`
+        interceptor in new development instead of the `post_update_backup_config` interceptor.
+        When both interceptors are used, this `post_update_backup_config_with_metadata` interceptor runs after the
+        `post_update_backup_config` interceptor. The (possibly modified) response returned by
+        `post_update_backup_config` will be passed to
+        `post_update_backup_config_with_metadata`.
         """
         return response, metadata
 
@@ -9985,6 +10259,151 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
                 )
             return resp
 
+    class _GetSplitStatus(_BaseNetAppRestTransport._BaseGetSplitStatus, NetAppRestStub):
+        def __hash__(self):
+            return hash("NetAppRestTransport.GetSplitStatus")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: volume.GetSplitStatusRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> volume.SplitStatus:
+            r"""Call the get split status method over HTTP.
+
+            Args:
+                request (~.volume.GetSplitStatusRequest):
+                    The request object. Request message for GetSplitStatus.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.volume.SplitStatus:
+                    Message for SplitStatus.
+            """
+
+            http_options = (
+                _BaseNetAppRestTransport._BaseGetSplitStatus._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_get_split_status(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseGetSplitStatus,
+                    "_BaseGetSplitStatus__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.netapp_v1.NetAppClient.GetSplitStatus",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "GetSplitStatus",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = NetAppRestTransport._GetSplitStatus._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = volume.SplitStatus()
+            pb_resp = volume.SplitStatus.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_get_split_status(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_get_split_status_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = volume.SplitStatus.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.netapp_v1.NetAppClient.get_split_status",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "GetSplitStatus",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _GetStoragePool(_BaseNetAppRestTransport._BaseGetStoragePool, NetAppRestStub):
         def __hash__(self):
             return hash("NetAppRestTransport.GetStoragePool")
@@ -10427,6 +10846,158 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
                     extra={
                         "serviceName": "google.cloud.netapp.v1.NetApp",
                         "rpcName": "ListActiveDirectories",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _ListBackupConfigs(
+        _BaseNetAppRestTransport._BaseListBackupConfigs, NetAppRestStub
+    ):
+        def __hash__(self):
+            return hash("NetAppRestTransport.ListBackupConfigs")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: volume.ListBackupConfigsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> volume.ListBackupConfigsResponse:
+            r"""Call the list backup configs method over HTTP.
+
+            Args:
+                request (~.volume.ListBackupConfigsRequest):
+                    The request object. Message for requesting list of
+                BackupConfigs in a StoragePool.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.volume.ListBackupConfigsResponse:
+                    Message for response to listing
+                BackupConfigs in an ONTAP StoragePool.
+
+            """
+
+            http_options = (
+                _BaseNetAppRestTransport._BaseListBackupConfigs._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_list_backup_configs(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseListBackupConfigs,
+                    "_BaseListBackupConfigs__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.netapp_v1.NetAppClient.ListBackupConfigs",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "ListBackupConfigs",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = NetAppRestTransport._ListBackupConfigs._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = volume.ListBackupConfigsResponse()
+            pb_resp = volume.ListBackupConfigsResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_backup_configs(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_list_backup_configs_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = volume.ListBackupConfigsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.netapp_v1.NetAppClient.list_backup_configs",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "ListBackupConfigs",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -12071,6 +12642,152 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
                 )
             return resp
 
+    class _RestoreVolume(_BaseNetAppRestTransport._BaseRestoreVolume, NetAppRestStub):
+        def __hash__(self):
+            return hash("NetAppRestTransport.RestoreVolume")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: volume.RestoreVolumeRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the restore volume method over HTTP.
+
+            Args:
+                request (~.volume.RestoreVolumeRequest):
+                    The request object. Request message for ``RestoreVolume`` API.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = (
+                _BaseNetAppRestTransport._BaseRestoreVolume._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_restore_volume(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseRestoreVolume,
+                    "_BaseRestoreVolume__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.netapp_v1.NetAppClient.RestoreVolume",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "RestoreVolume",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = NetAppRestTransport._RestoreVolume._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_restore_volume(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_restore_volume_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.netapp_v1.NetAppClient.restore_volume",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "RestoreVolume",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _ResumeReplication(
         _BaseNetAppRestTransport._BaseResumeReplication, NetAppRestStub
     ):
@@ -12517,6 +13234,151 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
                     extra={
                         "serviceName": "google.cloud.netapp.v1.NetApp",
                         "rpcName": "RevertVolume",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _StartSplit(_BaseNetAppRestTransport._BaseStartSplit, NetAppRestStub):
+        def __hash__(self):
+            return hash("NetAppRestTransport.StartSplit")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: volume.StartSplitRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the start split method over HTTP.
+
+            Args:
+                request (~.volume.StartSplitRequest):
+                    The request object. Request message for splitting a
+                volume.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = _BaseNetAppRestTransport._BaseStartSplit._get_http_options()
+            request, metadata = self._interceptor.pre_start_split(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseStartSplit,
+                    "_BaseStartSplit__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.netapp_v1.NetAppClient.StartSplit",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "StartSplit",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = NetAppRestTransport._StartSplit._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_start_split(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_start_split_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.netapp_v1.NetAppClient.start_split",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "StartSplit",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -13268,6 +14130,157 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
                     extra={
                         "serviceName": "google.cloud.netapp.v1.NetApp",
                         "rpcName": "UpdateBackup",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _UpdateBackupConfig(
+        _BaseNetAppRestTransport._BaseUpdateBackupConfig, NetAppRestStub
+    ):
+        def __hash__(self):
+            return hash("NetAppRestTransport.UpdateBackupConfig")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: volume.UpdateBackupConfigRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the update backup config method over HTTP.
+
+            Args:
+                request (~.volume.UpdateBackupConfigRequest):
+                    The request object. Request message for
+                UpdateBackupConfig
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = (
+                _BaseNetAppRestTransport._BaseUpdateBackupConfig._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_update_backup_config(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNetAppRestTransport._BaseUpdateBackupConfig,
+                    "_BaseUpdateBackupConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.netapp_v1.NetAppClient.UpdateBackupConfig",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "UpdateBackupConfig",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = NetAppRestTransport._UpdateBackupConfig._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_backup_config(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_backup_config_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.netapp_v1.NetAppClient.update_backup_config",
+                    extra={
+                        "serviceName": "google.cloud.netapp.v1.NetApp",
+                        "rpcName": "UpdateBackupConfig",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -15246,6 +16259,14 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
         return self._GetSnapshot(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def get_split_status(
+        self,
+    ) -> Callable[[volume.GetSplitStatusRequest], volume.SplitStatus]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GetSplitStatus(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def get_storage_pool(
         self,
     ) -> Callable[[storage_pool.GetStoragePoolRequest], storage_pool.StoragePool]:
@@ -15269,6 +16290,14 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._ListActiveDirectories(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def list_backup_configs(
+        self,
+    ) -> Callable[[volume.ListBackupConfigsRequest], volume.ListBackupConfigsResponse]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListBackupConfigs(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def list_backup_policies(
@@ -15372,6 +16401,14 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
         return self._RestoreBackupFiles(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def restore_volume(
+        self,
+    ) -> Callable[[volume.RestoreVolumeRequest], operations_pb2.Operation]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._RestoreVolume(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def resume_replication(
         self,
     ) -> Callable[[replication.ResumeReplicationRequest], operations_pb2.Operation]:
@@ -15398,6 +16435,14 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._RevertVolume(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def start_split(
+        self,
+    ) -> Callable[[volume.StartSplitRequest], operations_pb2.Operation]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._StartSplit(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def stop_replication(
@@ -15444,6 +16489,14 @@ class NetAppRestTransport(_BaseNetAppRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._UpdateBackup(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def update_backup_config(
+        self,
+    ) -> Callable[[volume.UpdateBackupConfigRequest], operations_pb2.Operation]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateBackupConfig(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def update_backup_policy(

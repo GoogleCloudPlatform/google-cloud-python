@@ -1,2 +1,0 @@
-pytest
-google-cloud-testutils==1.7.0

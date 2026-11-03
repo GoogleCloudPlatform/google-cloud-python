@@ -533,6 +533,39 @@ class ParticipantsGrpcAsyncIOTransport(ParticipantsTransport):
         return self._stubs["streaming_analyze_content"]
 
     @property
+    def streaming_reactive_companion_suggestions(
+        self,
+    ) -> Callable[
+        [participant.StreamingReactiveCompanionSuggestionsRequest],
+        Awaitable[participant.StreamingReactiveCompanionSuggestionsResponse],
+    ]:
+        r"""Return a callable for the streaming reactive companion
+        suggestions method over gRPC.
+
+        External streaming API for human-agent queries to the
+        companion bot.
+
+        Returns:
+            Callable[[~.StreamingReactiveCompanionSuggestionsRequest],
+                    Awaitable[~.StreamingReactiveCompanionSuggestionsResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "streaming_reactive_companion_suggestions" not in self._stubs:
+            self._stubs["streaming_reactive_companion_suggestions"] = (
+                self._logged_channel.stream_stream(
+                    "/google.cloud.dialogflow.v2beta1.Participants/StreamingReactiveCompanionSuggestions",
+                    request_serializer=participant.StreamingReactiveCompanionSuggestionsRequest.serialize,
+                    response_deserializer=participant.StreamingReactiveCompanionSuggestionsResponse.deserialize,
+                )
+            )
+        return self._stubs["streaming_reactive_companion_suggestions"]
+
+    @property
     def bidi_streaming_analyze_content(
         self,
     ) -> Callable[
@@ -822,6 +855,11 @@ class ParticipantsGrpcAsyncIOTransport(ParticipantsTransport):
             self.streaming_analyze_content: self._wrap_method(
                 self.streaming_analyze_content,
                 default_timeout=220.0,
+                client_info=client_info,
+            ),
+            self.streaming_reactive_companion_suggestions: self._wrap_method(
+                self.streaming_reactive_companion_suggestions,
+                default_timeout=5400.0,
                 client_info=client_info,
             ),
             self.bidi_streaming_analyze_content: self._wrap_method(

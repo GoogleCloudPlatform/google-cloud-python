@@ -610,7 +610,7 @@ class CompanyServiceRestTransport(_BaseCompanyServiceRestTransport):
 
             Args:
                 request (~.company_service.BatchCreateCompaniesRequest):
-                    The request object. Request object for [BatchCreateCompanies][] method.
+                    The request object. Request object for ``BatchCreateCompanies`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -621,7 +621,7 @@ class CompanyServiceRestTransport(_BaseCompanyServiceRestTransport):
 
             Returns:
                 ~.company_service.BatchCreateCompaniesResponse:
-                    Response object for [BatchCreateCompanies][] method.
+                    Response object for ``BatchCreateCompanies`` method.
             """
 
             http_options = _BaseCompanyServiceRestTransport._BaseBatchCreateCompanies._get_http_options()
@@ -760,7 +760,7 @@ class CompanyServiceRestTransport(_BaseCompanyServiceRestTransport):
 
             Args:
                 request (~.company_service.BatchUpdateCompaniesRequest):
-                    The request object. Request object for [BatchUpdateCompanies][] method.
+                    The request object. Request object for ``BatchUpdateCompanies`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -771,7 +771,7 @@ class CompanyServiceRestTransport(_BaseCompanyServiceRestTransport):
 
             Returns:
                 ~.company_service.BatchUpdateCompaniesResponse:
-                    Response object for [BatchUpdateCompanies][] method.
+                    Response object for ``BatchUpdateCompanies`` method.
             """
 
             http_options = _BaseCompanyServiceRestTransport._BaseBatchUpdateCompanies._get_http_options()
@@ -909,7 +909,7 @@ class CompanyServiceRestTransport(_BaseCompanyServiceRestTransport):
 
             Args:
                 request (~.company_service.CreateCompanyRequest):
-                    The request object. Request object for [CreateCompany][] method.
+                    The request object. Request object for ``CreateCompany`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -1055,7 +1055,7 @@ class CompanyServiceRestTransport(_BaseCompanyServiceRestTransport):
 
             Args:
                 request (~.company_service.GetCompanyRequest):
-                    The request object. Request object for [GetCompany][] method.
+                    The request object. Request object for ``GetCompany`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -1200,7 +1200,7 @@ class CompanyServiceRestTransport(_BaseCompanyServiceRestTransport):
 
             Args:
                 request (~.company_service.ListCompaniesRequest):
-                    The request object. Request object for [ListCompanies][] method.
+                    The request object. Request object for ``ListCompanies`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -1211,10 +1211,9 @@ class CompanyServiceRestTransport(_BaseCompanyServiceRestTransport):
 
             Returns:
                 ~.company_service.ListCompaniesResponse:
-                    Response object for
-                [ListCompaniesRequest][google.ads.admanager.v1.ListCompaniesRequest]
-                containing matching
-                [Company][google.ads.admanager.v1.Company] objects.
+                    Response object for ``ListCompaniesRequest`` containing
+                matching [Company][google.ads.admanager.v1.Company]
+                objects.
 
             """
 
@@ -1352,7 +1351,7 @@ class CompanyServiceRestTransport(_BaseCompanyServiceRestTransport):
 
             Args:
                 request (~.company_service.UpdateCompanyRequest):
-                    The request object. Request object for [UpdateCompany][] method.
+                    The request object. Request object for ``UpdateCompany`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.

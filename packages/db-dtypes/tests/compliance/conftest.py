@@ -181,3 +181,17 @@ def using_nan_is_na(request):
     Boolean fixture to support testing whether NaN is considered NA.
     """
     return request.param
+
+
+@pytest.fixture(
+    params=getattr(
+        pandas._testing,
+        "all_reductions",
+        (),
+    )
+)
+def all_reductions(request):
+    """
+    Fixture for all (boolean + numeric) reduction names.
+    """
+    return request.param

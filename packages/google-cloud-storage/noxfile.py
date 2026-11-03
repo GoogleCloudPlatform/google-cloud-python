@@ -290,10 +290,6 @@ def install_unittest_dependencies(session, *constraints):
 def unit(session, protobuf_implementation):
     # Install all test dependencies, then install this package in-place.
 
-    if session.python == "3.15":
-        session.skip(
-            "Skipping 3.15 until compatible wheels are available for google-crc32c"
-        )
     constraints_path = str(
         CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
     )

@@ -21526,6 +21526,8 @@ def test_insert_rest_call_success(request_type):
         "disk_encryption_configuration": {
             "kms_key_name": "kms_key_name_value",
             "kind": "kind_value",
+            "confidential_mode": True,
+            "cmek_source_log_encryption_enforced": True,
         },
         "disk_encryption_status": {
             "kms_key_version_name": "kms_key_version_name_value",
@@ -21578,6 +21580,7 @@ def test_insert_rest_call_success(request_type):
         "satisfies_pzi": {},
         "switch_transaction_logs_to_cloud_storage_enabled": {},
         "include_replicas_for_major_version_upgrade": {},
+        "skip_precheck": {},
         "tags": {},
         "node_count": 1070,
         "nodes": [
@@ -21600,6 +21603,12 @@ def test_insert_rest_call_success(request_type):
             }
         ],
         "dns_names": {},
+        "deployment_info": {
+            "deployment_id": "deployment_id_value",
+            "source": {"target_id": {}},
+            "target": {"source_id": {}},
+            "state": 1,
+        },
         "database_center_integration_enabled": {},
         "database_center_integration": 1,
     }
@@ -22653,6 +22662,8 @@ def test_patch_rest_call_success(request_type):
         "disk_encryption_configuration": {
             "kms_key_name": "kms_key_name_value",
             "kind": "kind_value",
+            "confidential_mode": True,
+            "cmek_source_log_encryption_enforced": True,
         },
         "disk_encryption_status": {
             "kms_key_version_name": "kms_key_version_name_value",
@@ -22705,6 +22716,7 @@ def test_patch_rest_call_success(request_type):
         "satisfies_pzi": {},
         "switch_transaction_logs_to_cloud_storage_enabled": {},
         "include_replicas_for_major_version_upgrade": {},
+        "skip_precheck": {},
         "tags": {},
         "node_count": 1070,
         "nodes": [
@@ -22727,6 +22739,12 @@ def test_patch_rest_call_success(request_type):
             }
         ],
         "dns_names": {},
+        "deployment_info": {
+            "deployment_id": "deployment_id_value",
+            "source": {"target_id": {}},
+            "target": {"source_id": {}},
+            "state": 1,
+        },
         "database_center_integration_enabled": {},
         "database_center_integration": 1,
     }
@@ -23823,6 +23841,8 @@ def test_restore_backup_rest_call_success(request_type):
             "disk_encryption_configuration": {
                 "kms_key_name": "kms_key_name_value",
                 "kind": "kind_value",
+                "confidential_mode": True,
+                "cmek_source_log_encryption_enforced": True,
             },
             "disk_encryption_status": {
                 "kms_key_version_name": "kms_key_version_name_value",
@@ -23875,6 +23895,7 @@ def test_restore_backup_rest_call_success(request_type):
             "satisfies_pzi": {},
             "switch_transaction_logs_to_cloud_storage_enabled": {},
             "include_replicas_for_major_version_upgrade": {},
+            "skip_precheck": {},
             "tags": {},
             "node_count": 1070,
             "nodes": [
@@ -23897,6 +23918,12 @@ def test_restore_backup_rest_call_success(request_type):
                 }
             ],
             "dns_names": {},
+            "deployment_info": {
+                "deployment_id": "deployment_id_value",
+                "source": {"target_id": {}},
+                "target": {"source_id": {}},
+                "state": 1,
+            },
             "database_center_integration_enabled": {},
             "database_center_integration": 1,
         },
@@ -23904,6 +23931,7 @@ def test_restore_backup_rest_call_success(request_type):
             "restore_instance_clear_overrides_field_names_value1",
             "restore_instance_clear_overrides_field_names_value2",
         ],
+        "ignore_maintenance_version": True,
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -25588,6 +25616,8 @@ def test_update_rest_call_success(request_type):
         "disk_encryption_configuration": {
             "kms_key_name": "kms_key_name_value",
             "kind": "kind_value",
+            "confidential_mode": True,
+            "cmek_source_log_encryption_enforced": True,
         },
         "disk_encryption_status": {
             "kms_key_version_name": "kms_key_version_name_value",
@@ -25640,6 +25670,7 @@ def test_update_rest_call_success(request_type):
         "satisfies_pzi": {},
         "switch_transaction_logs_to_cloud_storage_enabled": {},
         "include_replicas_for_major_version_upgrade": {},
+        "skip_precheck": {},
         "tags": {},
         "node_count": 1070,
         "nodes": [
@@ -25662,6 +25693,12 @@ def test_update_rest_call_success(request_type):
             }
         ],
         "dns_names": {},
+        "deployment_info": {
+            "deployment_id": "deployment_id_value",
+            "source": {"target_id": {}},
+            "target": {"source_id": {}},
+            "state": 1,
+        },
         "database_center_integration_enabled": {},
         "database_center_integration": 1,
     }
@@ -27852,6 +27889,7 @@ def test_pre_check_major_version_upgrade_rest_call_success(request_type):
                 }
             ],
             "kind": "kind_value",
+            "max_runtime": {"seconds": 751, "nanos": 543},
         }
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
@@ -28350,6 +28388,8 @@ def test_point_in_time_restore_rest_call_success(request_type):
             "disk_encryption_configuration": {
                 "kms_key_name": "kms_key_name_value",
                 "kind": "kind_value",
+                "confidential_mode": True,
+                "cmek_source_log_encryption_enforced": True,
             },
             "disk_encryption_status": {
                 "kms_key_version_name": "kms_key_version_name_value",
@@ -28402,6 +28442,7 @@ def test_point_in_time_restore_rest_call_success(request_type):
             "satisfies_pzi": {},
             "switch_transaction_logs_to_cloud_storage_enabled": {},
             "include_replicas_for_major_version_upgrade": {},
+            "skip_precheck": {},
             "tags": {},
             "node_count": 1070,
             "nodes": [
@@ -28424,6 +28465,12 @@ def test_point_in_time_restore_rest_call_success(request_type):
                 }
             ],
             "dns_names": {},
+            "deployment_info": {
+                "deployment_id": "deployment_id_value",
+                "source": {"target_id": {}},
+                "target": {"source_id": {}},
+                "state": 1,
+            },
             "database_center_integration_enabled": {},
             "database_center_integration": 1,
         },
@@ -30185,9 +30232,74 @@ def test_parse_backup_dr_backup_path():
     assert expected == actual
 
 
-def test_network_path():
+def test_crypto_key_path():
     project = "whelk"
-    network = "octopus"
+    location = "octopus"
+    key_ring = "oyster"
+    crypto_key = "nudibranch"
+    expected = "projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}".format(
+        project=project,
+        location=location,
+        key_ring=key_ring,
+        crypto_key=crypto_key,
+    )
+    actual = SqlInstancesServiceClient.crypto_key_path(
+        project, location, key_ring, crypto_key
+    )
+    assert expected == actual
+
+
+def test_parse_crypto_key_path():
+    expected = {
+        "project": "cuttlefish",
+        "location": "mussel",
+        "key_ring": "winkle",
+        "crypto_key": "nautilus",
+    }
+    path = SqlInstancesServiceClient.crypto_key_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = SqlInstancesServiceClient.parse_crypto_key_path(path)
+    assert expected == actual
+
+
+def test_crypto_key_version_path():
+    project = "scallop"
+    location = "abalone"
+    key_ring = "squid"
+    crypto_key = "clam"
+    crypto_key_version = "whelk"
+    expected = "projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}/cryptoKeyVersions/{crypto_key_version}".format(
+        project=project,
+        location=location,
+        key_ring=key_ring,
+        crypto_key=crypto_key,
+        crypto_key_version=crypto_key_version,
+    )
+    actual = SqlInstancesServiceClient.crypto_key_version_path(
+        project, location, key_ring, crypto_key, crypto_key_version
+    )
+    assert expected == actual
+
+
+def test_parse_crypto_key_version_path():
+    expected = {
+        "project": "octopus",
+        "location": "oyster",
+        "key_ring": "nudibranch",
+        "crypto_key": "cuttlefish",
+        "crypto_key_version": "mussel",
+    }
+    path = SqlInstancesServiceClient.crypto_key_version_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = SqlInstancesServiceClient.parse_crypto_key_version_path(path)
+    assert expected == actual
+
+
+def test_network_path():
+    project = "winkle"
+    network = "nautilus"
     expected = "projects/{project}/global/networks/{network}".format(
         project=project,
         network=network,
@@ -30198,13 +30310,41 @@ def test_network_path():
 
 def test_parse_network_path():
     expected = {
-        "project": "oyster",
-        "network": "nudibranch",
+        "project": "scallop",
+        "network": "abalone",
     }
     path = SqlInstancesServiceClient.network_path(**expected)
 
     # Check that the path construction is reversible.
     actual = SqlInstancesServiceClient.parse_network_path(path)
+    assert expected == actual
+
+
+def test_network_attachment_path():
+    project = "squid"
+    region = "clam"
+    network_attachment = "whelk"
+    expected = "projects/{project}/regions/{region}/networkAttachments/{network_attachment}".format(
+        project=project,
+        region=region,
+        network_attachment=network_attachment,
+    )
+    actual = SqlInstancesServiceClient.network_attachment_path(
+        project, region, network_attachment
+    )
+    assert expected == actual
+
+
+def test_parse_network_attachment_path():
+    expected = {
+        "project": "octopus",
+        "region": "oyster",
+        "network_attachment": "nudibranch",
+    }
+    path = SqlInstancesServiceClient.network_attachment_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = SqlInstancesServiceClient.parse_network_attachment_path(path)
     assert expected == actual
 
 

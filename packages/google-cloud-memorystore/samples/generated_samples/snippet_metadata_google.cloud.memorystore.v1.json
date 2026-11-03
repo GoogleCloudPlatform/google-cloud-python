@@ -8,7 +8,7 @@
     ],
     "language": "PYTHON",
     "name": "google-cloud-memorystore",
-    "version": "0.5.5"
+    "version": "0.5.7"
   },
   "snippets": [
     {
@@ -518,6 +518,183 @@
           "fullName": "google.cloud.memorystore_v1.MemorystoreAsyncClient",
           "shortName": "MemorystoreAsyncClient"
         },
+        "fullName": "google.cloud.memorystore_v1.MemorystoreAsyncClient.create_acl_policy",
+        "method": {
+          "fullName": "google.cloud.memorystore.v1.Memorystore.CreateAclPolicy",
+          "service": {
+            "fullName": "google.cloud.memorystore.v1.Memorystore",
+            "shortName": "Memorystore"
+          },
+          "shortName": "CreateAclPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memorystore_v1.types.CreateAclPolicyRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "acl_policy",
+            "type": "google.cloud.memorystore_v1.types.AclPolicy"
+          },
+          {
+            "name": "acl_policy_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.memorystore_v1.types.AclPolicy",
+        "shortName": "create_acl_policy"
+      },
+      "description": "Sample for CreateAclPolicy",
+      "file": "memorystore_v1_generated_memorystore_create_acl_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memorystore_v1_generated_Memorystore_CreateAclPolicy_async",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memorystore_v1_generated_memorystore_create_acl_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.memorystore_v1.MemorystoreClient",
+          "shortName": "MemorystoreClient"
+        },
+        "fullName": "google.cloud.memorystore_v1.MemorystoreClient.create_acl_policy",
+        "method": {
+          "fullName": "google.cloud.memorystore.v1.Memorystore.CreateAclPolicy",
+          "service": {
+            "fullName": "google.cloud.memorystore.v1.Memorystore",
+            "shortName": "Memorystore"
+          },
+          "shortName": "CreateAclPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memorystore_v1.types.CreateAclPolicyRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "acl_policy",
+            "type": "google.cloud.memorystore_v1.types.AclPolicy"
+          },
+          {
+            "name": "acl_policy_id",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.memorystore_v1.types.AclPolicy",
+        "shortName": "create_acl_policy"
+      },
+      "description": "Sample for CreateAclPolicy",
+      "file": "memorystore_v1_generated_memorystore_create_acl_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memorystore_v1_generated_Memorystore_CreateAclPolicy_sync",
+      "segments": [
+        {
+          "end": 57,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 57,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 51,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 54,
+          "start": 52,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 58,
+          "start": 55,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memorystore_v1_generated_memorystore_create_acl_policy_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.memorystore_v1.MemorystoreAsyncClient",
+          "shortName": "MemorystoreAsyncClient"
+        },
         "fullName": "google.cloud.memorystore_v1.MemorystoreAsyncClient.create_instance",
         "method": {
           "fullName": "google.cloud.memorystore.v1.Memorystore.CreateInstance",
@@ -686,6 +863,167 @@
         }
       ],
       "title": "memorystore_v1_generated_memorystore_create_instance_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.memorystore_v1.MemorystoreAsyncClient",
+          "shortName": "MemorystoreAsyncClient"
+        },
+        "fullName": "google.cloud.memorystore_v1.MemorystoreAsyncClient.delete_acl_policy",
+        "method": {
+          "fullName": "google.cloud.memorystore.v1.Memorystore.DeleteAclPolicy",
+          "service": {
+            "fullName": "google.cloud.memorystore.v1.Memorystore",
+            "shortName": "Memorystore"
+          },
+          "shortName": "DeleteAclPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memorystore_v1.types.DeleteAclPolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "delete_acl_policy"
+      },
+      "description": "Sample for DeleteAclPolicy",
+      "file": "memorystore_v1_generated_memorystore_delete_acl_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memorystore_v1_generated_Memorystore_DeleteAclPolicy_async",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memorystore_v1_generated_memorystore_delete_acl_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.memorystore_v1.MemorystoreClient",
+          "shortName": "MemorystoreClient"
+        },
+        "fullName": "google.cloud.memorystore_v1.MemorystoreClient.delete_acl_policy",
+        "method": {
+          "fullName": "google.cloud.memorystore.v1.Memorystore.DeleteAclPolicy",
+          "service": {
+            "fullName": "google.cloud.memorystore.v1.Memorystore",
+            "shortName": "Memorystore"
+          },
+          "shortName": "DeleteAclPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memorystore_v1.types.DeleteAclPolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "delete_acl_policy"
+      },
+      "description": "Sample for DeleteAclPolicy",
+      "file": "memorystore_v1_generated_memorystore_delete_acl_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memorystore_v1_generated_Memorystore_DeleteAclPolicy_sync",
+      "segments": [
+        {
+          "end": 55,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 55,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 52,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 56,
+          "start": 53,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memorystore_v1_generated_memorystore_delete_acl_policy_sync.py"
     },
     {
       "canonical": true,
@@ -1652,6 +1990,328 @@
         }
       ],
       "title": "memorystore_v1_generated_memorystore_finish_migration_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.memorystore_v1.MemorystoreAsyncClient",
+          "shortName": "MemorystoreAsyncClient"
+        },
+        "fullName": "google.cloud.memorystore_v1.MemorystoreAsyncClient.get_acl_policy_revision",
+        "method": {
+          "fullName": "google.cloud.memorystore.v1.Memorystore.GetAclPolicyRevision",
+          "service": {
+            "fullName": "google.cloud.memorystore.v1.Memorystore",
+            "shortName": "Memorystore"
+          },
+          "shortName": "GetAclPolicyRevision"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memorystore_v1.types.GetAclPolicyRevisionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.memorystore_v1.types.AclPolicyRevision",
+        "shortName": "get_acl_policy_revision"
+      },
+      "description": "Sample for GetAclPolicyRevision",
+      "file": "memorystore_v1_generated_memorystore_get_acl_policy_revision_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memorystore_v1_generated_Memorystore_GetAclPolicyRevision_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memorystore_v1_generated_memorystore_get_acl_policy_revision_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.memorystore_v1.MemorystoreClient",
+          "shortName": "MemorystoreClient"
+        },
+        "fullName": "google.cloud.memorystore_v1.MemorystoreClient.get_acl_policy_revision",
+        "method": {
+          "fullName": "google.cloud.memorystore.v1.Memorystore.GetAclPolicyRevision",
+          "service": {
+            "fullName": "google.cloud.memorystore.v1.Memorystore",
+            "shortName": "Memorystore"
+          },
+          "shortName": "GetAclPolicyRevision"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memorystore_v1.types.GetAclPolicyRevisionRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.memorystore_v1.types.AclPolicyRevision",
+        "shortName": "get_acl_policy_revision"
+      },
+      "description": "Sample for GetAclPolicyRevision",
+      "file": "memorystore_v1_generated_memorystore_get_acl_policy_revision_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memorystore_v1_generated_Memorystore_GetAclPolicyRevision_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memorystore_v1_generated_memorystore_get_acl_policy_revision_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.memorystore_v1.MemorystoreAsyncClient",
+          "shortName": "MemorystoreAsyncClient"
+        },
+        "fullName": "google.cloud.memorystore_v1.MemorystoreAsyncClient.get_acl_policy",
+        "method": {
+          "fullName": "google.cloud.memorystore.v1.Memorystore.GetAclPolicy",
+          "service": {
+            "fullName": "google.cloud.memorystore.v1.Memorystore",
+            "shortName": "Memorystore"
+          },
+          "shortName": "GetAclPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memorystore_v1.types.GetAclPolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.memorystore_v1.types.AclPolicy",
+        "shortName": "get_acl_policy"
+      },
+      "description": "Sample for GetAclPolicy",
+      "file": "memorystore_v1_generated_memorystore_get_acl_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memorystore_v1_generated_Memorystore_GetAclPolicy_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memorystore_v1_generated_memorystore_get_acl_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.memorystore_v1.MemorystoreClient",
+          "shortName": "MemorystoreClient"
+        },
+        "fullName": "google.cloud.memorystore_v1.MemorystoreClient.get_acl_policy",
+        "method": {
+          "fullName": "google.cloud.memorystore.v1.Memorystore.GetAclPolicy",
+          "service": {
+            "fullName": "google.cloud.memorystore.v1.Memorystore",
+            "shortName": "Memorystore"
+          },
+          "shortName": "GetAclPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memorystore_v1.types.GetAclPolicyRequest"
+          },
+          {
+            "name": "name",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.memorystore_v1.types.AclPolicy",
+        "shortName": "get_acl_policy"
+      },
+      "description": "Sample for GetAclPolicy",
+      "file": "memorystore_v1_generated_memorystore_get_acl_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memorystore_v1_generated_Memorystore_GetAclPolicy_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memorystore_v1_generated_memorystore_get_acl_policy_sync.py"
     },
     {
       "canonical": true,
@@ -2788,6 +3448,328 @@
           "fullName": "google.cloud.memorystore_v1.MemorystoreAsyncClient",
           "shortName": "MemorystoreAsyncClient"
         },
+        "fullName": "google.cloud.memorystore_v1.MemorystoreAsyncClient.list_acl_policies",
+        "method": {
+          "fullName": "google.cloud.memorystore.v1.Memorystore.ListAclPolicies",
+          "service": {
+            "fullName": "google.cloud.memorystore.v1.Memorystore",
+            "shortName": "Memorystore"
+          },
+          "shortName": "ListAclPolicies"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memorystore_v1.types.ListAclPoliciesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.memorystore_v1.services.memorystore.pagers.ListAclPoliciesAsyncPager",
+        "shortName": "list_acl_policies"
+      },
+      "description": "Sample for ListAclPolicies",
+      "file": "memorystore_v1_generated_memorystore_list_acl_policies_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memorystore_v1_generated_Memorystore_ListAclPolicies_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memorystore_v1_generated_memorystore_list_acl_policies_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.memorystore_v1.MemorystoreClient",
+          "shortName": "MemorystoreClient"
+        },
+        "fullName": "google.cloud.memorystore_v1.MemorystoreClient.list_acl_policies",
+        "method": {
+          "fullName": "google.cloud.memorystore.v1.Memorystore.ListAclPolicies",
+          "service": {
+            "fullName": "google.cloud.memorystore.v1.Memorystore",
+            "shortName": "Memorystore"
+          },
+          "shortName": "ListAclPolicies"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memorystore_v1.types.ListAclPoliciesRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.memorystore_v1.services.memorystore.pagers.ListAclPoliciesPager",
+        "shortName": "list_acl_policies"
+      },
+      "description": "Sample for ListAclPolicies",
+      "file": "memorystore_v1_generated_memorystore_list_acl_policies_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memorystore_v1_generated_Memorystore_ListAclPolicies_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memorystore_v1_generated_memorystore_list_acl_policies_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.memorystore_v1.MemorystoreAsyncClient",
+          "shortName": "MemorystoreAsyncClient"
+        },
+        "fullName": "google.cloud.memorystore_v1.MemorystoreAsyncClient.list_acl_policy_revisions",
+        "method": {
+          "fullName": "google.cloud.memorystore.v1.Memorystore.ListAclPolicyRevisions",
+          "service": {
+            "fullName": "google.cloud.memorystore.v1.Memorystore",
+            "shortName": "Memorystore"
+          },
+          "shortName": "ListAclPolicyRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memorystore_v1.types.ListAclPolicyRevisionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.memorystore_v1.services.memorystore.pagers.ListAclPolicyRevisionsAsyncPager",
+        "shortName": "list_acl_policy_revisions"
+      },
+      "description": "Sample for ListAclPolicyRevisions",
+      "file": "memorystore_v1_generated_memorystore_list_acl_policy_revisions_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memorystore_v1_generated_Memorystore_ListAclPolicyRevisions_async",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memorystore_v1_generated_memorystore_list_acl_policy_revisions_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.memorystore_v1.MemorystoreClient",
+          "shortName": "MemorystoreClient"
+        },
+        "fullName": "google.cloud.memorystore_v1.MemorystoreClient.list_acl_policy_revisions",
+        "method": {
+          "fullName": "google.cloud.memorystore.v1.Memorystore.ListAclPolicyRevisions",
+          "service": {
+            "fullName": "google.cloud.memorystore.v1.Memorystore",
+            "shortName": "Memorystore"
+          },
+          "shortName": "ListAclPolicyRevisions"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memorystore_v1.types.ListAclPolicyRevisionsRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.cloud.memorystore_v1.services.memorystore.pagers.ListAclPolicyRevisionsPager",
+        "shortName": "list_acl_policy_revisions"
+      },
+      "description": "Sample for ListAclPolicyRevisions",
+      "file": "memorystore_v1_generated_memorystore_list_acl_policy_revisions_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memorystore_v1_generated_Memorystore_ListAclPolicyRevisions_sync",
+      "segments": [
+        {
+          "end": 52,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 52,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memorystore_v1_generated_memorystore_list_acl_policy_revisions_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.memorystore_v1.MemorystoreAsyncClient",
+          "shortName": "MemorystoreAsyncClient"
+        },
         "fullName": "google.cloud.memorystore_v1.MemorystoreAsyncClient.list_auth_tokens",
         "method": {
           "fullName": "google.cloud.memorystore.v1.Memorystore.ListAuthTokens",
@@ -3914,6 +4896,175 @@
         }
       ],
       "title": "memorystore_v1_generated_memorystore_start_migration_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.cloud.memorystore_v1.MemorystoreAsyncClient",
+          "shortName": "MemorystoreAsyncClient"
+        },
+        "fullName": "google.cloud.memorystore_v1.MemorystoreAsyncClient.update_acl_policy",
+        "method": {
+          "fullName": "google.cloud.memorystore.v1.Memorystore.UpdateAclPolicy",
+          "service": {
+            "fullName": "google.cloud.memorystore.v1.Memorystore",
+            "shortName": "Memorystore"
+          },
+          "shortName": "UpdateAclPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memorystore_v1.types.UpdateAclPolicyRequest"
+          },
+          {
+            "name": "acl_policy",
+            "type": "google.cloud.memorystore_v1.types.AclPolicy"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation_async.AsyncOperation",
+        "shortName": "update_acl_policy"
+      },
+      "description": "Sample for UpdateAclPolicy",
+      "file": "memorystore_v1_generated_memorystore_update_acl_policy_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memorystore_v1_generated_Memorystore_UpdateAclPolicy_async",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memorystore_v1_generated_memorystore_update_acl_policy_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.cloud.memorystore_v1.MemorystoreClient",
+          "shortName": "MemorystoreClient"
+        },
+        "fullName": "google.cloud.memorystore_v1.MemorystoreClient.update_acl_policy",
+        "method": {
+          "fullName": "google.cloud.memorystore.v1.Memorystore.UpdateAclPolicy",
+          "service": {
+            "fullName": "google.cloud.memorystore.v1.Memorystore",
+            "shortName": "Memorystore"
+          },
+          "shortName": "UpdateAclPolicy"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.cloud.memorystore_v1.types.UpdateAclPolicyRequest"
+          },
+          {
+            "name": "acl_policy",
+            "type": "google.cloud.memorystore_v1.types.AclPolicy"
+          },
+          {
+            "name": "update_mask",
+            "type": "google.protobuf.field_mask_pb2.FieldMask"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.api_core.operation.Operation",
+        "shortName": "update_acl_policy"
+      },
+      "description": "Sample for UpdateAclPolicy",
+      "file": "memorystore_v1_generated_memorystore_update_acl_policy_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "memorystore_v1_generated_Memorystore_UpdateAclPolicy_sync",
+      "segments": [
+        {
+          "end": 59,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 59,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 56,
+          "start": 50,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 60,
+          "start": 57,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "memorystore_v1_generated_memorystore_update_acl_policy_sync.py"
     },
     {
       "canonical": true,

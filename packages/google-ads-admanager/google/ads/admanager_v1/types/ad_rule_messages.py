@@ -77,9 +77,9 @@ class AdRule(proto.Message):
         end_time (google.protobuf.timestamp_pb2.Timestamp):
             Optional. This end time of the AdRule. This attribute is
             required unless
-            [end_time_unlimited][google.ads.admanager.v1.AdRule.end_time_unlimited]
+            [endTimeUnlimited][google.ads.admanager.v1.AdRule.end_time_unlimited]
             is set to true. If specified, it must be after the
-            [start_time][google.ads.admanager.v1.AdRule.start_time].
+            [startTime][google.ads.admanager.v1.AdRule.start_time].
 
             This field is a member of `oneof`_ ``_end_time``.
         end_time_unlimited (bool):
@@ -90,13 +90,14 @@ class AdRule(proto.Message):
             This field is a member of `oneof`_ ``_end_time_unlimited``.
         status (google.ads.admanager_v1.types.AdRuleStatusEnum.AdRuleStatus):
             Output only. The AdRuleStatus of the AdRule. This attribute
-            is read-only and defaults to [AdRuleStatus.INACTIVE][].
+            is read-only and defaults to
+            [AdRuleStatusEnum.AdRuleStatus.INACTIVE][google.ads.admanager.v1.AdRuleStatusEnum.AdRuleStatus.INACTIVE].
 
             This field is a member of `oneof`_ ``_status``.
         frequency_cap_behavior (google.ads.admanager_v1.types.AdRuleFrequencyCapBehaviorEnum.AdRuleFrequencyCapBehavior):
             Optional. The FrequencyCapBehavior of the AdRule. This
             attribute is optional and defaults to
-            [FrequencyCapBehavior.DEFER][].
+            [AdRuleFrequencyCapBehaviorEnum.AdRuleFrequencyCapBehavior.DEFER][google.ads.admanager.v1.AdRuleFrequencyCapBehaviorEnum.AdRuleFrequencyCapBehavior.DEFER].
 
             This field is a member of `oneof`_ ``_frequency_cap_behavior``.
         max_impressions_per_line_item_per_stream (int):
@@ -222,9 +223,9 @@ class AdRuleSlot(proto.Message):
         slot_behavior (google.ads.admanager_v1.types.AdRuleSlotBehaviorEnum.AdRuleSlotBehavior):
             Optional. The AdRuleSlotBehavior for video ads for this
             slot. This attribute is optional and defaults to
-            [AdRuleSlotBehavior.DEFER][]. Indicates whether video ads
-            are allowed for this slot, or if the decision is deferred to
-            alower-priority ad rule.
+            [AdRuleSlotBehaviorEnum.AdRuleSlotBehavior.DEFER][google.ads.admanager.v1.AdRuleSlotBehaviorEnum.AdRuleSlotBehavior.DEFER].
+            Indicates whether video ads are allowed for this slot, or if
+            the decision is deferred to alower-priority ad rule.
 
             This field is a member of `oneof`_ ``_slot_behavior``.
         max_video_ad_duration (google.protobuf.duration_pb2.Duration):
@@ -237,26 +238,25 @@ class AdRuleSlot(proto.Message):
             Optional. The frequency type for video ads in this ad rule
             slot. This attribute is required for mid-rolls, but if this
             is not a mid-roll, the value is set to
-            [AdRuleSlotMidrollFrequencyType.NONE][].
+            [AdRuleSlotMidrollFrequencyTypeEnum.AdRuleSlotMidrollFrequencyType.NONE][google.ads.admanager.v1.AdRuleSlotMidrollFrequencyTypeEnum.AdRuleSlotMidrollFrequencyType.NONE].
 
             This field is a member of `oneof`_ ``_video_midroll_frequency_type``.
         video_midroll_frequency (str):
             Optional. The mid-roll frequency of this ad rule slot for
             video ads. This attribute is required for mid-rolls, but if
             MidrollFrequencyType is set to
-            [AdRuleSlotMidrollFrequencyType.NONE][], this value should
-            be ignored. For example, if this slot has a frequency type
-            of [AdRuleSlotMidrollFrequencyType.EVERY_N_SECONDS][] and
-
-            videoMidrollFrequency = "60", this would mean "play a mid-roll every 60
-            =======================================================================
-
-            seconds.".
+            [AdRuleSlotMidrollFrequencyTypeEnum.AdRuleSlotMidrollFrequencyType.NONE][google.ads.admanager.v1.AdRuleSlotMidrollFrequencyTypeEnum.AdRuleSlotMidrollFrequencyType.NONE],
+            this value should be ignored. For example, if this slot has
+            a frequency type of
+            [AdRuleSlotMidrollFrequencyTypeEnum.AdRuleSlotMidrollFrequencyType.EVERY_N_SECONDS][google.ads.admanager.v1.AdRuleSlotMidrollFrequencyTypeEnum.AdRuleSlotMidrollFrequencyType.EVERY_N_SECONDS]
+            and #videoMidrollFrequency = "60", this would mean "play a
+            mid-roll every 60 seconds.".
 
             This field is a member of `oneof`_ ``_video_midroll_frequency``.
         bumper (google.ads.admanager_v1.types.AdRuleSlotBumperEnum.AdRuleSlotBumper):
             Optional. The AdRuleSlotBumper for this slot. This attribute
-            is optional and defaults to [AdRuleSlotBumper.NONE][].
+            is optional and defaults to
+            [AdRuleSlotBumperEnum.AdRuleSlotBumper.NONE][google.ads.admanager.v1.AdRuleSlotBumperEnum.AdRuleSlotBumper.NONE].
 
             This field is a member of `oneof`_ ``_bumper``.
         max_bumper_duration (google.protobuf.duration_pb2.Duration):

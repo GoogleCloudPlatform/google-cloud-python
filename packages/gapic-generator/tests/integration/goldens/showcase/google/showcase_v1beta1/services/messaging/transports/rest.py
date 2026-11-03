@@ -18,12 +18,13 @@ import json  # type: ignore
 
 from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.auth import credentials as ga_credentials  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import retry as retries
 from google.api_core import rest_helpers
 from google.api_core import rest_streaming
 from google.api_core import gapic_v1
-from google.showcase_v1beta1._compat import transcode_request
+from google.showcase_v1beta1._compat import transcode_request, trace_http_request
 import google.protobuf
 
 from google.protobuf import json_format
@@ -747,6 +748,7 @@ class MessagingRestStub:
     _session: AuthorizedSession
     _host: str
     _interceptor: MessagingRestInterceptor
+    _client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None
 
 
 class MessagingRestTransport(_BaseMessagingRestTransport):
@@ -777,6 +779,8 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             url_scheme: str = 'https',
             interceptor: Optional[MessagingRestInterceptor] = None,
             api_audience: Optional[str] = None,
+            client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
+            **kwargs,
             ) -> None:
         """Instantiate the transport.
 
@@ -816,6 +820,9 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
         # Run the base constructor
         # TODO(yon-mg): resolve other ctor params i.e. scopes, quota, etc.
@@ -827,7 +834,9 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             url_scheme=url_scheme,
-            api_audience=api_audience
+            api_audience=api_audience,
+            client_options=client_options,
+            **kwargs,
         )
         self._session = AuthorizedSession(
             self._credentials, default_host=self.DEFAULT_HOST)
@@ -911,20 +920,35 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: messaging.CreateBlurbRequest, *,
@@ -992,7 +1016,17 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._CreateBlurb._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = MessagingRestTransport._CreateBlurb._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1004,7 +1038,6 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             pb_resp = messaging.Blurb.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_blurb(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_blurb_with_metadata(resp, response_metadata)
@@ -1041,20 +1074,35 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: messaging.CreateRoomRequest, *,
@@ -1119,7 +1167,17 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._CreateRoom._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = MessagingRestTransport._CreateRoom._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1131,7 +1189,6 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             pb_resp = messaging.Room.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_room(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_room_with_metadata(resp, response_metadata)
@@ -1168,19 +1225,34 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: messaging.DeleteBlurbRequest, *,
@@ -1241,7 +1313,16 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._DeleteBlurb._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = MessagingRestTransport._DeleteBlurb._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1260,19 +1341,34 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: messaging.DeleteRoomRequest, *,
@@ -1333,7 +1429,16 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._DeleteRoom._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = MessagingRestTransport._DeleteRoom._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1352,19 +1457,34 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: messaging.GetBlurbRequest, *,
@@ -1432,7 +1552,16 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._GetBlurb._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = MessagingRestTransport._GetBlurb._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1444,7 +1573,6 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             pb_resp = messaging.Blurb.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_blurb(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_blurb_with_metadata(resp, response_metadata)
@@ -1481,19 +1609,34 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: messaging.GetRoomRequest, *,
@@ -1558,7 +1701,16 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._GetRoom._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = MessagingRestTransport._GetRoom._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1570,7 +1722,6 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             pb_resp = messaging.Room.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_room(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_room_with_metadata(resp, response_metadata)
@@ -1607,19 +1758,34 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: messaging.ListBlurbsRequest, *,
@@ -1687,7 +1853,16 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._ListBlurbs._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = MessagingRestTransport._ListBlurbs._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1699,7 +1874,6 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             pb_resp = messaging.ListBlurbsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_blurbs(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_blurbs_with_metadata(resp, response_metadata)
@@ -1736,19 +1910,34 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: messaging.ListRoomsRequest, *,
@@ -1816,7 +2005,16 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._ListRooms._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = MessagingRestTransport._ListRooms._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1828,7 +2026,6 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             pb_resp = messaging.ListRoomsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_rooms(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_rooms_with_metadata(resp, response_metadata)
@@ -1865,20 +2062,35 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: messaging.SearchBlurbsRequest, *,
@@ -1946,7 +2158,17 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._SearchBlurbs._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = MessagingRestTransport._SearchBlurbs._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1956,7 +2178,6 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_search_blurbs(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_search_blurbs_with_metadata(resp, response_metadata)
@@ -2006,21 +2227,36 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                stream=True,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    stream=True,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: messaging.StreamBlurbsRequest, *,
@@ -2088,7 +2324,17 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._StreamBlurbs._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = MessagingRestTransport._StreamBlurbs._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2097,7 +2343,6 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
 
             # Return the response
             resp = rest_streaming.ResponseIterator(response, messaging.StreamBlurbsResponse)
-
             resp = self._interceptor.post_stream_blurbs(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_stream_blurbs_with_metadata(resp, response_metadata)
@@ -2129,20 +2374,35 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: messaging.UpdateBlurbRequest, *,
@@ -2210,7 +2470,17 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._UpdateBlurb._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = MessagingRestTransport._UpdateBlurb._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2222,7 +2492,6 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             pb_resp = messaging.Blurb.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_blurb(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_blurb_with_metadata(resp, response_metadata)
@@ -2259,20 +2528,35 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: messaging.UpdateRoomRequest, *,
@@ -2337,7 +2621,17 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._UpdateRoom._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = MessagingRestTransport._UpdateRoom._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2349,7 +2643,6 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             pb_resp = messaging.Room.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_room(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_room_with_metadata(resp, response_metadata)
@@ -2380,7 +2673,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             messaging.StreamBlurbsResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._Connect(self._session, self._host, self._interceptor) # type: ignore
+        return self._Connect(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def create_blurb(self) -> Callable[
@@ -2388,7 +2681,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             messaging.Blurb]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateBlurb(self._session, self._host, self._interceptor) # type: ignore
+        return self._CreateBlurb(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def create_room(self) -> Callable[
@@ -2396,7 +2689,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             messaging.Room]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateRoom(self._session, self._host, self._interceptor) # type: ignore
+        return self._CreateRoom(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def delete_blurb(self) -> Callable[
@@ -2404,7 +2697,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             empty_pb2.Empty]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteBlurb(self._session, self._host, self._interceptor) # type: ignore
+        return self._DeleteBlurb(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def delete_room(self) -> Callable[
@@ -2412,7 +2705,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             empty_pb2.Empty]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteRoom(self._session, self._host, self._interceptor) # type: ignore
+        return self._DeleteRoom(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def get_blurb(self) -> Callable[
@@ -2420,7 +2713,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             messaging.Blurb]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetBlurb(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetBlurb(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def get_room(self) -> Callable[
@@ -2428,7 +2721,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             messaging.Room]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetRoom(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetRoom(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def list_blurbs(self) -> Callable[
@@ -2436,7 +2729,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             messaging.ListBlurbsResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListBlurbs(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListBlurbs(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def list_rooms(self) -> Callable[
@@ -2444,7 +2737,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             messaging.ListRoomsResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListRooms(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListRooms(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def search_blurbs(self) -> Callable[
@@ -2452,7 +2745,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._SearchBlurbs(self._session, self._host, self._interceptor) # type: ignore
+        return self._SearchBlurbs(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def send_blurbs(self) -> Callable[
@@ -2460,7 +2753,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             messaging.SendBlurbsResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._SendBlurbs(self._session, self._host, self._interceptor) # type: ignore
+        return self._SendBlurbs(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def stream_blurbs(self) -> Callable[
@@ -2468,7 +2761,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             messaging.StreamBlurbsResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._StreamBlurbs(self._session, self._host, self._interceptor) # type: ignore
+        return self._StreamBlurbs(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def update_blurb(self) -> Callable[
@@ -2476,7 +2769,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             messaging.Blurb]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateBlurb(self._session, self._host, self._interceptor) # type: ignore
+        return self._UpdateBlurb(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def update_room(self) -> Callable[
@@ -2484,11 +2777,11 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             messaging.Room]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateRoom(self._session, self._host, self._interceptor) # type: ignore
+        return self._UpdateRoom(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def list_locations(self):
-        return self._ListLocations(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListLocations(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _ListLocations(_BaseMessagingRestTransport._BaseListLocations, MessagingRestStub):
         def __hash__(self):
@@ -2502,19 +2795,34 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
             request: locations_pb2.ListLocationsRequest, *,
@@ -2577,7 +2885,16 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._ListLocations._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = MessagingRestTransport._ListLocations._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2611,7 +2928,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
 
     @property
     def get_location(self):
-        return self._GetLocation(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetLocation(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _GetLocation(_BaseMessagingRestTransport._BaseGetLocation, MessagingRestStub):
         def __hash__(self):
@@ -2625,19 +2942,34 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
             request: locations_pb2.GetLocationRequest, *,
@@ -2700,7 +3032,16 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._GetLocation._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = MessagingRestTransport._GetLocation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2734,7 +3075,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
 
     @property
     def set_iam_policy(self):
-        return self._SetIamPolicy(self._session, self._host, self._interceptor) # type: ignore
+        return self._SetIamPolicy(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _SetIamPolicy(_BaseMessagingRestTransport._BaseSetIamPolicy, MessagingRestStub):
         def __hash__(self):
@@ -2748,20 +3089,35 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
             request: iam_policy_pb2.SetIamPolicyRequest, *,
@@ -2824,7 +3180,17 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._SetIamPolicy._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = MessagingRestTransport._SetIamPolicy._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2858,7 +3224,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
 
     @property
     def get_iam_policy(self):
-        return self._GetIamPolicy(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetIamPolicy(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _GetIamPolicy(_BaseMessagingRestTransport._BaseGetIamPolicy, MessagingRestStub):
         def __hash__(self):
@@ -2872,19 +3238,34 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
             request: iam_policy_pb2.GetIamPolicyRequest, *,
@@ -2947,7 +3328,16 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._GetIamPolicy._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = MessagingRestTransport._GetIamPolicy._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2981,7 +3371,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
 
     @property
     def test_iam_permissions(self):
-        return self._TestIamPermissions(self._session, self._host, self._interceptor) # type: ignore
+        return self._TestIamPermissions(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _TestIamPermissions(_BaseMessagingRestTransport._BaseTestIamPermissions, MessagingRestStub):
         def __hash__(self):
@@ -2995,20 +3385,35 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
             request: iam_policy_pb2.TestIamPermissionsRequest, *,
@@ -3071,7 +3476,17 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._TestIamPermissions._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = MessagingRestTransport._TestIamPermissions._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3105,7 +3520,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
 
     @property
     def list_operations(self):
-        return self._ListOperations(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListOperations(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _ListOperations(_BaseMessagingRestTransport._BaseListOperations, MessagingRestStub):
         def __hash__(self):
@@ -3119,19 +3534,34 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
             request: operations_pb2.ListOperationsRequest, *,
@@ -3194,7 +3624,16 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._ListOperations._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = MessagingRestTransport._ListOperations._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3228,7 +3667,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
 
     @property
     def get_operation(self):
-        return self._GetOperation(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetOperation(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _GetOperation(_BaseMessagingRestTransport._BaseGetOperation, MessagingRestStub):
         def __hash__(self):
@@ -3242,19 +3681,34 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
             request: operations_pb2.GetOperationRequest, *,
@@ -3317,7 +3771,16 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._GetOperation._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = MessagingRestTransport._GetOperation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3351,7 +3814,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
 
     @property
     def delete_operation(self):
-        return self._DeleteOperation(self._session, self._host, self._interceptor) # type: ignore
+        return self._DeleteOperation(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _DeleteOperation(_BaseMessagingRestTransport._BaseDeleteOperation, MessagingRestStub):
         def __hash__(self):
@@ -3365,19 +3828,34 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
             request: operations_pb2.DeleteOperationRequest, *,
@@ -3437,7 +3915,16 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._DeleteOperation._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = MessagingRestTransport._DeleteOperation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3448,7 +3935,7 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
 
     @property
     def cancel_operation(self):
-        return self._CancelOperation(self._session, self._host, self._interceptor) # type: ignore
+        return self._CancelOperation(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _CancelOperation(_BaseMessagingRestTransport._BaseCancelOperation, MessagingRestStub):
         def __hash__(self):
@@ -3462,19 +3949,34 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
             request: operations_pb2.CancelOperationRequest, *,
@@ -3534,7 +4036,16 @@ class MessagingRestTransport(_BaseMessagingRestTransport):
                 )
 
             # Send the request
-            response = MessagingRestTransport._CancelOperation._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = MessagingRestTransport._CancelOperation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.

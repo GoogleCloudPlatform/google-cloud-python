@@ -18,12 +18,13 @@ import json  # type: ignore
 
 from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.auth import credentials as ga_credentials  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import retry as retries
 from google.api_core import rest_helpers
 from google.api_core import rest_streaming
 from google.api_core import gapic_v1
-from google.cloud.eventarc_v1._compat import transcode_request
+from google.cloud.eventarc_v1._compat import transcode_request, trace_http_request
 import google.protobuf
 
 from google.protobuf import json_format
@@ -2008,6 +2009,7 @@ class EventarcRestStub:
     _session: AuthorizedSession
     _host: str
     _interceptor: EventarcRestInterceptor
+    _client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None
 
 
 class EventarcRestTransport(_BaseEventarcRestTransport):
@@ -2037,6 +2039,8 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             url_scheme: str = 'https',
             interceptor: Optional[EventarcRestInterceptor] = None,
             api_audience: Optional[str] = None,
+            client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
+            **kwargs,
             ) -> None:
         """Instantiate the transport.
 
@@ -2080,6 +2084,9 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
         # Run the base constructor
         # TODO(yon-mg): resolve other ctor params i.e. scopes, quota, etc.
@@ -2091,7 +2098,9 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             url_scheme=url_scheme,
-            api_audience=api_audience
+            api_audience=api_audience,
+            client_options=client_options,
+            **kwargs,
         )
         self._session = AuthorizedSession(
             self._credentials, default_host=self.DEFAULT_HOST)
@@ -2163,20 +2172,35 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.CreateChannelRequest, *,
@@ -2243,7 +2267,17 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._CreateChannel._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = EventarcRestTransport._CreateChannel._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2253,7 +2287,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_channel(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_channel_with_metadata(resp, response_metadata)
@@ -2290,20 +2323,35 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.CreateChannelConnectionRequest, *,
@@ -2370,7 +2418,17 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._CreateChannelConnection._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = EventarcRestTransport._CreateChannelConnection._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2380,7 +2438,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_channel_connection(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_channel_connection_with_metadata(resp, response_metadata)
@@ -2417,20 +2474,35 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.CreateEnrollmentRequest, *,
@@ -2497,7 +2569,17 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._CreateEnrollment._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = EventarcRestTransport._CreateEnrollment._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2507,7 +2589,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_enrollment(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_enrollment_with_metadata(resp, response_metadata)
@@ -2544,20 +2625,35 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.CreateGoogleApiSourceRequest, *,
@@ -2624,7 +2720,17 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._CreateGoogleApiSource._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = EventarcRestTransport._CreateGoogleApiSource._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2634,7 +2740,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_google_api_source(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_google_api_source_with_metadata(resp, response_metadata)
@@ -2671,20 +2776,35 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.CreateMessageBusRequest, *,
@@ -2751,7 +2871,17 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._CreateMessageBus._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = EventarcRestTransport._CreateMessageBus._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2761,7 +2891,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_message_bus(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_message_bus_with_metadata(resp, response_metadata)
@@ -2798,20 +2927,35 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.CreatePipelineRequest, *,
@@ -2878,7 +3022,17 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._CreatePipeline._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = EventarcRestTransport._CreatePipeline._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2888,7 +3042,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_pipeline(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_pipeline_with_metadata(resp, response_metadata)
@@ -2925,20 +3078,35 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.CreateTriggerRequest, *,
@@ -3005,7 +3173,17 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._CreateTrigger._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = EventarcRestTransport._CreateTrigger._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3015,7 +3193,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_trigger(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_trigger_with_metadata(resp, response_metadata)
@@ -3052,19 +3229,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.DeleteChannelRequest, *,
@@ -3131,7 +3323,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._DeleteChannel._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._DeleteChannel._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3141,7 +3342,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_delete_channel(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_delete_channel_with_metadata(resp, response_metadata)
@@ -3178,19 +3378,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.DeleteChannelConnectionRequest, *,
@@ -3257,7 +3472,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._DeleteChannelConnection._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._DeleteChannelConnection._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3267,7 +3491,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_delete_channel_connection(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_delete_channel_connection_with_metadata(resp, response_metadata)
@@ -3304,19 +3527,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.DeleteEnrollmentRequest, *,
@@ -3383,7 +3621,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._DeleteEnrollment._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._DeleteEnrollment._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3393,7 +3640,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_delete_enrollment(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_delete_enrollment_with_metadata(resp, response_metadata)
@@ -3430,19 +3676,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.DeleteGoogleApiSourceRequest, *,
@@ -3509,7 +3770,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._DeleteGoogleApiSource._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._DeleteGoogleApiSource._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3519,7 +3789,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_delete_google_api_source(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_delete_google_api_source_with_metadata(resp, response_metadata)
@@ -3556,19 +3825,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.DeleteMessageBusRequest, *,
@@ -3635,7 +3919,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._DeleteMessageBus._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._DeleteMessageBus._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3645,7 +3938,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_delete_message_bus(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_delete_message_bus_with_metadata(resp, response_metadata)
@@ -3682,19 +3974,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.DeletePipelineRequest, *,
@@ -3761,7 +4068,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._DeletePipeline._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._DeletePipeline._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3771,7 +4087,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_delete_pipeline(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_delete_pipeline_with_metadata(resp, response_metadata)
@@ -3808,19 +4123,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.DeleteTriggerRequest, *,
@@ -3887,7 +4217,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._DeleteTrigger._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._DeleteTrigger._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3897,7 +4236,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_delete_trigger(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_delete_trigger_with_metadata(resp, response_metadata)
@@ -3934,19 +4272,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.GetChannelRequest, *,
@@ -4018,7 +4371,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._GetChannel._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._GetChannel._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -4030,7 +4392,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pb_resp = channel.Channel.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_channel(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_channel_with_metadata(resp, response_metadata)
@@ -4067,19 +4428,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.GetChannelConnectionRequest, *,
@@ -4150,7 +4526,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._GetChannelConnection._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._GetChannelConnection._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -4162,7 +4547,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pb_resp = channel_connection.ChannelConnection.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_channel_connection(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_channel_connection_with_metadata(resp, response_metadata)
@@ -4199,19 +4583,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.GetEnrollmentRequest, *,
@@ -4281,7 +4680,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._GetEnrollment._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._GetEnrollment._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -4293,7 +4701,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pb_resp = enrollment.Enrollment.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_enrollment(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_enrollment_with_metadata(resp, response_metadata)
@@ -4330,19 +4737,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.GetGoogleApiSourceRequest, *,
@@ -4409,7 +4831,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._GetGoogleApiSource._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._GetGoogleApiSource._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -4421,7 +4852,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pb_resp = google_api_source.GoogleApiSource.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_google_api_source(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_google_api_source_with_metadata(resp, response_metadata)
@@ -4458,19 +4888,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.GetGoogleChannelConfigRequest, *,
@@ -4542,7 +4987,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._GetGoogleChannelConfig._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._GetGoogleChannelConfig._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -4554,7 +5008,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pb_resp = google_channel_config.GoogleChannelConfig.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_google_channel_config(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_google_channel_config_with_metadata(resp, response_metadata)
@@ -4591,19 +5044,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.GetMessageBusRequest, *,
@@ -4675,7 +5143,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._GetMessageBus._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._GetMessageBus._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -4687,7 +5164,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pb_resp = message_bus.MessageBus.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_message_bus(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_message_bus_with_metadata(resp, response_metadata)
@@ -4724,19 +5200,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.GetPipelineRequest, *,
@@ -4802,7 +5293,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._GetPipeline._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._GetPipeline._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -4814,7 +5314,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pb_resp = pipeline.Pipeline.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_pipeline(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_pipeline_with_metadata(resp, response_metadata)
@@ -4851,19 +5350,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.GetProviderRequest, *,
@@ -4929,7 +5443,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._GetProvider._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._GetProvider._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -4941,7 +5464,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pb_resp = discovery.Provider.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_provider(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_provider_with_metadata(resp, response_metadata)
@@ -4978,19 +5500,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.GetTriggerRequest, *,
@@ -5056,7 +5593,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._GetTrigger._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._GetTrigger._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -5068,7 +5614,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pb_resp = trigger.Trigger.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_trigger(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_trigger_with_metadata(resp, response_metadata)
@@ -5105,19 +5650,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.ListChannelConnectionsRequest, *,
@@ -5183,7 +5743,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._ListChannelConnections._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._ListChannelConnections._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -5195,7 +5764,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pb_resp = eventarc.ListChannelConnectionsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_channel_connections(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_channel_connections_with_metadata(resp, response_metadata)
@@ -5232,19 +5800,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.ListChannelsRequest, *,
@@ -5308,7 +5891,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._ListChannels._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._ListChannels._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -5320,7 +5912,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pb_resp = eventarc.ListChannelsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_channels(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_channels_with_metadata(resp, response_metadata)
@@ -5357,19 +5948,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.ListEnrollmentsRequest, *,
@@ -5433,7 +6039,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._ListEnrollments._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._ListEnrollments._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -5445,7 +6060,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pb_resp = eventarc.ListEnrollmentsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_enrollments(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_enrollments_with_metadata(resp, response_metadata)
@@ -5482,19 +6096,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.ListGoogleApiSourcesRequest, *,
@@ -5560,7 +6189,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._ListGoogleApiSources._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._ListGoogleApiSources._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -5572,7 +6210,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pb_resp = eventarc.ListGoogleApiSourcesResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_google_api_sources(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_google_api_sources_with_metadata(resp, response_metadata)
@@ -5609,19 +6246,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.ListMessageBusEnrollmentsRequest, *,
@@ -5688,7 +6340,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._ListMessageBusEnrollments._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._ListMessageBusEnrollments._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -5700,7 +6361,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pb_resp = eventarc.ListMessageBusEnrollmentsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_message_bus_enrollments(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_message_bus_enrollments_with_metadata(resp, response_metadata)
@@ -5737,19 +6397,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.ListMessageBusesRequest, *,
@@ -5815,7 +6490,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._ListMessageBuses._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._ListMessageBuses._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -5827,7 +6511,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pb_resp = eventarc.ListMessageBusesResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_message_buses(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_message_buses_with_metadata(resp, response_metadata)
@@ -5864,19 +6547,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.ListPipelinesRequest, *,
@@ -5942,7 +6640,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._ListPipelines._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._ListPipelines._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -5954,7 +6661,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pb_resp = eventarc.ListPipelinesResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_pipelines(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_pipelines_with_metadata(resp, response_metadata)
@@ -5991,19 +6697,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.ListProvidersRequest, *,
@@ -6067,7 +6788,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._ListProviders._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._ListProviders._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -6079,7 +6809,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pb_resp = eventarc.ListProvidersResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_providers(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_providers_with_metadata(resp, response_metadata)
@@ -6116,19 +6845,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.ListTriggersRequest, *,
@@ -6192,7 +6936,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._ListTriggers._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._ListTriggers._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -6204,7 +6957,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pb_resp = eventarc.ListTriggersResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_triggers(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_triggers_with_metadata(resp, response_metadata)
@@ -6241,20 +6993,35 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.UpdateChannelRequest, *,
@@ -6321,7 +7088,17 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._UpdateChannel._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = EventarcRestTransport._UpdateChannel._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -6331,7 +7108,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_channel(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_channel_with_metadata(resp, response_metadata)
@@ -6368,20 +7144,35 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.UpdateEnrollmentRequest, *,
@@ -6448,7 +7239,17 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._UpdateEnrollment._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = EventarcRestTransport._UpdateEnrollment._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -6458,7 +7259,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_enrollment(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_enrollment_with_metadata(resp, response_metadata)
@@ -6495,20 +7295,35 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.UpdateGoogleApiSourceRequest, *,
@@ -6575,7 +7390,17 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._UpdateGoogleApiSource._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = EventarcRestTransport._UpdateGoogleApiSource._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -6585,7 +7410,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_google_api_source(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_google_api_source_with_metadata(resp, response_metadata)
@@ -6622,20 +7446,35 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.UpdateGoogleChannelConfigRequest, *,
@@ -6708,7 +7547,17 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._UpdateGoogleChannelConfig._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = EventarcRestTransport._UpdateGoogleChannelConfig._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -6720,7 +7569,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pb_resp = gce_google_channel_config.GoogleChannelConfig.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_google_channel_config(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_google_channel_config_with_metadata(resp, response_metadata)
@@ -6757,20 +7605,35 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.UpdateMessageBusRequest, *,
@@ -6837,7 +7700,17 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._UpdateMessageBus._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = EventarcRestTransport._UpdateMessageBus._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -6847,7 +7720,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_message_bus(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_message_bus_with_metadata(resp, response_metadata)
@@ -6884,20 +7756,35 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.UpdatePipelineRequest, *,
@@ -6964,7 +7851,17 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._UpdatePipeline._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = EventarcRestTransport._UpdatePipeline._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -6974,7 +7871,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_pipeline(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_pipeline_with_metadata(resp, response_metadata)
@@ -7011,20 +7907,35 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: eventarc.UpdateTriggerRequest, *,
@@ -7091,7 +8002,17 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._UpdateTrigger._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = EventarcRestTransport._UpdateTrigger._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -7101,7 +8022,6 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_trigger(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_trigger_with_metadata(resp, response_metadata)
@@ -7132,7 +8052,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateChannel(self._session, self._host, self._interceptor) # type: ignore
+        return self._CreateChannel(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def create_channel_connection(self) -> Callable[
@@ -7140,7 +8060,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateChannelConnection(self._session, self._host, self._interceptor) # type: ignore
+        return self._CreateChannelConnection(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def create_enrollment(self) -> Callable[
@@ -7148,7 +8068,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateEnrollment(self._session, self._host, self._interceptor) # type: ignore
+        return self._CreateEnrollment(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def create_google_api_source(self) -> Callable[
@@ -7156,7 +8076,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateGoogleApiSource(self._session, self._host, self._interceptor) # type: ignore
+        return self._CreateGoogleApiSource(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def create_message_bus(self) -> Callable[
@@ -7164,7 +8084,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateMessageBus(self._session, self._host, self._interceptor) # type: ignore
+        return self._CreateMessageBus(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def create_pipeline(self) -> Callable[
@@ -7172,7 +8092,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreatePipeline(self._session, self._host, self._interceptor) # type: ignore
+        return self._CreatePipeline(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def create_trigger(self) -> Callable[
@@ -7180,7 +8100,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateTrigger(self._session, self._host, self._interceptor) # type: ignore
+        return self._CreateTrigger(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def delete_channel(self) -> Callable[
@@ -7188,7 +8108,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteChannel(self._session, self._host, self._interceptor) # type: ignore
+        return self._DeleteChannel(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def delete_channel_connection(self) -> Callable[
@@ -7196,7 +8116,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteChannelConnection(self._session, self._host, self._interceptor) # type: ignore
+        return self._DeleteChannelConnection(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def delete_enrollment(self) -> Callable[
@@ -7204,7 +8124,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteEnrollment(self._session, self._host, self._interceptor) # type: ignore
+        return self._DeleteEnrollment(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def delete_google_api_source(self) -> Callable[
@@ -7212,7 +8132,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteGoogleApiSource(self._session, self._host, self._interceptor) # type: ignore
+        return self._DeleteGoogleApiSource(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def delete_message_bus(self) -> Callable[
@@ -7220,7 +8140,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteMessageBus(self._session, self._host, self._interceptor) # type: ignore
+        return self._DeleteMessageBus(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def delete_pipeline(self) -> Callable[
@@ -7228,7 +8148,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeletePipeline(self._session, self._host, self._interceptor) # type: ignore
+        return self._DeletePipeline(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def delete_trigger(self) -> Callable[
@@ -7236,7 +8156,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteTrigger(self._session, self._host, self._interceptor) # type: ignore
+        return self._DeleteTrigger(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def get_channel(self) -> Callable[
@@ -7244,7 +8164,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             channel.Channel]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetChannel(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetChannel(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def get_channel_connection(self) -> Callable[
@@ -7252,7 +8172,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             channel_connection.ChannelConnection]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetChannelConnection(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetChannelConnection(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def get_enrollment(self) -> Callable[
@@ -7260,7 +8180,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             enrollment.Enrollment]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetEnrollment(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetEnrollment(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def get_google_api_source(self) -> Callable[
@@ -7268,7 +8188,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             google_api_source.GoogleApiSource]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetGoogleApiSource(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetGoogleApiSource(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def get_google_channel_config(self) -> Callable[
@@ -7276,7 +8196,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             google_channel_config.GoogleChannelConfig]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetGoogleChannelConfig(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetGoogleChannelConfig(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def get_message_bus(self) -> Callable[
@@ -7284,7 +8204,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             message_bus.MessageBus]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetMessageBus(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetMessageBus(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def get_pipeline(self) -> Callable[
@@ -7292,7 +8212,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             pipeline.Pipeline]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetPipeline(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetPipeline(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def get_provider(self) -> Callable[
@@ -7300,7 +8220,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             discovery.Provider]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetProvider(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetProvider(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def get_trigger(self) -> Callable[
@@ -7308,7 +8228,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             trigger.Trigger]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetTrigger(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetTrigger(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def list_channel_connections(self) -> Callable[
@@ -7316,7 +8236,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             eventarc.ListChannelConnectionsResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListChannelConnections(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListChannelConnections(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def list_channels(self) -> Callable[
@@ -7324,7 +8244,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             eventarc.ListChannelsResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListChannels(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListChannels(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def list_enrollments(self) -> Callable[
@@ -7332,7 +8252,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             eventarc.ListEnrollmentsResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListEnrollments(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListEnrollments(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def list_google_api_sources(self) -> Callable[
@@ -7340,7 +8260,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             eventarc.ListGoogleApiSourcesResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListGoogleApiSources(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListGoogleApiSources(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def list_message_bus_enrollments(self) -> Callable[
@@ -7348,7 +8268,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             eventarc.ListMessageBusEnrollmentsResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListMessageBusEnrollments(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListMessageBusEnrollments(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def list_message_buses(self) -> Callable[
@@ -7356,7 +8276,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             eventarc.ListMessageBusesResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListMessageBuses(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListMessageBuses(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def list_pipelines(self) -> Callable[
@@ -7364,7 +8284,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             eventarc.ListPipelinesResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListPipelines(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListPipelines(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def list_providers(self) -> Callable[
@@ -7372,7 +8292,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             eventarc.ListProvidersResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListProviders(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListProviders(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def list_triggers(self) -> Callable[
@@ -7380,7 +8300,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             eventarc.ListTriggersResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListTriggers(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListTriggers(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def update_channel(self) -> Callable[
@@ -7388,7 +8308,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateChannel(self._session, self._host, self._interceptor) # type: ignore
+        return self._UpdateChannel(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def update_enrollment(self) -> Callable[
@@ -7396,7 +8316,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateEnrollment(self._session, self._host, self._interceptor) # type: ignore
+        return self._UpdateEnrollment(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def update_google_api_source(self) -> Callable[
@@ -7404,7 +8324,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateGoogleApiSource(self._session, self._host, self._interceptor) # type: ignore
+        return self._UpdateGoogleApiSource(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def update_google_channel_config(self) -> Callable[
@@ -7412,7 +8332,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             gce_google_channel_config.GoogleChannelConfig]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateGoogleChannelConfig(self._session, self._host, self._interceptor) # type: ignore
+        return self._UpdateGoogleChannelConfig(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def update_message_bus(self) -> Callable[
@@ -7420,7 +8340,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateMessageBus(self._session, self._host, self._interceptor) # type: ignore
+        return self._UpdateMessageBus(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def update_pipeline(self) -> Callable[
@@ -7428,7 +8348,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdatePipeline(self._session, self._host, self._interceptor) # type: ignore
+        return self._UpdatePipeline(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def update_trigger(self) -> Callable[
@@ -7436,11 +8356,11 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateTrigger(self._session, self._host, self._interceptor) # type: ignore
+        return self._UpdateTrigger(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def get_location(self):
-        return self._GetLocation(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetLocation(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _GetLocation(_BaseEventarcRestTransport._BaseGetLocation, EventarcRestStub):
         def __hash__(self):
@@ -7454,19 +8374,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
             request: locations_pb2.GetLocationRequest, *,
@@ -7529,7 +8464,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._GetLocation._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._GetLocation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -7563,7 +8507,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
 
     @property
     def list_locations(self):
-        return self._ListLocations(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListLocations(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _ListLocations(_BaseEventarcRestTransport._BaseListLocations, EventarcRestStub):
         def __hash__(self):
@@ -7577,19 +8521,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
             request: locations_pb2.ListLocationsRequest, *,
@@ -7652,7 +8611,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._ListLocations._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._ListLocations._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -7686,7 +8654,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
 
     @property
     def get_iam_policy(self):
-        return self._GetIamPolicy(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetIamPolicy(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _GetIamPolicy(_BaseEventarcRestTransport._BaseGetIamPolicy, EventarcRestStub):
         def __hash__(self):
@@ -7700,19 +8668,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
             request: iam_policy_pb2.GetIamPolicyRequest, *,
@@ -7775,7 +8758,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._GetIamPolicy._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._GetIamPolicy._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -7809,7 +8801,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
 
     @property
     def set_iam_policy(self):
-        return self._SetIamPolicy(self._session, self._host, self._interceptor) # type: ignore
+        return self._SetIamPolicy(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _SetIamPolicy(_BaseEventarcRestTransport._BaseSetIamPolicy, EventarcRestStub):
         def __hash__(self):
@@ -7823,20 +8815,35 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
             request: iam_policy_pb2.SetIamPolicyRequest, *,
@@ -7899,7 +8906,17 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._SetIamPolicy._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = EventarcRestTransport._SetIamPolicy._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -7933,7 +8950,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
 
     @property
     def test_iam_permissions(self):
-        return self._TestIamPermissions(self._session, self._host, self._interceptor) # type: ignore
+        return self._TestIamPermissions(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _TestIamPermissions(_BaseEventarcRestTransport._BaseTestIamPermissions, EventarcRestStub):
         def __hash__(self):
@@ -7947,20 +8964,35 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
             request: iam_policy_pb2.TestIamPermissionsRequest, *,
@@ -8023,7 +9055,17 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._TestIamPermissions._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = EventarcRestTransport._TestIamPermissions._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -8057,7 +9099,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
 
     @property
     def cancel_operation(self):
-        return self._CancelOperation(self._session, self._host, self._interceptor) # type: ignore
+        return self._CancelOperation(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _CancelOperation(_BaseEventarcRestTransport._BaseCancelOperation, EventarcRestStub):
         def __hash__(self):
@@ -8071,20 +9113,35 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
             request: operations_pb2.CancelOperationRequest, *,
@@ -8144,7 +9201,17 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._CancelOperation._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = EventarcRestTransport._CancelOperation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -8155,7 +9222,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
 
     @property
     def delete_operation(self):
-        return self._DeleteOperation(self._session, self._host, self._interceptor) # type: ignore
+        return self._DeleteOperation(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _DeleteOperation(_BaseEventarcRestTransport._BaseDeleteOperation, EventarcRestStub):
         def __hash__(self):
@@ -8169,19 +9236,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
             request: operations_pb2.DeleteOperationRequest, *,
@@ -8241,7 +9323,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._DeleteOperation._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._DeleteOperation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -8252,7 +9343,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
 
     @property
     def get_operation(self):
-        return self._GetOperation(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetOperation(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _GetOperation(_BaseEventarcRestTransport._BaseGetOperation, EventarcRestStub):
         def __hash__(self):
@@ -8266,19 +9357,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
             request: operations_pb2.GetOperationRequest, *,
@@ -8341,7 +9447,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._GetOperation._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._GetOperation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -8375,7 +9490,7 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
 
     @property
     def list_operations(self):
-        return self._ListOperations(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListOperations(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _ListOperations(_BaseEventarcRestTransport._BaseListOperations, EventarcRestStub):
         def __hash__(self):
@@ -8389,19 +9504,34 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
             request: operations_pb2.ListOperationsRequest, *,
@@ -8464,7 +9594,16 @@ class EventarcRestTransport(_BaseEventarcRestTransport):
                 )
 
             # Send the request
-            response = EventarcRestTransport._ListOperations._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = EventarcRestTransport._ListOperations._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.

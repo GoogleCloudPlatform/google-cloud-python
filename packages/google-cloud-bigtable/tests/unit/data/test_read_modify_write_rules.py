@@ -50,6 +50,8 @@ class TestIncrementRule:
         [
             (("fam", b"qual", 1), ("fam", b"qual", 1)),
             (("fam", b"qual", -12), ("fam", b"qual", -12)),
+            (("fam", b"qual", -(2**63)), ("fam", b"qual", -(2**63))),
+            (("fam", b"qual", 2**63 - 1), ("fam", b"qual", 2**63 - 1)),
             (("fam", "qual", 1), ("fam", b"qual", 1)),
             (("fam", "qual", 0), ("fam", b"qual", 0)),
             (("", "", 0), ("", b"", 0)),
@@ -62,17 +64,21 @@ class TestIncrementRule:
         assert instance.qualifier == expected[1]
         assert instance.increment_amount == expected[2]
 
-    @pytest.mark.parametrize("input_amount", [1.1, None, "1", object(), "", b"", b"1"])
+    @pytest.mark.parametrize(
+        "input_amount", [True, False, 1.1, None, "1", object(), "", b"", b"1"]
+    )
     def test_ctor_bad_input(self, input_amount):
         with pytest.raises(TypeError) as e:
             self._target_class()("fam", b"qual", input_amount)
         assert "increment_amount must be an integer" in str(e.value)
 
-    @pytest.mark.parametrize("large_value", [2**64, 2**64 + 1, -(2**64), -(2**64) - 1])
+    @pytest.mark.parametrize(
+        "large_value", [2**63, -(2**63) - 1, 2**64, 2**64 + 1, -(2**64), -(2**64) - 1]
+    )
     def test_ctor_large_values(self, large_value):
         with pytest.raises(ValueError) as e:
             self._target_class()("fam", b"qual", large_value)
-            assert "too large" in str(e.value)
+        assert "increment_amount must be between -2**63 and 2**63" in str(e.value)
 
     @pytest.mark.parametrize(
         "args,expected",

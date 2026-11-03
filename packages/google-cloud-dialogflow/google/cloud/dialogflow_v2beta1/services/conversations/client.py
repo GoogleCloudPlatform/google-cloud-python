@@ -262,6 +262,28 @@ class ConversationsClient(metaclass=ConversationsClientMeta):
         return m.groupdict() if m else {}
 
     @staticmethod
+    def companion_agent_path(
+        project: str,
+        location: str,
+        companion_agent: str,
+    ) -> str:
+        """Returns a fully-qualified companion_agent string."""
+        return "projects/{project}/locations/{location}/companionAgents/{companion_agent}".format(
+            project=project,
+            location=location,
+            companion_agent=companion_agent,
+        )
+
+    @staticmethod
+    def parse_companion_agent_path(path: str) -> Dict[str, str]:
+        """Parses a companion_agent path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/companionAgents/(?P<companion_agent>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
     def conversation_path(
         project: str,
         conversation: str,
@@ -1567,7 +1589,6 @@ class ConversationsClient(metaclass=ConversationsClientMeta):
                 # Initialize request argument(s)
                 requests = dialogflow_v2beta1.CreateMessageRequest()
                 requests.parent = "parent_value"
-                requests.message.content = "content_value"
 
                 request = dialogflow_v2beta1.BatchCreateMessagesRequest(
                     parent="parent_value",
@@ -1938,7 +1959,6 @@ class ConversationsClient(metaclass=ConversationsClientMeta):
 
                 # Initialize request argument(s)
                 stateless_conversation = dialogflow_v2beta1.MinimalConversation()
-                stateless_conversation.messages.content = "content_value"
                 stateless_conversation.parent = "parent_value"
 
                 conversation_profile = dialogflow_v2beta1.ConversationProfile()

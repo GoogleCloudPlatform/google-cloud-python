@@ -2273,6 +2273,11 @@
                 "set_labels"
               ]
             },
+            "SetName": {
+              "methods": [
+                "set_name"
+              ]
+            },
             "TestIamPermissions": {
               "methods": [
                 "test_iam_permissions"

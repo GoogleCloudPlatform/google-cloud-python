@@ -43,7 +43,7 @@ async def sample_update_volume():
     volume.share_name = "share_name_value"
     volume.storage_pool = "storage_pool_value"
     volume.capacity_gib = 1247
-    volume.protocols = ["ISCSI"]
+    volume.protocols = ["NVME"]
 
     request = netapp_v1.UpdateVolumeRequest(
         volume=volume,

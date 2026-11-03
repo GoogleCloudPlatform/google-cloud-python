@@ -10,4 +10,4 @@ google-cloud-documentai
 google-cloud-storage
 numpy
 pikepdf
-numba>=0.63.0b1
+numba

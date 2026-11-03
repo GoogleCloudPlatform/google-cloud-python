@@ -36,6 +36,7 @@ __protobuf__ = proto.module(
         "AutoscalingConfig",
         "EncryptionConfig",
         "GceClusterConfig",
+        "MultiZoneConfig",
         "NodeGroupAffinity",
         "ShieldedInstanceConfig",
         "ConfidentialInstanceConfig",
@@ -44,6 +45,7 @@ __protobuf__ = proto.module(
         "InstanceReference",
         "ManagedGroupConfig",
         "InstanceFlexibilityPolicy",
+        "FlexibleInstanceGroupConfig",
         "AcceleratorConfig",
         "DiskConfig",
         "AttachedDiskConfig",
@@ -263,6 +265,64 @@ class ClusterConfig(proto.Message):
             Optional. The config for Dataproc metrics.
         auxiliary_node_groups (MutableSequence[google.cloud.dataproc_v1.types.AuxiliaryNodeGroup]):
             Optional. The node group settings.
+        master_flexible_config (google.cloud.dataproc_v1.types.FlexibleInstanceGroupConfig):
+            Optional. The High Obtainability (HO) config settings for
+            the cluster's master instances.
+
+            In High Obtainability (HO) mode, flexible configs are the
+            single source of truth for desired cluster configuration
+            across node groups:
+
+            - For single-node clusters: ``master_flexible_config`` must
+              be specified, and no worker configs should be set.
+            - For multi-node (standard) clusters: both
+              ``master_flexible_config`` and
+              [worker_flexible_config][google.cloud.dataproc.v1.ClusterConfig.worker_flexible_config]
+              must be specified. Mixing standard and flexible configs
+              across node groups is not allowed.
+
+            Only one of
+            [master_config][google.cloud.dataproc.v1.ClusterConfig.master_config]
+            or ``master_flexible_config`` can be set.
+        worker_flexible_config (google.cloud.dataproc_v1.types.FlexibleInstanceGroupConfig):
+            Optional. The High Obtainability (HO) config settings for
+            the cluster's worker instances.
+
+            In High Obtainability (HO) mode, flexible configs are the
+            single source of truth for desired cluster configuration.
+            ``num_instances`` represents the desired capacity of the
+            worker group and is mutable via cluster updates and
+            autoscaling.
+
+            Only one of
+            [worker_config][google.cloud.dataproc.v1.ClusterConfig.worker_config]
+            or ``worker_flexible_config`` can be set.
+
+            In High Obtainability (HO) mode, for multi-node (standard)
+            clusters, both
+            [master_flexible_config][google.cloud.dataproc.v1.ClusterConfig.master_flexible_config]
+            and ``worker_flexible_config`` must be specified. Mixing
+            standard and flexible configs across node groups is not
+            allowed. Single-node clusters do not specify worker configs.
+        secondary_worker_flexible_config (google.cloud.dataproc_v1.types.FlexibleInstanceGroupConfig):
+            Optional. The High Obtainability (HO) config settings for a
+            cluster's secondary worker instances.
+
+            In High Obtainability (HO) mode, flexible configs are the
+            single source of truth for desired cluster configuration.
+            ``num_instances`` represents the desired capacity of the
+            secondary worker group and is mutable via cluster updates
+            and autoscaling.
+
+            Only one of
+            [secondary_worker_config][google.cloud.dataproc.v1.ClusterConfig.secondary_worker_config]
+            or ``secondary_worker_flexible_config`` can be set.
+
+            In High Obtainability (HO) mode, secondary workers are
+            optional. If secondary workers are used in an HO cluster,
+            they must be configured using
+            ``secondary_worker_flexible_config`` (not
+            ``secondary_worker_config``).
     """
 
     class ClusterType(proto.Enum):
@@ -414,6 +474,21 @@ class ClusterConfig(proto.Message):
         proto.MESSAGE,
         number=25,
         message="AuxiliaryNodeGroup",
+    )
+    master_flexible_config: "FlexibleInstanceGroupConfig" = proto.Field(
+        proto.MESSAGE,
+        number=31,
+        message="FlexibleInstanceGroupConfig",
+    )
+    worker_flexible_config: "FlexibleInstanceGroupConfig" = proto.Field(
+        proto.MESSAGE,
+        number=32,
+        message="FlexibleInstanceGroupConfig",
+    )
+    secondary_worker_flexible_config: "FlexibleInstanceGroupConfig" = proto.Field(
+        proto.MESSAGE,
+        number=33,
+        message="FlexibleInstanceGroupConfig",
     )
 
 
@@ -606,6 +681,10 @@ class GceClusterConfig(proto.Message):
             - ``https://www.googleapis.com/compute/v1/projects/[project_id]/zones/[zone]``
             - ``projects/[project_id]/zones/[zone]``
             - ``[zone]``
+        multi_zone_config (google.cloud.dataproc_v1.types.MultiZoneConfig):
+            Optional. Controls how instances within this Cluster are
+            allowed to exist in multiple Zones within the Region. Only
+            one of ``zone_uri`` or ``multi_zone_config`` must be set.
         network_uri (str):
             Optional. The Compute Engine network to be used for machine
             communications. Cannot be specified with subnetwork_uri. If
@@ -746,6 +825,11 @@ class GceClusterConfig(proto.Message):
         proto.STRING,
         number=1,
     )
+    multi_zone_config: "MultiZoneConfig" = proto.Field(
+        proto.MESSAGE,
+        number=19,
+        message="MultiZoneConfig",
+    )
     network_uri: str = proto.Field(
         proto.STRING,
         number=2,
@@ -805,6 +889,39 @@ class GceClusterConfig(proto.Message):
         proto.STRING,
         proto.STRING,
         number=16,
+    )
+
+
+class MultiZoneConfig(proto.Message):
+    r"""Configuration for multi-zonal clusters that can create
+    instances across multiple Zones within the Region.
+
+    Attributes:
+        target_shape (google.cloud.dataproc_v1.types.MultiZoneConfig.TargetShape):
+            Optional. The distribution shape of the nodes
+            in the multi-zonal cluster.
+    """
+
+    class TargetShape(proto.Enum):
+        r"""The distribution shape of the nodes in the multi-zonal
+        cluster.
+
+        Values:
+            TARGET_SHAPE_UNSPECIFIED (0):
+                Target shape is unspecified. Setting this
+                will cause error.
+            ANY (1):
+                Instances may exist in any Zones within the
+                Region.
+        """
+
+        TARGET_SHAPE_UNSPECIFIED = 0
+        ANY = 1
+
+    target_shape: TargetShape = proto.Field(
+        proto.ENUM,
+        number=1,
+        enum=TargetShape,
     )
 
 
@@ -1376,6 +1493,97 @@ class InstanceFlexibilityPolicy(proto.Message):
             number=3,
             message=InstanceSelectionResult,
         )
+    )
+
+
+class FlexibleInstanceGroupConfig(proto.Message):
+    r"""The configuration for High Obtainability (HO) flexible
+    instance groups. Flexible instance group configs serve as the
+    single source of truth for desired state.
+
+    Attributes:
+        num_instances (int):
+            Optional. The number of VM instances
+            requested.
+            For master instances, this must be 1. For worker
+            and secondary worker instances, this represents
+            the desired capacity of the group and is mutable
+            via cluster update operations and autoscaling.
+        core_count (int):
+            Optional. The number of vCPUs per instance.
+            Must be a power of 2 (2, 4, 8, 16, 32). This is
+            a create-time specification and is not currently
+            mutable via update masks.
+        boot_disk_size_gb (int):
+            Optional. The boot disk size in GB. This is a
+            create-time specification and is not currently
+            mutable via update masks.
+        hardware_class (google.cloud.dataproc_v1.types.FlexibleInstanceGroupConfig.HardwareClass):
+            Optional. The hardware class of the
+            instances. This is a create-time specification
+            and is not currently mutable via update masks.
+    """
+
+    class HardwareClass(proto.Enum):
+        r"""Controls the hardware class for the flexible instance group.
+
+        Values:
+            HARDWARE_CLASS_UNSPECIFIED (0):
+                Unspecified hardware class.
+            STANDARD (1):
+                Standard hardware class. Provides a balanced compute
+                configuration with approximately 4GB of memory per vCPU and
+                standard disk storage tiers.
+
+                Candidate machine types include ``n4-standard``,
+                ``n4d-standard``, ``n2-standard``, and ``n2d-standard``
+                (Rank 0), and ``c4-standard`` and ``c4d-standard`` (Rank 1)
+                (for requested core counts 2, 4, 8, 16, 32).
+
+                Warning: The specific machine families and types selected
+                for this hardware class are subject to change. Users should
+                not take a dependency on the underlying machine type
+                selection.
+            PERFORMANCE (2):
+                Performance hardware class. Provides a high-performance
+                configuration with approximately 8GB of memory per vCPU
+                (e.g. high-memory machine types) and higher-tier disk
+                configurations (e.g. higher IOPS and throughput).
+
+                Candidate machine types include ``n4-highmem``,
+                ``n4d-highmem``, ``n2-highmem``, and ``n2d-highmem`` (Rank
+                0), and ``c4-highmem`` and ``c4d-highmem`` (Rank 1) (for
+                requested core counts 2, 4, 8, 16, 32). ``n4``, ``n4d``,
+                ``c4``, and ``c4d`` use Hyperdisk Balanced with provisioned
+                storage, whereas ``n2`` and ``n2d`` use SSD persistent
+                disks.
+
+                Warning: The specific machine families and types selected
+                for this hardware class are subject to change. Users should
+                not take a dependency on the underlying machine type
+                selection.
+        """
+
+        HARDWARE_CLASS_UNSPECIFIED = 0
+        STANDARD = 1
+        PERFORMANCE = 2
+
+    num_instances: int = proto.Field(
+        proto.INT32,
+        number=1,
+    )
+    core_count: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    boot_disk_size_gb: int = proto.Field(
+        proto.INT32,
+        number=3,
+    )
+    hardware_class: HardwareClass = proto.Field(
+        proto.ENUM,
+        number=4,
+        enum=HardwareClass,
     )
 
 

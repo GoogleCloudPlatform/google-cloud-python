@@ -19,7 +19,7 @@ import backoff
 import pytest
 from google.api_core.exceptions import DeadlineExceeded
 
-from ...utils import create_table_cm
+from ....utils import create_table_cm
 from .write_batch import write_batch
 from .write_conditionally import write_conditional
 from .write_increment import write_increment

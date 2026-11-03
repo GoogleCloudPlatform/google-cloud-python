@@ -780,6 +780,91 @@ def test_table_mutate_rows_w_retry_none():
     )
 
 
+def _make_mutate_rows_table_and_rows(row_keys):
+    """Build a table and real ``DirectRow`` instances holding mutations.
+
+    ``_MockRow`` fakes out ``_get_mutations``, so it cannot observe clearing.
+    """
+    credentials = _make_credentials()
+    client = _make_client(project="project-id", credentials=credentials, admin=True)
+    instance = client.instance(instance_id=INSTANCE_ID)
+    table = _make_table(TABLE_ID, instance)
+
+    rows = []
+    for row_key in row_keys:
+        row = DirectRow(row_key=row_key)
+        row.set_cell(FAMILY_NAME, QUALIFIER, VALUE, timestamp=None)
+        rows.append(row)
+
+    return table, rows
+
+
+def test_table_mutate_rows_clears_succeeded_rows_only():
+    """Succeeded rows are cleaned up, failed rows keep their mutations so that
+    they can be applied again separately."""
+    from google.api_core import exceptions as api_exceptions
+
+    from google.cloud.bigtable.data.exceptions import (
+        FailedMutationEntryError,
+        MutationsExceptionGroup,
+    )
+    from google.cloud.bigtable.data.mutations import RowMutationEntry
+
+    table, rows = _make_mutate_rows_table_and_rows([ROW_KEY, ROW_KEY_1])
+
+    with mock.patch.object(table._table_impl, "bulk_mutate_rows") as bulk_mock:
+        bulk_mock.side_effect = MutationsExceptionGroup(
+            excs=[
+                FailedMutationEntryError(
+                    failed_idx=1,
+                    failed_mutation_entry=RowMutationEntry(
+                        ROW_KEY_1, [mock.MagicMock()]
+                    ),
+                    cause=api_exceptions.InternalServerError("Failure"),
+                )
+            ],
+            total_entries=2,
+        )
+        statuses = table.mutate_rows(rows)
+
+    assert [status.code for status in statuses] == [SUCCESS, STATUS_INTERNAL]
+    assert rows[0]._get_mutations() == []
+    assert len(rows[1]._get_mutations()) == 1
+
+
+def test_table_mutate_rows_clears_all_rows_on_success():
+    table, rows = _make_mutate_rows_table_and_rows([ROW_KEY, ROW_KEY_1])
+
+    with mock.patch.object(table._table_impl, "bulk_mutate_rows"):
+        statuses = table.mutate_rows(rows)
+
+    assert [status.code for status in statuses] == [SUCCESS, SUCCESS]
+    assert all(row._get_mutations() == [] for row in rows)
+
+
+def test_table_mutate_rows_keeps_mutations_when_call_raises():
+    """An error that is not reported per entry leaves every row untouched."""
+    table, rows = _make_mutate_rows_table_and_rows([ROW_KEY, ROW_KEY_1])
+
+    with mock.patch.object(table._table_impl, "bulk_mutate_rows") as bulk_mock:
+        bulk_mock.side_effect = DeadlineExceeded("deadline exceeded")
+        with pytest.raises(DeadlineExceeded):
+            table.mutate_rows(rows)
+
+    assert all(len(row._get_mutations()) == 1 for row in rows)
+
+
+def test_table_mutate_rows_w_iterator():
+    """``rows`` may be any iterable, not just a sequence."""
+    table, rows = _make_mutate_rows_table_and_rows([ROW_KEY, ROW_KEY_1])
+
+    with mock.patch.object(table._table_impl, "bulk_mutate_rows"):
+        statuses = table.mutate_rows(iter(rows))
+
+    assert [status.code for status in statuses] == [SUCCESS, SUCCESS]
+    assert all(row._get_mutations() == [] for row in rows)
+
+
 def test_table_mutate_rows_wrong_row_type():
     import pytest
 
@@ -1299,41 +1384,41 @@ def test__create_row_request_row_range_row_set_conflict():
 
 
 def test__create_row_request_row_range_start_key():
+    from google.cloud.bigtable.data.read_rows_query import RowRange
     from google.cloud.bigtable.table import _create_row_request
-    from google.cloud.bigtable_v2.types import RowRange
 
     start_key = b"begin_key"
     result = _create_row_request(start_key=start_key)
-    expected_result = ReadRowsQuery(row_ranges=RowRange(start_key_closed=start_key))
+    expected_result = ReadRowsQuery(row_ranges=RowRange(start_key=start_key))
     assert result == expected_result
 
 
 def test__create_row_request_row_range_end_key():
+    from google.cloud.bigtable.data.read_rows_query import RowRange
     from google.cloud.bigtable.table import _create_row_request
-    from google.cloud.bigtable_v2.types import RowRange
 
     end_key = b"begin_key"
     result = _create_row_request(end_key=end_key)
-    expected_result = ReadRowsQuery(row_ranges=RowRange(end_key_open=end_key))
+    expected_result = ReadRowsQuery(row_ranges=RowRange(end_key=end_key))
     assert result == expected_result
 
 
 def test__create_row_request_row_range_both_keys():
+    from google.cloud.bigtable.data.read_rows_query import RowRange
     from google.cloud.bigtable.table import _create_row_request
-    from google.cloud.bigtable_v2.types import RowRange
 
     start_key = b"begin_key"
     end_key = b"end_key"
     result = _create_row_request(start_key=start_key, end_key=end_key)
     expected_result = ReadRowsQuery(
-        row_ranges=RowRange(start_key_closed=start_key, end_key_open=end_key)
+        row_ranges=RowRange(start_key=start_key, end_key=end_key)
     )
     assert result == expected_result
 
 
 def test__create_row_request_row_range_both_keys_inclusive():
+    from google.cloud.bigtable.data.read_rows_query import RowRange
     from google.cloud.bigtable.table import _create_row_request
-    from google.cloud.bigtable_v2.types import RowRange
 
     start_key = b"begin_key"
     end_key = b"end_key"
@@ -1341,7 +1426,7 @@ def test__create_row_request_row_range_both_keys_inclusive():
         start_key=start_key, end_key=end_key, end_inclusive=True
     )
     expected_result = ReadRowsQuery(
-        row_ranges=RowRange(start_key_closed=start_key, end_key_closed=end_key)
+        row_ranges=RowRange(start_key=start_key, end_key=end_key, end_is_inclusive=True)
     )
     assert result == expected_result
 

@@ -83,6 +83,11 @@ class Fulfillment(proto.Message):
             the webhook service to identify which fulfillment is being
             called, but it could be used for other purposes. This field
             is required if ``webhook`` is specified.
+        code_block_function (str):
+            Optional. The name of the code block function
+            to execute, if this is a code block fulfillment.
+            The code block itself is implied by the
+            fulfillment's parent, e.g. a playbook.
         set_parameter_actions (MutableSequence[google.cloud.dialogflowcx_v3beta1.types.Fulfillment.SetParameterAction]):
             Set parameter values before executing the
             webhook.
@@ -266,6 +271,10 @@ class Fulfillment(proto.Message):
     tag: str = proto.Field(
         proto.STRING,
         number=3,
+    )
+    code_block_function: str = proto.Field(
+        proto.STRING,
+        number=17,
     )
     set_parameter_actions: MutableSequence[SetParameterAction] = proto.RepeatedField(
         proto.MESSAGE,

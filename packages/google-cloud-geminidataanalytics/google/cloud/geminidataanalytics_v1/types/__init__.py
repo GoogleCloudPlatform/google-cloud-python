@@ -99,6 +99,7 @@ from .data_chat_service import (
     UserMessage,
 )
 from .datasource import (
+    BigQueryDatasetReference,
     BigQueryPropertyGraphReference,
     BigQueryTableReference,
     BigQueryTableReferences,
@@ -111,6 +112,7 @@ from .datasource import (
     LookerExploreReferences,
     PrivateLookerInstanceInfo,
     Schema,
+    SearchScope,
     StudioDatasourceReference,
     StudioDatasourceReferences,
 )
@@ -187,6 +189,7 @@ __all__ = (
     "SystemMessage",
     "TextMessage",
     "UserMessage",
+    "BigQueryDatasetReference",
     "BigQueryPropertyGraphReference",
     "BigQueryTableReference",
     "BigQueryTableReferences",
@@ -198,6 +201,7 @@ __all__ = (
     "LookerExploreReferences",
     "PrivateLookerInstanceInfo",
     "Schema",
+    "SearchScope",
     "StudioDatasourceReference",
     "StudioDatasourceReferences",
     "DataFilterType",

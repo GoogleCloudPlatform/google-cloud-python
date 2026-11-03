@@ -346,6 +346,32 @@ class TestBigtableDataClient:
             assert client._channel_refresh_task is None
             ping_and_warm.assert_not_called()
 
+    def test__start_background_channel_refresh_task_creation_failure(self, caplog):
+        import logging
+
+        client = self._make_client(
+            project="project-id", _disable_background_refresh=True
+        )
+        client._disable_background_refresh = False
+        client._emulator_host = None
+        with mock.patch.object(
+            CrossSync._Sync_Impl,
+            "create_daemon_task",
+            side_effect=RuntimeError("can't start new thread"),
+        ) as mock_create_task:
+            target_logger = logging.getLogger(client.__class__.__module__)
+            target_logger.addHandler(caplog.handler)
+            with caplog.at_level(logging.WARNING, logger="google.cloud.bigtable.data"):
+                client._start_background_channel_refresh()
+                assert client._channel_refresh_task is None
+                assert "Failed to start background channel refresh task" in caplog.text
+                assert "can't start new thread" in caplog.text
+                mock_create_task.assert_called_once_with(
+                    client._manage_channel,
+                    task_name=f"{client.__class__.__name__} channel refresh",
+                )
+        client.close()
+
     def test__ping_and_warm_instances(self):
         """test ping and warm with mocked asyncio.gather"""
         client_mock = mock.Mock()
@@ -1260,6 +1286,32 @@ class TestTable:
             with pytest.raises(ValueError) as e:
                 self._make_one(client, **{operation_timeout: -1})
             assert "operation_timeout must be greater than 0" in str(e.value)
+        client.close()
+
+    def test_table_ctor_task_creation_failure_warns_and_continues(self, caplog):
+        import logging
+
+        client = self._make_client()
+        with mock.patch.object(
+            CrossSync._Sync_Impl,
+            "create_task",
+            side_effect=RuntimeError("can't start new thread"),
+        ) as mock_create_task:
+            with caplog.at_level(logging.WARNING):
+                table = self._make_one(client)
+                assert table._register_instance_future is None
+                assert "Failed to start background instance registration" in caplog.text
+                assert "can't start new thread" in caplog.text
+                mock_create_task.assert_called_once_with(
+                    client._register_instance,
+                    table.instance_id,
+                    table.app_profile_id,
+                    id(table),
+                    sync_executor=client._executor,
+                )
+        with table:
+            pass
+        table.close()
         client.close()
 
     @pytest.mark.parametrize(

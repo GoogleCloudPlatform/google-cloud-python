@@ -8399,6 +8399,7 @@ def test_create_conversation_rest_call_success(request_type):
                     "skip_empty_event_based_suggestion": True,
                     "use_unredacted_conversation_data": True,
                     "enable_async_tool_call": True,
+                    "companion_agent": "companion_agent_value",
                 },
                 "end_user_suggestion_config": {},
                 "message_analysis_config": {
@@ -8429,6 +8430,14 @@ def test_create_conversation_rest_call_success(request_type):
                 "language_code": "language_code_value",
                 "enable_word_info": True,
                 "use_timeout_based_endpointing": True,
+                "gemini_asr_config": {
+                    "model_id": "model_id_value",
+                    "silence_duration_ms": 2023,
+                    "prefix_padding_ms": 1795,
+                    "start_of_speech_sensitivity": 1,
+                    "end_of_speech_sensitivity": 1,
+                },
+                "use_gemini_asr": True,
             },
             "language_code": "language_code_value",
             "sip_config": {
@@ -11292,9 +11301,37 @@ def test_parse_ces_tool_path():
     assert expected == actual
 
 
-def test_conversation_path():
+def test_companion_agent_path():
     project = "winkle"
-    conversation = "nautilus"
+    location = "nautilus"
+    companion_agent = "scallop"
+    expected = "projects/{project}/locations/{location}/companionAgents/{companion_agent}".format(
+        project=project,
+        location=location,
+        companion_agent=companion_agent,
+    )
+    actual = ConversationsClient.companion_agent_path(
+        project, location, companion_agent
+    )
+    assert expected == actual
+
+
+def test_parse_companion_agent_path():
+    expected = {
+        "project": "abalone",
+        "location": "squid",
+        "companion_agent": "clam",
+    }
+    path = ConversationsClient.companion_agent_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = ConversationsClient.parse_companion_agent_path(path)
+    assert expected == actual
+
+
+def test_conversation_path():
+    project = "whelk"
+    conversation = "octopus"
     expected = "projects/{project}/conversations/{conversation}".format(
         project=project,
         conversation=conversation,
@@ -11305,8 +11342,8 @@ def test_conversation_path():
 
 def test_parse_conversation_path():
     expected = {
-        "project": "scallop",
-        "conversation": "abalone",
+        "project": "oyster",
+        "conversation": "nudibranch",
     }
     path = ConversationsClient.conversation_path(**expected)
 
@@ -11316,8 +11353,8 @@ def test_parse_conversation_path():
 
 
 def test_conversation_profile_path():
-    project = "squid"
-    conversation_profile = "clam"
+    project = "cuttlefish"
+    conversation_profile = "mussel"
     expected = "projects/{project}/conversationProfiles/{conversation_profile}".format(
         project=project,
         conversation_profile=conversation_profile,
@@ -11330,8 +11367,8 @@ def test_conversation_profile_path():
 
 def test_parse_conversation_profile_path():
     expected = {
-        "project": "whelk",
-        "conversation_profile": "octopus",
+        "project": "winkle",
+        "conversation_profile": "nautilus",
     }
     path = ConversationsClient.conversation_profile_path(**expected)
 
@@ -11341,9 +11378,9 @@ def test_parse_conversation_profile_path():
 
 
 def test_cx_security_settings_path():
-    project = "oyster"
-    location = "nudibranch"
-    security_settings = "cuttlefish"
+    project = "scallop"
+    location = "abalone"
+    security_settings = "squid"
     expected = "projects/{project}/locations/{location}/securitySettings/{security_settings}".format(
         project=project,
         location=location,
@@ -11357,9 +11394,9 @@ def test_cx_security_settings_path():
 
 def test_parse_cx_security_settings_path():
     expected = {
-        "project": "mussel",
-        "location": "winkle",
-        "security_settings": "nautilus",
+        "project": "clam",
+        "location": "whelk",
+        "security_settings": "octopus",
     }
     path = ConversationsClient.cx_security_settings_path(**expected)
 
@@ -11369,10 +11406,10 @@ def test_parse_cx_security_settings_path():
 
 
 def test_data_store_path():
-    project = "scallop"
-    location = "abalone"
-    collection = "squid"
-    data_store = "clam"
+    project = "oyster"
+    location = "nudibranch"
+    collection = "cuttlefish"
+    data_store = "mussel"
     expected = "projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}".format(
         project=project,
         location=location,
@@ -11387,10 +11424,10 @@ def test_data_store_path():
 
 def test_parse_data_store_path():
     expected = {
-        "project": "whelk",
-        "location": "octopus",
-        "collection": "oyster",
-        "data_store": "nudibranch",
+        "project": "winkle",
+        "location": "nautilus",
+        "collection": "scallop",
+        "data_store": "abalone",
     }
     path = ConversationsClient.data_store_path(**expected)
 
@@ -11400,9 +11437,9 @@ def test_parse_data_store_path():
 
 
 def test_document_path():
-    project = "cuttlefish"
-    knowledge_base = "mussel"
-    document = "winkle"
+    project = "squid"
+    knowledge_base = "clam"
+    document = "whelk"
     expected = "projects/{project}/knowledgeBases/{knowledge_base}/documents/{document}".format(
         project=project,
         knowledge_base=knowledge_base,
@@ -11414,9 +11451,9 @@ def test_document_path():
 
 def test_parse_document_path():
     expected = {
-        "project": "nautilus",
-        "knowledge_base": "scallop",
-        "document": "abalone",
+        "project": "octopus",
+        "knowledge_base": "oyster",
+        "document": "nudibranch",
     }
     path = ConversationsClient.document_path(**expected)
 
@@ -11426,9 +11463,9 @@ def test_parse_document_path():
 
 
 def test_generator_path():
-    project = "squid"
-    location = "clam"
-    generator = "whelk"
+    project = "cuttlefish"
+    location = "mussel"
+    generator = "winkle"
     expected = "projects/{project}/locations/{location}/generators/{generator}".format(
         project=project,
         location=location,
@@ -11440,9 +11477,9 @@ def test_generator_path():
 
 def test_parse_generator_path():
     expected = {
-        "project": "octopus",
-        "location": "oyster",
-        "generator": "nudibranch",
+        "project": "nautilus",
+        "location": "scallop",
+        "generator": "abalone",
     }
     path = ConversationsClient.generator_path(**expected)
 
@@ -11452,8 +11489,8 @@ def test_parse_generator_path():
 
 
 def test_knowledge_base_path():
-    project = "cuttlefish"
-    knowledge_base = "mussel"
+    project = "squid"
+    knowledge_base = "clam"
     expected = "projects/{project}/knowledgeBases/{knowledge_base}".format(
         project=project,
         knowledge_base=knowledge_base,
@@ -11464,8 +11501,8 @@ def test_knowledge_base_path():
 
 def test_parse_knowledge_base_path():
     expected = {
-        "project": "winkle",
-        "knowledge_base": "nautilus",
+        "project": "whelk",
+        "knowledge_base": "octopus",
     }
     path = ConversationsClient.knowledge_base_path(**expected)
 
@@ -11475,9 +11512,9 @@ def test_parse_knowledge_base_path():
 
 
 def test_message_path():
-    project = "scallop"
-    conversation = "abalone"
-    message = "squid"
+    project = "oyster"
+    conversation = "nudibranch"
+    message = "cuttlefish"
     expected = (
         "projects/{project}/conversations/{conversation}/messages/{message}".format(
             project=project,
@@ -11491,9 +11528,9 @@ def test_message_path():
 
 def test_parse_message_path():
     expected = {
-        "project": "clam",
-        "conversation": "whelk",
-        "message": "octopus",
+        "project": "mussel",
+        "conversation": "winkle",
+        "message": "nautilus",
     }
     path = ConversationsClient.message_path(**expected)
 
@@ -11503,9 +11540,9 @@ def test_parse_message_path():
 
 
 def test_phrase_set_path():
-    project = "oyster"
-    location = "nudibranch"
-    phrase_set = "cuttlefish"
+    project = "scallop"
+    location = "abalone"
+    phrase_set = "squid"
     expected = "projects/{project}/locations/{location}/phraseSets/{phrase_set}".format(
         project=project,
         location=location,
@@ -11517,9 +11554,9 @@ def test_phrase_set_path():
 
 def test_parse_phrase_set_path():
     expected = {
-        "project": "mussel",
-        "location": "winkle",
-        "phrase_set": "nautilus",
+        "project": "clam",
+        "location": "whelk",
+        "phrase_set": "octopus",
     }
     path = ConversationsClient.phrase_set_path(**expected)
 
@@ -11529,9 +11566,9 @@ def test_parse_phrase_set_path():
 
 
 def test_tool_path():
-    project = "scallop"
-    location = "abalone"
-    tool = "squid"
+    project = "oyster"
+    location = "nudibranch"
+    tool = "cuttlefish"
     expected = "projects/{project}/locations/{location}/tools/{tool}".format(
         project=project,
         location=location,
@@ -11543,9 +11580,9 @@ def test_tool_path():
 
 def test_parse_tool_path():
     expected = {
-        "project": "clam",
-        "location": "whelk",
-        "tool": "octopus",
+        "project": "mussel",
+        "location": "winkle",
+        "tool": "nautilus",
     }
     path = ConversationsClient.tool_path(**expected)
 
@@ -11555,10 +11592,10 @@ def test_parse_tool_path():
 
 
 def test_toolset_path():
-    project = "oyster"
-    location = "nudibranch"
-    app = "cuttlefish"
-    toolset = "mussel"
+    project = "scallop"
+    location = "abalone"
+    app = "squid"
+    toolset = "clam"
     expected = (
         "projects/{project}/locations/{location}/apps/{app}/toolsets/{toolset}".format(
             project=project,
@@ -11573,10 +11610,10 @@ def test_toolset_path():
 
 def test_parse_toolset_path():
     expected = {
-        "project": "winkle",
-        "location": "nautilus",
-        "app": "scallop",
-        "toolset": "abalone",
+        "project": "whelk",
+        "location": "octopus",
+        "app": "oyster",
+        "toolset": "nudibranch",
     }
     path = ConversationsClient.toolset_path(**expected)
 
@@ -11586,7 +11623,7 @@ def test_parse_toolset_path():
 
 
 def test_common_billing_account_path():
-    billing_account = "squid"
+    billing_account = "cuttlefish"
     expected = "billingAccounts/{billing_account}".format(
         billing_account=billing_account,
     )
@@ -11596,7 +11633,7 @@ def test_common_billing_account_path():
 
 def test_parse_common_billing_account_path():
     expected = {
-        "billing_account": "clam",
+        "billing_account": "mussel",
     }
     path = ConversationsClient.common_billing_account_path(**expected)
 
@@ -11606,7 +11643,7 @@ def test_parse_common_billing_account_path():
 
 
 def test_common_folder_path():
-    folder = "whelk"
+    folder = "winkle"
     expected = "folders/{folder}".format(
         folder=folder,
     )
@@ -11616,7 +11653,7 @@ def test_common_folder_path():
 
 def test_parse_common_folder_path():
     expected = {
-        "folder": "octopus",
+        "folder": "nautilus",
     }
     path = ConversationsClient.common_folder_path(**expected)
 
@@ -11626,7 +11663,7 @@ def test_parse_common_folder_path():
 
 
 def test_common_organization_path():
-    organization = "oyster"
+    organization = "scallop"
     expected = "organizations/{organization}".format(
         organization=organization,
     )
@@ -11636,7 +11673,7 @@ def test_common_organization_path():
 
 def test_parse_common_organization_path():
     expected = {
-        "organization": "nudibranch",
+        "organization": "abalone",
     }
     path = ConversationsClient.common_organization_path(**expected)
 
@@ -11646,7 +11683,7 @@ def test_parse_common_organization_path():
 
 
 def test_common_project_path():
-    project = "cuttlefish"
+    project = "squid"
     expected = "projects/{project}".format(
         project=project,
     )
@@ -11656,7 +11693,7 @@ def test_common_project_path():
 
 def test_parse_common_project_path():
     expected = {
-        "project": "mussel",
+        "project": "clam",
     }
     path = ConversationsClient.common_project_path(**expected)
 
@@ -11666,8 +11703,8 @@ def test_parse_common_project_path():
 
 
 def test_common_location_path():
-    project = "winkle"
-    location = "nautilus"
+    project = "whelk"
+    location = "octopus"
     expected = "projects/{project}/locations/{location}".format(
         project=project,
         location=location,
@@ -11678,8 +11715,8 @@ def test_common_location_path():
 
 def test_parse_common_location_path():
     expected = {
-        "project": "scallop",
-        "location": "abalone",
+        "project": "oyster",
+        "location": "nudibranch",
     }
     path = ConversationsClient.common_location_path(**expected)
 

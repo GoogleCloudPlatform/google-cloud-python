@@ -49,8 +49,10 @@ class AdRuleSlotMidrollFrequencyTypeEnum(proto.Message):
                 For example, "100" would mean "play a mid-roll
                 every 100 seconds".
             FIXED_CUE_POINTS (3):
-                Same as ``FIXED_TIME``, except the values represent the
-                ordinal cue points ("1,3,5", for example).
+                Same as
+                [AdRuleSlotMidrollFrequencyTypeEnum.AdRuleSlotMidrollFrequencyType.FIXED_TIME][google.ads.admanager.v1.AdRuleSlotMidrollFrequencyTypeEnum.AdRuleSlotMidrollFrequencyType.FIXED_TIME],
+                except the values represent the ordinal cue points ("1,3,5",
+                for example).
             FIXED_TIME (4):
                 MidrollFrequency is a comma-delimited list of
                 points in time (in seconds) when an ad should

@@ -39,9 +39,11 @@ except ImportError:  # pragma: NO COVER
     HAS_GOOGLE_AUTH_AIO = False
 
 import google.auth
+import google.protobuf.any_pb2 as any_pb2  # type: ignore
 import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
 import google.protobuf.struct_pb2 as struct_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
+import google.rpc.status_pb2 as status_pb2  # type: ignore
 from google.api_core import (
     client_options,
     gapic_v1,
@@ -7856,13 +7858,13 @@ def test_create_conversation_rest_call_success(request_type):
                 "enable_word_info": True,
                 "use_timeout_based_endpointing": True,
                 "gemini_asr_config": {
-                    "model_id": "model_id_value",
                     "silence_duration_ms": 2023,
                     "prefix_padding_ms": 1795,
                     "start_of_speech_sensitivity": 1,
                     "end_of_speech_sensitivity": 1,
                 },
                 "use_gemini_asr": True,
+                "disable_interim_input_transcripts": True,
             },
             "language_code": "language_code_value",
             "sip_config": {

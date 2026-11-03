@@ -125,7 +125,7 @@ class Intent(proto.Message):
         description (str):
             Human readable description for better
             understanding an intent like its scope, content,
-            result etc. Maximum character limit: 140
+            result etc. Maximum character limit: 1000
             characters.
         dtmf_pattern (str):
             Optional. Matching DTMF pattern for the

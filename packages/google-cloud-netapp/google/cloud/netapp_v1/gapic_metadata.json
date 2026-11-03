@@ -200,6 +200,11 @@
                 "get_snapshot"
               ]
             },
+            "GetSplitStatus": {
+              "methods": [
+                "get_split_status"
+              ]
+            },
             "GetStoragePool": {
               "methods": [
                 "get_storage_pool"
@@ -213,6 +218,11 @@
             "ListActiveDirectories": {
               "methods": [
                 "list_active_directories"
+              ]
+            },
+            "ListBackupConfigs": {
+              "methods": [
+                "list_backup_configs"
               ]
             },
             "ListBackupPolicies": {
@@ -270,6 +280,11 @@
                 "restore_backup_files"
               ]
             },
+            "RestoreVolume": {
+              "methods": [
+                "restore_volume"
+              ]
+            },
             "ResumeReplication": {
               "methods": [
                 "resume_replication"
@@ -283,6 +298,11 @@
             "RevertVolume": {
               "methods": [
                 "revert_volume"
+              ]
+            },
+            "StartSplit": {
+              "methods": [
+                "start_split"
               ]
             },
             "StopReplication": {
@@ -308,6 +328,11 @@
             "UpdateBackup": {
               "methods": [
                 "update_backup"
+              ]
+            },
+            "UpdateBackupConfig": {
+              "methods": [
+                "update_backup_config"
               ]
             },
             "UpdateBackupPolicy": {
@@ -560,6 +585,11 @@
                 "get_snapshot"
               ]
             },
+            "GetSplitStatus": {
+              "methods": [
+                "get_split_status"
+              ]
+            },
             "GetStoragePool": {
               "methods": [
                 "get_storage_pool"
@@ -573,6 +603,11 @@
             "ListActiveDirectories": {
               "methods": [
                 "list_active_directories"
+              ]
+            },
+            "ListBackupConfigs": {
+              "methods": [
+                "list_backup_configs"
               ]
             },
             "ListBackupPolicies": {
@@ -630,6 +665,11 @@
                 "restore_backup_files"
               ]
             },
+            "RestoreVolume": {
+              "methods": [
+                "restore_volume"
+              ]
+            },
             "ResumeReplication": {
               "methods": [
                 "resume_replication"
@@ -643,6 +683,11 @@
             "RevertVolume": {
               "methods": [
                 "revert_volume"
+              ]
+            },
+            "StartSplit": {
+              "methods": [
+                "start_split"
               ]
             },
             "StopReplication": {
@@ -668,6 +713,11 @@
             "UpdateBackup": {
               "methods": [
                 "update_backup"
+              ]
+            },
+            "UpdateBackupConfig": {
+              "methods": [
+                "update_backup_config"
               ]
             },
             "UpdateBackupPolicy": {
@@ -920,6 +970,11 @@
                 "get_snapshot"
               ]
             },
+            "GetSplitStatus": {
+              "methods": [
+                "get_split_status"
+              ]
+            },
             "GetStoragePool": {
               "methods": [
                 "get_storage_pool"
@@ -933,6 +988,11 @@
             "ListActiveDirectories": {
               "methods": [
                 "list_active_directories"
+              ]
+            },
+            "ListBackupConfigs": {
+              "methods": [
+                "list_backup_configs"
               ]
             },
             "ListBackupPolicies": {
@@ -990,6 +1050,11 @@
                 "restore_backup_files"
               ]
             },
+            "RestoreVolume": {
+              "methods": [
+                "restore_volume"
+              ]
+            },
             "ResumeReplication": {
               "methods": [
                 "resume_replication"
@@ -1003,6 +1068,11 @@
             "RevertVolume": {
               "methods": [
                 "revert_volume"
+              ]
+            },
+            "StartSplit": {
+              "methods": [
+                "start_split"
               ]
             },
             "StopReplication": {
@@ -1028,6 +1098,11 @@
             "UpdateBackup": {
               "methods": [
                 "update_backup"
+              ]
+            },
+            "UpdateBackupConfig": {
+              "methods": [
+                "update_backup_config"
               ]
             },
             "UpdateBackupPolicy": {

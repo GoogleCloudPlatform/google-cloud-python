@@ -173,6 +173,23 @@ class _BaseNativeStyleServiceRestTransport(NativeStyleServiceTransport):
             ]
             return http_options
 
+    class _BaseCreateNativeStyle:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=networks/*}/nativeStyles",
+                    "body": "native_style",
+                },
+            ]
+            return http_options
+
     class _BaseGetNativeStyle:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -201,6 +218,23 @@ class _BaseNativeStyleServiceRestTransport(NativeStyleServiceTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{parent=networks/*}/nativeStyles",
+                },
+            ]
+            return http_options
+
+    class _BaseUpdateNativeStyle:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{native_style.name=networks/*/nativeStyles/*}",
+                    "body": "native_style",
                 },
             ]
             return http_options

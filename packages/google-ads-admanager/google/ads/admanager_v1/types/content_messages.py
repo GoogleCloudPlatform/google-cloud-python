@@ -66,10 +66,12 @@ class Content(proto.Message):
         hls_ingest_errors (MutableSequence[google.ads.admanager_v1.types.DaiIngestError]):
             Output only. The list of any errors that occurred during the
             most recent DAI ingestion process of the HLS media. This
-            attribute will be empty if the hlsIngestStatus is
-            [DaiIngestStatus.SUCCESS][] or if the ``Content`` is not
-            eligible for dynamic ad insertion or if the ``Content`` does
-            not have HLS media.
+            attribute will be empty if the
+            [hlsIngestStatus][google.ads.admanager.v1.Content.hls_ingest_status]
+            is
+            [DaiIngestStatusEnum.DaiIngestStatus.SUCCESS][google.ads.admanager.v1.DaiIngestStatusEnum.DaiIngestStatus.SUCCESS]
+            or if the ``Content`` is not eligible for dynamic ad
+            insertion or if the ``Content`` does not have HLS media.
         last_hls_ingest_time (google.protobuf.timestamp_pb2.Timestamp):
             Output only. The timestamp at which this ``Content``'s HLS
             media was last ingested for DAI. This attribute will be
@@ -87,10 +89,12 @@ class Content(proto.Message):
         dash_ingest_errors (MutableSequence[google.ads.admanager_v1.types.DaiIngestError]):
             Output only. The list of any errors that occurred during the
             most recent DAI ingestion process of the DASH media. This
-            attribute will be empty if the hlsIngestStatus is
-            [DaiIngestStatus.SUCCESS][] or if the ``Content`` is not
-            eligible for dynamic ad insertion or if the ``Content`` does
-            not have DASH media.
+            attribute will be empty if the
+            [dashIngestStatus][google.ads.admanager.v1.Content.dash_ingest_status]
+            is
+            [DaiIngestStatusEnum.DaiIngestStatus.SUCCESS][google.ads.admanager.v1.DaiIngestStatusEnum.DaiIngestStatus.SUCCESS]
+            or if the ``Content`` is not eligible for dynamic ad
+            insertion or if the ``Content`` does not have DASH media.
         last_dash_ingest_time (google.protobuf.timestamp_pb2.Timestamp):
             Output only. The timestamp at which this ``Content``'s DASH
             media was last ingested for DAI. This attribute will be

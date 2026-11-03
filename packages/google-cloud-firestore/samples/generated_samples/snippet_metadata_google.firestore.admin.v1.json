@@ -8,7 +8,7 @@
     ],
     "language": "PYTHON",
     "name": "google-cloud-firestore",
-    "version": "2.34.0"
+    "version": "2.34.1"
   },
   "snippets": [
     {

@@ -141,6 +141,44 @@ class TestDatabase(_BaseTest):
         self.assertIsNone(database.database_role)
         self.assertTrue(database._route_to_leader_enabled, True)
 
+    def test_resource_info(self):
+        client = _Client()
+        instance = _Instance(self.INSTANCE_NAME, client=client)
+        database = self._make_one(self.DATABASE_ID, instance)
+
+        res_info = database._resource_info
+        self.assertEqual(res_info["project"], self.PROJECT_ID)
+        self.assertEqual(res_info["instance"], self.INSTANCE_ID)
+        self.assertEqual(res_info["database"], self.DATABASE_ID)
+        self.assertIsNotNone(getattr(res_info, "_client_attributes", None))
+        self.assertEqual(res_info._client_attributes["project_id"], self.PROJECT_ID)
+        self.assertEqual(res_info._client_attributes["instance_id"], self.INSTANCE_ID)
+        self.assertEqual(res_info._client_attributes["database"], self.DATABASE_ID)
+
+        # Caching check: second access returns identical instance
+        self.assertIs(database._resource_info, res_info)
+
+    def test_resource_info_fallback_on_exception(self):
+        client = _Client()
+        instance = _Instance(self.INSTANCE_NAME, client=client)
+        database = self._make_one(self.DATABASE_ID, instance)
+        database._cached_resource_info = None
+
+        from google.cloud.spanner_v1.metrics.metrics_tracer_factory import (
+            MetricsTracerFactory,
+        )
+
+        with mock.patch.object(
+            MetricsTracerFactory,
+            "create_resource_info",
+            side_effect=RuntimeError("Boom"),
+        ):
+            res_info = database._resource_info
+            self.assertEqual(res_info["project"], self.PROJECT_ID)
+            self.assertEqual(res_info["instance"], self.INSTANCE_ID)
+            self.assertEqual(res_info["database"], self.DATABASE_ID)
+            self.assertIsNone(getattr(res_info, "_client_attributes", None))
+
     def test_ctor_w_explicit_pool(self):
         instance = _Instance(self.INSTANCE_NAME)
         pool = _Pool()
@@ -162,6 +200,113 @@ class TestDatabase(_BaseTest):
         self.assertEqual(database.database_id, self.DATABASE_ID)
         self.assertIs(database._instance, instance)
         self.assertIs(database.database_role, self.DATABASE_ROLE)
+
+    def test_req_id_prefix_and_caching(self):
+        from google.cloud.spanner_v1.request_id_header import (
+            REQ_ID_VERSION,
+            REQ_RAND_PROCESS_ID,
+        )
+
+        instance = _Instance(self.INSTANCE_NAME)
+        database = self._make_one(self.DATABASE_ID, instance)
+        database._channel_id = 42
+        self.assertNotIn("_req_id_prefix", database.__dict__)
+
+        expected_prefix = (
+            f"{REQ_ID_VERSION}.{REQ_RAND_PROCESS_ID}.{database._nth_client_id}.42."
+        )
+        self.assertEqual(database._req_id_prefix, expected_prefix)
+        self.assertEqual(database.__dict__["_req_id_prefix"], expected_prefix)
+
+        # Invalidate when channel_id changes
+        database._channel_id = 43
+        self.assertNotIn("_req_id_prefix", database.__dict__)
+        expected_prefix_2 = (
+            f"{REQ_ID_VERSION}.{REQ_RAND_PROCESS_ID}.{database._nth_client_id}.43."
+        )
+        self.assertEqual(database._req_id_prefix, expected_prefix_2)
+        self.assertEqual(database.__dict__["_req_id_prefix"], expected_prefix_2)
+
+    def test_database_request_id_methods(self):
+        from unittest import mock
+
+        from google.api_core.exceptions import GoogleAPICallError
+
+        from google.cloud.spanner_v1.request_id_header import (
+            REQ_ID_HEADER_KEY,
+            X_GOOG_SPANNER_REQUEST_ID_SPAN_ATTR,
+        )
+
+        instance = _Instance(self.INSTANCE_NAME)
+        database = self._make_one(self.DATABASE_ID, instance)
+        database._channel_id = 1
+
+        mock_rec_span = mock.Mock()
+        mock_rec_span.is_recording.return_value = True
+        mock_non_rec_span = mock.Mock()
+        mock_non_rec_span.is_recording.return_value = False
+
+        # Test metadata_with_request_id
+        meta = database.metadata_with_request_id(
+            5, 2, [("foo", "bar")], span=mock_rec_span
+        )
+        expected_id = f"{database._req_id_prefix}5.2"
+        self.assertEqual(meta, [("foo", "bar"), (REQ_ID_HEADER_KEY, expected_id)])
+        mock_rec_span.set_attribute.assert_called_once_with(
+            X_GOOG_SPANNER_REQUEST_ID_SPAN_ATTR, expected_id
+        )
+
+        meta_no_prior = database.metadata_with_request_id(
+            5, 3, prior_metadata=None, span=mock_non_rec_span
+        )
+        self.assertEqual(
+            meta_no_prior, [(REQ_ID_HEADER_KEY, f"{database._req_id_prefix}5.3")]
+        )
+        mock_non_rec_span.set_attribute.assert_not_called()
+
+        # Test metadata_and_request_id
+        mock_rec_span.reset_mock()
+        meta2, req_id = database.metadata_and_request_id(6, 1, span=mock_rec_span)
+        expected_id_2 = f"{database._req_id_prefix}6.1"
+        self.assertEqual(req_id, expected_id_2)
+        self.assertEqual(meta2, [(REQ_ID_HEADER_KEY, expected_id_2)])
+        mock_rec_span.set_attribute.assert_called_once_with(
+            X_GOOG_SPANNER_REQUEST_ID_SPAN_ATTR, expected_id_2
+        )
+
+        meta2_prior, _ = database.metadata_and_request_id(
+            6, 2, prior_metadata=[("k", "v")], span=mock_non_rec_span
+        )
+        self.assertEqual(
+            meta2_prior,
+            [("k", "v"), (REQ_ID_HEADER_KEY, f"{database._req_id_prefix}6.2")],
+        )
+        mock_non_rec_span.set_attribute.assert_not_called()
+
+        # Test with_error_augmentation
+        mock_rec_span.reset_mock()
+        meta3, error_aug = database.with_error_augmentation(
+            7, 1, prior_metadata=[("a", "b")], span=mock_rec_span
+        )
+        expected_id_3 = f"{database._req_id_prefix}7.1"
+        self.assertEqual(meta3, [("a", "b"), (REQ_ID_HEADER_KEY, expected_id_3)])
+        mock_rec_span.set_attribute.assert_called_once_with(
+            X_GOOG_SPANNER_REQUEST_ID_SPAN_ATTR, expected_id_3
+        )
+
+        err = GoogleAPICallError("mock error")
+        with self.assertRaises(GoogleAPICallError):
+            with error_aug:
+                raise err
+        self.assertEqual(err.request_id, expected_id_3)
+
+        meta3_no_prior, _ = database.with_error_augmentation(
+            7, 2, prior_metadata=None, span=mock_non_rec_span
+        )
+        self.assertEqual(
+            meta3_no_prior, [(REQ_ID_HEADER_KEY, f"{database._req_id_prefix}7.2")]
+        )
+        mock_non_rec_span.set_attribute.assert_not_called()
 
     def test_ctor_w_route_to_leader_disbled(self):
         client = _Client(route_to_leader_enabled=False)
@@ -1759,6 +1904,166 @@ class TestDatabase(_BaseTest):
             committed = database.run_in_transaction(_unit_of_work, SINCE, until=UNTIL)
 
             self.assertEqual(committed, NOW)
+
+    def test_run_in_transaction_tracing(self):
+        from opentelemetry.sdk.trace import TracerProvider
+        from opentelemetry.sdk.trace.export import SimpleSpanProcessor
+        from opentelemetry.sdk.trace.export.in_memory_span_exporter import (
+            InMemorySpanExporter,
+        )
+        from opentelemetry.sdk.trace.sampling import ALWAYS_ON
+
+        tracer_provider = TracerProvider(sampler=ALWAYS_ON)
+        trace_exporter = InMemorySpanExporter()
+        tracer_provider.add_span_processor(SimpleSpanProcessor(trace_exporter))
+
+        client = _Client(observability_options=dict(tracer_provider=tracer_provider))
+        instance = _Instance(self.INSTANCE_NAME, client=client)
+        pool = _Pool()
+        session = _Session()
+        pool.put(session)
+        session._committed = 42
+        database = self._make_one(self.DATABASE_ID, instance, pool=pool)
+        database._spanner_api = instance._client._spanner_api
+
+        def unit_of_work(transaction):
+            return 42
+
+        with mock.patch(
+            "google.cloud.spanner_v1.transaction.Transaction.commit",
+            return_value=42,
+        ):
+            database.run_in_transaction(unit_of_work, transaction_tag="database-tag")
+
+        finished_spans = trace_exporter.get_finished_spans()
+        span_names = [span.name for span in finished_spans]
+        self.assertIn("CloudSpanner.Database.run_in_transaction", span_names)
+        self.assertNotIn("CloudSpanner.Session.run_in_transaction", span_names)
+        database_span = next(
+            span
+            for span in finished_spans
+            if span.name == "CloudSpanner.Database.run_in_transaction"
+        )
+        self.assertEqual(
+            database_span.attributes.get("transaction.tag"), "database-tag"
+        )
+
+    def test_run_in_transaction_tracing_retry_events(self):
+        from google.api_core.exceptions import Aborted
+        from opentelemetry.sdk.trace import TracerProvider
+        from opentelemetry.sdk.trace.export import SimpleSpanProcessor
+        from opentelemetry.sdk.trace.export.in_memory_span_exporter import (
+            InMemorySpanExporter,
+        )
+        from opentelemetry.sdk.trace.sampling import ALWAYS_ON
+
+        from google.cloud.spanner_v1.session import Session
+
+        tracer_provider = TracerProvider(sampler=ALWAYS_ON)
+        trace_exporter = InMemorySpanExporter()
+        tracer_provider.add_span_processor(SimpleSpanProcessor(trace_exporter))
+
+        client = _Client(observability_options=dict(tracer_provider=tracer_provider))
+        instance = _Instance(self.INSTANCE_NAME, client=client)
+        pool = _Pool()
+        database = self._make_one(self.DATABASE_ID, instance, pool=pool)
+        session = Session(database, is_multiplexed=True)
+        session._session_id = "test-session-id"
+        database._sessions_manager._multiplexed_session = session
+
+        mock_error = mock.Mock()
+        mock_error.trailing_metadata.return_value = ()
+        aborted_exception = Aborted("aborted", errors=[mock_error])
+
+        attempts = 0
+
+        def unit_of_work(transaction):
+            nonlocal attempts
+            attempts += 1
+            if attempts == 1:
+                raise aborted_exception
+            return "success"
+
+        with mock.patch(
+            "google.cloud.spanner_v1.transaction.Transaction.commit",
+            side_effect=[aborted_exception, 42],
+        ):
+            result = database.run_in_transaction(unit_of_work, default_retry_delay=0)
+
+        self.assertEqual(result, "success")
+        finished_spans = trace_exporter.get_finished_spans()
+        self.assertEqual(len(finished_spans), 1)
+        database_span = finished_spans[0]
+        self.assertEqual(database_span.name, "CloudSpanner.Database.run_in_transaction")
+
+        event_names = [event.name for event in database_span.events]
+        self.assertIn(
+            "Transaction was aborted in user operation, retrying",
+            event_names,
+        )
+        self.assertIn(
+            "Transaction was aborted during commit, retrying",
+            event_names,
+        )
+
+        user_abort_event = next(
+            event
+            for event in database_span.events
+            if event.name == "Transaction was aborted in user operation, retrying"
+        )
+        self.assertEqual(user_abort_event.attributes.get("attempt"), 1)
+        self.assertIn("cause", user_abort_event.attributes)
+
+        commit_abort_event = next(
+            event
+            for event in database_span.events
+            if event.name == "Transaction was aborted during commit, retrying"
+        )
+        self.assertEqual(commit_abort_event.attributes.get("attempt"), 2)
+
+    def test_run_in_transaction_tracing_error_status(self):
+        from opentelemetry.sdk.trace import TracerProvider
+        from opentelemetry.sdk.trace.export import SimpleSpanProcessor
+        from opentelemetry.sdk.trace.export.in_memory_span_exporter import (
+            InMemorySpanExporter,
+        )
+        from opentelemetry.sdk.trace.sampling import ALWAYS_ON
+        from opentelemetry.trace import StatusCode
+
+        from google.cloud.spanner_v1.session import Session
+
+        tracer_provider = TracerProvider(sampler=ALWAYS_ON)
+        trace_exporter = InMemorySpanExporter()
+        tracer_provider.add_span_processor(SimpleSpanProcessor(trace_exporter))
+
+        client = _Client(observability_options=dict(tracer_provider=tracer_provider))
+        instance = _Instance(self.INSTANCE_NAME, client=client)
+        pool = _Pool()
+        database = self._make_one(self.DATABASE_ID, instance, pool=pool)
+        session = Session(database, is_multiplexed=True)
+        session._session_id = "test-session-id"
+        database._sessions_manager._multiplexed_session = session
+
+        def unit_of_work(transaction):
+            raise ZeroDivisionError("division by zero")
+
+        with mock.patch("google.cloud.spanner_v1.transaction.Transaction.rollback"):
+            with self.assertRaises(ZeroDivisionError):
+                database.run_in_transaction(unit_of_work)
+
+        finished_spans = trace_exporter.get_finished_spans()
+        self.assertEqual(len(finished_spans), 1)
+        database_span = finished_spans[0]
+        self.assertEqual(database_span.name, "CloudSpanner.Database.run_in_transaction")
+        self.assertEqual(database_span.status.status_code, StatusCode.ERROR)
+        self.assertIn("division by zero", database_span.status.description)
+        error_event = next(
+            event
+            for event in database_span.events
+            if event.name
+            == "User operation failed. Invoking Transaction.rollback(), not retrying"
+        )
+        self.assertEqual(error_event.attributes.get("attempt"), 1)
 
     def test_run_in_transaction_nested(self):
         from datetime import datetime

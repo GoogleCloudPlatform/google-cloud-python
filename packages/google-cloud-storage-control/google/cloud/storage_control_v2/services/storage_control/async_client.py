@@ -843,6 +843,8 @@ class StorageControlAsyncClient:
                 gapic_v1.routing_header.to_grpc_metadata(header_params),
             )
 
+        setup_request_id(request, "request_id", False)
+
         # Validate the universe domain.
         self._client._validate_universe_domain()
 
@@ -1921,6 +1923,8 @@ class StorageControlAsyncClient:
                 gapic_v1.routing_header.to_grpc_metadata(header_params),
             )
 
+        setup_request_id(request, "request_id", False)
+
         # Validate the universe domain.
         self._client._validate_universe_domain()
 
@@ -2982,6 +2986,8 @@ class StorageControlAsyncClient:
                 gapic_v1.routing_header.to_grpc_metadata(header_params),
             )
 
+        setup_request_id(request, "request_id", False)
+
         # Validate the universe domain.
         self._client._validate_universe_domain()
 
@@ -3131,6 +3137,8 @@ class StorageControlAsyncClient:
                 gapic_v1.routing_header.to_grpc_metadata(header_params),
             )
 
+        setup_request_id(request, "request_id", False)
+
         # Validate the universe domain.
         self._client._validate_universe_domain()
 
@@ -3265,6 +3273,8 @@ class StorageControlAsyncClient:
                 gapic_v1.routing_header.to_grpc_metadata(header_params),
             )
 
+        setup_request_id(request, "request_id", False)
+
         # Validate the universe domain.
         self._client._validate_universe_domain()
 
@@ -3389,6 +3399,8 @@ class StorageControlAsyncClient:
                 gapic_v1.routing_header.to_grpc_metadata(header_params),
             )
 
+        setup_request_id(request, "request_id", False)
+
         # Validate the universe domain.
         self._client._validate_universe_domain()
 
@@ -3508,6 +3520,8 @@ class StorageControlAsyncClient:
             metadata = tuple(metadata) + (
                 gapic_v1.routing_header.to_grpc_metadata(header_params),
             )
+
+        setup_request_id(request, "request_id", False)
 
         # Validate the universe domain.
         self._client._validate_universe_domain()
@@ -3766,6 +3780,8 @@ class StorageControlAsyncClient:
             ),
         )
 
+        setup_request_id(request, "request_id", False)
+
         # Validate the universe domain.
         self._client._validate_universe_domain()
 
@@ -4011,6 +4027,8 @@ class StorageControlAsyncClient:
                 (("intelligence_config.name", request.intelligence_config.name),)
             ),
         )
+
+        setup_request_id(request, "request_id", False)
 
         # Validate the universe domain.
         self._client._validate_universe_domain()
@@ -4261,6 +4279,8 @@ class StorageControlAsyncClient:
                 (("intelligence_config.name", request.intelligence_config.name),)
             ),
         )
+
+        setup_request_id(request, "request_id", False)
 
         # Validate the universe domain.
         self._client._validate_universe_domain()

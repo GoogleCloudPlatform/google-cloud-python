@@ -132,11 +132,6 @@ jobs:
     - name: Install nox and nox-uv
       run: |
         uv pip install --system nox nox-uv
-    # TODO(https://github.com/googleapis/google-cloud-python/issues/18532):
-    # Remove UV_PRERELEASE once Python 3.15 is officially released and upstream binary wheels are available.
-    - name: Enable prereleases for Python 3.15
-      if: matrix.python == '3.15'
-      run: echo "UV_PRERELEASE=allow" >> $GITHUB_ENV
     - name: Run unit tests for ${{ matrix.package_shard.description }}
       env:
         BUILD_TYPE: presubmit
@@ -147,7 +142,7 @@ jobs:
       run: |
         ci/run_conditional_tests.sh
     - name: Upload coverage results
-      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
       with:
         name: coverage-artifact-${{ matrix.python }}-${{ matrix.package_shard.index }}
         path: .coverage.${{ matrix.python }}.*

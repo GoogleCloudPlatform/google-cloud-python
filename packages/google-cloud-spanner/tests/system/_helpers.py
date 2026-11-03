@@ -45,6 +45,9 @@ DATABASE_OPERATION_TIMEOUT_IN_SECONDS = int(
 BACKUP_OPERATION_TIMEOUT_IN_SECONDS = int(
     os.getenv("SPANNER_BACKUP_OPERATION_TIMEOUT_IN_SECONDS", 1200)
 )
+DATABASE_CLEANUP_CUTOFF_IN_SECONDS = int(
+    os.getenv("SPANNER_DATABASE_CLEANUP_CUTOFF_IN_SECONDS", 3 * 60 * 60)
+)
 
 USE_EMULATOR_ENVVAR = "SPANNER_EMULATOR_HOST"
 USE_EMULATOR = os.getenv(USE_EMULATOR_ENVVAR) is not None
@@ -164,23 +167,27 @@ def cleanup_old_instances(spanner_client):
                 scrub_instance_ignore_not_found(instance)
 
 
-def cleanup_stale_databases(instance, cutoff_seconds=600):
+def cleanup_stale_databases(
+    instance, cutoff_seconds=DATABASE_CLEANUP_CUTOFF_IN_SECONDS
+):
     """Delete stale databases in the given instance older than cutoff_seconds."""
-    cutoff_ms = (int(time.time()) - cutoff_seconds) * 1000
+    cutoff_milliseconds = (int(time.time()) - cutoff_seconds) * 1000
 
     for database_pb in instance.list_databases():
         if database_pb.create_time is not None:
-            create_time_ms = datetime_helpers.to_milliseconds(database_pb.create_time)
+            create_time_milliseconds = datetime_helpers.to_milliseconds(
+                database_pb.create_time
+            )
 
-            if create_time_ms < cutoff_ms:
-                db = instance.database(database_pb.name.split("/")[-1])
+            if create_time_milliseconds < cutoff_milliseconds:
+                database = instance.database(database_pb.name.split("/")[-1])
                 try:
-                    db.reload()
-                    if db.enable_drop_protection:
-                        db.enable_drop_protection = False
-                        operation = db.update(["enable_drop_protection"])
+                    database.reload()
+                    if database.enable_drop_protection:
+                        database.enable_drop_protection = False
+                        operation = database.update(["enable_drop_protection"])
                         operation.result(DATABASE_OPERATION_TIMEOUT_IN_SECONDS)
-                    db.drop()
+                    database.drop()
                 except exceptions.NotFound:
                     pass
                 except exceptions.GoogleAPIError:

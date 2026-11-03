@@ -687,8 +687,8 @@ class Generator(proto.Message):
             Optional. List of CES tool specs that the
             generator can choose from.
         ces_app_specs (MutableSequence[google.cloud.dialogflow_v2beta1.types.CesAppSpec]):
-            Optional. List of CES app specs that the
-            generator can choose from.
+            Optional. Deprecated: Use ``ces_tool_specs`` instead. List
+            of CES app specs that the generator can choose from.
     """
 
     name: str = proto.Field(

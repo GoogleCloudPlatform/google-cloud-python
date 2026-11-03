@@ -472,6 +472,11 @@ class CertificateManagerTransport(abc.ABC):
                 default_timeout=60.0,
                 client_info=client_info,
             ),
+            self.update_certificate_issuance_config: gapic_v1.method.wrap_method(
+                self.update_certificate_issuance_config,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.delete_certificate_issuance_config: gapic_v1.method.wrap_method(
                 self.delete_certificate_issuance_config,
                 default_retry=retries.Retry(
@@ -791,6 +796,15 @@ class CertificateManagerTransport(abc.ABC):
         self,
     ) -> Callable[
         [gcc_certificate_issuance_config.CreateCertificateIssuanceConfigRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_certificate_issuance_config(
+        self,
+    ) -> Callable[
+        [gcc_certificate_issuance_config.UpdateCertificateIssuanceConfigRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
     ]:
         raise NotImplementedError()

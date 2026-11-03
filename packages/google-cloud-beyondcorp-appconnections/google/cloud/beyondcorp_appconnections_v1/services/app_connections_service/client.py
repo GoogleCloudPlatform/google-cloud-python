@@ -141,6 +141,10 @@ class AppConnectionsServiceClient(metaclass=AppConnectionsServiceClientMeta):
 
     The AppConnectionsService service provides methods to manage
     (create/read/update/delete) BeyondCorp AppConnections.
+
+    Deprecated: App Connector is deprecated and creation of new App
+    Connector resources is no longer permitted. Use Security Gateway
+    instead.
     """
 
     # Note: DEFAULT_ENDPOINT is deprecated. Use _DEFAULT_ENDPOINT_TEMPLATE instead.
@@ -738,6 +742,11 @@ class AppConnectionsServiceClient(metaclass=AppConnectionsServiceClientMeta):
                 automatically.
 
         """
+        warnings.warn(
+            "AppConnectionsServiceClient.list_app_connections is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.
@@ -861,10 +870,15 @@ class AppConnectionsServiceClient(metaclass=AppConnectionsServiceClientMeta):
                 It creates all the necessary GCP
                 components needed for creating a
                 BeyondCorp protected AppConnection.
-                Multiple connectors can be authorised
+                Multiple connectors can be authorized
                 for a single AppConnection.
 
         """
+        warnings.warn(
+            "AppConnectionsServiceClient.get_app_connection is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.
@@ -1010,10 +1024,15 @@ class AppConnectionsServiceClient(metaclass=AppConnectionsServiceClientMeta):
                    AppConnection to a remote application. It creates all
                    the necessary GCP components needed for creating a
                    BeyondCorp protected AppConnection. Multiple
-                   connectors can be authorised for a single
+                   connectors can be authorized for a single
                    AppConnection.
 
         """
+        warnings.warn(
+            "AppConnectionsServiceClient.create_app_connection is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.
@@ -1164,10 +1183,15 @@ class AppConnectionsServiceClient(metaclass=AppConnectionsServiceClientMeta):
                    AppConnection to a remote application. It creates all
                    the necessary GCP components needed for creating a
                    BeyondCorp protected AppConnection. Multiple
-                   connectors can be authorised for a single
+                   connectors can be authorized for a single
                    AppConnection.
 
         """
+        warnings.warn(
+            "AppConnectionsServiceClient.update_app_connection is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.
@@ -1304,6 +1328,11 @@ class AppConnectionsServiceClient(metaclass=AppConnectionsServiceClientMeta):
                       }
 
         """
+        warnings.warn(
+            "AppConnectionsServiceClient.delete_app_connection is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.
@@ -1430,6 +1459,11 @@ class AppConnectionsServiceClient(metaclass=AppConnectionsServiceClientMeta):
                 automatically.
 
         """
+        warnings.warn(
+            "AppConnectionsServiceClient.resolve_app_connections is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.

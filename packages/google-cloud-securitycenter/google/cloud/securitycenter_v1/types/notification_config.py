@@ -61,6 +61,12 @@ class NotificationConfig(proto.Message):
             notifications.
 
             This field is a member of `oneof`_ ``notify_config``.
+        deletion_notifications_enabled (bool):
+            Optional. Indicates whether the notifications
+            will be sent for deleted findings. When enabled,
+            the filter defined in the streaming config is
+            still respected when sending deletion
+            notifications.
     """
 
     class StreamingConfig(proto.Message):
@@ -120,6 +126,10 @@ class NotificationConfig(proto.Message):
         number=5,
         oneof="notify_config",
         message=StreamingConfig,
+    )
+    deletion_notifications_enabled: bool = proto.Field(
+        proto.BOOL,
+        number=7,
     )
 
 

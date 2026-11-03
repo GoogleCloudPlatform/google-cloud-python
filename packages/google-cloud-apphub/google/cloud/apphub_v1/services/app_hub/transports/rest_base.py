@@ -29,6 +29,8 @@ from google.protobuf import json_format
 from google.cloud.apphub_v1.types import (
     apphub_service,
     application,
+    boundary,
+    extended_metadata_schema,
     service,
     service_project_attachment,
     workload,
@@ -272,6 +274,22 @@ class _BaseAppHubRestTransport(AppHubTransport):
             ]
             return http_options
 
+    class _BaseGetBoundary:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/boundary}",
+                },
+            ]
+            return http_options
+
     class _BaseGetDiscoveredService:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -300,6 +318,22 @@ class _BaseAppHubRestTransport(AppHubTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{name=projects/*/locations/*/discoveredWorkloads/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseGetExtendedMetadataSchema:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/extendedMetadataSchemas/**}",
                 },
             ]
             return http_options
@@ -396,6 +430,22 @@ class _BaseAppHubRestTransport(AppHubTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{parent=projects/*/locations/*}/discoveredWorkloads",
+                },
+            ]
+            return http_options
+
+    class _BaseListExtendedMetadataSchemas:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{parent=projects/*/locations/*}/extendedMetadataSchemas",
                 },
             ]
             return http_options
@@ -504,9 +554,7 @@ class _BaseAppHubRestTransport(AppHubTransport):
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
-            "updateMask": {},
-        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
 
         @staticmethod
         def _get_http_options():
@@ -519,13 +567,28 @@ class _BaseAppHubRestTransport(AppHubTransport):
             ]
             return http_options
 
+    class _BaseUpdateBoundary:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{boundary.name=projects/*/locations/*/boundary}",
+                    "body": "boundary",
+                },
+            ]
+            return http_options
+
     class _BaseUpdateService:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
-            "updateMask": {},
-        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
 
         @staticmethod
         def _get_http_options():
@@ -542,9 +605,7 @@ class _BaseAppHubRestTransport(AppHubTransport):
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
-            "updateMask": {},
-        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
 
         @staticmethod
         def _get_http_options():

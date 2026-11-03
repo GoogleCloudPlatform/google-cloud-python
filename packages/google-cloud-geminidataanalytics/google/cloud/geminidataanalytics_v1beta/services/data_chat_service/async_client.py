@@ -328,7 +328,8 @@ class DataChatServiceAsyncClient:
         metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
     ) -> Awaitable[AsyncIterable[data_chat_service.Message]]:
         r"""Answers a data question by generating a stream of
-        [Message][google.cloud.geminidataanalytics.v1.Message] objects.
+        [Message][google.cloud.geminidataanalytics.v1beta.Message]
+        objects.
 
         .. code-block:: python
 

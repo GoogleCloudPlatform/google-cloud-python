@@ -758,6 +758,22 @@ class _BaseNetAppRestTransport(NetAppTransport):
             ]
             return http_options
 
+    class _BaseGetSplitStatus:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/volumes/*}:getSplitStatus",
+                },
+            ]
+            return http_options
+
     class _BaseGetStoragePool:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -802,6 +818,22 @@ class _BaseNetAppRestTransport(NetAppTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{parent=projects/*/locations/*}/activeDirectories",
+                },
+            ]
+            return http_options
+
+    class _BaseListBackupConfigs:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{parent=projects/*/locations/*/storagePools/*}/backupConfigs",
                 },
             ]
             return http_options
@@ -983,6 +1015,23 @@ class _BaseNetAppRestTransport(NetAppTransport):
             ]
             return http_options
 
+    class _BaseRestoreVolume:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{name=projects/*/locations/*/storagePools/*}:restoreVolume",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
     class _BaseResumeReplication:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -1029,6 +1078,23 @@ class _BaseNetAppRestTransport(NetAppTransport):
                 {
                     "method": "post",
                     "uri": "/v1/{name=projects/*/locations/*/volumes/*}:revert",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseStartSplit:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{name=projects/*/locations/*/volumes/*}:startSplit",
                     "body": "*",
                 },
             ]
@@ -1119,6 +1185,23 @@ class _BaseNetAppRestTransport(NetAppTransport):
                     "method": "patch",
                     "uri": "/v1/{backup.name=projects/*/locations/*/backupVaults/*/backups/*}",
                     "body": "backup",
+                },
+            ]
+            return http_options
+
+    class _BaseUpdateBackupConfig:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{name=projects/*/locations/*/storagePools/*}:updateBackupConfig",
+                    "body": "*",
                 },
             ]
             return http_options

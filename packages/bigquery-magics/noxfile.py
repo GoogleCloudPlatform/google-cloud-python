@@ -252,11 +252,6 @@ def install_unittest_dependencies(session, *constraints):
 @nox.session(python=UNIT_TEST_PYTHON_VERSIONS)
 def unit(session):
     # Install all test dependencies, then install this package in-place.
-    if session.python == "3.15":
-        session.skip(
-            "Skipping 3.15 until wheels are available for pyproj needed for dependency geopandas"
-        )
-
     constraints_path = str(
         CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
     )

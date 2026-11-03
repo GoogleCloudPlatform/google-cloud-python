@@ -8289,6 +8289,105 @@ class ChatServiceClient(metaclass=ChatServiceClientMeta):
         # Done; return the response.
         return response
 
+    def replace_message_cards(
+        self,
+        request: Optional[Union[message.ReplaceMessageCardsRequest, dict]] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> message.ReplaceMessageCardsResponse:
+        r"""Replaces the cards included in a message.
+
+        A Chat app can only replace cards on a human-created message if
+        the message already contains cards, and the cards were created
+        by the app.
+
+        If the app replaces the cards with an empty list, the cards are
+        removed. After removing the cards, the app cannot add cards back
+        to the message.
+
+        Requires `app
+        authentication <https://developers.google.com/workspace/chat/authenticate-authorize-chat-app>`__
+        with the `authorization
+        scope <https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes>`__:
+
+        - ``https://www.googleapis.com/auth/chat.bot``
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.apps import chat_v1
+
+            def sample_replace_message_cards():
+                # Create a client
+                client = chat_v1.ChatServiceClient()
+
+                # Initialize request argument(s)
+                request = chat_v1.ReplaceMessageCardsRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.replace_message_cards(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.apps.chat_v1.types.ReplaceMessageCardsRequest, dict]):
+                The request object. Request message for
+                ReplaceMessageCards API method.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.apps.chat_v1.types.ReplaceMessageCardsResponse:
+                Response message for
+                ReplaceMessageCards API.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, message.ReplaceMessageCardsRequest):
+            request = message.ReplaceMessageCardsRequest(request)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.replace_message_cards]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
     def __enter__(self) -> "ChatServiceClient":
         return self
 

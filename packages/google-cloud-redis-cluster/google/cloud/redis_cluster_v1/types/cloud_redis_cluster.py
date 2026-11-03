@@ -34,11 +34,20 @@ __protobuf__ = proto.module(
         "ServerCaMode",
         "ConnectionType",
         "CreateClusterRequest",
+        "CreateAclPolicyRequest",
         "ListClustersRequest",
         "ListClustersResponse",
+        "ListAclPoliciesRequest",
+        "ListAclPoliciesResponse",
+        "ListAclPolicyRevisionsRequest",
+        "ListAclPolicyRevisionsResponse",
         "UpdateClusterRequest",
+        "UpdateAclPolicyRequest",
         "GetClusterRequest",
+        "GetAclPolicyRequest",
+        "GetAclPolicyRevisionRequest",
         "DeleteClusterRequest",
+        "DeleteAclPolicyRequest",
         "GetClusterCertificateAuthorityRequest",
         "ListBackupCollectionsRequest",
         "ListBackupCollectionsResponse",
@@ -49,7 +58,23 @@ __protobuf__ = proto.module(
         "DeleteBackupRequest",
         "ExportBackupRequest",
         "BackupClusterRequest",
+        "ListTokenAuthUsersRequest",
+        "ListTokenAuthUsersResponse",
+        "GetTokenAuthUserRequest",
+        "ListAuthTokensRequest",
+        "ListAuthTokensResponse",
+        "GetAuthTokenRequest",
+        "AddTokenAuthUserRequest",
+        "DeleteTokenAuthUserRequest",
+        "AddAuthTokenRequest",
+        "DeleteAuthTokenRequest",
         "Cluster",
+        "AclPolicyInfo",
+        "AclPolicy",
+        "AclPolicyRevisionStatus",
+        "ClusterAclPolicyAttachment",
+        "AclPolicyRevision",
+        "AclRule",
         "AutomatedBackupConfig",
         "BackupCollection",
         "Backup",
@@ -68,6 +93,8 @@ __protobuf__ = proto.module(
         "SharedRegionalCertificateAuthority",
         "GetSharedRegionalCertificateAuthorityRequest",
         "OperationMetadata",
+        "TokenAuthUser",
+        "AuthToken",
         "CertificateAuthority",
         "ClusterPersistenceConfig",
         "ZoneDistributionConfig",
@@ -104,11 +131,14 @@ class AuthorizationMode(proto.Enum):
             IAM basic authorization mode
         AUTH_MODE_DISABLED (2):
             Authorization disabled mode
+        AUTH_MODE_TOKEN_AUTH (3):
+            Token based authorization mode
     """
 
     AUTH_MODE_UNSPECIFIED = 0
     AUTH_MODE_IAM_AUTH = 1
     AUTH_MODE_DISABLED = 2
+    AUTH_MODE_TOKEN_AUTH = 3
 
 
 class NodeType(proto.Enum):
@@ -248,6 +278,50 @@ class CreateClusterRequest(proto.Message):
     )
 
 
+class CreateAclPolicyRequest(proto.Message):
+    r"""Request for ``CreateAclPolicy``.
+
+    Attributes:
+        parent (str):
+            Required. The resource name of the cluster location using
+            the form: ``projects/{project_id}/locations/{location_id}``
+            where ``location_id`` refers to a Google Cloud region.
+        acl_policy_id (str):
+            Required. The logical name of the ACL policy in the customer
+            project with the following restrictions:
+
+            - Must contain only lowercase letters, numbers, and hyphens.
+            - Must start with a letter.
+            - Must be between 1-63 characters.
+            - Must end with a number or a letter.
+            - Must be unique within the customer project / location
+        acl_policy (google.cloud.redis_cluster_v1.types.AclPolicy):
+            Required. The ACL policy that is to be
+            created.
+        request_id (str):
+            Optional. Idempotent request UUID.
+            .
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    acl_policy_id: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    acl_policy: "AclPolicy" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message="AclPolicy",
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+
+
 class ListClustersRequest(proto.Message):
     r"""Request for [ListClusters][CloudRedis.ListClusters].
 
@@ -328,6 +402,149 @@ class ListClustersResponse(proto.Message):
     )
 
 
+class ListAclPoliciesRequest(proto.Message):
+    r"""Request for ``ListAclPolicies``.
+
+    Attributes:
+        parent (str):
+            Required. The resource name of the ACL policy location using
+            the form: ``projects/{project_id}/locations/{location_id}``
+            where ``location_id`` refers to a Google Cloud region.
+        page_size (int):
+            Optional. The maximum number of items to return.
+
+            If not specified, a default value of 1000 will be used by
+            the service. Regardless of the page_size value, the response
+            may include a partial list and a caller should only rely on
+            response's
+            [``next_page_token``][google.cloud.redis.cluster.v1.ListAclPoliciesResponse.next_page_token]
+            to determine if there are more ACL policies left to be
+            queried.
+
+            The maximum value is 1000; values above 1000 will be coerced
+            to 1000.
+        page_token (str):
+            Optional. The ``next_page_token`` value returned from a
+            previous ``ListAclPolicies`` request, if any.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class ListAclPoliciesResponse(proto.Message):
+    r"""Response for ``ListAclPolicies``.
+
+    Attributes:
+        acl_policies (MutableSequence[google.cloud.redis_cluster_v1.types.AclPolicy]):
+            A list of ACL policies in the project in the specified
+            location, or across all locations.
+
+            If the ``location_id`` in the parent field of the request is
+            "-", all regions available to the project are queried, and
+            the results aggregated.
+        next_page_token (str):
+            Token to retrieve the next page of results,
+            or empty if there are no more results in the
+            list.
+        unreachable (MutableSequence[str]):
+            Unordered list. Locations that could not be
+            reached.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    acl_policies: MutableSequence["AclPolicy"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="AclPolicy",
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    unreachable: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+
+
+class ListAclPolicyRevisionsRequest(proto.Message):
+    r"""Request for ``ListAclPolicyRevisions``.
+
+    Attributes:
+        parent (str):
+            Required. The name of the ACL policy to list revisions for.
+            Format:
+            "projects/{project_id}/locations/{location_id}/aclPolicies/{acl_policy_id}".
+        page_size (int):
+            Optional. The maximum number of items to
+            return.
+        page_token (str):
+            Optional. The ``next_page_token`` value returned from a
+            previous ``ListAclPolicyRevisions`` request, if any.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class ListAclPolicyRevisionsResponse(proto.Message):
+    r"""Response for ``ListAclPolicyRevisions``.
+
+    Attributes:
+        acl_policy_revisions (MutableSequence[google.cloud.redis_cluster_v1.types.AclPolicyRevision]):
+            A list of ACL policy revisions.
+        next_page_token (str):
+            Token to retrieve the next page of results,
+            or empty if there are no more results in the
+            list.
+        unreachable (MutableSequence[str]):
+            Unordered list. Locations that could not be
+            reached.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    acl_policy_revisions: MutableSequence["AclPolicyRevision"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="AclPolicyRevision",
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    unreachable: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+
+
 class UpdateClusterRequest(proto.Message):
     r"""Request for [UpdateCluster][CloudRedis.UpdateCluster].
 
@@ -363,6 +580,39 @@ class UpdateClusterRequest(proto.Message):
     )
 
 
+class UpdateAclPolicyRequest(proto.Message):
+    r"""Request for ``UpdateAclPolicy``.
+
+    Attributes:
+        acl_policy (google.cloud.redis_cluster_v1.types.AclPolicy):
+            Required. The ACL policy to be updated.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. Mask of fields to be updated. At least one path
+            must be supplied in this field. The elements of the repeated
+            paths field may only include these fields from
+            ``AclPolicy``:
+
+            - ``rules``
+        request_id (str):
+            Optional. Idempotent request UUID.
+    """
+
+    acl_policy: "AclPolicy" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="AclPolicy",
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask_pb2.FieldMask,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
 class GetClusterRequest(proto.Message):
     r"""Request for [GetCluster][CloudRedis.GetCluster].
 
@@ -371,6 +621,39 @@ class GetClusterRequest(proto.Message):
             Required. Redis cluster resource name using the form:
             ``projects/{project_id}/locations/{location_id}/clusters/{cluster_id}``
             where ``location_id`` refers to a GCP region.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class GetAclPolicyRequest(proto.Message):
+    r"""Request for ``GetAclPolicy``.
+
+    Attributes:
+        name (str):
+            Required. Redis ACL policy resource name using the form:
+            ``projects/{project_id}/locations/{location_id}/aclPolicies/{acl_policy_id}``
+            where ``location_id`` refers to a Google Cloud region.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class GetAclPolicyRevisionRequest(proto.Message):
+    r"""Request for ``GetAclPolicyRevision``.
+
+    Attributes:
+        name (str):
+            Required. Redis ACL policy revision resource name using the
+            form:
+            ``projects/{project_id}/locations/{location_id}/aclPolicies/{acl_policy_id}/revisions/{revision_id}``
+            where ``location_id`` refers to a Google Cloud region.
     """
 
     name: str = proto.Field(
@@ -398,6 +681,36 @@ class DeleteClusterRequest(proto.Message):
     request_id: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+
+
+class DeleteAclPolicyRequest(proto.Message):
+    r"""Request for ``DeleteAclPolicy``.
+
+    Attributes:
+        name (str):
+            Required. Redis ACL policy resource name using the form:
+            ``projects/{project_id}/locations/{location_id}/aclPolicies/{acl_policy_id}``
+            where ``location_id`` refers to a Google Cloud region.
+        request_id (str):
+            Optional. Idempotent request UUID.
+        etag (str):
+            Optional. Etag of the ACL policy. If this is
+            different from the server's etag, the request
+            will fail with an ABORTED error.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    etag: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 
@@ -687,6 +1000,314 @@ class BackupClusterRequest(proto.Message):
     )
 
 
+class ListTokenAuthUsersRequest(proto.Message):
+    r"""Request message for [ListTokenAuthUsers][].
+
+    Attributes:
+        parent (str):
+            Required. The parent resource that this token
+            based auth user will be listed for. Format:
+
+            projects/{project}/locations/{location}/clusters/{cluster}
+        page_size (int):
+            Optional. The maximum number of items to return.
+
+            If not specified, a default value of 1000 will be used by
+            the service. Regardless of the page_size value, the response
+            may include a partial list and a caller should only rely on
+            response's The maximum value is 1000; values above 1000 will
+            be coerced to 1000.
+            [``next_page_token``][google.cloud.redis.cluster.v1.ListTokenAuthUsersResponse.next_page_token]
+            to determine if there are more clusters left to be queried.
+        page_token (str):
+            Optional. The ``next_page_token`` value returned from a
+            previous [ListTokenAuthUsers] request, if any.
+        filter (str):
+            Optional. Expression for filtering results.
+        order_by (str):
+            Optional. Sort results by a defined order.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    filter: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=5,
+    )
+
+
+class ListTokenAuthUsersResponse(proto.Message):
+    r"""Response message for [ListTokenAuthUsers][].
+
+    Attributes:
+        token_auth_users (MutableSequence[google.cloud.redis_cluster_v1.types.TokenAuthUser]):
+            A list of token auth users in the project.
+        next_page_token (str):
+            Token to retrieve the next page of results,
+            or empty if there are no more results in the
+            list.
+        unreachable (MutableSequence[str]):
+            Unordered list. Token auth users that could
+            not be reached.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    token_auth_users: MutableSequence["TokenAuthUser"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="TokenAuthUser",
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    unreachable: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+
+
+class GetTokenAuthUserRequest(proto.Message):
+    r"""Request message for [GetTokenAuthUser][].
+
+    Attributes:
+        name (str):
+            Required. The name of token auth user for a token based auth
+            enabled cluster. Format:
+            projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class ListAuthTokensRequest(proto.Message):
+    r"""Request message for [ListAuthTokens][].
+
+    Attributes:
+        parent (str):
+            Required. The parent resource that this auth token will be
+            listed for. Format:
+            projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}
+        page_size (int):
+            Optional. The maximum number of items to return. The maximum
+            value is 1000; values above 1000 will be coerced to 1000. If
+            not specified, a default value of 1000 will be used by the
+            service. Regardless of the page_size value, the response may
+            include a partial list and a caller should only rely on
+            response's
+            [``next_page_token``][google.cloud.redis.cluster.v1.ListTokenAuthUsersResponse.next_page_token]
+            to determine if there are more clusters left to be queried.
+        page_token (str):
+            Optional. The ``next_page_token`` value returned from a
+            previous [ListTokenAuthUsers] request, if any.
+        filter (str):
+            Optional. Expression for filtering results.
+        order_by (str):
+            Optional. Sort results by a defined order.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    filter: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=5,
+    )
+
+
+class ListAuthTokensResponse(proto.Message):
+    r"""Response message for [ListAuthTokens][].
+
+    Attributes:
+        auth_tokens (MutableSequence[google.cloud.redis_cluster_v1.types.AuthToken]):
+            A list of auth tokens in the project.
+        next_page_token (str):
+            Token to retrieve the next page of results,
+            or empty if there are no more results in the
+            list.
+        unreachable (MutableSequence[str]):
+            Unordered list. Auth tokens that could not be
+            reached.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    auth_tokens: MutableSequence["AuthToken"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="AuthToken",
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    unreachable: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+
+
+class GetAuthTokenRequest(proto.Message):
+    r"""Request message for [GetAuthToken][].
+
+    Attributes:
+        name (str):
+            Required. The name of auth token for a token based auth
+            enabled cluster. Format:
+            projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}/authTokens/{auth_token}
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class AddTokenAuthUserRequest(proto.Message):
+    r"""Request message for [AddTokenAuthUser][].
+
+    Attributes:
+        cluster (str):
+            Required. The cluster resource that this
+            token auth user will be added for. Format:
+            projects/{project}/locations/{location}/clusters/{cluster}
+        token_auth_user (str):
+            Required. The id of the token auth user to
+            add.
+    """
+
+    cluster: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    token_auth_user: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class DeleteTokenAuthUserRequest(proto.Message):
+    r"""Request message for [DeleteTokenAuthUser][].
+
+    Attributes:
+        name (str):
+            Required. The name of the token auth user to delete. Format:
+            projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}
+        request_id (str):
+            Optional. An optional request ID to identify
+            requests. Specify a unique request ID so that if
+            you must retry your request, the server will
+            know to ignore the request if it has already
+            been completed. The server will guarantee that
+            for at least 60 minutes after the first request.
+
+            For example, consider a situation where you make
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
+            prevents clients from accidentally creating
+            duplicate commitments.
+
+            The request ID must be a valid UUID with the
+            exception that zero UUID is not supported
+            (00000000-0000-0000-0000-000000000000).
+        force (bool):
+            Optional. If set to true, any child auth
+            tokens of this user will also be deleted.
+            Otherwise, the request will only work if the
+            user has no auth tokens.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    force: bool = proto.Field(
+        proto.BOOL,
+        number=3,
+    )
+
+
+class AddAuthTokenRequest(proto.Message):
+    r"""Request message for [AddAuthToken][].
+
+    Attributes:
+        token_auth_user (str):
+            Required. The name of the token auth user resource that this
+            auth token will be added for. Format:
+            projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}
+        auth_token (google.cloud.redis_cluster_v1.types.AuthToken):
+            Required. The auth token to add.
+    """
+
+    token_auth_user: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    auth_token: "AuthToken" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="AuthToken",
+    )
+
+
+class DeleteAuthTokenRequest(proto.Message):
+    r"""Request message for [DeleteAuthToken][].
+
+    Attributes:
+        name (str):
+            Required. The name of the token auth user resource that this
+            auth token will be deleted from. Format:
+            projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}/authTokens/{auth_token}
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
 class Cluster(proto.Message):
     r"""A cluster instance.
 
@@ -849,6 +1470,12 @@ class Cluster(proto.Message):
             certificates.
 
             This field is a member of `oneof`_ ``_rotate_server_certificate``.
+        acl_policy (str):
+            Optional. The ACL policy to be applied to the
+            cluster.
+        acl_policy_info (google.cloud.redis_cluster_v1.types.AclPolicyInfo):
+            Output only. Details of the applied ACL
+            policy.
     """
 
     class State(proto.Enum):
@@ -1133,6 +1760,303 @@ class Cluster(proto.Message):
         proto.BOOL,
         number=55,
         optional=True,
+    )
+    acl_policy: str = proto.Field(
+        proto.STRING,
+        number=56,
+    )
+    acl_policy_info: "AclPolicyInfo" = proto.Field(
+        proto.MESSAGE,
+        number=58,
+        message="AclPolicyInfo",
+    )
+
+
+class AclPolicyInfo(proto.Message):
+    r"""Details of the applied ACL policy.
+
+    Attributes:
+        applied_acl_policy (str):
+            Output only. The resource name of the applied ACL policy.
+            Format:
+            "projects/{project}/locations/{location}/aclPolicies/{acl_policy}".
+        applied_acl_policy_revision (str):
+            Output only. The resource name of the applied ACL policy
+            revision. Format:
+            "projects/{project}/locations/{location}/aclPolicies/{acl_policy}/revisions/{revision}".
+        applied_acl_policy_revision_number (int):
+            Output only. The revision number of the
+            applied ACL policy revision.
+        acl_policy_revision_statuses (MutableSequence[google.cloud.redis_cluster_v1.types.AclPolicyRevisionStatus]):
+            Output only. A list of status for various
+            revisions of this ACL policy on the cluster.
+    """
+
+    applied_acl_policy: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    applied_acl_policy_revision: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    applied_acl_policy_revision_number: int = proto.Field(
+        proto.INT64,
+        number=3,
+    )
+    acl_policy_revision_statuses: MutableSequence["AclPolicyRevisionStatus"] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=4,
+            message="AclPolicyRevisionStatus",
+        )
+    )
+
+
+class AclPolicy(proto.Message):
+    r"""The ACL policy resource.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        name (str):
+            Identifier. Full resource path of the ACL
+            policy.
+        rules (MutableSequence[google.cloud.redis_cluster_v1.types.AclRule]):
+            Required. The ACL rules within the ACL
+            policy.
+        state (google.cloud.redis_cluster_v1.types.AclPolicy.State):
+            Output only. The state of the ACL policy.
+        etag (str):
+            Output only. Etag for the ACL policy.
+
+            This field is a member of `oneof`_ ``_etag``.
+        cluster_acl_policy_attachments (MutableSequence[google.cloud.redis_cluster_v1.types.ClusterAclPolicyAttachment]):
+            Output only. The ACL policy attachment status
+            for each attached cluster.
+        create_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The timestamp that the ACL
+            policy was created.
+        update_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The timestamp that the ACL
+            policy was last updated.
+    """
+
+    class State(proto.Enum):
+        r"""Represents the different states of an ACL policy.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                Not set.
+            ACTIVE (1):
+                ACL policy has been created and is fully
+                usable. Since ACL policy creation is synchronous
+                and not an LRO, there is no CREATING state.
+            UPDATING (2):
+                ACL policy is being updated.
+            DELETING (3):
+                ACL policy is being deleted.
+        """
+
+        STATE_UNSPECIFIED = 0
+        ACTIVE = 1
+        UPDATING = 2
+        DELETING = 3
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    rules: MutableSequence["AclRule"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message="AclRule",
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=3,
+        enum=State,
+    )
+    etag: str = proto.Field(
+        proto.STRING,
+        number=5,
+        optional=True,
+    )
+    cluster_acl_policy_attachments: MutableSequence["ClusterAclPolicyAttachment"] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=6,
+            message="ClusterAclPolicyAttachment",
+        )
+    )
+    create_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=7,
+        message=timestamp_pb2.Timestamp,
+    )
+    update_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=8,
+        message=timestamp_pb2.Timestamp,
+    )
+
+
+class AclPolicyRevisionStatus(proto.Message):
+    r"""AclPolicyRevisionStatus stores the per-revision status for an
+    attached cluster.
+
+    Attributes:
+        acl_policy_revision (str):
+            Output only. The resource name of the ACL policy revision
+            this status refers to. Format:
+            "projects/{project}/locations/{location}/aclPolicies/{acl_policy}/revisions/{revision}".
+        acl_policy_revision_number (int):
+            Output only. The revision number of the ACL
+            policy revision this status refers to.
+        state (google.cloud.redis_cluster_v1.types.AclPolicyRevisionStatus.State):
+            Output only. AclPolicyRevision state.
+        error_message (str):
+            Output only. Human-readable error message
+            providing more details for FAILED states.
+    """
+
+    class State(proto.Enum):
+        r"""Enum indicating the status of this ACL policy revision on the
+        cluster.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                Not set.
+            APPLYING (1):
+                The cluster is attempting to apply this
+                revision.
+            APPLIED (2):
+                The cluster has successfully applied this
+                revision.
+            FAILED (3):
+                The cluster failed to apply this revision.
+        """
+
+        STATE_UNSPECIFIED = 0
+        APPLYING = 1
+        APPLIED = 2
+        FAILED = 3
+
+    acl_policy_revision: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    acl_policy_revision_number: int = proto.Field(
+        proto.INT64,
+        number=2,
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=3,
+        enum=State,
+    )
+    error_message: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+
+
+class ClusterAclPolicyAttachment(proto.Message):
+    r"""ClusterAclPolicyAttachment stores the ACL policy status for
+    an attached cluster for the revisions successfully applied,
+    under application or failed.
+
+    Attributes:
+        cluster (str):
+            Output only. The resource name of the
+            attached Cluster. Format:
+
+            "projects/{project}/locations/{location}/clusters/{cluster}".
+        acl_policy_revision_statuses (MutableSequence[google.cloud.redis_cluster_v1.types.AclPolicyRevisionStatus]):
+            Output only. A list of status for various
+            revisions of this ACL policy on the cluster.
+    """
+
+    cluster: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    acl_policy_revision_statuses: MutableSequence["AclPolicyRevisionStatus"] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=2,
+            message="AclPolicyRevisionStatus",
+        )
+    )
+
+
+class AclPolicyRevision(proto.Message):
+    r"""The ACL policy revision resource.
+
+    Attributes:
+        name (str):
+            Identifier. The name of the ACL policy revision. Format:
+            "projects/{project}/locations/{location}/aclPolicies/{acl_policy}/revisions/{revision}".
+        revision_number (int):
+            Output only. The revision number of the ACL
+            policy revision.
+        snapshot (google.cloud.redis_cluster_v1.types.AclPolicy):
+            Output only. The snapshot of the ACL policy
+            at the time of revision creation.
+        create_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The timestamp that the revision
+            was created.
+        attached_clusters (MutableSequence[str]):
+            Output only. A list of clusters that are
+            attached to this ACL policy revision.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    revision_number: int = proto.Field(
+        proto.INT64,
+        number=2,
+    )
+    snapshot: "AclPolicy" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message="AclPolicy",
+    )
+    create_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message=timestamp_pb2.Timestamp,
+    )
+    attached_clusters: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=5,
+    )
+
+
+class AclRule(proto.Message):
+    r"""A single ACL rule which defines the policy for a user.
+
+    Attributes:
+        username (str):
+            Required. Specifies the IAM user or service
+            account to be added to the ACL policy. This
+            username will be directly set on the Redis OSS.
+        rule (str):
+            Required. The rule to be applied to the username. Ex: "on
+            >password123 ~\* +@all" The format of the rule is defined by
+            Redis OSS:
+            https://redis.io/docs/latest/operate/oss_and_stack/management/security/acl/
+    """
+
+    username: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    rule: str = proto.Field(
+        proto.STRING,
+        number=2,
     )
 
 
@@ -2098,6 +3022,110 @@ class OperationMetadata(proto.Message):
     )
 
 
+class TokenAuthUser(proto.Message):
+    r"""Represents a token based auth user for the cluster.
+
+    Attributes:
+        name (str):
+            Identifier. The resource name of the token based auth user.
+            Format:
+            projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}
+        state (google.cloud.redis_cluster_v1.types.TokenAuthUser.State):
+            Output only. The state of the token based
+            auth user.
+    """
+
+    class State(proto.Enum):
+        r"""Represents the different states of a token based auth user.
+        New values may be added in the future.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                Not set.
+            ACTIVE (1):
+                The auth user is active.
+            CREATING (2):
+                The auth user is being created.
+            UPDATING (3):
+                The auth user is being updated.
+            DELETING (4):
+                The auth user is being deleted.
+        """
+
+        STATE_UNSPECIFIED = 0
+        ACTIVE = 1
+        CREATING = 2
+        UPDATING = 3
+        DELETING = 4
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=2,
+        enum=State,
+    )
+
+
+class AuthToken(proto.Message):
+    r"""Auth token for the cluster.
+
+    Attributes:
+        name (str):
+            Identifier. Name of the auth token. Format:
+            projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}/authTokens/{auth_token}
+        token (str):
+            Output only. The service generated
+            authentication token used to connect to the
+            Redis cluster.
+        create_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. Create time of the auth token.
+        state (google.cloud.redis_cluster_v1.types.AuthToken.State):
+            Output only. State of the auth token.
+    """
+
+    class State(proto.Enum):
+        r"""Represents the different states of an auth token.
+        New values may be added in the future.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                Not set.
+            ACTIVE (1):
+                The auth token is active.
+            CREATING (2):
+                The auth token is being created.
+            DELETING (3):
+                The auth token is being deleted.
+        """
+
+        STATE_UNSPECIFIED = 0
+        ACTIVE = 1
+        CREATING = 2
+        DELETING = 3
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    create_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=timestamp_pb2.Timestamp,
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=4,
+        enum=State,
+    )
+
+
 class CertificateAuthority(proto.Message):
     r"""Redis cluster certificate authority
 
@@ -2305,6 +3333,14 @@ class ZoneDistributionConfig(proto.Message):
             field would be used to allocate all resources in that zone.
             This is not applicable to MULTI_ZONE, and would be ignored
             for MULTI_ZONE clusters.
+        zones (MutableSequence[str]):
+            Optional. Specify the zones of a multi-zone
+            cluster where Redis Cluster allocates resources.
+            This flag isn't applicable for single-zone
+            clusters.
+        active_zones (MutableSequence[str]):
+            Output only. The exact list of zones where
+            the cluster currently has active VMs.
     """
 
     class ZoneDistributionMode(proto.Enum):
@@ -2334,6 +3370,14 @@ class ZoneDistributionConfig(proto.Message):
     zone: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+    zones: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+    active_zones: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=4,
     )
 
 

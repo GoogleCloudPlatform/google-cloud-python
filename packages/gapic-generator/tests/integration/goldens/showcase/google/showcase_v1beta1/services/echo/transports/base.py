@@ -17,9 +17,16 @@ import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
 from google.showcase_v1beta1 import gapic_version as package_version
+from google.showcase_v1beta1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
 
 import google.auth  # type: ignore
 import google.api_core
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
@@ -56,6 +63,7 @@ class EchoTransport(abc.ABC):
             client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
             always_use_jwt_access: Optional[bool] = False,
             api_audience: Optional[str] = None,
+            client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
             **kwargs,
             ) -> None:
         """Instantiate the transport.
@@ -86,6 +94,9 @@ class EchoTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -123,16 +134,95 @@ class EchoTransport(abc.ABC):
             host += ':443'
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.echo: gapic_v1.method.wrap_method(
+            self.echo: self._wrap_method(
                 self.echo,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -146,18 +236,21 @@ class EchoTransport(abc.ABC):
                 ),
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/Echo",
             ),
-            self.echo_error_details: gapic_v1.method.wrap_method(
+            self.echo_error_details: self._wrap_method(
                 self.echo_error_details,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/EchoErrorDetails",
             ),
-            self.fail_echo_with_details: gapic_v1.method.wrap_method(
+            self.fail_echo_with_details: self._wrap_method(
                 self.fail_echo_with_details,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/FailEchoWithDetails",
             ),
-            self.expand: gapic_v1.method.wrap_method(
+            self.expand: self._wrap_method(
                 self.expand,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -171,18 +264,24 @@ class EchoTransport(abc.ABC):
                 ),
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/Expand",
+                is_streaming=True,
             ),
-            self.collect: gapic_v1.method.wrap_method(
+            self.collect: self._wrap_method(
                 self.collect,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/Collect",
+                is_streaming=True,
             ),
-            self.chat: gapic_v1.method.wrap_method(
+            self.chat: self._wrap_method(
                 self.chat,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/Chat",
+                is_streaming=True,
             ),
-            self.paged_expand: gapic_v1.method.wrap_method(
+            self.paged_expand: self._wrap_method(
                 self.paged_expand,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -196,71 +295,85 @@ class EchoTransport(abc.ABC):
                 ),
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/PagedExpand",
             ),
-            self.paged_expand_legacy: gapic_v1.method.wrap_method(
+            self.paged_expand_legacy: self._wrap_method(
                 self.paged_expand_legacy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/PagedExpandLegacy",
             ),
-            self.paged_expand_legacy_mapped: gapic_v1.method.wrap_method(
+            self.paged_expand_legacy_mapped: self._wrap_method(
                 self.paged_expand_legacy_mapped,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/PagedExpandLegacyMapped",
             ),
-            self.wait: gapic_v1.method.wrap_method(
+            self.wait: self._wrap_method(
                 self.wait,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/Wait",
             ),
-            self.block: gapic_v1.method.wrap_method(
+            self.block: self._wrap_method(
                 self.block,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/Block",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.set_iam_policy: gapic_v1.method.wrap_method(
+            self.set_iam_policy: self._wrap_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/SetIamPolicy",
             ),
-            self.get_iam_policy: gapic_v1.method.wrap_method(
+            self.get_iam_policy: self._wrap_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/GetIamPolicy",
             ),
-            self.test_iam_permissions: gapic_v1.method.wrap_method(
+            self.test_iam_permissions: self._wrap_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/TestIamPermissions",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
          }
 

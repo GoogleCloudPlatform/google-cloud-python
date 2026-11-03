@@ -32,12 +32,16 @@
 
 
 {# also need calling form #}
+{% if sample.get("is_resumable_upload") %}
+{{ frags.render_resumable_upload_samples(sample, calling_form, calling_form_enum) }}
+{% else %}
 {% if sample.transport == "grpc-async" %}async {% endif %}def sample_{{ sample.rpc|snake_case|trim }}({{ frags.print_input_params(sample.request)|trim }}):
     {{ frags.render_client_setup(sample.module_name, sample.client_name)|indent }}
     {{ frags.render_request_setup(sample.request, sample.request_module_name, sample.request_type, calling_form, calling_form_enum)|indent }}
     {% with method_call = frags.render_method_call(sample, calling_form, calling_form_enum, sample.transport) %}
-    {{ frags.render_calling_form(method_call, calling_form, calling_form_enum, sample.transport, sample.response)|indent -}}
+    {{ frags.render_calling_form(method_call, calling_form, calling_form_enum, sample.transport, sample.response, sample)|indent -}}
     {% endwith %}
+{% endif %}
 
 # [END {{ sample.id }}]
 {# TODO: Enable main block (or decide to remove main block from python sample) #}

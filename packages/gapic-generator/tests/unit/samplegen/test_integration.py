@@ -807,3 +807,188 @@ def test_generate_sample_config_partial_config(fs):
 def test_generate_sample_config_fpaths_no_such_file(fs):
     with pytest.raises(types.InvalidConfig):
         list(gapic_utils.generate_all_sample_fpaths("cfgs/sample_config.yaml"))
+
+
+def test_generate_sample_resumable_upload():
+    classify_target_field = DummyField(
+        name="classify_target",
+        type=DummyMessageTypePB(name="ClassifyTarget"),
+        message=DummyMessage(
+            type="CLASSIFY TYPE",
+            fields={
+                "location_annotation": DummyField(
+                    type=DummyMessageTypePB(name="Location"),
+                    message=DummyMessage(type="LOCATION TYPE"),
+                ),
+            },
+        ),
+        ident=DummyIdent(sphinx="molluscs_v1.ClassifyTarget"),
+    )
+
+    input_type = DummyMessage(
+        type="REQUEST TYPE",
+        fields={"classify_target": classify_target_field},
+        ident=DummyIdent(
+            name="molluscs.v1.ClassifyRequest", sphinx="molluscs_v1.classify_request"
+        ),
+    )
+
+    output_type = DummyMessage(
+        type="RESPONSE TYPE",
+        fields={
+            "classification": DummyField(
+                type=DummyMessageTypePB(name="Classification"),
+            )
+        },
+        ident=DummyIdent(sphinx="molluscs_v1.classification"),
+    )
+
+    api_naming = naming.NewNaming(name="MolluscClient", namespace=("molluscs", "v1"))
+    service = wrappers.Service(
+        service_pb=namedtuple("service_pb", ["name"])("MolluscService"),
+        methods={
+            "Classify": DummyMethod(
+                name="Classify",
+                input=input_type,
+                output=message_factory("$resp.taxonomy"),
+                client_output_async=output_type,
+                client_output=output_type,
+                flattened_fields={"classify_target": classify_target_field},
+                is_resumable_upload=True,
+            )
+        },
+        visible_resources={},
+    )
+
+    schema = DummyApiSchema(
+        services={"animalia.mollusca.v1.Mollusc": service},
+        naming=api_naming,
+    )
+
+    sample = {
+        "service": "animalia.mollusca.v1.Mollusc",
+        "region_tag": "molluscs_generated_molluscs_v1_Mollusc_Classify_sync",
+        "rpc": "Classify",
+        "transport": "grpc",
+        "id": "mollusc_classify_sync",
+        "description": "Determine the full taxonomy of input mollusc",
+        "request": [
+            {
+                "field": "classify_target.location_annotation",
+                "value": "New Zealand",
+                "input_parameter": "location",
+            },
+        ],
+        "response": [{"print": ['Mollusc is a "%s"', "$resp.taxonomy"]}],
+    }
+
+    sample_str, _ = samplegen.generate_sample(
+        sample, schema, env.get_template("examples/sample.py.j2")
+    )
+
+    assert (
+        "from google.api_core.resumable_transfer import ResumableUploadConfig"
+        in sample_str
+    )
+    assert "import io" in sample_str
+    assert "# Make the request" in sample_str
+    assert "upload_session = client.classify(request=request, config=config)" in sample_str
+    assert 'stream = io.BytesIO(b"Example upload data")' in sample_str
+    assert "response = upload_session.upload(stream)" in sample_str
+    assert "# for progress in upload_session.iter_upload(stream):" in sample_str
+    assert "# response = upload_session.resume(upload_url, stream, chunk_size=config.chunk_size)" in sample_str
+    assert "# for progress in upload_session.iter_resume(upload_url, stream, chunk_size=config.chunk_size):" in sample_str
+
+
+def test_generate_sample_resumable_upload_async():
+    classify_target_field = DummyField(
+        name="classify_target",
+        type=DummyMessageTypePB(name="ClassifyTarget"),
+        message=DummyMessage(
+            type="CLASSIFY TYPE",
+            fields={
+                "location_annotation": DummyField(
+                    type=DummyMessageTypePB(name="Location"),
+                    message=DummyMessage(type="LOCATION TYPE"),
+                ),
+            },
+        ),
+        ident=DummyIdent(sphinx="molluscs_v1.ClassifyTarget"),
+    )
+
+    input_type = DummyMessage(
+        type="REQUEST TYPE",
+        fields={"classify_target": classify_target_field},
+        ident=DummyIdent(
+            name="molluscs.v1.ClassifyRequest", sphinx="molluscs_v1.classify_request"
+        ),
+    )
+
+    output_type = DummyMessage(
+        type="RESPONSE TYPE",
+        fields={
+            "classification": DummyField(
+                type=DummyMessageTypePB(name="Classification"),
+            )
+        },
+        ident=DummyIdent(sphinx="molluscs_v1.classification"),
+    )
+
+    api_naming = naming.NewNaming(name="MolluscClient", namespace=("molluscs", "v1"))
+    service = wrappers.Service(
+        service_pb=namedtuple("service_pb", ["name"])("MolluscService"),
+        methods={
+            "Classify": DummyMethod(
+                name="Classify",
+                input=input_type,
+                output=message_factory("$resp.taxonomy"),
+                client_output_async=output_type,
+                client_output=output_type,
+                flattened_fields={"classify_target": classify_target_field},
+                is_resumable_upload=True,
+            )
+        },
+        visible_resources={},
+    )
+
+    schema = DummyApiSchema(
+        services={"animalia.mollusca.v1.Mollusc": service},
+        naming=api_naming,
+    )
+
+    sample = {
+        "service": "animalia.mollusca.v1.Mollusc",
+        "region_tag": "molluscs_generated_molluscs_v1_Mollusc_Classify_async",
+        "rpc": "Classify",
+        "transport": "grpc-async",
+        "id": "mollusc_classify_async",
+        "description": "Determine the full taxonomy of input mollusc",
+        "request": [
+            {
+                "field": "classify_target.location_annotation",
+                "value": "New Zealand",
+                "input_parameter": "location",
+            },
+        ],
+        "response": [{"print": ['Mollusc is a "%s"', "$resp.taxonomy"]}],
+    }
+
+    sample_str, _ = samplegen.generate_sample(
+        sample, schema, env.get_template("examples/sample.py.j2")
+    )
+
+    assert (
+        "from google.api_core.resumable_transfer import ResumableUploadConfig"
+        in sample_str
+    )
+    assert "import io" in sample_str
+    assert "python3 -m pip install molluscs-v1-molluscclient[async_rest]" in sample_str
+    assert "# Make the request" in sample_str
+    assert "upload_session = await client.classify(request=request, config=config)" in sample_str
+    assert 'stream = io.BytesIO(b"Example upload data")' in sample_str
+    assert "response = await upload_session.upload(stream)" in sample_str
+    assert "# async for progress in upload_session.upload(stream):" in sample_str
+    assert "# response = await upload_session.resume(upload_url, stream, chunk_size=config.chunk_size)" in sample_str
+    assert "# async for progress in upload_session.resume(upload_url, stream, chunk_size=config.chunk_size):" in sample_str
+
+

@@ -8,13 +8,18 @@ import json  # type: ignore
 
 from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.auth import credentials as ga_credentials  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import retry as retries
 from google.api_core import rest_helpers
 from google.api_core import rest_streaming
 from google.api_core import gapic_v1
+{% if service.has_resumable_upload_methods %}
+import urllib.parse
+from google.api_core import resumable_transfer
+{% endif %}
 {% set package_path = api.naming.module_namespace|join('.') + "." + api.naming.versioned_module_name %}
-from {{package_path}}._compat import transcode_request
+from {{package_path}}._compat import transcode_request, trace_http_request
 import google.protobuf
 
 from google.protobuf import json_format
@@ -69,6 +74,7 @@ class {{service.name}}RestStub:
     _session: AuthorizedSession
     _host: str
     _interceptor: {{ service.name }}RestInterceptor
+    _client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None
 
 
 class {{service.name}}RestTransport(_Base{{ service.name }}RestTransport):
@@ -97,6 +103,8 @@ class {{service.name}}RestTransport(_Base{{ service.name }}RestTransport):
             url_scheme: str = 'https',
             interceptor: Optional[{{ service.name }}RestInterceptor] = None,
             api_audience: Optional[str] = None,
+            client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
+            **kwargs,
             ) -> None:
         """Instantiate the transport.
 
@@ -142,6 +150,9 @@ class {{service.name}}RestTransport(_Base{{ service.name }}RestTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
         # Run the base constructor
         # TODO(yon-mg): resolve other ctor params i.e. scopes, quota, etc.
@@ -153,7 +164,9 @@ class {{service.name}}RestTransport(_Base{{ service.name }}RestTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             url_scheme=url_scheme,
-            api_audience=api_audience
+            api_audience=api_audience,
+            client_options=client_options,
+            **kwargs,
         )
         self._session = AuthorizedSession(
             self._credentials, default_host=self.DEFAULT_HOST)
@@ -213,18 +226,23 @@ class {{service.name}}RestTransport(_Base{{ service.name }}RestTransport):
     class {{ method.name|make_private }}(_Base{{ service.name }}RestTransport._Base{{method.name}}, {{service.name}}RestStub):
         def __hash__(self):
             return hash("{{service.name}}RestTransport.{{method.name}}")
-        {% if method.http_options and not method.client_streaming %}
+        {% if method.http_options and not method.client_streaming and not method.is_resumable_upload %}
 
         {% set body_spec = method.http_options[0].body %}
         {{ shared_macros.response_method(body_spec, is_async=False, is_streaming_method=method.server_streaming)|indent(8) }}
-        {% endif %}{# method.http_options and not method.client_streaming #}
+        {% endif %}{# method.http_options and not method.client_streaming and not method.is_resumable_upload #}
 
         def __call__(self,
                 request: {{method.input.ident}}, *,
+                {% if method.is_resumable_upload %}
+                config: Optional[resumable_transfer.ResumableUploadConfig]=None,
+                start_retry: OptionalRetry=gapic_v1.method.DEFAULT,
+                {% else %}
                 retry: OptionalRetry=gapic_v1.method.DEFAULT,
+                {% endif %}
                 timeout: Optional[float]=None,
                 {{ shared_macros.client_method_metadata_argument()|indent(8) }}={{ shared_macros.client_method_metadata_default_value() }},
-                ){% if not method.void %} -> {% if not method.server_streaming %}{{method.output.ident}}{% else %}rest_streaming.ResponseIterator{% endif %}{% endif %}:
+                ){% if not method.void %} -> {% if method.is_resumable_upload %}{{method.client_output.ident}}{% elif not method.server_streaming %}{{method.output.ident}}{% else %}rest_streaming.ResponseIterator{% endif %}{% endif %}:
     {% if method.http_options and not method.client_streaming %}
             r"""Call the {{- ' ' -}}
             {{ (method.name|snake_case).replace('_',' ')|wrap(
@@ -235,17 +253,32 @@ class {{service.name}}RestTransport(_Base{{ service.name }}RestTransport):
                 request (~.{{ method.input.ident }}):
                     The request object.{{ ' ' }}
                     {{- method.input.meta.doc|rst(width=72, indent=16, nl=False) }}
+                {% if method.is_resumable_upload %}
+                config (Optional[google.api_core.resumable_transfer.ResumableUploadConfig]):
+                    Optional configuration for the resumable upload session.
+                start_retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried when initiating the resumable upload session.
+                {% else %}
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
+                {% endif %}
                 timeout (float): The timeout for this request.
                 {{ shared_macros.client_method_metadata_argument_doc()|indent(8) }}
             {% if not method.void %}
 
             Returns:
+                {% if method.is_resumable_upload %}
+                ~.{{ method.client_output.ident }}:
+                    {{ method.client_output.meta.doc|rst(width=72, indent=16) }}
+                {% else %}
                 ~.{{ method.output.ident }}:
                     {{ method.output.meta.doc|rst(width=72, indent=16) }}
+                {% endif %}
             {% endif %}
             """
+            {% if method.is_resumable_upload %}
+            {{ shared_macros.rest_resumable_upload_call_method_common(method, service, False, opts.rest_numeric_enums)|indent(12) }}
+            {% else %}
 
             {{ shared_macros.rest_call_method_common(body_spec, method.name, service, False, method.input.ident.is_proto_plus_type, opts.rest_numeric_enums)|indent(8) }}
 
@@ -266,7 +299,7 @@ class {{service.name}}RestTransport(_Base{{ service.name }}RestTransport):
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
             {% endif %}{# method.lro #}
-            {#- TODO(https://github.com/googleapis/gapic-generator-python/issues/2274): Add debug log before intercepting a request #} 
+            {#- TODO(https://github.com/googleapis/gapic-generator-python/issues/2274): Add debug log before intercepting a request #}
             resp = self._interceptor.post_{{ method.name|snake_case }}(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_{{ method.name|snake_case }}_with_metadata(resp, response_metadata)
@@ -304,6 +337,7 @@ class {{service.name}}RestTransport(_Base{{ service.name }}RestTransport):
             return resp
 
             {% endif %}{# method.void #}
+            {% endif %}{# method.is_resumable_upload #}
     {% else %}{# method.http_options and not method.client_streaming #}
             raise NotImplementedError(
                 "Method {{ method.name }} is not available over REST transport"
@@ -315,10 +349,14 @@ class {{service.name}}RestTransport(_Base{{ service.name }}RestTransport):
     @property
     def {{method.transport_safe_name|snake_case}}(self) -> Callable[
             [{{method.input.ident}}],
-            {{method.output.ident}}]:
+            {% if method.is_resumable_upload %}
+            {{ method.client_output.ident }}]:
+            {% else %}
+            {{ method.output.ident }}]:
+            {% endif %}
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._{{method.name}}(self._session, self._host, self._interceptor) # type: ignore
+        return self._{{method.name}}(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     {% endfor %}
 

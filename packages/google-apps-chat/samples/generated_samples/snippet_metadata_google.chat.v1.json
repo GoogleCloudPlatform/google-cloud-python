@@ -8,7 +8,7 @@
     ],
     "language": "PYTHON",
     "name": "google-apps-chat",
-    "version": "0.10.7"
+    "version": "0.10.8"
   },
   "snippets": [
     {
@@ -6567,6 +6567,159 @@
         }
       ],
       "title": "chat_v1_generated_chat_service_position_section_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
+          "fullName": "google.apps.chat_v1.ChatServiceAsyncClient",
+          "shortName": "ChatServiceAsyncClient"
+        },
+        "fullName": "google.apps.chat_v1.ChatServiceAsyncClient.replace_message_cards",
+        "method": {
+          "fullName": "google.chat.v1.ChatService.ReplaceMessageCards",
+          "service": {
+            "fullName": "google.chat.v1.ChatService",
+            "shortName": "ChatService"
+          },
+          "shortName": "ReplaceMessageCards"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.apps.chat_v1.types.ReplaceMessageCardsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.apps.chat_v1.types.ReplaceMessageCardsResponse",
+        "shortName": "replace_message_cards"
+      },
+      "description": "Sample for ReplaceMessageCards",
+      "file": "chat_v1_generated_chat_service_replace_message_cards_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chat_v1_generated_ChatService_ReplaceMessageCards_async",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chat_v1_generated_chat_service_replace_message_cards_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.apps.chat_v1.ChatServiceClient",
+          "shortName": "ChatServiceClient"
+        },
+        "fullName": "google.apps.chat_v1.ChatServiceClient.replace_message_cards",
+        "method": {
+          "fullName": "google.chat.v1.ChatService.ReplaceMessageCards",
+          "service": {
+            "fullName": "google.chat.v1.ChatService",
+            "shortName": "ChatService"
+          },
+          "shortName": "ReplaceMessageCards"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.apps.chat_v1.types.ReplaceMessageCardsRequest"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.apps.chat_v1.types.ReplaceMessageCardsResponse",
+        "shortName": "replace_message_cards"
+      },
+      "description": "Sample for ReplaceMessageCards",
+      "file": "chat_v1_generated_chat_service_replace_message_cards_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "chat_v1_generated_ChatService_ReplaceMessageCards_sync",
+      "segments": [
+        {
+          "end": 51,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 51,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 45,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 48,
+          "start": 46,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 52,
+          "start": 49,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "chat_v1_generated_chat_service_replace_message_cards_sync.py"
     },
     {
       "canonical": true,

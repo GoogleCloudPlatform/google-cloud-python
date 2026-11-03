@@ -135,8 +135,13 @@ class TestTransactionExtra(unittest.IsolatedAsyncioTestCase):
             final_resp,
         ]
 
-        await txn.commit()
+        with mock.patch(
+            "google.cloud.spanner_v1._async._helpers.asyncio.sleep"
+        ) as sleep_mock:
+            await txn.commit()
+
         self.assertEqual(self.db.spanner_api.commit.call_count, 3)
+        sleep_mock.assert_called_once_with(2)
 
     async def test_execute_update_request_options_dict(self):
         # coverage for line 503

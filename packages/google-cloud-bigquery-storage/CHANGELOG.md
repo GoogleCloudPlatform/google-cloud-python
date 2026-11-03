@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-cloud-bigquery-storage/#history
 
+## [2.43.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-storage-v2.42.0...google-cloud-bigquery-storage-v2.43.0) (2026-10-15)
+
+
+### Features
+
+* **bigquery-storage:** add Arrow options and cancel to read_rows ([#18643](https://github.com/googleapis/google-cloud-python/issues/18643)) ([939bdd0](https://github.com/googleapis/google-cloud-python/commit/939bdd03bf3cce1069eb055856f3a41c3355fa4b))
+
 ## [2.42.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-storage-v2.41.0...google-cloud-bigquery-storage-v2.42.0) (2026-10-01)
 
 

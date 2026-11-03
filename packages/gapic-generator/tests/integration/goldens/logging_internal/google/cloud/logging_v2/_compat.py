@@ -18,13 +18,175 @@
 import os
 import json
 
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Sequence, Tuple
 
+from google.api_core import gapic_v1
 from google.api_core import path_template
 from google.api_core.universe import EmptyUniverseError
 from google.auth.exceptions import MutualTLSChannelError
 from google.protobuf import json_format
 from urllib.parse import urlparse, urlunparse
+
+try:
+    import grpc  # type: ignore[import-untyped]
+except ImportError:  # pragma: NO COVER
+    grpc = None  # type: ignore[assignment]
+
+
+# The _observability module and OpenTelemetry tracing in wrap_method were introduced
+# together in google-api-core 2.36.0+.
+# On older versions of google-api-core or when type-checking against them,
+# mypy may flag attr-defined or assignment errors when fallback to None occurs.
+try:
+    from google.api_core import _observability  # type: ignore[attr-defined]
+except ImportError:  # pragma: NO COVER
+    _observability = None  # type: ignore[assignment]
+
+# OpenTelemetry method tracing arguments (client_options, method_name, is_streaming, kind)
+# were introduced to gapic_v1.method.wrap_method and gapic_v1.method_async.wrap_method
+# in google-api-core 2.36.0+ alongside the _observability module.
+# Once the repository's minimum constraint for google-api-core is bumped to >= 2.36.0,
+# WRAP_METHOD_SUPPORTS_TRACING, the fallback _FallbackTraceContext, and base transport fallbacks
+# can be safely removed.
+if _observability is not None and hasattr(_observability, "trace_http_request"):
+    trace_http_request = _observability.trace_http_request
+    WRAP_METHOD_SUPPORTS_TRACING = True
+else:  # pragma: NO COVER
+    WRAP_METHOD_SUPPORTS_TRACING = False
+
+    # Fallback for older versions of google-api-core without HTTP tracing.
+    class _FallbackTraceContext:
+        def __enter__(self) -> "_FallbackTraceContext":
+            return self
+
+        def __exit__(self, *args: Any) -> None:
+            pass
+
+        def record_response(self, response: Any) -> None:
+            pass
+
+        record_http_response = record_response
+
+        def record_error(self, exc: BaseException | None) -> None:
+            pass
+
+        record_http_error = record_error
+
+    # TODO(https://github.com/googleapis/google-cloud-python/issues/18657):
+    # mypy: Incompatible redefinition [misc] ignored because this fallback returns
+    # _FallbackTraceContext instead of google.api_core._observability._TraceContext.
+    # Remove once lowest constraints require google-api-core >= 2.36.0.
+    def trace_http_request(*args: Any, **kwargs: Any) -> _FallbackTraceContext:  # type: ignore[misc]
+        return _FallbackTraceContext()
+
+# The `kind` parameter in gapic_v1.method_async.wrap_method was introduced in
+# google-api-core 2.29.0 (PR #688) alongside _DEFAULT_ASYNC_TRANSPORT_KIND to prevent
+# async REST callables from being wrapped with gRPC error handlers.
+# In environments running older google-api-core (< 2.29.0) where tracing is also absent,
+# passing `kind` will trigger a TypeError unless stripped.
+# Once the minimum constraint for google-api-core is bumped to
+# >= 2.29.0, this check and the corresponding fallback in base transports can be safely removed.
+ASYNC_WRAP_METHOD_SUPPORTS_KIND = WRAP_METHOD_SUPPORTS_TRACING or hasattr(
+    gapic_v1.method_async, "_DEFAULT_ASYNC_TRANSPORT_KIND"
+)
+
+try:
+    from google.api_core import grpc_helpers
+except ImportError:  # pragma: NO COVER
+    grpc_helpers = None  # type: ignore[assignment]
+
+try:
+    from google.api_core import grpc_helpers_async
+except ImportError:  # pragma: NO COVER
+    grpc_helpers_async = None  # type: ignore[assignment]
+
+
+def apply_channel_interceptors(
+    channel: Any, interceptors: Optional[Sequence[Any]] = None
+) -> Any:
+    """Applies interceptors to a synchronous gRPC channel with fallback for older google-api-core."""
+    if grpc_helpers is not None and hasattr(grpc_helpers, "apply_channel_interceptors"):
+        return grpc_helpers.apply_channel_interceptors(channel, interceptors)  # pragma: NO COVER
+    if not interceptors:  # pragma: NO COVER
+        return channel
+    for interceptor in reversed(list(interceptors)):  # pragma: NO COVER
+        if callable(interceptor):
+            channel = interceptor(channel)
+        elif grpc is not None:
+            channel = grpc.intercept_channel(channel, interceptor)
+    return channel  # pragma: NO COVER
+
+
+def _fallback_apply_interceptors(
+    channel: Any, interceptors: Optional[Sequence[Any]] = None
+) -> Any:  # pragma: NO COVER
+    """Fallback helper to attach interceptors to an existing async gRPC channel.
+
+    Synchronous gRPC channels allow post-creation wrapping via
+    `grpc.intercept_channel(channel, *interceptors)`. However, asynchronous
+    channels (`grpc.aio.Channel`) in grpcio are immutable post-creation and
+    normally require interceptors at initialization.
+
+    When generated client libraries run against older versions of `google-api-core`
+    (< 2.36.0) where `grpc_helpers_async.apply_channel_interceptors` is not yet
+    available, this fallback mutates the channel's internal interceptor lists
+    directly so telemetry and auth interceptors remain operational.
+
+    Args:
+        channel (Any): The gRPC channel instance (typically a `grpc.aio.Channel`
+            or mock).
+        interceptors (Optional[Sequence[Any]]): A sequence of gRPC interceptor
+            instances or callables to register on the channel.
+
+    Returns:
+        Any: The channel instance with interceptors registered.
+    """
+    mapping = (
+        ("intercept_unary_unary", "_unary_unary_interceptors"),
+        ("intercept_unary_stream", "_unary_stream_interceptors"),
+        ("intercept_stream_unary", "_stream_unary_interceptors"),
+        ("intercept_stream_stream", "_stream_stream_interceptors"),
+    )
+    if interceptors:
+        for interceptor in interceptors:
+            matched = False
+
+            # Path 1: Interface-matched routing.
+            # Inspect whether the interceptor implements specific gRPC method hooks
+            # (unary-unary, unary-stream, stream-unary, stream-stream). If the channel
+            # maintains a corresponding internal list, append the interceptor (preventing duplicates).
+            # A single interceptor can handle multiple call patterns, so check all mappings.
+            for method_name, attr_name in mapping:
+                if hasattr(interceptor, method_name) and hasattr(channel, attr_name):
+                    target_list = getattr(channel, attr_name)
+                    if isinstance(target_list, list) and interceptor not in target_list:
+                        target_list.append(interceptor)
+                    matched = True
+
+            # Path 2: Duck-typed / callable fallback.
+            # If the interceptor did not implement any of the specific method signatures
+            # above (e.g., generic callables, untyped wrappers, or test doubles), fall back
+            # to registering it in the primary unary-unary interceptor list if present.
+            if not matched and hasattr(channel, "_unary_unary_interceptors"):
+                unary_interceptors = channel._unary_unary_interceptors
+                if isinstance(unary_interceptors, list) and interceptor not in unary_interceptors:
+                    unary_interceptors.append(interceptor)
+    return channel
+
+
+def apply_async_channel_interceptors(
+    channel: Any, interceptors: Optional[Sequence[Any]] = None
+) -> Any:
+    """Applies interceptors to an asynchronous gRPC channel with fallback for older google-api-core."""
+    if grpc_helpers_async is not None and hasattr(
+        grpc_helpers_async, "apply_channel_interceptors"
+    ):
+        return grpc_helpers_async.apply_channel_interceptors(channel, interceptors)  # pragma: NO COVER
+    return _fallback_apply_interceptors(channel, interceptors)  # pragma: NO COVER
+
+
+apply_channel_interceptors_async = apply_async_channel_interceptors
+
 
 try:
     # note: `#type: ignore` is added because the return type for `should_use_client_cert`

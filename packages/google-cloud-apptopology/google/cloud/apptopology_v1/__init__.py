@@ -58,6 +58,8 @@ from .types.schema import (
     StringValue,
 )
 from .types.service import (
+    ExploreSchemaRequest,
+    ExploreSchemaResponse,
     GenerateDiscoveredResourcesTopologyRequest,
     GenerateDiscoveredResourcesTopologyResponse,
     GetDomainRequest,
@@ -79,6 +81,8 @@ __all__ = (
     "EdgeRule",
     "EdgeType",
     "EntityContext",
+    "ExploreSchemaRequest",
+    "ExploreSchemaResponse",
     "GenerateDiscoveredResourcesTopologyRequest",
     "GenerateDiscoveredResourcesTopologyResponse",
     "GetDomainRequest",

@@ -1280,7 +1280,14 @@ class TestAuthorizedSession(object):
             # Assert mTLS check logic was SKIPPED (Inner Check was False)
             assert not mock_helper.check_parameters_for_unauthorized_response.called
 
-    def test_cert_rotation_skipped_on_non_mtls_url(self):
+    @pytest.mark.parametrize(
+        "non_mtls_url",
+        [
+            "https://storage.googleapis.com/bucket/mtls.googleapis.com",
+            "https://my-service-xyz-uc.a.run.app/mtls.run.app",
+        ],
+    )
+    def test_cert_rotation_skipped_on_non_mtls_url(self, non_mtls_url):
         """
         Tests that mTLS cert rotation is skipped on non-mTLS URLs even if
         mTLS is enabled and an UNAUTHORIZED (401) response is received.
@@ -1293,7 +1300,6 @@ class TestAuthorizedSession(object):
                 make_response(status=http_client.OK),
             ]
         )
-        non_mtls_url = "https://storage.googleapis.com/bucket/mtls.googleapis.com"
         authed_session = google.auth.transport.requests.AuthorizedSession(
             credentials, refresh_timeout=60
         )
@@ -1313,10 +1319,18 @@ class TestAuthorizedSession(object):
             # Assert mTLS check logic was SKIPPED
             assert not mock_check_params.called
 
-    def test_cert_rotation_triggered_on_psc_url(self):
+    @pytest.mark.parametrize(
+        "mtls_url",
+        [
+            "https://storage.p.googleapis.com/b/my-bucket",
+            "https://my-service-123456.us-central1.mtls.run.app/v1",
+        ],
+    )
+    def test_cert_rotation_triggered_on_mtls_url(self, mtls_url):
         """
-        Tests that mTLS cert rotation IS triggered on a Private Service Connect
-        (PSC) mTLS endpoint when an UNAUTHORIZED (401) response is received.
+        Tests that mTLS cert rotation IS triggered on Private Service Connect
+        (PSC) and Cloud Run mTLS endpoints when an UNAUTHORIZED (401) response
+        is received.
         """
         credentials = mock.Mock(wraps=CredentialsStub())
         adapter = AdapterStub(
@@ -1325,11 +1339,10 @@ class TestAuthorizedSession(object):
                 make_response(status=http_client.OK),
             ]
         )
-        psc_url = "https://storage.p.googleapis.com/b/my-bucket"
         authed_session = google.auth.transport.requests.AuthorizedSession(
             credentials, refresh_timeout=60
         )
-        authed_session.mount(psc_url, adapter)
+        authed_session.mount(mtls_url, adapter)
         authed_session._is_mtls = True
         authed_session._cached_cert = b"cached_cert"
 
@@ -1338,9 +1351,9 @@ class TestAuthorizedSession(object):
             "check_parameters_for_unauthorized_response",
             return_value=(b"new_cert", b"new_key", "old_fp", "old_fp"),
         ) as mock_check_params:
-            authed_session.request("GET", psc_url)
+            authed_session.request("GET", mtls_url)
 
-            # Assert mTLS check logic was called on PSC endpoint
+            # Assert mTLS check logic was called on PSC / Cloud Run mTLS endpoint
             mock_check_params.assert_called_once()
             assert credentials.refresh.called
 

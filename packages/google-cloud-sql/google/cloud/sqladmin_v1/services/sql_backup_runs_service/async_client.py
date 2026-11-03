@@ -77,6 +77,16 @@ class SqlBackupRunsServiceAsyncClient:
     _DEFAULT_ENDPOINT_TEMPLATE = SqlBackupRunsServiceClient._DEFAULT_ENDPOINT_TEMPLATE
     _DEFAULT_UNIVERSE = SqlBackupRunsServiceClient._DEFAULT_UNIVERSE
 
+    crypto_key_path = staticmethod(SqlBackupRunsServiceClient.crypto_key_path)
+    parse_crypto_key_path = staticmethod(
+        SqlBackupRunsServiceClient.parse_crypto_key_path
+    )
+    crypto_key_version_path = staticmethod(
+        SqlBackupRunsServiceClient.crypto_key_version_path
+    )
+    parse_crypto_key_version_path = staticmethod(
+        SqlBackupRunsServiceClient.parse_crypto_key_version_path
+    )
     common_billing_account_path = staticmethod(
         SqlBackupRunsServiceClient.common_billing_account_path
     )

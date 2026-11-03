@@ -35,6 +35,11 @@
                 "report_status"
               ]
             },
+            "ResolveInstanceConfig": {
+              "methods": [
+                "resolve_instance_config"
+              ]
+            },
             "UpdateAppConnector": {
               "methods": [
                 "update_app_connector"
@@ -70,6 +75,11 @@
                 "report_status"
               ]
             },
+            "ResolveInstanceConfig": {
+              "methods": [
+                "resolve_instance_config"
+              ]
+            },
             "UpdateAppConnector": {
               "methods": [
                 "update_app_connector"
@@ -103,6 +113,11 @@
             "ReportStatus": {
               "methods": [
                 "report_status"
+              ]
+            },
+            "ResolveInstanceConfig": {
+              "methods": [
+                "resolve_instance_config"
               ]
             },
             "UpdateAppConnector": {

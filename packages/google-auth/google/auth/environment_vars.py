@@ -128,10 +128,22 @@ CLOUDSDK_CONTEXT_AWARE_CERTIFICATE_CONFIG_FILE_PATH = (
 """Environment variable defining the location of Google API certificate config
 file. This variable is the fallback of GOOGLE_API_CERTIFICATE_CONFIG."""
 
+GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN = "GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN"
+"""Environment variable controlling whether to enable runtime bound tokens.
+
+Defaults to enabled; only a case-insensitive ``"false"`` disables it. When set
+to a non-empty value, this variable takes precedence over
+:data:`GOOGLE_API_PREVENT_AGENT_TOKEN_SHARING_FOR_GCP_SERVICES`.
+"""
+
 GOOGLE_API_PREVENT_AGENT_TOKEN_SHARING_FOR_GCP_SERVICES = (
     "GOOGLE_API_PREVENT_AGENT_TOKEN_SHARING_FOR_GCP_SERVICES"
 )
-"""Environment variable to prevent agent token sharing for GCP services."""
+"""Environment variable to prevent agent token sharing for GCP services.
+
+.. deprecated:: v2.59.0
+    Use :data:`GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN` instead.
+"""
 
 GOOGLE_API_USE_MTLS_ENDPOINT = "GOOGLE_API_USE_MTLS_ENDPOINT"
 """Environment variable controlling whether to use mTLS endpoint or not."""

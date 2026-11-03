@@ -87,8 +87,24 @@ class SqlInstancesServiceAsyncClient:
     parse_backup_dr_backup_path = staticmethod(
         SqlInstancesServiceClient.parse_backup_dr_backup_path
     )
+    crypto_key_path = staticmethod(SqlInstancesServiceClient.crypto_key_path)
+    parse_crypto_key_path = staticmethod(
+        SqlInstancesServiceClient.parse_crypto_key_path
+    )
+    crypto_key_version_path = staticmethod(
+        SqlInstancesServiceClient.crypto_key_version_path
+    )
+    parse_crypto_key_version_path = staticmethod(
+        SqlInstancesServiceClient.parse_crypto_key_version_path
+    )
     network_path = staticmethod(SqlInstancesServiceClient.network_path)
     parse_network_path = staticmethod(SqlInstancesServiceClient.parse_network_path)
+    network_attachment_path = staticmethod(
+        SqlInstancesServiceClient.network_attachment_path
+    )
+    parse_network_attachment_path = staticmethod(
+        SqlInstancesServiceClient.parse_network_attachment_path
+    )
     secret_version_path = staticmethod(SqlInstancesServiceClient.secret_version_path)
     parse_secret_version_path = staticmethod(
         SqlInstancesServiceClient.parse_secret_version_path
@@ -3972,7 +3988,7 @@ class SqlInstancesServiceAsyncClient:
 
         Returns:
             google.cloud.sqladmin_v1beta4.types.SqlInstancesExecuteSqlResponse:
-                Execute SQL statements response.
+
         """
         # Create or coerce a protobuf request object.
         # - Use the request object if provided (there's no risk of modifying the input as

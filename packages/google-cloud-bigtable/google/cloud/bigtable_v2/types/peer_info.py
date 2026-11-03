@@ -63,7 +63,7 @@ class PeerInfo(proto.Message):
                 The transport type is unknown.
             TRANSPORT_TYPE_EXTERNAL (1):
                 The client connected to this peer via an
-                external network (e.g. outside Google Coud).
+                external network (e.g. outside Google Cloud).
             TRANSPORT_TYPE_CLOUD_PATH (2):
                 The client connected to this peer via
                 CloudPath.

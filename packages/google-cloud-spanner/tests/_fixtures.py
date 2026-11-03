@@ -67,6 +67,22 @@ CREATE TABLE string_plus_array_of_string (
     tags ARRAY<STRING(16)> )
     PRIMARY KEY (id);
 CREATE INDEX name ON contacts(first_name, last_name);
+CREATE INDEX contacts_by_last_name ON contacts(last_name);
+CREATE TABLE singers (
+     singer_id   INT64 NOT NULL,
+     first_name  STRING(1024),
+     last_name   STRING(1024),
+     singer_info examples.spanner.music.SingerInfo,
+     singer_genre examples.spanner.music.Genre, )
+     PRIMARY KEY (singer_id);
+CREATE INDEX SingerByGenre ON singers(singer_genre) STORING (first_name, last_name);
+CREATE TABLE IntervalTable (
+    key STRING(MAX),
+    create_time TIMESTAMP,
+    expiry_time TIMESTAMP,
+    expiry_within_month bool AS (expiry_time - create_time < INTERVAL 30 DAY),
+    interval_array_len INT64 AS (ARRAY_LENGTH(ARRAY<INTERVAL>[INTERVAL '1-2 3 4:5:6' YEAR TO SECOND]))
+) PRIMARY KEY (key);
 CREATE TABLE users_history (
      id INT64 NOT NULL,
      commit_ts TIMESTAMP NOT NULL OPTIONS
@@ -134,6 +150,15 @@ CREATE TABLE string_plus_array_of_string (
     tags ARRAY<STRING(16)> )
     PRIMARY KEY (id);
 CREATE INDEX name ON contacts(first_name, last_name);
+CREATE INDEX contacts_by_last_name ON contacts(last_name);
+CREATE TABLE singers (
+     singer_id   INT64 NOT NULL,
+     first_name  STRING(1024),
+     last_name   STRING(1024),
+     singer_info examples.spanner.music.SingerInfo,
+     singer_genre examples.spanner.music.Genre, )
+     PRIMARY KEY (singer_id);
+CREATE INDEX SingerByGenre ON singers(singer_genre) STORING (first_name, last_name);
 CREATE TABLE users_history (
      id INT64 NOT NULL,
      commit_ts TIMESTAMP NOT NULL OPTIONS
@@ -181,6 +206,14 @@ CREATE TABLE string_plus_array_of_string (
     name VARCHAR(16),
     PRIMARY KEY (id));
 CREATE INDEX name ON contacts(first_name, last_name);
+CREATE INDEX contacts_by_last_name ON contacts(last_name);
+CREATE TABLE IntervalTable (
+    key text primary key,
+    create_time timestamptz,
+    expiry_time timestamptz,
+    expiry_within_month bool GENERATED ALWAYS AS (expiry_time - create_time < INTERVAL '30' DAY) STORED,
+    interval_array_len bigint GENERATED ALWAYS AS (ARRAY_LENGTH(ARRAY[INTERVAL '1-2 3 4:5:6'], 1)) STORED
+);
 CREATE TABLE Customers (
     CustomerId BIGINT,
     CustomerName VARCHAR(62) NOT NULL,

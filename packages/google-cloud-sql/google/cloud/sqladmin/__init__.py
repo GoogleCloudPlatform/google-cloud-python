@@ -18,6 +18,12 @@ from google.cloud.sqladmin import gapic_version as package_version
 __version__ = package_version.__version__
 
 
+from google.cloud.sqladmin_v1.services.blue_green_deployments_service.async_client import (
+    BlueGreenDeploymentsServiceAsyncClient,
+)
+from google.cloud.sqladmin_v1.services.blue_green_deployments_service.client import (
+    BlueGreenDeploymentsServiceClient,
+)
 from google.cloud.sqladmin_v1.services.sql_available_database_versions_service.async_client import (
     SqlAvailableDatabaseVersionsServiceAsyncClient,
 )
@@ -114,6 +120,12 @@ from google.cloud.sqladmin_v1.services.sql_users_service.async_client import (
 from google.cloud.sqladmin_v1.services.sql_users_service.client import (
     SqlUsersServiceClient,
 )
+from google.cloud.sqladmin_v1.services.sql_workload_captures_service.async_client import (
+    SqlWorkloadCapturesServiceAsyncClient,
+)
+from google.cloud.sqladmin_v1.services.sql_workload_captures_service.client import (
+    SqlWorkloadCapturesServiceClient,
+)
 from google.cloud.sqladmin_v1.types.cloud_sql_backup_runs import (
     BackupRun,
     BackupRunsListResponse,
@@ -133,6 +145,15 @@ from google.cloud.sqladmin_v1.types.cloud_sql_backups import (
     ListBackupsRequest,
     ListBackupsResponse,
     UpdateBackupRequest,
+)
+from google.cloud.sqladmin_v1.types.cloud_sql_blue_green_deployments import (
+    BlueGreenDeployment,
+    CreateBlueGreenDeploymentRequest,
+    DeleteBlueGreenDeploymentRequest,
+    GetBlueGreenDeploymentRequest,
+    ListBlueGreenDeploymentsRequest,
+    ListBlueGreenDeploymentsResponse,
+    SwitchoverBlueGreenDeploymentRequest,
 )
 from google.cloud.sqladmin_v1.types.cloud_sql_connect import (
     ConnectSettings,
@@ -160,6 +181,7 @@ from google.cloud.sqladmin_v1.types.cloud_sql_instances import (
     AvailableDatabaseVersion,
     BackupReencryptionConfig,
     BinLogCoordinates,
+    BlueGreenDeploymentInfo,
     CloneContext,
     Column,
     DatabaseInstance,
@@ -324,6 +346,10 @@ from google.cloud.sqladmin_v1.types.cloud_sql_resources import (
     SqlUpdateTrack,
     SslCert,
     SslCertDetail,
+    StartWorkloadCaptureContext,
+    StartWorkloadReplayContext,
+    StopWorkloadCaptureContext,
+    StopWorkloadReplayContext,
     SyncFlags,
 )
 from google.cloud.sqladmin_v1.types.cloud_sql_ssl_certs import (
@@ -352,8 +378,19 @@ from google.cloud.sqladmin_v1.types.cloud_sql_users import (
     UserPasswordValidationPolicy,
     UsersListResponse,
 )
+from google.cloud.sqladmin_v1.types.cloud_sql_workload_captures import (
+    SqlWorkloadCapturesListRequest,
+    WorkloadCapture,
+    WorkloadCapturesListResponse,
+    WorkloadCapturesStartReplayRequest,
+    WorkloadCapturesStartRequest,
+    WorkloadCapturesStopReplayRequest,
+    WorkloadCapturesStopRequest,
+)
 
 __all__ = (
+    "BlueGreenDeploymentsServiceClient",
+    "BlueGreenDeploymentsServiceAsyncClient",
     "SqlAvailableDatabaseVersionsServiceClient",
     "SqlAvailableDatabaseVersionsServiceAsyncClient",
     "SqlBackupRunsServiceClient",
@@ -386,6 +423,8 @@ __all__ = (
     "SqlTiersServiceAsyncClient",
     "SqlUsersServiceClient",
     "SqlUsersServiceAsyncClient",
+    "SqlWorkloadCapturesServiceClient",
+    "SqlWorkloadCapturesServiceAsyncClient",
     "BackupRun",
     "BackupRunsListResponse",
     "SqlBackupRunsDeleteRequest",
@@ -402,6 +441,13 @@ __all__ = (
     "ListBackupsRequest",
     "ListBackupsResponse",
     "UpdateBackupRequest",
+    "BlueGreenDeployment",
+    "CreateBlueGreenDeploymentRequest",
+    "DeleteBlueGreenDeploymentRequest",
+    "GetBlueGreenDeploymentRequest",
+    "ListBlueGreenDeploymentsRequest",
+    "ListBlueGreenDeploymentsResponse",
+    "SwitchoverBlueGreenDeploymentRequest",
     "ConnectSettings",
     "GenerateEphemeralCertRequest",
     "GenerateEphemeralCertResponse",
@@ -421,6 +467,7 @@ __all__ = (
     "AvailableDatabaseVersion",
     "BackupReencryptionConfig",
     "BinLogCoordinates",
+    "BlueGreenDeploymentInfo",
     "CloneContext",
     "Column",
     "DatabaseInstance",
@@ -569,6 +616,10 @@ __all__ = (
     "SqlSubOperationType",
     "SslCert",
     "SslCertDetail",
+    "StartWorkloadCaptureContext",
+    "StartWorkloadReplayContext",
+    "StopWorkloadCaptureContext",
+    "StopWorkloadReplayContext",
     "SyncFlags",
     "AutoDnsStatus",
     "BakType",
@@ -602,4 +653,11 @@ __all__ = (
     "User",
     "UserPasswordValidationPolicy",
     "UsersListResponse",
+    "SqlWorkloadCapturesListRequest",
+    "WorkloadCapture",
+    "WorkloadCapturesListResponse",
+    "WorkloadCapturesStartReplayRequest",
+    "WorkloadCapturesStartRequest",
+    "WorkloadCapturesStopReplayRequest",
+    "WorkloadCapturesStopRequest",
 )

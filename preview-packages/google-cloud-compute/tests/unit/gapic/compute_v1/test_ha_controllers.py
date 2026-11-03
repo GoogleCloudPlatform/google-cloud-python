@@ -4271,6 +4271,7 @@ def test_insert_rest_call_success(request_type):
                 "stack_type": "stack_type_value",
             }
         },
+        "params": {"migrate_disks_to_regional": True},
         "region": "region_value",
         "self_link": "self_link_value",
         "self_link_with_id": "self_link_with_id_value",
@@ -4725,6 +4726,7 @@ def test_patch_rest_call_success(request_type):
                 "stack_type": "stack_type_value",
             }
         },
+        "params": {"migrate_disks_to_regional": True},
         "region": "region_value",
         "self_link": "self_link_value",
         "self_link_with_id": "self_link_with_id_value",

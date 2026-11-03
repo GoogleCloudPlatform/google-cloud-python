@@ -19,7 +19,7 @@ import uuid
 from google.api_core import exceptions
 from test_utils.retry import RetryErrors
 
-from ..utils import create_table_cm
+from ...utils import create_table_cm
 from .tableadmin import delete_table, run_table_operations
 
 PROJECT = os.environ["GOOGLE_CLOUD_PROJECT"]

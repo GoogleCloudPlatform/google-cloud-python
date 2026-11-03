@@ -159,7 +159,7 @@ class Transaction(batch.WriteBatch, BaseTransaction):
         timeout: float | None = None,
         *,
         read_time: datetime.datetime | None = None,
-    ) -> Generator[DocumentSnapshot, Any, None]:
+    ) -> Generator[DocumentSnapshot[DocumentReference], Any, None]:
         """Retrieves multiple documents from Firestore.
 
         Args:
@@ -191,7 +191,10 @@ class Transaction(batch.WriteBatch, BaseTransaction):
         *,
         explain_options: Optional[ExplainOptions] = None,
         read_time: Optional[datetime.datetime] = None,
-    ) -> StreamGenerator[DocumentSnapshot] | Generator[DocumentSnapshot, Any, None]:
+    ) -> (
+        StreamGenerator[DocumentSnapshot[DocumentReference]]
+        | Generator[DocumentSnapshot[DocumentReference], Any, None]
+    ):
         """Retrieve a document or a query result from the database.
 
         Args:

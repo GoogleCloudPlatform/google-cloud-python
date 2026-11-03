@@ -2,15 +2,6 @@
   "bump-minor-pre-major": true,
   "bump-patch-for-minor-pre-major": true,
   "packages": {
-    "packages/bigquery-magics": {
-      "component": "bigquery-magics"
-    },
-    "packages/db-dtypes": {
-      "component": "db-dtypes"
-    },
-    "packages/django-google-spanner": {
-      "component": "django-google-spanner"
-    },
     "packages/gapic-generator": {
       "component": "gapic-generator"
     },
@@ -188,18 +179,6 @@
         "google/apps/script/type/gmail/gapic_version.py",
         "google/apps/script/type/sheets/gapic_version.py",
         "google/apps/script/type/slides/gapic_version.py"
-      ]
-    },
-    "packages/google-area120-tables": {
-      "component": "google-area120-tables",
-      "extra-files": [
-        "google/area120/tables/gapic_version.py",
-        "google/area120/tables_v1alpha1/gapic_version.py",
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.area120.tables.v1alpha1.json",
-          "type": "json"
-        }
       ]
     },
     "packages/google-auth-httplib2": {
@@ -421,6 +400,18 @@
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.cloud.appoptimize.v1beta.json",
+          "type": "json"
+        }
+      ]
+    },
+    "packages/google-cloud-apptopology": {
+      "component": "google-cloud-apptopology",
+      "extra-files": [
+        "google/cloud/apptopology/gapic_version.py",
+        "google/cloud/apptopology_v1/gapic_version.py",
+        {
+          "jsonpath": "$.clientLibrary.version",
+          "path": "samples/generated_samples/snippet_metadata_google.cloud.apptopology.v1.json",
           "type": "json"
         }
       ]
@@ -662,9 +653,6 @@
         }
       ]
     },
-    "packages/google-cloud-bigquery": {
-      "component": "google-cloud-bigquery"
-    },
     "packages/google-cloud-bigquery-analyticshub": {
       "component": "google-cloud-bigquery-analyticshub",
       "extra-files": [
@@ -794,50 +782,6 @@
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.cloud.bigquery.reservation.v1.json",
-          "type": "json"
-        }
-      ]
-    },
-    "packages/google-cloud-bigquery-storage": {
-      "component": "google-cloud-bigquery-storage",
-      "extra-files": [
-        "google/cloud/bigquery_storage/gapic_version.py",
-        "google/cloud/bigquery_storage_v1/gapic_version.py",
-        "google/cloud/bigquery_storage_v1alpha/gapic_version.py",
-        "google/cloud/bigquery_storage_v1beta/gapic_version.py",
-        "google/cloud/bigquery_storage_v1beta2/gapic_version.py",
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.cloud.bigquery.storage.v1.json",
-          "type": "json"
-        },
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.cloud.bigquery.storage.v1alpha.json",
-          "type": "json"
-        },
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.cloud.bigquery.storage.v1beta.json",
-          "type": "json"
-        },
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.cloud.bigquery.storage.v1beta2.json",
-          "type": "json"
-        }
-      ]
-    },
-    "packages/google-cloud-bigtable": {
-      "component": "google-cloud-bigtable",
-      "extra-files": [
-        "google/cloud/bigtable/gapic_version.py",
-        "google/cloud/bigtable_admin/gapic_version.py",
-        "google/cloud/bigtable_admin_v2/gapic_version.py",
-        "google/cloud/bigtable_v2/gapic_version.py",
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.bigtable.admin.v2.json",
           "type": "json"
         }
       ]
@@ -1337,25 +1281,6 @@
         }
       ]
     },
-    "packages/google-cloud-datastore": {
-      "component": "google-cloud-datastore",
-      "extra-files": [
-        "google/cloud/datastore/gapic_version.py",
-        "google/cloud/datastore_admin/gapic_version.py",
-        "google/cloud/datastore_admin_v1/gapic_version.py",
-        "google/cloud/datastore_v1/gapic_version.py",
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.datastore.admin.v1.json",
-          "type": "json"
-        },
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.datastore.v1.json",
-          "type": "json"
-        }
-      ]
-    },
     "packages/google-cloud-datastream": {
       "component": "google-cloud-datastream",
       "extra-files": [
@@ -1645,22 +1570,14 @@
         }
       ]
     },
-    "packages/google-cloud-firestore": {
-      "component": "google-cloud-firestore",
+    "packages/google-cloud-ftp": {
+      "component": "google-cloud-ftp",
       "extra-files": [
-        "google/cloud/firestore/gapic_version.py",
-        "google/cloud/firestore_admin/gapic_version.py",
-        "google/cloud/firestore_admin_v1/gapic_version.py",
-        "google/cloud/firestore_bundle/gapic_version.py",
-        "google/cloud/firestore_v1/gapic_version.py",
+        "google/cloud/ftp/gapic_version.py",
+        "google/cloud/ftp_v1/gapic_version.py",
         {
           "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.firestore.admin.v1.json",
-          "type": "json"
-        },
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.firestore.v1.json",
+          "path": "samples/generated_samples/snippet_metadata_google.cloud.ftp.v1.json",
           "type": "json"
         }
       ]
@@ -1995,18 +1912,6 @@
         }
       ]
     },
-    "packages/google-cloud-logging": {
-      "component": "google-cloud-logging",
-      "extra-files": [
-        "google/cloud/logging/gapic_version.py",
-        "google/cloud/logging_v2/gapic_version.py",
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.logging.v2.json",
-          "type": "json"
-        }
-      ]
-    },
     "packages/google-cloud-lustre": {
       "component": "google-cloud-lustre",
       "extra-files": [
@@ -2186,9 +2091,6 @@
           "type": "json"
         }
       ]
-    },
-    "packages/google-cloud-ndb": {
-      "component": "google-cloud-ndb"
     },
     "packages/google-cloud-netapp": {
       "component": "google-cloud-netapp",
@@ -2516,18 +2418,6 @@
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.cloud.productregistry.v1.json",
-          "type": "json"
-        }
-      ]
-    },
-    "packages/google-cloud-pubsub": {
-      "component": "google-cloud-pubsub",
-      "extra-files": [
-        "google/pubsub/gapic_version.py",
-        "google/pubsub_v1/gapic_version.py",
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.pubsub.v1.json",
           "type": "json"
         }
       ]
@@ -2932,14 +2822,20 @@
         }
       ]
     },
-    "packages/google-cloud-storage": {
-      "component": "google-cloud-storage",
+    "packages/google-cloud-sql": {
+      "component": "google-cloud-sql",
       "extra-files": [
-        "google/cloud/_storage/gapic_version.py",
-        "google/cloud/_storage_v2/gapic_version.py",
+        "google/cloud/sqladmin/gapic_version.py",
+        "google/cloud/sqladmin_v1/gapic_version.py",
+        "google/cloud/sqladmin_v1beta4/gapic_version.py",
         {
           "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.storage.v2.json",
+          "path": "samples/generated_samples/snippet_metadata_google.cloud.sql.v1.json",
+          "type": "json"
+        },
+        {
+          "jsonpath": "$.clientLibrary.version",
+          "path": "samples/generated_samples/snippet_metadata_google.cloud.sql.v1beta4.json",
           "type": "json"
         }
       ]
@@ -3404,6 +3300,18 @@
         }
       ]
     },
+    "packages/google-cloud-workloadidentity": {
+      "component": "google-cloud-workloadidentity",
+      "extra-files": [
+        "google/cloud/workloadidentity/gapic_version.py",
+        "google/cloud/workloadidentity_v1/gapic_version.py",
+        {
+          "jsonpath": "$.clientLibrary.version",
+          "path": "samples/generated_samples/snippet_metadata_google.cloud.workloadidentity.v1.json",
+          "type": "json"
+        }
+      ]
+    },
     "packages/google-cloud-workloadmanager": {
       "component": "google-cloud-workloadmanager",
       "extra-files": [
@@ -3451,9 +3359,15 @@
       "extra-files": [
         "google/devicesandservices/health/gapic_version.py",
         "google/devicesandservices/health_v4/gapic_version.py",
+        "google/devicesandservices/health_v4beta/gapic_version.py",
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.devicesandservices.health.v4.json",
+          "type": "json"
+        },
+        {
+          "jsonpath": "$.clientLibrary.version",
+          "path": "samples/generated_samples/snippet_metadata_google.devicesandservices.health.v4beta.json",
           "type": "json"
         }
       ]
@@ -3744,6 +3658,18 @@
         }
       ]
     },
+    "packages/google-shopping-merchant-loyaltycustomers": {
+      "component": "google-shopping-merchant-loyaltycustomers",
+      "extra-files": [
+        "google/shopping/merchant_loyaltycustomers/gapic_version.py",
+        "google/shopping/merchant_loyaltycustomers_v1/gapic_version.py",
+        {
+          "jsonpath": "$.clientLibrary.version",
+          "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.loyaltycustomers.v1.json",
+          "type": "json"
+        }
+      ]
+    },
     "packages/google-shopping-merchant-notifications": {
       "component": "google-shopping-merchant-notifications",
       "extra-files": [
@@ -3874,7 +3800,13 @@
       "component": "google-shopping-merchant-reviews",
       "extra-files": [
         "google/shopping/merchant_reviews/gapic_version.py",
+        "google/shopping/merchant_reviews_v1/gapic_version.py",
         "google/shopping/merchant_reviews_v1beta/gapic_version.py",
+        {
+          "jsonpath": "$.clientLibrary.version",
+          "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.reviews.v1.json",
+          "type": "json"
+        },
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.shopping.merchant.reviews.v1beta.json",
@@ -3906,14 +3838,8 @@
     "packages/grpc-google-iam-v1": {
       "component": "grpc-google-iam-v1"
     },
-    "packages/pandas-gbq": {
-      "component": "pandas-gbq"
-    },
     "packages/proto-plus": {
       "component": "proto-plus"
-    },
-    "packages/sqlalchemy-bigquery": {
-      "component": "sqlalchemy-bigquery"
     }
   },
   "release-type": "python-librarian"

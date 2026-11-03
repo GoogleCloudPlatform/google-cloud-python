@@ -494,7 +494,7 @@ class PartnerServiceRestTransport(_BasePartnerServiceRestTransport):
 
             Args:
                 request (~.partner_service.BatchUpdatePartnersRequest):
-                    The request object. Request object for [BatchUpdatePartners][] method.
+                    The request object. Request object for ``BatchUpdatePartners`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -505,7 +505,7 @@ class PartnerServiceRestTransport(_BasePartnerServiceRestTransport):
 
             Returns:
                 ~.partner_service.BatchUpdatePartnersResponse:
-                    Response object for [BatchUpdatePartners][] method.
+                    Response object for ``BatchUpdatePartners`` method.
             """
 
             http_options = _BasePartnerServiceRestTransport._BaseBatchUpdatePartners._get_http_options()
@@ -642,7 +642,7 @@ class PartnerServiceRestTransport(_BasePartnerServiceRestTransport):
 
             Args:
                 request (~.partner_service.GetPartnerRequest):
-                    The request object. Request object for [GetPartner][] method.
+                    The request object. Request object for ``GetPartner`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -796,7 +796,7 @@ class PartnerServiceRestTransport(_BasePartnerServiceRestTransport):
 
             Args:
                 request (~.partner_service.ListPartnersRequest):
-                    The request object. Request object for [ListPartners][] method.
+                    The request object. Request object for ``ListPartners`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -807,10 +807,9 @@ class PartnerServiceRestTransport(_BasePartnerServiceRestTransport):
 
             Returns:
                 ~.partner_service.ListPartnersResponse:
-                    Response object for
-                [ListPartnersRequest][google.ads.admanager.v1.ListPartnersRequest]
-                containing matching
-                [Partner][google.ads.admanager.v1.Partner] objects.
+                    Response object for ``ListPartnersRequest`` containing
+                matching [Partner][google.ads.admanager.v1.Partner]
+                objects.
 
             """
 
@@ -948,7 +947,7 @@ class PartnerServiceRestTransport(_BasePartnerServiceRestTransport):
 
             Args:
                 request (~.partner_service.UpdatePartnerRequest):
-                    The request object. Request object for [UpdatePartner][] method.
+                    The request object. Request object for ``UpdatePartner`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.

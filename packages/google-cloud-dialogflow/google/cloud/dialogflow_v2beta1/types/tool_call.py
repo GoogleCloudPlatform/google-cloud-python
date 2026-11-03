@@ -217,11 +217,18 @@ class ToolCallResult(proto.Message):
         Attributes:
             message (str):
                 Optional. The error message of the function.
+            retryable (bool):
+                Optional. Specifies whether the tool call is
+                retryable.
         """
 
         message: str = proto.Field(
             proto.STRING,
             number=1,
+        )
+        retryable: bool = proto.Field(
+            proto.BOOL,
+            number=2,
         )
 
     tool: str = proto.Field(

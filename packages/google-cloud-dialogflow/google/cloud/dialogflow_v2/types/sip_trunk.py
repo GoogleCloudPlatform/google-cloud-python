@@ -17,6 +17,7 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
 import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
@@ -32,6 +33,8 @@ __protobuf__ = proto.module(
         "UpdateSipTrunkRequest",
         "SipTrunk",
         "Connection",
+        "SipHostname",
+        "ProbeDetails",
     },
 )
 
@@ -192,7 +195,25 @@ class SipTrunk(proto.Message):
         display_name (str):
             Optional. Human readable alias for this
             trunk.
+        peer_hostnames (MutableSequence[google.cloud.dialogflow_v2.types.SipHostname]):
+            Required. Peer hostnames of the SIP trunk.
+        google_root_cert_file (google.cloud.dialogflow_v2.types.SipTrunk.GoogleRootCertFile):
+            Optional. The root certificate file to use
+            for this SIP trunk.
     """
+
+    class GoogleRootCertFile(proto.Enum):
+        r"""The type of Google root certificate file used for mTLS.
+
+        Values:
+            CERT_FILE_UNSPECIFIED (0):
+                Unspecified root certificate file.
+            EXTERNAL_PRIVATE_CA (5):
+                Use external private CA.
+        """
+
+        CERT_FILE_UNSPECIFIED = 0
+        EXTERNAL_PRIVATE_CA = 5
 
     name: str = proto.Field(
         proto.STRING,
@@ -210,6 +231,16 @@ class SipTrunk(proto.Message):
     display_name: str = proto.Field(
         proto.STRING,
         number=4,
+    )
+    peer_hostnames: MutableSequence["SipHostname"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=8,
+        message="SipHostname",
+    )
+    google_root_cert_file: GoogleRootCertFile = proto.Field(
+        proto.ENUM,
+        number=9,
+        enum=GoogleRootCertFile,
     )
 
 
@@ -346,6 +377,196 @@ class Connection(proto.Message):
         number=4,
         optional=True,
         message=ErrorDetails,
+    )
+
+
+class SipHostname(proto.Message):
+    r"""Represents a peer hostname for SIP Trunk.
+
+    Attributes:
+        peer_hostname (str):
+            Required. Peer hostname name.
+        enabled_sip_ping (bool):
+            Output only. Peer hostname enabled for SIP
+            ping.
+        ping_interval (google.protobuf.duration_pb2.Duration):
+            Output only. How often the sip ping should
+            occur.
+        peer_socket_address (str):
+            Output only. The peer_socket address of the partner SBC
+            pinged.
+        probe_details (google.cloud.dialogflow_v2.types.ProbeDetails):
+            Output only. The details from the options
+            probe.
+        connection_state (google.cloud.dialogflow_v2.types.SipHostname.ConnectionState):
+            Output only. State of the connection.
+        error_details (google.cloud.dialogflow_v2.types.SipHostname.HostnameErrorDetails):
+            Output only. The error details for the
+            connection. Only populated when authentication
+            errors occur.
+    """
+
+    class ConnectionState(proto.Enum):
+        r"""The state of SBC hostname connection.
+
+        Values:
+            CONNECTION_STATE_UNSPECIFIED (0):
+                SBC hostname connection state is Not
+                specified.
+            CONNECTED (1):
+                SBC hostname connection is connected.
+            DISCONNECTED (2):
+                SBC hostname connection is disconnected.
+            AUTHENTICATION_FAILED (3):
+                SBC hostname connection has authentication
+                error.
+            KEEPALIVE (4):
+                SBC hostname connection is keepalive.
+        """
+
+        CONNECTION_STATE_UNSPECIFIED = 0
+        CONNECTED = 1
+        DISCONNECTED = 2
+        AUTHENTICATION_FAILED = 3
+        KEEPALIVE = 4
+
+    class HostnameCertificateState(proto.Enum):
+        r"""The state of Sip Trunk certificate authentication.
+
+        Values:
+            HOSTNAME_CERTIFICATE_STATE_UNSPECIFIED (0):
+                Certificate state is not specified.
+            VALID (1):
+                Certificate is valid.
+            INVALID (2):
+                Catch all for any error not specified.
+            EXPIRED (3):
+                Certificate leaf node has expired.
+            HOSTNAME_NOT_FOUND (4):
+                There is no hostname defined to authenticate
+                in SipTrunkingServer.
+            UNAUTHENTICATED (5):
+                No path found from the leaf certificate to
+                any root.
+            TRUST_STORE_NOT_FOUND (6):
+                Trust store does not exist.
+            HOSTNAME_INVALID_FORMAT (7):
+                Hostname has invalid format.
+            QUOTA_EXCEEDED (8):
+                Certificate has exhausted its quota.
+        """
+
+        HOSTNAME_CERTIFICATE_STATE_UNSPECIFIED = 0
+        VALID = 1
+        INVALID = 2
+        EXPIRED = 3
+        HOSTNAME_NOT_FOUND = 4
+        UNAUTHENTICATED = 5
+        TRUST_STORE_NOT_FOUND = 6
+        HOSTNAME_INVALID_FORMAT = 7
+        QUOTA_EXCEEDED = 8
+
+    class HostnameErrorDetails(proto.Message):
+        r"""The error details of Sip Trunk hostnameconnection
+        authentication.
+
+        Attributes:
+            certificate_state (google.cloud.dialogflow_v2.types.SipHostname.HostnameCertificateState):
+                Output only. The status of the certificate
+                authentication.
+            error_message (str):
+                Output only. The error message provided from
+                SIP trunking auth service
+        """
+
+        certificate_state: "SipHostname.HostnameCertificateState" = proto.Field(
+            proto.ENUM,
+            number=1,
+            enum="SipHostname.HostnameCertificateState",
+        )
+        error_message: str = proto.Field(
+            proto.STRING,
+            number=2,
+        )
+
+    peer_hostname: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    enabled_sip_ping: bool = proto.Field(
+        proto.BOOL,
+        number=2,
+    )
+    ping_interval: duration_pb2.Duration = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=duration_pb2.Duration,
+    )
+    peer_socket_address: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    probe_details: "ProbeDetails" = proto.Field(
+        proto.MESSAGE,
+        number=5,
+        message="ProbeDetails",
+    )
+    connection_state: ConnectionState = proto.Field(
+        proto.ENUM,
+        number=6,
+        enum=ConnectionState,
+    )
+    error_details: HostnameErrorDetails = proto.Field(
+        proto.MESSAGE,
+        number=7,
+        message=HostnameErrorDetails,
+    )
+
+
+class ProbeDetails(proto.Message):
+    r"""The probe details of Sip Trunk peer hostname.
+
+    Attributes:
+        options_latency (google.protobuf.duration_pb2.Duration):
+            Output only. Duration between OPTIONS send
+            and OPTIONS 200 received.
+        probe_status (google.cloud.dialogflow_v2.types.ProbeDetails.ProbeStatus):
+            Output only. Result of the probe.
+        init_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. When the options probe was
+            started.
+    """
+
+    class ProbeStatus(proto.Enum):
+        r"""The status of InitiateSipOptionsPing to peer hostname.
+
+        Values:
+            PROBE_STATUS_UNSPECIFIED (0):
+                Peer hostname ping state is not specified.
+            PROBE_STATUS_SUCCESS (1):
+                Peer hostname ping succeeded.
+            PROBE_STATUS_FAILED (2):
+                Peer hostname ping failed.
+        """
+
+        PROBE_STATUS_UNSPECIFIED = 0
+        PROBE_STATUS_SUCCESS = 1
+        PROBE_STATUS_FAILED = 2
+
+    options_latency: duration_pb2.Duration = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=duration_pb2.Duration,
+    )
+    probe_status: ProbeStatus = proto.Field(
+        proto.ENUM,
+        number=2,
+        enum=ProbeStatus,
+    )
+    init_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=timestamp_pb2.Timestamp,
     )
 
 

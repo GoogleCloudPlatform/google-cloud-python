@@ -40,6 +40,7 @@ from google.cloud.oracledatabase_v1.types import (
     goldengate_deployment_type,
     goldengate_deployment_version,
     minor_version,
+    odb_dns_zone,
     odb_network,
     odb_subnet,
     oracledatabase,
@@ -59,6 +60,7 @@ from google.cloud.oracledatabase_v1.types import (
 from google.cloud.oracledatabase_v1.types import (
     goldengate_deployment as gco_goldengate_deployment,
 )
+from google.cloud.oracledatabase_v1.types import odb_dns_zone as gco_odb_dns_zone
 from google.cloud.oracledatabase_v1.types import odb_network as gco_odb_network
 from google.cloud.oracledatabase_v1.types import odb_subnet as gco_odb_subnet
 
@@ -315,6 +317,25 @@ class _BaseOracleDatabaseRestTransport(OracleDatabaseTransport):
             ]
             return http_options
 
+    class _BaseCreateOdbDnsZone:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
+            "odbDnsZoneId": "",
+        }
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=projects/*/locations/*/odbNetworks/*}/odbDnsZones",
+                    "body": "odb_dns_zone",
+                },
+            ]
+            return http_options
+
     class _BaseCreateOdbNetwork:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -493,6 +514,22 @@ class _BaseOracleDatabaseRestTransport(OracleDatabaseTransport):
                 {
                     "method": "delete",
                     "uri": "/v1/{name=projects/*/locations/*/goldengateDeployments/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseDeleteOdbDnsZone:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "delete",
+                    "uri": "/v1/{name=projects/*/locations/*/odbNetworks/*/odbDnsZones/*}",
                 },
             ]
             return http_options
@@ -735,6 +772,22 @@ class _BaseOracleDatabaseRestTransport(OracleDatabaseTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{name=projects/*/locations/*/goldengateDeployments/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseGetOdbDnsZone:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/odbNetworks/*/odbDnsZones/*}",
                 },
             ]
             return http_options
@@ -1203,6 +1256,22 @@ class _BaseOracleDatabaseRestTransport(OracleDatabaseTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{parent=projects/*/locations/*/giVersions/*}/minorVersions",
+                },
+            ]
+            return http_options
+
+    class _BaseListOdbDnsZones:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{parent=projects/*/locations/*/odbNetworks/*}/odbDnsZones",
                 },
             ]
             return http_options

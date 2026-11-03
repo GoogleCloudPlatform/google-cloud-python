@@ -676,3 +676,52 @@ class TestTracing(OpenTelemetryBase):
         span = mock.Mock()
         _opentelemetry_tracing.add_span_event(span, "test_event", {"attr": "val"})
         span.add_event.assert_called_once_with("test_event", {"attr": "val"})
+
+    @mock.patch("google.cloud.spanner_v1.metrics.metrics_capture.MetricsCapture")
+    def test_trace_call_does_not_invoke_metrics_capture(self, mock_metrics_capture):
+        from opentelemetry import trace
+        from opentelemetry.sdk.trace import TracerProvider
+        from opentelemetry.sdk.trace.export import SimpleSpanProcessor
+        from opentelemetry.sdk.trace.export.in_memory_span_exporter import (
+            InMemorySpanExporter,
+        )
+
+        # 1. No-op path (no ambient span)
+        with _opentelemetry_tracing.trace_call(
+            "CloudSpanner.TestNoOpSpan",
+            _make_session(),
+            observability_options={"tracer_provider": trace.NoOpTracerProvider()},
+        ) as noop_span:
+            self.assertIs(noop_span, trace.INVALID_SPAN)
+        mock_metrics_capture.assert_not_called()
+
+        # 2. No-op path with ambient valid span context (sub-branch 1a)
+        valid_span_context = trace.SpanContext(
+            trace_id=0x12345678123456781234567812345678,
+            span_id=0x1234567812345678,
+            is_remote=False,
+            trace_flags=trace.TraceFlags(trace.TraceFlags.SAMPLED),
+        )
+        ambient_span = trace.NonRecordingSpan(valid_span_context)
+        with trace.use_span(ambient_span):
+            with _opentelemetry_tracing.trace_call(
+                "CloudSpanner.TestNoOpSpanWithAmbient",
+                _make_session(),
+                observability_options={"tracer_provider": trace.NoOpTracerProvider()},
+            ) as child_span:
+                self.assertIsInstance(child_span, trace.NonRecordingSpan)
+        mock_metrics_capture.assert_not_called()
+
+        # 3. Active span path
+        tracer_provider = TracerProvider()
+        exporter = InMemorySpanExporter()
+        tracer_provider.add_span_processor(SimpleSpanProcessor(exporter))
+        observability_options = dict(tracer_provider=tracer_provider)
+
+        with _opentelemetry_tracing.trace_call(
+            "CloudSpanner.TestActiveSpan",
+            _make_session(),
+            observability_options=observability_options,
+        ):
+            pass
+        mock_metrics_capture.assert_not_called()

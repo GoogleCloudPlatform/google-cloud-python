@@ -244,11 +244,11 @@ class _BaseAppConnectionsServiceRestTransport(AppConnectionsServiceTransport):
                 },
                 {
                     "method": "get",
-                    "uri": "/v1/{resource=projects/*/locations/*/clientConnectorServices/*}:getIamPolicy",
+                    "uri": "/v1/{resource=projects/*/locations/*/securityGateways/*}:getIamPolicy",
                 },
                 {
                     "method": "get",
-                    "uri": "/v1/{resource=projects/*/locations/*/clientGateways/*}:getIamPolicy",
+                    "uri": "/v1/{resource=projects/*/locations/*/securityGateways/*/applications/*}:getIamPolicy",
                 },
             ]
             return http_options
@@ -277,12 +277,12 @@ class _BaseAppConnectionsServiceRestTransport(AppConnectionsServiceTransport):
                 },
                 {
                     "method": "post",
-                    "uri": "/v1/{resource=projects/*/locations/*/clientConnectorServices/*}:setIamPolicy",
+                    "uri": "/v1/{resource=projects/*/locations/*/securityGateways/*}:setIamPolicy",
                     "body": "*",
                 },
                 {
                     "method": "post",
-                    "uri": "/v1/{resource=projects/*/locations/*/clientGateways/*}:setIamPolicy",
+                    "uri": "/v1/{resource=projects/*/locations/*/securityGateways/*/applications/*}:setIamPolicy",
                     "body": "*",
                 },
             ]
@@ -312,12 +312,12 @@ class _BaseAppConnectionsServiceRestTransport(AppConnectionsServiceTransport):
                 },
                 {
                     "method": "post",
-                    "uri": "/v1/{resource=projects/*/locations/*/clientConnectorServices/*}:testIamPermissions",
+                    "uri": "/v1/{resource=projects/*/locations/*/securityGateways/*}:testIamPermissions",
                     "body": "*",
                 },
                 {
                     "method": "post",
-                    "uri": "/v1/{resource=projects/*/locations/*/clientGateways/*}:testIamPermissions",
+                    "uri": "/v1/{resource=projects/*/locations/*/securityGateways/*/applications/*}:testIamPermissions",
                     "body": "*",
                 },
             ]
@@ -335,6 +335,11 @@ class _BaseAppConnectionsServiceRestTransport(AppConnectionsServiceTransport):
                     "uri": "/v1/{name=projects/*/locations/*/operations/*}:cancel",
                     "body": "*",
                 },
+                {
+                    "method": "post",
+                    "uri": "/v1/{name=organizations/*/locations/*/operations/*}:cancel",
+                    "body": "*",
+                },
             ]
             return http_options
 
@@ -348,6 +353,10 @@ class _BaseAppConnectionsServiceRestTransport(AppConnectionsServiceTransport):
                 {
                     "method": "delete",
                     "uri": "/v1/{name=projects/*/locations/*/operations/*}",
+                },
+                {
+                    "method": "delete",
+                    "uri": "/v1/{name=organizations/*/locations/*/operations/*}",
                 },
             ]
             return http_options
@@ -363,6 +372,10 @@ class _BaseAppConnectionsServiceRestTransport(AppConnectionsServiceTransport):
                     "method": "get",
                     "uri": "/v1/{name=projects/*/locations/*/operations/*}",
                 },
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=organizations/*/locations/*/operations/*}",
+                },
             ]
             return http_options
 
@@ -376,6 +389,10 @@ class _BaseAppConnectionsServiceRestTransport(AppConnectionsServiceTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{name=projects/*/locations/*}/operations",
+                },
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=organizations/*/locations/*}/operations",
                 },
             ]
             return http_options

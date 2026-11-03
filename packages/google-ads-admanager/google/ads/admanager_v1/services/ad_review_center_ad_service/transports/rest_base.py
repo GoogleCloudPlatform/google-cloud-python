@@ -105,6 +105,23 @@ class _BaseAdReviewCenterAdServiceRestTransport(AdReviewCenterAdServiceTransport
             ]
             return http_options
 
+    class _BaseBatchApplyAdReviewCenterCustomLabels:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=networks/*/webProperties/*}/adReviewCenterAds:batchApplyCustomLabels",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
     class _BaseBatchBlockAdReviewCenterAds:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -118,6 +135,22 @@ class _BaseAdReviewCenterAdServiceRestTransport(AdReviewCenterAdServiceTransport
                     "method": "post",
                     "uri": "/v1/{parent=networks/*/webProperties/*}/adReviewCenterAds:batchBlock",
                     "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseFetchAdReviewCenterCustomLabels:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{parent=networks/*/webProperties/*}/adReviewCenterAds:fetchCustomLabels",
                 },
             ]
             return http_options

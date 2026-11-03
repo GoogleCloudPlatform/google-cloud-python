@@ -119,7 +119,7 @@ def _get_spanner_log_client_options_env():
     return os.getenv(LOG_CLIENT_OPTIONS_ENV_VAR, "false").lower() == "true"
 
 
-def _initialize_metrics(project, credentials):
+def _initialize_metrics(project, credentials, emulator_host=None):
     """Initializes the Spanner built-in metrics.
 
     This function sets up the OpenTelemetry MeterProvider and the SpannerMetricsTracerFactory.
@@ -130,7 +130,11 @@ def _initialize_metrics(project, credentials):
             if not _metrics_monitor_initialized:
                 meter_provider = metrics.NoOpMeterProvider()
                 try:
-                    if not _get_spanner_emulator_host():
+                    if (
+                        not _get_spanner_emulator_host()
+                        and (not emulator_host)
+                        and (not isinstance(credentials, AnonymousCredentials))
+                    ):
                         meter_provider = MeterProvider(
                             metric_readers=[
                                 PeriodicExportingMetricReader(
@@ -320,9 +324,7 @@ class Client(ClientWithProject):
                 raise ValueError(
                     "Both username and password must be specified for Omni authentication"
                 )
-            from google.cloud.spanner_v1.omni.credentials import (
-                SpannerOmniCredentials,
-            )
+            from google.cloud.spanner_v1.omni.credentials import SpannerOmniCredentials
 
             if has_username and has_password:
                 credentials = SpannerOmniCredentials(
@@ -339,11 +341,10 @@ class Client(ClientWithProject):
             disable_builtin_metrics = True
         elif isinstance(credentials, AnonymousCredentials):
             self._emulator_host = self._client_options.api_endpoint
-        else:
-            if username is not None or password is not None:
-                raise ValueError(
-                    "username and password can only be used when instance_type='omni'."
-                )
+        elif username is not None or password is not None:
+            raise ValueError(
+                "username and password can only be used when instance_type='omni'."
+            )
         super(Client, self).__init__(
             project=project,
             credentials=credentials,
@@ -366,7 +367,7 @@ class Client(ClientWithProject):
             and (not disable_builtin_metrics)
             and HAS_GOOGLE_CLOUD_MONITORING_INSTALLED
         ):
-            _initialize_metrics(project, credentials)
+            _initialize_metrics(project, credentials, self._emulator_host)
         else:
             SpannerMetricsTracerFactory(enabled=False)
         self._route_to_leader_enabled = route_to_leader_enabled

@@ -81,6 +81,23 @@ class TestExternalConfig(unittest.TestCase):
         got_resource = ec.to_api_repr()
         self.assertEqual(got_resource, resource)
 
+    def test_from_api_repr_missing_source_format(self):
+        resource = copy.deepcopy(self.BASE_RESOURCE)
+        del resource["sourceFormat"]
+
+        ec = external_config.ExternalConfig.from_api_repr(resource)
+        self._verify_base(ec)
+        self.assertIsNone(ec.source_format)
+        self.assertIsNone(ec.options)
+        self.assertIsNone(ec.avro_options)
+        self.assertIsNone(ec.bigtable_options)
+        self.assertIsNone(ec.csv_options)
+        self.assertIsNone(ec.google_sheets_options)
+        self.assertIsNone(ec.parquet_options)
+
+        got_resource = ec.to_api_repr()
+        self.assertEqual(got_resource, resource)
+
     def test_to_api_repr_base(self):
         ec = external_config.ExternalConfig("")
         ec.source_uris = self.SOURCE_URIS

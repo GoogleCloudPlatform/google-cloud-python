@@ -49,8 +49,8 @@ class LineItemCostTypeEnum(proto.Message):
                 https://support.google.com/admanager/answer/7519021#spotlight
 
                 Cost per action. The line item
-                [type][google.ads.admanager.v1.LineItem.line_item_type] must
-                be one of:
+                [lineItemType][google.ads.admanager.v1.LineItem.line_item_type]
+                must be one of:
 
                 - [LineItemTypeEnum.LineItemType.SPONSORSHIP][google.ads.admanager.v1.LineItemTypeEnum.LineItemType.SPONSORSHIP]
                 - [LineItemTypeEnum.LineItemType.STANDARD][google.ads.admanager.v1.LineItemTypeEnum.LineItemType.STANDARD]
@@ -58,8 +58,8 @@ class LineItemCostTypeEnum(proto.Message):
                 - [LineItemTypeEnum.LineItemType.NETWORK][google.ads.admanager.v1.LineItemTypeEnum.LineItemType.NETWORK]
             CPC (2):
                 Cost per click. The line item
-                [type][google.ads.admanager.v1.LineItem.line_item_type] must
-                be one of:
+                [lineItemType][google.ads.admanager.v1.LineItem.line_item_type]
+                must be one of:
 
                 - [LineItemTypeEnum.LineItemType.SPONSORSHIP][google.ads.admanager.v1.LineItemTypeEnum.LineItemType.SPONSORSHIP]
                 - [LineItemTypeEnum.LineItemType.STANDARD][google.ads.admanager.v1.LineItemTypeEnum.LineItemType.STANDARD]
@@ -69,15 +69,15 @@ class LineItemCostTypeEnum(proto.Message):
                 - [LineItemTypeEnum.LineItemType.HOUSE][google.ads.admanager.v1.LineItemTypeEnum.LineItemType.HOUSE]
             CPD (3):
                 Cost per day. The line item
-                [type][google.ads.admanager.v1.LineItem.line_item_type] must
-                be one of:
+                [lineItemType][google.ads.admanager.v1.LineItem.line_item_type]
+                must be one of:
 
                 - [LineItemTypeEnum.LineItemType.SPONSORSHIP][google.ads.admanager.v1.LineItemTypeEnum.LineItemType.SPONSORSHIP]
                 - [LineItemTypeEnum.LineItemType.NETWORK][google.ads.admanager.v1.LineItemTypeEnum.LineItemType.NETWORK]
             CPM (4):
                 Cost per mille (thousand) impressions. The line item
-                [type][google.ads.admanager.v1.LineItem.line_item_type] must
-                be one of:
+                [lineItemType][google.ads.admanager.v1.LineItem.line_item_type]
+                must be one of:
 
                 - [LineItemTypeEnum.LineItemType.SPONSORSHIP][google.ads.admanager.v1.LineItemTypeEnum.LineItemType.SPONSORSHIP]
                 - [LineItemTypeEnum.LineItemType.STANDARD][google.ads.admanager.v1.LineItemTypeEnum.LineItemType.STANDARD]
@@ -88,26 +88,27 @@ class LineItemCostTypeEnum(proto.Message):
             VCPM (5):
                 Cost per mille (thousand) Active View viewable impressions.
                 The line item
-                [type][google.ads.admanager.v1.LineItem.line_item_type] must
-                be one of:
+                [lineItemType][google.ads.admanager.v1.LineItem.line_item_type]
+                must be one of:
 
                 - [LineItemTypeEnum.LineItemType.STANDARD][google.ads.admanager.v1.LineItemTypeEnum.LineItemType.STANDARD]
             CPM_IN_TARGET (6):
                 Cost per millie (thousand) in-target impressions. The line
-                item [type][google.ads.admanager.v1.LineItem.line_item_type]
+                item
+                [lineItemType][google.ads.admanager.v1.LineItem.line_item_type]
                 must be one of:
 
                 - [LineItemTypeEnum.LineItemType.STANDARD][google.ads.admanager.v1.LineItemTypeEnum.LineItemType.STANDARD]
             CPF (7):
                 Cost for the entire flight of the deal. The line item
-                [type][google.ads.admanager.v1.LineItem.line_item_type] must
-                be must be one of:
+                [lineItemType][google.ads.admanager.v1.LineItem.line_item_type]
+                must be must be one of:
 
                 - [LineItemTypeEnum.LineItemType.SPONSORSHIP][google.ads.admanager.v1.LineItemTypeEnum.LineItemType.SPONSORSHIP]
             CPCV (8):
                 Cost per completed view. The line item
-                [type][google.ads.admanager.v1.LineItem.line_item_type] must
-                be one of:
+                [lineItemType][google.ads.admanager.v1.LineItem.line_item_type]
+                must be one of:
 
                 - [LineItemTypeEnum.LineItemType.STANDARD][google.ads.admanager.v1.LineItemTypeEnum.LineItemType.STANDARD].
         """

@@ -41,6 +41,8 @@ from .schema import (
     StringValue,
 )
 from .service import (
+    ExploreSchemaRequest,
+    ExploreSchemaResponse,
     GenerateDiscoveredResourcesTopologyRequest,
     GenerateDiscoveredResourcesTopologyResponse,
     GetDomainRequest,
@@ -72,6 +74,8 @@ __all__ = (
     "Property",
     "Schema",
     "StringValue",
+    "ExploreSchemaRequest",
+    "ExploreSchemaResponse",
     "GenerateDiscoveredResourcesTopologyRequest",
     "GenerateDiscoveredResourcesTopologyResponse",
     "GetDomainRequest",

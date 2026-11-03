@@ -4802,7 +4802,7 @@
             "type": "Sequence[Tuple[str, Union[str, bytes]]]"
           }
         ],
-        "resultType": "google.showcase_v1beta1.types.UploadMediaResponse",
+        "resultType": "google.api_core.resumable_transfer.AsyncResumableUploadSession",
         "shortName": "upload_media"
       },
       "description": "Sample for UploadMedia",
@@ -4812,33 +4812,33 @@
       "regionTag": "localhost_v1beta1_generated_ResumableUploadService_UploadMedia_async",
       "segments": [
         {
-          "end": 50,
+          "end": 78,
           "start": 27,
           "type": "FULL"
         },
         {
-          "end": 50,
+          "end": 78,
           "start": 27,
           "type": "SHORT"
         },
         {
-          "end": 40,
-          "start": 38,
+          "end": 42,
+          "start": 40,
           "type": "CLIENT_INITIALIZATION"
         },
         {
-          "end": 44,
-          "start": 41,
+          "end": 53,
+          "start": 43,
           "type": "REQUEST_INITIALIZATION"
         },
         {
-          "end": 47,
-          "start": 45,
+          "end": 74,
+          "start": 54,
           "type": "REQUEST_EXECUTION"
         },
         {
-          "end": 51,
-          "start": 48,
+          "end": 79,
+          "start": 75,
           "type": "RESPONSE_HANDLING"
         }
       ],
@@ -4878,7 +4878,7 @@
             "type": "Sequence[Tuple[str, Union[str, bytes]]]"
           }
         ],
-        "resultType": "google.showcase_v1beta1.types.UploadMediaResponse",
+        "resultType": "google.api_core.resumable_transfer.ResumableUploadSession",
         "shortName": "upload_media"
       },
       "description": "Sample for UploadMedia",
@@ -4888,33 +4888,33 @@
       "regionTag": "localhost_v1beta1_generated_ResumableUploadService_UploadMedia_sync",
       "segments": [
         {
-          "end": 50,
+          "end": 78,
           "start": 27,
           "type": "FULL"
         },
         {
-          "end": 50,
+          "end": 78,
           "start": 27,
           "type": "SHORT"
         },
         {
-          "end": 40,
-          "start": 38,
+          "end": 42,
+          "start": 40,
           "type": "CLIENT_INITIALIZATION"
         },
         {
-          "end": 44,
-          "start": 41,
+          "end": 53,
+          "start": 43,
           "type": "REQUEST_INITIALIZATION"
         },
         {
-          "end": 47,
-          "start": 45,
+          "end": 74,
+          "start": 54,
           "type": "REQUEST_EXECUTION"
         },
         {
-          "end": 51,
-          "start": 48,
+          "end": 79,
+          "start": 75,
           "type": "RESPONSE_HANDLING"
         }
       ],

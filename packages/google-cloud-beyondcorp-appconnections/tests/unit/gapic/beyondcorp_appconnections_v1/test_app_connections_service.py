@@ -1709,6 +1709,8 @@ def test_get_app_connection(request_type, transport: str = "grpc"):
             type_=app_connections_service.AppConnection.Type.TCP_PROXY,
             connectors=["connectors_value"],
             state=app_connections_service.AppConnection.State.CREATING,
+            satisfies_pzs=True,
+            satisfies_pzi=True,
         )
         response = client.get_app_connection(request)
 
@@ -1726,6 +1728,8 @@ def test_get_app_connection(request_type, transport: str = "grpc"):
     assert response.type_ == app_connections_service.AppConnection.Type.TCP_PROXY
     assert response.connectors == ["connectors_value"]
     assert response.state == app_connections_service.AppConnection.State.CREATING
+    assert response.satisfies_pzs is True
+    assert response.satisfies_pzi is True
 
 
 def test_get_app_connection_non_empty_request_with_auto_populated_field():
@@ -1871,6 +1875,8 @@ async def test_get_app_connection_async(request_type, transport: str = "grpc_asy
                 type_=app_connections_service.AppConnection.Type.TCP_PROXY,
                 connectors=["connectors_value"],
                 state=app_connections_service.AppConnection.State.CREATING,
+                satisfies_pzs=True,
+                satisfies_pzi=True,
             )
         )
         response = await client.get_app_connection(request)
@@ -1889,6 +1895,8 @@ async def test_get_app_connection_async(request_type, transport: str = "grpc_asy
     assert response.type_ == app_connections_service.AppConnection.Type.TCP_PROXY
     assert response.connectors == ["connectors_value"]
     assert response.state == app_connections_service.AppConnection.State.CREATING
+    assert response.satisfies_pzs is True
+    assert response.satisfies_pzi is True
 
 
 def test_get_app_connection_field_headers():
@@ -5255,6 +5263,8 @@ async def test_get_app_connection_empty_call_grpc_asyncio():
                 type_=app_connections_service.AppConnection.Type.TCP_PROXY,
                 connectors=["connectors_value"],
                 state=app_connections_service.AppConnection.State.CREATING,
+                satisfies_pzs=True,
+                satisfies_pzi=True,
             )
         )
         await client.get_app_connection(request=None)
@@ -5572,6 +5582,8 @@ def test_get_app_connection_rest_call_success(request_type):
             type_=app_connections_service.AppConnection.Type.TCP_PROXY,
             connectors=["connectors_value"],
             state=app_connections_service.AppConnection.State.CREATING,
+            satisfies_pzs=True,
+            satisfies_pzi=True,
         )
 
         # Wrap the value into a proper Response obj
@@ -5594,6 +5606,8 @@ def test_get_app_connection_rest_call_success(request_type):
     assert response.type_ == app_connections_service.AppConnection.Type.TCP_PROXY
     assert response.connectors == ["connectors_value"]
     assert response.state == app_connections_service.AppConnection.State.CREATING
+    assert response.satisfies_pzs is True
+    assert response.satisfies_pzi is True
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -5722,7 +5736,10 @@ def test_create_app_connection_rest_call_success(request_type):
             "uri": "uri_value",
             "ingress_port": 1311,
             "app_gateway": "app_gateway_value",
+            "l7psc": "l7psc_value",
         },
+        "satisfies_pzs": True,
+        "satisfies_pzi": True,
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -5944,7 +5961,10 @@ def test_update_app_connection_rest_call_success(request_type):
             "uri": "uri_value",
             "ingress_port": 1311,
             "app_gateway": "app_gateway_value",
+            "l7psc": "l7psc_value",
         },
+        "satisfies_pzs": True,
+        "satisfies_pzi": True,
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency

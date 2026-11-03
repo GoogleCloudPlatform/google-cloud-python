@@ -4026,7 +4026,10 @@ def test_create_generator_evaluation_rest_call_success(request_type):
                                         "ces_toolset": "ces_toolset_value",
                                         "ces_app": "ces_app_value",
                                         "action": "action_value",
-                                        "error": {"message": "message_value"},
+                                        "error": {
+                                            "message": "message_value",
+                                            "retryable": True,
+                                        },
                                         "raw_content": b"raw_content_blob",
                                         "content": "content_value",
                                         "create_time": {},

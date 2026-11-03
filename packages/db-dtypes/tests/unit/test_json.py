@@ -225,3 +225,48 @@ def test_json_arrow_record_batch():
         == '{"null_field":null,"order":{"address":{"city":"Anytown","street":"123 Main St"},"items":["book","pen","computer"],"total":15}}'
     )
     assert s[6] == "null"
+
+
+def test_from_pyarrow_array():
+    arr = db_dtypes.JSONArray._from_sequence([{"a": 1}])
+
+    # Non-string Arrow array returns standard ArrowExtensionArray
+    bool_pa = pa.array([True, False])
+    res_bool = arr._from_pyarrow_array(bool_pa)
+    assert type(res_bool) is pd.arrays.ArrowExtensionArray
+    assert res_bool.dtype == "bool[pyarrow]"
+
+    # String Arrow array returns JSONArray
+    str_pa = pa.array(['{"b": 2}'])
+    res_json = arr._from_pyarrow_array(str_pa)
+    assert type(res_json) is db_dtypes.JSONArray
+    assert res_json.dtype == db_dtypes.JSONDtype()
+
+
+def test_cast_pointwise_result():
+    arr = db_dtypes.JSONArray._from_sequence([{"a": 1}])
+
+    # Valid JSON sequence casts back to JSONArray
+    res = arr._cast_pointwise_result([{"b": 2}])
+    assert isinstance(res, db_dtypes.JSONArray)
+
+    # Fallback to super when _from_sequence raises
+    import unittest.mock
+
+    with unittest.mock.patch.object(
+        db_dtypes.JSONArray,
+        "_from_sequence",
+        side_effect=TypeError("cannot cast"),
+    ):
+        fallback = arr._cast_pointwise_result(["val"])
+        assert fallback is not None
+
+        # Fallback to numpy array when super() has no _cast_pointwise_result
+        with unittest.mock.patch.object(
+            pd.arrays.ArrowExtensionArray,
+            "_cast_pointwise_result",
+            None,
+            create=True,
+        ):
+            fallback_np = arr._cast_pointwise_result(["val"])
+            assert isinstance(fallback_np, np.ndarray)

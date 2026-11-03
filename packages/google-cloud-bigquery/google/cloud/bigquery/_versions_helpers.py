@@ -128,6 +128,21 @@ class BQStorageVersions:
         """
         return self.installed_version >= _BQ_STORAGE_OPTIONAL_READ_SESSION_VERSION
 
+    @property
+    def supports_arrow_serialization_options(self) -> bool:
+        """True if ``BigQueryReadClient.read_rows()`` accepts
+        ``arrow_serialization_options``, which ``ARROW`` query results need.
+
+        That option was added in the same release as
+        ``ReadRowsStream.cancel()``, which ``ARROW`` query results also use, so
+        this checks for ``cancel()`` instead of comparing version numbers. That
+        also gives the right answer for a build of
+        google-cloud-bigquery-storage that hasn't been released yet.
+        """
+        from google.cloud.bigquery_storage_v1 import reader
+
+        return hasattr(reader.ReadRowsStream, "cancel")
+
     def try_import(self, raise_if_error: bool = False) -> Any:
         """Tries to import the bigquery_storage module, and returns results
         accordingly. It also verifies the module version is recent enough.

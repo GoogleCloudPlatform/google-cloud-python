@@ -20,7 +20,7 @@
 # It may require modifications to work in your environment.
 
 # To install the latest published package dependency, execute the following:
-#   python3 -m pip install google-showcase
+#   python3 -m pip install google-showcase[async_rest]
 
 
 # [START localhost_v1beta1_generated_ResumableUploadService_UploadMedia_async]
@@ -32,6 +32,8 @@
 #   client as shown in:
 #   https://googleapis.dev/python/google-api-core/latest/client_options.html
 from google import showcase_v1beta1
+from google.api_core.resumable_transfer import ResumableUploadConfig
+import io
 
 
 async def sample_upload_media():
@@ -42,10 +44,36 @@ async def sample_upload_media():
     request = showcase_v1beta1.UploadMediaRequest(
     )
 
+    # Configure optional transfer settings such as chunk size and stall detection
+    config = ResumableUploadConfig(
+        chunk_size=8 * 1024 * 1024,  # 8 MB
+        stall_minimum_rate=64 * 1024,
+        stall_timeout=120,
+    )
+
     # Make the request
-    response = await client.upload_media(request=request)
+    upload_session = await client.upload_media(request=request, config=config)
+
+    # Option 1: Upload the entire stream directly and await the final response
+    stream = io.BytesIO(b"Example upload data")
+    response = await upload_session.upload(stream)
+
+    # Option 2: Alternatively, iterate over the upload to receive progress updates per chunk
+    # async for progress in upload_session.upload(stream):
+    #     print(f"Uploaded {progress.bytes_uploaded} bytes | State: {progress.state.name}")
+    #     print(f"Session URL: {progress.upload_url}")
+    # response = upload_session.response
+
+    # Option 3: Alternatively, resume an interrupted upload from a saved session URL
+    # response = await upload_session.resume(upload_url, stream, chunk_size=config.chunk_size)
+
+    # Option 4: Alternatively, resume an interrupted upload while receiving progress updates
+    # async for progress in upload_session.resume(upload_url, stream, chunk_size=config.chunk_size):
+    #     print(f"Resumed {progress.bytes_uploaded} bytes | State: {progress.state.name}")
+    # response = upload_session.response
 
     # Handle the response
     print(response)
+
 
 # [END localhost_v1beta1_generated_ResumableUploadService_UploadMedia_async]

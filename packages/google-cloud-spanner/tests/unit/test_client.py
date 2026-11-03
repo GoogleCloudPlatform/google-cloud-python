@@ -59,6 +59,17 @@ class TestClient(unittest.TestCase):
     def _make_one(self, *args, **kwargs):
         return self._get_target_class()(*args, **kwargs)
 
+    @staticmethod
+    def _make_instance_admin_api():
+        from google.cloud.spanner_admin_instance_v1 import InstanceAdminClient
+        from google.cloud.spanner_admin_instance_v1.services.instance_admin.transports.base import (
+            InstanceAdminTransport,
+        )
+
+        mock_transport = mock.create_autospec(InstanceAdminTransport, instance=True)
+        mock_transport._wrapped_methods = {}
+        return InstanceAdminClient(transport=mock_transport)
+
     def _constructor_test_helper(
         self,
         expected_scopes,
@@ -627,15 +638,14 @@ class TestClient(unittest.TestCase):
 
     def test_list_instance_configs(self):
         from google.cloud.spanner_admin_instance_v1 import (
-            InstanceAdminClient,
+            InstanceConfig as InstanceConfigPB,
+        )
+        from google.cloud.spanner_admin_instance_v1 import (
             ListInstanceConfigsRequest,
             ListInstanceConfigsResponse,
         )
-        from google.cloud.spanner_admin_instance_v1 import (
-            InstanceConfig as InstanceConfigPB,
-        )
 
-        api = InstanceAdminClient(credentials=AnonymousCredentials())
+        api = self._make_instance_admin_api()
         credentials = build_scoped_credentials()
         client = self._make_one(project=self.PROJECT, credentials=credentials)
         client._instance_admin_api = api
@@ -676,16 +686,15 @@ class TestClient(unittest.TestCase):
 
     def test_list_instance_configs_w_options(self):
         from google.cloud.spanner_admin_instance_v1 import (
-            InstanceAdminClient,
+            InstanceConfig as InstanceConfigPB,
+        )
+        from google.cloud.spanner_admin_instance_v1 import (
             ListInstanceConfigsRequest,
             ListInstanceConfigsResponse,
         )
-        from google.cloud.spanner_admin_instance_v1 import (
-            InstanceConfig as InstanceConfigPB,
-        )
 
         credentials = build_scoped_credentials()
-        api = InstanceAdminClient(credentials=credentials)
+        api = self._make_instance_admin_api()
         client = self._make_one(project=self.PROJECT, credentials=credentials)
         client._instance_admin_api = api
 
@@ -754,15 +763,16 @@ class TestClient(unittest.TestCase):
         self.assertIs(instance._client, client)
 
     def test_list_instances(self):
-        from google.cloud.spanner_admin_instance_v1 import Instance as InstancePB
         from google.cloud.spanner_admin_instance_v1 import (
-            InstanceAdminClient,
+            Instance as InstancePB,
+        )
+        from google.cloud.spanner_admin_instance_v1 import (
             ListInstancesRequest,
             ListInstancesResponse,
         )
 
+        api = self._make_instance_admin_api()
         credentials = build_scoped_credentials()
-        api = InstanceAdminClient(credentials=credentials)
         client = self._make_one(project=self.PROJECT, credentials=credentials)
         client._instance_admin_api = api
 
@@ -806,13 +816,12 @@ class TestClient(unittest.TestCase):
 
     def test_list_instances_w_options(self):
         from google.cloud.spanner_admin_instance_v1 import (
-            InstanceAdminClient,
             ListInstancesRequest,
             ListInstancesResponse,
         )
 
+        api = self._make_instance_admin_api()
         credentials = build_scoped_credentials()
-        api = InstanceAdminClient(credentials=credentials)
         client = self._make_one(project=self.PROJECT, credentials=credentials)
         client._instance_admin_api = api
 
@@ -1102,3 +1111,57 @@ class TestClient(unittest.TestCase):
             credentials=creds,
         )
         self.assertIs(client._credentials, creds)
+
+
+class TestInitializeMetrics(unittest.TestCase):
+    def test_initialize_metrics_emulator_branch(self):
+        from google.cloud.spanner_v1 import client as MUT
+
+        with mock.patch(
+            "google.cloud.spanner_v1.client._get_spanner_emulator_host",
+            return_value="localhost",
+        ):
+            with mock.patch(
+                "google.cloud.spanner_v1.client._metrics_monitor_initialized",
+                False,
+            ):
+                with mock.patch(
+                    "google.cloud.spanner_v1.client.metrics.set_meter_provider"
+                ) as set_mock:
+                    MUT._initialize_metrics("project", mock.Mock())
+                    set_mock.assert_called_once()
+
+    def test_initialize_metrics_emulator_host_parameter(self):
+        from google.cloud.spanner_v1 import client as MUT
+
+        with mock.patch(
+            "google.cloud.spanner_v1.client._metrics_monitor_initialized",
+            False,
+        ):
+            with mock.patch(
+                "google.cloud.spanner_v1.client.metrics.set_meter_provider"
+            ) as set_mock:
+                MUT._initialize_metrics(
+                    "project",
+                    mock.Mock(),
+                    emulator_host="localhost:9010",
+                )
+                set_mock.assert_called_once()
+
+    def test_initialize_metrics_anonymous_credentials(self):
+        from google.auth.credentials import AnonymousCredentials
+
+        from google.cloud.spanner_v1 import client as MUT
+
+        with mock.patch(
+            "google.cloud.spanner_v1.client._metrics_monitor_initialized",
+            False,
+        ):
+            with mock.patch(
+                "google.cloud.spanner_v1.client.metrics.set_meter_provider"
+            ) as set_mock:
+                MUT._initialize_metrics(
+                    "project",
+                    AnonymousCredentials(),
+                )
+                set_mock.assert_called_once()

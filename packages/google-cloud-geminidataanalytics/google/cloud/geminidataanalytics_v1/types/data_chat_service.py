@@ -223,9 +223,9 @@ class ChatRequest(proto.Message):
 
         Values:
             THINKING_MODE_UNSPECIFIED (0):
-                Unspecified thinking mode, agent will use
-                THINKING mode by default except for BigQuery
-                user defaulting to FAST mode by default.
+                The default value. For BigQuery and Looker
+                data sources, the agent uses FAST. For all other
+                data sources, the agent uses THINKING.
             FAST (1):
                 Fast mode, answers quickly.
             THINKING (2):

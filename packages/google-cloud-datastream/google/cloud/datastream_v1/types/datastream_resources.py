@@ -24,6 +24,8 @@ import proto  # type: ignore
 __protobuf__ = proto.module(
     package="google.cloud.datastream.v1",
     manifest={
+        "MongodbJsonMode",
+        "PartitioningTimeGranularity",
         "OracleProfile",
         "OracleAsmConfig",
         "MysqlProfile",
@@ -32,6 +34,14 @@ __protobuf__ = proto.module(
         "SalesforceProfile",
         "MongodbProfile",
         "HostAddress",
+        "SpannerProfile",
+        "OauthClientCredentials",
+        "OauthRefreshTokenCredentials",
+        "UserPasswordCredentials",
+        "SalesforceMarketingCloudProfile",
+        "DataverseProfile",
+        "ServiceNowProfile",
+        "WorkdayProfile",
         "SrvConnectionFormat",
         "StandardConnectionFormat",
         "GcsProfile",
@@ -43,9 +53,11 @@ __protobuf__ = proto.module(
         "PrivateConnection",
         "PrivateConnectivity",
         "Route",
+        "Secret",
         "MongodbSslConfig",
         "MysqlSslConfig",
         "OracleSslConfig",
+        "SqlServerSslConfig",
         "PostgresqlSslConfig",
         "ConnectionProfile",
         "OracleColumn",
@@ -79,9 +91,26 @@ __protobuf__ = proto.module(
         "MongodbDatabase",
         "MongodbCollection",
         "MongodbField",
+        "SpannerSourceConfig",
+        "SpannerDatabase",
+        "SpannerSchema",
+        "SpannerTable",
+        "SpannerColumn",
+        "DataverseSourceConfig",
+        "SalesforceMarketingCloudSourceConfig",
+        "ServiceNowSourceConfig",
+        "WorkdaySourceConfig",
+        "SourceCatalog",
+        "SourceObject",
+        "SourceProperty",
         "SourceConfig",
         "AvroFileFormat",
         "JsonFileFormat",
+        "BigQueryClustering",
+        "IngestionTimePartition",
+        "TimeUnitPartition",
+        "IntegerRangePartition",
+        "BigQueryPartitioning",
         "GcsDestinationConfig",
         "BigQueryDestinationConfig",
         "DestinationConfig",
@@ -89,6 +118,7 @@ __protobuf__ = proto.module(
         "StreamObject",
         "SourceObjectIdentifier",
         "BackfillJob",
+        "EventFilter",
         "Error",
         "ValidationResult",
         "Validation",
@@ -98,12 +128,54 @@ __protobuf__ = proto.module(
         "OracleScnPosition",
         "MysqlLogPosition",
         "MysqlGtidPosition",
+        "MongodbChangeStreamPosition",
+        "SpannerChangeStreamPosition",
     },
 )
 
 
+class MongodbJsonMode(proto.Enum):
+    r"""MongoDB JSON mode.
+
+    Values:
+        MONGODB_JSON_MODE_UNSPECIFIED (0):
+            Unspecified JSON mode.
+        STRICT (1):
+            Strict JSON mode.
+        CANONICAL (2):
+            Canonical JSON mode.
+    """
+
+    MONGODB_JSON_MODE_UNSPECIFIED = 0
+    STRICT = 1
+    CANONICAL = 2
+
+
+class PartitioningTimeGranularity(proto.Enum):
+    r"""Partitioning granularity for time partitions.
+
+    Values:
+        PARTITIONING_TIME_GRANULARITY_UNSPECIFIED (0):
+            Unspecified partitioing interval.
+        PARTITIONING_TIME_GRANULARITY_HOUR (1):
+            Hourly partitioning.
+        PARTITIONING_TIME_GRANULARITY_DAY (2):
+            Daily partitioning.
+        PARTITIONING_TIME_GRANULARITY_MONTH (3):
+            Monthly partitioning.
+        PARTITIONING_TIME_GRANULARITY_YEAR (4):
+            Yearly partitioning.
+    """
+
+    PARTITIONING_TIME_GRANULARITY_UNSPECIFIED = 0
+    PARTITIONING_TIME_GRANULARITY_HOUR = 1
+    PARTITIONING_TIME_GRANULARITY_DAY = 2
+    PARTITIONING_TIME_GRANULARITY_MONTH = 3
+    PARTITIONING_TIME_GRANULARITY_YEAR = 4
+
+
 class OracleProfile(proto.Message):
-    r"""Oracle database profile.
+    r"""Profile for connecting to an Oracle source.
 
     Attributes:
         hostname (str):
@@ -240,7 +312,7 @@ class OracleAsmConfig(proto.Message):
 
 
 class MysqlProfile(proto.Message):
-    r"""MySQL database profile.
+    r"""Profile for connecting to a MySQL source.
 
     Attributes:
         hostname (str):
@@ -290,7 +362,7 @@ class MysqlProfile(proto.Message):
 
 
 class PostgresqlProfile(proto.Message):
-    r"""PostgreSQL database profile.
+    r"""Profile for connecting to a PostgreSQL source.
 
     Attributes:
         hostname (str):
@@ -352,7 +424,7 @@ class PostgresqlProfile(proto.Message):
 
 
 class SqlServerProfile(proto.Message):
-    r"""SQLServer database profile.
+    r"""Profile for connecting to a SQLServer source.
 
     Attributes:
         hostname (str):
@@ -369,6 +441,9 @@ class SqlServerProfile(proto.Message):
             exclusive with the ``secret_manager_stored_password`` field.
         database (str):
             Required. Database for the SQLServer
+            connection.
+        ssl_config (google.cloud.datastream_v1.types.SqlServerSslConfig):
+            Optional. SSL configuration for the SQLServer
             connection.
         secret_manager_stored_password (str):
             Optional. A reference to a Secret Manager resource name
@@ -396,6 +471,11 @@ class SqlServerProfile(proto.Message):
         proto.STRING,
         number=5,
     )
+    ssl_config: "SqlServerSslConfig" = proto.Field(
+        proto.MESSAGE,
+        number=6,
+        message="SqlServerSslConfig",
+    )
     secret_manager_stored_password: str = proto.Field(
         proto.STRING,
         number=7,
@@ -403,7 +483,7 @@ class SqlServerProfile(proto.Message):
 
 
 class SalesforceProfile(proto.Message):
-    r"""Salesforce profile
+    r"""Profile for connecting to a Salesforce source.
 
     This message has `oneof`_ fields (mutually exclusive fields).
     For each oneof, at most one member field can be set at the same time.
@@ -417,7 +497,8 @@ class SalesforceProfile(proto.Message):
             Required. Domain endpoint for the Salesforce
             connection.
         user_credentials (google.cloud.datastream_v1.types.SalesforceProfile.UserCredentials):
-            User-password authentication.
+            Deprecated: Salesforce is retiring Username-Password
+            authentication. Use ``oauth2_client_credentials`` instead.
 
             This field is a member of `oneof`_ ``credentials``.
         oauth2_client_credentials (google.cloud.datastream_v1.types.SalesforceProfile.Oauth2ClientCredentials):
@@ -427,7 +508,8 @@ class SalesforceProfile(proto.Message):
     """
 
     class UserCredentials(proto.Message):
-        r"""Username-password credentials.
+        r"""Deprecated: Salesforce is retiring Username-Password authentication.
+        Use ``Oauth2ClientCredentials`` instead.
 
         Attributes:
             username (str):
@@ -520,7 +602,7 @@ class SalesforceProfile(proto.Message):
 
 
 class MongodbProfile(proto.Message):
-    r"""MongoDB profile.
+    r"""Profile for connecting to a MongoDB source.
 
     This message has `oneof`_ fields (mutually exclusive fields).
     For each oneof, at most one member field can be set at the same time.
@@ -564,6 +646,18 @@ class MongodbProfile(proto.Message):
             Standard connection format.
 
             This field is a member of `oneof`_ ``mongodb_connection_format``.
+        additional_options (MutableMapping[str, str]):
+            Optional. Specifies additional options for the MongoDB
+            connection.
+
+            The options should be sent as key-value pairs, for example:
+            ``additional_options = {"serverSelectionTimeoutMS": "10000", "directConnection": "true"}``.
+
+            Keys are case-sensitive and should match the official
+            MongoDB connection string options:
+            https://www.mongodb.com/docs/manual/reference/connection-string-options/
+
+            The server will not modify the values provided by the user.
     """
 
     host_addresses: MutableSequence["HostAddress"] = proto.RepeatedField(
@@ -604,6 +698,11 @@ class MongodbProfile(proto.Message):
         oneof="mongodb_connection_format",
         message="StandardConnectionFormat",
     )
+    additional_options: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=7,
+    )
 
 
 class HostAddress(proto.Message):
@@ -627,6 +726,235 @@ class HostAddress(proto.Message):
     )
 
 
+class SpannerProfile(proto.Message):
+    r"""Profile for connecting to a Spanner source.
+
+    Attributes:
+        database (str):
+            Required. Immutable. Cloud Spanner database resource. This
+            field is immutable. Must be in the format:
+            projects/{project}/instances/{instance}/databases/{database_id}.
+        host (str):
+            Optional. The Spanner endpoint to connect to.
+            Defaults to the global endpoint
+            (https://spanner.googleapis.com). Must be in the
+            format:
+
+            https://spanner.{region}.rep.googleapis.com.
+    """
+
+    database: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    host: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class OauthClientCredentials(proto.Message):
+    r"""OAuth Client Credentials.
+
+    Attributes:
+        client_id (str):
+            Required. Client ID for OAuth Client
+            Credentials.
+        client_secret (google.cloud.datastream_v1.types.Secret):
+            Required. Client secret for OAuth Client
+            Credentials.
+    """
+
+    client_id: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    client_secret: "Secret" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="Secret",
+    )
+
+
+class OauthRefreshTokenCredentials(proto.Message):
+    r"""OAuth Refresh Token Credentials.
+
+    Attributes:
+        oauth_client_credentials (google.cloud.datastream_v1.types.OauthClientCredentials):
+            Required. Specifies the OAuth Client
+            Credentials.
+        refresh_token (google.cloud.datastream_v1.types.Secret):
+            Required. Specifies the OAuth Refresh Token.
+    """
+
+    oauth_client_credentials: "OauthClientCredentials" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="OauthClientCredentials",
+    )
+    refresh_token: "Secret" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="Secret",
+    )
+
+
+class UserPasswordCredentials(proto.Message):
+    r"""User-password credentials.
+
+    Attributes:
+        username (str):
+            Required. Username for the connection.
+        password (google.cloud.datastream_v1.types.Secret):
+            Required. Password for the connection.
+    """
+
+    username: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    password: "Secret" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="Secret",
+    )
+
+
+class SalesforceMarketingCloudProfile(proto.Message):
+    r"""Profile for connecting to a Salesforce Marketing Cloud
+    source.
+
+    Attributes:
+        subdomain (str):
+            Required. Subdomain for the Salesforce Marketing Cloud
+            connection. Example: if your specific endpoint is
+            ``https://{your-specific-subdomain}.rest.marketingcloudapis.com/``,
+            the subdomain is ``{your-specific-subdomain}``. Must be 1-63
+            characters, start and end with an alphanumeric character,
+            and contain only lowercase letters, numbers, and hyphens
+            (-).
+        oauth_client_credentials (google.cloud.datastream_v1.types.OauthClientCredentials):
+            Required. Input only. Credentials for
+            authenticating with the Salesforce Marketing
+            Cloud API.
+    """
+
+    subdomain: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    oauth_client_credentials: "OauthClientCredentials" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message="OauthClientCredentials",
+    )
+
+
+class DataverseProfile(proto.Message):
+    r"""Profile for connecting to a Dataverse source.
+
+    Attributes:
+        tenant_id (str):
+            Required. Tenant id of the Microsoft
+            Dataverse instance.
+        environment_url (str):
+            Required. Environment URL of the Microsoft Dataverse
+            instance. Example: ``<subdomain>.crm.dynamics.com``
+        oauth_client_credentials (google.cloud.datastream_v1.types.OauthClientCredentials):
+            Required. Credentials for authenticating with
+            the Dataverse API.
+    """
+
+    tenant_id: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    environment_url: str = proto.Field(
+        proto.STRING,
+        number=5,
+    )
+    oauth_client_credentials: "OauthClientCredentials" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message="OauthClientCredentials",
+    )
+
+
+class ServiceNowProfile(proto.Message):
+    r"""Profile for connecting to a ServiceNow source.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        instance (str):
+            Required. The instance of the ServiceNow account. This is
+            the ``<instance>`` part of the URL
+            ``https://<instance>.service-now.com``.
+        user_password_credentials (google.cloud.datastream_v1.types.UserPasswordCredentials):
+            User-password authentication.
+
+            This field is a member of `oneof`_ ``credentials``.
+        oauth_client_credentials (google.cloud.datastream_v1.types.OauthClientCredentials):
+            Credentials for authenticating with the
+            ServiceNow API.
+
+            This field is a member of `oneof`_ ``credentials``.
+    """
+
+    instance: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    user_password_credentials: "UserPasswordCredentials" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        oneof="credentials",
+        message="UserPasswordCredentials",
+    )
+    oauth_client_credentials: "OauthClientCredentials" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        oneof="credentials",
+        message="OauthClientCredentials",
+    )
+
+
+class WorkdayProfile(proto.Message):
+    r"""Profile for connecting to a Workday source.
+
+    Attributes:
+        host (str):
+            Required. Host for the Workday connection. Must be a valid
+            hostname (e.g., ``wd3-impl-services1.workday.com``).
+        tenant (str):
+            Required. Tenant for the Workday connection (e.g.,
+            ``google12``).
+        oauth_refresh_token_credentials (google.cloud.datastream_v1.types.OauthRefreshTokenCredentials):
+            Required. Credentials for authenticating with
+            the Workday API. OAuth Refresh Token credentials
+            for authenticating with the Workday API.
+    """
+
+    host: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    tenant: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    oauth_refresh_token_credentials: "OauthRefreshTokenCredentials" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message="OauthRefreshTokenCredentials",
+    )
+
+
 class SrvConnectionFormat(proto.Message):
     r"""Srv connection format."""
 
@@ -636,8 +964,12 @@ class StandardConnectionFormat(proto.Message):
 
     Attributes:
         direct_connection (bool):
-            Optional. Specifies whether the client connects directly to
-            the host[:port] in the connection URI.
+            Optional. Deprecated: Use the ``additional_options`` map to
+            specify the ``directConnection`` parameter instead. For
+            example:
+            ``additional_options = {"directConnection": "true"}``.
+            Specifies whether the client connects directly to the
+            host[:port] in the connection URI.
     """
 
     direct_connection: bool = proto.Field(
@@ -647,14 +979,14 @@ class StandardConnectionFormat(proto.Message):
 
 
 class GcsProfile(proto.Message):
-    r"""Cloud Storage bucket profile.
+    r"""Profile for connecting to a Cloud Storage destination.
 
     Attributes:
         bucket (str):
             Required. The Cloud Storage bucket name.
         root_path (str):
-            The root path inside the Cloud Storage
-            bucket.
+            Optional. The root path inside the Cloud
+            Storage bucket.
     """
 
     bucket: str = proto.Field(
@@ -668,7 +1000,7 @@ class GcsProfile(proto.Message):
 
 
 class BigQueryProfile(proto.Message):
-    r"""BigQuery warehouse profile."""
+    r"""Profile for connecting to a BigQuery destination."""
 
 
 class StaticServiceIpConnectivity(proto.Message):
@@ -963,6 +1295,46 @@ class Route(proto.Message):
     )
 
 
+class Secret(proto.Message):
+    r"""A confidential piece of information where the actual value is
+    either directly specified in the message as a raw string or
+    stored in GCP secret manager.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        raw_value (str):
+            Optional. Input only. The actual raw value of
+            the secret as plain text.
+
+            This field is a member of `oneof`_ ``value``.
+        secret_version (str):
+            Optional. A Secret Manager resource name storing the actual
+            value of the secret. Supported formats:
+
+            - projects/{project}/locations/{location}/secrets/{secret}/versions/{version}
+            - projects/{project}/secrets/{secret}/versions/{version}
+
+            This field is a member of `oneof`_ ``value``.
+    """
+
+    raw_value: str = proto.Field(
+        proto.STRING,
+        number=1,
+        oneof="value",
+    )
+    secret_version: str = proto.Field(
+        proto.STRING,
+        number=2,
+        oneof="value",
+    )
+
+
 class MongodbSslConfig(proto.Message):
     r"""MongoDB SSL configuration information.
 
@@ -1115,6 +1487,111 @@ class OracleSslConfig(proto.Message):
     )
 
 
+class SqlServerSslConfig(proto.Message):
+    r"""SQL Server SSL configuration information.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        encryption_not_enforced (google.cloud.datastream_v1.types.SqlServerSslConfig.EncryptionNotEnforced):
+            If set, Datastream will not enforce
+            encryption. If the DB server mandates
+            encryption, then connection will be encrypted
+            but server identity will not be authenticated.
+
+            This field is a member of `oneof`_ ``encryption_setting``.
+        basic_encryption (google.cloud.datastream_v1.types.SqlServerSslConfig.BasicEncryption):
+            If set, Datastream will enforce encryption
+            without authenticating server identity. Server
+            certificates will be trusted by default.
+
+            This field is a member of `oneof`_ ``encryption_setting``.
+        encryption_and_server_validation (google.cloud.datastream_v1.types.SqlServerSslConfig.EncryptionAndServerValidation):
+            If set, Datastream will enforce encryption
+            and authenticate server identity.
+
+            This field is a member of `oneof`_ ``encryption_setting``.
+    """
+
+    class EncryptionNotEnforced(proto.Message):
+        r"""Message to represent the option where encryption is not
+        enforced. An empty message right now to allow future
+        extensibility.
+
+        """
+
+    class BasicEncryption(proto.Message):
+        r"""Message to represent the option where Datastream will enforce
+        encryption without authenticating server identity. Server
+        certificates will be trusted by default.
+
+        """
+
+    class EncryptionAndServerValidation(proto.Message):
+        r"""Message to represent the option where Datastream will enforce
+        encryption and authenticate server identity. ca_certificate must be
+        set if user selects this option.
+
+
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+        Attributes:
+            ca_certificate (str):
+                Optional. Input only. PEM-encoded certificate
+                of the CA that signed the source database
+                server's certificate.
+            server_certificate_hostname (str):
+                Optional. The hostname mentioned in the
+                Subject or SAN extension of the server
+                certificate. This field is used for bypassing
+                the hostname validation while verifying server
+                certificate. This is required for scenarios
+                where the host name that datastream connects to
+                is different from the certificate's subject.
+                This specifically happens for private
+                connectivity. It could also happen when the
+                customer provides a public IP in connection
+                profile but the same is not present in the
+                server certificate.
+
+                This field is a member of `oneof`_ ``_server_certificate_hostname``.
+        """
+
+        ca_certificate: str = proto.Field(
+            proto.STRING,
+            number=2,
+        )
+        server_certificate_hostname: str = proto.Field(
+            proto.STRING,
+            number=3,
+            optional=True,
+        )
+
+    encryption_not_enforced: EncryptionNotEnforced = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        oneof="encryption_setting",
+        message=EncryptionNotEnforced,
+    )
+    basic_encryption: BasicEncryption = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        oneof="encryption_setting",
+        message=BasicEncryption,
+    )
+    encryption_and_server_validation: EncryptionAndServerValidation = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        oneof="encryption_setting",
+        message=EncryptionAndServerValidation,
+    )
+
+
 class PostgresqlSslConfig(proto.Message):
     r"""PostgreSQL SSL configuration information.
 
@@ -1264,36 +1741,62 @@ class ConnectionProfile(proto.Message):
 
             This field is a member of `oneof`_ ``_satisfies_pzi``.
         oracle_profile (google.cloud.datastream_v1.types.OracleProfile):
-            Oracle ConnectionProfile configuration.
+            Profile for connecting to an Oracle source.
 
             This field is a member of `oneof`_ ``profile``.
         gcs_profile (google.cloud.datastream_v1.types.GcsProfile):
-            Cloud Storage ConnectionProfile
-            configuration.
+            Profile for connecting to a Cloud Storage
+            destination.
 
             This field is a member of `oneof`_ ``profile``.
         mysql_profile (google.cloud.datastream_v1.types.MysqlProfile):
-            MySQL ConnectionProfile configuration.
+            Profile for connecting to a MySQL source.
 
             This field is a member of `oneof`_ ``profile``.
         bigquery_profile (google.cloud.datastream_v1.types.BigQueryProfile):
-            BigQuery Connection Profile configuration.
+            Profile for connecting to a BigQuery
+            destination.
 
             This field is a member of `oneof`_ ``profile``.
         postgresql_profile (google.cloud.datastream_v1.types.PostgresqlProfile):
-            PostgreSQL Connection Profile configuration.
+            Profile for connecting to a PostgreSQL
+            source.
 
             This field is a member of `oneof`_ ``profile``.
         sql_server_profile (google.cloud.datastream_v1.types.SqlServerProfile):
-            SQLServer Connection Profile configuration.
+            Profile for connecting to a SQLServer source.
 
             This field is a member of `oneof`_ ``profile``.
         salesforce_profile (google.cloud.datastream_v1.types.SalesforceProfile):
-            Salesforce Connection Profile configuration.
+            Profile for connecting to a Salesforce
+            source.
 
             This field is a member of `oneof`_ ``profile``.
         mongodb_profile (google.cloud.datastream_v1.types.MongodbProfile):
-            MongoDB Connection Profile configuration.
+            Profile for connecting to a MongoDB source.
+
+            This field is a member of `oneof`_ ``profile``.
+        spanner_profile (google.cloud.datastream_v1.types.SpannerProfile):
+            Profile for connecting to a Spanner source.
+
+            This field is a member of `oneof`_ ``profile``.
+        dataverse_profile (google.cloud.datastream_v1.types.DataverseProfile):
+            Profile for connecting to a Dataverse source.
+
+            This field is a member of `oneof`_ ``profile``.
+        salesforce_marketing_cloud_profile (google.cloud.datastream_v1.types.SalesforceMarketingCloudProfile):
+            Profile for connecting to a Salesforce
+            Marketing Cloud source.
+
+            This field is a member of `oneof`_ ``profile``.
+        service_now_profile (google.cloud.datastream_v1.types.ServiceNowProfile):
+            Profile for connecting to a ServiceNow
+            source.
+
+            This field is a member of `oneof`_ ``profile``.
+        workday_profile (google.cloud.datastream_v1.types.WorkdayProfile):
+            Optional. Profile for connecting to a Workday
+            source.
 
             This field is a member of `oneof`_ ``profile``.
         static_service_ip_connectivity (google.cloud.datastream_v1.types.StaticServiceIpConnectivity):
@@ -1391,6 +1894,36 @@ class ConnectionProfile(proto.Message):
         oneof="profile",
         message="MongodbProfile",
     )
+    spanner_profile: "SpannerProfile" = proto.Field(
+        proto.MESSAGE,
+        number=109,
+        oneof="profile",
+        message="SpannerProfile",
+    )
+    dataverse_profile: "DataverseProfile" = proto.Field(
+        proto.MESSAGE,
+        number=114,
+        oneof="profile",
+        message="DataverseProfile",
+    )
+    salesforce_marketing_cloud_profile: "SalesforceMarketingCloudProfile" = proto.Field(
+        proto.MESSAGE,
+        number=119,
+        oneof="profile",
+        message="SalesforceMarketingCloudProfile",
+    )
+    service_now_profile: "ServiceNowProfile" = proto.Field(
+        proto.MESSAGE,
+        number=120,
+        oneof="profile",
+        message="ServiceNowProfile",
+    )
+    workday_profile: "WorkdayProfile" = proto.Field(
+        proto.MESSAGE,
+        number=121,
+        oneof="profile",
+        message="WorkdayProfile",
+    )
     static_service_ip_connectivity: "StaticServiceIpConnectivity" = proto.Field(
         proto.MESSAGE,
         number=200,
@@ -1416,7 +1949,7 @@ class OracleColumn(proto.Message):
 
     Attributes:
         column (str):
-            Column name.
+            The column name.
         data_type (str):
             The Oracle data type.
         length (int):
@@ -1481,7 +2014,7 @@ class OracleTable(proto.Message):
 
     Attributes:
         table (str):
-            Table name.
+            The table name.
         oracle_columns (MutableSequence[google.cloud.datastream_v1.types.OracleColumn]):
             Oracle columns in the schema.
             When unspecified as part of include/exclude
@@ -1504,7 +2037,7 @@ class OracleSchema(proto.Message):
 
     Attributes:
         schema (str):
-            Schema name.
+            The schema name.
         oracle_tables (MutableSequence[google.cloud.datastream_v1.types.OracleTable]):
             Tables in the schema.
     """
@@ -1537,7 +2070,7 @@ class OracleRdbms(proto.Message):
 
 
 class OracleSourceConfig(proto.Message):
-    r"""Oracle data source configuration
+    r"""Configuration for syncing data from an Oracle source.
 
     This message has `oneof`_ fields (mutually exclusive fields).
     For each oneof, at most one member field can be set at the same time.
@@ -1548,9 +2081,10 @@ class OracleSourceConfig(proto.Message):
 
     Attributes:
         include_objects (google.cloud.datastream_v1.types.OracleRdbms):
-            Oracle objects to include in the stream.
+            The Oracle objects to include in the stream.
         exclude_objects (google.cloud.datastream_v1.types.OracleRdbms):
-            Oracle objects to exclude from the stream.
+            The Oracle objects to exclude from the
+            stream.
         max_concurrent_cdc_tasks (int):
             Maximum number of concurrent CDC tasks. The
             number should be non-negative. If not set (or
@@ -1693,7 +2227,7 @@ class PostgresqlColumn(proto.Message):
 
     Attributes:
         column (str):
-            Column name.
+            The column name.
         data_type (str):
             The PostgreSQL data type.
         length (int):
@@ -1752,7 +2286,7 @@ class PostgresqlTable(proto.Message):
 
     Attributes:
         table (str):
-            Table name.
+            The table name.
         postgresql_columns (MutableSequence[google.cloud.datastream_v1.types.PostgresqlColumn]):
             PostgreSQL columns in the schema.
             When unspecified as part of include/exclude
@@ -1775,7 +2309,7 @@ class PostgresqlSchema(proto.Message):
 
     Attributes:
         schema (str):
-            Schema name.
+            The schema name.
         postgresql_tables (MutableSequence[google.cloud.datastream_v1.types.PostgresqlTable]):
             Tables in the schema.
     """
@@ -1807,13 +2341,14 @@ class PostgresqlRdbms(proto.Message):
 
 
 class PostgresqlSourceConfig(proto.Message):
-    r"""PostgreSQL data source configuration
+    r"""Configuration for syncing data from a PostgreSQL source.
 
     Attributes:
         include_objects (google.cloud.datastream_v1.types.PostgresqlRdbms):
-            PostgreSQL objects to include in the stream.
+            The PostgreSQL objects to include in the
+            stream.
         exclude_objects (google.cloud.datastream_v1.types.PostgresqlRdbms):
-            PostgreSQL objects to exclude from the
+            The PostgreSQL objects to exclude from the
             stream.
         replication_slot (str):
             Required. Immutable. The name of the logical
@@ -1859,7 +2394,7 @@ class SqlServerColumn(proto.Message):
 
     Attributes:
         column (str):
-            Column name.
+            The column name.
         data_type (str):
             The SQLServer data type.
         length (int):
@@ -1918,7 +2453,7 @@ class SqlServerTable(proto.Message):
 
     Attributes:
         table (str):
-            Table name.
+            The table name.
         columns (MutableSequence[google.cloud.datastream_v1.types.SqlServerColumn]):
             SQLServer columns in the schema.
             When unspecified as part of include/exclude
@@ -1941,7 +2476,7 @@ class SqlServerSchema(proto.Message):
 
     Attributes:
         schema (str):
-            Schema name.
+            The schema name.
         tables (MutableSequence[google.cloud.datastream_v1.types.SqlServerTable]):
             Tables in the schema.
     """
@@ -1973,7 +2508,7 @@ class SqlServerRdbms(proto.Message):
 
 
 class SqlServerSourceConfig(proto.Message):
-    r"""SQLServer data source configuration
+    r"""Configuration for syncing data from a SQLServer source.
 
     This message has `oneof`_ fields (mutually exclusive fields).
     For each oneof, at most one member field can be set at the same time.
@@ -1984,9 +2519,11 @@ class SqlServerSourceConfig(proto.Message):
 
     Attributes:
         include_objects (google.cloud.datastream_v1.types.SqlServerRdbms):
-            SQLServer objects to include in the stream.
+            The SQLServer objects to include in the
+            stream.
         exclude_objects (google.cloud.datastream_v1.types.SqlServerRdbms):
-            SQLServer objects to exclude from the stream.
+            The SQLServer objects to exclude from the
+            stream.
         max_concurrent_cdc_tasks (int):
             Max concurrent CDC tasks.
         max_concurrent_backfill_tasks (int):
@@ -2038,7 +2575,48 @@ class SqlServerTransactionLogs(proto.Message):
 
 
 class SqlServerChangeTables(proto.Message):
-    r"""Configuration to use Change Tables CDC read method."""
+    r"""Configuration to use Change Tables CDC read method.
+
+    Attributes:
+        ddl_config (google.cloud.datastream_v1.types.SqlServerChangeTables.SqlServerDdlConfig):
+            Optional. DDL configuration for change
+            tables.
+    """
+
+    class SqlServerDdlConfig(proto.Message):
+        r"""DDL configuration for change tables.
+
+        Attributes:
+            auto_create_new_capture_instance_on_ddl (bool):
+                Optional. If set to true, Datastream will
+                automatically create a new capture instance when
+                DDL is detected on a table.The customer will be
+                responsible for deleting it so that the next set
+                of DDLs can be handled. The default is false and
+                it means that DDL's will not be handled .
+            auto_delete_old_capture_instance (bool):
+                Optional. If set to true, Datastream will
+                automatically delete the old capture instance
+                after creating a new one to support a DDL
+                change. The default is false and means that the
+                customer has to delete the old capture instance
+                manually.
+        """
+
+        auto_create_new_capture_instance_on_ddl: bool = proto.Field(
+            proto.BOOL,
+            number=1,
+        )
+        auto_delete_old_capture_instance: bool = proto.Field(
+            proto.BOOL,
+            number=2,
+        )
+
+    ddl_config: SqlServerDdlConfig = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=SqlServerDdlConfig,
+    )
 
 
 class MysqlColumn(proto.Message):
@@ -2046,7 +2624,7 @@ class MysqlColumn(proto.Message):
 
     Attributes:
         column (str):
-            Column name.
+            The column name.
         data_type (str):
             The MySQL data type. Full data types list can
             be found here:
@@ -2113,7 +2691,7 @@ class MysqlTable(proto.Message):
 
     Attributes:
         table (str):
-            Table name.
+            The table name.
         mysql_columns (MutableSequence[google.cloud.datastream_v1.types.MysqlColumn]):
             MySQL columns in the database.
             When unspecified as part of include/exclude
@@ -2136,7 +2714,7 @@ class MysqlDatabase(proto.Message):
 
     Attributes:
         database (str):
-            Database name.
+            The database name.
         mysql_tables (MutableSequence[google.cloud.datastream_v1.types.MysqlTable]):
             Tables in the database.
     """
@@ -2168,7 +2746,7 @@ class MysqlRdbms(proto.Message):
 
 
 class MysqlSourceConfig(proto.Message):
-    r"""MySQL source configuration
+    r"""Configuration for syncing data from a MySQL source.
 
     This message has `oneof`_ fields (mutually exclusive fields).
     For each oneof, at most one member field can be set at the same time.
@@ -2179,9 +2757,10 @@ class MysqlSourceConfig(proto.Message):
 
     Attributes:
         include_objects (google.cloud.datastream_v1.types.MysqlRdbms):
-            MySQL objects to retrieve from the source.
+            The MySQL objects to retrieve from the
+            source.
         exclude_objects (google.cloud.datastream_v1.types.MysqlRdbms):
-            MySQL objects to exclude from the stream.
+            The MySQL objects to exclude from the stream.
         max_concurrent_cdc_tasks (int):
             Maximum number of concurrent CDC tasks. The
             number should be non negative. If not set (or
@@ -2241,20 +2820,20 @@ class MysqlSourceConfig(proto.Message):
 
 
 class SalesforceSourceConfig(proto.Message):
-    r"""Salesforce source configuration
+    r"""Configuration for syncing data from a Salesforce source.
 
     Attributes:
         include_objects (google.cloud.datastream_v1.types.SalesforceOrg):
-            Salesforce objects to retrieve from the
+            The Salesforce objects to retrieve from the
             source.
         exclude_objects (google.cloud.datastream_v1.types.SalesforceOrg):
-            Salesforce objects to exclude from the
+            The Salesforce objects to exclude from the
             stream.
         polling_interval (google.protobuf.duration_pb2.Duration):
-            Required. Salesforce objects polling
-            interval. The interval at which new changes will
-            be polled for each object. The duration must be
-            between 5 minutes and 24 hours.
+            Required. Salesforce objects polling interval. The interval
+            at which new changes will be polled for each object. The
+            duration must be from ``5 minutes`` to ``24 hours``,
+            inclusive.
     """
 
     include_objects: "SalesforceOrg" = proto.Field(
@@ -2294,7 +2873,7 @@ class SalesforceObject(proto.Message):
 
     Attributes:
         object_name (str):
-            Object name.
+            The object name.
         fields (MutableSequence[google.cloud.datastream_v1.types.SalesforceField]):
             Salesforce fields.
             When unspecified as part of include objects,
@@ -2318,7 +2897,7 @@ class SalesforceField(proto.Message):
 
     Attributes:
         name (str):
-            Field name.
+            The field name.
         data_type (str):
             The data type.
         nillable (bool):
@@ -2341,13 +2920,14 @@ class SalesforceField(proto.Message):
 
 
 class MongodbSourceConfig(proto.Message):
-    r"""MongoDB source configuration.
+    r"""Configuration for syncing data from a MongoDB source.
 
     Attributes:
         include_objects (google.cloud.datastream_v1.types.MongodbCluster):
-            MongoDB collections to include in the stream.
+            The MongoDB collections to include in the
+            stream.
         exclude_objects (google.cloud.datastream_v1.types.MongodbCluster):
-            MongoDB collections to exclude from the
+            The MongoDB collections to exclude from the
             stream.
         max_concurrent_backfill_tasks (int):
             Optional. Maximum number of concurrent
@@ -2355,6 +2935,9 @@ class MongodbSourceConfig(proto.Message):
             non-negative and less than or equal to 50. If
             not set (or set to 0), the system's default
             value is used
+        json_mode (google.cloud.datastream_v1.types.MongodbJsonMode):
+            Optional. MongoDB JSON mode to use for the
+            stream.
     """
 
     include_objects: "MongodbCluster" = proto.Field(
@@ -2370,6 +2953,11 @@ class MongodbSourceConfig(proto.Message):
     max_concurrent_backfill_tasks: int = proto.Field(
         proto.INT32,
         number=3,
+    )
+    json_mode: "MongodbJsonMode" = proto.Field(
+        proto.ENUM,
+        number=4,
+        enum="MongodbJsonMode",
     )
 
 
@@ -2393,7 +2981,7 @@ class MongodbDatabase(proto.Message):
 
     Attributes:
         database (str):
-            Database name.
+            The database name.
         collections (MutableSequence[google.cloud.datastream_v1.types.MongodbCollection]):
             Collections in the database.
     """
@@ -2414,7 +3002,7 @@ class MongodbCollection(proto.Message):
 
     Attributes:
         collection (str):
-            Collection name.
+            The collection name.
         fields (MutableSequence[google.cloud.datastream_v1.types.MongodbField]):
             Fields in the collection.
     """
@@ -2435,12 +3023,411 @@ class MongodbField(proto.Message):
 
     Attributes:
         field (str):
-            Field name.
+            The field name.
     """
 
     field: str = proto.Field(
         proto.STRING,
         number=1,
+    )
+
+
+class SpannerSourceConfig(proto.Message):
+    r"""Configuration for syncing data from a Spanner source.
+
+    Attributes:
+        change_stream_name (str):
+            Required. Immutable. The change stream name
+            to use for the stream.
+        spanner_rpc_priority (google.cloud.datastream_v1.types.SpannerSourceConfig.SpannerRpcPriority):
+            Optional. The RPC priority to use for the
+            stream.
+        fgac_role (str):
+            Optional. The FGAC role to use for the
+            stream.
+        max_concurrent_cdc_tasks (int):
+            Optional. Maximum number of concurrent CDC
+            tasks.
+        max_concurrent_backfill_tasks (int):
+            Optional. Maximum number of concurrent
+            backfill tasks.
+        include_objects (google.cloud.datastream_v1.types.SpannerDatabase):
+            Optional. The Spanner objects to retrieve
+            from the data source. If some objects are both
+            included and excluded, an error will be thrown.
+        exclude_objects (google.cloud.datastream_v1.types.SpannerDatabase):
+            Optional. The Spanner objects to avoid
+            retrieving. If some objects are both included
+            and excluded, an error will be thrown.
+        backfill_data_boost_enabled (bool):
+            Optional. Whether to use Data Boost for
+            Spanner backfills. Defaults to false if not set.
+    """
+
+    class SpannerRpcPriority(proto.Enum):
+        r"""The RPC priority to use for the stream.
+
+        Values:
+            SPANNER_RPC_PRIORITY_UNSPECIFIED (0):
+                Unspecified RPC priority.
+            LOW (1):
+                Low RPC priority.
+            MEDIUM (2):
+                Medium RPC priority.
+            HIGH (3):
+                High RPC priority.
+        """
+
+        SPANNER_RPC_PRIORITY_UNSPECIFIED = 0
+        LOW = 1
+        MEDIUM = 2
+        HIGH = 3
+
+    change_stream_name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    spanner_rpc_priority: SpannerRpcPriority = proto.Field(
+        proto.ENUM,
+        number=2,
+        enum=SpannerRpcPriority,
+    )
+    fgac_role: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    max_concurrent_cdc_tasks: int = proto.Field(
+        proto.INT32,
+        number=8,
+    )
+    max_concurrent_backfill_tasks: int = proto.Field(
+        proto.INT32,
+        number=4,
+    )
+    include_objects: "SpannerDatabase" = proto.Field(
+        proto.MESSAGE,
+        number=6,
+        message="SpannerDatabase",
+    )
+    exclude_objects: "SpannerDatabase" = proto.Field(
+        proto.MESSAGE,
+        number=7,
+        message="SpannerDatabase",
+    )
+    backfill_data_boost_enabled: bool = proto.Field(
+        proto.BOOL,
+        number=9,
+    )
+
+
+class SpannerDatabase(proto.Message):
+    r"""Spanner database structure.
+
+    Attributes:
+        schemas (MutableSequence[google.cloud.datastream_v1.types.SpannerSchema]):
+            Optional. Spanner schemas in the database.
+    """
+
+    schemas: MutableSequence["SpannerSchema"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="SpannerSchema",
+    )
+
+
+class SpannerSchema(proto.Message):
+    r"""Spanner schema.
+
+    Attributes:
+        schema (str):
+            Required. The schema name.
+        tables (MutableSequence[google.cloud.datastream_v1.types.SpannerTable]):
+            Optional. Spanner tables in the schema.
+    """
+
+    schema: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    tables: MutableSequence["SpannerTable"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message="SpannerTable",
+    )
+
+
+class SpannerTable(proto.Message):
+    r"""Spanner table.
+
+    Attributes:
+        table (str):
+            Required. The table name.
+        columns (MutableSequence[google.cloud.datastream_v1.types.SpannerColumn]):
+            Optional. Spanner columns in the table.
+    """
+
+    table: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    columns: MutableSequence["SpannerColumn"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message="SpannerColumn",
+    )
+
+
+class SpannerColumn(proto.Message):
+    r"""Spanner column.
+
+    Attributes:
+        column (str):
+            Required. The column name.
+        data_type (str):
+            Optional. Spanner data type.
+        is_primary_key (bool):
+            Optional. Whether or not the column is a
+            primary key.
+        ordinal_position (int):
+            Optional. The ordinal position of the column
+            in the table.
+    """
+
+    column: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    data_type: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    is_primary_key: bool = proto.Field(
+        proto.BOOL,
+        number=3,
+    )
+    ordinal_position: int = proto.Field(
+        proto.INT64,
+        number=4,
+    )
+
+
+class DataverseSourceConfig(proto.Message):
+    r"""Configuration for syncing data from a Dataverse source.
+
+    Attributes:
+        include_objects (google.cloud.datastream_v1.types.SourceCatalog):
+            Optional. The objects to retrieve from the
+            source.
+        exclude_objects (google.cloud.datastream_v1.types.SourceCatalog):
+            Optional. The objects to exclude from the
+            stream.
+        polling_interval (google.protobuf.duration_pb2.Duration):
+            Required. Incremental sync polling interval for all objects.
+            If not set, a default value of ``5 minutes`` is used. The
+            duration must be from ``5 minutes`` to ``24 hours``,
+            inclusive.
+    """
+
+    include_objects: "SourceCatalog" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="SourceCatalog",
+    )
+    exclude_objects: "SourceCatalog" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="SourceCatalog",
+    )
+    polling_interval: duration_pb2.Duration = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=duration_pb2.Duration,
+    )
+
+
+class SalesforceMarketingCloudSourceConfig(proto.Message):
+    r"""Configuration for syncing data from a Salesforce Marketing
+    Cloud source.
+
+    Attributes:
+        include_objects (google.cloud.datastream_v1.types.SourceCatalog):
+            Optional. The objects to retrieve from the
+            source.
+        exclude_objects (google.cloud.datastream_v1.types.SourceCatalog):
+            Optional. The objects to exclude from the
+            stream.
+        polling_interval (google.protobuf.duration_pb2.Duration):
+            Required. Incremental sync polling interval for all objects.
+            If not set, a default value of ``5 minutes`` is used. The
+            duration must be from ``5 minutes`` to ``24 hours``,
+            inclusive.
+        full_refresh_polling_interval (google.protobuf.duration_pb2.Duration):
+            Required. Specifies the polling interval for
+            a full refresh of objects that do not support
+            incremental sync. If not set, a default value of
+            24 hours is used. The duration must be between 1
+            and 24 hours, inclusive.
+    """
+
+    include_objects: "SourceCatalog" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="SourceCatalog",
+    )
+    exclude_objects: "SourceCatalog" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="SourceCatalog",
+    )
+    polling_interval: duration_pb2.Duration = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=duration_pb2.Duration,
+    )
+    full_refresh_polling_interval: duration_pb2.Duration = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message=duration_pb2.Duration,
+    )
+
+
+class ServiceNowSourceConfig(proto.Message):
+    r"""Configuration for syncing data from a ServiceNow source.
+
+    Attributes:
+        include_objects (google.cloud.datastream_v1.types.SourceCatalog):
+            Optional. The objects to retrieve from the
+            source.
+        exclude_objects (google.cloud.datastream_v1.types.SourceCatalog):
+            Optional. The objects to exclude from the
+            stream.
+        polling_interval (google.protobuf.duration_pb2.Duration):
+            Required. Incremental sync polling interval for all objects.
+            If not set, a default value of ``5 minutes`` is used. The
+            duration must be from ``5 minutes`` to ``24 hours``,
+            inclusive.
+    """
+
+    include_objects: "SourceCatalog" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="SourceCatalog",
+    )
+    exclude_objects: "SourceCatalog" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="SourceCatalog",
+    )
+    polling_interval: duration_pb2.Duration = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=duration_pb2.Duration,
+    )
+
+
+class WorkdaySourceConfig(proto.Message):
+    r"""Configuration for syncing data from a Workday source.
+
+    Attributes:
+        include_objects (google.cloud.datastream_v1.types.SourceCatalog):
+            Optional. The objects to retrieve from the
+            source.
+        exclude_objects (google.cloud.datastream_v1.types.SourceCatalog):
+            Optional. The objects to exclude from the
+            stream.
+        polling_interval (google.protobuf.duration_pb2.Duration):
+            Required. Incremental sync polling interval for all objects.
+            If not set, a default value of ``5 minutes`` is used. The
+            duration must be from ``5 minutes`` to ``24 hours``,
+            inclusive.
+    """
+
+    include_objects: "SourceCatalog" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="SourceCatalog",
+    )
+    exclude_objects: "SourceCatalog" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="SourceCatalog",
+    )
+    polling_interval: duration_pb2.Duration = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=duration_pb2.Duration,
+    )
+
+
+class SourceCatalog(proto.Message):
+    r"""Source catalog.
+
+    Attributes:
+        objects (MutableSequence[google.cloud.datastream_v1.types.SourceObject]):
+            Optional. Source objects in the catalog.
+    """
+
+    objects: MutableSequence["SourceObject"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="SourceObject",
+    )
+
+
+class SourceObject(proto.Message):
+    r"""Source object.
+
+    Attributes:
+        object_name (str):
+            Required. The object name.
+        properties (MutableSequence[google.cloud.datastream_v1.types.SourceProperty]):
+            Optional. Source properties. When unspecified
+            as part of include objects, includes everything,
+            when unspecified as part of exclude objects,
+            excludes nothing.
+    """
+
+    object_name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    properties: MutableSequence["SourceProperty"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message="SourceProperty",
+    )
+
+
+class SourceProperty(proto.Message):
+    r"""Source property.
+
+    Attributes:
+        property_name (str):
+            Required. The property name.
+        properties (MutableSequence[google.cloud.datastream_v1.types.SourceProperty]):
+            Optional. Source properties. When specified,
+            it means that the current property contains
+            nested properties of its own. When unspecified
+            as part of include objects, includes everything,
+            when unspecified as part of exclude objects,
+            excludes nothing.
+        primary_key (bool):
+            Optional. Whether or not the property is a
+            primary key.
+    """
+
+    property_name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    properties: MutableSequence["SourceProperty"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message="SourceProperty",
+    )
+    primary_key: bool = proto.Field(
+        proto.BOOL,
+        number=4,
     )
 
 
@@ -2480,6 +3467,27 @@ class SourceConfig(proto.Message):
             This field is a member of `oneof`_ ``source_stream_config``.
         mongodb_source_config (google.cloud.datastream_v1.types.MongodbSourceConfig):
             MongoDB data source configuration.
+
+            This field is a member of `oneof`_ ``source_stream_config``.
+        spanner_source_config (google.cloud.datastream_v1.types.SpannerSourceConfig):
+            Spanner data source configuration.
+
+            This field is a member of `oneof`_ ``source_stream_config``.
+        dataverse_source_config (google.cloud.datastream_v1.types.DataverseSourceConfig):
+            Dataverse data source configuration.
+
+            This field is a member of `oneof`_ ``source_stream_config``.
+        salesforce_marketing_cloud_source_config (google.cloud.datastream_v1.types.SalesforceMarketingCloudSourceConfig):
+            Salesforce Marketing Cloud data source
+            configuration.
+
+            This field is a member of `oneof`_ ``source_stream_config``.
+        service_now_source_config (google.cloud.datastream_v1.types.ServiceNowSourceConfig):
+            ServiceNow data source configuration.
+
+            This field is a member of `oneof`_ ``source_stream_config``.
+        workday_source_config (google.cloud.datastream_v1.types.WorkdaySourceConfig):
+            Optional. Workday data source configuration.
 
             This field is a member of `oneof`_ ``source_stream_config``.
     """
@@ -2523,6 +3531,38 @@ class SourceConfig(proto.Message):
         number=105,
         oneof="source_stream_config",
         message="MongodbSourceConfig",
+    )
+    spanner_source_config: "SpannerSourceConfig" = proto.Field(
+        proto.MESSAGE,
+        number=106,
+        oneof="source_stream_config",
+        message="SpannerSourceConfig",
+    )
+    dataverse_source_config: "DataverseSourceConfig" = proto.Field(
+        proto.MESSAGE,
+        number=111,
+        oneof="source_stream_config",
+        message="DataverseSourceConfig",
+    )
+    salesforce_marketing_cloud_source_config: "SalesforceMarketingCloudSourceConfig" = (
+        proto.Field(
+            proto.MESSAGE,
+            number=116,
+            oneof="source_stream_config",
+            message="SalesforceMarketingCloudSourceConfig",
+        )
+    )
+    service_now_source_config: "ServiceNowSourceConfig" = proto.Field(
+        proto.MESSAGE,
+        number=117,
+        oneof="source_stream_config",
+        message="ServiceNowSourceConfig",
+    )
+    workday_source_config: "WorkdaySourceConfig" = proto.Field(
+        proto.MESSAGE,
+        number=118,
+        oneof="source_stream_config",
+        message="WorkdaySourceConfig",
     )
 
 
@@ -2581,6 +3621,147 @@ class JsonFileFormat(proto.Message):
         proto.ENUM,
         number=2,
         enum=JsonCompression,
+    )
+
+
+class BigQueryClustering(proto.Message):
+    r"""BigQuery clustering configuration.
+
+    Attributes:
+        columns (MutableSequence[str]):
+            Required. Column names to set as clustering
+            columns.
+    """
+
+    columns: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=1,
+    )
+
+
+class IngestionTimePartition(proto.Message):
+    r"""Ingestion time partitioning. see
+    https://cloud.google.com/bigquery/docs/partitioned-tables#ingestion_time
+
+    Attributes:
+        partitioning_time_granularity (google.cloud.datastream_v1.types.PartitioningTimeGranularity):
+            Optional. Partition granularity
+    """
+
+    partitioning_time_granularity: "PartitioningTimeGranularity" = proto.Field(
+        proto.ENUM,
+        number=1,
+        enum="PartitioningTimeGranularity",
+    )
+
+
+class TimeUnitPartition(proto.Message):
+    r"""Time unit column partitioning. see
+    https://cloud.google.com/bigquery/docs/partitioned-tables#date_timestamp_partitioned_tables
+
+    Attributes:
+        column (str):
+            Required. The partitioning column.
+        partitioning_time_granularity (google.cloud.datastream_v1.types.PartitioningTimeGranularity):
+            Optional. Partition granularity.
+    """
+
+    column: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    partitioning_time_granularity: "PartitioningTimeGranularity" = proto.Field(
+        proto.ENUM,
+        number=2,
+        enum="PartitioningTimeGranularity",
+    )
+
+
+class IntegerRangePartition(proto.Message):
+    r"""Integer range partitioning. see
+    https://cloud.google.com/bigquery/docs/partitioned-tables#integer_range
+
+    Attributes:
+        column (str):
+            Required. The partitioning column.
+        start (int):
+            Required. The starting value for range
+            partitioning (inclusive).
+        end (int):
+            Required. The ending value for range
+            partitioning (exclusive).
+        interval (int):
+            Required. The interval of each range within
+            the partition.
+    """
+
+    column: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    start: int = proto.Field(
+        proto.INT64,
+        number=2,
+    )
+    end: int = proto.Field(
+        proto.INT64,
+        number=3,
+    )
+    interval: int = proto.Field(
+        proto.INT64,
+        number=4,
+    )
+
+
+class BigQueryPartitioning(proto.Message):
+    r"""BigQuery partitioning configuration.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        integer_range_partition (google.cloud.datastream_v1.types.IntegerRangePartition):
+            Integer range partitioning.
+
+            This field is a member of `oneof`_ ``partitioning``.
+        time_unit_partition (google.cloud.datastream_v1.types.TimeUnitPartition):
+            Time unit column partitioning.
+
+            This field is a member of `oneof`_ ``partitioning``.
+        ingestion_time_partition (google.cloud.datastream_v1.types.IngestionTimePartition):
+            Ingestion time partitioning.
+
+            This field is a member of `oneof`_ ``partitioning``.
+        require_partition_filter (bool):
+            Optional. If true, queries over the table
+            require a partition filter.
+    """
+
+    integer_range_partition: "IntegerRangePartition" = proto.Field(
+        proto.MESSAGE,
+        number=100,
+        oneof="partitioning",
+        message="IntegerRangePartition",
+    )
+    time_unit_partition: "TimeUnitPartition" = proto.Field(
+        proto.MESSAGE,
+        number=101,
+        oneof="partitioning",
+        message="TimeUnitPartition",
+    )
+    ingestion_time_partition: "IngestionTimePartition" = proto.Field(
+        proto.MESSAGE,
+        number=102,
+        oneof="partitioning",
+        message="IngestionTimePartition",
+    )
+    require_partition_filter: bool = proto.Field(
+        proto.BOOL,
+        number=103,
     )
 
 
@@ -2987,6 +4168,8 @@ class Stream(proto.Message):
             Output only. Reserved for future use.
 
             This field is a member of `oneof`_ ``_satisfies_pzi``.
+        rule_sets (MutableSequence[google.cloud.datastream_v1.types.Stream.RuleSet]):
+            Optional. Rule sets to apply to the stream.
     """
 
     class State(proto.Enum):
@@ -3072,6 +4255,17 @@ class Stream(proto.Message):
                 backfilling
 
                 This field is a member of `oneof`_ ``excluded_objects``.
+            spanner_excluded_objects (google.cloud.datastream_v1.types.SpannerDatabase):
+                Spanner data source objects to avoid
+                backfilling.
+
+                This field is a member of `oneof`_ ``excluded_objects``.
+            saas_excluded_objects (google.cloud.datastream_v1.types.SourceCatalog):
+                Source catalog data source objects to avoid
+                backfilling. This is mainly used to represent
+                SaaS applications objects.
+
+                This field is a member of `oneof`_ ``excluded_objects``.
         """
 
         oracle_excluded_objects: "OracleRdbms" = proto.Field(
@@ -3110,12 +4304,102 @@ class Stream(proto.Message):
             oneof="excluded_objects",
             message="MongodbCluster",
         )
+        spanner_excluded_objects: "SpannerDatabase" = proto.Field(
+            proto.MESSAGE,
+            number=7,
+            oneof="excluded_objects",
+            message="SpannerDatabase",
+        )
+        saas_excluded_objects: "SourceCatalog" = proto.Field(
+            proto.MESSAGE,
+            number=9,
+            oneof="excluded_objects",
+            message="SourceCatalog",
+        )
 
     class BackfillNoneStrategy(proto.Message):
         r"""Backfill strategy to disable automatic backfill for the
         Stream's objects.
 
         """
+
+    class RuleSet(proto.Message):
+        r"""A set of rules to apply to a set of objects.
+
+        Attributes:
+            customization_rules (MutableSequence[google.cloud.datastream_v1.types.Stream.RuleSet.CustomizationRule]):
+                Required. List of customization rules to
+                apply.
+            object_filter (google.cloud.datastream_v1.types.Stream.RuleSet.ObjectFilter):
+                Required. Object filter to apply the
+                customization rules to.
+        """
+
+        class ObjectFilter(proto.Message):
+            r"""Object filter to apply the rules to.
+
+            .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+            Attributes:
+                source_object_identifier (google.cloud.datastream_v1.types.SourceObjectIdentifier):
+                    Specific source object identifier.
+
+                    This field is a member of `oneof`_ ``filter_type``.
+            """
+
+            source_object_identifier: "SourceObjectIdentifier" = proto.Field(
+                proto.MESSAGE,
+                number=1,
+                oneof="filter_type",
+                message="SourceObjectIdentifier",
+            )
+
+        class CustomizationRule(proto.Message):
+            r"""A customization rule to apply to a set of objects.
+
+            This message has `oneof`_ fields (mutually exclusive fields).
+            For each oneof, at most one member field can be set at the same time.
+            Setting any member of the oneof automatically clears all other
+            members.
+
+            .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+            Attributes:
+                bigquery_partitioning (google.cloud.datastream_v1.types.BigQueryPartitioning):
+                    BigQuery partitioning rule.
+
+                    This field is a member of `oneof`_ ``rule``.
+                bigquery_clustering (google.cloud.datastream_v1.types.BigQueryClustering):
+                    BigQuery clustering rule.
+
+                    This field is a member of `oneof`_ ``rule``.
+            """
+
+            bigquery_partitioning: "BigQueryPartitioning" = proto.Field(
+                proto.MESSAGE,
+                number=1,
+                oneof="rule",
+                message="BigQueryPartitioning",
+            )
+            bigquery_clustering: "BigQueryClustering" = proto.Field(
+                proto.MESSAGE,
+                number=2,
+                oneof="rule",
+                message="BigQueryClustering",
+            )
+
+        customization_rules: MutableSequence["Stream.RuleSet.CustomizationRule"] = (
+            proto.RepeatedField(
+                proto.MESSAGE,
+                number=1,
+                message="Stream.RuleSet.CustomizationRule",
+            )
+        )
+        object_filter: "Stream.RuleSet.ObjectFilter" = proto.Field(
+            proto.MESSAGE,
+            number=2,
+            message="Stream.RuleSet.ObjectFilter",
+        )
 
     name: str = proto.Field(
         proto.STRING,
@@ -3192,6 +4476,11 @@ class Stream(proto.Message):
         number=16,
         optional=True,
     )
+    rule_sets: MutableSequence[RuleSet] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=19,
+        message=RuleSet,
+    )
 
 
 class StreamObject(proto.Message):
@@ -3215,6 +4504,10 @@ class StreamObject(proto.Message):
             for the stream object.
         source_object (google.cloud.datastream_v1.types.SourceObjectIdentifier):
             The object identifier in the data source.
+        customization_rules (MutableSequence[google.cloud.datastream_v1.types.Stream.RuleSet.CustomizationRule]):
+            Output only. The customization rules for the object. These
+            rules are derived from the parent Stream's ``rule_sets`` and
+            represent the intended configuration for the object.
     """
 
     name: str = proto.Field(
@@ -3249,6 +4542,13 @@ class StreamObject(proto.Message):
         proto.MESSAGE,
         number=8,
         message="SourceObjectIdentifier",
+    )
+    customization_rules: MutableSequence["Stream.RuleSet.CustomizationRule"] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=9,
+            message="Stream.RuleSet.CustomizationRule",
+        )
     )
 
 
@@ -3285,6 +4585,10 @@ class SourceObjectIdentifier(proto.Message):
             This field is a member of `oneof`_ ``source_identifier``.
         mongodb_identifier (google.cloud.datastream_v1.types.SourceObjectIdentifier.MongodbObjectIdentifier):
             MongoDB data source object identifier.
+
+            This field is a member of `oneof`_ ``source_identifier``.
+        spanner_identifier (google.cloud.datastream_v1.types.SourceObjectIdentifier.SpannerObjectIdentifier):
+            Spanner data source object identifier.
 
             This field is a member of `oneof`_ ``source_identifier``.
     """
@@ -3397,6 +4701,25 @@ class SourceObjectIdentifier(proto.Message):
             number=2,
         )
 
+    class SpannerObjectIdentifier(proto.Message):
+        r"""Spanner data source object identifier.
+
+        Attributes:
+            schema (str):
+                Optional. The schema name.
+            table (str):
+                Required. The table name.
+        """
+
+        schema: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+        table: str = proto.Field(
+            proto.STRING,
+            number=2,
+        )
+
     oracle_identifier: OracleObjectIdentifier = proto.Field(
         proto.MESSAGE,
         number=1,
@@ -3433,6 +4756,12 @@ class SourceObjectIdentifier(proto.Message):
         oneof="source_identifier",
         message=MongodbObjectIdentifier,
     )
+    spanner_identifier: SpannerObjectIdentifier = proto.Field(
+        proto.MESSAGE,
+        number=7,
+        oneof="source_identifier",
+        message=SpannerObjectIdentifier,
+    )
 
 
 class BackfillJob(proto.Message):
@@ -3450,6 +4779,9 @@ class BackfillJob(proto.Message):
         errors (MutableSequence[google.cloud.datastream_v1.types.Error]):
             Output only. Errors which caused the backfill
             job to fail.
+        event_filter (google.cloud.datastream_v1.types.EventFilter):
+            Output only. The filter for performing a
+            partial backfill.
     """
 
     class State(proto.Enum):
@@ -3532,6 +4864,32 @@ class BackfillJob(proto.Message):
         proto.MESSAGE,
         number=5,
         message="Error",
+    )
+    event_filter: "EventFilter" = proto.Field(
+        proto.MESSAGE,
+        number=7,
+        message="EventFilter",
+    )
+
+
+class EventFilter(proto.Message):
+    r"""Represents a filter for included data on a stream object.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        sql_where_clause (str):
+            An SQL-query Where clause selecting which data should be
+            included, not including the "WHERE" keyword. e.g.,
+            ``t.key1 = 'value1' AND t.key2 = 'value2'``
+
+            This field is a member of `oneof`_ ``filter``.
+    """
+
+    sql_where_clause: str = proto.Field(
+        proto.STRING,
+        number=1,
+        oneof="filter",
     )
 
 
@@ -3771,6 +5129,16 @@ class CdcStrategy(proto.Message):
                 MySQL GTID set to start replicating from.
 
                 This field is a member of `oneof`_ ``position``.
+            mongodb_change_stream_position (google.cloud.datastream_v1.types.MongodbChangeStreamPosition):
+                MongoDB change stream position to start
+                replicating from.
+
+                This field is a member of `oneof`_ ``position``.
+            spanner_change_stream_position (google.cloud.datastream_v1.types.SpannerChangeStreamPosition):
+                Optional. Spanner change stream position to
+                start replicating from.
+
+                This field is a member of `oneof`_ ``position``.
         """
 
         mysql_log_position: "MysqlLogPosition" = proto.Field(
@@ -3796,6 +5164,18 @@ class CdcStrategy(proto.Message):
             number=104,
             oneof="position",
             message="MysqlGtidPosition",
+        )
+        mongodb_change_stream_position: "MongodbChangeStreamPosition" = proto.Field(
+            proto.MESSAGE,
+            number=105,
+            oneof="position",
+            message="MongodbChangeStreamPosition",
+        )
+        spanner_change_stream_position: "SpannerChangeStreamPosition" = proto.Field(
+            proto.MESSAGE,
+            number=106,
+            oneof="position",
+            message="SpannerChangeStreamPosition",
         )
 
     most_recent_start_position: MostRecentStartPosition = proto.Field(
@@ -3886,6 +5266,40 @@ class MysqlGtidPosition(proto.Message):
     gtid_set: str = proto.Field(
         proto.STRING,
         number=1,
+    )
+
+
+class MongodbChangeStreamPosition(proto.Message):
+    r"""MongoDB change stream position
+
+    Attributes:
+        start_time (google.protobuf.timestamp_pb2.Timestamp):
+            Required. The timestamp to start change
+            stream from.
+    """
+
+    start_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=timestamp_pb2.Timestamp,
+    )
+
+
+class SpannerChangeStreamPosition(proto.Message):
+    r"""Represents a position in a Spanner change stream from which
+    to start replicating.
+
+    Attributes:
+        start_time (google.protobuf.timestamp_pb2.Timestamp):
+            Required. The timestamp to start change
+            stream queries from. The timestamp must be a
+            positive value.
+    """
+
+    start_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=timestamp_pb2.Timestamp,
     )
 
 

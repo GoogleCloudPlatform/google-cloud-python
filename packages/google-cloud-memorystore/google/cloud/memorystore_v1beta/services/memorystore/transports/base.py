@@ -146,8 +146,36 @@ class MemorystoreTransport(abc.ABC):
     def _prep_wrapped_messages(self, client_info):
         # Precompute the wrapped methods.
         self._wrapped_methods = {
+            self.list_acl_policies: gapic_v1.method.wrap_method(
+                self.list_acl_policies,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
             self.list_instances: gapic_v1.method.wrap_method(
                 self.list_instances,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_acl_policy: gapic_v1.method.wrap_method(
+                self.get_acl_policy,
                 default_retry=retries.Retry(
                     initial=1.0,
                     maximum=10.0,
@@ -174,14 +202,57 @@ class MemorystoreTransport(abc.ABC):
                 default_timeout=60.0,
                 client_info=client_info,
             ),
+            self.create_acl_policy: gapic_v1.method.wrap_method(
+                self.create_acl_policy,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
             self.create_instance: gapic_v1.method.wrap_method(
                 self.create_instance,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
+            self.update_acl_policy: gapic_v1.method.wrap_method(
+                self.update_acl_policy,
                 default_timeout=600.0,
                 client_info=client_info,
             ),
             self.update_instance: gapic_v1.method.wrap_method(
                 self.update_instance,
                 default_timeout=600.0,
+                client_info=client_info,
+            ),
+            self.delete_acl_policy: gapic_v1.method.wrap_method(
+                self.delete_acl_policy,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
+            self.get_acl_policy_revision: gapic_v1.method.wrap_method(
+                self.get_acl_policy_revision,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_acl_policy_revisions: gapic_v1.method.wrap_method(
+                self.list_acl_policy_revisions,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
                 client_info=client_info,
             ),
             self.delete_instance: gapic_v1.method.wrap_method(
@@ -345,6 +416,18 @@ class MemorystoreTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def list_acl_policies(
+        self,
+    ) -> Callable[
+        [memorystore.ListAclPoliciesRequest],
+        Union[
+            memorystore.ListAclPoliciesResponse,
+            Awaitable[memorystore.ListAclPoliciesResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def list_instances(
         self,
     ) -> Callable[
@@ -353,6 +436,15 @@ class MemorystoreTransport(abc.ABC):
             memorystore.ListInstancesResponse,
             Awaitable[memorystore.ListInstancesResponse],
         ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_acl_policy(
+        self,
+    ) -> Callable[
+        [memorystore.GetAclPolicyRequest],
+        Union[memorystore.AclPolicy, Awaitable[memorystore.AclPolicy]],
     ]:
         raise NotImplementedError()
 
@@ -366,10 +458,28 @@ class MemorystoreTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def create_acl_policy(
+        self,
+    ) -> Callable[
+        [memorystore.CreateAclPolicyRequest],
+        Union[memorystore.AclPolicy, Awaitable[memorystore.AclPolicy]],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def create_instance(
         self,
     ) -> Callable[
         [memorystore.CreateInstanceRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_acl_policy(
+        self,
+    ) -> Callable[
+        [memorystore.UpdateAclPolicyRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
     ]:
         raise NotImplementedError()
@@ -380,6 +490,36 @@ class MemorystoreTransport(abc.ABC):
     ) -> Callable[
         [memorystore.UpdateInstanceRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_acl_policy(
+        self,
+    ) -> Callable[
+        [memorystore.DeleteAclPolicyRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_acl_policy_revision(
+        self,
+    ) -> Callable[
+        [memorystore.GetAclPolicyRevisionRequest],
+        Union[memorystore.AclPolicyRevision, Awaitable[memorystore.AclPolicyRevision]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_acl_policy_revisions(
+        self,
+    ) -> Callable[
+        [memorystore.ListAclPolicyRevisionsRequest],
+        Union[
+            memorystore.ListAclPolicyRevisionsResponse,
+            Awaitable[memorystore.ListAclPolicyRevisionsResponse],
+        ],
     ]:
         raise NotImplementedError()
 

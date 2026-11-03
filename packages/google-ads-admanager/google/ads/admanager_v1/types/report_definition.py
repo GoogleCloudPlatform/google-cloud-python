@@ -235,15 +235,6 @@ class ReportDefinition(proto.Message):
                 ``FUTURE_SELL_THROUGH``, ``REACH``, ``AD_SPEED``
 
                 Data format: ``STRING``
-            ADVERTISER_DOMAIN_NAME (242):
-                The domain name of the advertiser.
-
-                Corresponds to "Landing page domain" in the Ad Manager UI.
-
-                Compatible with the following report types: ``HISTORICAL``,
-                ``REACH``
-
-                Data format: ``STRING``
             ADVERTISER_EXTERNAL_ID (228):
                 The ID used in an external system for advertiser
                 identification
@@ -1418,6 +1409,17 @@ class ReportDefinition(proto.Message):
                 ``REVENUE_VERIFICATION``, ``ADS_TRAFFIC_NAVIGATOR``
 
                 Data format: ``STRING``
+            BIDDER_ID (445):
+                Represents a single Bidder integration, like Open Bidding,
+                SDK Bidding, or Authorized Buying.
+
+                Corresponds to "Bidder ID" in the Ad Manager UI (when
+                showing API fields).
+
+                Compatible with the following report types: ``HISTORICAL``,
+                ``REVENUE_VERIFICATION``, ``ADS_TRAFFIC_NAVIGATOR``
+
+                Data format: ``IDENTIFIER``
             BIDDER_NAME (494):
                 The name of the bidder.
 
@@ -1923,6 +1925,9 @@ class ReportDefinition(proto.Message):
                 Compatible with the following report types: ``HISTORICAL``
 
                 Data format: ``ENUM``
+
+                Values:
+                [CreativeSslOverride][google.ads.admanager.v1.CreativeSslOverrideEnum.CreativeSslOverride]
             CREATIVE_SSL_COMPLIANCE_OVERRIDE_NAME (786):
                 Localized name of the creative SSL compliance override.
 
@@ -1941,6 +1946,9 @@ class ReportDefinition(proto.Message):
                 Compatible with the following report types: ``HISTORICAL``
 
                 Data format: ``ENUM``
+
+                Values:
+                [CreativeSslScanResult][google.ads.admanager.v1.CreativeSslScanResultEnum.CreativeSslScanResult]
             CREATIVE_SSL_SCAN_RESULT_NAME (787):
                 Localized name of the creative SSL scan result.
 
@@ -2267,7 +2275,9 @@ class ReportDefinition(proto.Message):
 
                 Data format: ``STRING``
             DEVICE (226):
-                The device on which an ad was served.
+                Deprecated: Use ``DEVICE_MANUFACTURER_ID`` and
+                ``DEVICE_MODEL_ID`` instead. The device on which an ad was
+                served.
 
                 Corresponds to "Device value" in the Ad Manager UI (when
                 showing API fields).
@@ -2334,7 +2344,9 @@ class ReportDefinition(proto.Message):
 
                 Data format: ``STRING``
             DEVICE_NAME (225):
-                The localized name of the device on which an ad was served.
+                Deprecated: Use ``DEVICE_MANUFACTURER_NAME`` and
+                ``DEVICE_MODEL_NAME`` instead. The localized name of the
+                device on which an ad was served.
 
                 Corresponds to "Device" in the Ad Manager UI.
 
@@ -2807,8 +2819,14 @@ class ReportDefinition(proto.Message):
 
                 Data format: ``STRING_LIST``
             LANDING_PAGE_DOMAIN (242):
-                The landing page domain name of the advertiser. This will
-                eventually replace ADVERTISER_DOMAIN_NAME.
+                The landing page domain name of the advertiser.
+
+                Corresponds to "Landing page domain" in the Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``,
+                ``REACH``
+
+                Data format: ``STRING``
             LINE_ITEM_AGENCY (663):
                 The agency of the order associated with the line item.
 
@@ -3808,6 +3826,28 @@ class ReportDefinition(proto.Message):
                 Compatible with the following report types: ``REACH``
 
                 Data format: ``STRING``
+            NON_GUARANTEED_DEAL_PRIORITY_TIER (859):
+                Deal priority tier for non-guaranteed deals.
+
+                Corresponds to "Non-guaranteed deal priority tier" in the Ad
+                Manager UI (when showing API fields).
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``ENUM``
+
+                Values:
+                [DealPriorityTier][google.ads.admanager.v1.DealPriorityTierEnum.DealPriorityTier]
+            NON_GUARANTEED_DEAL_PRIORITY_TIER_NAME (860):
+                The localized name of the deal priority tier for
+                non-guaranteed deals.
+
+                Corresponds to "Non-guaranteed deal priority tier (Name)" in
+                the Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``STRING``
             NO_FILL_REASON_CATEGORY_NAME (587):
                 No fill reason category name in the Ads traffic navigator
                 report.
@@ -4796,7 +4836,8 @@ class ReportDefinition(proto.Message):
 
                 Data format: ``STRING``
             TOPICS_STATUS (504):
-                Reports the status of Topics in the ad request.
+                Deprecated: No longer supported. Reports the status of
+                Topics in the ad request.
 
                 Corresponds to "Topics status value" in the Ad Manager UI
                 (when showing API fields).
@@ -4805,8 +4846,8 @@ class ReportDefinition(proto.Message):
 
                 Data format: ``ENUM``
             TOPICS_STATUS_NAME (505):
-                The localized name of the status of Topics in the ad
-                request.
+                Deprecated: No longer supported. The localized name of the
+                status of Topics in the ad request.
 
                 Corresponds to "Topics status" in the Ad Manager UI.
 
@@ -5324,6 +5365,9 @@ class ReportDefinition(proto.Message):
                 ``YOUTUBE_CONSOLIDATED``
 
                 Data format: ``STRING``
+            ADVERTISER_DOMAIN_NAME (242):
+                Deprecated: Use ``LANDING_PAGE_DOMAIN`` instead. The domain
+                name of the advertiser.
             LINE_ITEM_CUSTOM_FIELD_0_OPTION_ID (10000):
                 Custom field option ID for Line Item with custom field ID
                 equal to the ID in index 0 of
@@ -6562,7 +6606,6 @@ class ReportDefinition(proto.Message):
         ACTIVE_VIEW_MEASUREMENT_SOURCE_NAME = 576
         ADVERTISER_CREDIT_STATUS = 475
         ADVERTISER_CREDIT_STATUS_NAME = 476
-        ADVERTISER_DOMAIN_NAME = 242
         ADVERTISER_EXTERNAL_ID = 228
         ADVERTISER_ID = 131
         ADVERTISER_LABELS = 230
@@ -6683,6 +6726,7 @@ class ReportDefinition(proto.Message):
         AUTO_REFRESHED_TRAFFIC = 421
         AUTO_REFRESHED_TRAFFIC_NAME = 422
         BIDDER_ENCRYPTED_ID = 493
+        BIDDER_ID = 445
         BIDDER_NAME = 494
         BID_RANGE = 679
         BID_REJECTION_REASON = 599
@@ -6930,6 +6974,8 @@ class ReportDefinition(proto.Message):
         NIELSEN_RESTATEMENT_DATE = 698
         NIELSEN_SEGMENT = 699
         NIELSEN_SITE_URL = 700
+        NON_GUARANTEED_DEAL_PRIORITY_TIER = 859
+        NON_GUARANTEED_DEAL_PRIORITY_TIER_NAME = 860
         NO_FILL_REASON_CATEGORY_NAME = 587
         NUM_ADS_IN_POD = 804
         OPERATING_SYSTEM_CATEGORY = 117
@@ -7092,6 +7138,7 @@ class ReportDefinition(proto.Message):
         YOUTUBE_AD_DURATION_BUCKET_NAME = 431
         YOUTUBE_AD_TYPE = 399
         YOUTUBE_AD_TYPE_NAME = 400
+        ADVERTISER_DOMAIN_NAME = 242
         LINE_ITEM_CUSTOM_FIELD_0_OPTION_ID = 10000
         LINE_ITEM_CUSTOM_FIELD_1_OPTION_ID = 10001
         LINE_ITEM_CUSTOM_FIELD_2_OPTION_ID = 10002
@@ -7807,6 +7854,15 @@ class ReportDefinition(proto.Message):
                 zone.
 
                 Corresponds to "AdSense revenue" in the Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``MONEY``
+            ADVERTISER_COST_PER_ATTRIBUTED_ITEM_PURCHASED (747):
+                The cost per item purchased.
+
+                Corresponds to "Advertiser cost per attributed item
+                purchased" in the Ad Manager UI.
 
                 Compatible with the following report types: ``HISTORICAL``
 
@@ -8661,7 +8717,7 @@ class ReportDefinition(proto.Message):
 
                 Data format: ``INTEGER``
             AD_SERVER_UNFILTERED_IMPRESSIONS (260):
-                Deprecated. This metric has been renamed to
+                Deprecated: This metric has been renamed to
                 ``AD_SERVER_UNFILTERED_DOWNLOADED_IMPRESSIONS``. The server
                 will normalize any requests using this value to
                 ``AD_SERVER_UNFILTERED_DOWNLOADED_IMPRESSIONS``. This value
@@ -9280,6 +9336,28 @@ class ReportDefinition(proto.Message):
                 ``ADS_TRAFFIC_NAVIGATOR``
 
                 Data format: ``INTEGER``
+            ATTRIBUTED_ITEMS_PURCHASED (745):
+                The number of purchased items that were attributed to a view
+                or click as defined by the sponsored product ad's line item
+                settings.
+
+                Corresponds to "Attributed items purchased" in the Ad
+                Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``INTEGER``
+            ATTRIBUTED_ITEMS_PURCHASED_ROAS (748):
+                The percent of revenue the retailer made on attributed items
+                purchased compared to the advertiser's ad spend for those
+                items. Return on Ad Spend
+
+                Corresponds to "Attributed items purchased ROAS" in the Ad
+                Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``PERCENT``
             AUDIENCE_SEGMENT_COST (558):
                 Cost of the audience segment.
 
@@ -10195,6 +10273,71 @@ class ReportDefinition(proto.Message):
                 ``OFF_PROPERTY_CAMPAIGNS``
 
                 Data format: ``MONEY``
+            OFF_PROPERTY_VIDEO_COMPLETES (754):
+                The number of times the video played to completion for
+                off-property campaigns.
+
+                Corresponds to "Off-property completes" in the Ad Manager
+                UI.
+
+                Compatible with the following report types:
+                ``OFF_PROPERTY_CAMPAIGNS``
+
+                Data format: ``INTEGER``
+            OFF_PROPERTY_VIDEO_ENGAGED_VIEWS (755):
+                The number of engaged views for off-property campaigns: ad
+                is viewed to completion or for 30s, whichever comes first.
+
+                Corresponds to "Off-property engaged views" in the Ad
+                Manager UI.
+
+                Compatible with the following report types:
+                ``OFF_PROPERTY_CAMPAIGNS``
+
+                Data format: ``INTEGER``
+            OFF_PROPERTY_VIDEO_FIRST_QUARTILES (756):
+                The number of times the video played to 25% of its length
+                for off-property campaigns.
+
+                Corresponds to "Off-property first quartiles" in the Ad
+                Manager UI.
+
+                Compatible with the following report types:
+                ``OFF_PROPERTY_CAMPAIGNS``
+
+                Data format: ``INTEGER``
+            OFF_PROPERTY_VIDEO_MIDPOINTS (757):
+                The number of times the video reached its midpoint during
+                play for off- property campaigns.
+
+                Corresponds to "Off-property midpoints" in the Ad Manager
+                UI.
+
+                Compatible with the following report types:
+                ``OFF_PROPERTY_CAMPAIGNS``
+
+                Data format: ``INTEGER``
+            OFF_PROPERTY_VIDEO_STARTS (753):
+                The number of impressions where the video was played for
+                off-property campaigns.
+
+                Corresponds to "Off-property starts" in the Ad Manager UI.
+
+                Compatible with the following report types:
+                ``OFF_PROPERTY_CAMPAIGNS``
+
+                Data format: ``INTEGER``
+            OFF_PROPERTY_VIDEO_THIRD_QUARTILES (758):
+                The number of times the video played to 75% of its length
+                for off-property campaigns.
+
+                Corresponds to "Off-property third quartiles" in the Ad
+                Manager UI.
+
+                Compatible with the following report types:
+                ``OFF_PROPERTY_CAMPAIGNS``
+
+                Data format: ``INTEGER``
             ON_PLATFORM_MULTIPLE_CALL_ECPM (678):
                 Average effective cost-per-thousand-impressions earned from
                 the mediation on-platform multiple call, excluding CPD
@@ -10574,6 +10717,17 @@ class ReportDefinition(proto.Message):
 
                 Compatible with the following report types: ``HISTORICAL``,
                 ``AD_SPEED``
+
+                Data format: ``MONEY``
+            REVENUE_ON_ATTRIBUTED_ITEMS_PURCHASED (746):
+                The total amount users paid for items that were attributed
+                to a view or click as defined by the sponsored product ad's
+                line item settings. This value is revenue for the retailer.
+
+                Corresponds to "Revenue on attributed items purchased" in
+                the Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
 
                 Data format: ``MONEY``
             REVENUE_PAID_THROUGH_MCM_AUTOPAYMENT (214):
@@ -12603,6 +12757,7 @@ class ReportDefinition(proto.Message):
         ADSENSE_PERCENT_REVENUE_WITHOUT_CPD = 30
         ADSENSE_RESPONSES_SERVED = 41
         ADSENSE_REVENUE = 25
+        ADVERTISER_COST_PER_ATTRIBUTED_ITEM_PURCHASED = 747
         AD_EXCHANGE_ACTIVE_VIEW_AVERAGE_VIEWABLE_TIME = 79
         AD_EXCHANGE_ACTIVE_VIEW_ELIGIBLE_IMPRESSIONS = 76
         AD_EXCHANGE_ACTIVE_VIEW_MEASURABLE_IMPRESSIONS = 75
@@ -12744,6 +12899,8 @@ class ReportDefinition(proto.Message):
         ATN_TOTAL_LOADED_ADS = 387
         ATN_VALID_AD_REQUESTS = 389
         ATN_YIELD_GROUP_MEDIATION_PASSBACKS = 390
+        ATTRIBUTED_ITEMS_PURCHASED = 745
+        ATTRIBUTED_ITEMS_PURCHASED_ROAS = 748
         AUDIENCE_SEGMENT_COST = 558
         AVERAGE_ECPM = 37
         AVERAGE_ECPM_WITHOUT_CPD = 5
@@ -12839,6 +12996,12 @@ class ReportDefinition(proto.Message):
         OFF_PROPERTY_REVENUE = 401
         OFF_PROPERTY_SPEND = 402
         OFF_PROPERTY_SPEND_ECPM = 403
+        OFF_PROPERTY_VIDEO_COMPLETES = 754
+        OFF_PROPERTY_VIDEO_ENGAGED_VIEWS = 755
+        OFF_PROPERTY_VIDEO_FIRST_QUARTILES = 756
+        OFF_PROPERTY_VIDEO_MIDPOINTS = 757
+        OFF_PROPERTY_VIDEO_STARTS = 753
+        OFF_PROPERTY_VIDEO_THIRD_QUARTILES = 758
         ON_PLATFORM_MULTIPLE_CALL_ECPM = 678
         ON_PLATFORM_MULTIPLE_CALL_IMPRESSIONS = 676
         ON_PLATFORM_MULTIPLE_CALL_REVENUE = 677
@@ -12878,6 +13041,7 @@ class ReportDefinition(proto.Message):
         RESPONSES_SERVED = 39
         RETENTION = 238
         REVENUE = 36
+        REVENUE_ON_ATTRIBUTED_ITEMS_PURCHASED = 746
         REVENUE_PAID_THROUGH_MCM_AUTOPAYMENT = 214
         REVENUE_VERIFICATION_CPD_REVENUE = 560
         REVENUE_VERIFICATION_GROSS_CPD_REVENUE = 559
