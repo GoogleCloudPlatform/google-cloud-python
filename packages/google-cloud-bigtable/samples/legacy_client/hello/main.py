@@ -26,7 +26,7 @@ Prerequisites:
 
 import argparse
 
-# [START bigtable_hw_imports]
+# [START bigtable_hw_imports_legacy]
 from datetime import datetime, timezone
 
 from google.cloud import bigtable
@@ -34,7 +34,7 @@ from google.cloud.bigtable import column_family, row_filters
 
 from ...utils import wait_for_table
 
-# [END bigtable_hw_imports]
+# [END bigtable_hw_imports_legacy]
 
 # use to avoid warnings
 row_filters
@@ -42,14 +42,14 @@ column_family
 
 
 def main(project_id, instance_id, table_id):
-    # [START bigtable_hw_connect]
+    # [START bigtable_hw_connect_legacy]
     # The client must be created with admin=True because it will create a
     # table.
     client = bigtable.Client(project=project_id, admin=True)
     instance = client.instance(instance_id)
-    # [END bigtable_hw_connect]
+    # [END bigtable_hw_connect_legacy]
 
-    # [START bigtable_hw_create_table]
+    # [START bigtable_hw_create_table_legacy]
     print("Creating the {} table.".format(table_id))
     table = instance.table(table_id)
 
@@ -63,13 +63,13 @@ def main(project_id, instance_id, table_id):
         table.create(column_families=column_families)
     else:
         print("Table {} already exists.".format(table_id))
-    # [END bigtable_hw_create_table]
+    # [END bigtable_hw_create_table_legacy]
 
     try:
         # let table creation complete
         wait_for_table(table)
 
-        # [START bigtable_hw_write_rows]
+        # [START bigtable_hw_write_rows_legacy]
         print("Writing some greetings to the table.")
         greetings = [b"Hello World!", b"Hello Cloud Bigtable!", b"Hello Python!"]
         rows = []
@@ -98,27 +98,27 @@ def main(project_id, instance_id, table_id):
             )
             rows.append(row)
         table.mutate_rows(rows)
-        # [END bigtable_hw_write_rows]
+        # [END bigtable_hw_write_rows_legacy]
 
-        # [START bigtable_hw_create_filter]
+        # [START bigtable_hw_create_filter_legacy]
         # Create a filter to only retrieve the most recent version of the cell
         # for each column across entire row.
         row_filter = bigtable.row_filters.CellsColumnLimitFilter(1)
-        # [END bigtable_hw_create_filter]
+        # [END bigtable_hw_create_filter_legacy]
 
-        # [START bigtable_hw_get_with_filter]
-        # [START bigtable_hw_get_by_key]
+        # [START bigtable_hw_get_with_filter_legacy]
+        # [START bigtable_hw_get_by_key_legacy]
         print("Getting a single greeting by row key.")
         key = b"greeting0"
 
         row = table.read_row(key, row_filter)
         cell = row.cells[column_family_id.decode("utf-8")][column][0]
         print(cell.value.decode("utf-8"))
-        # [END bigtable_hw_get_by_key]
-        # [END bigtable_hw_get_with_filter]
+        # [END bigtable_hw_get_by_key_legacy]
+        # [END bigtable_hw_get_with_filter_legacy]
 
-        # [START bigtable_hw_scan_with_filter]
-        # [START bigtable_hw_scan_all]
+        # [START bigtable_hw_scan_with_filter_legacy]
+        # [START bigtable_hw_scan_all_legacy]
         print("Scanning for all greetings:")
         partial_rows = table.read_rows(filter_=row_filter)
 
@@ -126,14 +126,14 @@ def main(project_id, instance_id, table_id):
             column_family_id_str = column_family_id.decode("utf-8")
             cell = row.cells[column_family_id_str][column][0]
             print(cell.value.decode("utf-8"))
-        # [END bigtable_hw_scan_all]
-        # [END bigtable_hw_scan_with_filter]
+        # [END bigtable_hw_scan_all_legacy]
+        # [END bigtable_hw_scan_with_filter_legacy]
 
     finally:
-        # [START bigtable_hw_delete_table]
+        # [START bigtable_hw_delete_table_legacy]
         print("Deleting the {} table.".format(table_id))
         table.delete()
-        # [END bigtable_hw_delete_table]
+        # [END bigtable_hw_delete_table_legacy]
 
 
 if __name__ == "__main__":

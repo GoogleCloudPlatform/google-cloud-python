@@ -10,6 +10,16 @@
         "grpc": {
           "libraryClient": "CloudRedisClusterClient",
           "rpcs": {
+            "AddAuthToken": {
+              "methods": [
+                "add_auth_token"
+              ]
+            },
+            "AddTokenAuthUser": {
+              "methods": [
+                "add_token_auth_user"
+              ]
+            },
             "BackupCluster": {
               "methods": [
                 "backup_cluster"
@@ -30,6 +40,11 @@
                 "delete_acl_policy"
               ]
             },
+            "DeleteAuthToken": {
+              "methods": [
+                "delete_auth_token"
+              ]
+            },
             "DeleteBackup": {
               "methods": [
                 "delete_backup"
@@ -38,6 +53,11 @@
             "DeleteCluster": {
               "methods": [
                 "delete_cluster"
+              ]
+            },
+            "DeleteTokenAuthUser": {
+              "methods": [
+                "delete_token_auth_user"
               ]
             },
             "ExportBackup": {
@@ -53,6 +73,11 @@
             "GetAclPolicyRevision": {
               "methods": [
                 "get_acl_policy_revision"
+              ]
+            },
+            "GetAuthToken": {
+              "methods": [
+                "get_auth_token"
               ]
             },
             "GetBackup": {
@@ -80,6 +105,11 @@
                 "get_shared_regional_certificate_authority"
               ]
             },
+            "GetTokenAuthUser": {
+              "methods": [
+                "get_token_auth_user"
+              ]
+            },
             "ListAclPolicies": {
               "methods": [
                 "list_acl_policies"
@@ -88,6 +118,11 @@
             "ListAclPolicyRevisions": {
               "methods": [
                 "list_acl_policy_revisions"
+              ]
+            },
+            "ListAuthTokens": {
+              "methods": [
+                "list_auth_tokens"
               ]
             },
             "ListBackupCollections": {
@@ -103,6 +138,11 @@
             "ListClusters": {
               "methods": [
                 "list_clusters"
+              ]
+            },
+            "ListTokenAuthUsers": {
+              "methods": [
+                "list_token_auth_users"
               ]
             },
             "RescheduleClusterMaintenance": {
@@ -125,6 +165,16 @@
         "grpc-async": {
           "libraryClient": "CloudRedisClusterAsyncClient",
           "rpcs": {
+            "AddAuthToken": {
+              "methods": [
+                "add_auth_token"
+              ]
+            },
+            "AddTokenAuthUser": {
+              "methods": [
+                "add_token_auth_user"
+              ]
+            },
             "BackupCluster": {
               "methods": [
                 "backup_cluster"
@@ -145,6 +195,11 @@
                 "delete_acl_policy"
               ]
             },
+            "DeleteAuthToken": {
+              "methods": [
+                "delete_auth_token"
+              ]
+            },
             "DeleteBackup": {
               "methods": [
                 "delete_backup"
@@ -153,6 +208,11 @@
             "DeleteCluster": {
               "methods": [
                 "delete_cluster"
+              ]
+            },
+            "DeleteTokenAuthUser": {
+              "methods": [
+                "delete_token_auth_user"
               ]
             },
             "ExportBackup": {
@@ -168,6 +228,11 @@
             "GetAclPolicyRevision": {
               "methods": [
                 "get_acl_policy_revision"
+              ]
+            },
+            "GetAuthToken": {
+              "methods": [
+                "get_auth_token"
               ]
             },
             "GetBackup": {
@@ -195,6 +260,11 @@
                 "get_shared_regional_certificate_authority"
               ]
             },
+            "GetTokenAuthUser": {
+              "methods": [
+                "get_token_auth_user"
+              ]
+            },
             "ListAclPolicies": {
               "methods": [
                 "list_acl_policies"
@@ -203,6 +273,11 @@
             "ListAclPolicyRevisions": {
               "methods": [
                 "list_acl_policy_revisions"
+              ]
+            },
+            "ListAuthTokens": {
+              "methods": [
+                "list_auth_tokens"
               ]
             },
             "ListBackupCollections": {
@@ -218,6 +293,11 @@
             "ListClusters": {
               "methods": [
                 "list_clusters"
+              ]
+            },
+            "ListTokenAuthUsers": {
+              "methods": [
+                "list_token_auth_users"
               ]
             },
             "RescheduleClusterMaintenance": {
@@ -240,6 +320,16 @@
         "rest": {
           "libraryClient": "CloudRedisClusterClient",
           "rpcs": {
+            "AddAuthToken": {
+              "methods": [
+                "add_auth_token"
+              ]
+            },
+            "AddTokenAuthUser": {
+              "methods": [
+                "add_token_auth_user"
+              ]
+            },
             "BackupCluster": {
               "methods": [
                 "backup_cluster"
@@ -260,6 +350,11 @@
                 "delete_acl_policy"
               ]
             },
+            "DeleteAuthToken": {
+              "methods": [
+                "delete_auth_token"
+              ]
+            },
             "DeleteBackup": {
               "methods": [
                 "delete_backup"
@@ -268,6 +363,11 @@
             "DeleteCluster": {
               "methods": [
                 "delete_cluster"
+              ]
+            },
+            "DeleteTokenAuthUser": {
+              "methods": [
+                "delete_token_auth_user"
               ]
             },
             "ExportBackup": {
@@ -283,6 +383,11 @@
             "GetAclPolicyRevision": {
               "methods": [
                 "get_acl_policy_revision"
+              ]
+            },
+            "GetAuthToken": {
+              "methods": [
+                "get_auth_token"
               ]
             },
             "GetBackup": {
@@ -310,6 +415,11 @@
                 "get_shared_regional_certificate_authority"
               ]
             },
+            "GetTokenAuthUser": {
+              "methods": [
+                "get_token_auth_user"
+              ]
+            },
             "ListAclPolicies": {
               "methods": [
                 "list_acl_policies"
@@ -318,6 +428,11 @@
             "ListAclPolicyRevisions": {
               "methods": [
                 "list_acl_policy_revisions"
+              ]
+            },
+            "ListAuthTokens": {
+              "methods": [
+                "list_auth_tokens"
               ]
             },
             "ListBackupCollections": {
@@ -333,6 +448,11 @@
             "ListClusters": {
               "methods": [
                 "list_clusters"
+              ]
+            },
+            "ListTokenAuthUsers": {
+              "methods": [
+                "list_token_auth_users"
               ]
             },
             "RescheduleClusterMaintenance": {

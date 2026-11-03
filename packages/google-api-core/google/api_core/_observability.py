@@ -594,8 +594,11 @@ class _TraceContext:
             except Exception:  # Fail-open on malformed URL parsing
                 pass
 
-        span_name = resolved_method
+        span_name = (
+            f"{resolved_method} {url_template}" if url_template else resolved_method
+        )
         span_attributes: dict[str, Any] = {
+            "rpc.system.name": "http",
             "http.request.method": resolved_method,
             "server.address": server_address or "",
             "server.port": server_port or 443,
@@ -610,6 +613,36 @@ class _TraceContext:
             span_attributes["http.request.body.size"] = len(resolved_body)
 
         return span_name, span_attributes, resolved_headers
+
+    @staticmethod
+    def _extract_http_error_message(response: Any) -> str | None:
+        """Extract a human-readable error message from an HTTP error response."""
+        json_fn = getattr(response, "json", None)
+        if callable(json_fn):
+            try:
+                payload = json_fn()
+                if isinstance(payload, dict):
+                    err_obj = payload.get("error")
+                    if isinstance(err_obj, dict):
+                        msg = err_obj.get("message")
+                        if isinstance(msg, str) and msg:
+                            return msg
+                    elif isinstance(err_obj, str) and err_obj:
+                        return err_obj
+            # Intentionally catch broad Exception so telemetry extraction
+            # fails open and never disrupts the caller's RPC flow.
+            except Exception:
+                pass
+        for attr in ("text", "reason"):
+            try:
+                val = getattr(response, attr, None)
+                if isinstance(val, str) and val.strip():
+                    return val.strip()
+            # Intentionally catch broad Exception so telemetry extraction
+            # fails open and never disrupts the caller's RPC flow.
+            except Exception:
+                continue
+        return None
 
     def __init__(
         self,
@@ -630,6 +663,7 @@ class _TraceContext:
         self._body = body
         self._client_options = client_options
         self._span: Any = None
+        self._parent_span: Any = None
         self._cm: Any = None
 
     def record_response(self, response: Any) -> None:
@@ -652,11 +686,18 @@ class _TraceContext:
                 response, "status_code", getattr(response, "status", None)
             )
             if status_code is not None:
-                span.set_attribute("http.response.status_code", int(status_code))
-                if int(status_code) >= 400:
+                code_int = int(status_code)
+                span.set_attribute("http.response.status_code", code_int)
+                if self._parent_span is not None:
+                    self._parent_span.set_attribute(
+                        "http.response.status_code", code_int
+                    )
+                if code_int >= 400:
                     span.set_status(Status(StatusCode.ERROR))
-                else:
-                    span.set_status(Status(StatusCode.OK))
+                    span.set_attribute("error.type", str(code_int))
+                    error_msg = self._extract_http_error_message(response)
+                    if error_msg:
+                        span.set_attribute("status.message", error_msg)
 
             headers = getattr(response, "headers", None)
             if headers and "Content-Length" in headers:
@@ -742,6 +783,25 @@ class _TraceContext:
                     client_options=self._client_options,
                 )
             )
+
+            parent_span = trace.get_current_span()
+            if (
+                parent_span is not None
+                and getattr(parent_span, "is_recording", lambda: False)() is True
+                and hasattr(parent_span, "set_attribute")
+            ):
+                self._parent_span = parent_span
+                if self._url_template:
+                    try:
+                        parent_attrs = getattr(parent_span, "attributes", None)
+                        if parent_attrs is None or "url.template" not in parent_attrs:
+                            parent_span.set_attribute(
+                                "url.template", self._url_template
+                            )
+                    # Intentionally catch broad Exception so telemetry extraction
+                    # fails open and never disrupts the caller's RPC flow.
+                    except Exception:
+                        pass
 
             self._cm = tracer.start_as_current_span(
                 span_name,

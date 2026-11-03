@@ -1081,6 +1081,245 @@ class CloudRedisClusterGrpcAsyncIOTransport(CloudRedisClusterTransport):
             )
         return self._stubs["backup_cluster"]
 
+    @property
+    def list_token_auth_users(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.ListTokenAuthUsersRequest],
+        Awaitable[cloud_redis_cluster.ListTokenAuthUsersResponse],
+    ]:
+        r"""Return a callable for the list token auth users method over gRPC.
+
+        Lists all the token auth users for a token based auth
+        enabled cluster.
+
+        Returns:
+            Callable[[~.ListTokenAuthUsersRequest],
+                    Awaitable[~.ListTokenAuthUsersResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_token_auth_users" not in self._stubs:
+            self._stubs["list_token_auth_users"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1beta1.CloudRedisCluster/ListTokenAuthUsers",
+                request_serializer=cloud_redis_cluster.ListTokenAuthUsersRequest.serialize,
+                response_deserializer=cloud_redis_cluster.ListTokenAuthUsersResponse.deserialize,
+            )
+        return self._stubs["list_token_auth_users"]
+
+    @property
+    def get_token_auth_user(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.GetTokenAuthUserRequest],
+        Awaitable[cloud_redis_cluster.TokenAuthUser],
+    ]:
+        r"""Return a callable for the get token auth user method over gRPC.
+
+        Gets a specific token auth user for a basic auth
+        enabled cluster.
+
+        Returns:
+            Callable[[~.GetTokenAuthUserRequest],
+                    Awaitable[~.TokenAuthUser]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_token_auth_user" not in self._stubs:
+            self._stubs["get_token_auth_user"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1beta1.CloudRedisCluster/GetTokenAuthUser",
+                request_serializer=cloud_redis_cluster.GetTokenAuthUserRequest.serialize,
+                response_deserializer=cloud_redis_cluster.TokenAuthUser.deserialize,
+            )
+        return self._stubs["get_token_auth_user"]
+
+    @property
+    def list_auth_tokens(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.ListAuthTokensRequest],
+        Awaitable[cloud_redis_cluster.ListAuthTokensResponse],
+    ]:
+        r"""Return a callable for the list auth tokens method over gRPC.
+
+        Lists all the auth tokens for a specific token auth
+        user.
+
+        Returns:
+            Callable[[~.ListAuthTokensRequest],
+                    Awaitable[~.ListAuthTokensResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_auth_tokens" not in self._stubs:
+            self._stubs["list_auth_tokens"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1beta1.CloudRedisCluster/ListAuthTokens",
+                request_serializer=cloud_redis_cluster.ListAuthTokensRequest.serialize,
+                response_deserializer=cloud_redis_cluster.ListAuthTokensResponse.deserialize,
+            )
+        return self._stubs["list_auth_tokens"]
+
+    @property
+    def get_auth_token(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.GetAuthTokenRequest],
+        Awaitable[cloud_redis_cluster.AuthToken],
+    ]:
+        r"""Return a callable for the get auth token method over gRPC.
+
+        Gets a specific auth token for a specific token auth
+        user.
+
+        Returns:
+            Callable[[~.GetAuthTokenRequest],
+                    Awaitable[~.AuthToken]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_auth_token" not in self._stubs:
+            self._stubs["get_auth_token"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1beta1.CloudRedisCluster/GetAuthToken",
+                request_serializer=cloud_redis_cluster.GetAuthTokenRequest.serialize,
+                response_deserializer=cloud_redis_cluster.AuthToken.deserialize,
+            )
+        return self._stubs["get_auth_token"]
+
+    @property
+    def add_token_auth_user(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.AddTokenAuthUserRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the add token auth user method over gRPC.
+
+        Adds a token auth user for a token based auth enabled
+        cluster.
+
+        Returns:
+            Callable[[~.AddTokenAuthUserRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "add_token_auth_user" not in self._stubs:
+            self._stubs["add_token_auth_user"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1beta1.CloudRedisCluster/AddTokenAuthUser",
+                request_serializer=cloud_redis_cluster.AddTokenAuthUserRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["add_token_auth_user"]
+
+    @property
+    def delete_token_auth_user(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.DeleteTokenAuthUserRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the delete token auth user method over gRPC.
+
+        Deletes a token auth user for a token based auth
+        enabled cluster.
+
+        Returns:
+            Callable[[~.DeleteTokenAuthUserRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_token_auth_user" not in self._stubs:
+            self._stubs["delete_token_auth_user"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1beta1.CloudRedisCluster/DeleteTokenAuthUser",
+                request_serializer=cloud_redis_cluster.DeleteTokenAuthUserRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["delete_token_auth_user"]
+
+    @property
+    def add_auth_token(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.AddAuthTokenRequest], Awaitable[operations_pb2.Operation]
+    ]:
+        r"""Return a callable for the add auth token method over gRPC.
+
+        Adds a auth token for a user of a token based auth
+        enabled cluster.
+
+        Returns:
+            Callable[[~.AddAuthTokenRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "add_auth_token" not in self._stubs:
+            self._stubs["add_auth_token"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1beta1.CloudRedisCluster/AddAuthToken",
+                request_serializer=cloud_redis_cluster.AddAuthTokenRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["add_auth_token"]
+
+    @property
+    def delete_auth_token(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.DeleteAuthTokenRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the delete auth token method over gRPC.
+
+        Removes a auth token for a user of a token based auth
+        enabled instance.
+
+        Returns:
+            Callable[[~.DeleteAuthTokenRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_auth_token" not in self._stubs:
+            self._stubs["delete_auth_token"] = self._logged_channel.unary_unary(
+                "/google.cloud.redis.cluster.v1beta1.CloudRedisCluster/DeleteAuthToken",
+                request_serializer=cloud_redis_cluster.DeleteAuthTokenRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["delete_auth_token"]
+
     def _prep_wrapped_messages(self, client_info):
         """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
         self._wrapped_methods = {
@@ -1192,6 +1431,46 @@ class CloudRedisClusterGrpcAsyncIOTransport(CloudRedisClusterTransport):
             self.backup_cluster: self._wrap_method(
                 self.backup_cluster,
                 default_timeout=600.0,
+                client_info=client_info,
+            ),
+            self.list_token_auth_users: self._wrap_method(
+                self.list_token_auth_users,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_token_auth_user: self._wrap_method(
+                self.get_token_auth_user,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_auth_tokens: self._wrap_method(
+                self.list_auth_tokens,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_auth_token: self._wrap_method(
+                self.get_auth_token,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.add_token_auth_user: self._wrap_method(
+                self.add_token_auth_user,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_token_auth_user: self._wrap_method(
+                self.delete_token_auth_user,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.add_auth_token: self._wrap_method(
+                self.add_auth_token,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_auth_token: self._wrap_method(
+                self.delete_auth_token,
+                default_timeout=None,
                 client_info=client_info,
             ),
             self.get_location: self._wrap_method(

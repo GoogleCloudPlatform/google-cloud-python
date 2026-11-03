@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 language: python
-version: v0.48.0
+version: v0.50.0
 repo: googleapis/google-cloud-python
 sources:
   googleapis:
-    commit: b6efa15f5537f053786e5d8875d75bc3a6246455
-    sha256: d432e85ea4bb83e7b0ed83415d24fae57a52e7c51afc7a96c6147a27da85eb02
+    commit: 968d491eddafaf61da6b8bd0a6a2710ec9e2fdbc
+    sha256: f61663b244a2907b2cce73cb16589f103d203cace88ed5a79228e27dc415bfe2
 tools:
   pip:
     - name: black
@@ -80,11 +80,11 @@ default:
     library_type: GAPIC_AUTO
 libraries:
   - name: bigquery-magics
-    version: 0.15.1
+    version: 0.15.2
     python:
       library_type: INTEGRATION
   - name: db-dtypes
-    version: 1.8.0
+    version: 1.9.0
     python:
       library_type: INTEGRATION
   - name: django-google-spanner
@@ -92,7 +92,7 @@ libraries:
     python:
       library_type: INTEGRATION
   - name: gapic-generator
-    version: 1.43.1
+    version: 1.44.1
     python:
       library_type: CORE
   - name: gcp-sphinx-docfx-yaml
@@ -152,7 +152,7 @@ libraries:
       metadata_name_override: analyticsdata
       default_version: v1beta
   - name: google-api-core
-    version: 2.42.0
+    version: 2.43.2
     python:
       library_type: CORE
   - name: google-apps-card
@@ -164,7 +164,7 @@ libraries:
     python:
       default_version: v1
   - name: google-apps-chat
-    version: 0.10.7
+    version: 0.10.8
     apis:
       - path: google/chat/v1
     python:
@@ -237,15 +237,8 @@ libraries:
           - python-gapic-name=slides
       metadata_name_override: type
       default_version: apiVersion
-  - name: google-area120-tables
-    version: 0.15.1
-    apis:
-      - path: google/area120/tables/v1alpha1
-    python:
-      metadata_name_override: area120tables
-      default_version: v1alpha1
   - name: google-auth
-    version: 2.62.0
+    version: 2.62.1
     python:
       library_type: AUTH
   - name: google-auth-httplib2
@@ -278,7 +271,7 @@ libraries:
       metadata_name_override: accessapproval
       default_version: v1
   - name: google-cloud-access-context-manager
-    version: 0.6.1
+    version: 0.6.2
     apis:
       - path: google/identity/accesscontextmanager/v1
       - path: google/identity/accesscontextmanager/type
@@ -424,7 +417,7 @@ libraries:
     python:
       default_version: v1beta
   - name: google-cloud-apptopology
-    version: 0.1.0
+    version: 0.1.1
     apis:
       - path: google/cloud/apptopology/v1
     copyright_year: "2026"
@@ -465,7 +458,7 @@ libraries:
       metadata_name_override: assuredworkloads
       default_version: v1
   - name: google-cloud-audit-log
-    version: 0.6.2
+    version: 0.6.3
     apis:
       - path: google/cloud/audit
     python:
@@ -570,7 +563,7 @@ libraries:
     python:
       default_version: v1beta
   - name: google-cloud-bigquery
-    version: 3.46.2
+    version: 3.47.0
     python:
       library_type: GAPIC_COMBO
       metadata_name_override: bigquery
@@ -664,7 +657,7 @@ libraries:
       metadata_name_override: bigquerystorage
       default_version: v1
   - name: google-cloud-bigtable
-    version: 2.50.1
+    version: 2.50.2
     apis:
       - path: google/bigtable/v2
       - path: google/bigtable/admin/v2
@@ -711,7 +704,7 @@ libraries:
       metadata_name_override: binaryauthorization
       default_version: v1
   - name: google-cloud-build
-    version: 3.41.0
+    version: 3.42.0
     apis:
       - path: google/devtools/cloudbuild/v2
       - path: google/devtools/cloudbuild/v1
@@ -730,7 +723,7 @@ libraries:
     python:
       default_version: v1beta
   - name: google-cloud-certificate-manager
-    version: 1.15.0
+    version: 1.16.0
     apis:
       - path: google/cloud/certificatemanager/v1
     python:
@@ -741,9 +734,11 @@ libraries:
       default_version: v1
   - name: google-cloud-ces
     version: 0.7.2
+    comment: Generation is skipped due to https://github.com/googleapis/google-cloud-python/issues/18888
     apis:
       - path: google/cloud/ces/v1
       - path: google/cloud/ces/v1beta
+    skip_generate: true
     python:
       default_version: v1
   - name: google-cloud-channel
@@ -755,8 +750,10 @@ libraries:
       default_version: v1
   - name: google-cloud-chronicle
     version: 0.6.4
+    comment: Generation is skipped due to https://github.com/googleapis/google-cloud-python/issues/18890
     apis:
       - path: google/cloud/chronicle/v1
+    skip_generate: true
     python:
       default_version: v1
   - name: google-cloud-cloudcontrolspartner
@@ -800,7 +797,7 @@ libraries:
   - name: google-cloud-compute
     version: 1.56.0
     preview:
-      version: 1.56.0-preview.1
+      version: 1.56.0-preview.2
       apis:
         - path: google/cloud/compute/v1
     apis:
@@ -1009,6 +1006,16 @@ libraries:
     python:
       metadata_name_override: clouddeploy
       default_version: v1
+  - name: google-cloud-designcenter
+    version: 0.0.0
+    apis:
+      - path: google/cloud/designcenter/v1
+    copyright_year: "2026"
+    python:
+      opt_args_by_api:
+        google/cloud/designcenter/v1:
+          - proto-plus-deps=google.cloud.apphub.v1+google.cloud.config.v1
+      default_version: v1
   - name: google-cloud-developerconnect
     version: 0.6.1
     apis:
@@ -1022,7 +1029,7 @@ libraries:
     python:
       default_version: v1
   - name: google-cloud-dialogflow
-    version: 2.53.0
+    version: 2.54.0
     apis:
       - path: google/cloud/dialogflow/v2
       - path: google/cloud/dialogflow/v2beta1
@@ -1080,7 +1087,7 @@ libraries:
       issue_tracker_override: https://issuetracker.google.com/savedsearches/559772
       metadata_name_override: dns
   - name: google-cloud-documentai
-    version: 3.16.0
+    version: 3.17.0
     apis:
       - path: google/cloud/documentai/v1
       - path: google/cloud/documentai/v1beta3
@@ -1088,7 +1095,7 @@ libraries:
       metadata_name_override: documentai
       default_version: v1
   - name: google-cloud-documentai-toolbox
-    version: 0.17.4
+    version: 0.17.5
     python:
       library_type: OTHER
       metadata_name_override: documentai-toolbox
@@ -1207,7 +1214,7 @@ libraries:
       metadata_name_override: firestore
       default_version: v1
   - name: google-cloud-ftp
-    version: 0.1.0
+    version: 0.1.1
     apis:
       - path: google/cloud/ftp/v1
     copyright_year: "2026"
@@ -1228,7 +1235,7 @@ libraries:
     python:
       default_version: v1alpha
   - name: google-cloud-geminidataanalytics
-    version: 0.13.5
+    version: 0.13.6
     apis:
       - path: google/cloud/geminidataanalytics/v1
       - path: google/cloud/geminidataanalytics/v1beta
@@ -1479,7 +1486,7 @@ libraries:
       metadata_name_override: memcache
       default_version: v1
   - name: google-cloud-memorystore
-    version: 0.5.6
+    version: 0.5.7
     apis:
       - path: google/cloud/memorystore/v1
       - path: google/cloud/memorystore/v1beta
@@ -1493,7 +1500,7 @@ libraries:
       metadata_name_override: migrationcenter
       default_version: v1
   - name: google-cloud-modelarmor
-    version: 0.7.2
+    version: 0.7.4
     apis:
       - path: google/cloud/modelarmor/v1
       - path: google/cloud/modelarmor/v1beta
@@ -1604,6 +1611,13 @@ libraries:
     python:
       metadata_name_override: notebooks
       default_version: v1
+  - name: google-cloud-observability
+    version: 0.1.0
+    apis:
+      - path: google/cloud/observability/v1
+    copyright_year: "2026"
+    python:
+      default_version: v1
   - name: google-cloud-optimization
     version: 1.16.0
     apis:
@@ -1612,7 +1626,7 @@ libraries:
       metadata_name_override: optimization
       default_version: v1
   - name: google-cloud-oracledatabase
-    version: 0.6.3
+    version: 0.6.4
     apis:
       - path: google/cloud/oracledatabase/v1
     python:
@@ -1803,7 +1817,7 @@ libraries:
       metadata_name_override: redis
       default_version: v1
   - name: google-cloud-redis-cluster
-    version: 0.5.5
+    version: 0.5.7
     apis:
       - path: google/cloud/redis/cluster/v1
       - path: google/cloud/redis/cluster/v1beta1
@@ -2019,7 +2033,7 @@ libraries:
       metadata_name_override: speech
       default_version: v1
   - name: google-cloud-sql
-    version: 0.1.1
+    version: 0.1.3
     apis:
       - path: google/cloud/sql/v1
       - path: google/cloud/sql/v1beta4
@@ -2046,7 +2060,7 @@ libraries:
       metadata_name_override: storage
       default_version: v2
   - name: google-cloud-storage-control
-    version: 1.16.0
+    version: 1.17.0
     apis:
       - path: google/storage/control/v2
     python:
@@ -2187,7 +2201,7 @@ libraries:
       metadata_name_override: videostitcher
       default_version: v1
   - name: google-cloud-video-transcoder
-    version: 1.22.0
+    version: 1.23.0
     apis:
       - path: google/cloud/video/transcoder/v1
     python:
@@ -2283,7 +2297,7 @@ libraries:
       metadata_name_override: workflows
       default_version: v1
   - name: google-cloud-workloadidentity
-    version: 0.1.0
+    version: 0.1.1
     apis:
       - path: google/cloud/workloadidentity/v1
     copyright_year: "2026"
@@ -2320,7 +2334,7 @@ libraries:
           - python-gapic-name=developer_knowledge
       default_version: v1
   - name: google-devicesandservices-health
-    version: 0.1.4
+    version: 0.1.5
     apis:
       - path: google/devicesandservices/health/v4
       - path: google/devicesandservices/health/v4beta
@@ -2525,7 +2539,7 @@ libraries:
           - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-loyaltycustomers
-    version: 0.1.1
+    version: 0.1.2
     apis:
       - path: google/shopping/merchant/loyaltycustomers/v1
     copyright_year: "2026"
@@ -2584,7 +2598,7 @@ libraries:
           - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-quota
-    version: 1.6.0
+    version: 1.7.0
     apis:
       - path: google/shopping/merchant/quota/v1
       - path: google/shopping/merchant/quota/v1beta
@@ -2606,11 +2620,14 @@ libraries:
           - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-reviews
-    version: 0.6.1
+    version: 0.6.2
     apis:
+      - path: google/shopping/merchant/reviews/v1
       - path: google/shopping/merchant/reviews/v1beta
     python:
       opt_args_by_api:
+        google/shopping/merchant/reviews/v1:
+          - proto-plus-deps=google.shopping.type
         google/shopping/merchant/reviews/v1beta:
           - proto-plus-deps=google.shopping.type
       default_version: v1beta
@@ -2623,7 +2640,7 @@ libraries:
     python:
       default_version: apiVersion
   - name: googleapis-common-protos
-    version: 1.75.5
+    version: 1.76.0
     apis:
       - path: google/api
       - path: google/cloud
@@ -2655,7 +2672,7 @@ libraries:
           - python-gapic-name=grafeas
       default_version: v1
   - name: grpc-google-iam-v1
-    version: 0.14.5
+    version: 0.14.6
     apis:
       - path: google/iam/v1
     python:
@@ -2665,7 +2682,7 @@ libraries:
       metadata_name_override: grpc-iam
       default_version: apiVersion
   - name: pandas-gbq
-    version: 0.35.2
+    version: 0.35.3
     python:
       library_type: INTEGRATION
   - name: proto-plus

@@ -278,11 +278,6 @@ class DataPoint(proto.Message):
             collection.
 
             This field is a member of `oneof`_ ``data``.
-        skin_temperature (google.devicesandservices.health_v4beta.types.SkinTemperature):
-            Optional. Data for points in the ``skin-temperature`` sample
-            data type collection.
-
-            This field is a member of `oneof`_ ``data``.
         skin_temperature_sensors (google.devicesandservices.health_v4beta.types.SkinTemperatureSensors):
             Optional. Data for points in the
             ``skin-temperature-sensors`` sample data type collection.
@@ -297,12 +292,19 @@ class DataPoint(proto.Message):
             Format:
             ``users/{user}/dataTypes/{data_type}/dataPoints/{data_point}``
 
-            Example:
-            ``users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef``
+            Examples:
+            ---------
 
-            The ``{user}`` ID is a system-generated identifier, as
-            described in
-            [Identity.health_user_id][google.devicesandservices.health.v4beta.Identity.health_user_id].
+            ``users/me/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef``
+
+            ``users/1234567890/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef``
+
+            The ``{user}`` can be either the alias ``me`` or the
+            authenticated user's numeric Health User ID, which can be
+            retrieved by calling
+            [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]
+            (see
+            [Identity.health_user_id][google.devicesandservices.health.v4beta.Identity.health_user_id]).
 
             The ``{data_type}`` ID corresponds to the kebab-case version
             of the field names in the [DataPoint
@@ -575,12 +577,6 @@ class DataPoint(proto.Message):
         oneof="data",
         message=data_model.Moods,
     )
-    skin_temperature: data_model.SkinTemperature = proto.Field(
-        proto.MESSAGE,
-        number=54,
-        oneof="data",
-        message=data_model.SkinTemperature,
-    )
     skin_temperature_sensors: data_model.SkinTemperatureSensors = proto.Field(
         proto.MESSAGE,
         number=60,
@@ -780,11 +776,6 @@ class ReconciledDataPoint(proto.Message):
             collection.
 
             This field is a member of `oneof`_ ``data``.
-        skin_temperature (google.devicesandservices.health_v4beta.types.SkinTemperature):
-            Data for points in the ``skin-temperature`` sample data type
-            collection.
-
-            This field is a member of `oneof`_ ``data``.
         skin_temperature_sensors (google.devicesandservices.health_v4beta.types.SkinTemperatureSensors):
             Data for points in the ``skin-temperature-sensors`` sample
             data type collection.
@@ -799,12 +790,19 @@ class ReconciledDataPoint(proto.Message):
             Format:
             ``users/{user}/dataTypes/{data_type}/dataPoints/{data_point}``
 
-            Example:
-            ``users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef``
+            Examples:
+            ---------
 
-            The ``{user}`` ID is a system-generated identifier, as
-            described in
-            [Identity.health_user_id][google.devicesandservices.health.v4beta.Identity.health_user_id].
+            ``users/me/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef``
+
+            ``users/1234567890/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef``
+
+            The ``{user}`` can be either the alias ``me`` or the
+            authenticated user's numeric Health User ID, which can be
+            retrieved by calling
+            [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]
+            (see
+            [Identity.health_user_id][google.devicesandservices.health.v4beta.Identity.health_user_id]).
 
             The ``{data_type}`` ID corresponds to the kebab-case version
             of the field names in the [DataPoint
@@ -1026,12 +1024,6 @@ class ReconciledDataPoint(proto.Message):
         oneof="data",
         message=data_model.BloodGlucose,
     )
-    skin_temperature: data_model.SkinTemperature = proto.Field(
-        proto.MESSAGE,
-        number=54,
-        oneof="data",
-        message=data_model.SkinTemperature,
-    )
     skin_temperature_sensors: data_model.SkinTemperatureSensors = proto.Field(
         proto.MESSAGE,
         number=30,
@@ -1188,11 +1180,6 @@ class RollupDataPoint(proto.Message):
             ``blood-glucose`` data type.
 
             This field is a member of `oneof`_ ``value``.
-        skin_temperature (google.devicesandservices.health_v4beta.types.SkinTemperatureRollupValue):
-            Returned by default when rolling up data points from the
-            ``skin-temperature`` data type.
-
-            This field is a member of `oneof`_ ``value``.
         start_time (google.protobuf.timestamp_pb2.Timestamp):
             Start time of the window this value
             aggregates over
@@ -1328,12 +1315,6 @@ class RollupDataPoint(proto.Message):
         number=26,
         oneof="value",
         message=data_model.BloodGlucoseRollupValue,
-    )
-    skin_temperature: data_model.SkinTemperatureRollupValue = proto.Field(
-        proto.MESSAGE,
-        number=27,
-        oneof="value",
-        message=data_model.SkinTemperatureRollupValue,
     )
     start_time: timestamp_pb2.Timestamp = proto.Field(
         proto.MESSAGE,
@@ -1506,11 +1487,6 @@ class DailyRollupDataPoint(proto.Message):
             ``blood-glucose`` data type.
 
             This field is a member of `oneof`_ ``value``.
-        skin_temperature (google.devicesandservices.health_v4beta.types.SkinTemperatureRollupValue):
-            Returned by default when rolling up data points from the
-            ``skin-temperature`` data type.
-
-            This field is a member of `oneof`_ ``value``.
         civil_start_time (google.devicesandservices.health_v4beta.types.CivilDateTime):
             Start time of the window this value
             aggregates over
@@ -1659,12 +1635,6 @@ class DailyRollupDataPoint(proto.Message):
         oneof="value",
         message=data_model.BloodGlucoseRollupValue,
     )
-    skin_temperature: data_model.SkinTemperatureRollupValue = proto.Field(
-        proto.MESSAGE,
-        number=29,
-        oneof="value",
-        message=data_model.SkinTemperatureRollupValue,
-    )
     civil_start_time: data_coordinates.CivilDateTime = proto.Field(
         proto.MESSAGE,
         number=1,
@@ -1687,6 +1657,17 @@ class GetDataPointRequest(proto.Message):
             Format:
             ``users/{user}/dataTypes/{data_type}/dataPoints/{data_point}``
 
+            Examples:
+            ---------
+
+            ``users/me/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef``
+
+            ``users/1234567890/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef``
+
+            The ``{user}`` can be either the alias ``me`` or the
+            authenticated user's numeric Health User ID (retrieved via
+            [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]).
+
             See
             [DataPoint.name][google.devicesandservices.health.v4beta.DataPoint.name]
             for examples and possible values.
@@ -1705,10 +1686,16 @@ class ListDataPointsRequest(proto.Message):
         parent (str):
             Required. Parent data type of the Data Point collection.
 
-            Format: ``users/me/dataTypes/{data_type}``, e.g.:
+            Format: ``users/{user}/dataTypes/{data_type}``, e.g.:
 
             - ``users/me/dataTypes/steps``
+            - ``users/1234567890/dataTypes/steps``
             - ``users/me/dataTypes/weight``
+            - ``users/1234567890/dataTypes/weight``
+
+            The ``{user}`` can be either the alias ``me`` or the
+            authenticated user's numeric Health User ID (retrieved via
+            [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]).
 
             For a list of the supported data types see the [DataPoint
             data][google.devicesandservices.health.v4beta.DataPoint]
@@ -1845,24 +1832,31 @@ class ListDataPointsRequest(proto.Message):
             If empty, data points from all available data sources will
             be returned.
 
-            Format: ``users/me/dataSourceFamilies/{data_source_family}``
+            Format:
+            ``users/{user}/dataSourceFamilies/{data_source_family}``
+
+            The ``{user}`` can be either the alias ``me`` or the
+            authenticated user's numeric Health User ID, retrieved via
+            [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]
+            (e.g. ``users/me/dataSourceFamilies/...`` or
+            ``users/1234567890/dataSourceFamilies/...``).
 
             The supported values are:
 
-            - ``users/me/dataSourceFamilies/all-sources`` - Default
+            - ``users/{user}/dataSourceFamilies/all-sources`` - Default
               value. Includes data from all available data sources.
-            - ``users/me/dataSourceFamilies/google-wearables`` -
+            - ``users/{user}/dataSourceFamilies/google-wearables`` -
               Includes data from Google and Fitbit tracker devices (such
               as Fitbit trackers and Pixel Watch). Excludes manually
               logged data.
-            - ``users/me/dataSourceFamilies/google-sources`` - Includes
-              first-party Google data, such as data from tracker
-              devices, manually logged data, and Health Connect.
-            - ``users/me/dataSourceFamilies/self-sources`` - Includes
-              only the data the calling client wrote through this API,
-              that is, data points whose data source was registered
-              through this API with the same OAuth client ID as the
-              caller.
+            - ``users/{user}/dataSourceFamilies/google-sources`` -
+              Includes first-party Google data, such as data from
+              tracker devices, manually logged data, and Health Connect.
+            - ``users/{user}/dataSourceFamilies/self-sources`` -
+              Includes only the data the calling client wrote through
+              this API, that is, data points whose data source was
+              registered through this API with the same OAuth client ID
+              as the caller.
 
             Callers that were only granted write scopes for the
             requested data types may only read the data they wrote
@@ -1939,7 +1933,16 @@ class CreateDataPointRequest(proto.Message):
     Attributes:
         parent (str):
             Required. The parent resource name where the data point will
-            be created. Format: ``users/{user}/dataTypes/{data_type}``
+            be created.
+
+            Format: ``users/{user}/dataTypes/{data_type}``, e.g.:
+
+            - ``users/me/dataTypes/steps``
+            - ``users/1234567890/dataTypes/steps``
+
+            The ``{user}`` can be either the alias ``me`` or the
+            authenticated user's numeric Health User ID (retrieved via
+            [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]).
         data_point (google.devicesandservices.health_v4beta.types.DataPoint):
             Required. The data point to create.
     """
@@ -1971,6 +1974,17 @@ class UpdateDataPointRequest(proto.Message):
 
             Format:
             ``users/{user}/dataTypes/{data_type}/dataPoints/{data_point}``
+
+            Examples:
+            ---------
+
+            ``users/me/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef``
+
+            ``users/1234567890/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef``
+
+            The ``{user}`` can be either the alias ``me`` or the
+            authenticated user's numeric Health User ID (retrieved via
+            [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]).
     """
 
     data_point: "DataPoint" = proto.Field(
@@ -1990,10 +2004,17 @@ class BatchDeleteDataPointsRequest(proto.Message):
     Attributes:
         parent (str):
             Optional. Parent (data type) for the Data Point collection
-            Format: ``users/me/dataTypes/{data_type}``, e.g.:
+
+            Format: ``users/{user}/dataTypes/{data_type}``, e.g.:
 
             - ``users/me/dataTypes/steps``
+            - ``users/1234567890/dataTypes/steps``
             - ``users/me/dataTypes/-``
+            - ``users/1234567890/dataTypes/-``
+
+            The ``{user}`` can be either the alias ``me`` or the
+            authenticated user's numeric Health User ID (retrieved via
+            [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]).
 
             For a list of the supported data types see the [DataPoint
             data][google.devicesandservices.health.v4beta.DataPoint]
@@ -2061,10 +2082,16 @@ class ReconcileDataPointsRequest(proto.Message):
         parent (str):
             Required. Parent data type of the Data Point collection.
 
-            Format: ``users/me/dataTypes/{data_type}``, e.g.:
+            Format: ``users/{user}/dataTypes/{data_type}``, e.g.:
 
             - ``users/me/dataTypes/steps``
+            - ``users/1234567890/dataTypes/steps``
             - ``users/me/dataTypes/heart-rate``
+            - ``users/1234567890/dataTypes/heart-rate``
+
+            The ``{user}`` can be either the alias ``me`` or the
+            authenticated user's numeric Health User ID (retrieved via
+            [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]).
 
             For a list of the supported data types see the [DataPoint
             data][google.devicesandservices.health.v4beta.DataPoint]
@@ -2092,22 +2119,31 @@ class ReconcileDataPointsRequest(proto.Message):
             If empty, data points from all data sources will be
             reconciled.
 
-            Format: ``users/me/dataSourceFamilies/{data_source_family}``
+            Format:
+            ``users/{user}/dataSourceFamilies/{data_source_family}``
 
-            - ``users/me/dataSourceFamilies/all-sources`` - Default
+            The ``{user}`` can be either the alias ``me`` or the
+            authenticated user's numeric Health User ID, retrieved via
+            [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]
+            (e.g. ``users/me/dataSourceFamilies/...`` or
+            ``users/1234567890/dataSourceFamilies/...``).
+
+            The supported values are:
+
+            - ``users/{user}/dataSourceFamilies/all-sources`` - Default
               value. Includes data from all available data sources.
-            - ``users/me/dataSourceFamilies/google-wearables`` -
+            - ``users/{user}/dataSourceFamilies/google-wearables`` -
               Includes data from Google and Fitbit tracker devices (such
               as Fitbit trackers and Pixel Watch). Excludes manually
               logged data.
-            - ``users/me/dataSourceFamilies/google-sources`` - Includes
-              first-party Google data, such as data from tracker
-              devices, manually logged data, and Health Connect.
-            - ``users/me/dataSourceFamilies/self-sources`` - Includes
-              only the data the calling client wrote through this API,
-              that is, data points whose data source was registered
-              through this API with the same OAuth client ID as the
-              caller.
+            - ``users/{user}/dataSourceFamilies/google-sources`` -
+              Includes first-party Google data, such as data from
+              tracker devices, manually logged data, and Health Connect.
+            - ``users/{user}/dataSourceFamilies/self-sources`` -
+              Includes only the data the calling client wrote through
+              this API, that is, data points whose data source was
+              registered through this API with the same OAuth client ID
+              as the caller.
 
             Callers that were only granted write scopes for the
             requested data type may only read the data they wrote
@@ -2177,7 +2213,13 @@ class RollUpDataPointsRequest(proto.Message):
             Format: ``users/{user}/dataTypes/{data_type}``, e.g.:
 
             - ``users/me/dataTypes/steps``
+            - ``users/1234567890/dataTypes/steps``
             - ``users/me/dataTypes/distance``
+            - ``users/1234567890/dataTypes/distance``
+
+            The ``{user}`` can be either the alias ``me`` or the
+            authenticated user's numeric Health User ID (retrieved via
+            [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]).
 
             For a list of the supported data types see the
             [RollupDataPoint
@@ -2214,24 +2256,31 @@ class RollUpDataPointsRequest(proto.Message):
             If empty, data points from all available data sources will
             be rolled up.
 
-            Format: ``users/me/dataSourceFamilies/{data_source_family}``
+            Format:
+            ``users/{user}/dataSourceFamilies/{data_source_family}``
+
+            The ``{user}`` can be either the alias ``me`` or the
+            authenticated user's numeric Health User ID, retrieved via
+            [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]
+            (e.g. ``users/me/dataSourceFamilies/...`` or
+            ``users/1234567890/dataSourceFamilies/...``).
 
             The supported values are:
 
-            - ``users/me/dataSourceFamilies/all-sources`` - Default
+            - ``users/{user}/dataSourceFamilies/all-sources`` - Default
               value. Includes data from all available data sources.
-            - ``users/me/dataSourceFamilies/google-wearables`` -
+            - ``users/{user}/dataSourceFamilies/google-wearables`` -
               Includes data from Google and Fitbit tracker devices (such
               as Fitbit trackers and Pixel Watch). Excludes manually
               logged data.
-            - ``users/me/dataSourceFamilies/google-sources`` - Includes
-              first-party Google data, such as data from tracker
-              devices, manually logged data, and Health Connect.
-            - ``users/me/dataSourceFamilies/self-sources`` - Includes
-              only the data the calling client wrote through this API,
-              that is, data points whose data source was registered
-              through this API with the same OAuth client ID as the
-              caller.
+            - ``users/{user}/dataSourceFamilies/google-sources`` -
+              Includes first-party Google data, such as data from
+              tracker devices, manually logged data, and Health Connect.
+            - ``users/{user}/dataSourceFamilies/self-sources`` -
+              Includes only the data the calling client wrote through
+              this API, that is, data points whose data source was
+              registered through this API with the same OAuth client ID
+              as the caller.
 
             Callers that were only granted write scopes for the
             requested data type may only read the data they wrote
@@ -2308,7 +2357,13 @@ class DailyRollUpDataPointsRequest(proto.Message):
             Format: ``users/{user}/dataTypes/{data_type}``, e.g.:
 
             - ``users/me/dataTypes/steps``
+            - ``users/1234567890/dataTypes/steps``
             - ``users/me/dataTypes/distance``
+            - ``users/1234567890/dataTypes/distance``
+
+            The ``{user}`` can be either the alias ``me`` or the
+            authenticated user's numeric Health User ID (retrieved via
+            [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]).
 
             For a list of the supported data types see the
             [DailyRollupDataPoint
@@ -2336,32 +2391,39 @@ class DailyRollUpDataPointsRequest(proto.Message):
             is 10000; values above that will be truncated
             accordingly.
         page_token (str):
-            Optional. The ``next_page_token`` from a previous request,
-            if any. All other request fields need to be the same as in
-            the initial request when the page token is specified.
+            Optional. The next_page_token from a previous request, if
+            any. All other request fields need to be the same as in the
+            initial request when the page token is specified.
         data_source_family (str):
             Optional. The data source family name to roll up. If empty,
             data points from all available data sources will be rolled
             up.
 
-            Format: ``users/me/dataSourceFamilies/{data_source_family}``
+            Format:
+            ``users/{user}/dataSourceFamilies/{data_source_family}``
+
+            The ``{user}`` can be either the alias ``me`` or the
+            authenticated user's numeric Health User ID, retrieved via
+            [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]
+            (e.g. ``users/me/dataSourceFamilies/...`` or
+            ``users/1234567890/dataSourceFamilies/...``).
 
             The supported values are:
 
-            - ``users/me/dataSourceFamilies/all-sources`` - Default
+            - ``users/{user}/dataSourceFamilies/all-sources`` - Default
               value. Includes data from all available data sources.
-            - ``users/me/dataSourceFamilies/google-wearables`` -
+            - ``users/{user}/dataSourceFamilies/google-wearables`` -
               Includes data from Google and Fitbit tracker devices (such
               as Fitbit trackers and Pixel Watch). Excludes manually
               logged data.
-            - ``users/me/dataSourceFamilies/google-sources`` - Includes
-              first-party Google data, such as data from tracker
-              devices, manually logged data, and Health Connect.
-            - ``users/me/dataSourceFamilies/self-sources`` - Includes
-              only the data the calling client wrote through this API,
-              that is, data points whose data source was registered
-              through this API with the same OAuth client ID as the
-              caller.
+            - ``users/{user}/dataSourceFamilies/google-sources`` -
+              Includes first-party Google data, such as data from
+              tracker devices, manually logged data, and Health Connect.
+            - ``users/{user}/dataSourceFamilies/self-sources`` -
+              Includes only the data the calling client wrote through
+              this API, that is, data points whose data source was
+              registered through this API with the same OAuth client ID
+              as the caller.
 
             Callers that were only granted write scopes for the
             requested data type may only read the data they wrote
@@ -2406,12 +2468,24 @@ class DailyRollUpDataPointsResponse(proto.Message):
     Attributes:
         rollup_data_points (MutableSequence[google.devicesandservices.health_v4beta.types.DailyRollupDataPoint]):
             Values for each aggregation time window.
+        next_page_token (str):
+            A token, which can be sent as ``page_token`` to retrieve the
+            next page. If this field is omitted, there are no subsequent
+            pages.
     """
+
+    @property
+    def raw_page(self):
+        return self
 
     rollup_data_points: MutableSequence["DailyRollupDataPoint"] = proto.RepeatedField(
         proto.MESSAGE,
         number=1,
         message="DailyRollupDataPoint",
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
     )
 
 
@@ -2427,7 +2501,14 @@ class DataType(proto.Message):
         name (str):
             Identifier. The resource name of the data type.
 
-            Format: ``users/{user}/dataTypes/{data_type}``
+            Format: ``users/{user}/dataTypes/{data_type}``, e.g.:
+
+            - ``users/me/dataTypes/steps``
+            - ``users/1234567890/dataTypes/steps``
+
+            The ``{user}`` can be either the alias ``me`` or the
+            authenticated user's numeric Health User ID (retrieved via
+            [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]).
 
             See
             [DataPoint.name][google.devicesandservices.health.v4beta.DataPoint.name]
@@ -2450,12 +2531,17 @@ class ExportExerciseTcxRequest(proto.Message):
 
             Format:
             ``users/{user}/dataTypes/exercise/dataPoints/{data_point}``
-            Example:
-            ``users/me/dataTypes/exercise/dataPoints/2026443605080188808``
 
-            The ``{user}`` is the alias ``"me"`` currently. Future
-            versions may support user IDs. The ``{data_point}`` ID maps
-            to the exercise ID, which is a long integer.
+            Examples:
+
+            - ``users/me/dataTypes/exercise/dataPoints/2026443605080188808``
+            - ``users/1234567890/dataTypes/exercise/dataPoints/2026443605080188808``
+
+            The ``{user}`` can be either the alias ``me`` or the
+            authenticated user's numeric Health User ID (retrieved via
+            [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]).
+            The ``{data_point}`` ID maps to the exercise ID, which is a
+            long integer.
         partial_data (bool):
             Optional. Indicates whether to include the TCX data points
             when the GPS data is not available. If not specified,

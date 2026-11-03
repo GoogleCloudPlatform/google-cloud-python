@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import sys
+import types
 import urllib.parse
 from unittest import mock
 
@@ -615,7 +616,7 @@ def test_build_http_span_attributes_with_request():
     name, attrs, res_headers = _observability._TraceContext._build_http_span_attributes(
         request, url_template="/v1/echo"
     )
-    assert name == "POST"
+    assert name == "POST /v1/echo"
     assert attrs["http.request.method"] == "POST"
     assert attrs["server.address"] == "example.com"
     assert attrs["server.port"] == 8443
@@ -637,7 +638,7 @@ def test_build_http_span_attributes_with_kwargs():
         body="string-body",
         client_options=options,
     )
-    assert name == "GET"
+    assert name == "GET /v1/items"
     assert attrs["server.address"] == "custom.endpoint.com"
     assert attrs["server.port"] == 9443
     assert attrs["http.request.body.size"] == len("string-body")
@@ -736,8 +737,9 @@ def test_trace_http_request_active(monkeypatch):
 
     mock_tracer.start_as_current_span.assert_called_once()
     call_args, call_kwargs = mock_tracer.start_as_current_span.call_args
-    assert call_args[0] == "POST"
+    assert call_args[0] == "POST /v1/test"
     attrs = call_kwargs["attributes"]
+    assert attrs["rpc.system.name"] == "http"
     assert attrs["http.request.method"] == "POST"
     assert attrs["server.address"] == "custom.googleapis.com"
     assert attrs["server.port"] == 8443
@@ -747,7 +749,7 @@ def test_trace_http_request_active(monkeypatch):
 
 
 def test_trace_context_record_response_success(monkeypatch):
-    """Proves that _TraceContext.record_response records status code and size attributes."""
+    """Proves that _TraceContext.record_response records status code and size attributes while leaving status UNSET."""
     mock_span = mock.Mock()
     response = mock.Mock(status_code=200, headers={"Content-Length": "42"})
 
@@ -759,21 +761,209 @@ def test_trace_context_record_response_success(monkeypatch):
     ctx.record_response(response)
     mock_span.set_attribute.assert_any_call("http.response.status_code", 200)
     mock_span.set_attribute.assert_any_call("http.response.body.size", 42)
+    mock_span.set_status.assert_not_called()
 
 
-def test_trace_context_record_response_error_status(monkeypatch):
-    """Proves that _TraceContext.record_response sets error status on 4xx/5xx responses."""
-    mock_span = mock.Mock()
-    response = mock.Mock(status_code=503, headers={})
-
-    mock_status_mod = mock.Mock()
-    monkeypatch.setitem(sys.modules, "opentelemetry.trace.status", mock_status_mod)
+@pytest.mark.parametrize(
+    "status_code,json_fn,expected_message",
+    [
+        pytest.param(
+            400,
+            lambda: {"error": {"message": "Invalid argument"}},
+            "Invalid argument",
+            id="400_bad_request_with_message",
+        ),
+        pytest.param(
+            503,
+            lambda: {"error": {"message": "Temporary glitch"}},
+            "Temporary glitch",
+            id="503_service_unavailable_with_message",
+        ),
+        pytest.param(
+            503,
+            None,
+            None,
+            id="503_without_extractable_message",
+        ),
+    ],
+)
+def test_trace_context_record_response_error_status(
+    mock_otel, status_code, json_fn, expected_message
+):
+    """Proves that _TraceContext.record_response sets error status, error.type, and status.message on 4xx/5xx responses."""
+    mock_span = mock.Mock(spec_set=["set_attribute", "set_status"])
+    mock_parent_span = mock.Mock(spec_set=["set_attribute"])
+    response = types.SimpleNamespace(
+        status_code=status_code,
+        headers={},
+        json=json_fn,
+    )
 
     ctx = _observability._TraceContext()
     ctx._span = mock_span
+    ctx._parent_span = mock_parent_span
     ctx.record_response(response)
-    mock_span.set_attribute.assert_any_call("http.response.status_code", 503)
+
+    mock_span.set_attribute.assert_any_call("http.response.status_code", status_code)
+    mock_span.set_attribute.assert_any_call("error.type", str(status_code))
+    if expected_message is not None:
+        mock_span.set_attribute.assert_any_call("status.message", expected_message)
+    mock_parent_span.set_attribute.assert_called_once_with(
+        "http.response.status_code", status_code
+    )
     mock_span.set_status.assert_called_once()
+
+
+@pytest.mark.parametrize(
+    "json_fn,text,reason,expected",
+    [
+        pytest.param(
+            lambda: {"error": {"message": "Invalid argument"}},
+            None,
+            None,
+            "Invalid argument",
+            id="nested_dict_error_message",
+        ),
+        pytest.param(
+            lambda: {"error": "Simple error"},
+            None,
+            None,
+            "Simple error",
+            id="string_error_field",
+        ),
+        pytest.param(
+            lambda: {"error": {"message": ""}},
+            "  Gateway timeout  ",
+            None,
+            "Gateway timeout",
+            id="empty_json_message_falls_back_to_text",
+        ),
+        pytest.param(
+            mock.Mock(side_effect=ValueError("No JSON"), spec_set=True),
+            "",
+            "Service Unavailable",
+            "Service Unavailable",
+            id="json_value_error_falls_back_to_reason",
+        ),
+        pytest.param(
+            None,
+            "   \n\t  ",
+            "Valid Fallback Reason",
+            "Valid Fallback Reason",
+            id="whitespace_only_text_falls_back_to_reason",
+        ),
+        pytest.param(None, None, None, None, id="empty_response"),
+        pytest.param(lambda: ["not-a-dict"], None, None, None, id="json_list_payload"),
+        pytest.param(lambda: {"error": 123}, None, None, None, id="non_string_error"),
+    ],
+)
+def test_extract_http_error_message_variants(json_fn, text, reason, expected):
+    """Proves that _extract_http_error_message handles JSON dicts, string errors, text/reason fallbacks, and empty responses."""
+    resp = types.SimpleNamespace(json=json_fn, text=text, reason=reason)
+    assert _observability._TraceContext._extract_http_error_message(resp) == expected
+
+
+def test_extract_http_error_message_text_property_exception():
+    """Proves that _extract_http_error_message fails open when accessing .text raises an exception and falls back to .reason."""
+
+    class _BrokenTextResponse:
+        json = None
+        reason = "Fallback after broken text"
+
+        @property
+        def text(self):
+            raise RuntimeError("broken text property")
+
+    assert (
+        _observability._TraceContext._extract_http_error_message(_BrokenTextResponse())
+        == "Fallback after broken text"
+    )
+
+
+def test_trace_http_request_propagates_to_parent_span(mock_otel):
+    """Proves that trace_http_request propagates url.template (first attempt) and http.response.status_code to parent T3 span."""
+    parent_attrs = {}
+    mock_parent_span = types.SimpleNamespace(
+        is_recording=lambda: True,
+        attributes=parent_attrs,
+        set_attribute=parent_attrs.__setitem__,
+    )
+    mock_otel.trace.get_current_span.return_value = mock_parent_span
+
+    # First attempt: sets url.template on parent_span
+    with _observability.trace_http_request(
+        method="POST",
+        url="https://example.com/v1/first",
+        url_template="/v1/first",
+        client_options=ClientOptions(),
+    ) as ctx:
+        assert ctx._parent_span is mock_parent_span
+    assert parent_attrs["url.template"] == "/v1/first"
+
+    # Second attempt with a different url_template: does NOT overwrite first attempt's url.template
+    with _observability.trace_http_request(
+        method="POST",
+        url="https://example.com/v1/second",
+        url_template="/v1/second",
+        client_options=ClientOptions(),
+    ):
+        pass
+    assert parent_attrs["url.template"] == "/v1/first"
+
+    # Third attempt with url_template=None
+    with _observability.trace_http_request(
+        method="POST",
+        url="https://example.com/v1/none",
+        url_template=None,
+        client_options=ClientOptions(),
+    ):
+        pass
+
+
+@pytest.mark.parametrize(
+    "invalid_parent_span",
+    [
+        pytest.param(
+            types.SimpleNamespace(
+                is_recording=lambda: False, set_attribute=lambda k, v: None
+            ),
+            id="parent_span_not_recording",
+        ),
+        pytest.param(
+            types.SimpleNamespace(is_recording=lambda: True),
+            id="parent_span_missing_set_attribute",
+        ),
+    ],
+)
+def test_trace_http_request_parent_span_capability_guards(
+    mock_otel, invalid_parent_span
+):
+    """Proves that trace_http_request skips parent span propagation when the parent span is not recording or lacks set_attribute."""
+    mock_otel.trace.get_current_span.return_value = invalid_parent_span
+    with _observability.trace_http_request(
+        method="POST",
+        url="https://example.com/v1/guarded",
+        url_template="/v1/guarded",
+        client_options=ClientOptions(),
+    ) as ctx:
+        assert ctx._parent_span is None
+
+
+def test_trace_http_request_parent_span_set_attribute_fails_open(mock_otel):
+    """Proves that trace_http_request fails open when parent_span.set_attribute raises an exception."""
+    failing_parent_span = types.SimpleNamespace(
+        is_recording=lambda: True,
+        attributes={},
+        set_attribute=mock.Mock(side_effect=RuntimeError("set_attribute boom")),
+    )
+    mock_otel.trace.get_current_span.return_value = failing_parent_span
+    with _observability.trace_http_request(
+        method="POST",
+        url="https://example.com/v1/fail-open",
+        url_template="/v1/fail-open",
+        client_options=ClientOptions(),
+    ) as ctx:
+        assert ctx._parent_span is failing_parent_span
 
 
 def test_trace_context_record_error(monkeypatch):
@@ -843,7 +1033,7 @@ def test_trace_http_request_with_kwargs(monkeypatch):
         assert ctx._span is mock_span
 
     call_args, call_kwargs = mock_tracer.start_as_current_span.call_args
-    assert call_args[0] == "POST"
+    assert call_args[0] == "POST /v1/test"
     attrs = call_kwargs["attributes"]
     assert attrs["http.request.method"] == "POST"
     assert attrs["http.request.body.size"] == len("string-payload")

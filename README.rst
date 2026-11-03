@@ -997,12 +997,6 @@ Libraries
      -
      -
      - `Client Library Issues <https://github.com/googleapis/google-cloud-python/issues>`_
-   * - `Area 120 Tables <https://github.com/googleapis/google-cloud-python/tree/main/packages/google-area120-tables>`_
-     - preview
-     - |PyPI-google-area120-tables|
-     -
-     -
-     - `Client Library Issues <https://github.com/googleapis/google-cloud-python/issues>`_
    * - `Audit Log API <https://github.com/googleapis/google-cloud-python/tree/main/packages/google-cloud-audit-log>`_
      - preview
      - |PyPI-google-cloud-audit-log|
@@ -2040,8 +2034,6 @@ Libraries
      :target: https://pypi.org/project/google-apps-card
 .. |PyPI-google-apps-script-type| image:: https://img.shields.io/pypi/v/google-apps-script-type.svg
      :target: https://pypi.org/project/google-apps-script-type
-.. |PyPI-google-area120-tables| image:: https://img.shields.io/pypi/v/google-area120-tables.svg
-     :target: https://pypi.org/project/google-area120-tables
 .. |PyPI-google-cloud-audit-log| image:: https://img.shields.io/pypi/v/google-cloud-audit-log.svg
      :target: https://pypi.org/project/google-cloud-audit-log
 .. |PyPI-google-cloud-auditmanager| image:: https://img.shields.io/pypi/v/google-cloud-auditmanager.svg

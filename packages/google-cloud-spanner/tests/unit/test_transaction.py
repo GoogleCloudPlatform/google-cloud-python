@@ -225,6 +225,27 @@ class TestTransaction(OpenTelemetryBase):
         "google.cloud.spanner_v1._opentelemetry_tracing._get_cloud_region",
         return_value="global",
     )
+    def test_rollback_w_grpc_error(self, mock_region):
+        from google.api_core.exceptions import Unknown
+
+        database = _Database()
+        database.spanner_api = self._make_spanner_api()
+        err = Unknown("grpc error")
+        database.spanner_api.rollback.side_effect = err
+        session = _Session(database)
+        transaction = self._make_one(session)
+        transaction._transaction_id = TRANSACTION_ID
+
+        with self.assertRaises(Unknown):
+            transaction.rollback()
+
+        req_id = f"1.{REQ_RAND_PROCESS_ID}.{database._nth_client_id}.{database._channel_id}.1.1"
+        self.assertEqual(getattr(err, "request_id", None), req_id)
+
+    @mock.patch(
+        "google.cloud.spanner_v1._opentelemetry_tracing._get_cloud_region",
+        return_value="global",
+    )
     def test_rollback_ok(self, mock_region):
         from google.protobuf.empty_pb2 import Empty
 
@@ -262,6 +283,43 @@ class TestTransaction(OpenTelemetryBase):
                 database, x_goog_spanner_request_id=req_id
             ),
         )
+
+    @mock.patch("google.cloud.spanner_v1._helpers.time.sleep")
+    @mock.patch(
+        "google.cloud.spanner_v1._opentelemetry_tracing._get_cloud_region",
+        return_value="global",
+    )
+    def test_rollback_w_retry(self, mock_region, mock_sleep):
+        from google.api_core.exceptions import InternalServerError
+        from google.protobuf.empty_pb2 import Empty
+
+        empty_pb = Empty()
+        database = _Database()
+        metadata_calls = []
+
+        def mock_rollback(session=None, transaction_id=None, metadata=None):
+            metadata_calls.append(metadata)
+            if len(metadata_calls) == 1:
+                raise InternalServerError("RST_STREAM")
+            return empty_pb
+
+        api = database.spanner_api = _FauxSpannerAPI()
+        api.rollback = mock_rollback
+
+        session = _Session(database)
+        transaction = self._make_one(session)
+        transaction._transaction_id = TRANSACTION_ID
+
+        transaction.rollback()
+
+        self.assertTrue(transaction.rolled_back)
+        self.assertEqual(len(metadata_calls), 2)
+
+        req_id_1 = f"1.{REQ_RAND_PROCESS_ID}.{database._nth_client_id}.{database._channel_id}.1.1"
+        req_id_2 = f"1.{REQ_RAND_PROCESS_ID}.{database._nth_client_id}.{database._channel_id}.1.2"
+
+        self.assertIn(("x-goog-spanner-request-id", req_id_1), metadata_calls[0])
+        self.assertIn(("x-goog-spanner-request-id", req_id_2), metadata_calls[1])
 
     def test_commit_not_begun(self):
         database = _Database()
@@ -871,7 +929,9 @@ class TestTransaction(OpenTelemetryBase):
         )
 
         expected_attributes = self._build_span_attributes(
-            database, **{"db.statement": DML_QUERY_WITH_PARAM}
+            database,
+            x_goog_spanner_request_id=f"1.{REQ_RAND_PROCESS_ID}.{_Client.NTH_CLIENT.value}.1.1.1",
+            **{"db.statement": DML_QUERY_WITH_PARAM},
         )
         request_tag = (
             request_options.get("request_tag")

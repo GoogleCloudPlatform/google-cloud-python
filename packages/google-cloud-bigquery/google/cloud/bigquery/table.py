@@ -1910,6 +1910,9 @@ class RowIterator(HTTPIterator):
             If representing query results, the start time of the associated query.
         ended (Optional[datetime.datetime]):
             If representing query results, the end time of the associated query.
+        arrow_serialization_options (Optional[Dict[str, str]]):
+            The ``arrowSerializationOptions`` sent on ``jobs.query`` for
+            ``ARROW`` results. ``ReadRows`` requests the same options.
     """
 
     def __init__(
@@ -1938,6 +1941,8 @@ class RowIterator(HTTPIterator):
         started: Optional[datetime.datetime] = None,
         ended: Optional[datetime.datetime] = None,
         query_results_format: Optional[str] = None,
+        *,
+        arrow_serialization_options: Optional[Dict[str, str]] = None,
     ):
         super(RowIterator, self).__init__(
             client,
@@ -1972,6 +1977,10 @@ class RowIterator(HTTPIterator):
         self._job_started = started
         self._job_ended = ended
         self._query_results_format = query_results_format
+        self._arrow_serialization_options = arrow_serialization_options
+        # Set by query_and_wait() if the query wrote to a destination table
+        # set in its job config.
+        self._explicit_destination = False
 
     @property
     @_disallow_when_arrow
@@ -2312,7 +2321,8 @@ class RowIterator(HTTPIterator):
 
         Args:
             bqstorage_client (Optional[bigquery_storage.BigQueryReadClient]):
-                Client for BigQuery Storage Read API. If None, one will be created.
+                Client for BigQuery Storage Read API. If None, the BigQuery
+                Storage client that the BigQuery client shares is used.
             timeout (Optional[float]):
                 Timeout in seconds for read operations.
 
@@ -2391,11 +2401,17 @@ class RowIterator(HTTPIterator):
         if pyarrow is None:
             raise ValueError(_NO_PYARROW_ERROR)
 
-        self._maybe_warn_max_results(bqstorage_client)
-
-        if not self._should_use_bqstorage(bqstorage_client, create_bqstorage_client):
+        if self._query_results_format == QueryResultsFormat.ARROW.value:
+            # ARROW results apply max_results themselves and read with the
+            # bqstorage_client they're given, so keep it.
             create_bqstorage_client = False
-            bqstorage_client = None
+        else:
+            self._maybe_warn_max_results(bqstorage_client)
+            if not self._should_use_bqstorage(
+                bqstorage_client, create_bqstorage_client
+            ):
+                create_bqstorage_client = False
+                bqstorage_client = None
 
         owns_bqstorage_client = False
         if not bqstorage_client and create_bqstorage_client:
@@ -2894,7 +2910,9 @@ class RowIterator(HTTPIterator):
         if dtypes is None:
             dtypes = {}
 
-        self._maybe_warn_max_results(bqstorage_client)
+        # ARROW results apply max_results with the BigQuery Storage API too.
+        if self._query_results_format != QueryResultsFormat.ARROW.value:
+            self._maybe_warn_max_results(bqstorage_client)
 
         if (
             self._query_results_format != QueryResultsFormat.ARROW.value

@@ -235,6 +235,14 @@ from google.cloud.oracledatabase_v1.types.minor_version import (
     ListMinorVersionsResponse,
     MinorVersion,
 )
+from google.cloud.oracledatabase_v1.types.odb_dns_zone import (
+    CreateOdbDnsZoneRequest,
+    DeleteOdbDnsZoneRequest,
+    GetOdbDnsZoneRequest,
+    ListOdbDnsZonesRequest,
+    ListOdbDnsZonesResponse,
+    OdbDnsZone,
+)
 from google.cloud.oracledatabase_v1.types.odb_network import (
     CreateOdbNetworkRequest,
     DeleteOdbNetworkRequest,
@@ -492,6 +500,12 @@ __all__ = (
     "ListMinorVersionsRequest",
     "ListMinorVersionsResponse",
     "MinorVersion",
+    "CreateOdbDnsZoneRequest",
+    "DeleteOdbDnsZoneRequest",
+    "GetOdbDnsZoneRequest",
+    "ListOdbDnsZonesRequest",
+    "ListOdbDnsZonesResponse",
+    "OdbDnsZone",
     "CreateOdbNetworkRequest",
     "DeleteOdbNetworkRequest",
     "GetOdbNetworkRequest",

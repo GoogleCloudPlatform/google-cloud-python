@@ -369,3 +369,71 @@ def test_mutations_batcher_atexit_flushes_after_explicit_flush(_setup_batcher, r
 
         assert operation_mock.call_count == 2
         assert len(recwarn) == 0
+
+
+def test_mutations_batcher_mutate_w_bound_table_row(_setup_batcher):
+    table, operation_mock = _setup_batcher
+    with MutationsBatcher(table=table, flush_count=1) as mutation_batcher:
+        row = table.direct_row(b"row_key")
+        row.set_cell("cf1", b"c1", 1)
+        mutation_batcher.mutate(row)
+
+    operation_mock.assert_called_once()
+
+
+def test_mutations_batcher_mutate_wrong_row_type(_setup_batcher):
+    from google.cloud.bigtable.row import AppendRow, ConditionalRow
+    from google.cloud.bigtable.row_filters import PassAllFilter
+
+    table, operation_mock = _setup_batcher
+    cond_row = ConditionalRow(
+        row_key=b"cond_row_key", table=table, filter_=PassAllFilter(True)
+    )
+    cond_row.set_cell("cf1", b"c1", b"true_val", state=True)
+    cond_row.set_cell("cf1", b"c1", b"false_val", state=False)
+    append_row = AppendRow(row_key=b"append_row_key", table=table)
+    append_row.append_cell_value("cf1", b"c1", b"val")
+
+    with MutationsBatcher(table=table, flush_count=1) as mutation_batcher:
+        with pytest.raises(
+            TypeError,
+            match="Bulk processing cannot be applied for conditional or append mutations.",
+        ):
+            mutation_batcher.mutate(cond_row)
+
+        with pytest.raises(
+            TypeError,
+            match="Bulk processing cannot be applied for conditional or append mutations.",
+        ):
+            mutation_batcher.mutate(append_row)
+
+        with pytest.raises(
+            TypeError,
+            match="Bulk processing cannot be applied for conditional or append mutations.",
+        ):
+            mutation_batcher.mutate_rows([cond_row])
+
+    operation_mock.assert_not_called()
+
+
+def test_mutations_batcher_mutate_table_mismatch(_setup_batcher):
+    from google.cloud.bigtable.table import Table, TableMismatchError
+
+    table, operation_mock = _setup_batcher
+    other_table = Table("other-table", instance=table._instance)
+    row = DirectRow(row_key=b"row_key", table=other_table)
+    row.set_cell("cf1", b"c1", b"val")
+
+    expected_msg = (
+        rf"Row b'row_key' is a part of {other_table.name} table\. "
+        rf"Current table: {table.name}"
+    )
+
+    with MutationsBatcher(table=table, flush_count=1) as mutation_batcher:
+        with pytest.raises(TableMismatchError, match=expected_msg):
+            mutation_batcher.mutate(row)
+
+        with pytest.raises(TableMismatchError, match=expected_msg):
+            mutation_batcher.mutate_rows([row])
+
+    operation_mock.assert_not_called()

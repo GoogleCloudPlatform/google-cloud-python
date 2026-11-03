@@ -17,6 +17,7 @@ import os
 import pathlib
 import re
 import shutil
+import sys
 import warnings
 from typing import Dict, List
 
@@ -27,7 +28,17 @@ LINT_PATHS = ["google", "tests", "noxfile.py", "setup.py"]
 
 DEFAULT_PYTHON_VERSION = "3.14"
 
-DEFAULT_MOCK_SERVER_TESTS_PYTHON_VERSION = "3.12"
+# Default to Python 3.12 for local development if available. If Python 3.12 is
+# not installed (such as in CI environments where a different Python version
+# is provisioned), fall back to the currently running Python interpreter to
+# avoid InterpreterNotFound errors. Can also be overridden via the
+# MOCK_SERVER_TESTS_PYTHON_VERSION environment variable.
+DEFAULT_MOCK_SERVER_TESTS_PYTHON_VERSION = os.environ.get(
+    "MOCK_SERVER_TESTS_PYTHON_VERSION",
+    "3.12"
+    if shutil.which("python3.12")
+    else f"{sys.version_info.major}.{sys.version_info.minor}",
+)
 SYSTEM_TEST_PYTHON_VERSIONS: List[str] = ["3.12"]
 
 ALL_PYTHON: List[str] = [

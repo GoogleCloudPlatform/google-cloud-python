@@ -2398,6 +2398,14 @@ class ZoneDistributionConfig(proto.Message):
         zone (str):
             Optional. Defines zone where all resources will be allocated
             with SINGLE_ZONE mode. Ignored for MULTI_ZONE mode.
+        zones (MutableSequence[str]):
+            Optional. Specify the zones of a multi-zone
+            instance where Memorystore instance allocates
+            resources. This flag isn't applicable for
+            single-zone instances.
+        active_zones (MutableSequence[str]):
+            Output only. The exact list of zones where
+            the instance currently has active VMs.
         mode (google.cloud.memorystore_v1beta.types.ZoneDistributionConfig.ZoneDistributionMode):
             Optional. Current zone distribution mode. Defaults to
             MULTI_ZONE.
@@ -2424,6 +2432,14 @@ class ZoneDistributionConfig(proto.Message):
     zone: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+    zones: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+    active_zones: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=4,
     )
     mode: ZoneDistributionMode = proto.Field(
         proto.ENUM,

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-loyaltycustomers-v0.1.1...google-shopping-merchant-loyaltycustomers-v0.1.2) (2026-10-22)
+
+
+### Features
+
+* declare Python3.15 support ([8775794](https://github.com/googleapis/google-cloud-python/commit/8775794508e17150023c8e7152543410014458bf))
+
 ## [0.1.1](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-loyaltycustomers-v0.1.0...google-shopping-merchant-loyaltycustomers-v0.1.1) (2026-09-03)
 
 

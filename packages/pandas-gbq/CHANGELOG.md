@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/pandas-gbq/#history
 
+## [0.35.3](https://github.com/googleapis/google-cloud-python/compare/pandas-gbq-v0.35.2...pandas-gbq-v0.35.3) (2026-10-23)
+
+
+### Features
+
+* support Python 3.15 ([8fceef4](https://github.com/googleapis/google-cloud-python/commit/8fceef49c523bcc8989abf3b6b82bcf143332d50))
+
 ## [0.35.2](https://github.com/googleapis/google-cloud-python/compare/pandas-gbq-v0.35.1...pandas-gbq-v0.35.2) (2026-08-21)
 
 

@@ -1332,7 +1332,7 @@ class TestMtlsHelper:
             True,
             b"cert_bytes",
             b"key_bytes",
-            b"passphrase",
+            None,
         )
 
         cert, key = _mtls_helper.call_client_cert_callback()
@@ -1340,8 +1340,42 @@ class TestMtlsHelper:
         assert cert == b"cert_bytes"
         assert key == b"key_bytes"
         mock_get_client_ssl_credentials.assert_called_once_with(
-            generate_encrypted_key=True
+            generate_encrypted_key=False
         )
+
+    @mock.patch("subprocess.Popen", autospec=True)
+    @mock.patch("google.auth.transport._mtls_helper._load_json_file", autospec=True)
+    @mock.patch("google.auth.transport._mtls_helper._check_config_path", autospec=True)
+    @mock.patch(
+        "google.auth.transport._mtls_helper._get_workload_cert_and_key", autospec=True
+    )
+    def test_call_client_cert_callback_secure_connect_unencrypted_key(
+        self,
+        mock_get_workload_cert_and_key,
+        mock_check_config_path,
+        mock_load_json_file,
+        mock_popen,
+    ):
+        mock_get_workload_cert_and_key.return_value = (None, None)
+        mock_check_config_path.return_value = "/path/to/config"
+        mock_load_json_file.return_value = {"cert_provider_command": ["command"]}
+
+        process = mock.Mock()
+        process.configure_mock(
+            **{
+                "communicate.return_value": (
+                    pytest.public_cert_bytes + pytest.private_key_bytes,
+                    b"",
+                ),
+                "returncode": 0,
+            }
+        )
+        mock_popen.return_value = process
+
+        cert, key = _mtls_helper.call_client_cert_callback()
+
+        assert cert == pytest.public_cert_bytes
+        assert key == pytest.private_key_bytes
 
 
 class TestSecureCertKeyPaths(object):

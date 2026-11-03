@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-shopping-merchant-reviews/#history
 
+## [0.6.2](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-reviews-v0.6.1...google-shopping-merchant-reviews-v0.6.2) (2026-10-23)
+
+
+### Features
+
+* **google/shopping/merchant/reviews/v1:** add google-shopping-merchant-reviews ([#18801](https://github.com/googleapis/google-cloud-python/issues/18801)) ([c4a6a21](https://github.com/googleapis/google-cloud-python/commit/c4a6a211a625e44c2b4e74be995c5ef6d85b4dc2))
+
 ## [0.6.1](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-reviews-v0.6.0...google-shopping-merchant-reviews-v0.6.1) (2026-10-01)
 
 

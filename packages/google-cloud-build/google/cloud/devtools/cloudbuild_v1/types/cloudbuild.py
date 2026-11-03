@@ -2875,6 +2875,9 @@ class BuildTrigger(proto.Message):
             source at whatever commit caused the event.
             This field is currently only used by Webhook,
             Pub/Sub, Manual, and Cron triggers.
+        approval_config (google.cloud.devtools.cloudbuild_v1.types.ApprovalConfig):
+            Configuration for manual approval to start a
+            build invocation of this BuildTrigger.
         service_account (str):
             The service account used for all user-controlled operations
             including UpdateBuildTrigger, RunBuildTrigger, CreateBuild,
@@ -2982,6 +2985,11 @@ class BuildTrigger(proto.Message):
         proto.MESSAGE,
         number=26,
         message="GitRepoSource",
+    )
+    approval_config: "ApprovalConfig" = proto.Field(
+        proto.MESSAGE,
+        number=28,
+        message="ApprovalConfig",
     )
     service_account: str = proto.Field(
         proto.STRING,

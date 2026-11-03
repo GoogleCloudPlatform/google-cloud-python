@@ -14446,6 +14446,7 @@ def test_create_build_trigger_rest_call_success(request_type):
             "repo_type": 1,
             "github_enterprise_config": "github_enterprise_config_value",
         },
+        "approval_config": {},
         "service_account": "service_account_value",
         "repository_event_config": {
             "repository": "repository_value",
@@ -15361,6 +15362,7 @@ def test_update_build_trigger_rest_call_success(request_type):
             "repo_type": 1,
             "github_enterprise_config": "github_enterprise_config_value",
         },
+        "approval_config": {},
         "service_account": "service_account_value",
         "repository_event_config": {
             "repository": "repository_value",

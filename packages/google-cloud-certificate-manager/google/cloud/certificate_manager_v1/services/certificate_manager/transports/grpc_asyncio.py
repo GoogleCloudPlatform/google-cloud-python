@@ -1084,6 +1084,38 @@ class CertificateManagerGrpcAsyncIOTransport(CertificateManagerTransport):
         return self._stubs["create_certificate_issuance_config"]
 
     @property
+    def update_certificate_issuance_config(
+        self,
+    ) -> Callable[
+        [gcc_certificate_issuance_config.UpdateCertificateIssuanceConfigRequest],
+        Awaitable[operations_pb2.Operation],
+    ]:
+        r"""Return a callable for the update certificate issuance
+        config method over gRPC.
+
+        Updates a CertificateIssuanceConfig.
+
+        Returns:
+            Callable[[~.UpdateCertificateIssuanceConfigRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_certificate_issuance_config" not in self._stubs:
+            self._stubs["update_certificate_issuance_config"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.certificatemanager.v1.CertificateManager/UpdateCertificateIssuanceConfig",
+                    request_serializer=gcc_certificate_issuance_config.UpdateCertificateIssuanceConfigRequest.serialize,
+                    response_deserializer=operations_pb2.Operation.FromString,
+                )
+            )
+        return self._stubs["update_certificate_issuance_config"]
+
+    @property
     def delete_certificate_issuance_config(
         self,
     ) -> Callable[
@@ -1580,6 +1612,11 @@ class CertificateManagerGrpcAsyncIOTransport(CertificateManagerTransport):
                     deadline=60.0,
                 ),
                 default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.update_certificate_issuance_config: self._wrap_method(
+                self.update_certificate_issuance_config,
+                default_timeout=None,
                 client_info=client_info,
             ),
             self.delete_certificate_issuance_config: self._wrap_method(

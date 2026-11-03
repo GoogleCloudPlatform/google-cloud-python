@@ -16,6 +16,7 @@
 
 
 from __future__ import absolute_import
+
 import os
 import pathlib
 import re
@@ -37,6 +38,11 @@ ALL_PYTHON = ["3.10", "3.11", "3.12", "3.13", "3.14", "3.15"]
 DEFAULT_PYTHON_VERSION = "3.14"
 BLACK_VERSION = "black==23.7.0"
 RUFF_VERSION = "ruff==0.14.14"
+# Temporarily pin pytest<9.2 because pytest 9.2.0 applies filterwarnings=error
+# before pytest_configure hooks run, turning pytest-asyncio's unset
+# asyncio_default_fixture_loop_scope warning (inherited via shared CI venvs)
+# into an error. Remove once pytest 9.2+ deprecations are resolved.
+PYTEST_VERSION = "pytest<9.2"
 BLACK_PATHS = ["test_utils", "setup.py"]
 CURRENT_DIRECTORY = pathlib.Path(__file__).parent.absolute()
 # Path to the centralized mypy configuration file at the repository root.
@@ -154,7 +160,7 @@ def unit(session):
         "-e", "tests/unit/resources/good_package", "tests/unit/resources/bad_package"
     )
 
-    session.install("pytest", "pytest-cov")
+    session.install(PYTEST_VERSION, "pytest-cov")
     session.install("-e", ".", "-c", constraints_path)
 
     # Run py.test against the unit tests.
@@ -303,7 +309,7 @@ def prerelease_deps(session):
         "-e", "tests/unit/resources/good_package", "tests/unit/resources/bad_package"
     )
 
-    session.install("pytest", "pytest-cov")
+    session.install(PYTEST_VERSION, "pytest-cov")
     session.install("-e", ".", "-c", constraints_path)
 
     # Because we test minimum dependency versions on the minimum Python
@@ -371,7 +377,7 @@ def core_deps_from_source(session):
         "-e", "tests/unit/resources/good_package", "tests/unit/resources/bad_package"
     )
 
-    session.install("pytest", "pytest-cov")
+    session.install(PYTEST_VERSION, "pytest-cov")
     session.install("-e", ".", "-c", constraints_path)
 
     # Because we test minimum dependency versions on the minimum Python

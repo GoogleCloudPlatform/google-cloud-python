@@ -58,6 +58,16 @@ __protobuf__ = proto.module(
         "DeleteBackupRequest",
         "ExportBackupRequest",
         "BackupClusterRequest",
+        "ListTokenAuthUsersRequest",
+        "ListTokenAuthUsersResponse",
+        "GetTokenAuthUserRequest",
+        "ListAuthTokensRequest",
+        "ListAuthTokensResponse",
+        "GetAuthTokenRequest",
+        "AddTokenAuthUserRequest",
+        "DeleteTokenAuthUserRequest",
+        "AddAuthTokenRequest",
+        "DeleteAuthTokenRequest",
         "Cluster",
         "AclPolicyInfo",
         "AclPolicy",
@@ -83,6 +93,8 @@ __protobuf__ = proto.module(
         "SharedRegionalCertificateAuthority",
         "GetSharedRegionalCertificateAuthorityRequest",
         "OperationMetadata",
+        "TokenAuthUser",
+        "AuthToken",
         "CertificateAuthority",
         "ClusterPersistenceConfig",
         "ZoneDistributionConfig",
@@ -119,11 +131,14 @@ class AuthorizationMode(proto.Enum):
             IAM basic authorization mode
         AUTH_MODE_DISABLED (2):
             Authorization disabled mode
+        AUTH_MODE_TOKEN_AUTH (3):
+            Token based authorization mode
     """
 
     AUTH_MODE_UNSPECIFIED = 0
     AUTH_MODE_IAM_AUTH = 1
     AUTH_MODE_DISABLED = 2
+    AUTH_MODE_TOKEN_AUTH = 3
 
 
 class NodeType(proto.Enum):
@@ -982,6 +997,314 @@ class BackupClusterRequest(proto.Message):
         proto.STRING,
         number=3,
         optional=True,
+    )
+
+
+class ListTokenAuthUsersRequest(proto.Message):
+    r"""Request message for [ListTokenAuthUsers][].
+
+    Attributes:
+        parent (str):
+            Required. The parent resource that this token
+            based auth user will be listed for. Format:
+
+            projects/{project}/locations/{location}/clusters/{cluster}
+        page_size (int):
+            Optional. The maximum number of items to return.
+
+            If not specified, a default value of 1000 will be used by
+            the service. Regardless of the page_size value, the response
+            may include a partial list and a caller should only rely on
+            response's The maximum value is 1000; values above 1000 will
+            be coerced to 1000.
+            [``next_page_token``][google.cloud.redis.cluster.v1beta1.ListTokenAuthUsersResponse.next_page_token]
+            to determine if there are more clusters left to be queried.
+        page_token (str):
+            Optional. The ``next_page_token`` value returned from a
+            previous [ListTokenAuthUsers] request, if any.
+        filter (str):
+            Optional. Expression for filtering results.
+        order_by (str):
+            Optional. Sort results by a defined order.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    filter: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=5,
+    )
+
+
+class ListTokenAuthUsersResponse(proto.Message):
+    r"""Response message for [ListTokenAuthUsers][].
+
+    Attributes:
+        token_auth_users (MutableSequence[google.cloud.redis_cluster_v1beta1.types.TokenAuthUser]):
+            A list of token auth users in the project.
+        next_page_token (str):
+            Token to retrieve the next page of results,
+            or empty if there are no more results in the
+            list.
+        unreachable (MutableSequence[str]):
+            Unordered list. Token auth users that could
+            not be reached.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    token_auth_users: MutableSequence["TokenAuthUser"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="TokenAuthUser",
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    unreachable: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+
+
+class GetTokenAuthUserRequest(proto.Message):
+    r"""Request message for [GetTokenAuthUser][].
+
+    Attributes:
+        name (str):
+            Required. The name of token auth user for a token based auth
+            enabled cluster. Format:
+            projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class ListAuthTokensRequest(proto.Message):
+    r"""Request message for [ListAuthTokens][].
+
+    Attributes:
+        parent (str):
+            Required. The parent resource that this auth token will be
+            listed for. Format:
+            projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}
+        page_size (int):
+            Optional. The maximum number of items to return. The maximum
+            value is 1000; values above 1000 will be coerced to 1000. If
+            not specified, a default value of 1000 will be used by the
+            service. Regardless of the page_size value, the response may
+            include a partial list and a caller should only rely on
+            response's
+            [``next_page_token``][google.cloud.redis.cluster.v1beta1.ListTokenAuthUsersResponse.next_page_token]
+            to determine if there are more clusters left to be queried.
+        page_token (str):
+            Optional. The ``next_page_token`` value returned from a
+            previous [ListTokenAuthUsers] request, if any.
+        filter (str):
+            Optional. Expression for filtering results.
+        order_by (str):
+            Optional. Sort results by a defined order.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    filter: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=5,
+    )
+
+
+class ListAuthTokensResponse(proto.Message):
+    r"""Response message for [ListAuthTokens][].
+
+    Attributes:
+        auth_tokens (MutableSequence[google.cloud.redis_cluster_v1beta1.types.AuthToken]):
+            A list of auth tokens in the project.
+        next_page_token (str):
+            Token to retrieve the next page of results,
+            or empty if there are no more results in the
+            list.
+        unreachable (MutableSequence[str]):
+            Unordered list. Auth tokens that could not be
+            reached.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    auth_tokens: MutableSequence["AuthToken"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="AuthToken",
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    unreachable: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+
+
+class GetAuthTokenRequest(proto.Message):
+    r"""Request message for [GetAuthToken][].
+
+    Attributes:
+        name (str):
+            Required. The name of auth token for a token based auth
+            enabled cluster. Format:
+            projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}/authTokens/{auth_token}
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class AddTokenAuthUserRequest(proto.Message):
+    r"""Request message for [AddTokenAuthUser][].
+
+    Attributes:
+        cluster (str):
+            Required. The cluster resource that this
+            token auth user will be added for. Format:
+            projects/{project}/locations/{location}/clusters/{cluster}
+        token_auth_user (str):
+            Required. The id of the token auth user to
+            add.
+    """
+
+    cluster: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    token_auth_user: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class DeleteTokenAuthUserRequest(proto.Message):
+    r"""Request message for [DeleteTokenAuthUser][].
+
+    Attributes:
+        name (str):
+            Required. The name of the token auth user to delete. Format:
+            projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}
+        request_id (str):
+            Optional. An optional request ID to identify
+            requests. Specify a unique request ID so that if
+            you must retry your request, the server will
+            know to ignore the request if it has already
+            been completed. The server will guarantee that
+            for at least 60 minutes after the first request.
+
+            For example, consider a situation where you make
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
+            prevents clients from accidentally creating
+            duplicate commitments.
+
+            The request ID must be a valid UUID with the
+            exception that zero UUID is not supported
+            (00000000-0000-0000-0000-000000000000).
+        force (bool):
+            Optional. If set to true, any child auth
+            tokens of this user will also be deleted.
+            Otherwise, the request will only work if the
+            user has no auth tokens.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    force: bool = proto.Field(
+        proto.BOOL,
+        number=3,
+    )
+
+
+class AddAuthTokenRequest(proto.Message):
+    r"""Request message for [AddAuthToken][].
+
+    Attributes:
+        token_auth_user (str):
+            Required. The name of the token auth user resource that this
+            auth token will be added for. Format:
+            projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}
+        auth_token (google.cloud.redis_cluster_v1beta1.types.AuthToken):
+            Required. The auth token to add.
+    """
+
+    token_auth_user: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    auth_token: "AuthToken" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="AuthToken",
+    )
+
+
+class DeleteAuthTokenRequest(proto.Message):
+    r"""Request message for [DeleteAuthToken][].
+
+    Attributes:
+        name (str):
+            Required. The name of the token auth user resource that this
+            auth token will be deleted from. Format:
+            projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}/authTokens/{auth_token}
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
     )
 
 
@@ -2699,6 +3022,110 @@ class OperationMetadata(proto.Message):
     )
 
 
+class TokenAuthUser(proto.Message):
+    r"""Represents a token based auth user for the cluster.
+
+    Attributes:
+        name (str):
+            Identifier. The resource name of the token based auth user.
+            Format:
+            projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}
+        state (google.cloud.redis_cluster_v1beta1.types.TokenAuthUser.State):
+            Output only. The state of the token based
+            auth user.
+    """
+
+    class State(proto.Enum):
+        r"""Represents the different states of a token based auth user.
+        New values may be added in the future.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                Not set.
+            ACTIVE (1):
+                The auth user is active.
+            CREATING (2):
+                The auth user is being created.
+            UPDATING (3):
+                The auth user is being updated.
+            DELETING (4):
+                The auth user is being deleted.
+        """
+
+        STATE_UNSPECIFIED = 0
+        ACTIVE = 1
+        CREATING = 2
+        UPDATING = 3
+        DELETING = 4
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=2,
+        enum=State,
+    )
+
+
+class AuthToken(proto.Message):
+    r"""Auth token for the cluster.
+
+    Attributes:
+        name (str):
+            Identifier. Name of the auth token. Format:
+            projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}/authTokens/{auth_token}
+        token (str):
+            Output only. The service generated
+            authentication token used to connect to the
+            Redis cluster.
+        create_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. Create time of the auth token.
+        state (google.cloud.redis_cluster_v1beta1.types.AuthToken.State):
+            Output only. State of the auth token.
+    """
+
+    class State(proto.Enum):
+        r"""Represents the different states of an auth token.
+        New values may be added in the future.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                Not set.
+            ACTIVE (1):
+                The auth token is active.
+            CREATING (2):
+                The auth token is being created.
+            DELETING (3):
+                The auth token is being deleted.
+        """
+
+        STATE_UNSPECIFIED = 0
+        ACTIVE = 1
+        CREATING = 2
+        DELETING = 3
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    create_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=timestamp_pb2.Timestamp,
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=4,
+        enum=State,
+    )
+
+
 class CertificateAuthority(proto.Message):
     r"""Redis cluster certificate authority
 
@@ -2906,6 +3333,14 @@ class ZoneDistributionConfig(proto.Message):
             field would be used to allocate all resources in that zone.
             This is not applicable to MULTI_ZONE, and would be ignored
             for MULTI_ZONE clusters.
+        zones (MutableSequence[str]):
+            Optional. Specify the zones of a multi-zone
+            cluster where Redis Cluster allocates resources.
+            This flag isn't applicable for single-zone
+            clusters.
+        active_zones (MutableSequence[str]):
+            Output only. The exact list of zones where
+            the cluster currently has active VMs.
     """
 
     class ZoneDistributionMode(proto.Enum):
@@ -2935,6 +3370,14 @@ class ZoneDistributionConfig(proto.Message):
     zone: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+    zones: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+    active_zones: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=4,
     )
 
 

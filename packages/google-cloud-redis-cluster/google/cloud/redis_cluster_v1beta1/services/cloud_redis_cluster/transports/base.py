@@ -252,6 +252,46 @@ class CloudRedisClusterTransport(abc.ABC):
                 default_timeout=600.0,
                 client_info=client_info,
             ),
+            self.list_token_auth_users: gapic_v1.method.wrap_method(
+                self.list_token_auth_users,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_token_auth_user: gapic_v1.method.wrap_method(
+                self.get_token_auth_user,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_auth_tokens: gapic_v1.method.wrap_method(
+                self.list_auth_tokens,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_auth_token: gapic_v1.method.wrap_method(
+                self.get_auth_token,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.add_token_auth_user: gapic_v1.method.wrap_method(
+                self.add_token_auth_user,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_token_auth_user: gapic_v1.method.wrap_method(
+                self.delete_token_auth_user,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.add_auth_token: gapic_v1.method.wrap_method(
+                self.add_auth_token,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_auth_token: gapic_v1.method.wrap_method(
+                self.delete_auth_token,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.get_location: gapic_v1.method.wrap_method(
                 self.get_location,
                 default_timeout=None,
@@ -519,6 +559,87 @@ class CloudRedisClusterTransport(abc.ABC):
         self,
     ) -> Callable[
         [cloud_redis_cluster.BackupClusterRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_token_auth_users(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.ListTokenAuthUsersRequest],
+        Union[
+            cloud_redis_cluster.ListTokenAuthUsersResponse,
+            Awaitable[cloud_redis_cluster.ListTokenAuthUsersResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_token_auth_user(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.GetTokenAuthUserRequest],
+        Union[
+            cloud_redis_cluster.TokenAuthUser,
+            Awaitable[cloud_redis_cluster.TokenAuthUser],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_auth_tokens(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.ListAuthTokensRequest],
+        Union[
+            cloud_redis_cluster.ListAuthTokensResponse,
+            Awaitable[cloud_redis_cluster.ListAuthTokensResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_auth_token(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.GetAuthTokenRequest],
+        Union[cloud_redis_cluster.AuthToken, Awaitable[cloud_redis_cluster.AuthToken]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def add_token_auth_user(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.AddTokenAuthUserRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_token_auth_user(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.DeleteTokenAuthUserRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def add_auth_token(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.AddAuthTokenRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_auth_token(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.DeleteAuthTokenRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
     ]:
         raise NotImplementedError()

@@ -3478,6 +3478,170 @@ class CertificateManagerAsyncClient:
         # Done; return the response.
         return response
 
+    async def update_certificate_issuance_config(
+        self,
+        request: Optional[
+            Union[
+                gcc_certificate_issuance_config.UpdateCertificateIssuanceConfigRequest,
+                dict,
+            ]
+        ] = None,
+        *,
+        certificate_issuance_config: Optional[
+            gcc_certificate_issuance_config.CertificateIssuanceConfig
+        ] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Updates a CertificateIssuanceConfig.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import certificate_manager_v1
+
+            async def sample_update_certificate_issuance_config():
+                # Create a client
+                client = certificate_manager_v1.CertificateManagerAsyncClient()
+
+                # Initialize request argument(s)
+                certificate_issuance_config = certificate_manager_v1.CertificateIssuanceConfig()
+                certificate_issuance_config.certificate_authority_config.certificate_authority_service_config.ca_pool = "ca_pool_value"
+                certificate_issuance_config.rotation_window_percentage = 2788
+                certificate_issuance_config.key_algorithm = "ECDSA_P256"
+
+                request = certificate_manager_v1.UpdateCertificateIssuanceConfigRequest(
+                    certificate_issuance_config=certificate_issuance_config,
+                )
+
+                # Make the request
+                operation = await client.update_certificate_issuance_config(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.certificate_manager_v1.types.UpdateCertificateIssuanceConfigRequest, dict]]):
+                The request object. Request for the ``UpdateCertificateIssuanceConfig``
+                method.
+            certificate_issuance_config (:class:`google.cloud.certificate_manager_v1.types.CertificateIssuanceConfig`):
+                Required. A definition of the
+                certificate issuance config to update.
+
+                This corresponds to the ``certificate_issuance_config`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Required. The update mask applies to the resource. For
+                the ``FieldMask`` definition, see
+                https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.certificate_manager_v1.types.CertificateIssuanceConfig`
+                CertificateIssuanceConfig specifies how to issue and
+                manage a certificate.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [certificate_issuance_config, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request,
+            gcc_certificate_issuance_config.UpdateCertificateIssuanceConfigRequest,
+        ):
+            request = (
+                gcc_certificate_issuance_config.UpdateCertificateIssuanceConfigRequest(
+                    request
+                )
+            )
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if certificate_issuance_config is not None:
+            request.certificate_issuance_config = certificate_issuance_config
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_certificate_issuance_config
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (
+                    (
+                        "certificate_issuance_config.name",
+                        request.certificate_issuance_config.name,
+                    ),
+                )
+            ),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            gcc_certificate_issuance_config.CertificateIssuanceConfig,
+            metadata_type=certificate_manager.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
     async def delete_certificate_issuance_config(
         self,
         request: Optional[

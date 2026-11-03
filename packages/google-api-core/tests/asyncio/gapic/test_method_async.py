@@ -400,10 +400,11 @@ async def test_wrap_method_async_otel_tracing_enabled_success(
     assert result == "async_success"
     mock_otel.tracer.start_as_current_span.assert_called_once_with(
         "google.cloud.secretmanager.v1.SecretManagerService/ListSecrets",
-        kind="CLIENT",
+        kind="INTERNAL",
         attributes={
             "rpc.system.name": expected_rpc_system,
             "rpc.method": "google.cloud.secretmanager.v1.SecretManagerService/ListSecrets",
+            "url.domain": "googleapis.com",
         },
     )
     mock_otel.span.set_attribute.assert_called_with("rpc.response.status_code", "OK")

@@ -156,11 +156,34 @@ def test_row_set_add_row_range_from_keys():
 
 
 def test_row_set_add_row_range_with_prefix():
-    from google.cloud.bigtable.row_set import RowSet
+    from google.cloud.bigtable.row_set import RowRange, RowSet
 
     row_set = RowSet()
     row_set.add_row_range_with_prefix("row")
+    assert isinstance(row_set.row_ranges[0], RowRange)
     assert row_set.row_ranges[0].end_key == b"rox"
+    assert row_set.row_ranges[0].start_inclusive is True
+    assert row_set.row_ranges[0].end_inclusive is False
+    assert row_set.row_ranges[0].get_range_kwargs() == {
+        "start_key_closed": b"row",
+        "end_key_open": b"rox",
+    }
+
+
+def test_row_range_unbounded_end_inclusive_default():
+    from google.cloud.bigtable.row_set import RowRange, RowSet
+
+    rr = RowRange(start_key=b"a", end_key=None)
+    assert rr.start_inclusive is True
+    assert rr.end_inclusive is False
+    assert rr.get_range_kwargs() == {"start_key_closed": b"a"}
+
+    rs = RowSet()
+    rs.add_row_range_from_keys(start_key=b"a", end_key=b"z")
+    returned = rs.row_ranges[0]
+    assert isinstance(returned, RowRange)
+    assert returned == RowRange(start_key=b"a", end_key=b"z")
+    assert hash(returned) == hash(RowRange(start_key=b"a", end_key=b"z"))
 
 
 def test_row_range_constructor():

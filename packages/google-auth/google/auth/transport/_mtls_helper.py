@@ -911,8 +911,10 @@ def check_parameters_for_unauthorized_response(cached_cert):
 
 def call_client_cert_callback():
     """Calls the client cert callback and returns the certificate and key."""
-    _, cert_bytes, key_bytes, passphrase = get_client_ssl_credentials(
-        generate_encrypted_key=True
+    # Callers load the key without a passphrase, so request an unencrypted
+    # key, as get_client_cert_and_key() does.
+    _, cert_bytes, key_bytes, _ = get_client_ssl_credentials(
+        generate_encrypted_key=False
     )
     return cert_bytes, key_bytes
 

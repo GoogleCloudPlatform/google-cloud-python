@@ -83,6 +83,13 @@ class ReadRowsStream(object):
     :func:`~google.cloud.bigquery_storage_v1.reader.ReadRowsStream.to_dataframe()`
     method to parse all messages into a :class:`pandas.DataFrame`.
 
+    Use the stream as a context manager to cancel the ``ReadRows`` call if
+    reading stops before the end of the stream::
+
+        with client.read_rows(stream_name) as stream:
+            for message in stream:
+                ...
+
     This object should not be created directly, but is returned by
     other methods in this library.
     """
@@ -126,10 +133,10 @@ class ReadRowsStream(object):
             request_template (Optional[Union[dict, \
                 ~google.cloud.bigquery_storage_v1.types.ReadRowsRequest \
             ]]):
-                Request fields, such as ``arrow_serialization_options``, to
-                send on every ``ReadRows`` request, including after a
-                reconnect. ``read_stream`` and ``offset`` are set from
-                ``name`` and the current stream offset.
+                Request fields, such as ``arrow_serialization_options``
+                ([Beta]), to send on every ``ReadRows`` request, including
+                after a reconnect. ``read_stream`` and ``offset`` are set
+                from ``name`` and the current stream offset.
 
         Returns:
             Iterable[ \
@@ -147,6 +154,7 @@ class ReadRowsStream(object):
         self._retry_delay_callback = retry_delay_callback
         self._request_template = request_template
         self._cancelled = False
+        self._finished = False
         self._wrapped = None
 
     def __iter__(self):
@@ -172,6 +180,7 @@ class ReadRowsStream(object):
                     yield message
 
                 self._wrapped = None
+                self._finished = True
                 return  # Made it through the whole stream.
             except google.api_core.exceptions.InternalServerError as exc:
                 resumable_error = any(
@@ -205,7 +214,16 @@ class ReadRowsStream(object):
             cancel()
 
     def __del__(self):
-        if not getattr(self, "_cancelled", True):
+        if not getattr(self, "_cancelled", True) and not getattr(
+            self, "_finished", True
+        ):
+            self.cancel()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if not self._cancelled and not self._finished:
             self.cancel()
 
     def _reconnect(self):

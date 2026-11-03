@@ -4,6 +4,14 @@
 
 [1]: https://pypi.org/project/google-cloud-access-context-manager/#history
 
+## [0.6.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-access-context-manager-v0.6.1...google-cloud-access-context-manager-v0.6.2) (2026-10-22)
+
+
+### Features
+
+* declare support for Python 3.15 ([#18737](https://github.com/googleapis/google-cloud-python/issues/18737)) ([65c8767](https://github.com/googleapis/google-cloud-python/commit/65c87678e7a63aa4c8115c9273581aa5db82fbe9))
+* update API sources and regenerate ([#18797](https://github.com/googleapis/google-cloud-python/issues/18797)) ([be4d954](https://github.com/googleapis/google-cloud-python/commit/be4d954baf9a27cad04637183047b156afa4784a))
+
 ## [0.6.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-access-context-manager-v0.6.0...google-cloud-access-context-manager-v0.6.1) (2026-08-06)
 
 

@@ -1,10 +1,10 @@
-google-auth==2.52.0
+google-auth==2.62.0
 google-cloud-bigquery-storage==2.43.0
-google-cloud-bigquery==3.41.0
+google-cloud-bigquery==3.46.2
 pyarrow==26.0.0
 ipython===8.33.0; python_version == '3.10'
 ipython==9.17.1; python_version >= '3.11'
-ipywidgets==8.1.8
+ipywidgets==8.1.9
 pandas==3.0.6
 tqdm==4.70.1
 db-dtypes==1.8.0

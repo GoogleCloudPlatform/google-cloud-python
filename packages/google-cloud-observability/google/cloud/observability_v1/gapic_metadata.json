@@ -1,0 +1,358 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.observability_v1",
+  "protoPackage": "google.cloud.observability.v1",
+  "schema": "1.0",
+  "services": {
+    "Observability": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ObservabilityClient",
+          "rpcs": {
+            "CreateBucket": {
+              "methods": [
+                "create_bucket"
+              ]
+            },
+            "CreateLink": {
+              "methods": [
+                "create_link"
+              ]
+            },
+            "CreateTraceScope": {
+              "methods": [
+                "create_trace_scope"
+              ]
+            },
+            "DeleteLink": {
+              "methods": [
+                "delete_link"
+              ]
+            },
+            "DeleteTraceScope": {
+              "methods": [
+                "delete_trace_scope"
+              ]
+            },
+            "GetBucket": {
+              "methods": [
+                "get_bucket"
+              ]
+            },
+            "GetDataset": {
+              "methods": [
+                "get_dataset"
+              ]
+            },
+            "GetLink": {
+              "methods": [
+                "get_link"
+              ]
+            },
+            "GetScope": {
+              "methods": [
+                "get_scope"
+              ]
+            },
+            "GetSettings": {
+              "methods": [
+                "get_settings"
+              ]
+            },
+            "GetTraceScope": {
+              "methods": [
+                "get_trace_scope"
+              ]
+            },
+            "GetView": {
+              "methods": [
+                "get_view"
+              ]
+            },
+            "ListBuckets": {
+              "methods": [
+                "list_buckets"
+              ]
+            },
+            "ListDatasets": {
+              "methods": [
+                "list_datasets"
+              ]
+            },
+            "ListLinks": {
+              "methods": [
+                "list_links"
+              ]
+            },
+            "ListTraceScopes": {
+              "methods": [
+                "list_trace_scopes"
+              ]
+            },
+            "ListViews": {
+              "methods": [
+                "list_views"
+              ]
+            },
+            "UpdateBucket": {
+              "methods": [
+                "update_bucket"
+              ]
+            },
+            "UpdateLink": {
+              "methods": [
+                "update_link"
+              ]
+            },
+            "UpdateScope": {
+              "methods": [
+                "update_scope"
+              ]
+            },
+            "UpdateSettings": {
+              "methods": [
+                "update_settings"
+              ]
+            },
+            "UpdateTraceScope": {
+              "methods": [
+                "update_trace_scope"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "ObservabilityAsyncClient",
+          "rpcs": {
+            "CreateBucket": {
+              "methods": [
+                "create_bucket"
+              ]
+            },
+            "CreateLink": {
+              "methods": [
+                "create_link"
+              ]
+            },
+            "CreateTraceScope": {
+              "methods": [
+                "create_trace_scope"
+              ]
+            },
+            "DeleteLink": {
+              "methods": [
+                "delete_link"
+              ]
+            },
+            "DeleteTraceScope": {
+              "methods": [
+                "delete_trace_scope"
+              ]
+            },
+            "GetBucket": {
+              "methods": [
+                "get_bucket"
+              ]
+            },
+            "GetDataset": {
+              "methods": [
+                "get_dataset"
+              ]
+            },
+            "GetLink": {
+              "methods": [
+                "get_link"
+              ]
+            },
+            "GetScope": {
+              "methods": [
+                "get_scope"
+              ]
+            },
+            "GetSettings": {
+              "methods": [
+                "get_settings"
+              ]
+            },
+            "GetTraceScope": {
+              "methods": [
+                "get_trace_scope"
+              ]
+            },
+            "GetView": {
+              "methods": [
+                "get_view"
+              ]
+            },
+            "ListBuckets": {
+              "methods": [
+                "list_buckets"
+              ]
+            },
+            "ListDatasets": {
+              "methods": [
+                "list_datasets"
+              ]
+            },
+            "ListLinks": {
+              "methods": [
+                "list_links"
+              ]
+            },
+            "ListTraceScopes": {
+              "methods": [
+                "list_trace_scopes"
+              ]
+            },
+            "ListViews": {
+              "methods": [
+                "list_views"
+              ]
+            },
+            "UpdateBucket": {
+              "methods": [
+                "update_bucket"
+              ]
+            },
+            "UpdateLink": {
+              "methods": [
+                "update_link"
+              ]
+            },
+            "UpdateScope": {
+              "methods": [
+                "update_scope"
+              ]
+            },
+            "UpdateSettings": {
+              "methods": [
+                "update_settings"
+              ]
+            },
+            "UpdateTraceScope": {
+              "methods": [
+                "update_trace_scope"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "ObservabilityClient",
+          "rpcs": {
+            "CreateBucket": {
+              "methods": [
+                "create_bucket"
+              ]
+            },
+            "CreateLink": {
+              "methods": [
+                "create_link"
+              ]
+            },
+            "CreateTraceScope": {
+              "methods": [
+                "create_trace_scope"
+              ]
+            },
+            "DeleteLink": {
+              "methods": [
+                "delete_link"
+              ]
+            },
+            "DeleteTraceScope": {
+              "methods": [
+                "delete_trace_scope"
+              ]
+            },
+            "GetBucket": {
+              "methods": [
+                "get_bucket"
+              ]
+            },
+            "GetDataset": {
+              "methods": [
+                "get_dataset"
+              ]
+            },
+            "GetLink": {
+              "methods": [
+                "get_link"
+              ]
+            },
+            "GetScope": {
+              "methods": [
+                "get_scope"
+              ]
+            },
+            "GetSettings": {
+              "methods": [
+                "get_settings"
+              ]
+            },
+            "GetTraceScope": {
+              "methods": [
+                "get_trace_scope"
+              ]
+            },
+            "GetView": {
+              "methods": [
+                "get_view"
+              ]
+            },
+            "ListBuckets": {
+              "methods": [
+                "list_buckets"
+              ]
+            },
+            "ListDatasets": {
+              "methods": [
+                "list_datasets"
+              ]
+            },
+            "ListLinks": {
+              "methods": [
+                "list_links"
+              ]
+            },
+            "ListTraceScopes": {
+              "methods": [
+                "list_trace_scopes"
+              ]
+            },
+            "ListViews": {
+              "methods": [
+                "list_views"
+              ]
+            },
+            "UpdateBucket": {
+              "methods": [
+                "update_bucket"
+              ]
+            },
+            "UpdateLink": {
+              "methods": [
+                "update_link"
+              ]
+            },
+            "UpdateScope": {
+              "methods": [
+                "update_scope"
+              ]
+            },
+            "UpdateSettings": {
+              "methods": [
+                "update_settings"
+              ]
+            },
+            "UpdateTraceScope": {
+              "methods": [
+                "update_trace_scope"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

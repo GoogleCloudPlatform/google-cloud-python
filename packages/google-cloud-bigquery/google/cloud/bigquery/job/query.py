@@ -1842,9 +1842,13 @@ class QueryJob(_AsyncJob):
         # RowIterator response if there are any rows in it. This prevents us
         # from stopping the iteration early in the cases where we set
         # maxResults=0. In that case, we're missing rows and there's no next
-        # page token.
+        # page token. ARROW responses from jobs.query carry their rows in
+        # arrowRecordBatch instead of rows.
         first_page_response = self._query_results._properties
-        if "rows" not in first_page_response:
+        if (
+            "rows" not in first_page_response
+            and "arrowRecordBatch" not in first_page_response
+        ):
             first_page_response = None
 
         rows = self._client._list_rows_from_query_results(

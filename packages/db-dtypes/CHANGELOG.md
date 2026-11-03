@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/db-dtypes/#history
 
+## [1.9.0](https://github.com/googleapis/google-cloud-python/compare/db-dtypes-v1.8.0...db-dtypes-v1.9.0) (2026-10-22)
+
+
+### Features
+
+* support Python 3.15 ([8fceef4](https://github.com/googleapis/google-cloud-python/commit/8fceef49c523bcc8989abf3b6b82bcf143332d50))
+
 ## [1.8.0](https://github.com/googleapis/google-cloud-python/compare/db-dtypes-v1.7.2...db-dtypes-v1.8.0) (2026-10-15)
 
 

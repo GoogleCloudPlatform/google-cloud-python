@@ -31,6 +31,7 @@ from google.cloud.certificate_manager_v1.types.certificate_issuance_config impor
     GetCertificateIssuanceConfigRequest,
     ListCertificateIssuanceConfigsRequest,
     ListCertificateIssuanceConfigsResponse,
+    UpdateCertificateIssuanceConfigRequest,
 )
 from google.cloud.certificate_manager_v1.types.certificate_manager import (
     Certificate,
@@ -83,6 +84,7 @@ __all__ = (
     "GetCertificateIssuanceConfigRequest",
     "ListCertificateIssuanceConfigsRequest",
     "ListCertificateIssuanceConfigsResponse",
+    "UpdateCertificateIssuanceConfigRequest",
     "Certificate",
     "CertificateMap",
     "CertificateMapEntry",

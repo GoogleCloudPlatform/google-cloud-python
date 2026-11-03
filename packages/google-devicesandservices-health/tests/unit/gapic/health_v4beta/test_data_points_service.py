@@ -3953,7 +3953,9 @@ def test_daily_roll_up_data_points(request_type, transport: str = "grpc"):
         type(client.transport.daily_roll_up_data_points), "__call__"
     ) as call:
         # Designate an appropriate return value for the call.
-        call.return_value = data_points.DailyRollUpDataPointsResponse()
+        call.return_value = data_points.DailyRollUpDataPointsResponse(
+            next_page_token="next_page_token_value",
+        )
         response = client.daily_roll_up_data_points(request)
 
         # Establish that the underlying gRPC stub method was called.
@@ -3963,7 +3965,8 @@ def test_daily_roll_up_data_points(request_type, transport: str = "grpc"):
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
-    assert isinstance(response, data_points.DailyRollUpDataPointsResponse)
+    assert isinstance(response, pagers.DailyRollUpDataPointsPager)
+    assert response.next_page_token == "next_page_token_value"
 
 
 def test_daily_roll_up_data_points_non_empty_request_with_auto_populated_field():
@@ -4109,7 +4112,9 @@ async def test_daily_roll_up_data_points_async(
     ) as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            data_points.DailyRollUpDataPointsResponse()
+            data_points.DailyRollUpDataPointsResponse(
+                next_page_token="next_page_token_value",
+            )
         )
         response = await client.daily_roll_up_data_points(request)
 
@@ -4120,7 +4125,8 @@ async def test_daily_roll_up_data_points_async(
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
-    assert isinstance(response, data_points.DailyRollUpDataPointsResponse)
+    assert isinstance(response, pagers.DailyRollUpDataPointsAsyncPager)
+    assert response.next_page_token == "next_page_token_value"
 
 
 def test_daily_roll_up_data_points_field_headers():
@@ -4186,6 +4192,211 @@ async def test_daily_roll_up_data_points_field_headers_async():
         "x-goog-request-params",
         "parent=parent_value",
     ) in kw["metadata"]
+
+
+def test_daily_roll_up_data_points_pager(transport_name: str = "grpc"):
+    client = DataPointsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.daily_roll_up_data_points), "__call__"
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[
+                    data_points.DailyRollupDataPoint(),
+                    data_points.DailyRollupDataPoint(),
+                    data_points.DailyRollupDataPoint(),
+                ],
+                next_page_token="abc",
+            ),
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[],
+                next_page_token="def",
+            ),
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[
+                    data_points.DailyRollupDataPoint(),
+                ],
+                next_page_token="ghi",
+            ),
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[
+                    data_points.DailyRollupDataPoint(),
+                    data_points.DailyRollupDataPoint(),
+                ],
+            ),
+            RuntimeError,
+        )
+
+        expected_metadata = ()
+        retry = retries.Retry()
+        timeout = 5
+        expected_metadata = tuple(expected_metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", ""),)),
+        )
+        pager = client.daily_roll_up_data_points(
+            request={}, retry=retry, timeout=timeout
+        )
+
+        assert pager._metadata == expected_metadata
+        assert pager._retry == retry
+        assert pager._timeout == timeout
+
+        assert pager.next_page_token == "abc"
+        assert str(pager).startswith(f"{pager.__class__.__name__}<")
+
+        results = list(pager)
+        assert len(results) == 6
+        assert all(isinstance(i, data_points.DailyRollupDataPoint) for i in results)
+
+
+def test_daily_roll_up_data_points_pages(transport_name: str = "grpc"):
+    client = DataPointsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.daily_roll_up_data_points), "__call__"
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[
+                    data_points.DailyRollupDataPoint(),
+                    data_points.DailyRollupDataPoint(),
+                    data_points.DailyRollupDataPoint(),
+                ],
+                next_page_token="abc",
+            ),
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[],
+                next_page_token="def",
+            ),
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[
+                    data_points.DailyRollupDataPoint(),
+                ],
+                next_page_token="ghi",
+            ),
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[
+                    data_points.DailyRollupDataPoint(),
+                    data_points.DailyRollupDataPoint(),
+                ],
+            ),
+            RuntimeError,
+        )
+        pages = list(client.daily_roll_up_data_points(request={}).pages)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+@pytest.mark.asyncio
+async def test_daily_roll_up_data_points_async_pager():
+    client = DataPointsServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.daily_roll_up_data_points),
+        "__call__",
+        new_callable=mock.AsyncMock,
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[
+                    data_points.DailyRollupDataPoint(),
+                    data_points.DailyRollupDataPoint(),
+                    data_points.DailyRollupDataPoint(),
+                ],
+                next_page_token="abc",
+            ),
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[],
+                next_page_token="def",
+            ),
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[
+                    data_points.DailyRollupDataPoint(),
+                ],
+                next_page_token="ghi",
+            ),
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[
+                    data_points.DailyRollupDataPoint(),
+                    data_points.DailyRollupDataPoint(),
+                ],
+            ),
+            RuntimeError,
+        )
+        async_pager = await client.daily_roll_up_data_points(
+            request={},
+        )
+        assert async_pager.next_page_token == "abc"
+        assert str(async_pager).startswith(f"{async_pager.__class__.__name__}<")
+
+        responses = []
+        async for response in async_pager:  # pragma: no branch
+            responses.append(response)
+
+        assert len(responses) == 6
+        assert all(isinstance(i, data_points.DailyRollupDataPoint) for i in responses)
+
+
+@pytest.mark.asyncio
+async def test_daily_roll_up_data_points_async_pages():
+    client = DataPointsServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.daily_roll_up_data_points),
+        "__call__",
+        new_callable=mock.AsyncMock,
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[
+                    data_points.DailyRollupDataPoint(),
+                    data_points.DailyRollupDataPoint(),
+                    data_points.DailyRollupDataPoint(),
+                ],
+                next_page_token="abc",
+            ),
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[],
+                next_page_token="def",
+            ),
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[
+                    data_points.DailyRollupDataPoint(),
+                ],
+                next_page_token="ghi",
+            ),
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[
+                    data_points.DailyRollupDataPoint(),
+                    data_points.DailyRollupDataPoint(),
+                ],
+            ),
+            RuntimeError,
+        )
+        pages = []
+        async for page_ in (await client.daily_roll_up_data_points(request={})).pages:
+            pages.append(page_)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
 
 
 @pytest.mark.parametrize(
@@ -5920,6 +6131,72 @@ def test_daily_roll_up_data_points_rest_required_fields(
             assert sorted(expected_params) == sorted(actual_params)
 
 
+def test_daily_roll_up_data_points_rest_pager(transport: str = "rest"):
+    client = DataPointsServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # TODO(kbandes): remove this mock unless there's a good reason for it.
+        # with mock.patch.object(path_template, 'transcode') as transcode:
+        # Set the response as a series of pages
+        response = (
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[
+                    data_points.DailyRollupDataPoint(),
+                    data_points.DailyRollupDataPoint(),
+                    data_points.DailyRollupDataPoint(),
+                ],
+                next_page_token="abc",
+            ),
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[],
+                next_page_token="def",
+            ),
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[
+                    data_points.DailyRollupDataPoint(),
+                ],
+                next_page_token="ghi",
+            ),
+            data_points.DailyRollUpDataPointsResponse(
+                rollup_data_points=[
+                    data_points.DailyRollupDataPoint(),
+                    data_points.DailyRollupDataPoint(),
+                ],
+            ),
+        )
+        # Two responses for two calls
+        response = response + response
+
+        # Wrap the values into proper Response objs
+        response = tuple(
+            data_points.DailyRollUpDataPointsResponse.to_json(x) for x in response
+        )
+        return_values = tuple(Response() for i in response)
+        for return_val, response_val in zip(return_values, response):
+            return_val._content = response_val.encode("UTF-8")
+            return_val.status_code = 200
+        req.side_effect = return_values
+
+        sample_request = {"parent": "users/sample1/dataTypes/sample2"}
+
+        pager = client.daily_roll_up_data_points(request=sample_request)
+
+        assert pager.next_page_token == "abc"
+        assert str(pager).startswith(f"{pager.__class__.__name__}<")
+
+        results = list(pager)
+        assert len(results) == 6
+        assert all(isinstance(i, data_points.DailyRollupDataPoint) for i in results)
+
+        pages = list(client.daily_roll_up_data_points(request=sample_request).pages)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
 def test_export_exercise_tcx_rest_use_cached_wrapped_rpc():
     # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
     # instead of constructing them on each call
@@ -6611,7 +6888,9 @@ async def test_daily_roll_up_data_points_empty_call_grpc_asyncio():
     ) as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            data_points.DailyRollUpDataPointsResponse()
+            data_points.DailyRollUpDataPointsResponse(
+                next_page_token="next_page_token_value",
+            )
         )
         await client.daily_roll_up_data_points(request=None)
 
@@ -7288,12 +7567,6 @@ def test_create_data_point_rest_call_success(request_type):
         "ovulation_test": {"sample_time": {}, "result": 1},
         "symptoms": {"sample_time": {}, "symptoms": [1]},
         "moods": {"sample_time": {}, "moods": [1], "valences": [1]},
-        "skin_temperature": {
-            "sample_time": {},
-            "temperature_celsius": 0.2053,
-            "baseline_temperature_celsius": 0.2983,
-            "metadata": {"measurement_location": 1, "measurement_state": 1},
-        },
         "skin_temperature_sensors": {
             "sample_time": {},
             "sensor_data": [
@@ -7849,12 +8122,6 @@ def test_update_data_point_rest_call_success(request_type):
         "ovulation_test": {"sample_time": {}, "result": 1},
         "symptoms": {"sample_time": {}, "symptoms": [1]},
         "moods": {"sample_time": {}, "moods": [1], "valences": [1]},
-        "skin_temperature": {
-            "sample_time": {},
-            "temperature_celsius": 0.2053,
-            "baseline_temperature_celsius": 0.2983,
-            "metadata": {"measurement_location": 1, "measurement_state": 1},
-        },
         "skin_temperature_sensors": {
             "sample_time": {},
             "sensor_data": [
@@ -8480,7 +8747,9 @@ def test_daily_roll_up_data_points_rest_call_success(request_type):
     # Mock the http request call within the method and fake a response.
     with mock.patch.object(type(client.transport._session), "request") as req:
         # Designate an appropriate value for the returned response.
-        return_value = data_points.DailyRollUpDataPointsResponse()
+        return_value = data_points.DailyRollUpDataPointsResponse(
+            next_page_token="next_page_token_value",
+        )
 
         # Wrap the value into a proper Response obj
         response_value = mock.Mock()
@@ -8495,7 +8764,8 @@ def test_daily_roll_up_data_points_rest_call_success(request_type):
         response = client.daily_roll_up_data_points(request)
 
     # Establish that the response is the type that we expect.
-    assert isinstance(response, data_points.DailyRollUpDataPointsResponse)
+    assert isinstance(response, pagers.DailyRollUpDataPointsPager)
+    assert response.next_page_token == "next_page_token_value"
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])

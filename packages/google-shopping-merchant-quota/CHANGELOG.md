@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-shopping-merchant-quota/#history
 
+## [1.7.0](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-quota-v1.6.0...google-shopping-merchant-quota-v1.7.0) (2026-10-29)
+
+
+### Features
+
+* update API sources and regenerate ([#18889](https://github.com/googleapis/google-cloud-python/issues/18889)) ([8705243](https://github.com/googleapis/google-cloud-python/commit/870524380c52ea234235e0c449f5c9aee2945283))
+
 ## [1.6.0](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-quota-v1.5.0...google-shopping-merchant-quota-v1.6.0) (2026-10-01)
 
 

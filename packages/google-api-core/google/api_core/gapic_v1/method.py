@@ -213,25 +213,46 @@ def _extract_error_attributes(exc: Optional[BaseException]) -> dict[str, Any]:
                 pass
 
     # 4. Unified attribute extraction: extract domain, reason, and metadata from ErrorInfo or exception attributes
+    http_response = getattr(target_exc, "response", None)
+    http_status = (
+        getattr(http_response, "status_code", getattr(http_response, "status", None))
+        if http_response is not None and not hasattr(http_response, "trailing_metadata")
+        else None
+    )
+
     source = error_info or target_exc
-    domain = getattr(source, "domain", None)
+    if isinstance(source, dict):
+        domain = source.get("domain")
+        reason = source.get("reason")
+        metadata = source.get("metadata")
+    else:
+        domain = getattr(source, "domain", None)
+        reason = getattr(source, "reason", None)
+        metadata = getattr(source, "metadata", None)
+
     if domain:
         attrs["gcp.errors.domain"] = domain
-    reason = getattr(source, "reason", None)
     if reason:
         attrs["error.type"] = reason
+    elif isinstance(http_status, int):
+        attrs["error.type"] = str(http_status)
     else:
         # Fallback per OpenTelemetry Semantic Conventions: every failed span should record
         # a low-cardinality error.type. Use canonical status code name or exception class name.
         status_code = _extract_status_code(target_exc)
         attrs["error.type"] = status_code or target_exc.__class__.__name__
-    metadata = getattr(source, "metadata", None)
     if metadata:
         for k, v in metadata.items():
             attrs[f"gcp.errors.metadata.{k}"] = str(v)
 
     # 5. Extract human-readable error description for cross-language PRD parity
-    message = getattr(target_exc, "message", None)
+    message = (
+        _observability._TraceContext._extract_http_error_message(http_response)
+        if http_status is not None
+        else None
+    )
+    if not message:
+        message = getattr(target_exc, "message", None)
     if not message and hasattr(target_exc, "details"):
         details = target_exc.details
         message = details() if callable(details) else details
@@ -330,14 +351,18 @@ class _GapicCallable(object):
                     tracer = trace.get_tracer("google.api_core")
 
                 span_name, _, _ = _extract_rpc_identity(method_name)
+                endpoint_attrs = _observability._extract_endpoint_attributes(
+                    client_options
+                )
                 span_attributes = {
                     "rpc.system.name": "http" if kind.startswith("rest") else "grpc",
                     "rpc.method": span_name,
+                    **endpoint_attrs,
                 }
                 self._start_span_fn = functools.partial(
                     tracer.start_as_current_span,
                     span_name,
-                    kind=trace.SpanKind.CLIENT,
+                    kind=trace.SpanKind.INTERNAL,
                     attributes=span_attributes,
                 )
             except (ImportError, AttributeError, TypeError):

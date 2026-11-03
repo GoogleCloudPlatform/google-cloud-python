@@ -114,6 +114,7 @@ from google.cloud.geminidataanalytics_v1.types.data_chat_service import (
     UserMessage,
 )
 from google.cloud.geminidataanalytics_v1.types.datasource import (
+    BigQueryDatasetReference,
     BigQueryPropertyGraphReference,
     BigQueryTableReference,
     BigQueryTableReferences,
@@ -126,6 +127,7 @@ from google.cloud.geminidataanalytics_v1.types.datasource import (
     LookerExploreReferences,
     PrivateLookerInstanceInfo,
     Schema,
+    SearchScope,
     StudioDatasourceReference,
     StudioDatasourceReferences,
 )
@@ -206,6 +208,7 @@ __all__ = (
     "SystemMessage",
     "TextMessage",
     "UserMessage",
+    "BigQueryDatasetReference",
     "BigQueryPropertyGraphReference",
     "BigQueryTableReference",
     "BigQueryTableReferences",
@@ -217,6 +220,7 @@ __all__ = (
     "LookerExploreReferences",
     "PrivateLookerInstanceInfo",
     "Schema",
+    "SearchScope",
     "StudioDatasourceReference",
     "StudioDatasourceReferences",
     "DataFilterType",

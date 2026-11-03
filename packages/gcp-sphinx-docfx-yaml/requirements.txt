@@ -7,5 +7,5 @@ mock
 pytest
 
 # Other dependencies
-ruff==0.15.12
+ruff==0.17.1
 parameterized==0.9.0

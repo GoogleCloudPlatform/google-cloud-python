@@ -416,10 +416,17 @@ class BigtableDataClientAsync(ClientWithProject):
         ):
             # raise error if not in an event loop in async client
             CrossSync.verify_async_event_loop()
-            self._channel_refresh_task = CrossSync.create_daemon_task(
-                self._manage_channel,
-                task_name=f"{self.__class__.__name__} channel refresh",
-            )
+            try:
+                self._channel_refresh_task = CrossSync.create_daemon_task(
+                    self._manage_channel,
+                    task_name=f"{self.__class__.__name__} channel refresh",
+                )
+            except Exception as e:
+                _LOGGER.warning(
+                    f"Failed to start background channel refresh task: {e}. "
+                    "Channel refresh will be disabled."
+                )
+                self._channel_refresh_task = None
 
     @CrossSync.convert
     async def close(self, timeout: float | None = 2.0):
@@ -1150,18 +1157,29 @@ class _DataApiTargetAsync(abc.ABC):
             default_retryable_errors or ()
         )
 
+        if CrossSync.is_async:
+            try:
+                CrossSync.verify_async_event_loop()
+            except RuntimeError as e:
+                raise RuntimeError(
+                    f"{self.__class__.__name__} must be created within an async event loop context."
+                ) from e
         try:
-            self._register_instance_future = CrossSync.create_task(
-                self.client._register_instance,
-                self.instance_id,
-                self.app_profile_id,
-                id(self),
-                sync_executor=self.client._executor,
+            self._register_instance_future: CrossSync.Future[None] | None = (
+                CrossSync.create_task(
+                    self.client._register_instance,
+                    self.instance_id,
+                    self.app_profile_id,
+                    id(self),
+                    sync_executor=self.client._executor,
+                )
             )
-        except RuntimeError as e:
-            raise RuntimeError(
-                f"{self.__class__.__name__} must be created within an async event loop context."
-            ) from e
+        except Exception as e:
+            _LOGGER.warning(
+                f"Failed to start background instance registration: {e}. "
+                "Requests will proceed without proactive channel warming."
+            )
+            self._register_instance_future = None
 
     def _create_operation(
         self, op_type: OperationType, **kwargs

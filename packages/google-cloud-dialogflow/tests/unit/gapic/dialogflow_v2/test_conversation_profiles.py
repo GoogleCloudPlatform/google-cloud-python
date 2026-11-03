@@ -6125,13 +6125,13 @@ def test_create_conversation_profile_rest_call_success(request_type):
             "enable_word_info": True,
             "use_timeout_based_endpointing": True,
             "gemini_asr_config": {
-                "model_id": "model_id_value",
                 "silence_duration_ms": 2023,
                 "prefix_padding_ms": 1795,
                 "start_of_speech_sensitivity": 1,
                 "end_of_speech_sensitivity": 1,
             },
             "use_gemini_asr": True,
+            "disable_interim_input_transcripts": True,
         },
         "language_code": "language_code_value",
         "sip_config": {
@@ -6492,13 +6492,13 @@ def test_update_conversation_profile_rest_call_success(request_type):
             "enable_word_info": True,
             "use_timeout_based_endpointing": True,
             "gemini_asr_config": {
-                "model_id": "model_id_value",
                 "silence_duration_ms": 2023,
                 "prefix_padding_ms": 1795,
                 "start_of_speech_sensitivity": 1,
                 "end_of_speech_sensitivity": 1,
             },
             "use_gemini_asr": True,
+            "disable_interim_input_transcripts": True,
         },
         "language_code": "language_code_value",
         "sip_config": {

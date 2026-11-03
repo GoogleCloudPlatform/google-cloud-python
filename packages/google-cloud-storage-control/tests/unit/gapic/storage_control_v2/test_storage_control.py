@@ -1948,8 +1948,15 @@ async def test_get_folder_flattened_error_async():
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.ListFoldersRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.ListFoldersRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 def test_list_folders(request_type, transport: str = "grpc"):
@@ -1974,6 +1981,7 @@ def test_list_folders(request_type, transport: str = "grpc"):
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
         request = storage_control.ListFoldersRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -2017,6 +2025,9 @@ def test_list_folders_non_empty_request_with_auto_populated_field():
             lexicographic_start="lexicographic_start_value",
             lexicographic_end="lexicographic_end_value",
         )
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -2101,8 +2112,15 @@ async def test_list_folders_async_use_cached_wrapped_rpc(
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.ListFoldersRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.ListFoldersRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 async def test_list_folders_async(request_type, transport: str = "grpc_asyncio"):
@@ -2129,6 +2147,7 @@ async def test_list_folders_async(request_type, transport: str = "grpc_asyncio")
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
         request = storage_control.ListFoldersRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -4736,8 +4755,15 @@ async def test_list_managed_folders_async_pages():
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.UpdateManagedFolderRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.UpdateManagedFolderRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 def test_update_managed_folder(request_type, transport: str = "grpc"):
@@ -4765,6 +4791,7 @@ def test_update_managed_folder(request_type, transport: str = "grpc"):
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
         request = storage_control.UpdateManagedFolderRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -4797,6 +4824,9 @@ def test_update_managed_folder_non_empty_request_with_auto_populated_field():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateManagedFolderRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -4886,8 +4916,15 @@ async def test_update_managed_folder_async_use_cached_wrapped_rpc(
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.UpdateManagedFolderRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.UpdateManagedFolderRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 async def test_update_managed_folder_async(
@@ -4919,6 +4956,7 @@ async def test_update_managed_folder_async(
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
         request = storage_control.UpdateManagedFolderRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -7420,8 +7458,15 @@ async def test_list_anywhere_caches_async_pages():
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.CreateRapidCacheRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.CreateRapidCacheRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 def test_create_rapid_cache(request_type, transport: str = "grpc"):
@@ -7446,6 +7491,7 @@ def test_create_rapid_cache(request_type, transport: str = "grpc"):
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
         request = storage_control.CreateRapidCacheRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -7480,6 +7526,9 @@ def test_create_rapid_cache_non_empty_request_with_auto_populated_field():
         request_msg = storage_control.CreateRapidCacheRequest(
             parent="parent_value",
         )
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -7578,8 +7627,15 @@ async def test_create_rapid_cache_async_use_cached_wrapped_rpc(
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.CreateRapidCacheRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.CreateRapidCacheRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 async def test_create_rapid_cache_async(request_type, transport: str = "grpc_asyncio"):
@@ -7606,6 +7662,7 @@ async def test_create_rapid_cache_async(request_type, transport: str = "grpc_asy
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
         request = storage_control.CreateRapidCacheRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -7711,8 +7768,15 @@ async def test_create_rapid_cache_flattened_error_async():
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.UpdateRapidCacheRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.UpdateRapidCacheRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 def test_update_rapid_cache(request_type, transport: str = "grpc"):
@@ -7737,6 +7801,7 @@ def test_update_rapid_cache(request_type, transport: str = "grpc"):
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
         request = storage_control.UpdateRapidCacheRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -7767,6 +7832,9 @@ def test_update_rapid_cache_non_empty_request_with_auto_populated_field():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateRapidCacheRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -7865,8 +7933,15 @@ async def test_update_rapid_cache_async_use_cached_wrapped_rpc(
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.UpdateRapidCacheRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.UpdateRapidCacheRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 async def test_update_rapid_cache_async(request_type, transport: str = "grpc_asyncio"):
@@ -7893,6 +7968,7 @@ async def test_update_rapid_cache_async(request_type, transport: str = "grpc_asy
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
         request = storage_control.UpdateRapidCacheRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -7998,8 +8074,15 @@ async def test_update_rapid_cache_flattened_error_async():
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.DisableRapidCacheRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.DisableRapidCacheRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 def test_disable_rapid_cache(request_type, transport: str = "grpc"):
@@ -8024,6 +8107,7 @@ def test_disable_rapid_cache(request_type, transport: str = "grpc"):
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
         request = storage_control.DisableRapidCacheRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -8058,6 +8142,9 @@ def test_disable_rapid_cache_non_empty_request_with_auto_populated_field():
         request_msg = storage_control.DisableRapidCacheRequest(
             name="name_value",
         )
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -8156,8 +8243,15 @@ async def test_disable_rapid_cache_async_use_cached_wrapped_rpc(
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.DisableRapidCacheRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.DisableRapidCacheRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 async def test_disable_rapid_cache_async(request_type, transport: str = "grpc_asyncio"):
@@ -8184,6 +8278,7 @@ async def test_disable_rapid_cache_async(request_type, transport: str = "grpc_as
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
         request = storage_control.DisableRapidCacheRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -8279,8 +8374,15 @@ async def test_disable_rapid_cache_flattened_error_async():
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.GetRapidCacheRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.GetRapidCacheRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 def test_get_rapid_cache(request_type, transport: str = "grpc"):
@@ -8310,6 +8412,7 @@ def test_get_rapid_cache(request_type, transport: str = "grpc"):
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
         request = storage_control.GetRapidCacheRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -8348,6 +8451,9 @@ def test_get_rapid_cache_non_empty_request_with_auto_populated_field():
         request_msg = storage_control.GetRapidCacheRequest(
             name="name_value",
         )
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -8432,8 +8538,15 @@ async def test_get_rapid_cache_async_use_cached_wrapped_rpc(
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.GetRapidCacheRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.GetRapidCacheRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 async def test_get_rapid_cache_async(request_type, transport: str = "grpc_asyncio"):
@@ -8465,6 +8578,7 @@ async def test_get_rapid_cache_async(request_type, transport: str = "grpc_asynci
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
         request = storage_control.GetRapidCacheRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -8562,8 +8676,15 @@ async def test_get_rapid_cache_flattened_error_async():
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.ListRapidCachesRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.ListRapidCachesRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 def test_list_rapid_caches(request_type, transport: str = "grpc"):
@@ -8590,6 +8711,7 @@ def test_list_rapid_caches(request_type, transport: str = "grpc"):
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
         request = storage_control.ListRapidCachesRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -8627,6 +8749,9 @@ def test_list_rapid_caches_non_empty_request_with_auto_populated_field():
             parent="parent_value",
             page_token="page_token_value",
         )
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -8713,8 +8838,15 @@ async def test_list_rapid_caches_async_use_cached_wrapped_rpc(
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.ListRapidCachesRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.ListRapidCachesRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 async def test_list_rapid_caches_async(request_type, transport: str = "grpc_asyncio"):
@@ -8743,6 +8875,7 @@ async def test_list_rapid_caches_async(request_type, transport: str = "grpc_asyn
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
         request = storage_control.ListRapidCachesRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -9394,8 +9527,15 @@ async def test_get_project_intelligence_config_flattened_error_async():
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.UpdateProjectIntelligenceConfigRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.UpdateProjectIntelligenceConfigRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 def test_update_project_intelligence_config(request_type, transport: str = "grpc"):
@@ -9423,6 +9563,7 @@ def test_update_project_intelligence_config(request_type, transport: str = "grpc
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
         request = storage_control.UpdateProjectIntelligenceConfigRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -9458,6 +9599,9 @@ def test_update_project_intelligence_config_non_empty_request_with_auto_populate
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateProjectIntelligenceConfigRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -9547,8 +9691,15 @@ async def test_update_project_intelligence_config_async_use_cached_wrapped_rpc(
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.UpdateProjectIntelligenceConfigRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.UpdateProjectIntelligenceConfigRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 async def test_update_project_intelligence_config_async(
@@ -9580,6 +9731,7 @@ async def test_update_project_intelligence_config_async(
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
         request = storage_control.UpdateProjectIntelligenceConfigRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -10110,8 +10262,15 @@ async def test_get_folder_intelligence_config_flattened_error_async():
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.UpdateFolderIntelligenceConfigRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.UpdateFolderIntelligenceConfigRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 def test_update_folder_intelligence_config(request_type, transport: str = "grpc"):
@@ -10139,6 +10298,7 @@ def test_update_folder_intelligence_config(request_type, transport: str = "grpc"
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
         request = storage_control.UpdateFolderIntelligenceConfigRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -10174,6 +10334,9 @@ def test_update_folder_intelligence_config_non_empty_request_with_auto_populated
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateFolderIntelligenceConfigRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -10263,8 +10426,15 @@ async def test_update_folder_intelligence_config_async_use_cached_wrapped_rpc(
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.UpdateFolderIntelligenceConfigRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.UpdateFolderIntelligenceConfigRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 async def test_update_folder_intelligence_config_async(
@@ -10296,6 +10466,7 @@ async def test_update_folder_intelligence_config_async(
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
         request = storage_control.UpdateFolderIntelligenceConfigRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -10826,8 +10997,15 @@ async def test_get_organization_intelligence_config_flattened_error_async():
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.UpdateOrganizationIntelligenceConfigRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.UpdateOrganizationIntelligenceConfigRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 def test_update_organization_intelligence_config(request_type, transport: str = "grpc"):
@@ -10855,6 +11033,7 @@ def test_update_organization_intelligence_config(request_type, transport: str = 
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
         request = storage_control.UpdateOrganizationIntelligenceConfigRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -10890,6 +11069,9 @@ def test_update_organization_intelligence_config_non_empty_request_with_auto_pop
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateOrganizationIntelligenceConfigRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -10979,8 +11161,15 @@ async def test_update_organization_intelligence_config_async_use_cached_wrapped_
 @pytest.mark.parametrize(
     "request_type",
     [
-        storage_control.UpdateOrganizationIntelligenceConfigRequest(),
-        {},
+        # Pure protobuf messages (non-proto-plus) require keyword arguments.
+        storage_control.UpdateOrganizationIntelligenceConfigRequest(
+            **{
+                "request_id": "explicit value for autopopulate-able field",
+            }
+        ),
+        {
+            "request_id": "explicit value for autopopulate-able field",
+        },
     ],
 )
 async def test_update_organization_intelligence_config_async(
@@ -11012,6 +11201,7 @@ async def test_update_organization_intelligence_config_async(
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
         request = storage_control.UpdateOrganizationIntelligenceConfigRequest()
+        request.request_id = "explicit value for autopopulate-able field"
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -15457,6 +15647,15 @@ def test_list_folders_rest_required_fields(
             response = client.list_folders(request)
 
             expected_params = [("$alt", "json;enum-encoding=int")]
+            # Ensure that the uuid4 field is set according to AIP 4235
+            for i, (key, value) in enumerate(req.call_args.kwargs["params"]):
+                if key == "requestId":
+                    assert _UUID4_RE.match(value)
+                    break
+
+            # Include requestId within expected_params with value mock.ANY
+            expected_params = [p for p in expected_params if p[0] != "requestId"]
+            expected_params.append(("requestId", mock.ANY))
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
 
@@ -16602,6 +16801,15 @@ def test_update_project_intelligence_config_rest_required_fields(
             response = client.update_project_intelligence_config(request)
 
             expected_params = [("$alt", "json;enum-encoding=int")]
+            # Ensure that the uuid4 field is set according to AIP 4235
+            for i, (key, value) in enumerate(req.call_args.kwargs["params"]):
+                if key == "requestId":
+                    assert _UUID4_RE.match(value)
+                    break
+
+            # Include requestId within expected_params with value mock.ANY
+            expected_params = [p for p in expected_params if p[0] != "requestId"]
+            expected_params.append(("requestId", mock.ANY))
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
 
@@ -16964,6 +17172,15 @@ def test_update_folder_intelligence_config_rest_required_fields(
             response = client.update_folder_intelligence_config(request)
 
             expected_params = [("$alt", "json;enum-encoding=int")]
+            # Ensure that the uuid4 field is set according to AIP 4235
+            for i, (key, value) in enumerate(req.call_args.kwargs["params"]):
+                if key == "requestId":
+                    assert _UUID4_RE.match(value)
+                    break
+
+            # Include requestId within expected_params with value mock.ANY
+            expected_params = [p for p in expected_params if p[0] != "requestId"]
+            expected_params.append(("requestId", mock.ANY))
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
 
@@ -17328,6 +17545,15 @@ def test_update_organization_intelligence_config_rest_required_fields(
             response = client.update_organization_intelligence_config(request)
 
             expected_params = [("$alt", "json;enum-encoding=int")]
+            # Ensure that the uuid4 field is set according to AIP 4235
+            for i, (key, value) in enumerate(req.call_args.kwargs["params"]):
+                if key == "requestId":
+                    assert _UUID4_RE.match(value)
+                    break
+
+            # Include requestId within expected_params with value mock.ANY
+            expected_params = [p for p in expected_params if p[0] != "requestId"]
+            expected_params.append(("requestId", mock.ANY))
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
 
@@ -19205,6 +19431,9 @@ def test_list_folders_empty_call_grpc():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.ListFoldersRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -19400,6 +19629,9 @@ def test_update_managed_folder_empty_call_grpc():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateManagedFolderRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -19597,6 +19829,9 @@ def test_create_rapid_cache_empty_call_grpc():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.CreateRapidCacheRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -19619,6 +19854,9 @@ def test_update_rapid_cache_empty_call_grpc():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateRapidCacheRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -19641,6 +19879,9 @@ def test_disable_rapid_cache_empty_call_grpc():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.DisableRapidCacheRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -19661,6 +19902,9 @@ def test_get_rapid_cache_empty_call_grpc():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.GetRapidCacheRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -19683,6 +19927,9 @@ def test_list_rapid_caches_empty_call_grpc():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.ListRapidCachesRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -19727,6 +19974,9 @@ def test_update_project_intelligence_config_empty_call_grpc():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateProjectIntelligenceConfigRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -19771,6 +20021,9 @@ def test_update_folder_intelligence_config_empty_call_grpc():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateFolderIntelligenceConfigRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -19815,6 +20068,9 @@ def test_update_organization_intelligence_config_empty_call_grpc():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateOrganizationIntelligenceConfigRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -20111,6 +20367,9 @@ def test_list_folders_routing_parameters_request_1_grpc():
         call.assert_called()
         _, args, kw = call.mock_calls[0]
         request_msg = storage_control.ListFoldersRequest(**{"parent": "sample1"})
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "sample1"}
@@ -20358,6 +20617,9 @@ def test_update_managed_folder_routing_parameters_request_1_grpc():
         request_msg = storage_control.UpdateManagedFolderRequest(
             **{"managed_folder": {"name": "projects/sample1/buckets/sample2/sample3"}}
         )
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "projects/sample1/buckets/sample2"}
@@ -20603,6 +20865,9 @@ def test_create_rapid_cache_routing_parameters_request_1_grpc():
         call.assert_called()
         _, args, kw = call.mock_calls[0]
         request_msg = storage_control.CreateRapidCacheRequest(**{"parent": "sample1"})
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "sample1"}
@@ -20634,6 +20899,9 @@ def test_update_rapid_cache_routing_parameters_request_1_grpc():
         request_msg = storage_control.UpdateRapidCacheRequest(
             **{"rapid_cache": {"name": "projects/sample1/buckets/sample2/sample3"}}
         )
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "projects/sample1/buckets/sample2"}
@@ -20663,6 +20931,9 @@ def test_disable_rapid_cache_routing_parameters_request_1_grpc():
         request_msg = storage_control.DisableRapidCacheRequest(
             **{"name": "projects/sample1/buckets/sample2/sample3"}
         )
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "projects/sample1/buckets/sample2"}
@@ -20690,6 +20961,9 @@ def test_get_rapid_cache_routing_parameters_request_1_grpc():
         request_msg = storage_control.GetRapidCacheRequest(
             **{"name": "projects/sample1/buckets/sample2/sample3"}
         )
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "projects/sample1/buckets/sample2"}
@@ -20715,6 +20989,9 @@ def test_list_rapid_caches_routing_parameters_request_1_grpc():
         call.assert_called()
         _, args, kw = call.mock_calls[0]
         request_msg = storage_control.ListRapidCachesRequest(**{"parent": "sample1"})
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "sample1"}
@@ -21061,6 +21338,9 @@ async def test_list_folders_empty_call_grpc_asyncio():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.ListFoldersRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -21301,6 +21581,9 @@ async def test_update_managed_folder_empty_call_grpc_asyncio():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateManagedFolderRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -21560,6 +21843,9 @@ async def test_create_rapid_cache_empty_call_grpc_asyncio():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.CreateRapidCacheRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -21586,6 +21872,9 @@ async def test_update_rapid_cache_empty_call_grpc_asyncio():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateRapidCacheRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -21612,6 +21901,9 @@ async def test_disable_rapid_cache_empty_call_grpc_asyncio():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.DisableRapidCacheRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -21643,6 +21935,9 @@ async def test_get_rapid_cache_empty_call_grpc_asyncio():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.GetRapidCacheRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -21671,6 +21966,9 @@ async def test_list_rapid_caches_empty_call_grpc_asyncio():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.ListRapidCachesRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -21729,6 +22027,9 @@ async def test_update_project_intelligence_config_empty_call_grpc_asyncio():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateProjectIntelligenceConfigRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -21787,6 +22088,9 @@ async def test_update_folder_intelligence_config_empty_call_grpc_asyncio():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateFolderIntelligenceConfigRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -21845,6 +22149,9 @@ async def test_update_organization_intelligence_config_empty_call_grpc_asyncio()
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateOrganizationIntelligenceConfigRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -22229,6 +22536,9 @@ async def test_list_folders_routing_parameters_request_1_grpc_asyncio():
         call.assert_called()
         _, args, kw = call.mock_calls[0]
         request_msg = storage_control.ListFoldersRequest(**{"parent": "sample1"})
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "sample1"}
@@ -22521,6 +22831,9 @@ async def test_update_managed_folder_routing_parameters_request_1_grpc_asyncio()
         request_msg = storage_control.UpdateManagedFolderRequest(
             **{"managed_folder": {"name": "projects/sample1/buckets/sample2/sample3"}}
         )
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "projects/sample1/buckets/sample2"}
@@ -22828,6 +23141,9 @@ async def test_create_rapid_cache_routing_parameters_request_1_grpc_asyncio():
         call.assert_called()
         _, args, kw = call.mock_calls[0]
         request_msg = storage_control.CreateRapidCacheRequest(**{"parent": "sample1"})
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "sample1"}
@@ -22863,6 +23179,9 @@ async def test_update_rapid_cache_routing_parameters_request_1_grpc_asyncio():
         request_msg = storage_control.UpdateRapidCacheRequest(
             **{"rapid_cache": {"name": "projects/sample1/buckets/sample2/sample3"}}
         )
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "projects/sample1/buckets/sample2"}
@@ -22896,6 +23215,9 @@ async def test_disable_rapid_cache_routing_parameters_request_1_grpc_asyncio():
         request_msg = storage_control.DisableRapidCacheRequest(
             **{"name": "projects/sample1/buckets/sample2/sample3"}
         )
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "projects/sample1/buckets/sample2"}
@@ -22934,6 +23256,9 @@ async def test_get_rapid_cache_routing_parameters_request_1_grpc_asyncio():
         request_msg = storage_control.GetRapidCacheRequest(
             **{"name": "projects/sample1/buckets/sample2/sample3"}
         )
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "projects/sample1/buckets/sample2"}
@@ -22965,6 +23290,9 @@ async def test_list_rapid_caches_routing_parameters_request_1_grpc_asyncio():
         call.assert_called()
         _, args, kw = call.mock_calls[0]
         request_msg = storage_control.ListRapidCachesRequest(**{"parent": "sample1"})
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "sample1"}
@@ -26551,6 +26879,9 @@ def test_list_folders_empty_call_rest():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.ListFoldersRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -26738,6 +27069,9 @@ def test_update_managed_folder_empty_call_rest():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateManagedFolderRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -26927,6 +27261,9 @@ def test_create_rapid_cache_empty_call_rest():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.CreateRapidCacheRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -26948,6 +27285,9 @@ def test_update_rapid_cache_empty_call_rest():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateRapidCacheRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -26969,6 +27309,9 @@ def test_disable_rapid_cache_empty_call_rest():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.DisableRapidCacheRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -26988,6 +27331,9 @@ def test_get_rapid_cache_empty_call_rest():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.GetRapidCacheRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -27009,6 +27355,9 @@ def test_list_rapid_caches_empty_call_rest():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.ListRapidCachesRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -27051,6 +27400,9 @@ def test_update_project_intelligence_config_empty_call_rest():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateProjectIntelligenceConfigRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -27093,6 +27445,9 @@ def test_update_folder_intelligence_config_empty_call_rest():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateFolderIntelligenceConfigRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -27135,6 +27490,9 @@ def test_update_organization_intelligence_config_empty_call_rest():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = storage_control.UpdateOrganizationIntelligenceConfigRequest()
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
 
@@ -27418,6 +27776,9 @@ def test_list_folders_routing_parameters_request_1_rest():
         call.assert_called()
         _, args, kw = call.mock_calls[0]
         request_msg = storage_control.ListFoldersRequest(**{"parent": "sample1"})
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "sample1"}
@@ -27657,6 +28018,9 @@ def test_update_managed_folder_routing_parameters_request_1_rest():
         request_msg = storage_control.UpdateManagedFolderRequest(
             **{"managed_folder": {"name": "projects/sample1/buckets/sample2/sample3"}}
         )
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "projects/sample1/buckets/sample2"}
@@ -27894,6 +28258,9 @@ def test_create_rapid_cache_routing_parameters_request_1_rest():
         call.assert_called()
         _, args, kw = call.mock_calls[0]
         request_msg = storage_control.CreateRapidCacheRequest(**{"parent": "sample1"})
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "sample1"}
@@ -27924,6 +28291,9 @@ def test_update_rapid_cache_routing_parameters_request_1_rest():
         request_msg = storage_control.UpdateRapidCacheRequest(
             **{"rapid_cache": {"name": "projects/sample1/buckets/sample2/sample3"}}
         )
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "projects/sample1/buckets/sample2"}
@@ -27952,6 +28322,9 @@ def test_disable_rapid_cache_routing_parameters_request_1_rest():
         request_msg = storage_control.DisableRapidCacheRequest(
             **{"name": "projects/sample1/buckets/sample2/sample3"}
         )
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "projects/sample1/buckets/sample2"}
@@ -27978,6 +28351,9 @@ def test_get_rapid_cache_routing_parameters_request_1_rest():
         request_msg = storage_control.GetRapidCacheRequest(
             **{"name": "projects/sample1/buckets/sample2/sample3"}
         )
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "projects/sample1/buckets/sample2"}
@@ -28002,6 +28378,9 @@ def test_list_rapid_caches_routing_parameters_request_1_rest():
         call.assert_called()
         _, args, kw = call.mock_calls[0]
         request_msg = storage_control.ListRapidCachesRequest(**{"parent": "sample1"})
+        # Ensure that the uuid4 field is set according to AIP 4235
+        assert _UUID4_RE.fullmatch(args[0].request_id)
+        request_msg.request_id = args[0].request_id
         assert args[0] == request_msg
 
         expected_headers = {"bucket": "sample1"}

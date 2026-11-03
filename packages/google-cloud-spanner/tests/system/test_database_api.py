@@ -75,7 +75,9 @@ def test_list_databases(shared_instance, shared_database):
     assert shared_database.name in database_names
 
 
-def test_create_database(shared_instance, databases_to_delete, database_dialect):
+def test_create_database_and_update_ddl(
+    shared_instance, databases_to_delete, database_dialect
+):
     pool = spanner_v1.BurstyPool(labels={"testcase": "create_database"})
     temp_db_id = _helpers.unique_id("temp_db")
     temp_db = shared_instance.database(
@@ -90,27 +92,22 @@ def test_create_database(shared_instance, databases_to_delete, database_dialect)
     database_ids = [database.name for database in shared_instance.list_databases()]
     assert temp_db.name in database_ids
 
-
-def test_create_database_pitr_invalid_retention_period(
-    not_emulator,  # PITR-lite features are not supported by the emulator
-    not_postgres,
-    shared_instance,
-):
-    pool = spanner_v1.BurstyPool(labels={"testcase": "create_database_pitr"})
-    temp_db_id = _helpers.unique_id("pitr_inv_db", separator="_")
-    retention_period = "0d"
-    ddl_statements = [
-        f"ALTER DATABASE {temp_db_id}"
-        f" SET OPTIONS (version_retention_period = '{retention_period}')"
-    ]
-    temp_db = shared_instance.database(
-        temp_db_id, pool=pool, ddl_statements=ddl_statements
+    # Update DDL with custom operation ID and reload
+    operation_id = f"a{str(uuid.uuid4())[:8]}"
+    ddl_statements = [_helpers.DDL_STATEMENTS[0]]
+    operation = temp_db.update_ddl(
+        ddl_statements,
+        operation_id=operation_id,
     )
-    with pytest.raises(exceptions.InvalidArgument):
-        temp_db.create()
+    assert operation_id == operation.operation.name.split("/")[-1]
+    operation.result(DBAPI_OPERATION_TIMEOUT)
+
+    temp_db.reload()
+    assert len(temp_db.ddl_statements) == len(ddl_statements)
+    assert "contacts" in temp_db.ddl_statements[0].lower()
 
 
-def test_create_database_pitr_success(
+def test_create_and_update_database_pitr(
     not_emulator,  # PITR-lite features are not supported by the emulator
     not_postgres,
     shared_instance,
@@ -134,27 +131,58 @@ def test_create_database_pitr_success(
     assert temp_db.name in database_ids
 
     temp_db.reload()
-    temp_db.version_retention_period == retention_period
+    assert temp_db.version_retention_period == retention_period
 
     with temp_db.snapshot() as snapshot:
-        results = snapshot.execute_sql(
-            "SELECT OPTION_VALUE AS version_retention_period "
-            "FROM INFORMATION_SCHEMA.DATABASE_OPTIONS "
-            "WHERE SCHEMA_NAME = '' "
-            "AND OPTION_NAME = 'version_retention_period'"
+        results = list(
+            snapshot.execute_sql(
+                "SELECT OPTION_VALUE AS version_retention_period "
+                "FROM INFORMATION_SCHEMA.DATABASE_OPTIONS "
+                "WHERE SCHEMA_NAME = '' "
+                "AND OPTION_NAME = 'version_retention_period'"
+            )
         )
-        for result in results:
-            assert result[0] == retention_period
+        assert len(results) == 1
+        assert results[0][0] == retention_period
+
+    # Test updating PITR and passing custom operation_id
+    new_retention_period = "3d"
+    operation_id = f"a{str(uuid.uuid4())[:8]}"
+    update_ddl_statements = [
+        f"ALTER DATABASE {temp_db_id}"
+        f" SET OPTIONS (version_retention_period = '{new_retention_period}')"
+    ]
+    operation = temp_db.update_ddl(
+        update_ddl_statements,
+        operation_id=operation_id,
+    )
+    assert operation_id == operation.operation.name.split("/")[-1]
+    operation.result(DBAPI_OPERATION_TIMEOUT)
+
+    temp_db.reload()
+    assert temp_db.version_retention_period == new_retention_period
+
+    with temp_db.snapshot() as snapshot:
+        results = list(
+            snapshot.execute_sql(
+                "SELECT OPTION_VALUE AS version_retention_period "
+                "FROM INFORMATION_SCHEMA.DATABASE_OPTIONS "
+                "WHERE SCHEMA_NAME = '' "
+                "AND OPTION_NAME = 'version_retention_period'"
+            )
+        )
+        assert len(results) == 1
+        assert results[0][0] == new_retention_period
 
 
-def test_create_database_with_default_leader_success(
+def test_create_and_update_database_with_default_leader(
     not_emulator,  # Default leader setting not supported by the emulator
     not_postgres,
     not_spanner_omni,
     multiregion_instance,
     databases_to_delete,
 ):
-    pool = spanner_v1.BurstyPool(labels={"testcase": "create_database_default_leader"})
+    pool = spanner_v1.BurstyPool(labels={"testcase": "default_leader"})
 
     temp_db_id = _helpers.unique_id("dflt_ldr_db", separator="_")
     default_leader = "us-east4"
@@ -166,7 +194,7 @@ def test_create_database_with_default_leader_success(
     )
     operation = temp_db.create()
     databases_to_delete.append(temp_db)
-    operation.result(30)  # raises on failure / timeout.
+    operation.result(DBAPI_OPERATION_TIMEOUT)  # raises on failure / timeout.
 
     database_ids = [database.name for database in multiregion_instance.list_databases()]
     assert temp_db.name in database_ids
@@ -175,13 +203,38 @@ def test_create_database_with_default_leader_success(
     assert temp_db.default_leader == default_leader
 
     with temp_db.snapshot() as snapshot:
-        results = snapshot.execute_sql(
-            "SELECT OPTION_VALUE AS default_leader "
-            "FROM INFORMATION_SCHEMA.DATABASE_OPTIONS "
-            "WHERE SCHEMA_NAME = '' AND OPTION_NAME = 'default_leader'"
+        results = list(
+            snapshot.execute_sql(
+                "SELECT OPTION_VALUE AS default_leader "
+                "FROM INFORMATION_SCHEMA.DATABASE_OPTIONS "
+                "WHERE SCHEMA_NAME = '' AND OPTION_NAME = 'default_leader'"
+            )
         )
-        for result in results:
-            assert result[0] == default_leader
+        assert len(results) == 1
+        assert results[0][0] == default_leader
+
+    # Test updating default leader on the multiregion database
+    new_default_leader = "us-east1"
+    update_ddl_statements = [
+        f"ALTER DATABASE {temp_db_id} "
+        f"SET OPTIONS (default_leader = '{new_default_leader}')"
+    ]
+    operation = temp_db.update_ddl(update_ddl_statements)
+    operation.result(DBAPI_OPERATION_TIMEOUT)
+
+    temp_db.reload()
+    assert temp_db.default_leader == new_default_leader
+
+    with temp_db.snapshot() as snapshot:
+        results = list(
+            snapshot.execute_sql(
+                "SELECT OPTION_VALUE AS default_leader "
+                "FROM INFORMATION_SCHEMA.DATABASE_OPTIONS "
+                "WHERE SCHEMA_NAME = '' AND OPTION_NAME = 'default_leader'"
+            )
+        )
+        assert len(results) == 1
+        assert results[0][0] == new_default_leader
 
 
 def test_iam_policy(
@@ -253,212 +306,17 @@ def test_table_not_found(shared_instance):
         temp_db.create()
 
 
-def test_update_ddl_w_operation_id(
-    shared_instance, databases_to_delete, database_dialect, proto_descriptor_file
-):
-    # We used to have:
-    # @pytest.mark.skip(
-    #    reason="'Database.update_ddl' has a flaky timeout.  See: "
-    #    https://github.com/GoogleCloudPlatform/google-cloud-python/issues/5629
-    # )
-    pool = spanner_v1.BurstyPool(labels={"testcase": "update_database_ddl"})
-    temp_db_id = _helpers.unique_id("update_ddl", separator="_")
-    temp_db = shared_instance.database(
-        temp_db_id, pool=pool, database_dialect=database_dialect
-    )
-    create_op = temp_db.create()
-    databases_to_delete.append(temp_db)
-    create_op.result(DBAPI_OPERATION_TIMEOUT)  # raises on failure / timeout.
-
-    # random but shortish always start with letter
-    operation_id = f"a{str(uuid.uuid4())[:8]}"
-    operation = temp_db.update_ddl(
-        _helpers.DDL_STATEMENTS,
-        operation_id=operation_id,
-        proto_descriptors=proto_descriptor_file,
-    )
-
-    assert operation_id == operation.operation.name.split("/")[-1]
-
-    operation.result(DBAPI_OPERATION_TIMEOUT)  # raises on failure / timeout.
-
-    temp_db.reload()
-
-    assert len(temp_db.ddl_statements) == len(_helpers.DDL_STATEMENTS)
-
-
-def test_update_ddl_w_pitr_invalid(
-    not_emulator,
-    not_postgres,
-    shared_instance,
-    databases_to_delete,
-    proto_descriptor_file,
-):
-    pool = spanner_v1.BurstyPool(labels={"testcase": "update_database_ddl_pitr"})
-    temp_db_id = _helpers.unique_id("pitr_upd_ddl_inv", separator="_")
-    retention_period = "0d"
-    temp_db = shared_instance.database(temp_db_id, pool=pool)
-
-    create_op = temp_db.create()
-    databases_to_delete.append(temp_db)
-    create_op.result(DBAPI_OPERATION_TIMEOUT)  # raises on failure / timeout.
-
-    assert temp_db.version_retention_period is None
-
-    ddl_statements = _helpers.DDL_STATEMENTS + [
-        f"ALTER DATABASE {temp_db_id}"
-        f" SET OPTIONS (version_retention_period = '{retention_period}')"
-    ]
-    with pytest.raises(exceptions.InvalidArgument):
-        temp_db.update_ddl(ddl_statements, proto_descriptors=proto_descriptor_file)
-
-
-def test_update_ddl_w_pitr_success(
-    not_emulator,
-    not_postgres,
-    shared_instance,
-    databases_to_delete,
-    proto_descriptor_file,
-):
-    pool = spanner_v1.BurstyPool(labels={"testcase": "update_database_ddl_pitr"})
-    temp_db_id = _helpers.unique_id("pitr_upd_ddl_inv", separator="_")
-    retention_period = "7d"
-    temp_db = shared_instance.database(temp_db_id, pool=pool)
-
-    create_op = temp_db.create()
-    databases_to_delete.append(temp_db)
-    create_op.result(DBAPI_OPERATION_TIMEOUT)  # raises on failure / timeout.
-
-    assert temp_db.version_retention_period is None
-
-    ddl_statements = _helpers.DDL_STATEMENTS + [
-        f"ALTER DATABASE {temp_db_id}"
-        f" SET OPTIONS (version_retention_period = '{retention_period}')"
-    ]
-    operation = temp_db.update_ddl(
-        ddl_statements, proto_descriptors=proto_descriptor_file
-    )
-    operation.result(DBAPI_OPERATION_TIMEOUT)  # raises on failure / timeout.
-
-    temp_db.reload()
-    assert temp_db.version_retention_period == retention_period
-    assert len(temp_db.ddl_statements) == len(ddl_statements)
-
-
-def test_update_ddl_w_default_leader_success(
-    not_emulator,
-    not_postgres,
-    not_spanner_omni,
-    multiregion_instance,
-    databases_to_delete,
-    proto_descriptor_file,
-):
-    pool = spanner_v1.BurstyPool(
-        labels={"testcase": "update_database_ddl_default_leader"},
-    )
-
-    temp_db_id = _helpers.unique_id("dfl_ldrr_upd_ddl", separator="_")
-    default_leader = "us-east4"
-    temp_db = multiregion_instance.database(temp_db_id, pool=pool)
-
-    create_op = temp_db.create()
-    databases_to_delete.append(temp_db)
-    create_op.result(DBAPI_OPERATION_TIMEOUT)  # raises on failure / timeout.
-
-    assert temp_db.default_leader is None
-
-    ddl_statements = _helpers.DDL_STATEMENTS + [
-        f"ALTER DATABASE {temp_db_id} SET OPTIONS (default_leader = '{default_leader}')"
-    ]
-    operation = temp_db.update_ddl(
-        ddl_statements, proto_descriptors=proto_descriptor_file
-    )
-    operation.result(DBAPI_OPERATION_TIMEOUT)  # raises on failure / timeout.
-
-    temp_db.reload()
-    assert temp_db.default_leader == default_leader
-    assert len(temp_db.ddl_statements) == len(ddl_statements)
-
-
-def test_create_role_grant_access_success(
+def test_create_role_grant_access_and_list_roles(
     not_emulator,
     not_spanner_omni,
     shared_instance,
     databases_to_delete,
     database_dialect,
-    proto_descriptor_file,
 ):
     creator_role_parent = _helpers.unique_id("role_parent", separator="_")
     creator_role_orphan = _helpers.unique_id("role_orphan", separator="_")
 
-    temp_db_id = _helpers.unique_id("dfl_ldrr_upd_ddl", separator="_")
-    temp_db = shared_instance.database(temp_db_id, database_dialect=database_dialect)
-
-    create_op = temp_db.create()
-    databases_to_delete.append(temp_db)
-    create_op.result(DBAPI_OPERATION_TIMEOUT)  # raises on failure / timeout.
-    # Create role and grant select permission on table contacts for parent role.
-    if database_dialect == DatabaseDialect.GOOGLE_STANDARD_SQL:
-        ddl_statements = _helpers.DDL_STATEMENTS + [
-            f"CREATE ROLE {creator_role_parent}",
-            f"CREATE ROLE {creator_role_orphan}",
-            f"GRANT SELECT ON TABLE contacts TO ROLE {creator_role_parent}",
-        ]
-    elif database_dialect == DatabaseDialect.POSTGRESQL:
-        ddl_statements = _helpers.DDL_STATEMENTS + [
-            f"CREATE ROLE {creator_role_parent}",
-            f"CREATE ROLE {creator_role_orphan}",
-            f"GRANT SELECT ON TABLE contacts TO {creator_role_parent}",
-        ]
-
-    operation = temp_db.update_ddl(
-        ddl_statements, proto_descriptors=proto_descriptor_file
-    )
-    operation.result(DBAPI_OPERATION_TIMEOUT)  # raises on failure / timeout.
-
-    # Perform select with orphan role on table contacts.
-    # Expect PermissionDenied exception.
-    temp_db = shared_instance.database(temp_db_id, database_role=creator_role_orphan)
-    with pytest.raises(exceptions.PermissionDenied):
-        with temp_db.snapshot() as snapshot:
-            results = snapshot.execute_sql("SELECT * FROM contacts")
-            for row in results:
-                pass
-
-    # Perform select with parent role on table contacts. Expect success.
-    temp_db = shared_instance.database(temp_db_id, database_role=creator_role_parent)
-    with temp_db.snapshot() as snapshot:
-        snapshot.execute_sql("SELECT * FROM contacts")
-
-    if database_dialect == DatabaseDialect.GOOGLE_STANDARD_SQL:
-        ddl_remove_roles = [
-            f"REVOKE SELECT ON TABLE contacts FROM ROLE {creator_role_parent}",
-            f"DROP ROLE {creator_role_parent}",
-            f"DROP ROLE {creator_role_orphan}",
-        ]
-    elif database_dialect == DatabaseDialect.POSTGRESQL:
-        ddl_remove_roles = [
-            f"REVOKE SELECT ON TABLE contacts FROM {creator_role_parent}",
-            f"DROP ROLE {creator_role_parent}",
-            f"DROP ROLE {creator_role_orphan}",
-        ]
-    # Revoke permission and Delete roles.
-    operation = temp_db.update_ddl(ddl_remove_roles)
-    operation.result(DBAPI_OPERATION_TIMEOUT)  # raises on failure / timeout.
-
-
-def test_list_database_role_success(
-    not_emulator,
-    not_spanner_omni,
-    shared_instance,
-    databases_to_delete,
-    database_dialect,
-    proto_descriptor_file,
-):
-    creator_role_parent = _helpers.unique_id("role_parent", separator="_")
-    creator_role_orphan = _helpers.unique_id("role_orphan", separator="_")
-
-    temp_db_id = _helpers.unique_id("dfl_ldrr_upd_ddl", separator="_")
+    temp_db_id = _helpers.unique_id("roles_db", separator="_")
     temp_db = shared_instance.database(temp_db_id, database_dialect=database_dialect)
 
     create_op = temp_db.create()
@@ -466,21 +324,41 @@ def test_list_database_role_success(
     create_op.result(DBAPI_OPERATION_TIMEOUT)  # raises on failure / timeout.
 
     # Create role and grant select permission on table contacts for parent role.
-    ddl_statements = _helpers.DDL_STATEMENTS + [
+    grant_target = (
+        f"ROLE {creator_role_parent}"
+        if database_dialect == DatabaseDialect.GOOGLE_STANDARD_SQL
+        else f"{creator_role_parent}"
+    )
+    ddl_statements = [
+        _helpers.DDL_STATEMENTS[0],
         f"CREATE ROLE {creator_role_parent}",
         f"CREATE ROLE {creator_role_orphan}",
+        f"GRANT SELECT ON TABLE contacts TO {grant_target}",
     ]
-    operation = temp_db.update_ddl(
-        ddl_statements, proto_descriptors=proto_descriptor_file
-    )
+
+    operation = temp_db.update_ddl(ddl_statements)
     operation.result(DBAPI_OPERATION_TIMEOUT)  # raises on failure / timeout.
 
     # List database roles.
-    roles_list = []
-    for role in temp_db.list_database_roles():
-        roles_list.append(role.name.split("/")[-1])
+    roles_list = [role.name.split("/")[-1] for role in temp_db.list_database_roles()]
     assert creator_role_parent in roles_list
     assert creator_role_orphan in roles_list
+
+    # Perform select with orphan role on table contacts.
+    # Expect PermissionDenied exception.
+    orphan_db = shared_instance.database(temp_db_id, database_role=creator_role_orphan)
+    with pytest.raises(exceptions.PermissionDenied):
+        with orphan_db.snapshot() as snapshot:
+            results = snapshot.execute_sql("SELECT * FROM contacts")
+            for _ in results:
+                pass
+
+    # Perform select with parent role on table contacts. Expect success.
+    parent_db = shared_instance.database(temp_db_id, database_role=creator_role_parent)
+    with parent_db.snapshot() as snapshot:
+        results = snapshot.execute_sql("SELECT * FROM contacts")
+        for _ in results:
+            pass
 
 
 def test_db_batch_insert_then_db_snapshot_read(shared_database):

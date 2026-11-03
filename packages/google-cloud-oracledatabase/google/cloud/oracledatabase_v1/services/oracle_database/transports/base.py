@@ -46,6 +46,7 @@ from google.cloud.oracledatabase_v1.types import (
     goldengate_deployment_type,
     goldengate_deployment_version,
     minor_version,
+    odb_dns_zone,
     odb_network,
     odb_subnet,
     oracledatabase,
@@ -65,6 +66,7 @@ from google.cloud.oracledatabase_v1.types import (
 from google.cloud.oracledatabase_v1.types import (
     goldengate_deployment as gco_goldengate_deployment,
 )
+from google.cloud.oracledatabase_v1.types import odb_dns_zone as gco_odb_dns_zone
 from google.cloud.oracledatabase_v1.types import odb_network as gco_odb_network
 from google.cloud.oracledatabase_v1.types import odb_subnet as gco_odb_subnet
 
@@ -567,6 +569,46 @@ class OracleDatabaseTransport(abc.ABC):
             ),
             self.delete_odb_subnet: gapic_v1.method.wrap_method(
                 self.delete_odb_subnet,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_odb_dns_zones: gapic_v1.method.wrap_method(
+                self.list_odb_dns_zones,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_odb_dns_zone: gapic_v1.method.wrap_method(
+                self.get_odb_dns_zone,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.create_odb_dns_zone: gapic_v1.method.wrap_method(
+                self.create_odb_dns_zone,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_odb_dns_zone: gapic_v1.method.wrap_method(
+                self.delete_odb_dns_zone,
                 default_timeout=None,
                 client_info=client_info,
             ),
@@ -1456,6 +1498,45 @@ class OracleDatabaseTransport(abc.ABC):
         self,
     ) -> Callable[
         [odb_subnet.DeleteOdbSubnetRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_odb_dns_zones(
+        self,
+    ) -> Callable[
+        [odb_dns_zone.ListOdbDnsZonesRequest],
+        Union[
+            odb_dns_zone.ListOdbDnsZonesResponse,
+            Awaitable[odb_dns_zone.ListOdbDnsZonesResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_odb_dns_zone(
+        self,
+    ) -> Callable[
+        [odb_dns_zone.GetOdbDnsZoneRequest],
+        Union[odb_dns_zone.OdbDnsZone, Awaitable[odb_dns_zone.OdbDnsZone]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_odb_dns_zone(
+        self,
+    ) -> Callable[
+        [gco_odb_dns_zone.CreateOdbDnsZoneRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_odb_dns_zone(
+        self,
+    ) -> Callable[
+        [odb_dns_zone.DeleteOdbDnsZoneRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
     ]:
         raise NotImplementedError()

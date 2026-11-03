@@ -8,7 +8,7 @@
     ],
     "language": "PYTHON",
     "name": "google-devicesandservices-health",
-    "version": "0.1.4"
+    "version": "0.1.5"
   },
   "snippets": [
     {
@@ -368,7 +368,7 @@
             "type": "Sequence[Tuple[str, Union[str, bytes]]]"
           }
         ],
-        "resultType": "google.devicesandservices.health_v4beta.types.DailyRollUpDataPointsResponse",
+        "resultType": "google.devicesandservices.health_v4beta.services.data_points_service.pagers.DailyRollUpDataPointsAsyncPager",
         "shortName": "daily_roll_up_data_points"
       },
       "description": "Sample for DailyRollUpDataPoints",
@@ -378,12 +378,12 @@
       "regionTag": "health_v4beta_generated_DataPointsService_DailyRollUpDataPoints_async",
       "segments": [
         {
-          "end": 51,
+          "end": 52,
           "start": 27,
           "type": "FULL"
         },
         {
-          "end": 51,
+          "end": 52,
           "start": 27,
           "type": "SHORT"
         },
@@ -403,7 +403,7 @@
           "type": "REQUEST_EXECUTION"
         },
         {
-          "end": 52,
+          "end": 53,
           "start": 49,
           "type": "RESPONSE_HANDLING"
         }
@@ -444,7 +444,7 @@
             "type": "Sequence[Tuple[str, Union[str, bytes]]]"
           }
         ],
-        "resultType": "google.devicesandservices.health_v4beta.types.DailyRollUpDataPointsResponse",
+        "resultType": "google.devicesandservices.health_v4beta.services.data_points_service.pagers.DailyRollUpDataPointsPager",
         "shortName": "daily_roll_up_data_points"
       },
       "description": "Sample for DailyRollUpDataPoints",
@@ -454,12 +454,12 @@
       "regionTag": "health_v4beta_generated_DataPointsService_DailyRollUpDataPoints_sync",
       "segments": [
         {
-          "end": 51,
+          "end": 52,
           "start": 27,
           "type": "FULL"
         },
         {
-          "end": 51,
+          "end": 52,
           "start": 27,
           "type": "SHORT"
         },
@@ -479,7 +479,7 @@
           "type": "REQUEST_EXECUTION"
         },
         {
-          "end": 52,
+          "end": 53,
           "start": 49,
           "type": "RESPONSE_HANDLING"
         }

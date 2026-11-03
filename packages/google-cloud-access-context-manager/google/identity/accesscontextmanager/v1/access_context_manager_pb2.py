@@ -64,7 +64,7 @@ from google.identity.accesscontextmanager.v1 import (
 )
 
 DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(
-    b'\nDgoogle/identity/accesscontextmanager/v1/access_context_manager.proto\x12\'google.identity.accesscontextmanager.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\x1agoogle/iam/v1/policy.proto\x1a:google/identity/accesscontextmanager/v1/access_level.proto\x1a;google/identity/accesscontextmanager/v1/access_policy.proto\x1a\x45google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto\x1a?google/identity/accesscontextmanager/v1/service_perimeter.proto\x1a#google/longrunning/operations.proto\x1a google/protobuf/field_mask.proto"\x8c\x01\n\x19ListAccessPoliciesRequest\x12H\n\x06parent\x18\x01 \x01(\tB8\xe0\x41\x02\xfa\x41\x32\n0cloudresourcemanager.googleapis.com/Organization\x12\x11\n\tpage_size\x18\x02 \x01(\x05\x12\x12\n\npage_token\x18\x03 \x01(\t"\x85\x01\n\x1aListAccessPoliciesResponse\x12N\n\x0f\x61\x63\x63\x65ss_policies\x18\x01 \x03(\x0b\x32\x35.google.identity.accesscontextmanager.v1.AccessPolicy\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t"`\n\x16GetAccessPolicyRequest\x12\x46\n\x04name\x18\x01 \x01(\tB8\xe0\x41\x02\xfa\x41\x32\n0accesscontextmanager.googleapis.com/AccessPolicy"\x9d\x01\n\x19UpdateAccessPolicyRequest\x12J\n\x06policy\x18\x01 \x01(\x0b\x32\x35.google.identity.accesscontextmanager.v1.AccessPolicyB\x03\xe0\x41\x02\x12\x34\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMaskB\x03\xe0\x41\x02"c\n\x19\x44\x65leteAccessPolicyRequest\x12\x46\n\x04name\x18\x01 \x01(\tB8\xe0\x41\x02\xfa\x41\x32\n0accesscontextmanager.googleapis.com/AccessPolicy"\xdc\x01\n\x17ListAccessLevelsRequest\x12G\n\x06parent\x18\x01 \x01(\tB7\xe0\x41\x02\xfa\x41\x31\x12/accesscontextmanager.googleapis.com/AccessLevel\x12\x11\n\tpage_size\x18\x02 \x01(\x05\x12\x12\n\npage_token\x18\x03 \x01(\t\x12Q\n\x13\x61\x63\x63\x65ss_level_format\x18\x04 \x01(\x0e\x32\x34.google.identity.accesscontextmanager.v1.LevelFormat"\x80\x01\n\x18ListAccessLevelsResponse\x12K\n\raccess_levels\x18\x01 \x03(\x0b\x32\x34.google.identity.accesscontextmanager.v1.AccessLevel\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t"\xb1\x01\n\x15GetAccessLevelRequest\x12\x45\n\x04name\x18\x01 \x01(\tB7\xe0\x41\x02\xfa\x41\x31\n/accesscontextmanager.googleapis.com/AccessLevel\x12Q\n\x13\x61\x63\x63\x65ss_level_format\x18\x02 \x01(\x0e\x32\x34.google.identity.accesscontextmanager.v1.LevelFormat"\xb4\x01\n\x18\x43reateAccessLevelRequest\x12G\n\x06parent\x18\x01 \x01(\tB7\xe0\x41\x02\xfa\x41\x31\x12/accesscontextmanager.googleapis.com/AccessLevel\x12O\n\x0c\x61\x63\x63\x65ss_level\x18\x02 \x01(\x0b\x32\x34.google.identity.accesscontextmanager.v1.AccessLevelB\x03\xe0\x41\x02"\xa1\x01\n\x18UpdateAccessLevelRequest\x12O\n\x0c\x61\x63\x63\x65ss_level\x18\x01 \x01(\x0b\x32\x34.google.identity.accesscontextmanager.v1.AccessLevelB\x03\xe0\x41\x02\x12\x34\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMaskB\x03\xe0\x41\x02"a\n\x18\x44\x65leteAccessLevelRequest\x12\x45\n\x04name\x18\x01 \x01(\tB7\xe0\x41\x02\xfa\x41\x31\n/accesscontextmanager.googleapis.com/AccessLevel"\xc5\x01\n\x1aReplaceAccessLevelsRequest\x12G\n\x06parent\x18\x01 \x01(\tB7\xe0\x41\x02\xfa\x41\x31\x12/accesscontextmanager.googleapis.com/AccessLevel\x12P\n\raccess_levels\x18\x02 \x03(\x0b\x32\x34.google.identity.accesscontextmanager.v1.AccessLevelB\x03\xe0\x41\x02\x12\x0c\n\x04\x65tag\x18\x04 \x01(\t"j\n\x1bReplaceAccessLevelsResponse\x12K\n\raccess_levels\x18\x01 \x03(\x0b\x32\x34.google.identity.accesscontextmanager.v1.AccessLevel"\x93\x01\n\x1cListServicePerimetersRequest\x12L\n\x06parent\x18\x01 \x01(\tB<\xe0\x41\x02\xfa\x41\x36\x12\x34\x61\x63\x63\x65sscontextmanager.googleapis.com/ServicePerimeter\x12\x11\n\tpage_size\x18\x02 \x01(\x05\x12\x12\n\npage_token\x18\x03 \x01(\t"\x8f\x01\n\x1dListServicePerimetersResponse\x12U\n\x12service_perimeters\x18\x01 \x03(\x0b\x32\x39.google.identity.accesscontextmanager.v1.ServicePerimeter\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t"h\n\x1aGetServicePerimeterRequest\x12J\n\x04name\x18\x01 \x01(\tB<\xe0\x41\x02\xfa\x41\x36\n4accesscontextmanager.googleapis.com/ServicePerimeter"\xc8\x01\n\x1d\x43reateServicePerimeterRequest\x12L\n\x06parent\x18\x01 \x01(\tB<\xe0\x41\x02\xfa\x41\x36\x12\x34\x61\x63\x63\x65sscontextmanager.googleapis.com/ServicePerimeter\x12Y\n\x11service_perimeter\x18\x02 \x01(\x0b\x32\x39.google.identity.accesscontextmanager.v1.ServicePerimeterB\x03\xe0\x41\x02"\xb0\x01\n\x1dUpdateServicePerimeterRequest\x12Y\n\x11service_perimeter\x18\x01 \x01(\x0b\x32\x39.google.identity.accesscontextmanager.v1.ServicePerimeterB\x03\xe0\x41\x02\x12\x34\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMaskB\x03\xe0\x41\x02"k\n\x1d\x44\x65leteServicePerimeterRequest\x12J\n\x04name\x18\x01 \x01(\tB<\xe0\x41\x02\xfa\x41\x36\n4accesscontextmanager.googleapis.com/ServicePerimeter"\xd9\x01\n\x1fReplaceServicePerimetersRequest\x12L\n\x06parent\x18\x01 \x01(\tB<\xe0\x41\x02\xfa\x41\x36\x12\x34\x61\x63\x63\x65sscontextmanager.googleapis.com/ServicePerimeter\x12Z\n\x12service_perimeters\x18\x02 \x03(\x0b\x32\x39.google.identity.accesscontextmanager.v1.ServicePerimeterB\x03\xe0\x41\x02\x12\x0c\n\x04\x65tag\x18\x03 \x01(\t"y\n ReplaceServicePerimetersResponse\x12U\n\x12service_perimeters\x18\x01 \x03(\x0b\x32\x39.google.identity.accesscontextmanager.v1.ServicePerimeter"|\n\x1e\x43ommitServicePerimetersRequest\x12L\n\x06parent\x18\x01 \x01(\tB<\xe0\x41\x02\xfa\x41\x36\x12\x34\x61\x63\x63\x65sscontextmanager.googleapis.com/ServicePerimeter\x12\x0c\n\x04\x65tag\x18\x02 \x01(\t"x\n\x1f\x43ommitServicePerimetersResponse\x12U\n\x12service_perimeters\x18\x01 \x03(\x0b\x32\x39.google.identity.accesscontextmanager.v1.ServicePerimeter"\x9d\x01\n ListGcpUserAccessBindingsRequest\x12H\n\x06parent\x18\x01 \x01(\tB8\xe0\x41\x02\xfa\x41\x32\n0cloudresourcemanager.googleapis.com/Organization\x12\x16\n\tpage_size\x18\x02 \x01(\x05\x42\x03\xe0\x41\x01\x12\x17\n\npage_token\x18\x03 \x01(\tB\x03\xe0\x41\x01"\x9d\x01\n!ListGcpUserAccessBindingsResponse\x12_\n\x18gcp_user_access_bindings\x18\x01 \x03(\x0b\x32=.google.identity.accesscontextmanager.v1.GcpUserAccessBinding\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t"p\n\x1eGetGcpUserAccessBindingRequest\x12N\n\x04name\x18\x01 \x01(\tB@\xe0\x41\x02\xfa\x41:\n8accesscontextmanager.googleapis.com/GcpUserAccessBinding"\xd2\x01\n!CreateGcpUserAccessBindingRequest\x12H\n\x06parent\x18\x01 \x01(\tB8\xe0\x41\x02\xfa\x41\x32\n0cloudresourcemanager.googleapis.com/Organization\x12\x63\n\x17gcp_user_access_binding\x18\x02 \x01(\x0b\x32=.google.identity.accesscontextmanager.v1.GcpUserAccessBindingB\x03\xe0\x41\x02"\xbe\x01\n!UpdateGcpUserAccessBindingRequest\x12\x63\n\x17gcp_user_access_binding\x18\x01 \x01(\x0b\x32=.google.identity.accesscontextmanager.v1.GcpUserAccessBindingB\x03\xe0\x41\x02\x12\x34\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMaskB\x03\xe0\x41\x02"s\n!DeleteGcpUserAccessBindingRequest\x12N\n\x04name\x18\x01 \x01(\tB@\xe0\x41\x02\xfa\x41:\n8accesscontextmanager.googleapis.com/GcpUserAccessBinding"\'\n%GcpUserAccessBindingOperationMetadata"\'\n%AccessContextManagerOperationMetadata*D\n\x0bLevelFormat\x12\x1c\n\x18LEVEL_FORMAT_UNSPECIFIED\x10\x00\x12\x0e\n\nAS_DEFINED\x10\x01\x12\x07\n\x03\x43\x45L\x10\x02\x32\xf1\x32\n\x14\x41\x63\x63\x65ssContextManager\x12\xb9\x01\n\x12ListAccessPolicies\x12\x42.google.identity.accesscontextmanager.v1.ListAccessPoliciesRequest\x1a\x43.google.identity.accesscontextmanager.v1.ListAccessPoliciesResponse"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/v1/accessPolicies\x12\xb5\x01\n\x0fGetAccessPolicy\x12?.google.identity.accesscontextmanager.v1.GetAccessPolicyRequest\x1a\x35.google.identity.accesscontextmanager.v1.AccessPolicy"*\xda\x41\x04name\x82\xd3\xe4\x93\x02\x1d\x12\x1b/v1/{name=accessPolicies/*}\x12\xc1\x01\n\x12\x43reateAccessPolicy\x12\x35.google.identity.accesscontextmanager.v1.AccessPolicy\x1a\x1d.google.longrunning.Operation"U\xca\x41\x35\n\x0c\x41\x63\x63\x65ssPolicy\x12%AccessContextManagerOperationMetadata\x82\xd3\xe4\x93\x02\x17"\x12/v1/accessPolicies:\x01*\x12\xf8\x01\n\x12UpdateAccessPolicy\x12\x42.google.identity.accesscontextmanager.v1.UpdateAccessPolicyRequest\x1a\x1d.google.longrunning.Operation"\x7f\xca\x41\x35\n\x0c\x41\x63\x63\x65ssPolicy\x12%AccessContextManagerOperationMetadata\xda\x41\x12policy,update_mask\x82\xd3\xe4\x93\x02,2"/v1/{policy.name=accessPolicies/*}:\x06policy\x12\xe4\x01\n\x12\x44\x65leteAccessPolicy\x12\x42.google.identity.accesscontextmanager.v1.DeleteAccessPolicyRequest\x1a\x1d.google.longrunning.Operation"k\xca\x41>\n\x15google.protobuf.Empty\x12%AccessContextManagerOperationMetadata\xda\x41\x04name\x82\xd3\xe4\x93\x02\x1d*\x1b/v1/{name=accessPolicies/*}\x12\xd4\x01\n\x10ListAccessLevels\x12@.google.identity.accesscontextmanager.v1.ListAccessLevelsRequest\x1a\x41.google.identity.accesscontextmanager.v1.ListAccessLevelsResponse";\xda\x41\x06parent\x82\xd3\xe4\x93\x02,\x12*/v1/{parent=accessPolicies/*}/accessLevels\x12\xc1\x01\n\x0eGetAccessLevel\x12>.google.identity.accesscontextmanager.v1.GetAccessLevelRequest\x1a\x34.google.identity.accesscontextmanager.v1.AccessLevel"9\xda\x41\x04name\x82\xd3\xe4\x93\x02,\x12*/v1/{name=accessPolicies/*/accessLevels/*}\x12\x85\x02\n\x11\x43reateAccessLevel\x12\x41.google.identity.accesscontextmanager.v1.CreateAccessLevelRequest\x1a\x1d.google.longrunning.Operation"\x8d\x01\xca\x41\x34\n\x0b\x41\x63\x63\x65ssLevel\x12%AccessContextManagerOperationMetadata\xda\x41\x13parent,access_level\x82\xd3\xe4\x93\x02:"*/v1/{parent=accessPolicies/*}/accessLevels:\x0c\x61\x63\x63\x65ss_level\x12\x97\x02\n\x11UpdateAccessLevel\x12\x41.google.identity.accesscontextmanager.v1.UpdateAccessLevelRequest\x1a\x1d.google.longrunning.Operation"\x9f\x01\xca\x41\x34\n\x0b\x41\x63\x63\x65ssLevel\x12%AccessContextManagerOperationMetadata\xda\x41\x18\x61\x63\x63\x65ss_level,update_mask\x82\xd3\xe4\x93\x02G27/v1/{access_level.name=accessPolicies/*/accessLevels/*}:\x0c\x61\x63\x63\x65ss_level\x12\xf1\x01\n\x11\x44\x65leteAccessLevel\x12\x41.google.identity.accesscontextmanager.v1.DeleteAccessLevelRequest\x1a\x1d.google.longrunning.Operation"z\xca\x41>\n\x15google.protobuf.Empty\x12%AccessContextManagerOperationMetadata\xda\x41\x04name\x82\xd3\xe4\x93\x02,**/v1/{name=accessPolicies/*/accessLevels/*}\x12\x83\x02\n\x13ReplaceAccessLevels\x12\x43.google.identity.accesscontextmanager.v1.ReplaceAccessLevelsRequest\x1a\x1d.google.longrunning.Operation"\x87\x01\xca\x41\x44\n\x1bReplaceAccessLevelsResponse\x12%AccessContextManagerOperationMetadata\x82\xd3\xe4\x93\x02:"5/v1/{parent=accessPolicies/*}/accessLevels:replaceAll:\x01*\x12\xe8\x01\n\x15ListServicePerimeters\x12\x45.google.identity.accesscontextmanager.v1.ListServicePerimetersRequest\x1a\x46.google.identity.accesscontextmanager.v1.ListServicePerimetersResponse"@\xda\x41\x06parent\x82\xd3\xe4\x93\x02\x31\x12//v1/{parent=accessPolicies/*}/servicePerimeters\x12\xd5\x01\n\x13GetServicePerimeter\x12\x43.google.identity.accesscontextmanager.v1.GetServicePerimeterRequest\x1a\x39.google.identity.accesscontextmanager.v1.ServicePerimeter">\xda\x41\x04name\x82\xd3\xe4\x93\x02\x31\x12//v1/{name=accessPolicies/*/servicePerimeters/*}\x12\xa3\x02\n\x16\x43reateServicePerimeter\x12\x46.google.identity.accesscontextmanager.v1.CreateServicePerimeterRequest\x1a\x1d.google.longrunning.Operation"\xa1\x01\xca\x41\x39\n\x10ServicePerimeter\x12%AccessContextManagerOperationMetadata\xda\x41\x18parent,service_perimeter\x82\xd3\xe4\x93\x02\x44"//v1/{parent=accessPolicies/*}/servicePerimeters:\x11service_perimeter\x12\xba\x02\n\x16UpdateServicePerimeter\x12\x46.google.identity.accesscontextmanager.v1.UpdateServicePerimeterRequest\x1a\x1d.google.longrunning.Operation"\xb8\x01\xca\x41\x39\n\x10ServicePerimeter\x12%AccessContextManagerOperationMetadata\xda\x41\x1dservice_perimeter,update_mask\x82\xd3\xe4\x93\x02V2A/v1/{service_perimeter.name=accessPolicies/*/servicePerimeters/*}:\x11service_perimeter\x12\x80\x02\n\x16\x44\x65leteServicePerimeter\x12\x46.google.identity.accesscontextmanager.v1.DeleteServicePerimeterRequest\x1a\x1d.google.longrunning.Operation"\x7f\xca\x41>\n\x15google.protobuf.Empty\x12%AccessContextManagerOperationMetadata\xda\x41\x04name\x82\xd3\xe4\x93\x02\x31*//v1/{name=accessPolicies/*/servicePerimeters/*}\x12\x97\x02\n\x18ReplaceServicePerimeters\x12H.google.identity.accesscontextmanager.v1.ReplaceServicePerimetersRequest\x1a\x1d.google.longrunning.Operation"\x91\x01\xca\x41I\n ReplaceServicePerimetersResponse\x12%AccessContextManagerOperationMetadata\x82\xd3\xe4\x93\x02?":/v1/{parent=accessPolicies/*}/servicePerimeters:replaceAll:\x01*\x12\x90\x02\n\x17\x43ommitServicePerimeters\x12G.google.identity.accesscontextmanager.v1.CommitServicePerimetersRequest\x1a\x1d.google.longrunning.Operation"\x8c\x01\xca\x41H\n\x1f\x43ommitServicePerimetersResponse\x12%AccessContextManagerOperationMetadata\x82\xd3\xe4\x93\x02;"6/v1/{parent=accessPolicies/*}/servicePerimeters:commit:\x01*\x12\xf7\x01\n\x19ListGcpUserAccessBindings\x12I.google.identity.accesscontextmanager.v1.ListGcpUserAccessBindingsRequest\x1aJ.google.identity.accesscontextmanager.v1.ListGcpUserAccessBindingsResponse"C\xda\x41\x06parent\x82\xd3\xe4\x93\x02\x34\x12\x32/v1/{parent=organizations/*}/gcpUserAccessBindings\x12\xe4\x01\n\x17GetGcpUserAccessBinding\x12G.google.identity.accesscontextmanager.v1.GetGcpUserAccessBindingRequest\x1a=.google.identity.accesscontextmanager.v1.GcpUserAccessBinding"A\xda\x41\x04name\x82\xd3\xe4\x93\x02\x34\x12\x32/v1/{name=organizations/*/gcpUserAccessBindings/*}\x12\xbe\x02\n\x1a\x43reateGcpUserAccessBinding\x12J.google.identity.accesscontextmanager.v1.CreateGcpUserAccessBindingRequest\x1a\x1d.google.longrunning.Operation"\xb4\x01\xca\x41=\n\x14GcpUserAccessBinding\x12%GcpUserAccessBindingOperationMetadata\xda\x41\x1eparent,gcp_user_access_binding\x82\xd3\xe4\x93\x02M"2/v1/{parent=organizations/*}/gcpUserAccessBindings:\x17gcp_user_access_binding\x12\xdb\x02\n\x1aUpdateGcpUserAccessBinding\x12J.google.identity.accesscontextmanager.v1.UpdateGcpUserAccessBindingRequest\x1a\x1d.google.longrunning.Operation"\xd1\x01\xca\x41=\n\x14GcpUserAccessBinding\x12%GcpUserAccessBindingOperationMetadata\xda\x41#gcp_user_access_binding,update_mask\x82\xd3\xe4\x93\x02\x65\x32J/v1/{gcp_user_access_binding.name=organizations/*/gcpUserAccessBindings/*}:\x17gcp_user_access_binding\x12\x8c\x02\n\x1a\x44\x65leteGcpUserAccessBinding\x12J.google.identity.accesscontextmanager.v1.DeleteGcpUserAccessBindingRequest\x1a\x1d.google.longrunning.Operation"\x82\x01\xca\x41>\n\x15google.protobuf.Empty\x12%GcpUserAccessBindingOperationMetadata\xda\x41\x04name\x82\xd3\xe4\x93\x02\x34*2/v1/{name=organizations/*/gcpUserAccessBindings/*}\x12\x82\x01\n\x0cSetIamPolicy\x12".google.iam.v1.SetIamPolicyRequest\x1a\x15.google.iam.v1.Policy"7\x82\xd3\xe4\x93\x02\x31",/v1/{resource=accessPolicies/*}:setIamPolicy:\x01*\x12\x82\x01\n\x0cGetIamPolicy\x12".google.iam.v1.GetIamPolicyRequest\x1a\x15.google.iam.v1.Policy"7\x82\xd3\xe4\x93\x02\x31",/v1/{resource=accessPolicies/*}:getIamPolicy:\x01*\x12\xbf\x02\n\x12TestIamPermissions\x12(.google.iam.v1.TestIamPermissionsRequest\x1a).google.iam.v1.TestIamPermissionsResponse"\xd3\x01\x82\xd3\xe4\x93\x02\xcc\x01"2/v1/{resource=accessPolicies/*}:testIamPermissions:\x01*ZF"A/v1/{resource=accessPolicies/*/accessLevels/*}:testIamPermissions:\x01*ZK"F/v1/{resource=accessPolicies/*/servicePerimeters/*}:testIamPermissions:\x01*\x1aW\xca\x41#accesscontextmanager.googleapis.com\xd2\x41.https://www.googleapis.com/auth/cloud-platformB\xb0\x02\n+com.google.identity.accesscontextmanager.v1B\x19\x41\x63\x63\x65ssContextManagerProtoP\x01Z\\cloud.google.com/go/accesscontextmanager/apiv1/accesscontextmanagerpb;accesscontextmanagerpb\xa2\x02\x04GACM\xaa\x02\'Google.Identity.AccessContextManager.V1\xca\x02\'Google\\Identity\\AccessContextManager\\V1\xea\x02*Google::Identity::AccessContextManager::V1b\x06proto3'
+    b'\nDgoogle/identity/accesscontextmanager/v1/access_context_manager.proto\x12\'google.identity.accesscontextmanager.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\x1agoogle/iam/v1/policy.proto\x1a:google/identity/accesscontextmanager/v1/access_level.proto\x1a;google/identity/accesscontextmanager/v1/access_policy.proto\x1a\x45google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto\x1a?google/identity/accesscontextmanager/v1/service_perimeter.proto\x1a#google/longrunning/operations.proto\x1a google/protobuf/field_mask.proto"\x8d\x01\n\x19ListAccessPoliciesRequest\x12I\n\x06parent\x18\x01 \x01(\tB9\xe2\x41\x01\x02\xfa\x41\x32\n0cloudresourcemanager.googleapis.com/Organization\x12\x11\n\tpage_size\x18\x02 \x01(\x05\x12\x12\n\npage_token\x18\x03 \x01(\t"\x85\x01\n\x1aListAccessPoliciesResponse\x12N\n\x0f\x61\x63\x63\x65ss_policies\x18\x01 \x03(\x0b\x32\x35.google.identity.accesscontextmanager.v1.AccessPolicy\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t"a\n\x16GetAccessPolicyRequest\x12G\n\x04name\x18\x01 \x01(\tB9\xe2\x41\x01\x02\xfa\x41\x32\n0accesscontextmanager.googleapis.com/AccessPolicy"\x9f\x01\n\x19UpdateAccessPolicyRequest\x12K\n\x06policy\x18\x01 \x01(\x0b\x32\x35.google.identity.accesscontextmanager.v1.AccessPolicyB\x04\xe2\x41\x01\x02\x12\x35\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMaskB\x04\xe2\x41\x01\x02"d\n\x19\x44\x65leteAccessPolicyRequest\x12G\n\x04name\x18\x01 \x01(\tB9\xe2\x41\x01\x02\xfa\x41\x32\n0accesscontextmanager.googleapis.com/AccessPolicy"\xdd\x01\n\x17ListAccessLevelsRequest\x12H\n\x06parent\x18\x01 \x01(\tB8\xe2\x41\x01\x02\xfa\x41\x31\x12/accesscontextmanager.googleapis.com/AccessLevel\x12\x11\n\tpage_size\x18\x02 \x01(\x05\x12\x12\n\npage_token\x18\x03 \x01(\t\x12Q\n\x13\x61\x63\x63\x65ss_level_format\x18\x04 \x01(\x0e\x32\x34.google.identity.accesscontextmanager.v1.LevelFormat"\x80\x01\n\x18ListAccessLevelsResponse\x12K\n\raccess_levels\x18\x01 \x03(\x0b\x32\x34.google.identity.accesscontextmanager.v1.AccessLevel\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t"\xb2\x01\n\x15GetAccessLevelRequest\x12\x46\n\x04name\x18\x01 \x01(\tB8\xe2\x41\x01\x02\xfa\x41\x31\n/accesscontextmanager.googleapis.com/AccessLevel\x12Q\n\x13\x61\x63\x63\x65ss_level_format\x18\x02 \x01(\x0e\x32\x34.google.identity.accesscontextmanager.v1.LevelFormat"\xb6\x01\n\x18\x43reateAccessLevelRequest\x12H\n\x06parent\x18\x01 \x01(\tB8\xe2\x41\x01\x02\xfa\x41\x31\x12/accesscontextmanager.googleapis.com/AccessLevel\x12P\n\x0c\x61\x63\x63\x65ss_level\x18\x02 \x01(\x0b\x32\x34.google.identity.accesscontextmanager.v1.AccessLevelB\x04\xe2\x41\x01\x02"\xa3\x01\n\x18UpdateAccessLevelRequest\x12P\n\x0c\x61\x63\x63\x65ss_level\x18\x01 \x01(\x0b\x32\x34.google.identity.accesscontextmanager.v1.AccessLevelB\x04\xe2\x41\x01\x02\x12\x35\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMaskB\x04\xe2\x41\x01\x02"b\n\x18\x44\x65leteAccessLevelRequest\x12\x46\n\x04name\x18\x01 \x01(\tB8\xe2\x41\x01\x02\xfa\x41\x31\n/accesscontextmanager.googleapis.com/AccessLevel"\xc7\x01\n\x1aReplaceAccessLevelsRequest\x12H\n\x06parent\x18\x01 \x01(\tB8\xe2\x41\x01\x02\xfa\x41\x31\x12/accesscontextmanager.googleapis.com/AccessLevel\x12Q\n\raccess_levels\x18\x02 \x03(\x0b\x32\x34.google.identity.accesscontextmanager.v1.AccessLevelB\x04\xe2\x41\x01\x02\x12\x0c\n\x04\x65tag\x18\x04 \x01(\t"j\n\x1bReplaceAccessLevelsResponse\x12K\n\raccess_levels\x18\x01 \x03(\x0b\x32\x34.google.identity.accesscontextmanager.v1.AccessLevel"\x94\x01\n\x1cListServicePerimetersRequest\x12M\n\x06parent\x18\x01 \x01(\tB=\xe2\x41\x01\x02\xfa\x41\x36\x12\x34\x61\x63\x63\x65sscontextmanager.googleapis.com/ServicePerimeter\x12\x11\n\tpage_size\x18\x02 \x01(\x05\x12\x12\n\npage_token\x18\x03 \x01(\t"\x8f\x01\n\x1dListServicePerimetersResponse\x12U\n\x12service_perimeters\x18\x01 \x03(\x0b\x32\x39.google.identity.accesscontextmanager.v1.ServicePerimeter\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t"i\n\x1aGetServicePerimeterRequest\x12K\n\x04name\x18\x01 \x01(\tB=\xe2\x41\x01\x02\xfa\x41\x36\n4accesscontextmanager.googleapis.com/ServicePerimeter"\xca\x01\n\x1d\x43reateServicePerimeterRequest\x12M\n\x06parent\x18\x01 \x01(\tB=\xe2\x41\x01\x02\xfa\x41\x36\x12\x34\x61\x63\x63\x65sscontextmanager.googleapis.com/ServicePerimeter\x12Z\n\x11service_perimeter\x18\x02 \x01(\x0b\x32\x39.google.identity.accesscontextmanager.v1.ServicePerimeterB\x04\xe2\x41\x01\x02"\xb2\x01\n\x1dUpdateServicePerimeterRequest\x12Z\n\x11service_perimeter\x18\x01 \x01(\x0b\x32\x39.google.identity.accesscontextmanager.v1.ServicePerimeterB\x04\xe2\x41\x01\x02\x12\x35\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMaskB\x04\xe2\x41\x01\x02"l\n\x1d\x44\x65leteServicePerimeterRequest\x12K\n\x04name\x18\x01 \x01(\tB=\xe2\x41\x01\x02\xfa\x41\x36\n4accesscontextmanager.googleapis.com/ServicePerimeter"\xdb\x01\n\x1fReplaceServicePerimetersRequest\x12M\n\x06parent\x18\x01 \x01(\tB=\xe2\x41\x01\x02\xfa\x41\x36\x12\x34\x61\x63\x63\x65sscontextmanager.googleapis.com/ServicePerimeter\x12[\n\x12service_perimeters\x18\x02 \x03(\x0b\x32\x39.google.identity.accesscontextmanager.v1.ServicePerimeterB\x04\xe2\x41\x01\x02\x12\x0c\n\x04\x65tag\x18\x03 \x01(\t"y\n ReplaceServicePerimetersResponse\x12U\n\x12service_perimeters\x18\x01 \x03(\x0b\x32\x39.google.identity.accesscontextmanager.v1.ServicePerimeter"}\n\x1e\x43ommitServicePerimetersRequest\x12M\n\x06parent\x18\x01 \x01(\tB=\xe2\x41\x01\x02\xfa\x41\x36\x12\x34\x61\x63\x63\x65sscontextmanager.googleapis.com/ServicePerimeter\x12\x0c\n\x04\x65tag\x18\x02 \x01(\t"x\n\x1f\x43ommitServicePerimetersResponse\x12U\n\x12service_perimeters\x18\x01 \x03(\x0b\x32\x39.google.identity.accesscontextmanager.v1.ServicePerimeter"\xa0\x01\n ListGcpUserAccessBindingsRequest\x12I\n\x06parent\x18\x01 \x01(\tB9\xe2\x41\x01\x02\xfa\x41\x32\n0cloudresourcemanager.googleapis.com/Organization\x12\x17\n\tpage_size\x18\x02 \x01(\x05\x42\x04\xe2\x41\x01\x01\x12\x18\n\npage_token\x18\x03 \x01(\tB\x04\xe2\x41\x01\x01"\x9d\x01\n!ListGcpUserAccessBindingsResponse\x12_\n\x18gcp_user_access_bindings\x18\x01 \x03(\x0b\x32=.google.identity.accesscontextmanager.v1.GcpUserAccessBinding\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t"q\n\x1eGetGcpUserAccessBindingRequest\x12O\n\x04name\x18\x01 \x01(\tBA\xe2\x41\x01\x02\xfa\x41:\n8accesscontextmanager.googleapis.com/GcpUserAccessBinding"\xd4\x01\n!CreateGcpUserAccessBindingRequest\x12I\n\x06parent\x18\x01 \x01(\tB9\xe2\x41\x01\x02\xfa\x41\x32\n0cloudresourcemanager.googleapis.com/Organization\x12\x64\n\x17gcp_user_access_binding\x18\x02 \x01(\x0b\x32=.google.identity.accesscontextmanager.v1.GcpUserAccessBindingB\x04\xe2\x41\x01\x02"\xc0\x01\n!UpdateGcpUserAccessBindingRequest\x12\x64\n\x17gcp_user_access_binding\x18\x01 \x01(\x0b\x32=.google.identity.accesscontextmanager.v1.GcpUserAccessBindingB\x04\xe2\x41\x01\x02\x12\x35\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMaskB\x04\xe2\x41\x01\x02"t\n!DeleteGcpUserAccessBindingRequest\x12O\n\x04name\x18\x01 \x01(\tBA\xe2\x41\x01\x02\xfa\x41:\n8accesscontextmanager.googleapis.com/GcpUserAccessBinding"\'\n%GcpUserAccessBindingOperationMetadata"\'\n%AccessContextManagerOperationMetadata*D\n\x0bLevelFormat\x12\x1c\n\x18LEVEL_FORMAT_UNSPECIFIED\x10\x00\x12\x0e\n\nAS_DEFINED\x10\x01\x12\x07\n\x03\x43\x45L\x10\x02\x32\xf1\x32\n\x14\x41\x63\x63\x65ssContextManager\x12\xb9\x01\n\x12ListAccessPolicies\x12\x42.google.identity.accesscontextmanager.v1.ListAccessPoliciesRequest\x1a\x43.google.identity.accesscontextmanager.v1.ListAccessPoliciesResponse"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/v1/accessPolicies\x12\xb5\x01\n\x0fGetAccessPolicy\x12?.google.identity.accesscontextmanager.v1.GetAccessPolicyRequest\x1a\x35.google.identity.accesscontextmanager.v1.AccessPolicy"*\xda\x41\x04name\x82\xd3\xe4\x93\x02\x1d\x12\x1b/v1/{name=accessPolicies/*}\x12\xc1\x01\n\x12\x43reateAccessPolicy\x12\x35.google.identity.accesscontextmanager.v1.AccessPolicy\x1a\x1d.google.longrunning.Operation"U\xca\x41\x35\n\x0c\x41\x63\x63\x65ssPolicy\x12%AccessContextManagerOperationMetadata\x82\xd3\xe4\x93\x02\x17"\x12/v1/accessPolicies:\x01*\x12\xf8\x01\n\x12UpdateAccessPolicy\x12\x42.google.identity.accesscontextmanager.v1.UpdateAccessPolicyRequest\x1a\x1d.google.longrunning.Operation"\x7f\xca\x41\x35\n\x0c\x41\x63\x63\x65ssPolicy\x12%AccessContextManagerOperationMetadata\xda\x41\x12policy,update_mask\x82\xd3\xe4\x93\x02,2"/v1/{policy.name=accessPolicies/*}:\x06policy\x12\xe4\x01\n\x12\x44\x65leteAccessPolicy\x12\x42.google.identity.accesscontextmanager.v1.DeleteAccessPolicyRequest\x1a\x1d.google.longrunning.Operation"k\xca\x41>\n\x15google.protobuf.Empty\x12%AccessContextManagerOperationMetadata\xda\x41\x04name\x82\xd3\xe4\x93\x02\x1d*\x1b/v1/{name=accessPolicies/*}\x12\xd4\x01\n\x10ListAccessLevels\x12@.google.identity.accesscontextmanager.v1.ListAccessLevelsRequest\x1a\x41.google.identity.accesscontextmanager.v1.ListAccessLevelsResponse";\xda\x41\x06parent\x82\xd3\xe4\x93\x02,\x12*/v1/{parent=accessPolicies/*}/accessLevels\x12\xc1\x01\n\x0eGetAccessLevel\x12>.google.identity.accesscontextmanager.v1.GetAccessLevelRequest\x1a\x34.google.identity.accesscontextmanager.v1.AccessLevel"9\xda\x41\x04name\x82\xd3\xe4\x93\x02,\x12*/v1/{name=accessPolicies/*/accessLevels/*}\x12\x85\x02\n\x11\x43reateAccessLevel\x12\x41.google.identity.accesscontextmanager.v1.CreateAccessLevelRequest\x1a\x1d.google.longrunning.Operation"\x8d\x01\xca\x41\x34\n\x0b\x41\x63\x63\x65ssLevel\x12%AccessContextManagerOperationMetadata\xda\x41\x13parent,access_level\x82\xd3\xe4\x93\x02:"*/v1/{parent=accessPolicies/*}/accessLevels:\x0c\x61\x63\x63\x65ss_level\x12\x97\x02\n\x11UpdateAccessLevel\x12\x41.google.identity.accesscontextmanager.v1.UpdateAccessLevelRequest\x1a\x1d.google.longrunning.Operation"\x9f\x01\xca\x41\x34\n\x0b\x41\x63\x63\x65ssLevel\x12%AccessContextManagerOperationMetadata\xda\x41\x18\x61\x63\x63\x65ss_level,update_mask\x82\xd3\xe4\x93\x02G27/v1/{access_level.name=accessPolicies/*/accessLevels/*}:\x0c\x61\x63\x63\x65ss_level\x12\xf1\x01\n\x11\x44\x65leteAccessLevel\x12\x41.google.identity.accesscontextmanager.v1.DeleteAccessLevelRequest\x1a\x1d.google.longrunning.Operation"z\xca\x41>\n\x15google.protobuf.Empty\x12%AccessContextManagerOperationMetadata\xda\x41\x04name\x82\xd3\xe4\x93\x02,**/v1/{name=accessPolicies/*/accessLevels/*}\x12\x83\x02\n\x13ReplaceAccessLevels\x12\x43.google.identity.accesscontextmanager.v1.ReplaceAccessLevelsRequest\x1a\x1d.google.longrunning.Operation"\x87\x01\xca\x41\x44\n\x1bReplaceAccessLevelsResponse\x12%AccessContextManagerOperationMetadata\x82\xd3\xe4\x93\x02:"5/v1/{parent=accessPolicies/*}/accessLevels:replaceAll:\x01*\x12\xe8\x01\n\x15ListServicePerimeters\x12\x45.google.identity.accesscontextmanager.v1.ListServicePerimetersRequest\x1a\x46.google.identity.accesscontextmanager.v1.ListServicePerimetersResponse"@\xda\x41\x06parent\x82\xd3\xe4\x93\x02\x31\x12//v1/{parent=accessPolicies/*}/servicePerimeters\x12\xd5\x01\n\x13GetServicePerimeter\x12\x43.google.identity.accesscontextmanager.v1.GetServicePerimeterRequest\x1a\x39.google.identity.accesscontextmanager.v1.ServicePerimeter">\xda\x41\x04name\x82\xd3\xe4\x93\x02\x31\x12//v1/{name=accessPolicies/*/servicePerimeters/*}\x12\xa3\x02\n\x16\x43reateServicePerimeter\x12\x46.google.identity.accesscontextmanager.v1.CreateServicePerimeterRequest\x1a\x1d.google.longrunning.Operation"\xa1\x01\xca\x41\x39\n\x10ServicePerimeter\x12%AccessContextManagerOperationMetadata\xda\x41\x18parent,service_perimeter\x82\xd3\xe4\x93\x02\x44"//v1/{parent=accessPolicies/*}/servicePerimeters:\x11service_perimeter\x12\xba\x02\n\x16UpdateServicePerimeter\x12\x46.google.identity.accesscontextmanager.v1.UpdateServicePerimeterRequest\x1a\x1d.google.longrunning.Operation"\xb8\x01\xca\x41\x39\n\x10ServicePerimeter\x12%AccessContextManagerOperationMetadata\xda\x41\x1dservice_perimeter,update_mask\x82\xd3\xe4\x93\x02V2A/v1/{service_perimeter.name=accessPolicies/*/servicePerimeters/*}:\x11service_perimeter\x12\x80\x02\n\x16\x44\x65leteServicePerimeter\x12\x46.google.identity.accesscontextmanager.v1.DeleteServicePerimeterRequest\x1a\x1d.google.longrunning.Operation"\x7f\xca\x41>\n\x15google.protobuf.Empty\x12%AccessContextManagerOperationMetadata\xda\x41\x04name\x82\xd3\xe4\x93\x02\x31*//v1/{name=accessPolicies/*/servicePerimeters/*}\x12\x97\x02\n\x18ReplaceServicePerimeters\x12H.google.identity.accesscontextmanager.v1.ReplaceServicePerimetersRequest\x1a\x1d.google.longrunning.Operation"\x91\x01\xca\x41I\n ReplaceServicePerimetersResponse\x12%AccessContextManagerOperationMetadata\x82\xd3\xe4\x93\x02?":/v1/{parent=accessPolicies/*}/servicePerimeters:replaceAll:\x01*\x12\x90\x02\n\x17\x43ommitServicePerimeters\x12G.google.identity.accesscontextmanager.v1.CommitServicePerimetersRequest\x1a\x1d.google.longrunning.Operation"\x8c\x01\xca\x41H\n\x1f\x43ommitServicePerimetersResponse\x12%AccessContextManagerOperationMetadata\x82\xd3\xe4\x93\x02;"6/v1/{parent=accessPolicies/*}/servicePerimeters:commit:\x01*\x12\xf7\x01\n\x19ListGcpUserAccessBindings\x12I.google.identity.accesscontextmanager.v1.ListGcpUserAccessBindingsRequest\x1aJ.google.identity.accesscontextmanager.v1.ListGcpUserAccessBindingsResponse"C\xda\x41\x06parent\x82\xd3\xe4\x93\x02\x34\x12\x32/v1/{parent=organizations/*}/gcpUserAccessBindings\x12\xe4\x01\n\x17GetGcpUserAccessBinding\x12G.google.identity.accesscontextmanager.v1.GetGcpUserAccessBindingRequest\x1a=.google.identity.accesscontextmanager.v1.GcpUserAccessBinding"A\xda\x41\x04name\x82\xd3\xe4\x93\x02\x34\x12\x32/v1/{name=organizations/*/gcpUserAccessBindings/*}\x12\xbe\x02\n\x1a\x43reateGcpUserAccessBinding\x12J.google.identity.accesscontextmanager.v1.CreateGcpUserAccessBindingRequest\x1a\x1d.google.longrunning.Operation"\xb4\x01\xca\x41=\n\x14GcpUserAccessBinding\x12%GcpUserAccessBindingOperationMetadata\xda\x41\x1eparent,gcp_user_access_binding\x82\xd3\xe4\x93\x02M"2/v1/{parent=organizations/*}/gcpUserAccessBindings:\x17gcp_user_access_binding\x12\xdb\x02\n\x1aUpdateGcpUserAccessBinding\x12J.google.identity.accesscontextmanager.v1.UpdateGcpUserAccessBindingRequest\x1a\x1d.google.longrunning.Operation"\xd1\x01\xca\x41=\n\x14GcpUserAccessBinding\x12%GcpUserAccessBindingOperationMetadata\xda\x41#gcp_user_access_binding,update_mask\x82\xd3\xe4\x93\x02\x65\x32J/v1/{gcp_user_access_binding.name=organizations/*/gcpUserAccessBindings/*}:\x17gcp_user_access_binding\x12\x8c\x02\n\x1a\x44\x65leteGcpUserAccessBinding\x12J.google.identity.accesscontextmanager.v1.DeleteGcpUserAccessBindingRequest\x1a\x1d.google.longrunning.Operation"\x82\x01\xca\x41>\n\x15google.protobuf.Empty\x12%GcpUserAccessBindingOperationMetadata\xda\x41\x04name\x82\xd3\xe4\x93\x02\x34*2/v1/{name=organizations/*/gcpUserAccessBindings/*}\x12\x82\x01\n\x0cSetIamPolicy\x12".google.iam.v1.SetIamPolicyRequest\x1a\x15.google.iam.v1.Policy"7\x82\xd3\xe4\x93\x02\x31",/v1/{resource=accessPolicies/*}:setIamPolicy:\x01*\x12\x82\x01\n\x0cGetIamPolicy\x12".google.iam.v1.GetIamPolicyRequest\x1a\x15.google.iam.v1.Policy"7\x82\xd3\xe4\x93\x02\x31",/v1/{resource=accessPolicies/*}:getIamPolicy:\x01*\x12\xbf\x02\n\x12TestIamPermissions\x12(.google.iam.v1.TestIamPermissionsRequest\x1a).google.iam.v1.TestIamPermissionsResponse"\xd3\x01\x82\xd3\xe4\x93\x02\xcc\x01"2/v1/{resource=accessPolicies/*}:testIamPermissions:\x01*ZF"A/v1/{resource=accessPolicies/*/accessLevels/*}:testIamPermissions:\x01*ZK"F/v1/{resource=accessPolicies/*/servicePerimeters/*}:testIamPermissions:\x01*\x1aW\xca\x41#accesscontextmanager.googleapis.com\xd2\x41.https://www.googleapis.com/auth/cloud-platformB\xb0\x02\n+com.google.identity.accesscontextmanager.v1B\x19\x41\x63\x63\x65ssContextManagerProtoP\x01Z\\cloud.google.com/go/accesscontextmanager/apiv1/accesscontextmanagerpb;accesscontextmanagerpb\xa2\x02\x04GACM\xaa\x02\'Google.Identity.AccessContextManager.V1\xca\x02\'Google\\Identity\\AccessContextManager\\V1\xea\x02*Google::Identity::AccessContextManager::V1b\x06proto3'
 )
 
 _globals = globals()
@@ -85,43 +85,43 @@ if not _descriptor._USE_C_DESCRIPTORS:
     _globals["_LISTACCESSPOLICIESREQUEST"].fields_by_name[
         "parent"
     ]._serialized_options = (
-        b"\340A\002\372A2\n0cloudresourcemanager.googleapis.com/Organization"
+        b"\342A\001\002\372A2\n0cloudresourcemanager.googleapis.com/Organization"
     )
     _globals["_GETACCESSPOLICYREQUEST"].fields_by_name["name"]._loaded_options = None
     _globals["_GETACCESSPOLICYREQUEST"].fields_by_name[
         "name"
     ]._serialized_options = (
-        b"\340A\002\372A2\n0accesscontextmanager.googleapis.com/AccessPolicy"
+        b"\342A\001\002\372A2\n0accesscontextmanager.googleapis.com/AccessPolicy"
     )
     _globals["_UPDATEACCESSPOLICYREQUEST"].fields_by_name[
         "policy"
     ]._loaded_options = None
     _globals["_UPDATEACCESSPOLICYREQUEST"].fields_by_name[
         "policy"
-    ]._serialized_options = b"\340A\002"
+    ]._serialized_options = b"\342A\001\002"
     _globals["_UPDATEACCESSPOLICYREQUEST"].fields_by_name[
         "update_mask"
     ]._loaded_options = None
     _globals["_UPDATEACCESSPOLICYREQUEST"].fields_by_name[
         "update_mask"
-    ]._serialized_options = b"\340A\002"
+    ]._serialized_options = b"\342A\001\002"
     _globals["_DELETEACCESSPOLICYREQUEST"].fields_by_name["name"]._loaded_options = None
     _globals["_DELETEACCESSPOLICYREQUEST"].fields_by_name[
         "name"
     ]._serialized_options = (
-        b"\340A\002\372A2\n0accesscontextmanager.googleapis.com/AccessPolicy"
+        b"\342A\001\002\372A2\n0accesscontextmanager.googleapis.com/AccessPolicy"
     )
     _globals["_LISTACCESSLEVELSREQUEST"].fields_by_name["parent"]._loaded_options = None
     _globals["_LISTACCESSLEVELSREQUEST"].fields_by_name[
         "parent"
     ]._serialized_options = (
-        b"\340A\002\372A1\022/accesscontextmanager.googleapis.com/AccessLevel"
+        b"\342A\001\002\372A1\022/accesscontextmanager.googleapis.com/AccessLevel"
     )
     _globals["_GETACCESSLEVELREQUEST"].fields_by_name["name"]._loaded_options = None
     _globals["_GETACCESSLEVELREQUEST"].fields_by_name[
         "name"
     ]._serialized_options = (
-        b"\340A\002\372A1\n/accesscontextmanager.googleapis.com/AccessLevel"
+        b"\342A\001\002\372A1\n/accesscontextmanager.googleapis.com/AccessLevel"
     )
     _globals["_CREATEACCESSLEVELREQUEST"].fields_by_name[
         "parent"
@@ -129,31 +129,31 @@ if not _descriptor._USE_C_DESCRIPTORS:
     _globals["_CREATEACCESSLEVELREQUEST"].fields_by_name[
         "parent"
     ]._serialized_options = (
-        b"\340A\002\372A1\022/accesscontextmanager.googleapis.com/AccessLevel"
+        b"\342A\001\002\372A1\022/accesscontextmanager.googleapis.com/AccessLevel"
     )
     _globals["_CREATEACCESSLEVELREQUEST"].fields_by_name[
         "access_level"
     ]._loaded_options = None
     _globals["_CREATEACCESSLEVELREQUEST"].fields_by_name[
         "access_level"
-    ]._serialized_options = b"\340A\002"
+    ]._serialized_options = b"\342A\001\002"
     _globals["_UPDATEACCESSLEVELREQUEST"].fields_by_name[
         "access_level"
     ]._loaded_options = None
     _globals["_UPDATEACCESSLEVELREQUEST"].fields_by_name[
         "access_level"
-    ]._serialized_options = b"\340A\002"
+    ]._serialized_options = b"\342A\001\002"
     _globals["_UPDATEACCESSLEVELREQUEST"].fields_by_name[
         "update_mask"
     ]._loaded_options = None
     _globals["_UPDATEACCESSLEVELREQUEST"].fields_by_name[
         "update_mask"
-    ]._serialized_options = b"\340A\002"
+    ]._serialized_options = b"\342A\001\002"
     _globals["_DELETEACCESSLEVELREQUEST"].fields_by_name["name"]._loaded_options = None
     _globals["_DELETEACCESSLEVELREQUEST"].fields_by_name[
         "name"
     ]._serialized_options = (
-        b"\340A\002\372A1\n/accesscontextmanager.googleapis.com/AccessLevel"
+        b"\342A\001\002\372A1\n/accesscontextmanager.googleapis.com/AccessLevel"
     )
     _globals["_REPLACEACCESSLEVELSREQUEST"].fields_by_name[
         "parent"
@@ -161,21 +161,21 @@ if not _descriptor._USE_C_DESCRIPTORS:
     _globals["_REPLACEACCESSLEVELSREQUEST"].fields_by_name[
         "parent"
     ]._serialized_options = (
-        b"\340A\002\372A1\022/accesscontextmanager.googleapis.com/AccessLevel"
+        b"\342A\001\002\372A1\022/accesscontextmanager.googleapis.com/AccessLevel"
     )
     _globals["_REPLACEACCESSLEVELSREQUEST"].fields_by_name[
         "access_levels"
     ]._loaded_options = None
     _globals["_REPLACEACCESSLEVELSREQUEST"].fields_by_name[
         "access_levels"
-    ]._serialized_options = b"\340A\002"
+    ]._serialized_options = b"\342A\001\002"
     _globals["_LISTSERVICEPERIMETERSREQUEST"].fields_by_name[
         "parent"
     ]._loaded_options = None
     _globals["_LISTSERVICEPERIMETERSREQUEST"].fields_by_name[
         "parent"
     ]._serialized_options = (
-        b"\340A\002\372A6\0224accesscontextmanager.googleapis.com/ServicePerimeter"
+        b"\342A\001\002\372A6\0224accesscontextmanager.googleapis.com/ServicePerimeter"
     )
     _globals["_GETSERVICEPERIMETERREQUEST"].fields_by_name[
         "name"
@@ -183,7 +183,7 @@ if not _descriptor._USE_C_DESCRIPTORS:
     _globals["_GETSERVICEPERIMETERREQUEST"].fields_by_name[
         "name"
     ]._serialized_options = (
-        b"\340A\002\372A6\n4accesscontextmanager.googleapis.com/ServicePerimeter"
+        b"\342A\001\002\372A6\n4accesscontextmanager.googleapis.com/ServicePerimeter"
     )
     _globals["_CREATESERVICEPERIMETERREQUEST"].fields_by_name[
         "parent"
@@ -191,33 +191,33 @@ if not _descriptor._USE_C_DESCRIPTORS:
     _globals["_CREATESERVICEPERIMETERREQUEST"].fields_by_name[
         "parent"
     ]._serialized_options = (
-        b"\340A\002\372A6\0224accesscontextmanager.googleapis.com/ServicePerimeter"
+        b"\342A\001\002\372A6\0224accesscontextmanager.googleapis.com/ServicePerimeter"
     )
     _globals["_CREATESERVICEPERIMETERREQUEST"].fields_by_name[
         "service_perimeter"
     ]._loaded_options = None
     _globals["_CREATESERVICEPERIMETERREQUEST"].fields_by_name[
         "service_perimeter"
-    ]._serialized_options = b"\340A\002"
+    ]._serialized_options = b"\342A\001\002"
     _globals["_UPDATESERVICEPERIMETERREQUEST"].fields_by_name[
         "service_perimeter"
     ]._loaded_options = None
     _globals["_UPDATESERVICEPERIMETERREQUEST"].fields_by_name[
         "service_perimeter"
-    ]._serialized_options = b"\340A\002"
+    ]._serialized_options = b"\342A\001\002"
     _globals["_UPDATESERVICEPERIMETERREQUEST"].fields_by_name[
         "update_mask"
     ]._loaded_options = None
     _globals["_UPDATESERVICEPERIMETERREQUEST"].fields_by_name[
         "update_mask"
-    ]._serialized_options = b"\340A\002"
+    ]._serialized_options = b"\342A\001\002"
     _globals["_DELETESERVICEPERIMETERREQUEST"].fields_by_name[
         "name"
     ]._loaded_options = None
     _globals["_DELETESERVICEPERIMETERREQUEST"].fields_by_name[
         "name"
     ]._serialized_options = (
-        b"\340A\002\372A6\n4accesscontextmanager.googleapis.com/ServicePerimeter"
+        b"\342A\001\002\372A6\n4accesscontextmanager.googleapis.com/ServicePerimeter"
     )
     _globals["_REPLACESERVICEPERIMETERSREQUEST"].fields_by_name[
         "parent"
@@ -225,21 +225,21 @@ if not _descriptor._USE_C_DESCRIPTORS:
     _globals["_REPLACESERVICEPERIMETERSREQUEST"].fields_by_name[
         "parent"
     ]._serialized_options = (
-        b"\340A\002\372A6\0224accesscontextmanager.googleapis.com/ServicePerimeter"
+        b"\342A\001\002\372A6\0224accesscontextmanager.googleapis.com/ServicePerimeter"
     )
     _globals["_REPLACESERVICEPERIMETERSREQUEST"].fields_by_name[
         "service_perimeters"
     ]._loaded_options = None
     _globals["_REPLACESERVICEPERIMETERSREQUEST"].fields_by_name[
         "service_perimeters"
-    ]._serialized_options = b"\340A\002"
+    ]._serialized_options = b"\342A\001\002"
     _globals["_COMMITSERVICEPERIMETERSREQUEST"].fields_by_name[
         "parent"
     ]._loaded_options = None
     _globals["_COMMITSERVICEPERIMETERSREQUEST"].fields_by_name[
         "parent"
     ]._serialized_options = (
-        b"\340A\002\372A6\0224accesscontextmanager.googleapis.com/ServicePerimeter"
+        b"\342A\001\002\372A6\0224accesscontextmanager.googleapis.com/ServicePerimeter"
     )
     _globals["_LISTGCPUSERACCESSBINDINGSREQUEST"].fields_by_name[
         "parent"
@@ -247,62 +247,58 @@ if not _descriptor._USE_C_DESCRIPTORS:
     _globals["_LISTGCPUSERACCESSBINDINGSREQUEST"].fields_by_name[
         "parent"
     ]._serialized_options = (
-        b"\340A\002\372A2\n0cloudresourcemanager.googleapis.com/Organization"
+        b"\342A\001\002\372A2\n0cloudresourcemanager.googleapis.com/Organization"
     )
     _globals["_LISTGCPUSERACCESSBINDINGSREQUEST"].fields_by_name[
         "page_size"
     ]._loaded_options = None
     _globals["_LISTGCPUSERACCESSBINDINGSREQUEST"].fields_by_name[
         "page_size"
-    ]._serialized_options = b"\340A\001"
+    ]._serialized_options = b"\342A\001\001"
     _globals["_LISTGCPUSERACCESSBINDINGSREQUEST"].fields_by_name[
         "page_token"
     ]._loaded_options = None
     _globals["_LISTGCPUSERACCESSBINDINGSREQUEST"].fields_by_name[
         "page_token"
-    ]._serialized_options = b"\340A\001"
+    ]._serialized_options = b"\342A\001\001"
     _globals["_GETGCPUSERACCESSBINDINGREQUEST"].fields_by_name[
         "name"
     ]._loaded_options = None
     _globals["_GETGCPUSERACCESSBINDINGREQUEST"].fields_by_name[
         "name"
-    ]._serialized_options = (
-        b"\340A\002\372A:\n8accesscontextmanager.googleapis.com/GcpUserAccessBinding"
-    )
+    ]._serialized_options = b"\342A\001\002\372A:\n8accesscontextmanager.googleapis.com/GcpUserAccessBinding"
     _globals["_CREATEGCPUSERACCESSBINDINGREQUEST"].fields_by_name[
         "parent"
     ]._loaded_options = None
     _globals["_CREATEGCPUSERACCESSBINDINGREQUEST"].fields_by_name[
         "parent"
     ]._serialized_options = (
-        b"\340A\002\372A2\n0cloudresourcemanager.googleapis.com/Organization"
+        b"\342A\001\002\372A2\n0cloudresourcemanager.googleapis.com/Organization"
     )
     _globals["_CREATEGCPUSERACCESSBINDINGREQUEST"].fields_by_name[
         "gcp_user_access_binding"
     ]._loaded_options = None
     _globals["_CREATEGCPUSERACCESSBINDINGREQUEST"].fields_by_name[
         "gcp_user_access_binding"
-    ]._serialized_options = b"\340A\002"
+    ]._serialized_options = b"\342A\001\002"
     _globals["_UPDATEGCPUSERACCESSBINDINGREQUEST"].fields_by_name[
         "gcp_user_access_binding"
     ]._loaded_options = None
     _globals["_UPDATEGCPUSERACCESSBINDINGREQUEST"].fields_by_name[
         "gcp_user_access_binding"
-    ]._serialized_options = b"\340A\002"
+    ]._serialized_options = b"\342A\001\002"
     _globals["_UPDATEGCPUSERACCESSBINDINGREQUEST"].fields_by_name[
         "update_mask"
     ]._loaded_options = None
     _globals["_UPDATEGCPUSERACCESSBINDINGREQUEST"].fields_by_name[
         "update_mask"
-    ]._serialized_options = b"\340A\002"
+    ]._serialized_options = b"\342A\001\002"
     _globals["_DELETEGCPUSERACCESSBINDINGREQUEST"].fields_by_name[
         "name"
     ]._loaded_options = None
     _globals["_DELETEGCPUSERACCESSBINDINGREQUEST"].fields_by_name[
         "name"
-    ]._serialized_options = (
-        b"\340A\002\372A:\n8accesscontextmanager.googleapis.com/GcpUserAccessBinding"
-    )
+    ]._serialized_options = b"\342A\001\002\372A:\n8accesscontextmanager.googleapis.com/GcpUserAccessBinding"
     _globals["_ACCESSCONTEXTMANAGER"]._loaded_options = None
     _globals[
         "_ACCESSCONTEXTMANAGER"
@@ -469,70 +465,70 @@ if not _descriptor._USE_C_DESCRIPTORS:
     _globals["_ACCESSCONTEXTMANAGER"].methods_by_name[
         "TestIamPermissions"
     ]._serialized_options = b'\202\323\344\223\002\314\001"2/v1/{resource=accessPolicies/*}:testIamPermissions:\001*ZF"A/v1/{resource=accessPolicies/*/accessLevels/*}:testIamPermissions:\001*ZK"F/v1/{resource=accessPolicies/*/servicePerimeters/*}:testIamPermissions:\001*'
-    _globals["_LEVELFORMAT"]._serialized_start = 5065
-    _globals["_LEVELFORMAT"]._serialized_end = 5133
+    _globals["_LEVELFORMAT"]._serialized_start = 5098
+    _globals["_LEVELFORMAT"]._serialized_end = 5166
     _globals["_LISTACCESSPOLICIESREQUEST"]._serialized_start = 617
-    _globals["_LISTACCESSPOLICIESREQUEST"]._serialized_end = 757
-    _globals["_LISTACCESSPOLICIESRESPONSE"]._serialized_start = 760
-    _globals["_LISTACCESSPOLICIESRESPONSE"]._serialized_end = 893
-    _globals["_GETACCESSPOLICYREQUEST"]._serialized_start = 895
-    _globals["_GETACCESSPOLICYREQUEST"]._serialized_end = 991
-    _globals["_UPDATEACCESSPOLICYREQUEST"]._serialized_start = 994
-    _globals["_UPDATEACCESSPOLICYREQUEST"]._serialized_end = 1151
-    _globals["_DELETEACCESSPOLICYREQUEST"]._serialized_start = 1153
-    _globals["_DELETEACCESSPOLICYREQUEST"]._serialized_end = 1252
-    _globals["_LISTACCESSLEVELSREQUEST"]._serialized_start = 1255
-    _globals["_LISTACCESSLEVELSREQUEST"]._serialized_end = 1475
-    _globals["_LISTACCESSLEVELSRESPONSE"]._serialized_start = 1478
-    _globals["_LISTACCESSLEVELSRESPONSE"]._serialized_end = 1606
-    _globals["_GETACCESSLEVELREQUEST"]._serialized_start = 1609
-    _globals["_GETACCESSLEVELREQUEST"]._serialized_end = 1786
-    _globals["_CREATEACCESSLEVELREQUEST"]._serialized_start = 1789
-    _globals["_CREATEACCESSLEVELREQUEST"]._serialized_end = 1969
-    _globals["_UPDATEACCESSLEVELREQUEST"]._serialized_start = 1972
-    _globals["_UPDATEACCESSLEVELREQUEST"]._serialized_end = 2133
-    _globals["_DELETEACCESSLEVELREQUEST"]._serialized_start = 2135
-    _globals["_DELETEACCESSLEVELREQUEST"]._serialized_end = 2232
-    _globals["_REPLACEACCESSLEVELSREQUEST"]._serialized_start = 2235
-    _globals["_REPLACEACCESSLEVELSREQUEST"]._serialized_end = 2432
-    _globals["_REPLACEACCESSLEVELSRESPONSE"]._serialized_start = 2434
-    _globals["_REPLACEACCESSLEVELSRESPONSE"]._serialized_end = 2540
-    _globals["_LISTSERVICEPERIMETERSREQUEST"]._serialized_start = 2543
-    _globals["_LISTSERVICEPERIMETERSREQUEST"]._serialized_end = 2690
-    _globals["_LISTSERVICEPERIMETERSRESPONSE"]._serialized_start = 2693
-    _globals["_LISTSERVICEPERIMETERSRESPONSE"]._serialized_end = 2836
-    _globals["_GETSERVICEPERIMETERREQUEST"]._serialized_start = 2838
-    _globals["_GETSERVICEPERIMETERREQUEST"]._serialized_end = 2942
-    _globals["_CREATESERVICEPERIMETERREQUEST"]._serialized_start = 2945
-    _globals["_CREATESERVICEPERIMETERREQUEST"]._serialized_end = 3145
-    _globals["_UPDATESERVICEPERIMETERREQUEST"]._serialized_start = 3148
-    _globals["_UPDATESERVICEPERIMETERREQUEST"]._serialized_end = 3324
-    _globals["_DELETESERVICEPERIMETERREQUEST"]._serialized_start = 3326
-    _globals["_DELETESERVICEPERIMETERREQUEST"]._serialized_end = 3433
-    _globals["_REPLACESERVICEPERIMETERSREQUEST"]._serialized_start = 3436
-    _globals["_REPLACESERVICEPERIMETERSREQUEST"]._serialized_end = 3653
-    _globals["_REPLACESERVICEPERIMETERSRESPONSE"]._serialized_start = 3655
-    _globals["_REPLACESERVICEPERIMETERSRESPONSE"]._serialized_end = 3776
-    _globals["_COMMITSERVICEPERIMETERSREQUEST"]._serialized_start = 3778
-    _globals["_COMMITSERVICEPERIMETERSREQUEST"]._serialized_end = 3902
-    _globals["_COMMITSERVICEPERIMETERSRESPONSE"]._serialized_start = 3904
-    _globals["_COMMITSERVICEPERIMETERSRESPONSE"]._serialized_end = 4024
-    _globals["_LISTGCPUSERACCESSBINDINGSREQUEST"]._serialized_start = 4027
-    _globals["_LISTGCPUSERACCESSBINDINGSREQUEST"]._serialized_end = 4184
-    _globals["_LISTGCPUSERACCESSBINDINGSRESPONSE"]._serialized_start = 4187
-    _globals["_LISTGCPUSERACCESSBINDINGSRESPONSE"]._serialized_end = 4344
-    _globals["_GETGCPUSERACCESSBINDINGREQUEST"]._serialized_start = 4346
-    _globals["_GETGCPUSERACCESSBINDINGREQUEST"]._serialized_end = 4458
-    _globals["_CREATEGCPUSERACCESSBINDINGREQUEST"]._serialized_start = 4461
-    _globals["_CREATEGCPUSERACCESSBINDINGREQUEST"]._serialized_end = 4671
-    _globals["_UPDATEGCPUSERACCESSBINDINGREQUEST"]._serialized_start = 4674
-    _globals["_UPDATEGCPUSERACCESSBINDINGREQUEST"]._serialized_end = 4864
-    _globals["_DELETEGCPUSERACCESSBINDINGREQUEST"]._serialized_start = 4866
-    _globals["_DELETEGCPUSERACCESSBINDINGREQUEST"]._serialized_end = 4981
-    _globals["_GCPUSERACCESSBINDINGOPERATIONMETADATA"]._serialized_start = 4983
-    _globals["_GCPUSERACCESSBINDINGOPERATIONMETADATA"]._serialized_end = 5022
-    _globals["_ACCESSCONTEXTMANAGEROPERATIONMETADATA"]._serialized_start = 5024
-    _globals["_ACCESSCONTEXTMANAGEROPERATIONMETADATA"]._serialized_end = 5063
-    _globals["_ACCESSCONTEXTMANAGER"]._serialized_start = 5136
-    _globals["_ACCESSCONTEXTMANAGER"]._serialized_end = 11649
+    _globals["_LISTACCESSPOLICIESREQUEST"]._serialized_end = 758
+    _globals["_LISTACCESSPOLICIESRESPONSE"]._serialized_start = 761
+    _globals["_LISTACCESSPOLICIESRESPONSE"]._serialized_end = 894
+    _globals["_GETACCESSPOLICYREQUEST"]._serialized_start = 896
+    _globals["_GETACCESSPOLICYREQUEST"]._serialized_end = 993
+    _globals["_UPDATEACCESSPOLICYREQUEST"]._serialized_start = 996
+    _globals["_UPDATEACCESSPOLICYREQUEST"]._serialized_end = 1155
+    _globals["_DELETEACCESSPOLICYREQUEST"]._serialized_start = 1157
+    _globals["_DELETEACCESSPOLICYREQUEST"]._serialized_end = 1257
+    _globals["_LISTACCESSLEVELSREQUEST"]._serialized_start = 1260
+    _globals["_LISTACCESSLEVELSREQUEST"]._serialized_end = 1481
+    _globals["_LISTACCESSLEVELSRESPONSE"]._serialized_start = 1484
+    _globals["_LISTACCESSLEVELSRESPONSE"]._serialized_end = 1612
+    _globals["_GETACCESSLEVELREQUEST"]._serialized_start = 1615
+    _globals["_GETACCESSLEVELREQUEST"]._serialized_end = 1793
+    _globals["_CREATEACCESSLEVELREQUEST"]._serialized_start = 1796
+    _globals["_CREATEACCESSLEVELREQUEST"]._serialized_end = 1978
+    _globals["_UPDATEACCESSLEVELREQUEST"]._serialized_start = 1981
+    _globals["_UPDATEACCESSLEVELREQUEST"]._serialized_end = 2144
+    _globals["_DELETEACCESSLEVELREQUEST"]._serialized_start = 2146
+    _globals["_DELETEACCESSLEVELREQUEST"]._serialized_end = 2244
+    _globals["_REPLACEACCESSLEVELSREQUEST"]._serialized_start = 2247
+    _globals["_REPLACEACCESSLEVELSREQUEST"]._serialized_end = 2446
+    _globals["_REPLACEACCESSLEVELSRESPONSE"]._serialized_start = 2448
+    _globals["_REPLACEACCESSLEVELSRESPONSE"]._serialized_end = 2554
+    _globals["_LISTSERVICEPERIMETERSREQUEST"]._serialized_start = 2557
+    _globals["_LISTSERVICEPERIMETERSREQUEST"]._serialized_end = 2705
+    _globals["_LISTSERVICEPERIMETERSRESPONSE"]._serialized_start = 2708
+    _globals["_LISTSERVICEPERIMETERSRESPONSE"]._serialized_end = 2851
+    _globals["_GETSERVICEPERIMETERREQUEST"]._serialized_start = 2853
+    _globals["_GETSERVICEPERIMETERREQUEST"]._serialized_end = 2958
+    _globals["_CREATESERVICEPERIMETERREQUEST"]._serialized_start = 2961
+    _globals["_CREATESERVICEPERIMETERREQUEST"]._serialized_end = 3163
+    _globals["_UPDATESERVICEPERIMETERREQUEST"]._serialized_start = 3166
+    _globals["_UPDATESERVICEPERIMETERREQUEST"]._serialized_end = 3344
+    _globals["_DELETESERVICEPERIMETERREQUEST"]._serialized_start = 3346
+    _globals["_DELETESERVICEPERIMETERREQUEST"]._serialized_end = 3454
+    _globals["_REPLACESERVICEPERIMETERSREQUEST"]._serialized_start = 3457
+    _globals["_REPLACESERVICEPERIMETERSREQUEST"]._serialized_end = 3676
+    _globals["_REPLACESERVICEPERIMETERSRESPONSE"]._serialized_start = 3678
+    _globals["_REPLACESERVICEPERIMETERSRESPONSE"]._serialized_end = 3799
+    _globals["_COMMITSERVICEPERIMETERSREQUEST"]._serialized_start = 3801
+    _globals["_COMMITSERVICEPERIMETERSREQUEST"]._serialized_end = 3926
+    _globals["_COMMITSERVICEPERIMETERSRESPONSE"]._serialized_start = 3928
+    _globals["_COMMITSERVICEPERIMETERSRESPONSE"]._serialized_end = 4048
+    _globals["_LISTGCPUSERACCESSBINDINGSREQUEST"]._serialized_start = 4051
+    _globals["_LISTGCPUSERACCESSBINDINGSREQUEST"]._serialized_end = 4211
+    _globals["_LISTGCPUSERACCESSBINDINGSRESPONSE"]._serialized_start = 4214
+    _globals["_LISTGCPUSERACCESSBINDINGSRESPONSE"]._serialized_end = 4371
+    _globals["_GETGCPUSERACCESSBINDINGREQUEST"]._serialized_start = 4373
+    _globals["_GETGCPUSERACCESSBINDINGREQUEST"]._serialized_end = 4486
+    _globals["_CREATEGCPUSERACCESSBINDINGREQUEST"]._serialized_start = 4489
+    _globals["_CREATEGCPUSERACCESSBINDINGREQUEST"]._serialized_end = 4701
+    _globals["_UPDATEGCPUSERACCESSBINDINGREQUEST"]._serialized_start = 4704
+    _globals["_UPDATEGCPUSERACCESSBINDINGREQUEST"]._serialized_end = 4896
+    _globals["_DELETEGCPUSERACCESSBINDINGREQUEST"]._serialized_start = 4898
+    _globals["_DELETEGCPUSERACCESSBINDINGREQUEST"]._serialized_end = 5014
+    _globals["_GCPUSERACCESSBINDINGOPERATIONMETADATA"]._serialized_start = 5016
+    _globals["_GCPUSERACCESSBINDINGOPERATIONMETADATA"]._serialized_end = 5055
+    _globals["_ACCESSCONTEXTMANAGEROPERATIONMETADATA"]._serialized_start = 5057
+    _globals["_ACCESSCONTEXTMANAGEROPERATIONMETADATA"]._serialized_end = 5096
+    _globals["_ACCESSCONTEXTMANAGER"]._serialized_start = 5169
+    _globals["_ACCESSCONTEXTMANAGER"]._serialized_end = 11682
 # @@protoc_insertion_point(module_scope)
