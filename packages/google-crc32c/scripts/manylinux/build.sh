@@ -50,8 +50,8 @@ docker run \
 docker run \
     --rm \
     --interactive \
-    --volume ${REPO_ROOT}:/var/code/python-crc32c/ \
+    --volume "${REPO_ROOT}:/var/code/python-crc32c/" \
     --env REPO_ROOT=/var/code/python-crc32c \
-    --env BUILD_PYTHON=${BUILD_PYTHON} \
+    --env BUILD_PYTHON \
     quay.io/pypa/manylinux2014_x86_64 \
     /var/code/python-crc32c/scripts/manylinux/publish_python_wheel.sh
