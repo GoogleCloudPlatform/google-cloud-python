@@ -19,7 +19,7 @@ from typing import List, Optional, Tuple
 from google.api_core.bidi_async import AsyncBidiRpc
 
 from google.cloud import _storage_v2
-from google.cloud.storage.asyncio import _zero_copy_bidi_read
+from google.cloud.storage.asyncio import _utils, _zero_copy_bidi_read
 from google.cloud.storage.asyncio.async_abstract_object_stream import (
     _AsyncAbstractObjectStream,
 )
@@ -126,6 +126,7 @@ class _AsyncReadObjectStream(_AsyncAbstractObjectStream):
 
         current_metadata = other_metadata
         current_metadata.append(("x-goog-request-params", "&".join(request_params)))
+        current_metadata = _utils.inject_traceparent_to_metadata(current_metadata)
 
         self.socket_like_rpc = AsyncBidiRpc(
             self.rpc,

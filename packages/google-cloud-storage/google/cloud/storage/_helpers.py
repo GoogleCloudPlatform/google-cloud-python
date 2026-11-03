@@ -32,17 +32,15 @@ from google.api_core import exceptions as api_exceptions
 from google.auth import environment_vars
 from google.cloud.exceptions import NotFound
 
-from google.cloud.storage._opentelemetry_tracing import (
-    _is_bucket_metadata_disabled,
-)
-from google.cloud.storage._opentelemetry_tracing import (
-    create_trace_span as _base_create_trace_span,
-)
+from google.cloud.storage import _opentelemetry_tracing
 from google.cloud.storage.constants import _DEFAULT_TIMEOUT
 from google.cloud.storage.retry import (
     DEFAULT_RETRY,
     DEFAULT_RETRY_IF_METAGENERATION_SPECIFIED,
 )
+
+# Kept as a patch point for unit tests.
+_base_create_trace_span = None
 
 _logger = logging.getLogger(__name__)
 
@@ -149,61 +147,127 @@ def _validate_name(name):
     return name
 
 
-@contextmanager
-def create_trace_span_helper(client, bucket_name, name, attributes=None, **kwargs):
-    span_attrs = dict(attributes) if attributes else {}
+_BUCKET_METADATA_FETCH_SPAN_NAMES = frozenset(
+    (
+        "Storage.Client.getBucket",
+        "Storage.Client.lookupBucket",
+        "Storage.Bucket.reload",
+        "Storage.Bucket.exists",
+    )
+)
 
-    if (
-        bucket_name
-        and isinstance(bucket_name, str)
-        and client
-        and hasattr(client, "_bucket_metadata_cache")
-        and client._bucket_metadata_cache
-        and not _is_bucket_metadata_disabled()
-    ):
-        try:
-            if name in (
-                "Storage.Client.getBucket",
-                "Storage.Client.lookupBucket",
-                "Storage.Bucket.reload",
-                "Storage.Bucket.exists",
-            ):
-                cached = client._bucket_metadata_cache.get(bucket_name)
-            else:
-                cached = client._bucket_metadata_cache.get_or_queue_fetch(bucket_name)
 
-            if cached and isinstance(cached, tuple) and len(cached) == 2:
-                dest_id, loc = cached
-                span_attrs.update(
-                    {
-                        "gcp.resource.destination.id": dest_id,
-                        "gcp.resource.destination.location": loc,
-                    }
-                )
-        except Exception as e:
-            _logger.debug(f"Failed cache lookup in create_trace_span_helper: {e}")
+class _TraceSpanHelperContext:
+    """Context manager supporting both sync and async tracing span creation with bucket metadata."""
 
-    if "client" not in kwargs and client:
-        kwargs["client"] = client
+    __slots__ = (
+        "client",
+        "bucket_name",
+        "name",
+        "attributes",
+        "kwargs",
+        "_base_cm",
+    )
 
-    with _base_create_trace_span(name, attributes=span_attrs, **kwargs) as span:
-        try:
-            yield span
-        except (NotFound, api_exceptions.NotFound):
-            if (
-                bucket_name
-                and isinstance(bucket_name, str)
-                and client
-                and hasattr(client, "_bucket_metadata_cache")
-                and client._bucket_metadata_cache
-            ):
+    def __init__(self, client, bucket_name, name, attributes=None, **kwargs):
+        self.client = client
+        self.bucket_name = bucket_name
+        self.name = name
+        self.attributes = attributes
+        self.kwargs = kwargs
+        self._base_cm = None
+
+    def _prepare_base_cm(self):
+        span_attrs = dict(self.attributes) if self.attributes else {}
+        client = self.client
+        bucket_name = self.bucket_name
+        name = self.name
+
+        if (
+            _opentelemetry_tracing._is_otel_traces_enabled()
+            and not _opentelemetry_tracing._is_bucket_metadata_disabled()
+            and bucket_name
+            and isinstance(bucket_name, str)
+            and client is not None
+        ):
+            cache = getattr(client, "_bucket_metadata_cache", None)
+            if cache is not None:
                 try:
-                    client._bucket_metadata_cache.check_and_evict(bucket_name)
+                    if name in _BUCKET_METADATA_FETCH_SPAN_NAMES:
+                        cached = cache.get(bucket_name)
+                    else:
+                        cached = cache.get_or_queue_fetch(bucket_name)
+
+                    if cached and isinstance(cached, tuple) and len(cached) == 2:
+                        dest_id, loc = cached
+                        span_attrs["gcp.resource.destination.id"] = dest_id
+                        span_attrs["gcp.resource.destination.location"] = loc
+                except Exception as e:
+                    _logger.debug(
+                        f"Failed cache lookup in create_trace_span_helper: {e}"
+                    )
+
+        kwargs = self.kwargs
+        if "client" not in kwargs and client is not None:
+            kwargs = dict(kwargs)
+            kwargs["client"] = client
+
+        create_span_fn = (
+            _base_create_trace_span
+            if _base_create_trace_span is not None
+            else _opentelemetry_tracing.create_trace_span
+        )
+        self._base_cm = create_span_fn(name, attributes=span_attrs, **kwargs)
+        return self._base_cm
+
+    def _handle_not_found(self):
+        if (
+            _opentelemetry_tracing._is_otel_traces_enabled()
+            and self.bucket_name
+            and isinstance(self.bucket_name, str)
+            and self.client is not None
+        ):
+            cache = getattr(self.client, "_bucket_metadata_cache", None)
+            if cache is not None:
+                try:
+                    cache.check_and_evict(self.bucket_name)
                 except Exception as e:
                     _logger.debug(
                         f"Failed cache eviction on 404 in create_trace_span_helper: {e}"
                     )
-            raise
+
+    def __enter__(self):
+        self._prepare_base_cm()
+        return self._base_cm.__enter__()
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        suppressed = False
+        if self._base_cm is not None:
+            suppressed = bool(self._base_cm.__exit__(exc_type, exc_val, exc_tb))
+        if (
+            not suppressed
+            and exc_val is not None
+            and isinstance(exc_val, (NotFound, api_exceptions.NotFound))
+        ):
+            self._handle_not_found()
+        return suppressed
+
+    async def __aenter__(self):
+        return self.__enter__()
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        return self.__exit__(exc_type, exc_val, exc_tb)
+
+
+def create_trace_span_helper(client, bucket_name, name, attributes=None, **kwargs):
+    if (
+        _base_create_trace_span is None
+        and not _opentelemetry_tracing._is_otel_traces_enabled()
+    ):
+        return _opentelemetry_tracing._NOOP_TRACE_SPAN_CONTEXT
+    return _TraceSpanHelperContext(
+        client, bucket_name, name, attributes=attributes, **kwargs
+    )
 
 
 class _PropertyMixin(object):

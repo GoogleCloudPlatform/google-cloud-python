@@ -207,6 +207,7 @@ class _AsyncWriteObjectStream(_AsyncAbstractObjectStream):
                     final_metadata.append((key, value))
 
         final_metadata.append(("x-goog-request-params", "&".join(request_param_values)))
+        final_metadata = _utils.inject_traceparent_to_metadata(final_metadata)
 
         self.socket_like_rpc = AsyncBidiRpc(
             self.rpc,
