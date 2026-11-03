@@ -2779,14 +2779,13 @@ class BigQueryConfig(proto.Message):
 
 
 class BigtableConfig(proto.Message):
-    r"""Configuration for a Bigtable subscription. The Pub/Sub message will
-    be written to a Bigtable row as follows:
+    r"""Configuration for a Bigtable subscription, which will write a
+    Pub/Sub message to a Bigtable row. See the ColumnFamilyMapping
+    documentation below for details on how the row keys and columns
+    will be written.
 
-    - row key: subscription name, message ID hash, and message ID
-      delimited by ``#``.
-    - columns: message bytes written to a single column family ``data``
-      with an empty-string column qualifier.
-    - cell timestamp: the message publish timestamp.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
     Attributes:
         table (str):
@@ -2815,6 +2814,13 @@ class BigtableConfig(proto.Message):
             publish_time fields are put in their own columns while all
             other message properties (other than data) are written to a
             JSON object in the attributes column.
+        column_family_mapping (google.pubsub_v1.types.BigtableConfig.ColumnFamilyMapping):
+            Optional. Configuration that allows writing
+            row keys and/or columns based on fields in the
+            input message. The input message format must be
+            JSON if this field is set.
+
+            This field is a member of `oneof`_ ``message_mapping``.
         state (google.pubsub_v1.types.BigtableConfig.State):
             Output only. An output-only field that
             indicates whether or not the subscription can
@@ -2874,6 +2880,110 @@ class BigtableConfig(proto.Message):
         IN_TRANSIT_LOCATION_RESTRICTION = 6
         VERTEX_AI_LOCATION_RESTRICTION = 7
 
+    class ColumnFamilyMapping(proto.Message):
+        r"""Configuration for writing a Pub/Sub message to a Bigtable row with a
+        user-defined key and writing to column families.
+
+        If this field is set:
+
+        - The subscription messages must be formatted as JSON.
+        - The row key mapping is configured in the ``key_definition``
+          section.
+        - The top-level fields will be written either:
+
+          - By default, they will be written to the ``data`` column family
+            with the field name as the column qualifier.
+          - But if the field name matches an existing column family (except
+            for the default ``data`` column), then that field will be
+            written to that column family, either as a scalar or its next
+            level nested fields if it's a JSON object.
+
+        - The cell timestamp will be the message publish timestamp.
+
+        If the field is not set, the default behavior is to write:
+
+        - row key: subscription name, message ID hash, and message ID
+          delimited by ``#``.
+        - columns: message bytes written to a single column family ``data``
+          with an empty-string column qualifier.
+        - cell timestamp: the message publish timestamp.
+
+        This message has `oneof`_ fields (mutually exclusive fields).
+        For each oneof, at most one member field can be set at the same time.
+        Setting any member of the oneof automatically clears all other
+        members.
+
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+        Attributes:
+            row_key_schema (google.pubsub_v1.types.BigtableConfig.ColumnFamilyMapping.RowKeySchema):
+                Optional. If set, the row key is constructed from the field
+                names of the table's structured row key
+                ({$universe.dns_names.final_documentation_domain}/bigtable/docs/manage-row-key-schemas).
+                Note that if the field is nullable in the structured row
+                key, then it need not be present in the message; null will
+                be used instead.
+
+                This field is a member of `oneof`_ ``key_definition``.
+            delimited_key (google.pubsub_v1.types.BigtableConfig.ColumnFamilyMapping.DelimitedKey):
+                Optional. If set, the row key is constructed
+                from the given key fields and delimiter. All key
+                fields must be present in the message;
+                otherwise, the message remains in the
+                subscription backlog.
+
+                This field is a member of `oneof`_ ``key_definition``.
+        """
+
+        class RowKeySchema(proto.Message):
+            r"""Row key definition that reads the input message fields based on the
+            field names of the table's structured row key
+            ({$universe.dns_names.final_documentation_domain}/bigtable/docs/manage-row-key-schemas).
+            Note that if the field is nullable in the structured row key, then
+            it need not be present in the message; null will be used instead.
+
+            """
+
+        class DelimitedKey(proto.Message):
+            r"""Row key definition based on fields from the message.
+
+            Attributes:
+                key_fields (MutableSequence[str]):
+                    Required. The key fields to construct from
+                    the row key. The fields must be present in the
+                    message as a top-level field, i.e. JSON path
+                    expressions will not traverse into nested
+                    objects.
+                delimiter (bytes):
+                    Optional. Byte sequence used to delimit
+                    concatenated fields. Must be specified if
+                    multiple key fields are used. The delimiter must
+                    contain at least 1 character and at most 50
+                    characters.
+            """
+
+            key_fields: MutableSequence[str] = proto.RepeatedField(
+                proto.STRING,
+                number=1,
+            )
+            delimiter: bytes = proto.Field(
+                proto.BYTES,
+                number=2,
+            )
+
+        row_key_schema: "BigtableConfig.ColumnFamilyMapping.RowKeySchema" = proto.Field(
+            proto.MESSAGE,
+            number=1,
+            oneof="key_definition",
+            message="BigtableConfig.ColumnFamilyMapping.RowKeySchema",
+        )
+        delimited_key: "BigtableConfig.ColumnFamilyMapping.DelimitedKey" = proto.Field(
+            proto.MESSAGE,
+            number=2,
+            oneof="key_definition",
+            message="BigtableConfig.ColumnFamilyMapping.DelimitedKey",
+        )
+
     table: str = proto.Field(
         proto.STRING,
         number=1,
@@ -2889,6 +2999,12 @@ class BigtableConfig(proto.Message):
     write_metadata: bool = proto.Field(
         proto.BOOL,
         number=5,
+    )
+    column_family_mapping: ColumnFamilyMapping = proto.Field(
+        proto.MESSAGE,
+        number=6,
+        oneof="message_mapping",
+        message=ColumnFamilyMapping,
     )
     state: State = proto.Field(
         proto.ENUM,

@@ -213,5 +213,43 @@
       "{\n  \"values\": [\"f\"]\n}"
     ],
     "name": "Multiple Row Chunks/Non Chunks Interleaved"
+  },
+  {
+    "result": {"value": [[[
+      "{}",
+      "{\"color\":\"red\",\"value\":\"#f00\"}"
+    ]]]},
+    "chunks": [
+      "{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"ARRAY\",\n          \"arrayElementType\": {\n            \"code\": \"JSON\"\n          }\n        }\n      }]\n    }\n  },\n  \"values\": [[\"{}\", \"{\\\"color\\\":\\\"red\\\"\"]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[\",\\\"value\\\":\\\"#f00\\\"}\"]],\n  \"chunkedValue\": false\n}"
+    ],
+    "name": "JSON Array Chunking Test"
+  },
+  {
+    "result": {"value": [[[
+      "1.1",
+      "2.3",
+      "4.0",
+      null,
+      "5.5"
+    ]]]},
+    "chunks": [
+      "{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"ARRAY\",\n          \"arrayElementType\": {\n            \"code\": \"NUMERIC\"\n          }\n        }\n      }]\n    }\n  },\n  \"values\": [[\"1.1\", \"2.\"]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[\"3\", \"4.0\"]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[\"\", null, \"5.5\"]]\n}"
+    ],
+    "name": "NUMERIC Array Chunking Test"
+  },
+  {
+    "result": {"value": [[[[[
+      ["abc"],
+      null,
+      ["def"]
+    ]]]]]},
+    "chunks": [
+      "{\n  \"metadata\": {\n    \"rowType\": {\n      \"fields\": [{\n        \"name\": \"f1\",\n        \"type\": {\n          \"code\": \"ARRAY\",\n          \"arrayElementType\": {\n            \"code\": \"STRUCT\",\n            \"structType\": {\n              \"fields\": [{\n                \"name\": \"f11\",\n                \"type\": {\n                  \"code\": \"ARRAY\",\n                  \"arrayElementType\": {\n                    \"code\": \"STRUCT\",\n                    \"structType\": {\n                      \"fields\": [{\n                        \"name\": \"f12\",\n                        \"type\": {\n                          \"code\": \"STRING\"\n                        }\n                      }]\n                    }\n                  }\n                }\n              }]\n            }\n          }\n        }\n      }]\n    }\n  },\n  \"values\": [[[[[\"abc\"], null]]]],\n  \"chunkedValue\": true\n}",
+      "{\n  \"values\": [[[[[\"def\"]]]]]\n}"
+    ],
+    "name": "Nested Struct Array Chunking Test With null"
   }
 ]}

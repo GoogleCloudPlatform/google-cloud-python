@@ -518,6 +518,25 @@ class _BaseCertificateManagerRestTransport(CertificateManagerTransport):
             ]
             return http_options
 
+    class _BaseUpdateCertificateIssuanceConfig:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
+            "updateMask": {},
+        }
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{certificate_issuance_config.name=projects/*/locations/*/certificateIssuanceConfigs/*}",
+                    "body": "certificate_issuance_config",
+                },
+            ]
+            return http_options
+
     class _BaseUpdateCertificateMap:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")

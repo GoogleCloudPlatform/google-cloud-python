@@ -28,6 +28,7 @@ def clear_stale_instances(
         "python-bigtable-tests",
         "g-c-p",
         "admin-overlay-instance",
+        "bt-samples-",
     ),
     older_than_days: int = 1,
     max_deletions: int = 5,

@@ -42,7 +42,7 @@ else:
     release_status = "Development Status :: 5 - Production/Stable"
 
 dependencies = [
-    "google-api-core[grpc] >= 2.28.0, <3.0.0",
+    "google-api-core[grpc] >= 2.41.0, <3.0.0",
     # Exclude incompatible versions of `google-auth`
     # See https://github.com/googleapis/google-cloud-python/issues/12364
     "google-auth >= 2.14.1, <3.0.0,!=2.24.0,!=2.25.0",
@@ -53,6 +53,10 @@ dependencies = [
     "grpc-google-iam-v1 >= 0.14.2, <1.0.0",
 ]
 extras = {
+    "async_rest": [
+        "google-auth[aiohttp] >= 2.60.0, <3.0.0",
+        "google-api-core >= 2.41.0, <3.0.0",
+    ],
 }
 url = "https://github.com/googleapis/google-cloud-python/tree/main/packages/google-showcase"
 

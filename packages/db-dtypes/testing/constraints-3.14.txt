@@ -7,4 +7,3 @@
 # Forward-looking tests against upcoming, unreleased versions of pandas and other
 # dependencies continue to run in our dedicated pre-release test suite.
 
-pandas < 3.1.0dev0

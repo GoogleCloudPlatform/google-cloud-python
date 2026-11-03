@@ -26,6 +26,7 @@ __version__ = package_version.__version__
 # https://docs.python.org/3.15/library/sys.html#sys.set_lazy_imports_filter
 # Older Python versions safely ignore this variable.
 __lazy_modules__ = {
+    "google.cloud.sqladmin_v1beta4.services.blue_green_deployments_service",
     "google.cloud.sqladmin_v1beta4.services.sql_backup_runs_service",
     "google.cloud.sqladmin_v1beta4.services.sql_backups_service",
     "google.cloud.sqladmin_v1beta4.services.sql_connect_service",
@@ -38,16 +39,23 @@ __lazy_modules__ = {
     "google.cloud.sqladmin_v1beta4.services.sql_ssl_certs_service",
     "google.cloud.sqladmin_v1beta4.services.sql_tiers_service",
     "google.cloud.sqladmin_v1beta4.services.sql_users_service",
+    "google.cloud.sqladmin_v1beta4.services.sql_workload_captures_service",
     "google.cloud.sqladmin_v1beta4.types.cloud_sql",
+    "google.cloud.sqladmin_v1beta4.types.cloud_sql_blue_green_deployments",
     "google.cloud.sqladmin_v1beta4.types.cloud_sql_connect",
     "google.cloud.sqladmin_v1beta4.types.cloud_sql_data",
     "google.cloud.sqladmin_v1beta4.types.cloud_sql_iam_policies",
     "google.cloud.sqladmin_v1beta4.types.cloud_sql_resources",
     "google.cloud.sqladmin_v1beta4.types.cloud_sql_tiers",
     "google.cloud.sqladmin_v1beta4.types.cloud_sql_users",
+    "google.cloud.sqladmin_v1beta4.types.cloud_sql_workload_captures",
 }
 
 
+from .services.blue_green_deployments_service import (
+    BlueGreenDeploymentsServiceAsyncClient,
+    BlueGreenDeploymentsServiceClient,
+)
 from .services.sql_backup_runs_service import (
     SqlBackupRunsServiceAsyncClient,
     SqlBackupRunsServiceClient,
@@ -92,6 +100,10 @@ from .services.sql_tiers_service import (
 from .services.sql_users_service import (
     SqlUsersServiceAsyncClient,
     SqlUsersServiceClient,
+)
+from .services.sql_workload_captures_service import (
+    SqlWorkloadCapturesServiceAsyncClient,
+    SqlWorkloadCapturesServiceClient,
 )
 from .types.cloud_sql import (
     BackupReencryptionConfig,
@@ -175,6 +187,15 @@ from .types.cloud_sql import (
     UpdateBackupRequest,
     Value,
 )
+from .types.cloud_sql_blue_green_deployments import (
+    BlueGreenDeployment,
+    CreateBlueGreenDeploymentRequest,
+    DeleteBlueGreenDeploymentRequest,
+    GetBlueGreenDeploymentRequest,
+    ListBlueGreenDeploymentsRequest,
+    ListBlueGreenDeploymentsResponse,
+    SwitchoverBlueGreenDeploymentRequest,
+)
 from .types.cloud_sql_connect import (
     ConnectSettings,
     GenerateEphemeralCertRequest,
@@ -208,6 +229,7 @@ from .types.cloud_sql_resources import (
     BackupRunsListResponse,
     BakType,
     BinLogCoordinates,
+    BlueGreenDeploymentInfo,
     CloneContext,
     ConnectionPoolConfig,
     ConnectionPoolFlags,
@@ -310,6 +332,10 @@ from .types.cloud_sql_resources import (
     SslCertsInsertRequest,
     SslCertsInsertResponse,
     SslCertsListResponse,
+    StartWorkloadCaptureContext,
+    StartWorkloadReplayContext,
+    StopWorkloadCaptureContext,
+    StopWorkloadReplayContext,
     SyncFlags,
     TruncateLogContext,
 )
@@ -326,8 +352,18 @@ from .types.cloud_sql_users import (
     UserPasswordValidationPolicy,
     UsersListResponse,
 )
+from .types.cloud_sql_workload_captures import (
+    SqlWorkloadCapturesListRequest,
+    WorkloadCapture,
+    WorkloadCapturesListResponse,
+    WorkloadCapturesStartReplayRequest,
+    WorkloadCapturesStartRequest,
+    WorkloadCapturesStopReplayRequest,
+    WorkloadCapturesStopRequest,
+)
 
 __all__ = (
+    "BlueGreenDeploymentsServiceAsyncClient",
     "SqlBackupRunsServiceAsyncClient",
     "SqlBackupsServiceAsyncClient",
     "SqlConnectServiceAsyncClient",
@@ -340,6 +376,7 @@ __all__ = (
     "SqlSslCertsServiceAsyncClient",
     "SqlTiersServiceAsyncClient",
     "SqlUsersServiceAsyncClient",
+    "SqlWorkloadCapturesServiceAsyncClient",
     "Ack",
     "AclEntry",
     "AcquireSsrsLeaseContext",
@@ -356,6 +393,9 @@ __all__ = (
     "BackupRunsListResponse",
     "BakType",
     "BinLogCoordinates",
+    "BlueGreenDeployment",
+    "BlueGreenDeploymentInfo",
+    "BlueGreenDeploymentsServiceClient",
     "CloneContext",
     "Column",
     "ConnectSettings",
@@ -363,6 +403,7 @@ __all__ = (
     "ConnectionPoolFlags",
     "ContinueSession",
     "CreateBackupRequest",
+    "CreateBlueGreenDeploymentRequest",
     "DataCacheConfig",
     "DataPacket",
     "Database",
@@ -370,6 +411,7 @@ __all__ = (
     "DatabaseInstance",
     "DatabasesListResponse",
     "DeleteBackupRequest",
+    "DeleteBlueGreenDeploymentRequest",
     "DemoteContext",
     "DemoteMasterConfiguration",
     "DemoteMasterContext",
@@ -390,6 +432,7 @@ __all__ = (
     "GenerateEphemeralCertRequest",
     "GenerateEphemeralCertResponse",
     "GetBackupRequest",
+    "GetBlueGreenDeploymentRequest",
     "GetConnectSettingsRequest",
     "ImportContext",
     "InsightsConfig",
@@ -416,6 +459,8 @@ __all__ = (
     "IpMapping",
     "ListBackupsRequest",
     "ListBackupsResponse",
+    "ListBlueGreenDeploymentsRequest",
+    "ListBlueGreenDeploymentsResponse",
     "LocationPreference",
     "MaintenanceWindow",
     "Metadata",
@@ -558,6 +603,8 @@ __all__ = (
     "SqlUsersListRequest",
     "SqlUsersServiceClient",
     "SqlUsersUpdateRequest",
+    "SqlWorkloadCapturesListRequest",
+    "SqlWorkloadCapturesServiceClient",
     "SslCert",
     "SslCertDetail",
     "SslCertsCreateEphemeralRequest",
@@ -565,8 +612,13 @@ __all__ = (
     "SslCertsInsertResponse",
     "SslCertsListResponse",
     "StartSession",
+    "StartWorkloadCaptureContext",
+    "StartWorkloadReplayContext",
+    "StopWorkloadCaptureContext",
+    "StopWorkloadReplayContext",
     "StreamSqlDataRequest",
     "StreamSqlDataResponse",
+    "SwitchoverBlueGreenDeploymentRequest",
     "SyncFlags",
     "TerminateSession",
     "Tier",
@@ -577,6 +629,12 @@ __all__ = (
     "UserPasswordValidationPolicy",
     "UsersListResponse",
     "Value",
+    "WorkloadCapture",
+    "WorkloadCapturesListResponse",
+    "WorkloadCapturesStartReplayRequest",
+    "WorkloadCapturesStartRequest",
+    "WorkloadCapturesStopReplayRequest",
+    "WorkloadCapturesStopRequest",
 )
 
 api_core.check_python_version("google.cloud.sqladmin_v1beta4")

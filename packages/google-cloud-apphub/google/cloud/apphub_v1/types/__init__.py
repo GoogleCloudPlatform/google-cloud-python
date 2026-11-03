@@ -25,8 +25,10 @@ from .apphub_service import (
     DetachServiceProjectAttachmentRequest,
     DetachServiceProjectAttachmentResponse,
     GetApplicationRequest,
+    GetBoundaryRequest,
     GetDiscoveredServiceRequest,
     GetDiscoveredWorkloadRequest,
+    GetExtendedMetadataSchemaRequest,
     GetServiceProjectAttachmentRequest,
     GetServiceRequest,
     GetWorkloadRequest,
@@ -36,6 +38,8 @@ from .apphub_service import (
     ListDiscoveredServicesResponse,
     ListDiscoveredWorkloadsRequest,
     ListDiscoveredWorkloadsResponse,
+    ListExtendedMetadataSchemasRequest,
+    ListExtendedMetadataSchemasResponse,
     ListServiceProjectAttachmentsRequest,
     ListServiceProjectAttachmentsResponse,
     ListServicesRequest,
@@ -50,11 +54,14 @@ from .apphub_service import (
     LookupServiceProjectAttachmentResponse,
     OperationMetadata,
     UpdateApplicationRequest,
+    UpdateBoundaryRequest,
     UpdateServiceRequest,
     UpdateWorkloadRequest,
 )
 from .application import (
     Application,
+    ApplicationProperties,
+    ApplicationType,
     Scope,
 )
 from .attributes import (
@@ -62,6 +69,18 @@ from .attributes import (
     ContactInfo,
     Criticality,
     Environment,
+)
+from .boundary import (
+    Boundary,
+)
+from .extended_metadata_schema import (
+    ExtendedMetadataSchema,
+)
+from .properties import (
+    ExtendedMetadata,
+    FunctionalType,
+    Identity,
+    RegistrationType,
 )
 from .service import (
     DiscoveredService,
@@ -91,8 +110,10 @@ __all__ = (
     "DetachServiceProjectAttachmentRequest",
     "DetachServiceProjectAttachmentResponse",
     "GetApplicationRequest",
+    "GetBoundaryRequest",
     "GetDiscoveredServiceRequest",
     "GetDiscoveredWorkloadRequest",
+    "GetExtendedMetadataSchemaRequest",
     "GetServiceProjectAttachmentRequest",
     "GetServiceRequest",
     "GetWorkloadRequest",
@@ -102,6 +123,8 @@ __all__ = (
     "ListDiscoveredServicesResponse",
     "ListDiscoveredWorkloadsRequest",
     "ListDiscoveredWorkloadsResponse",
+    "ListExtendedMetadataSchemasRequest",
+    "ListExtendedMetadataSchemasResponse",
     "ListServiceProjectAttachmentsRequest",
     "ListServiceProjectAttachmentsResponse",
     "ListServicesRequest",
@@ -116,14 +139,23 @@ __all__ = (
     "LookupServiceProjectAttachmentResponse",
     "OperationMetadata",
     "UpdateApplicationRequest",
+    "UpdateBoundaryRequest",
     "UpdateServiceRequest",
     "UpdateWorkloadRequest",
     "Application",
+    "ApplicationProperties",
+    "ApplicationType",
     "Scope",
     "Attributes",
     "ContactInfo",
     "Criticality",
     "Environment",
+    "Boundary",
+    "ExtendedMetadataSchema",
+    "ExtendedMetadata",
+    "FunctionalType",
+    "Identity",
+    "RegistrationType",
     "DiscoveredService",
     "Service",
     "ServiceProperties",

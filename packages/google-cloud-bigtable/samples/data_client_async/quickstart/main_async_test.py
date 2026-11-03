@@ -21,7 +21,7 @@ import pytest_asyncio
 
 from google.cloud.bigtable.data import BigtableDataClientAsync, SetCell
 
-from ..utils import create_table_cm
+from ...utils import create_table_cm
 from .main_async import main
 
 PROJECT = os.environ["GOOGLE_CLOUD_PROJECT"]

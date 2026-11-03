@@ -244,11 +244,11 @@ def test_transaction_abort_then_retry_spans(mock_session_id):
         want_events = [
             ("Creating Session", {}),
             ("Using session", {"id": session_id, "multiplexed": multiplexed}),
-            ("Returning session", {"id": session_id, "multiplexed": multiplexed}),
             (
                 "Transaction was aborted in user operation, retrying",
                 {"delay_seconds": "EPHEMERAL", "cause": "EPHEMERAL", "attempt": 1},
             ),
+            ("Returning session", {"id": session_id, "multiplexed": multiplexed}),
             ("Starting Commit", {}),
             ("Commit Done", {}),
         ]
@@ -260,11 +260,11 @@ def test_transaction_abort_then_retry_spans(mock_session_id):
             ("No sessions available in pool. Creating session", {"kind": "BurstyPool"}),
             ("Creating Session", {}),
             ("Using session", {"id": session_id, "multiplexed": multiplexed}),
-            ("Returning session", {"id": session_id, "multiplexed": multiplexed}),
             (
                 "Transaction was aborted in user operation, retrying",
                 {"delay_seconds": "EPHEMERAL", "cause": "EPHEMERAL", "attempt": 1},
             ),
+            ("Returning session", {"id": session_id, "multiplexed": multiplexed}),
             ("Starting Commit", {}),
             ("Commit Done", {}),
         ]
@@ -277,7 +277,6 @@ def test_transaction_abort_then_retry_spans(mock_session_id):
         want_statuses = [
             ("CloudSpanner.Database.run_in_transaction", codes.OK, None),
             ("CloudSpanner.CreateMultiplexedSession", codes.OK, None),
-            ("CloudSpanner.Session.run_in_transaction", codes.OK, None),
             ("CloudSpanner.Transaction.execute_sql", codes.OK, None),
             ("CloudSpanner.Transaction.execute_sql", codes.OK, None),
             ("CloudSpanner.Transaction.commit", codes.OK, None),
@@ -287,7 +286,6 @@ def test_transaction_abort_then_retry_spans(mock_session_id):
         want_statuses = [
             ("CloudSpanner.Database.run_in_transaction", codes.OK, None),
             ("CloudSpanner.CreateSession", codes.OK, None),
-            ("CloudSpanner.Session.run_in_transaction", codes.OK, None),
             ("CloudSpanner.Transaction.execute_sql", codes.OK, None),
             ("CloudSpanner.Transaction.execute_sql", codes.OK, None),
             ("CloudSpanner.Transaction.commit", codes.OK, None),
@@ -430,7 +428,6 @@ def test_transaction_update_implicit_begin_nested_inside_commit():
     want_span_names = [
         "CloudSpanner.Database.run_in_transaction",
         expected_session_span_name,
-        "CloudSpanner.Session.run_in_transaction",
         "CloudSpanner.Transaction.commit",
         "CloudSpanner.Transaction.begin",
     ]

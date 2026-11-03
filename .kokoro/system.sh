@@ -68,6 +68,14 @@ run_package_test() {
   trap 'rm -rf "$gcloud_config_dir"' EXIT
 
   case "${package_name}" in
+    "gapic-generator")
+      source "${KOKORO_GFILE_DIR}/gapic-generator-env.sh"
+      PROJECT_ID=$(cat "${KOKORO_GFILE_DIR}/gapic-generator-project-id.json")
+      GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/gapic-generator-service-account.json"
+      export GOOGLE_ADS_VIDEO_PATH="${KOKORO_GFILE_DIR}/gapic-generator-video.mp4"
+      NOX_FILE="noxfile.py"
+      NOX_SESSION="${NOX_SESSION:-system-3.12}"
+      ;;
     "google-auth")
       # Copy files needed for google-auth system tests
       mkdir -p "${package_path}/system_tests/data"
@@ -85,14 +93,6 @@ run_package_test() {
       else
         NOX_FILE="noxfile.py"
       fi
-      ;;
-    "google-cloud-dns")
-      # EXPERIMENTAL: Force running all system sessions to test mixed results. This will be reverted
-      # before merge. You can safely ignore it.
-      PROJECT_ID=$(cat "${KOKORO_GFILE_DIR}/project-id.json")
-      GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/service-account.json"
-      NOX_FILE="noxfile.py"
-      NOX_SESSION="system"
       ;;
     *)
       PROJECT_ID=$(cat "${KOKORO_GFILE_DIR}/project-id.json")

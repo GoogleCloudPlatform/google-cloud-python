@@ -479,6 +479,11 @@ class InputAudioConfig(proto.Message):
             inherited from the ConversationProfile.
 
             This field is a member of `oneof`_ ``_use_gemini_asr``.
+        disable_interim_input_transcripts (bool):
+            Optional. Disables emission of interim input transcriptions
+            when set to ``true``.
+
+            This field is a member of `oneof`_ ``_disable_interim_input_transcripts``.
     """
 
     audio_encoding: "AudioEncoding" = proto.Field(
@@ -548,6 +553,11 @@ class InputAudioConfig(proto.Message):
     use_gemini_asr: bool = proto.Field(
         proto.BOOL,
         number=31,
+        optional=True,
+    )
+    disable_interim_input_transcripts: bool = proto.Field(
+        proto.BOOL,
+        number=32,
         optional=True,
     )
 
@@ -758,6 +768,9 @@ class SpeechToTextConfig(proto.Message):
     r"""Configures speech transcription for
     [ConversationProfile][google.cloud.dialogflow.v2.ConversationProfile].
 
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
     Attributes:
         speech_model_variant (google.cloud.dialogflow_v2.types.SpeechModelVariant):
             The speech model used in speech to text.
@@ -834,6 +847,11 @@ class SpeechToTextConfig(proto.Message):
             Optional. If true, Gemini ASR will be used
             for transcription instead of Cloud
             Speech-to-Text.
+        disable_interim_input_transcripts (bool):
+            Optional. Disables emission of interim input transcriptions
+            when set to ``true``.
+
+            This field is a member of `oneof`_ ``_disable_interim_input_transcripts``.
     """
 
     class GeminiAsrConfig(proto.Message):
@@ -842,11 +860,6 @@ class SpeechToTextConfig(proto.Message):
         model or provide additional advanced parameters.
 
         Attributes:
-            model_id (str):
-                Optional. The Gemini ASR model ID used for
-                transcription. This value overrides the default
-                model ID configured on the server. Example:
-                "gemini-3-flash-lite-asr-preview".
             silence_duration_ms (int):
                 Optional. The required duration of detected
                 silence (or non-speech) before end-of-speech is
@@ -894,10 +907,6 @@ class SpeechToTextConfig(proto.Message):
             END_SENSITIVITY_HIGH = 1
             END_SENSITIVITY_LOW = 2
 
-        model_id: str = proto.Field(
-            proto.STRING,
-            number=1,
-        )
         silence_duration_ms: int = proto.Field(
             proto.INT32,
             number=2,
@@ -959,6 +968,11 @@ class SpeechToTextConfig(proto.Message):
     use_gemini_asr: bool = proto.Field(
         proto.BOOL,
         number=16,
+    )
+    disable_interim_input_transcripts: bool = proto.Field(
+        proto.BOOL,
+        number=17,
+        optional=True,
     )
 
 

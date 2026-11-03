@@ -1215,12 +1215,22 @@ class SentimentAnalysisResult(proto.Message):
     Attributes:
         query_text_sentiment (google.cloud.dialogflow_v2.types.Sentiment):
             The sentiment analysis result for ``query_text``.
+        status (google.rpc.status_pb2.Status):
+            Output only. The status of the sentiment analysis operation.
+            If the operation failed, this field will contain the error
+            details. For example, it might indicate a quota issue
+            (RESOURCE_EXHAUSTED).
     """
 
     query_text_sentiment: "Sentiment" = proto.Field(
         proto.MESSAGE,
         number=1,
         message="Sentiment",
+    )
+    status: status_pb2.Status = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=status_pb2.Status,
     )
 
 

@@ -113,6 +113,14 @@ class NativeStyleServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_create_native_style(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_create_native_style(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_get_native_style(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -126,6 +134,14 @@ class NativeStyleServiceRestInterceptor:
                 return request, metadata
 
             def post_list_native_styles(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_native_style(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_native_style(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -395,6 +411,57 @@ class NativeStyleServiceRestInterceptor:
         """
         return response, metadata
 
+    def pre_create_native_style(
+        self,
+        request: native_style_service.CreateNativeStyleRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        native_style_service.CreateNativeStyleRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for create_native_style
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the NativeStyleService server.
+        """
+        return request, metadata
+
+    def post_create_native_style(
+        self, response: native_style_messages.NativeStyle
+    ) -> native_style_messages.NativeStyle:
+        """Post-rpc interceptor for create_native_style
+
+        DEPRECATED. Please use the `post_create_native_style_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the NativeStyleService server but before
+        it is returned to user code. This `post_create_native_style` interceptor runs
+        before the `post_create_native_style_with_metadata` interceptor.
+        """
+        return response
+
+    def post_create_native_style_with_metadata(
+        self,
+        response: native_style_messages.NativeStyle,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        native_style_messages.NativeStyle, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for create_native_style
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the NativeStyleService server but before it is returned to user code.
+
+        We recommend only using this `post_create_native_style_with_metadata`
+        interceptor in new development instead of the `post_create_native_style` interceptor.
+        When both interceptors are used, this `post_create_native_style_with_metadata` interceptor runs after the
+        `post_create_native_style` interceptor. The (possibly modified) response returned by
+        `post_create_native_style` will be passed to
+        `post_create_native_style_with_metadata`.
+        """
+        return response, metadata
+
     def pre_get_native_style(
         self,
         request: native_style_service.GetNativeStyleRequest,
@@ -495,6 +562,57 @@ class NativeStyleServiceRestInterceptor:
         `post_list_native_styles` interceptor. The (possibly modified) response returned by
         `post_list_native_styles` will be passed to
         `post_list_native_styles_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_native_style(
+        self,
+        request: native_style_service.UpdateNativeStyleRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        native_style_service.UpdateNativeStyleRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for update_native_style
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the NativeStyleService server.
+        """
+        return request, metadata
+
+    def post_update_native_style(
+        self, response: native_style_messages.NativeStyle
+    ) -> native_style_messages.NativeStyle:
+        """Post-rpc interceptor for update_native_style
+
+        DEPRECATED. Please use the `post_update_native_style_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the NativeStyleService server but before
+        it is returned to user code. This `post_update_native_style` interceptor runs
+        before the `post_update_native_style_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_native_style_with_metadata(
+        self,
+        response: native_style_messages.NativeStyle,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        native_style_messages.NativeStyle, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for update_native_style
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the NativeStyleService server but before it is returned to user code.
+
+        We recommend only using this `post_update_native_style_with_metadata`
+        interceptor in new development instead of the `post_update_native_style` interceptor.
+        When both interceptors are used, this `post_update_native_style_with_metadata` interceptor runs after the
+        `post_update_native_style` interceptor. The (possibly modified) response returned by
+        `post_update_native_style` will be passed to
+        `post_update_native_style_with_metadata`.
         """
         return response, metadata
 
@@ -1416,6 +1534,161 @@ class NativeStyleServiceRestTransport(_BaseNativeStyleServiceRestTransport):
                 )
             return resp
 
+    class _CreateNativeStyle(
+        _BaseNativeStyleServiceRestTransport._BaseCreateNativeStyle,
+        NativeStyleServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("NativeStyleServiceRestTransport.CreateNativeStyle")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: native_style_service.CreateNativeStyleRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> native_style_messages.NativeStyle:
+            r"""Call the create native style method over HTTP.
+
+            Args:
+                request (~.native_style_service.CreateNativeStyleRequest):
+                    The request object. Request object for ``CreateNativeStyle`` method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.native_style_messages.NativeStyle:
+                    Used to define the look and feel of
+                native ads, for both web and apps.
+                Native styles determine how native
+                creatives look for a segment of
+                inventory.
+
+            """
+
+            http_options = _BaseNativeStyleServiceRestTransport._BaseCreateNativeStyle._get_http_options()
+            request, metadata = self._interceptor.pre_create_native_style(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNativeStyleServiceRestTransport._BaseCreateNativeStyle,
+                    "_BaseCreateNativeStyle__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.NativeStyleServiceClient.CreateNativeStyle",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.NativeStyleService",
+                        "rpcName": "CreateNativeStyle",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = NativeStyleServiceRestTransport._CreateNativeStyle._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = native_style_messages.NativeStyle()
+            pb_resp = native_style_messages.NativeStyle.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_create_native_style(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_create_native_style_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = native_style_messages.NativeStyle.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.NativeStyleServiceClient.create_native_style",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.NativeStyleService",
+                        "rpcName": "CreateNativeStyle",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _GetNativeStyle(
         _BaseNativeStyleServiceRestTransport._BaseGetNativeStyle,
         NativeStyleServiceRestStub,
@@ -1719,6 +1992,161 @@ class NativeStyleServiceRestTransport(_BaseNativeStyleServiceRestTransport):
                 )
             return resp
 
+    class _UpdateNativeStyle(
+        _BaseNativeStyleServiceRestTransport._BaseUpdateNativeStyle,
+        NativeStyleServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("NativeStyleServiceRestTransport.UpdateNativeStyle")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: native_style_service.UpdateNativeStyleRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> native_style_messages.NativeStyle:
+            r"""Call the update native style method over HTTP.
+
+            Args:
+                request (~.native_style_service.UpdateNativeStyleRequest):
+                    The request object. Request object for ``UpdateNativeStyle`` method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.native_style_messages.NativeStyle:
+                    Used to define the look and feel of
+                native ads, for both web and apps.
+                Native styles determine how native
+                creatives look for a segment of
+                inventory.
+
+            """
+
+            http_options = _BaseNativeStyleServiceRestTransport._BaseUpdateNativeStyle._get_http_options()
+            request, metadata = self._interceptor.pre_update_native_style(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseNativeStyleServiceRestTransport._BaseUpdateNativeStyle,
+                    "_BaseUpdateNativeStyle__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.NativeStyleServiceClient.UpdateNativeStyle",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.NativeStyleService",
+                        "rpcName": "UpdateNativeStyle",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = NativeStyleServiceRestTransport._UpdateNativeStyle._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = native_style_messages.NativeStyle()
+            pb_resp = native_style_messages.NativeStyle.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_native_style(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_native_style_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = native_style_messages.NativeStyle.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.NativeStyleServiceClient.update_native_style",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.NativeStyleService",
+                        "rpcName": "UpdateNativeStyle",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     @property
     def batch_activate_native_styles(
         self,
@@ -1785,6 +2213,17 @@ class NativeStyleServiceRestTransport(_BaseNativeStyleServiceRestTransport):
         )  # type: ignore
 
     @property
+    def create_native_style(
+        self,
+    ) -> Callable[
+        [native_style_service.CreateNativeStyleRequest],
+        native_style_messages.NativeStyle,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._CreateNativeStyle(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def get_native_style(
         self,
     ) -> Callable[
@@ -1804,6 +2243,17 @@ class NativeStyleServiceRestTransport(_BaseNativeStyleServiceRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._ListNativeStyles(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def update_native_style(
+        self,
+    ) -> Callable[
+        [native_style_service.UpdateNativeStyleRequest],
+        native_style_messages.NativeStyle,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateNativeStyle(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def cancel_operation(self):

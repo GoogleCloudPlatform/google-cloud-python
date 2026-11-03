@@ -43,7 +43,9 @@ class ThirdPartyMeasurementSettings(proto.Message):
     Attributes:
         viewability_partner (google.ads.admanager_v1.types.ViewabilityPartnerEnum.ViewabilityPartner):
             Optional. A field to determine the type of
-            ViewabilityPartner. This field default is NONE.
+            [ViewabilityPartner][google.ads.admanager.v1.ViewabilityPartnerEnum.ViewabilityPartner].
+            This field default is
+            [NONE][google.ads.admanager.v1.ViewabilityPartnerEnum.ViewabilityPartner.NONE].
 
             This field is a member of `oneof`_ ``_viewability_partner``.
         viewability_client_id (str):
@@ -58,9 +60,10 @@ class ThirdPartyMeasurementSettings(proto.Message):
 
             This field is a member of `oneof`_ ``_viewability_reporting_id``.
         publisher_viewability_partner (google.ads.admanager_v1.types.ViewabilityPartnerEnum.ViewabilityPartner):
-            Optional. A field to determine the type of
-            publisher's viewability partner. This field
-            default is NONE.
+            Optional. A field to determine the type of publisher's
+            [ViewabilityPartner][google.ads.admanager.v1.ViewabilityPartnerEnum.ViewabilityPartner].
+            This field default is
+            [NONE][google.ads.admanager.v1.ViewabilityPartnerEnum.ViewabilityPartner.NONE].
 
             This field is a member of `oneof`_ ``_publisher_viewability_partner``.
         publisher_viewability_client_id (str):
@@ -77,7 +80,9 @@ class ThirdPartyMeasurementSettings(proto.Message):
             This field is a member of `oneof`_ ``_publisher_viewability_reporting_id``.
         brand_lift_partner (google.ads.admanager_v1.types.BrandLiftPartnerEnum.BrandLiftPartner):
             Optional. A field to determine the type of
-            BrandLiftPartner. This field default is NONE.
+            [BrandLiftPartner][google.ads.admanager.v1.BrandLiftPartnerEnum.BrandLiftPartner].
+            This field default is
+            [NONE][google.ads.admanager.v1.BrandLiftPartnerEnum.BrandLiftPartner.NONE].
 
             This field is a member of `oneof`_ ``_brand_lift_partner``.
         brand_lift_client_id (str):
@@ -92,9 +97,10 @@ class ThirdPartyMeasurementSettings(proto.Message):
 
             This field is a member of `oneof`_ ``_brand_lift_reporting_id``.
         reach_partner (google.ads.admanager_v1.types.ReachPartnerEnum.ReachPartner):
-            Optional. A field to determine the type of
-            advertiser's ReachPartner. This field default is
-            UNKNOWN.
+            Optional. A field to determine the type of advertiser's
+            [ReachPartner][google.ads.admanager.v1.ReachPartnerEnum.ReachPartner].
+            This field default is
+            [UNKNOWN][ReachPartnerEnum.ReachPartner.UNKNOWN].
 
             This field is a member of `oneof`_ ``_reach_partner``.
         reach_client_id (str):
@@ -109,9 +115,10 @@ class ThirdPartyMeasurementSettings(proto.Message):
 
             This field is a member of `oneof`_ ``_reach_reporting_id``.
         publisher_reach_partner (google.ads.admanager_v1.types.ReachPartnerEnum.ReachPartner):
-            Optional. A field to determine the type of
-            publisher's ReachPartner. This field default is
-            UNKNOWN.
+            Optional. A field to determine the type of publisher's
+            [ReachPartner][google.ads.admanager.v1.ReachPartnerEnum.ReachPartner].
+            This field default is
+            [UNKNOWN][ReachPartnerEnum.ReachPartner.UNKNOWN].
 
             This field is a member of `oneof`_ ``_publisher_reach_partner``.
         publisher_reach_client_id (str):

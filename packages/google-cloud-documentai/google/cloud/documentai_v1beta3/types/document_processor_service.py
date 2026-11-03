@@ -1405,6 +1405,9 @@ class TrainProcessorVersionRequest(proto.Message):
             training. This processor version must be a child of
             ``parent``. Format:
             ``projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}``.
+        processor_version_overrides (google.cloud.documentai_v1beta3.types.ProcessorVersionOverrides):
+            Optional. Options to override structures in
+            the base processor version.
     """
 
     class InputData(proto.Message):
@@ -1534,6 +1537,11 @@ class TrainProcessorVersionRequest(proto.Message):
     base_processor_version: str = proto.Field(
         proto.STRING,
         number=8,
+    )
+    processor_version_overrides: gcd_processor.ProcessorVersionOverrides = proto.Field(
+        proto.MESSAGE,
+        number=13,
+        message=gcd_processor.ProcessorVersionOverrides,
     )
 
 

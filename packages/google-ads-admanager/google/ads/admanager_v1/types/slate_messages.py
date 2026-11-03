@@ -52,7 +52,9 @@ class Slate(proto.Message):
             This field is a member of `oneof`_ ``_display_name``.
         status (google.ads.admanager_v1.types.SlateStatusEnum.SlateStatus):
             Output only. The status of this Slate. Slates are created in
-            the [SlateStatus.ACTIVE][] state.
+            the
+            [SlateStatusEnum.SlateStatus.ACTIVE][google.ads.admanager.v1.SlateStatusEnum.SlateStatus.ACTIVE]
+            state.
 
             This field is a member of `oneof`_ ``_status``.
         transcode_status (google.ads.admanager_v1.types.VideoTranscodeStatusEnum.VideoTranscodeStatus):

@@ -1124,9 +1124,24 @@ def test_method_is_resumable_upload():
     # UploadMedia (and CreateYouTubeVideoUpload) are temporarily hardcoded as
     # resumable upload method names until resumable upload proto annotations
     # are adopted in the future.
-    # Verify that UploadMedia is identified as a resumable upload method.
+    # Verify that UploadMedia is identified as a resumable upload method and
+    # configures ResumableUploadSession / AsyncResumableUploadSession as the
+    # client output while retaining the raw output message in ref_types.
     method_upload = make_method("UploadMedia")
     assert method_upload.is_resumable_upload
+    assert method_upload.client_output.ident.name == "ResumableUploadSession"
+    assert (
+        str(method_upload.client_output.ident)
+        == "resumable_transfer.ResumableUploadSession"
+    )
+    assert (
+        method_upload.client_output_async.ident.name == "AsyncResumableUploadSession"
+    )
+    assert (
+        str(method_upload.client_output_async.ident)
+        == "resumable_transfer.AsyncResumableUploadSession"
+    )
+    assert method_upload.output in method_upload.ref_types
 
     # Verify that CreateYouTubeVideoUpload is also recognized as a resumable upload method.
     method_youtube_upload = make_method("CreateYouTubeVideoUpload")

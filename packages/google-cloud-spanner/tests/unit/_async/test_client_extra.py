@@ -240,3 +240,38 @@ class TestClientExtra(unittest.IsolatedAsyncioTestCase):
                 ) as set_mock:
                     MUT._initialize_metrics("project", self.credentials)
                     set_mock.assert_called_once()
+
+    def test_initialize_metrics_emulator_host_parameter(self):
+        from google.cloud.spanner_v1._async import client as MUT
+
+        with mock.patch(
+            "google.cloud.spanner_v1._async.client._metrics_monitor_initialized",
+            False,
+        ):
+            with mock.patch(
+                "google.cloud.spanner_v1._async.client.metrics.set_meter_provider"
+            ) as set_mock:
+                MUT._initialize_metrics(
+                    "project",
+                    self.credentials,
+                    emulator_host="localhost:9010",
+                )
+                set_mock.assert_called_once()
+
+    def test_initialize_metrics_anonymous_credentials(self):
+        from google.auth.credentials import AnonymousCredentials
+
+        from google.cloud.spanner_v1._async import client as MUT
+
+        with mock.patch(
+            "google.cloud.spanner_v1._async.client._metrics_monitor_initialized",
+            False,
+        ):
+            with mock.patch(
+                "google.cloud.spanner_v1._async.client.metrics.set_meter_provider"
+            ) as set_mock:
+                MUT._initialize_metrics(
+                    "project",
+                    AnonymousCredentials(),
+                )
+                set_mock.assert_called_once()

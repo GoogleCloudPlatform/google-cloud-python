@@ -486,9 +486,9 @@ class TestOpaqueCrypto(unittest.TestCase):
     def test_authenticator_validation(self):
         valid_params = authentication_pb2.HashParameters(
             argon2_id_parameters=authentication_pb2.HashParameters.Argon2IdParameters(
-                iteration_count=3,
-                memory_usage=64 * 1024,
-                parallelism=4,
+                iteration_count=1,
+                memory_usage=8,
+                parallelism=1,
                 hash_size=32,
             )
         )
@@ -512,9 +512,9 @@ class TestOpaqueCrypto(unittest.TestCase):
     def test_authenticator_state_errors(self):
         params = authentication_pb2.HashParameters(
             argon2_id_parameters=authentication_pb2.HashParameters.Argon2IdParameters(
-                iteration_count=3,
-                memory_usage=64 * 1024,
-                parallelism=4,
+                iteration_count=1,
+                memory_usage=8,
+                parallelism=1,
                 hash_size=32,
             )
         )
@@ -541,9 +541,9 @@ class TestOpaqueCrypto(unittest.TestCase):
     def test_user_authenticator_clear_and_del(self):
         params = authentication_pb2.HashParameters(
             argon2_id_parameters=authentication_pb2.HashParameters.Argon2IdParameters(
-                iteration_count=3,
-                memory_usage=64 * 1024,
-                parallelism=4,
+                iteration_count=1,
+                memory_usage=8,
+                parallelism=1,
                 hash_size=32,
             )
         )
@@ -584,9 +584,9 @@ class TestOpaqueCrypto(unittest.TestCase):
 
         params = authentication_pb2.HashParameters(
             argon2_id_parameters=authentication_pb2.HashParameters.Argon2IdParameters(
-                iteration_count=3,
-                memory_usage=64 * 1024,
-                parallelism=4,
+                iteration_count=1,
+                memory_usage=8,
+                parallelism=1,
                 hash_size=32,
             )
         )
@@ -708,9 +708,9 @@ class TestOpaqueCrypto(unittest.TestCase):
     def test_final_request_invalid_masked_response_length(self):
         params = authentication_pb2.HashParameters(
             argon2_id_parameters=authentication_pb2.HashParameters.Argon2IdParameters(
-                iteration_count=3,
-                memory_usage=64 * 1024,
-                parallelism=4,
+                iteration_count=1,
+                memory_usage=8,
+                parallelism=1,
                 hash_size=32,
             )
         )
@@ -964,9 +964,9 @@ class TestOpaqueCrypto(unittest.TestCase):
 
         params = authentication_pb2.HashParameters(
             argon2_id_parameters=authentication_pb2.HashParameters.Argon2IdParameters(
-                iteration_count=3,
-                memory_usage=64 * 1024,
-                parallelism=4,
+                iteration_count=1,
+                memory_usage=8,
+                parallelism=1,
                 hash_size=32,
             )
         )

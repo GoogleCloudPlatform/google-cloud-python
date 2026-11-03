@@ -21,7 +21,7 @@ import pytest  # type: ignore
 from pyasn1_modules import pem  # type: ignore
 
 try:
-    import rsa
+    import rsa  # type: ignore
 except ImportError:
     pytest.skip("rsa module not available", allow_module_level=True)
 

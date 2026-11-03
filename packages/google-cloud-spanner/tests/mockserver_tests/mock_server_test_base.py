@@ -139,6 +139,10 @@ def add_error(method: str, error: status_pb2.Status):
     get_spanner_service().mock_spanner.add_error(method, error)
 
 
+def add_header(method: str, header: str, value: str):
+    get_spanner_service().mock_spanner.add_header(method, header, value)
+
+
 def add_result(sql: str, result: result_set.ResultSet):
     get_spanner_service().mock_spanner.add_result(sql, result)
 

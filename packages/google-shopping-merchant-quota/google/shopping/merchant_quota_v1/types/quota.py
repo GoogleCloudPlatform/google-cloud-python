@@ -46,7 +46,7 @@ class QuotaGroup(proto.Message):
             Output only. The current quota usage, meaning
             the number of calls already made on a given day
             to the methods in the group. The daily quota
-            limits reset at at 12:00 PM midday UTC.
+            limits reset at 12:00 PM midday UTC.
         quota_limit (int):
             Output only. The maximum number of calls
             allowed per day for the group.

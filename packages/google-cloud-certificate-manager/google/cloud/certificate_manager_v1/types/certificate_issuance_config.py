@@ -18,6 +18,7 @@ from __future__ import annotations
 from typing import MutableMapping, MutableSequence
 
 import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
 
@@ -28,6 +29,7 @@ __protobuf__ = proto.module(
         "ListCertificateIssuanceConfigsResponse",
         "GetCertificateIssuanceConfigRequest",
         "CreateCertificateIssuanceConfigRequest",
+        "UpdateCertificateIssuanceConfigRequest",
         "DeleteCertificateIssuanceConfigRequest",
         "CertificateIssuanceConfig",
     },
@@ -43,22 +45,22 @@ class ListCertificateIssuanceConfigsRequest(proto.Message):
             certificate should be listed, specified in the format
             ``projects/*/locations/*``.
         page_size (int):
-            Maximum number of certificate configs to
-            return per call.
+            Optional. Maximum number of certificate
+            configs to return per call.
         page_token (str):
-            The value returned by the last
+            Optional. The value returned by the last
             ``ListCertificateIssuanceConfigsResponse``. Indicates that
             this is a continuation of a prior
             ``ListCertificateIssuanceConfigs`` call, and that the system
             should return the next page of data.
         filter (str):
-            Filter expression to restrict the
+            Optional. Filter expression to restrict the
             Certificates Configs returned.
         order_by (str):
-            A list of Certificate Config field names used to specify the
-            order of the returned results. The default sorting order is
-            ascending. To specify descending order for a field, add a
-            suffix ``" desc"``.
+            Optional. A list of Certificate Config field names used to
+            specify the order of the returned results. The default
+            sorting order is ascending. To specify descending order for
+            a field, add a suffix ``" desc"``.
     """
 
     parent: str = proto.Field(
@@ -166,6 +168,31 @@ class CreateCertificateIssuanceConfigRequest(proto.Message):
     )
 
 
+class UpdateCertificateIssuanceConfigRequest(proto.Message):
+    r"""Request for the ``UpdateCertificateIssuanceConfig`` method.
+
+    Attributes:
+        certificate_issuance_config (google.cloud.certificate_manager_v1.types.CertificateIssuanceConfig):
+            Required. A definition of the certificate
+            issuance config to update.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Required. The update mask applies to the resource. For the
+            ``FieldMask`` definition, see
+            https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
+    """
+
+    certificate_issuance_config: "CertificateIssuanceConfig" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="CertificateIssuanceConfig",
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask_pb2.FieldMask,
+    )
+
+
 class DeleteCertificateIssuanceConfigRequest(proto.Message):
     r"""Request for the ``DeleteCertificateIssuanceConfig`` method.
 
@@ -188,9 +215,9 @@ class CertificateIssuanceConfig(proto.Message):
 
     Attributes:
         name (str):
-            A user-defined name of the certificate issuance config.
-            CertificateIssuanceConfig names must be unique globally and
-            match pattern
+            Identifier. A user-defined name of the certificate issuance
+            config. CertificateIssuanceConfig names must be unique
+            globally and match pattern
             ``projects/*/locations/*/certificateIssuanceConfigs/*``.
         create_time (google.protobuf.timestamp_pb2.Timestamp):
             Output only. The creation timestamp of a
@@ -199,11 +226,11 @@ class CertificateIssuanceConfig(proto.Message):
             Output only. The last update timestamp of a
             CertificateIssuanceConfig.
         labels (MutableMapping[str, str]):
-            Set of labels associated with a
+            Optional. Set of labels associated with a
             CertificateIssuanceConfig.
         description (str):
-            One or more paragraphs of text description of
-            a CertificateIssuanceConfig.
+            Optional. One or more paragraphs of text
+            description of a CertificateIssuanceConfig.
         certificate_authority_config (google.cloud.certificate_manager_v1.types.CertificateIssuanceConfig.CertificateAuthorityConfig):
             Required. The CA that issues the workload
             certificate. It includes the CA address, type,
@@ -219,6 +246,13 @@ class CertificateIssuanceConfig(proto.Message):
         key_algorithm (google.cloud.certificate_manager_v1.types.CertificateIssuanceConfig.KeyAlgorithm):
             Required. The key algorithm to use when
             generating the private key.
+        tags (MutableMapping[str, str]):
+            Optional. Input only. Immutable. Tag
+            keys/values directly bound to this resource. For
+            example:
+
+              "123/environment": "production",
+              "123/costCenter": "marketing".
     """
 
     class KeyAlgorithm(proto.Enum):
@@ -315,6 +349,11 @@ class CertificateIssuanceConfig(proto.Message):
         proto.ENUM,
         number=9,
         enum=KeyAlgorithm,
+    )
+    tags: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=10,
     )
 
 

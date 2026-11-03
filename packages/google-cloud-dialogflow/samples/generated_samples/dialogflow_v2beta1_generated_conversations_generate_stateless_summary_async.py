@@ -40,7 +40,6 @@ async def sample_generate_stateless_summary():
 
     # Initialize request argument(s)
     stateless_conversation = dialogflow_v2beta1.MinimalConversation()
-    stateless_conversation.messages.content = "content_value"
     stateless_conversation.parent = "parent_value"
 
     conversation_profile = dialogflow_v2beta1.ConversationProfile()

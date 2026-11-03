@@ -199,6 +199,80 @@ class CloudRedisClusterClient(metaclass=CloudRedisClusterClientMeta):
         return self._transport
 
     @staticmethod
+    def acl_policy_path(
+        project: str,
+        location: str,
+        acl_policy: str,
+    ) -> str:
+        """Returns a fully-qualified acl_policy string."""
+        return (
+            "projects/{project}/locations/{location}/aclPolicies/{acl_policy}".format(
+                project=project,
+                location=location,
+                acl_policy=acl_policy,
+            )
+        )
+
+    @staticmethod
+    def parse_acl_policy_path(path: str) -> Dict[str, str]:
+        """Parses a acl_policy path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/aclPolicies/(?P<acl_policy>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def acl_policy_revision_path(
+        project: str,
+        location: str,
+        acl_policy: str,
+        revision: str,
+    ) -> str:
+        """Returns a fully-qualified acl_policy_revision string."""
+        return "projects/{project}/locations/{location}/aclPolicies/{acl_policy}/revisions/{revision}".format(
+            project=project,
+            location=location,
+            acl_policy=acl_policy,
+            revision=revision,
+        )
+
+    @staticmethod
+    def parse_acl_policy_revision_path(path: str) -> Dict[str, str]:
+        """Parses a acl_policy_revision path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/aclPolicies/(?P<acl_policy>.+?)/revisions/(?P<revision>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def auth_token_path(
+        project: str,
+        location: str,
+        cluster: str,
+        token_auth_user: str,
+        auth_token: str,
+    ) -> str:
+        """Returns a fully-qualified auth_token string."""
+        return "projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}/authTokens/{auth_token}".format(
+            project=project,
+            location=location,
+            cluster=cluster,
+            token_auth_user=token_auth_user,
+            auth_token=auth_token,
+        )
+
+    @staticmethod
+    def parse_auth_token_path(path: str) -> Dict[str, str]:
+        """Parses a auth_token path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/clusters/(?P<cluster>.+?)/tokenAuthUsers/(?P<token_auth_user>.+?)/authTokens/(?P<auth_token>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
     def backup_path(
         project: str,
         location: str,
@@ -439,6 +513,30 @@ class CloudRedisClusterClient(metaclass=CloudRedisClusterClientMeta):
         """Parses a shared_regional_certificate_authority path into its component segments."""
         m = re.match(
             r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/sharedRegionalCertificateAuthority$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def token_auth_user_path(
+        project: str,
+        location: str,
+        cluster: str,
+        token_auth_user: str,
+    ) -> str:
+        """Returns a fully-qualified token_auth_user string."""
+        return "projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}".format(
+            project=project,
+            location=location,
+            cluster=cluster,
+            token_auth_user=token_auth_user,
+        )
+
+    @staticmethod
+    def parse_token_auth_user_path(path: str) -> Dict[str, str]:
+        """Parses a token_auth_user path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/clusters/(?P<cluster>.+?)/tokenAuthUsers/(?P<token_auth_user>.+?)$",
             path,
         )
         return m.groupdict() if m else {}
@@ -979,6 +1077,140 @@ class CloudRedisClusterClient(metaclass=CloudRedisClusterClientMeta):
         # Done; return the response.
         return response
 
+    def list_acl_policies(
+        self,
+        request: Optional[
+            Union[cloud_redis_cluster.ListAclPoliciesRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListAclPoliciesPager:
+        r"""Lists all ACL policies owned by a project in either the
+        specified location (region) or all locations.
+
+        The location should have the following format:
+
+        - ``projects/{project_id}/locations/{location_id}``
+
+        If ``location_id`` is specified as ``-`` (wildcard), then all
+        regions available to the project are queried, and the results
+        are aggregated.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import redis_cluster_v1
+
+            def sample_list_acl_policies():
+                # Create a client
+                client = redis_cluster_v1.CloudRedisClusterClient()
+
+                # Initialize request argument(s)
+                request = redis_cluster_v1.ListAclPoliciesRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_acl_policies(request=request)
+
+                # Handle the response
+                for response in page_result:
+                    print(response)
+
+        Args:
+            request (Union[google.cloud.redis_cluster_v1.types.ListAclPoliciesRequest, dict]):
+                The request object. Request for ``ListAclPolicies``.
+            parent (str):
+                Required. The resource name of the ACL policy location
+                using the form:
+                ``projects/{project_id}/locations/{location_id}`` where
+                ``location_id`` refers to a Google Cloud region.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.redis_cluster_v1.services.cloud_redis_cluster.pagers.ListAclPoliciesPager:
+                Response for ListAclPolicies.
+
+                Iterating over this object will yield results and
+                resolve additional pages automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_redis_cluster.ListAclPoliciesRequest):
+            request = cloud_redis_cluster.ListAclPoliciesRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.list_acl_policies]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__iter__` convenience method.
+        response = pagers.ListAclPoliciesPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
     def get_cluster(
         self,
         request: Optional[Union[cloud_redis_cluster.GetClusterRequest, dict]] = None,
@@ -1064,6 +1296,113 @@ class CloudRedisClusterClient(metaclass=CloudRedisClusterClientMeta):
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
         rpc = self._transport._wrapped_methods[self._transport.get_cluster]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def get_acl_policy(
+        self,
+        request: Optional[Union[cloud_redis_cluster.GetAclPolicyRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> cloud_redis_cluster.AclPolicy:
+        r"""Gets the details of a specific Redis Cluster ACL
+        policy.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import redis_cluster_v1
+
+            def sample_get_acl_policy():
+                # Create a client
+                client = redis_cluster_v1.CloudRedisClusterClient()
+
+                # Initialize request argument(s)
+                request = redis_cluster_v1.GetAclPolicyRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.get_acl_policy(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.redis_cluster_v1.types.GetAclPolicyRequest, dict]):
+                The request object. Request for ``GetAclPolicy``.
+            name (str):
+                Required. Redis ACL policy resource name using the form:
+                ``projects/{project_id}/locations/{location_id}/aclPolicies/{acl_policy_id}``
+                where ``location_id`` refers to a Google Cloud region.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.redis_cluster_v1.types.AclPolicy:
+                The ACL policy resource.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_redis_cluster.GetAclPolicyRequest):
+            request = cloud_redis_cluster.GetAclPolicyRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.get_acl_policy]
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -1232,6 +1571,161 @@ class CloudRedisClusterClient(metaclass=CloudRedisClusterClientMeta):
         # Done; return the response.
         return response
 
+    def update_acl_policy(
+        self,
+        request: Optional[
+            Union[cloud_redis_cluster.UpdateAclPolicyRequest, dict]
+        ] = None,
+        *,
+        acl_policy: Optional[cloud_redis_cluster.AclPolicy] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Updates the ACL policy.
+
+        The operation applies the updated ACL policy to all of
+        the linked clusters. If Memorystore can apply the policy
+        to all clusters, then the operation returns a SUCCESS
+        status. If Memorystore can't apply the policy to all
+        clusters, then to ensure eventual consistency,
+        Memorystore uses reconciliation to apply the policy to
+        the failed clusters.
+
+        Completed longrunning.Operation will contain the new ACL
+        policy object in the response field.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import redis_cluster_v1
+
+            def sample_update_acl_policy():
+                # Create a client
+                client = redis_cluster_v1.CloudRedisClusterClient()
+
+                # Initialize request argument(s)
+                acl_policy = redis_cluster_v1.AclPolicy()
+                acl_policy.rules.username = "username_value"
+                acl_policy.rules.rule = "rule_value"
+
+                request = redis_cluster_v1.UpdateAclPolicyRequest(
+                    acl_policy=acl_policy,
+                )
+
+                # Make the request
+                operation = client.update_acl_policy(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.redis_cluster_v1.types.UpdateAclPolicyRequest, dict]):
+                The request object. Request for ``UpdateAclPolicy``.
+            acl_policy (google.cloud.redis_cluster_v1.types.AclPolicy):
+                Required. The ACL policy to be
+                updated.
+
+                This corresponds to the ``acl_policy`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (google.protobuf.field_mask_pb2.FieldMask):
+                Optional. Mask of fields to be updated. At least one
+                path must be supplied in this field. The elements of the
+                repeated paths field may only include these fields from
+                ``AclPolicy``:
+
+                - ``rules``
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.redis_cluster_v1.types.AclPolicy`
+                The ACL policy resource.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [acl_policy, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_redis_cluster.UpdateAclPolicyRequest):
+            request = cloud_redis_cluster.UpdateAclPolicyRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if acl_policy is not None:
+                request.acl_policy = acl_policy
+            if update_mask is not None:
+                request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.update_acl_policy]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("acl_policy.name", request.acl_policy.name),)
+            ),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            cloud_redis_cluster.AclPolicy,
+            metadata_type=cloud_redis_cluster.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
     def delete_cluster(
         self,
         request: Optional[Union[cloud_redis_cluster.DeleteClusterRequest, dict]] = None,
@@ -1358,6 +1852,376 @@ class CloudRedisClusterClient(metaclass=CloudRedisClusterClientMeta):
             self._transport.operations_client,
             empty_pb2.Empty,
             metadata_type=any_pb2.Any,
+        )
+
+        # Done; return the response.
+        return response
+
+    def delete_acl_policy(
+        self,
+        request: Optional[
+            Union[cloud_redis_cluster.DeleteAclPolicyRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Deletes a specific ACL policy. This action will
+        delete the ACL policy and all the rules associated with
+        it. An ACL policy cannot be deleted if it is attached to
+        a cluster.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import redis_cluster_v1
+
+            def sample_delete_acl_policy():
+                # Create a client
+                client = redis_cluster_v1.CloudRedisClusterClient()
+
+                # Initialize request argument(s)
+                request = redis_cluster_v1.DeleteAclPolicyRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                operation = client.delete_acl_policy(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.redis_cluster_v1.types.DeleteAclPolicyRequest, dict]):
+                The request object. Request for ``DeleteAclPolicy``.
+            name (str):
+                Required. Redis ACL policy resource name using the form:
+                ``projects/{project_id}/locations/{location_id}/aclPolicies/{acl_policy_id}``
+                where ``location_id`` refers to a Google Cloud region.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.protobuf.empty_pb2.Empty` A generic empty message that you can re-use to avoid defining duplicated
+                   empty messages in your APIs. A typical example is to
+                   use it as the request or the response type of an API
+                   method. For instance:
+
+                      service Foo {
+                         rpc Bar(google.protobuf.Empty) returns
+                         (google.protobuf.Empty);
+
+                      }
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_redis_cluster.DeleteAclPolicyRequest):
+            request = cloud_redis_cluster.DeleteAclPolicyRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.delete_acl_policy]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            empty_pb2.Empty,
+            metadata_type=cloud_redis_cluster.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def get_acl_policy_revision(
+        self,
+        request: Optional[
+            Union[cloud_redis_cluster.GetAclPolicyRevisionRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> cloud_redis_cluster.AclPolicyRevision:
+        r"""Gets details of a specific ACL policy revision.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import redis_cluster_v1
+
+            def sample_get_acl_policy_revision():
+                # Create a client
+                client = redis_cluster_v1.CloudRedisClusterClient()
+
+                # Initialize request argument(s)
+                request = redis_cluster_v1.GetAclPolicyRevisionRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.get_acl_policy_revision(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.redis_cluster_v1.types.GetAclPolicyRevisionRequest, dict]):
+                The request object. Request for ``GetAclPolicyRevision``.
+            name (str):
+                Required. Redis ACL policy revision resource name using
+                the form:
+                ``projects/{project_id}/locations/{location_id}/aclPolicies/{acl_policy_id}/revisions/{revision_id}``
+                where ``location_id`` refers to a Google Cloud region.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.redis_cluster_v1.types.AclPolicyRevision:
+                The ACL policy revision resource.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_redis_cluster.GetAclPolicyRevisionRequest):
+            request = cloud_redis_cluster.GetAclPolicyRevisionRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.get_acl_policy_revision]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def list_acl_policy_revisions(
+        self,
+        request: Optional[
+            Union[cloud_redis_cluster.ListAclPolicyRevisionsRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListAclPolicyRevisionsPager:
+        r"""Lists all ACL policy revisions in a given ACL policy.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import redis_cluster_v1
+
+            def sample_list_acl_policy_revisions():
+                # Create a client
+                client = redis_cluster_v1.CloudRedisClusterClient()
+
+                # Initialize request argument(s)
+                request = redis_cluster_v1.ListAclPolicyRevisionsRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_acl_policy_revisions(request=request)
+
+                # Handle the response
+                for response in page_result:
+                    print(response)
+
+        Args:
+            request (Union[google.cloud.redis_cluster_v1.types.ListAclPolicyRevisionsRequest, dict]):
+                The request object. Request for ``ListAclPolicyRevisions``.
+            parent (str):
+                Required. The name of the ACL policy to list revisions
+                for. Format:
+                "projects/{project_id}/locations/{location_id}/aclPolicies/{acl_policy_id}"
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.redis_cluster_v1.services.cloud_redis_cluster.pagers.ListAclPolicyRevisionsPager:
+                Response for ListAclPolicyRevisions.
+
+                Iterating over this object will yield results and
+                resolve additional pages automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_redis_cluster.ListAclPolicyRevisionsRequest):
+            request = cloud_redis_cluster.ListAclPolicyRevisionsRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.list_acl_policy_revisions
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__iter__` convenience method.
+        response = pagers.ListAclPolicyRevisionsPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
         )
 
         # Done; return the response.
@@ -1523,6 +2387,150 @@ class CloudRedisClusterClient(metaclass=CloudRedisClusterClientMeta):
             self._transport.operations_client,
             cloud_redis_cluster.Cluster,
             metadata_type=any_pb2.Any,
+        )
+
+        # Done; return the response.
+        return response
+
+    def create_acl_policy(
+        self,
+        request: Optional[
+            Union[cloud_redis_cluster.CreateAclPolicyRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        acl_policy: Optional[cloud_redis_cluster.AclPolicy] = None,
+        acl_policy_id: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> cloud_redis_cluster.AclPolicy:
+        r"""Creates an ACL policy.
+        The creation is executed synchronously and the policy is
+        available for use immediately after the RPC returns.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import redis_cluster_v1
+
+            def sample_create_acl_policy():
+                # Create a client
+                client = redis_cluster_v1.CloudRedisClusterClient()
+
+                # Initialize request argument(s)
+                acl_policy = redis_cluster_v1.AclPolicy()
+                acl_policy.rules.username = "username_value"
+                acl_policy.rules.rule = "rule_value"
+
+                request = redis_cluster_v1.CreateAclPolicyRequest(
+                    parent="parent_value",
+                    acl_policy_id="acl_policy_id_value",
+                    acl_policy=acl_policy,
+                )
+
+                # Make the request
+                response = client.create_acl_policy(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.redis_cluster_v1.types.CreateAclPolicyRequest, dict]):
+                The request object. Request for ``CreateAclPolicy``.
+            parent (str):
+                Required. The resource name of the cluster location
+                using the form:
+                ``projects/{project_id}/locations/{location_id}`` where
+                ``location_id`` refers to a Google Cloud region.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            acl_policy (google.cloud.redis_cluster_v1.types.AclPolicy):
+                Required. The ACL policy that is to
+                be created.
+
+                This corresponds to the ``acl_policy`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            acl_policy_id (str):
+                Required. The logical name of the ACL policy in the
+                customer project with the following restrictions:
+
+                - Must contain only lowercase letters, numbers, and
+                  hyphens.
+                - Must start with a letter.
+                - Must be between 1-63 characters.
+                - Must end with a number or a letter.
+                - Must be unique within the customer project / location
+
+                This corresponds to the ``acl_policy_id`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.redis_cluster_v1.types.AclPolicy:
+                The ACL policy resource.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent, acl_policy, acl_policy_id]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_redis_cluster.CreateAclPolicyRequest):
+            request = cloud_redis_cluster.CreateAclPolicyRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+            if acl_policy is not None:
+                request.acl_policy = acl_policy
+            if acl_policy_id is not None:
+                request.acl_policy_id = acl_policy_id
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.create_acl_policy]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
         )
 
         # Done; return the response.
@@ -2744,6 +3752,1014 @@ class CloudRedisClusterClient(metaclass=CloudRedisClusterClientMeta):
             self._transport.operations_client,
             cloud_redis_cluster.Cluster,
             metadata_type=any_pb2.Any,
+        )
+
+        # Done; return the response.
+        return response
+
+    def list_token_auth_users(
+        self,
+        request: Optional[
+            Union[cloud_redis_cluster.ListTokenAuthUsersRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListTokenAuthUsersPager:
+        r"""Lists all the token auth users for a token based auth
+        enabled cluster.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import redis_cluster_v1
+
+            def sample_list_token_auth_users():
+                # Create a client
+                client = redis_cluster_v1.CloudRedisClusterClient()
+
+                # Initialize request argument(s)
+                request = redis_cluster_v1.ListTokenAuthUsersRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_token_auth_users(request=request)
+
+                # Handle the response
+                for response in page_result:
+                    print(response)
+
+        Args:
+            request (Union[google.cloud.redis_cluster_v1.types.ListTokenAuthUsersRequest, dict]):
+                The request object. Request message for [ListTokenAuthUsers][].
+            parent (str):
+                Required. The parent resource that
+                this token based auth user will be
+                listed for. Format:
+
+                projects/{project}/locations/{location}/clusters/{cluster}
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.redis_cluster_v1.services.cloud_redis_cluster.pagers.ListTokenAuthUsersPager:
+                Response message for [ListTokenAuthUsers][].
+
+                Iterating over this object will yield results and
+                resolve additional pages automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_redis_cluster.ListTokenAuthUsersRequest):
+            request = cloud_redis_cluster.ListTokenAuthUsersRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.list_token_auth_users]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__iter__` convenience method.
+        response = pagers.ListTokenAuthUsersPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def get_token_auth_user(
+        self,
+        request: Optional[
+            Union[cloud_redis_cluster.GetTokenAuthUserRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> cloud_redis_cluster.TokenAuthUser:
+        r"""Gets a specific token auth user for a basic auth
+        enabled cluster.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import redis_cluster_v1
+
+            def sample_get_token_auth_user():
+                # Create a client
+                client = redis_cluster_v1.CloudRedisClusterClient()
+
+                # Initialize request argument(s)
+                request = redis_cluster_v1.GetTokenAuthUserRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.get_token_auth_user(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.redis_cluster_v1.types.GetTokenAuthUserRequest, dict]):
+                The request object. Request message for [GetTokenAuthUser][].
+            name (str):
+                Required. The name of token auth user for a token based
+                auth enabled cluster. Format:
+                projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.redis_cluster_v1.types.TokenAuthUser:
+                Represents a token based auth user
+                for the cluster.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_redis_cluster.GetTokenAuthUserRequest):
+            request = cloud_redis_cluster.GetTokenAuthUserRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.get_token_auth_user]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def list_auth_tokens(
+        self,
+        request: Optional[
+            Union[cloud_redis_cluster.ListAuthTokensRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListAuthTokensPager:
+        r"""Lists all the auth tokens for a specific token auth
+        user.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import redis_cluster_v1
+
+            def sample_list_auth_tokens():
+                # Create a client
+                client = redis_cluster_v1.CloudRedisClusterClient()
+
+                # Initialize request argument(s)
+                request = redis_cluster_v1.ListAuthTokensRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_auth_tokens(request=request)
+
+                # Handle the response
+                for response in page_result:
+                    print(response)
+
+        Args:
+            request (Union[google.cloud.redis_cluster_v1.types.ListAuthTokensRequest, dict]):
+                The request object. Request message for [ListAuthTokens][].
+            parent (str):
+                Required. The parent resource that this auth token will
+                be listed for. Format:
+                projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.redis_cluster_v1.services.cloud_redis_cluster.pagers.ListAuthTokensPager:
+                Response message for [ListAuthTokens][].
+
+                Iterating over this object will yield results and
+                resolve additional pages automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_redis_cluster.ListAuthTokensRequest):
+            request = cloud_redis_cluster.ListAuthTokensRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.list_auth_tokens]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__iter__` convenience method.
+        response = pagers.ListAuthTokensPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def get_auth_token(
+        self,
+        request: Optional[Union[cloud_redis_cluster.GetAuthTokenRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> cloud_redis_cluster.AuthToken:
+        r"""Gets a specific auth token for a specific token auth
+        user.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import redis_cluster_v1
+
+            def sample_get_auth_token():
+                # Create a client
+                client = redis_cluster_v1.CloudRedisClusterClient()
+
+                # Initialize request argument(s)
+                request = redis_cluster_v1.GetAuthTokenRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.get_auth_token(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.redis_cluster_v1.types.GetAuthTokenRequest, dict]):
+                The request object. Request message for [GetAuthToken][].
+            name (str):
+                Required. The name of auth token for a token based auth
+                enabled cluster. Format:
+                projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}/authTokens/{auth_token}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.redis_cluster_v1.types.AuthToken:
+                Auth token for the cluster.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_redis_cluster.GetAuthTokenRequest):
+            request = cloud_redis_cluster.GetAuthTokenRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.get_auth_token]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def add_token_auth_user(
+        self,
+        request: Optional[
+            Union[cloud_redis_cluster.AddTokenAuthUserRequest, dict]
+        ] = None,
+        *,
+        cluster: Optional[str] = None,
+        token_auth_user: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Adds a token auth user for a token based auth enabled
+        cluster.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import redis_cluster_v1
+
+            def sample_add_token_auth_user():
+                # Create a client
+                client = redis_cluster_v1.CloudRedisClusterClient()
+
+                # Initialize request argument(s)
+                request = redis_cluster_v1.AddTokenAuthUserRequest(
+                    cluster="cluster_value",
+                    token_auth_user="token_auth_user_value",
+                )
+
+                # Make the request
+                operation = client.add_token_auth_user(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.redis_cluster_v1.types.AddTokenAuthUserRequest, dict]):
+                The request object. Request message for [AddTokenAuthUser][].
+            cluster (str):
+                Required. The cluster resource that
+                this token auth user will be added for.
+                Format:
+                projects/{project}/locations/{location}/clusters/{cluster}
+
+                This corresponds to the ``cluster`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            token_auth_user (str):
+                Required. The id of the token auth
+                user to add.
+
+                This corresponds to the ``token_auth_user`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.redis_cluster_v1.types.Cluster` A
+                cluster instance.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [cluster, token_auth_user]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_redis_cluster.AddTokenAuthUserRequest):
+            request = cloud_redis_cluster.AddTokenAuthUserRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if cluster is not None:
+                request.cluster = cluster
+            if token_auth_user is not None:
+                request.token_auth_user = token_auth_user
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.add_token_auth_user]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("cluster", request.cluster),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            cloud_redis_cluster.Cluster,
+            metadata_type=cloud_redis_cluster.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def delete_token_auth_user(
+        self,
+        request: Optional[
+            Union[cloud_redis_cluster.DeleteTokenAuthUserRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Deletes a token auth user for a token based auth
+        enabled cluster.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import redis_cluster_v1
+
+            def sample_delete_token_auth_user():
+                # Create a client
+                client = redis_cluster_v1.CloudRedisClusterClient()
+
+                # Initialize request argument(s)
+                request = redis_cluster_v1.DeleteTokenAuthUserRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                operation = client.delete_token_auth_user(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.redis_cluster_v1.types.DeleteTokenAuthUserRequest, dict]):
+                The request object. Request message for [DeleteTokenAuthUser][].
+            name (str):
+                Required. The name of the token auth user to delete.
+                Format:
+                projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.protobuf.empty_pb2.Empty` A generic empty message that you can re-use to avoid defining duplicated
+                   empty messages in your APIs. A typical example is to
+                   use it as the request or the response type of an API
+                   method. For instance:
+
+                      service Foo {
+                         rpc Bar(google.protobuf.Empty) returns
+                         (google.protobuf.Empty);
+
+                      }
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_redis_cluster.DeleteTokenAuthUserRequest):
+            request = cloud_redis_cluster.DeleteTokenAuthUserRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.delete_token_auth_user]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            empty_pb2.Empty,
+            metadata_type=cloud_redis_cluster.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def add_auth_token(
+        self,
+        request: Optional[Union[cloud_redis_cluster.AddAuthTokenRequest, dict]] = None,
+        *,
+        token_auth_user: Optional[str] = None,
+        auth_token: Optional[cloud_redis_cluster.AuthToken] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Adds a auth token for a user of a token based auth
+        enabled cluster.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import redis_cluster_v1
+
+            def sample_add_auth_token():
+                # Create a client
+                client = redis_cluster_v1.CloudRedisClusterClient()
+
+                # Initialize request argument(s)
+                request = redis_cluster_v1.AddAuthTokenRequest(
+                    token_auth_user="token_auth_user_value",
+                )
+
+                # Make the request
+                operation = client.add_auth_token(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.redis_cluster_v1.types.AddAuthTokenRequest, dict]):
+                The request object. Request message for [AddAuthToken][].
+            token_auth_user (str):
+                Required. The name of the token auth user resource that
+                this auth token will be added for. Format:
+                projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}
+
+                This corresponds to the ``token_auth_user`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            auth_token (google.cloud.redis_cluster_v1.types.AuthToken):
+                Required. The auth token to add.
+                This corresponds to the ``auth_token`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.redis_cluster_v1.types.TokenAuthUser`
+                Represents a token based auth user for the cluster.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [token_auth_user, auth_token]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_redis_cluster.AddAuthTokenRequest):
+            request = cloud_redis_cluster.AddAuthTokenRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if token_auth_user is not None:
+                request.token_auth_user = token_auth_user
+            if auth_token is not None:
+                request.auth_token = auth_token
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.add_auth_token]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("token_auth_user", request.token_auth_user),)
+            ),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            cloud_redis_cluster.TokenAuthUser,
+            metadata_type=cloud_redis_cluster.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def delete_auth_token(
+        self,
+        request: Optional[
+            Union[cloud_redis_cluster.DeleteAuthTokenRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Removes a auth token for a user of a token based auth
+        enabled instance.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import redis_cluster_v1
+
+            def sample_delete_auth_token():
+                # Create a client
+                client = redis_cluster_v1.CloudRedisClusterClient()
+
+                # Initialize request argument(s)
+                request = redis_cluster_v1.DeleteAuthTokenRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                operation = client.delete_auth_token(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.redis_cluster_v1.types.DeleteAuthTokenRequest, dict]):
+                The request object. Request message for [DeleteAuthToken][].
+            name (str):
+                Required. The name of the token auth user resource that
+                this auth token will be deleted from. Format:
+                projects/{project}/locations/{location}/clusters/{cluster}/tokenAuthUsers/{token_auth_user}/authTokens/{auth_token}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.protobuf.empty_pb2.Empty` A generic empty message that you can re-use to avoid defining duplicated
+                   empty messages in your APIs. A typical example is to
+                   use it as the request or the response type of an API
+                   method. For instance:
+
+                      service Foo {
+                         rpc Bar(google.protobuf.Empty) returns
+                         (google.protobuf.Empty);
+
+                      }
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, cloud_redis_cluster.DeleteAuthTokenRequest):
+            request = cloud_redis_cluster.DeleteAuthTokenRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.delete_auth_token]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            empty_pb2.Empty,
+            metadata_type=cloud_redis_cluster.OperationMetadata,
         )
 
         # Done; return the response.

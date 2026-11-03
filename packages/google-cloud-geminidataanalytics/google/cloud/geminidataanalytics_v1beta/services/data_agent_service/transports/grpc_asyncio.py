@@ -678,9 +678,7 @@ class DataAgentServiceGrpcAsyncIOTransport(DataAgentServiceTransport):
         r"""Return a callable for the set agent ops observability method over gRPC.
 
         Enables/Disables required GCP services and configures
-        AgentOps observability settings calling the Admin
-        Settings executable node to update the AgentOps
-        Observability feature.
+        AgentOps observability settings.
 
         Returns:
             Callable[[~.SetAgentOpsObservabilityRequest],

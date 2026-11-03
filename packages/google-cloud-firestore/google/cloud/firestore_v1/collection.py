@@ -202,7 +202,7 @@ class CollectionReference(BaseCollectionReference[query_mod.Query]):
         *,
         explain_options: Optional[ExplainOptions] = None,
         read_time: Optional[datetime.datetime] = None,
-    ) -> QueryResultsList[DocumentSnapshot]:
+    ) -> QueryResultsList[DocumentSnapshot[DocumentReference]]:
         """Read the documents in this collection.
 
         This sends a ``RunQuery`` RPC and returns a list of documents
@@ -249,7 +249,7 @@ class CollectionReference(BaseCollectionReference[query_mod.Query]):
         *,
         explain_options: Optional[ExplainOptions] = None,
         read_time: Optional[datetime.datetime] = None,
-    ) -> StreamGenerator[DocumentSnapshot]:
+    ) -> StreamGenerator[DocumentSnapshot[DocumentReference]]:
         """Read the documents in this collection.
 
         This sends a ``RunQuery`` RPC and then returns an iterator which

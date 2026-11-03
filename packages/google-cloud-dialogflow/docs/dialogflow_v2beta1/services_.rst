@@ -5,6 +5,7 @@ Services for Google Cloud Dialogflow v2beta1 API
 
     agents
     answer_records
+    companion_agents
     contexts
     conversation_profiles
     conversations

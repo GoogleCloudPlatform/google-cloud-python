@@ -3,4 +3,4 @@
 # license that can be found in the LICENSE file.
 
 # Original snapshotted version is 0.19.1.
-__version__ = "3.3.3"
+__version__ = "3.4.0"

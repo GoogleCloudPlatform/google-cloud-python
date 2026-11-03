@@ -404,9 +404,10 @@ class Credentials(external_account.Credentials):
                 'The credential is not configured to use mtls requests. The credential should include a "certificate" section in the credential source.'
             )
         else:
-            return _mtls_helper._get_workload_cert_and_key_paths(
+            cert_path, key_path, _ = _mtls_helper._get_workload_cert_and_key_paths(
                 self._certificate_config_location
             )
+            return cert_path, key_path
 
     def _get_cert_bytes(self):
         cert_path, _ = self._get_mtls_cert_and_key_paths()
@@ -572,12 +573,12 @@ class Credentials(external_account.Credentials):
         if self._credential_source_certificate is not None:
             try:
                 cert_bytes = self._get_cert_bytes()
-            except (exceptions.ClientCertError, OSError) as e:
+                cert = _agent_identity_utils.parse_certificate(cert_bytes)
+            except (exceptions.ClientCertError, OSError, ValueError) as e:
                 raise exceptions.RefreshError(
-                    "Failed to retrieve certificate bytes for external"
+                    "Failed to retrieve or parse certificate for external"
                     " account credentials"
                 ) from e
-            cert = _agent_identity_utils.parse_certificate(cert_bytes)
             if _agent_identity_utils.should_request_bound_token(cert):
                 cert_fingerprint = (
                     _agent_identity_utils.calculate_certificate_fingerprint(cert)

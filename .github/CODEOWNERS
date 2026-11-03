@@ -37,7 +37,7 @@
 /packages/google-cloud-firestore/             @googleapis/firestore-team
 /packages/google-cloud-pubsub/                @googleapis/pubsub-team
 /packages/google-cloud-spanner/               @googleapis/spanner-team
-/packages/google-cloud-storage/               @googleapis/gcs-team
+/packages/google-cloud-storage/               @googleapis/gcs-team @googleapis/gcs-fs-team
 /packages/google-resumable-media/             @googleapis/gcs-team @googleapis/bigquery-team @googleapis/bigquery-dataframe-team
 /packages/pandas-gbq/                         @googleapis/bigquery-team @googleapis/bigquery-dataframe-team
 /packages/sqlalchemy-bigquery/                @googleapis/bigquery-team @googleapis/bigquery-dataframe-team

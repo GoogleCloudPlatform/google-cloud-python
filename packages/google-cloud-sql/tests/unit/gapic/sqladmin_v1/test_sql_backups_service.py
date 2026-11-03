@@ -3880,6 +3880,99 @@ def test_parse_backup_path():
     assert expected == actual
 
 
+def test_crypto_key_path():
+    project = "oyster"
+    location = "nudibranch"
+    key_ring = "cuttlefish"
+    crypto_key = "mussel"
+    expected = "projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}".format(
+        project=project,
+        location=location,
+        key_ring=key_ring,
+        crypto_key=crypto_key,
+    )
+    actual = SqlBackupsServiceClient.crypto_key_path(
+        project, location, key_ring, crypto_key
+    )
+    assert expected == actual
+
+
+def test_parse_crypto_key_path():
+    expected = {
+        "project": "winkle",
+        "location": "nautilus",
+        "key_ring": "scallop",
+        "crypto_key": "abalone",
+    }
+    path = SqlBackupsServiceClient.crypto_key_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = SqlBackupsServiceClient.parse_crypto_key_path(path)
+    assert expected == actual
+
+
+def test_crypto_key_version_path():
+    project = "squid"
+    location = "clam"
+    key_ring = "whelk"
+    crypto_key = "octopus"
+    crypto_key_version = "oyster"
+    expected = "projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}/cryptoKeyVersions/{crypto_key_version}".format(
+        project=project,
+        location=location,
+        key_ring=key_ring,
+        crypto_key=crypto_key,
+        crypto_key_version=crypto_key_version,
+    )
+    actual = SqlBackupsServiceClient.crypto_key_version_path(
+        project, location, key_ring, crypto_key, crypto_key_version
+    )
+    assert expected == actual
+
+
+def test_parse_crypto_key_version_path():
+    expected = {
+        "project": "nudibranch",
+        "location": "cuttlefish",
+        "key_ring": "mussel",
+        "crypto_key": "winkle",
+        "crypto_key_version": "nautilus",
+    }
+    path = SqlBackupsServiceClient.crypto_key_version_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = SqlBackupsServiceClient.parse_crypto_key_version_path(path)
+    assert expected == actual
+
+
+def test_network_attachment_path():
+    project = "scallop"
+    region = "abalone"
+    network_attachment = "squid"
+    expected = "projects/{project}/regions/{region}/networkAttachments/{network_attachment}".format(
+        project=project,
+        region=region,
+        network_attachment=network_attachment,
+    )
+    actual = SqlBackupsServiceClient.network_attachment_path(
+        project, region, network_attachment
+    )
+    assert expected == actual
+
+
+def test_parse_network_attachment_path():
+    expected = {
+        "project": "clam",
+        "region": "whelk",
+        "network_attachment": "octopus",
+    }
+    path = SqlBackupsServiceClient.network_attachment_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = SqlBackupsServiceClient.parse_network_attachment_path(path)
+    assert expected == actual
+
+
 def test_service_connection_policy_path():
     project = "oyster"
     region = "nudibranch"

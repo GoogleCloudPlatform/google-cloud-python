@@ -8342,6 +8342,7 @@ def test_create_playbook_rest_call_success(request_type):
                         "webhook": "webhook_value",
                         "return_partial_responses": True,
                         "tag": "tag_value",
+                        "code_block_function": "code_block_function_value",
                         "set_parameter_actions": [
                             {
                                 "parameter": "parameter_value",
@@ -9334,6 +9335,7 @@ def test_update_playbook_rest_call_success(request_type):
                         "webhook": "webhook_value",
                         "return_partial_responses": True,
                         "tag": "tag_value",
+                        "code_block_function": "code_block_function_value",
                         "set_parameter_actions": [
                             {
                                 "parameter": "parameter_value",
@@ -9705,6 +9707,7 @@ def test_create_playbook_version_rest_call_success(request_type):
                             "webhook": "webhook_value",
                             "return_partial_responses": True,
                             "tag": "tag_value",
+                            "code_block_function": "code_block_function_value",
                             "set_parameter_actions": [
                                 {
                                     "parameter": "parameter_value",

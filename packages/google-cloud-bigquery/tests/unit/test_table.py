@@ -2508,15 +2508,20 @@ class Test_EmptyRowIterator(unittest.TestCase):
         else:
             assert not hasattr(df, "crs")
 
-    def test_to_arrow_emits_pending_deprecation_warning(self):
+    def test_to_arrow_does_not_emit_deprecation_warning(self):
         pytest.importorskip("pyarrow")
         row_iterator = self._make_one()
 
-        with pytest.warns(
-            PendingDeprecationWarning,
-            match="Retrieving PyArrow Tables via google-cloud-bigquery is deprecated",
-        ):
+        with warnings.catch_warnings(record=True) as record:
+            warnings.simplefilter("always")
             row_iterator.to_arrow()
+
+        deprecation_warnings = [
+            w
+            for w in record
+            if issubclass(w.category, (PendingDeprecationWarning, DeprecationWarning))
+        ]
+        self.assertEqual(len(deprecation_warnings), 0)
 
     def test_to_dataframe_emits_pending_deprecation_warning(self):
         pytest.importorskip("pandas")
@@ -3302,8 +3307,8 @@ class TestRowIterator(unittest.TestCase):
         self.assertEqual(sports, ["volleyball", "basketball"])
 
         # Expect warning from both the arrow conversion, and the json deserialization.
-        sport_warnings = [w for w in warned if "sport" in str(w.message)]
-        self.assertEqual(len(sport_warnings), 2)
+        self.assertEqual(len(warned), 2)
+        self.assertTrue(all("sport" in str(warning) for warning in warned))
 
     def test_to_arrow_w_empty_table(self):
         pytest.importorskip("numpy")
@@ -5961,15 +5966,20 @@ class TestRowIterator(unittest.TestCase):
 
         self.assertEqual([v.__class__.__name__ for v in df.g], ["Point"])
 
-    def test_to_arrow_emits_pending_deprecation_warning(self):
+    def test_to_arrow_does_not_emit_deprecation_warning(self):
         pytest.importorskip("pyarrow")
         row_iterator = self._make_one_from_data((("name", "STRING"),), (("foo",),))
 
-        with pytest.warns(
-            PendingDeprecationWarning,
-            match="Retrieving PyArrow Tables via google-cloud-bigquery is deprecated",
-        ):
+        with warnings.catch_warnings(record=True) as record:
+            warnings.simplefilter("always")
             row_iterator.to_arrow(create_bqstorage_client=False)
+
+        deprecation_warnings = [
+            w
+            for w in record
+            if issubclass(w.category, (PendingDeprecationWarning, DeprecationWarning))
+        ]
+        self.assertEqual(len(deprecation_warnings), 0)
 
     def test_to_dataframe_emits_pending_deprecation_warning(self):
         pytest.importorskip("pandas")
@@ -5978,13 +5988,8 @@ class TestRowIterator(unittest.TestCase):
         with pytest.warns(
             PendingDeprecationWarning,
             match="Retrieving DataFrames via google-cloud-bigquery is deprecated",
-        ) as record:
+        ):
             row_iterator.to_dataframe(create_bqstorage_client=False)
-
-        arrow_warnings = [
-            w for w in record if "Retrieving PyArrow Tables" in str(w.message)
-        ]
-        self.assertEqual(len(arrow_warnings), 0)
 
     def test_to_geodataframe_does_not_emit_deprecation_warning(self):
         pytest.importorskip("pandas")

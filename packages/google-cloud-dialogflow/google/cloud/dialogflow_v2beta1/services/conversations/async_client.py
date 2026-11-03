@@ -95,6 +95,10 @@ class ConversationsAsyncClient:
     parse_app_path = staticmethod(ConversationsClient.parse_app_path)
     ces_tool_path = staticmethod(ConversationsClient.ces_tool_path)
     parse_ces_tool_path = staticmethod(ConversationsClient.parse_ces_tool_path)
+    companion_agent_path = staticmethod(ConversationsClient.companion_agent_path)
+    parse_companion_agent_path = staticmethod(
+        ConversationsClient.parse_companion_agent_path
+    )
     conversation_path = staticmethod(ConversationsClient.conversation_path)
     parse_conversation_path = staticmethod(ConversationsClient.parse_conversation_path)
     conversation_profile_path = staticmethod(
@@ -1026,7 +1030,6 @@ class ConversationsAsyncClient:
                 # Initialize request argument(s)
                 requests = dialogflow_v2beta1.CreateMessageRequest()
                 requests.parent = "parent_value"
-                requests.message.content = "content_value"
 
                 request = dialogflow_v2beta1.BatchCreateMessagesRequest(
                     parent="parent_value",
@@ -1404,7 +1407,6 @@ class ConversationsAsyncClient:
 
                 # Initialize request argument(s)
                 stateless_conversation = dialogflow_v2beta1.MinimalConversation()
-                stateless_conversation.messages.content = "content_value"
                 stateless_conversation.parent = "parent_value"
 
                 conversation_profile = dialogflow_v2beta1.ConversationProfile()

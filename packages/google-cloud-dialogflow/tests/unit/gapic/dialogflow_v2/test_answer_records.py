@@ -39,9 +39,11 @@ except ImportError:  # pragma: NO COVER
     HAS_GOOGLE_AUTH_AIO = False
 
 import google.auth
+import google.protobuf.any_pb2 as any_pb2  # type: ignore
 import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.struct_pb2 as struct_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
+import google.rpc.status_pb2 as status_pb2  # type: ignore
 from google.api_core import (
     client_options,
     gapic_v1,
@@ -3047,7 +3049,17 @@ def test_update_answer_record_rest_call_success(request_type):
                         "query_text_sentiment": {
                             "score": 0.54,
                             "magnitude": 0.9580000000000001,
-                        }
+                        },
+                        "status": {
+                            "code": 411,
+                            "message": "message_value",
+                            "details": [
+                                {
+                                    "type_url": "type.googleapis.com/google.protobuf.Duration",
+                                    "value": b"\x08\x0c\x10\xdb\x07",
+                                }
+                            ],
+                        },
                     },
                 },
                 "intent_suggestion": {

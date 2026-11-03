@@ -33,6 +33,15 @@ from .cloud_sql_backups import (
     ListBackupsResponse,
     UpdateBackupRequest,
 )
+from .cloud_sql_blue_green_deployments import (
+    BlueGreenDeployment,
+    CreateBlueGreenDeploymentRequest,
+    DeleteBlueGreenDeploymentRequest,
+    GetBlueGreenDeploymentRequest,
+    ListBlueGreenDeploymentsRequest,
+    ListBlueGreenDeploymentsResponse,
+    SwitchoverBlueGreenDeploymentRequest,
+)
 from .cloud_sql_connect import (
     ConnectSettings,
     GenerateEphemeralCertRequest,
@@ -59,6 +68,7 @@ from .cloud_sql_instances import (
     AvailableDatabaseVersion,
     BackupReencryptionConfig,
     BinLogCoordinates,
+    BlueGreenDeploymentInfo,
     CloneContext,
     Column,
     DatabaseInstance,
@@ -223,6 +233,10 @@ from .cloud_sql_resources import (
     SqlUpdateTrack,
     SslCert,
     SslCertDetail,
+    StartWorkloadCaptureContext,
+    StartWorkloadReplayContext,
+    StopWorkloadCaptureContext,
+    StopWorkloadReplayContext,
     SyncFlags,
 )
 from .cloud_sql_ssl_certs import (
@@ -251,6 +265,15 @@ from .cloud_sql_users import (
     UserPasswordValidationPolicy,
     UsersListResponse,
 )
+from .cloud_sql_workload_captures import (
+    SqlWorkloadCapturesListRequest,
+    WorkloadCapture,
+    WorkloadCapturesListResponse,
+    WorkloadCapturesStartReplayRequest,
+    WorkloadCapturesStartRequest,
+    WorkloadCapturesStopReplayRequest,
+    WorkloadCapturesStopRequest,
+)
 
 __all__ = (
     "BackupRun",
@@ -269,6 +292,13 @@ __all__ = (
     "ListBackupsRequest",
     "ListBackupsResponse",
     "UpdateBackupRequest",
+    "BlueGreenDeployment",
+    "CreateBlueGreenDeploymentRequest",
+    "DeleteBlueGreenDeploymentRequest",
+    "GetBlueGreenDeploymentRequest",
+    "ListBlueGreenDeploymentsRequest",
+    "ListBlueGreenDeploymentsResponse",
+    "SwitchoverBlueGreenDeploymentRequest",
     "ConnectSettings",
     "GenerateEphemeralCertRequest",
     "GenerateEphemeralCertResponse",
@@ -288,6 +318,7 @@ __all__ = (
     "AvailableDatabaseVersion",
     "BackupReencryptionConfig",
     "BinLogCoordinates",
+    "BlueGreenDeploymentInfo",
     "CloneContext",
     "Column",
     "DatabaseInstance",
@@ -436,6 +467,10 @@ __all__ = (
     "SqlSubOperationType",
     "SslCert",
     "SslCertDetail",
+    "StartWorkloadCaptureContext",
+    "StartWorkloadReplayContext",
+    "StopWorkloadCaptureContext",
+    "StopWorkloadReplayContext",
     "SyncFlags",
     "AutoDnsStatus",
     "BakType",
@@ -469,4 +504,11 @@ __all__ = (
     "User",
     "UserPasswordValidationPolicy",
     "UsersListResponse",
+    "SqlWorkloadCapturesListRequest",
+    "WorkloadCapture",
+    "WorkloadCapturesListResponse",
+    "WorkloadCapturesStartReplayRequest",
+    "WorkloadCapturesStartRequest",
+    "WorkloadCapturesStopReplayRequest",
+    "WorkloadCapturesStopRequest",
 )

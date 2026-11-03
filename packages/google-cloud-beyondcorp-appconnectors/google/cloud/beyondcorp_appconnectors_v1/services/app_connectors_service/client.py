@@ -84,6 +84,7 @@ from google.cloud.beyondcorp_appconnectors_v1.services.app_connectors_service im
     pagers,
 )
 from google.cloud.beyondcorp_appconnectors_v1.types import (
+    app_connector_instance_config,
     app_connectors_service,
     resource_info,
 )
@@ -147,6 +148,10 @@ class AppConnectorsServiceClient(metaclass=AppConnectorsServiceClientMeta):
 
     The AppConnectorsService provides methods to manage
     (create/read/update/delete) BeyondCorp AppConnectors.
+
+    Deprecated: App Connector is deprecated and creation of new App
+    Connector resources is no longer permitted. Use Security Gateway
+    instead.
     """
 
     # Note: DEFAULT_ENDPOINT is deprecated. Use _DEFAULT_ENDPOINT_TEMPLATE instead.
@@ -698,6 +703,11 @@ class AppConnectorsServiceClient(metaclass=AppConnectorsServiceClientMeta):
                 automatically.
 
         """
+        warnings.warn(
+            "AppConnectorsServiceClient.list_app_connectors is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.
@@ -827,6 +837,11 @@ class AppConnectorsServiceClient(metaclass=AppConnectorsServiceClientMeta):
                 users over the connection.
 
         """
+        warnings.warn(
+            "AppConnectorsServiceClient.get_app_connector is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.
@@ -974,6 +989,11 @@ class AppConnectorsServiceClient(metaclass=AppConnectorsServiceClientMeta):
                    the connection.
 
         """
+        warnings.warn(
+            "AppConnectorsServiceClient.create_app_connector is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.
@@ -1123,6 +1143,11 @@ class AppConnectorsServiceClient(metaclass=AppConnectorsServiceClientMeta):
                    the connection.
 
         """
+        warnings.warn(
+            "AppConnectorsServiceClient.update_app_connector is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.
@@ -1259,6 +1284,11 @@ class AppConnectorsServiceClient(metaclass=AppConnectorsServiceClientMeta):
                       }
 
         """
+        warnings.warn(
+            "AppConnectorsServiceClient.delete_app_connector is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.
@@ -1308,6 +1338,125 @@ class AppConnectorsServiceClient(metaclass=AppConnectorsServiceClientMeta):
             self._transport.operations_client,
             empty_pb2.Empty,
             metadata_type=app_connectors_service.AppConnectorOperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def resolve_instance_config(
+        self,
+        request: Optional[
+            Union[app_connectors_service.ResolveInstanceConfigRequest, dict]
+        ] = None,
+        *,
+        app_connector: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> app_connectors_service.ResolveInstanceConfigResponse:
+        r"""Gets instance configuration for a given AppConnector.
+        An internal method called by a AppConnector to get its
+        container config.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import beyondcorp_appconnectors_v1
+
+            def sample_resolve_instance_config():
+                # Create a client
+                client = beyondcorp_appconnectors_v1.AppConnectorsServiceClient()
+
+                # Initialize request argument(s)
+                request = beyondcorp_appconnectors_v1.ResolveInstanceConfigRequest(
+                    app_connector="app_connector_value",
+                )
+
+                # Make the request
+                response = client.resolve_instance_config(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.beyondcorp_appconnectors_v1.types.ResolveInstanceConfigRequest, dict]):
+                The request object. Request message for
+                BeyondCorp.ResolveInstanceConfig.
+            app_connector (str):
+                Required. BeyondCorp AppConnector name using the form:
+                ``projects/{project_id}/locations/{location_id}/appConnectors/{app_connector}``
+
+                This corresponds to the ``app_connector`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.beyondcorp_appconnectors_v1.types.ResolveInstanceConfigResponse:
+                Response message for
+                BeyondCorp.ResolveInstanceConfig.
+
+        """
+        warnings.warn(
+            "AppConnectorsServiceClient.resolve_instance_config is deprecated",
+            DeprecationWarning,
+        )
+
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [app_connector]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, app_connectors_service.ResolveInstanceConfigRequest):
+            request = app_connectors_service.ResolveInstanceConfigRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if app_connector is not None:
+                request.app_connector = app_connector
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.resolve_instance_config]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("app_connector", request.app_connector),)
+            ),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
         )
 
         # Done; return the response.
@@ -1399,6 +1548,10 @@ class AppConnectorsServiceClient(metaclass=AppConnectorsServiceClientMeta):
                    the connection.
 
         """
+        warnings.warn(
+            "AppConnectorsServiceClient.report_status is deprecated", DeprecationWarning
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.

@@ -22,7 +22,7 @@ while the helper classes provide additional functionality and context for the me
 import os
 import re
 from datetime import datetime
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Tuple
 
 from grpc import StatusCode
 
@@ -38,6 +38,7 @@ from .constants import (
     MONITORED_RES_LABEL_KEY_INSTANCE_CONFIG,
     MONITORED_RES_LABEL_KEY_LOCATION,
     MONITORED_RES_LABEL_KEY_PROJECT,
+    _safe_decode_utf8,
 )
 
 try:
@@ -46,6 +47,79 @@ try:
     HAS_OPENTELEMETRY_INSTALLED = True
 except ImportError:  # pragma: NO COVER
     HAS_OPENTELEMETRY_INSTALLED = False
+
+_GFE_TIMING_PATTERN = re.compile(r"(?<![a-zA-Z0-9_-])gfet4t7;\s*dur=([0-9.]+)")
+_AFE_TIMING_PATTERN = re.compile(r"(?<![a-zA-Z0-9_-])afe;\s*dur=([0-9.]+)")
+_SERVER_TIMING_HEADER_STR = "server-timing"
+_SERVER_TIMING_HEADER_BYTES = b"server-timing"
+
+
+def _extract_metric_latency(pattern: re.Pattern, text: str) -> Optional[int]:
+    """Search for the pattern in text and parse the captured latency to int."""
+    match = pattern.search(text)
+    if match:
+        try:
+            return int(float(match.group(1)))
+        except (ValueError, OverflowError):
+            pass
+    return None
+
+
+class _ObservableDict(dict):
+    """A dictionary that invokes an invalidation callback upon modification."""
+
+    def __init__(self, *args, on_change=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._on_change = on_change
+
+    def __setitem__(self, key, value):
+        super().__setitem__(key, value)
+        if self._on_change is not None:
+            self._on_change()
+
+    def __delitem__(self, key):
+        super().__delitem__(key)
+        if self._on_change is not None:
+            self._on_change()
+
+    def update(self, *args, **kwargs):
+        super().update(*args, **kwargs)
+        if self._on_change is not None:
+            self._on_change()
+
+    def clear(self):
+        super().clear()
+        if self._on_change is not None:
+            self._on_change()
+
+    def pop(self, *args, **kwargs):
+        result = super().pop(*args, **kwargs)
+        if self._on_change is not None:
+            self._on_change()
+        return result
+
+    def popitem(self):
+        result = super().popitem()
+        if self._on_change is not None:
+            self._on_change()
+        return result
+
+    def setdefault(self, key, default=None):
+        if key not in self:
+            result = super().setdefault(key, default)
+            if self._on_change is not None:
+                self._on_change()
+            return result
+        return super().setdefault(key, default)
+
+    def copy(self):
+        return dict(self)
+
+    def __ior__(self, other):
+        super().__ior__(other)
+        if self._on_change is not None:
+            self._on_change()
+        return self
 
 
 class MetricAttemptTracer:
@@ -225,7 +299,10 @@ class MetricsTracer:
             instrument_afe_connectivity_error_count (Counter): Instrument for counting AFE connectivity errors.
         """
         self.current_op = MetricOpTracer()
-        self._client_attributes = client_attributes
+        self._client_attributes = _ObservableDict(
+            client_attributes or {},
+            on_change=self._invalidate_attribute_cache,
+        )
         self._instrument_attempt_latency = instrument_attempt_latency
         self._instrument_attempt_counter = instrument_attempt_counter
         self._instrument_operation_latency = instrument_operation_latency
@@ -242,6 +319,19 @@ class MetricsTracer:
         self.afe_server_timing_enabled = (
             os.environ.get("SPANNER_DISABLE_AFE_SERVER_TIMING", "").lower() != "true"
         )
+        self._cached_attempt_attributes: Optional[dict] = None
+        self._cached_attempt_status: Optional[str] = None
+        self._cached_attempt: Optional[MetricAttemptTracer] = None
+        self._cached_operation_attributes: Optional[dict] = None
+        self._cached_operation_status: Optional[str] = None
+
+    def _invalidate_attribute_cache(self) -> None:
+        """Invalidates cached attribute dictionaries when client attributes are modified."""
+        self._cached_attempt_attributes = None
+        self._cached_attempt_status = None
+        self._cached_attempt = None
+        self._cached_operation_attributes = None
+        self._cached_operation_status = None
 
     @staticmethod
     def _get_ms_time_diff(start: datetime, end: datetime) -> float:
@@ -272,7 +362,7 @@ class MetricsTracer:
         These attributes are used to provide context to the metrics being traced.
 
         Returns:
-            dict[str, str]: A dictionary of client attributes.
+            Dict[str, str]: A dictionary of client attributes.
         """
         return self._client_attributes
 
@@ -478,69 +568,58 @@ class MetricsTracer:
     @staticmethod
     def extract_front_end_latencies(
         metadata: Any,
-    ) -> tuple[Optional[int], Optional[int]]:
-        """
-        Extracts both GFE and AFE latency values (in milliseconds) from response metadata.
+    ) -> Tuple[Optional[int], Optional[int]]:
+        """Extracts both GFE and AFE latency values (in milliseconds) from response metadata.
+
+        :type metadata: Any
+        :param metadata: The metadata sequence or dict from the RPC response.
+
+        :rtype: Tuple[Optional[int], Optional[int]]
+        :return: A tuple containing (gfe_latency, afe_latency) in milliseconds, or None if not found.
         """
         if not metadata:
             return None, None
 
         if isinstance(metadata, dict):
             items = metadata.items()
-        elif isinstance(metadata, (list, tuple)):
-            items = [
-                item
-                for item in metadata
-                if isinstance(item, (list, tuple)) and len(item) == 2
-            ]
         else:
-            items = []
-
-        header_vals = []
-        for key, val in items:
-            key_str = key.decode("utf-8") if isinstance(key, bytes) else str(key)
-            if key_str and key_str.lower() == "server-timing":
-                if isinstance(val, (list, tuple)):
-                    header_vals.extend(val)
-                else:
-                    header_vals.append(val)
+            try:
+                items = iter(metadata)
+            except TypeError:
+                return None, None
 
         gfe_latency = None
         afe_latency = None
 
-        for header_val in header_vals:
-            if not header_val:
+        for item in items:
+            if not (isinstance(item, (list, tuple)) and len(item) == 2):
                 continue
-            if isinstance(header_val, bytes):
-                try:
-                    header_val = header_val.decode("utf-8")
-                except Exception:
-                    header_val = str(header_val)
-            elif not isinstance(header_val, str):
-                header_val = str(header_val)
+            key, value = item
+            is_server_timing = (
+                isinstance(key, str) and key.lower() == _SERVER_TIMING_HEADER_STR
+            ) or (isinstance(key, bytes) and key.lower() == _SERVER_TIMING_HEADER_BYTES)
+            if not is_server_timing:
+                continue
 
-            if gfe_latency is None:
-                match = re.search(r"gfet4t7;\s*dur=([0-9.]+)", header_val)
-                if match:
-                    try:
-                        gfe_latency = int(float(match.group(1)))
-                    except ValueError:
-                        pass
+            timing_values = value if isinstance(value, (list, tuple)) else (value,)
+            for timing_value in timing_values:
+                if not timing_value:
+                    continue
+                text = _safe_decode_utf8(timing_value)
 
-            if afe_latency is None:
-                match = re.search(r"afe;\s*dur=([0-9.]+)", header_val)
-                if match:
-                    try:
-                        afe_latency = int(float(match.group(1)))
-                    except ValueError:
-                        pass
+                if gfe_latency is None and "gfet4t7" in text:
+                    gfe_latency = _extract_metric_latency(_GFE_TIMING_PATTERN, text)
+
+                if afe_latency is None and "afe" in text:
+                    afe_latency = _extract_metric_latency(_AFE_TIMING_PATTERN, text)
+
+                if gfe_latency is not None and afe_latency is not None:
+                    return gfe_latency, afe_latency
 
         return gfe_latency, afe_latency
 
     def record_front_end_metrics(self, metadata: Any) -> None:
-        """
-        Extracts and records both GFE and AFE metrics from the RPC response metadata.
-        """
+        """Extracts and records both GFE and AFE metrics from the RPC response metadata."""
         if not self.enabled or not HAS_OPENTELEMETRY_INSTALLED:
             return
         gfe_latency, afe_latency = self.extract_front_end_latencies(metadata)
@@ -556,36 +635,77 @@ class MetricsTracer:
             self.record_afe_connectivity_error_count()
 
     def _create_operation_otel_attributes(self) -> dict:
-        """
-        Create additional attributes for operation metrics tracing.
+        """Create additional attributes for operation metrics tracing.
 
         This method populates the client attributes dictionary with the operation status if metrics tracing is enabled.
-        It returns the updated client attributes dictionary.
+        It returns the updated client attributes dictionary (returned by reference from internal cache for performance;
+        should be treated as read-only by callers).
         """
         if not self.enabled or not HAS_OPENTELEMETRY_INSTALLED:
             return {}
+        status = self.current_op.status
+        if (
+            self._cached_operation_attributes is not None
+            and self._cached_operation_status == status
+        ):
+            return self._cached_operation_attributes
+
         attributes = self._client_attributes.copy()
-        attributes[METRIC_LABEL_KEY_STATUS] = self.current_op.status
+        attributes[METRIC_LABEL_KEY_STATUS] = status
+        self._cached_operation_attributes = attributes
+        self._cached_operation_status = status
         return attributes
 
     def _create_attempt_otel_attributes(self) -> dict:
-        """
-        Create additional attributes for attempt metrics tracing.
+        """Create additional attributes for attempt metrics tracing.
 
         This method populates the attributes dictionary with the attempt status if metrics tracing is enabled and an attempt exists.
-        It returns the updated attributes dictionary.
+        It returns the updated attributes dictionary (returned by reference from internal cache for performance;
+        should be treated as read-only by callers).
         """
         if not self.enabled or not HAS_OPENTELEMETRY_INSTALLED:
             return {}
 
-        attributes = self._client_attributes.copy()
-
+        current_attempt = self.current_op.current_attempt
         # Short circuit out if we don't have an attempt
-        if self.current_op.current_attempt is None:
-            return attributes
+        if current_attempt is None:
+            return self._client_attributes.copy()
 
-        attributes[METRIC_LABEL_KEY_STATUS] = self.current_op.current_attempt.status
+        status = current_attempt.status
+        if (
+            self._cached_attempt_attributes is not None
+            and self._cached_attempt_status == status
+            and self._cached_attempt is current_attempt
+        ):
+            return self._cached_attempt_attributes
+
+        attributes = self._client_attributes.copy()
+        attributes[METRIC_LABEL_KEY_STATUS] = status
+        self._cached_attempt_attributes = attributes
+        self._cached_attempt_status = status
+        self._cached_attempt = current_attempt
         return attributes
+
+    def set_resource_info(
+        self, resource_info: Optional[Dict[str, str]]
+    ) -> "MetricsTracer":
+        """Set resource attributes (project, instance, database) for metrics tracing.
+
+        :param resource_info: A dictionary containing project, instance, and database information.
+        :return: This instance of MetricsTracer for method chaining.
+        """
+        if resource_info:
+            client_attributes = self._client_attributes
+            project = resource_info.get("project")
+            if project and MONITORED_RES_LABEL_KEY_PROJECT not in client_attributes:
+                client_attributes[MONITORED_RES_LABEL_KEY_PROJECT] = project
+            instance = resource_info.get("instance")
+            if instance and MONITORED_RES_LABEL_KEY_INSTANCE not in client_attributes:
+                client_attributes[MONITORED_RES_LABEL_KEY_INSTANCE] = instance
+            database = resource_info.get("database")
+            if database and METRIC_LABEL_KEY_DATABASE not in client_attributes:
+                client_attributes[METRIC_LABEL_KEY_DATABASE] = database
+        return self
 
     def set_project(self, project: str) -> "MetricsTracer":
         """
@@ -712,7 +832,7 @@ class MetricsTracer:
         :return: This instance of MetricsTracer for method chaining.
         """
         if METRIC_LABEL_KEY_METHOD not in self._client_attributes:
-            self.client_attributes[METRIC_LABEL_KEY_METHOD] = method
+            self._client_attributes[METRIC_LABEL_KEY_METHOD] = method
         return self
 
     def enable_direct_path(self, enable: bool = False) -> "MetricsTracer":

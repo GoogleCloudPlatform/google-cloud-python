@@ -470,7 +470,7 @@ class TestDatabaseExtra(unittest.IsolatedAsyncioTestCase):
         # coverage for line 1603, 1655
         db = Database("db", self.instance)
         await db._pool.bind(db)
-        batch = db.batch()
+        _ = db.batch()
 
         mock_session = mock.MagicMock()
         mock_session.name = "projects/p/instances/i/databases/db/sessions/s"
@@ -511,3 +511,35 @@ class TestDatabaseExtra(unittest.IsolatedAsyncioTestCase):
 
         sc = SnapshotCheckout(db)
         _ = sc._resource_info  # line 1655
+
+    def test_resource_info(self):
+        db = Database("db", self.instance)
+        res_info = db._resource_info
+        self.assertEqual(res_info["database"], "db")
+        self.assertEqual(res_info["project"], self.instance._client.project)
+        self.assertEqual(res_info["instance"], "i")
+        self.assertIsNotNone(getattr(res_info, "_client_attributes", None))
+        self.assertEqual(res_info._client_attributes["database"], "db")
+        self.assertEqual(
+            res_info._client_attributes["project_id"], self.instance._client.project
+        )
+        self.assertEqual(res_info._client_attributes["instance_id"], "i")
+        # Caching check: second access returns identical instance
+        self.assertIs(db._resource_info, res_info)
+
+    def test_resource_info_fallback_on_exception(self):
+        db = Database("db", self.instance)
+        from google.cloud.spanner_v1.metrics.metrics_tracer_factory import (
+            MetricsTracerFactory,
+        )
+
+        with mock.patch.object(
+            MetricsTracerFactory,
+            "create_resource_info",
+            side_effect=RuntimeError("Boom"),
+        ):
+            res_info = db._resource_info
+            self.assertEqual(res_info["database"], "db")
+            self.assertEqual(res_info["project"], self.instance._client.project)
+            self.assertEqual(res_info["instance"], "i")
+            self.assertIsNone(getattr(res_info, "_client_attributes", None))

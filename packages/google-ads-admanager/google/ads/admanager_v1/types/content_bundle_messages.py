@@ -53,7 +53,7 @@ class ContentBundle(proto.Message):
             Output only. The ContentBundleStatus of the
             [ContentBundle][google.ads.admanager.v1.ContentBundle]. This
             attribute is read-only and defaults to
-            [ContentBundleStatus.INACTIVE][].
+            [ContentBundleStatusEnum.ContentBundleStatus.INACTIVE][google.ads.admanager.v1.ContentBundleStatusEnum.ContentBundleStatus.INACTIVE].
         update_time (google.protobuf.timestamp_pb2.Timestamp):
             Output only. The time the ``ContentBundle`` was last
             modified.

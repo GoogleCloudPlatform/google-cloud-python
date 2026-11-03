@@ -1033,3 +1033,414 @@ def test_apply_channel_interceptors_invalid_type_raises():
     mock_base_channel = mock.Mock(name="base_channel")
     with pytest.raises(TypeError, match="Expected ClientInterceptor or Callable"):
         grpc_helpers.apply_channel_interceptors(mock_base_channel, [12345])
+
+
+@pytest.mark.parametrize(
+    "env_value,attempt_interconnect,expected_result",
+    [
+        ("false", True, True),
+        ("FALSE", True, True),
+        ("0", True, True),
+        ("true", False, False),
+        ("TRUE", False, False),
+        ("1", False, False),
+        ("true", None, True),
+        ("TRUE", None, True),
+        (" True ", None, True),
+        ("1", None, True),
+        ("yes", None, True),
+        ("on", None, True),
+        ("false", None, False),
+        ("FALSE", None, False),
+        (" False ", None, False),
+        ("0", None, False),
+        ("no", None, False),
+        ("off", None, False),
+        (None, True, True),
+        (None, False, False),
+        (None, None, False),
+    ],
+)
+def test__resolve_direct_path_interconnect(
+    monkeypatch, env_value, attempt_interconnect, expected_result
+):
+    if env_value is None:
+        monkeypatch.delenv(grpc_helpers._DIRECT_PATH_INTERCONNECT_ENV, raising=False)
+    else:
+        monkeypatch.setenv(grpc_helpers._DIRECT_PATH_INTERCONNECT_ENV, env_value)
+    assert (
+        grpc_helpers._resolve_direct_path_interconnect(attempt_interconnect)
+        is expected_result
+    )
+
+
+@pytest.mark.parametrize("invalid_env_value", ["invalid", "   ", ""])
+def test__resolve_direct_path_interconnect_invalid_raises(
+    monkeypatch, invalid_env_value
+):
+    monkeypatch.setenv(grpc_helpers._DIRECT_PATH_INTERCONNECT_ENV, invalid_env_value)
+    with pytest.raises(
+        ValueError,
+        match=f"Invalid value for {grpc_helpers._DIRECT_PATH_INTERCONNECT_ENV}",
+    ):
+        grpc_helpers._resolve_direct_path_interconnect(None)
+
+
+@pytest.mark.parametrize(
+    "target,expected_host",
+    [
+        ("storage-direct.googleapis.com:443", "storage-direct.googleapis.com"),
+        ("dns:///storage-direct.googleapis.com:443", "storage-direct.googleapis.com"),
+        (
+            "https://storage-direct.googleapis.com:443/v1",
+            "storage-direct.googleapis.com",
+        ),
+        (
+            "http://storage-direct.googleapis.com:443/v1",
+            "storage-direct.googleapis.com",
+        ),
+        (
+            "google-c2p:///storage-direct.googleapis.com?force-xds",
+            "storage-direct.googleapis.com",
+        ),
+        ("[::1]:8080", "::1"),
+        ("[invalid_ipv6", "[invalid_ipv6"),
+        ("", ""),
+    ],
+)
+def test__extract_target_host(target, expected_host):
+    assert grpc_helpers._extract_target_host(target) == expected_host
+
+
+@pytest.mark.parametrize(
+    "target,attempt_interconnect,expected_target",
+    [
+        (
+            "storage-direct.googleapis.com:443",
+            True,
+            "google-c2p:///storage-direct.googleapis.com?force-xds",
+        ),
+        (
+            "dns:///storage-direct.googleapis.com:443",
+            True,
+            "google-c2p:///storage-direct.googleapis.com?force-xds",
+        ),
+        (
+            "https://storage-direct.googleapis.com:443",
+            True,
+            "google-c2p:///storage-direct.googleapis.com?force-xds",
+        ),
+        (
+            "http://storage-direct.googleapis.com:443/v1",
+            True,
+            "google-c2p:///storage-direct.googleapis.com?force-xds",
+        ),
+        (
+            "google-c2p:///storage-direct.googleapis.com",
+            True,
+            "google-c2p:///storage-direct.googleapis.com?force-xds",
+        ),
+        (
+            "google-c2p:///storage-direct.googleapis.com?force-xds",
+            True,
+            "google-c2p:///storage-direct.googleapis.com?force-xds",
+        ),
+        (
+            "google-c2p:///storage-direct.googleapis.com?force-xds",
+            False,
+            "google-c2p:///storage-direct.googleapis.com?force-xds",
+        ),
+        (
+            "storage-direct.googleapis.com:443?foo=bar",
+            True,
+            "google-c2p:///storage-direct.googleapis.com?foo=bar&force-xds",
+        ),
+    ],
+)
+def test__modify_target_for_direct_path_interconnect(
+    target, attempt_interconnect, expected_target
+):
+    actual = grpc_helpers._modify_target_for_direct_path(
+        target,
+        attempt_direct_path_xds_over_interconnect=attempt_interconnect,
+    )
+    assert actual == expected_target
+
+
+@mock.patch("grpc.ssl_channel_credentials")
+@mock.patch("grpc.composite_channel_credentials")
+@mock.patch(
+    "google.auth.default",
+    autospec=True,
+    return_value=(mock.sentinel.credentials, mock.sentinel.project),
+)
+@mock.patch("grpc.secure_channel")
+def test_create_channel_attempt_direct_path_xds_over_interconnect_default_ssl(
+    grpc_secure_channel,
+    google_auth_default,
+    composite_creds_call,
+    ssl_creds_call,
+):
+    composite_creds = composite_creds_call.return_value
+    default_ssl_creds = ssl_creds_call.return_value
+
+    channel = grpc_helpers.create_channel(
+        "storage-direct.googleapis.com:443",
+        attempt_direct_path=True,
+        attempt_direct_path_xds_over_interconnect=True,
+    )
+
+    assert channel is grpc_secure_channel.return_value
+    ssl_creds_call.assert_called_once_with()
+    assert composite_creds_call.call_args.args[0] is default_ssl_creds
+    grpc_secure_channel.assert_called_once_with(
+        "google-c2p:///storage-direct.googleapis.com?force-xds",
+        composite_creds,
+        compression=None,
+        options=(("grpc.default_authority", "storage.googleapis.com"),),
+    )
+
+
+@mock.patch("grpc.composite_channel_credentials")
+@mock.patch(
+    "google.auth.default",
+    autospec=True,
+    return_value=(mock.sentinel.credentials, mock.sentinel.project),
+)
+@mock.patch("grpc.secure_channel")
+def test_create_channel_attempt_direct_path_xds_over_interconnect_custom_ssl(
+    grpc_secure_channel,
+    google_auth_default,
+    composite_creds_call,
+):
+    composite_creds = composite_creds_call.return_value
+    custom_ssl_creds = mock.sentinel.custom_ssl_creds
+
+    channel = grpc_helpers.create_channel(
+        "storage-direct.googleapis.com:443",
+        ssl_credentials=custom_ssl_creds,
+        attempt_direct_path=True,
+        attempt_direct_path_xds_over_interconnect=True,
+    )
+
+    assert channel is grpc_secure_channel.return_value
+    assert composite_creds_call.call_args.args[0] is custom_ssl_creds
+    grpc_secure_channel.assert_called_once_with(
+        "google-c2p:///storage-direct.googleapis.com?force-xds",
+        composite_creds,
+        compression=None,
+        options=(("grpc.default_authority", "storage.googleapis.com"),),
+    )
+
+
+@mock.patch("grpc.compute_engine_channel_credentials")
+@mock.patch(
+    "google.auth.default",
+    autospec=True,
+    return_value=(mock.sentinel.credentials, mock.sentinel.project),
+)
+@mock.patch("grpc.secure_channel")
+def test_create_channel_interconnect_fallback_rewrites_direct_host(
+    grpc_secure_channel,
+    google_auth_default,
+    composite_creds_call,
+):
+    composite_creds = composite_creds_call.return_value
+
+    channel = grpc_helpers.create_channel(
+        "storage-direct.googleapis.com:443",
+        attempt_direct_path=False,
+        attempt_direct_path_xds_over_interconnect=False,
+    )
+
+    assert channel is grpc_secure_channel.return_value
+    grpc_secure_channel.assert_called_once_with(
+        "storage.googleapis.com:443",
+        composite_creds,
+        compression=None,
+    )
+
+
+@mock.patch("grpc.compute_engine_channel_credentials")
+@mock.patch(
+    "google.auth.default",
+    autospec=True,
+    return_value=(mock.sentinel.credentials, mock.sentinel.project),
+)
+@mock.patch("grpc.secure_channel")
+def test_create_channel_interconnect_fallback_preserves_non_google_direct_host(
+    grpc_secure_channel,
+    google_auth_default,
+    composite_creds_call,
+):
+    composite_creds = composite_creds_call.return_value
+
+    channel = grpc_helpers.create_channel(
+        "my-direct.example.com:443",
+        attempt_direct_path=False,
+        attempt_direct_path_xds_over_interconnect=False,
+    )
+
+    assert channel is grpc_secure_channel.return_value
+    grpc_secure_channel.assert_called_once_with(
+        "my-direct.example.com:443",
+        composite_creds,
+        compression=None,
+    )
+
+    channel2 = grpc_helpers.create_channel(
+        "storage-direct.googleapis.com.example.com:443",
+        attempt_direct_path=False,
+        attempt_direct_path_xds_over_interconnect=False,
+    )
+    assert channel2 is grpc_secure_channel.return_value
+    grpc_secure_channel.assert_called_with(
+        "storage-direct.googleapis.com.example.com:443",
+        composite_creds,
+        compression=None,
+    )
+
+
+@pytest.mark.parametrize(
+    "target,expected_authority",
+    [
+        ("storage-direct.googleapis.com:443", "storage.googleapis.com"),
+        ("dns:///storage-direct.googleapis.com:443", "storage.googleapis.com"),
+        (
+            "google-c2p:///storage-direct.googleapis.com?force-xds",
+            "storage.googleapis.com",
+        ),
+        ("storage.googleapis.com:443", None),
+        ("my-direct.example.com:443", None),
+        ("storage-direct.googleapis.com.example.com:443", None),
+        ("-direct.googleapis.com:443", None),
+    ],
+)
+def test__extract_direct_path_authority(target, expected_authority):
+    assert grpc_helpers._extract_direct_path_authority(target) == expected_authority
+
+
+@mock.patch("grpc.ssl_channel_credentials")
+@mock.patch("grpc.composite_channel_credentials")
+@mock.patch(
+    "google.auth.default",
+    autospec=True,
+    return_value=(mock.sentinel.credentials, mock.sentinel.project),
+)
+@mock.patch("grpc.secure_channel")
+def test_create_channel_interconnect_authority_branches(
+    grpc_secure_channel,
+    google_auth_default,
+    composite_creds_call,
+    ssl_creds_call,
+):
+    composite_creds = composite_creds_call.return_value
+
+    # Authority is None (target does not contain -direct.googleapis.com)
+    grpc_helpers.create_channel(
+        "storage.googleapis.com:443",
+        attempt_direct_path_xds_over_interconnect=True,
+    )
+    grpc_secure_channel.assert_called_with(
+        "google-c2p:///storage.googleapis.com?force-xds",
+        composite_creds,
+        compression=None,
+    )
+
+    # Authority exists, but grpc.default_authority is already provided
+    custom_options_default = (("grpc.default_authority", "custom.googleapis.com"),)
+    grpc_helpers.create_channel(
+        "storage-direct.googleapis.com:443",
+        attempt_direct_path_xds_over_interconnect=True,
+        options=custom_options_default,
+    )
+    grpc_secure_channel.assert_called_with(
+        "google-c2p:///storage-direct.googleapis.com?force-xds",
+        composite_creds,
+        compression=None,
+        options=custom_options_default,
+    )
+
+    # Authority exists, but grpc.ssl_target_name_override is already provided
+    custom_options_ssl = (("grpc.ssl_target_name_override", "custom.googleapis.com"),)
+    grpc_helpers.create_channel(
+        "storage-direct.googleapis.com:443",
+        attempt_direct_path_xds_over_interconnect=True,
+        options=custom_options_ssl,
+    )
+    grpc_secure_channel.assert_called_with(
+        "google-c2p:///storage-direct.googleapis.com?force-xds",
+        composite_creds,
+        compression=None,
+        options=custom_options_ssl,
+    )
+
+
+@mock.patch("grpc.ssl_channel_credentials")
+@mock.patch("grpc.composite_channel_credentials")
+@mock.patch("grpc.compute_engine_channel_credentials")
+@mock.patch(
+    "google.auth.default",
+    autospec=True,
+    return_value=(mock.sentinel.credentials, mock.sentinel.project),
+)
+@mock.patch("grpc.secure_channel")
+def test_create_channel_interconnect_gated_by_attempt_direct_path(
+    grpc_secure_channel,
+    google_auth_default,
+    compute_engine_creds_call,
+    composite_creds_call,
+    ssl_creds_call,
+    monkeypatch,
+):
+    monkeypatch.setenv(grpc_helpers._DIRECT_PATH_INTERCONNECT_ENV, "true")
+    composite_creds = composite_creds_call.return_value
+    compute_creds = compute_engine_creds_call.return_value
+
+    # When attempt_direct_path is False (default), env var override is ignored
+    grpc_helpers.create_channel(
+        "storage-direct.googleapis.com:443",
+        attempt_direct_path=False,
+    )
+    # Target rewrites to standard fallback host instead of C2P
+    grpc_secure_channel.assert_called_with(
+        "storage.googleapis.com:443",
+        compute_creds,
+        compression=None,
+    )
+
+    # When attempt_direct_path is True, env var override activates DirectPath Interconnect
+    grpc_helpers.create_channel(
+        "storage-direct.googleapis.com:443",
+        attempt_direct_path=True,
+    )
+    grpc_secure_channel.assert_called_with(
+        "google-c2p:///storage-direct.googleapis.com?force-xds",
+        composite_creds,
+        compression=None,
+        options=(("grpc.default_authority", "storage.googleapis.com"),),
+    )
+
+    # When attempt_direct_path_xds_over_interconnect is True explicitly, Interconnect activates
+    grpc_helpers.create_channel(
+        "storage-direct.googleapis.com:443",
+        attempt_direct_path=False,
+        attempt_direct_path_xds_over_interconnect=True,
+    )
+    grpc_secure_channel.assert_called_with(
+        "google-c2p:///storage-direct.googleapis.com?force-xds",
+        composite_creds,
+        compression=None,
+        options=(("grpc.default_authority", "storage.googleapis.com"),),
+    )
+
+    # When target already starts with google-c2p:/// and attempt_direct_path=False, preserve target
+    grpc_helpers.create_channel(
+        "google-c2p:///storage-direct.googleapis.com",
+        attempt_direct_path=False,
+    )
+    grpc_secure_channel.assert_called_with(
+        "google-c2p:///storage-direct.googleapis.com",
+        compute_creds,
+        compression=None,
+    )

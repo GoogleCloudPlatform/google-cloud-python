@@ -57,7 +57,7 @@ SYSTEM_TEST_STANDARD_DEPENDENCIES: List[str] = [
     "google-cloud-testutils",
 ]
 SYSTEM_TEST_EXTERNAL_DEPENDENCIES: List[str] = [
-    "pytest-asyncio==0.21.2",
+    "pytest-asyncio>=0.26.0",
     "pytest-order==1.3.0",
     RUFF_VERSION,
     "pyyaml==6.0.2",
@@ -328,18 +328,19 @@ def system_emulated(session):
         os.killpg(os.getpgid(p.pid), signal.SIGKILL)
 
 
-# Run the system/emulator tests
+# Run the system/emulator/samples tests
 @nox.session(py="3.12")
 @nox.parametrize(
     "test_type",
-    ["system_default", "system_emulated"],
+    ["system_default", "system_emulated", "samples"],
 )
 def system(session, test_type):
-    """Run the system/emulator tests."""
-    # system and emulator tests
+    """Run the system/emulator/samples tests."""
+    # system, emulator, and sample tests
     test_map = {
         "system_default": system_default,
         "system_emulated": system_emulated,
+        "samples": samples,
     }
     test_map[test_type](session)
 
@@ -384,6 +385,39 @@ def system_default(session):
             system_test_folder_path,
             *session.posargs,
         )
+
+
+@nox.session(python=DEFAULT_PYTHON_VERSION)
+def samples(session):
+    """Run the sample test suite."""
+    req_files = [
+        str(p.relative_to(CURRENT_DIRECTORY))
+        for p in sorted(CURRENT_DIRECTORY.glob("samples/**/requirements.txt"))
+        if "beam" not in p.parts
+    ]
+    req_args = [arg for req_file in req_files for arg in ("-r", req_file)]
+    session.install(
+        "google-cloud-testutils",
+        "mock",
+        "pytest",
+        "pytest-asyncio",
+        *req_args,
+    )
+    # Install the library from this checkout last so the samples exercise the
+    # code at HEAD rather than a released version. The samples' requirements.txt
+    # files intentionally leave google-cloud-bigtable unpinned for this reason.
+    session.install("-e", ".")
+
+    has_target = any(not arg.startswith("-") for arg in session.posargs)
+    target_paths = [] if has_target else [os.path.join("samples")]
+    session.run(
+        "py.test",
+        "--quiet",
+        f"--junitxml=samples_{session.python}_sponge_log.xml",
+        "--ignore=samples/legacy_client/beam",
+        *target_paths,
+        *session.posargs,
+    )
 
 
 @nox.session(python=DEFAULT_PYTHON_VERSION)

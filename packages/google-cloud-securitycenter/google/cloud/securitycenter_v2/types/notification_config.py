@@ -67,6 +67,12 @@ class NotificationConfig(proto.Message):
         update_time (google.protobuf.timestamp_pb2.Timestamp):
             Output only. The timestamp of when the
             notification config was last updated.
+        deletion_notifications_enabled (bool):
+            Optional. Indicates whether the notifications
+            will be sent for deleted findings. When enabled,
+            the filter defined in the streaming config is
+            still respected when sending deletion
+            notifications.
     """
 
     class StreamingConfig(proto.Message):
@@ -131,6 +137,10 @@ class NotificationConfig(proto.Message):
         proto.MESSAGE,
         number=7,
         message=timestamp_pb2.Timestamp,
+    )
+    deletion_notifications_enabled: bool = proto.Field(
+        proto.BOOL,
+        number=9,
     )
 
 

@@ -46,6 +46,20 @@ service ServiceImplicitHeaders {
             get: "/v2/{resource.inner.inner_name=projects/*/instances/*/tables/*}:withMultipleLevels"
         };
     }
+
+    rpc ClientStreaming(stream Request) returns(Response) {
+        option (google.api.http) = {
+            post: "/v2/{table_name=projects/*/instances/*/tables/*}:clientStreaming"
+            body: "*"
+        };
+    }
+
+    rpc BidiStreaming(stream Request) returns(stream Response) {
+        option (google.api.http) = {
+            post: "/v2/{table_name=projects/*/instances/*/tables/*}:bidiStreaming"
+            body: "*"
+        };
+    }
 }
 
 service ServiceExplicitHeaders {
@@ -132,6 +146,30 @@ service ServiceExplicitHeaders {
             }
             routing_parameters {
                 field: "app_profile_id"
+            }
+        };
+    }
+
+    rpc ClientStreaming(stream Request) returns(Response) {
+        option (google.api.http) = {
+            post: "/v2/{table_name=projects/*/instances/*/tables/*}:clientStreaming"
+            body: "*"
+        };
+        option (google.api.routing) = {
+            routing_parameters {
+                field: "table_name"
+            }
+        };
+    }
+
+    rpc BidiStreaming(stream Request) returns(stream Response) {
+        option (google.api.http) = {
+            post: "/v2/{table_name=projects/*/instances/*/tables/*}:bidiStreaming"
+            body: "*"
+        };
+        option (google.api.routing) = {
+            routing_parameters {
+                field: "table_name"
             }
         };
     }

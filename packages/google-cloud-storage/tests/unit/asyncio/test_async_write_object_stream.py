@@ -21,6 +21,9 @@ import pytest
 
 from google.cloud import _storage_v2
 from google.cloud.storage import Blob, Bucket
+from google.cloud.storage.asyncio.async_appendable_object_writer import (
+    Preconditions,
+)
 from google.cloud.storage.asyncio.async_write_object_stream import (
     _AsyncWriteObjectStream,
 )
@@ -185,6 +188,90 @@ class TestAsyncWriteObjectStream:
         assert initial_request.append_object_spec.generation == GENERATION
         assert initial_request.append_object_spec.routing_token == "token-123"
         assert stream.persisted_size == 1024
+
+    @mock.patch("google.cloud.storage.asyncio.async_write_object_stream.AsyncBidiRpc")
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "generation_number, preconditions, expected",
+        [
+            (None, None, {}),
+            (0, None, {"if_generation_match": 0}),
+            (None, Preconditions(if_generation_match=0), {"if_generation_match": 0}),
+            (
+                None,
+                Preconditions(
+                    if_generation_match=10,
+                    if_generation_not_match=20,
+                    if_metageneration_match=3,
+                    if_metageneration_not_match=4,
+                ),
+                {
+                    "if_generation_match": 10,
+                    "if_generation_not_match": 20,
+                    "if_metageneration_match": 3,
+                    "if_metageneration_not_match": 4,
+                },
+            ),
+        ],
+    )
+    async def test_open_new_object_preconditions(
+        self,
+        mock_rpc_cls,
+        mock_client,
+        generation_number,
+        preconditions,
+        expected,
+    ):
+        mock_rpc = mock_rpc_cls.return_value
+        mock_rpc.open = AsyncMock()
+        mock_rpc.recv = AsyncMock(return_value=MagicMock(resource=None))
+
+        stream = _AsyncWriteObjectStream(
+            mock_client,
+            BUCKET,
+            OBJECT,
+            generation_number=generation_number,
+            preconditions=preconditions,
+        )
+        await stream.open()
+
+        spec = mock_rpc_cls.call_args.kwargs["initial_request"].write_object_spec
+        assert spec.appendable
+        fields = (
+            "if_generation_match",
+            "if_generation_not_match",
+            "if_metageneration_match",
+            "if_metageneration_not_match",
+        )
+        # `in` checks field presence, so an unset field is not mistaken for 0.
+        assert {f: getattr(spec, f) for f in fields if f in spec} == expected
+
+    @mock.patch("google.cloud.storage.asyncio.async_write_object_stream.AsyncBidiRpc")
+    @pytest.mark.asyncio
+    async def test_open_existing_object_preconditions(self, mock_rpc_cls, mock_client):
+        mock_rpc = mock_rpc_cls.return_value
+        mock_rpc.open = AsyncMock()
+        mock_rpc.recv = AsyncMock(return_value=MagicMock(resource=None))
+
+        preconditions = Preconditions(
+            if_metageneration_match=2,
+            if_metageneration_not_match=3,
+        )
+        stream = _AsyncWriteObjectStream(
+            mock_client,
+            BUCKET,
+            OBJECT,
+            generation_number=GENERATION,
+            preconditions=preconditions,
+        )
+        await stream.open()
+
+        spec = mock_rpc_cls.call_args.kwargs["initial_request"].append_object_spec
+        assert spec.generation == GENERATION
+        assert "if_metageneration_match" in spec
+        assert spec.if_metageneration_match == 2
+        assert "if_metageneration_not_match" in spec
+        assert spec.if_metageneration_not_match == 3
 
     @mock.patch("google.cloud.storage.asyncio.async_write_object_stream.AsyncBidiRpc")
     @pytest.mark.asyncio

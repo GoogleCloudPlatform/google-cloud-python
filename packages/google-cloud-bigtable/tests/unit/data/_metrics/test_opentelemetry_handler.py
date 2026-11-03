@@ -347,8 +347,17 @@ class TestOpentelemetryMetricsHandler:
         )
         handler.on_operation_complete(op)
         if should_record:
+            # throttling_latencies must not carry a status label; Cloud Monitoring
+            # rejects the series with "unrecognized metric labels [status]".
+            expected_labels = {
+                "method": op.op_type.value,
+                "resource_zone": op.zone,
+                "resource_cluster": op.cluster_id,
+                "app_profile": "default",
+                **handler.shared_labels,
+            }
             mock_instruments.throttling_latencies.record.assert_called_once_with(
-                pytest.approx(flow_throttling_ns / 1e6), mock.ANY
+                pytest.approx(flow_throttling_ns / 1e6), expected_labels
             )
         else:
             mock_instruments.throttling_latencies.record.assert_not_called()

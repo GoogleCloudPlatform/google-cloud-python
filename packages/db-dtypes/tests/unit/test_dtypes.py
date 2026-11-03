@@ -720,3 +720,19 @@ def test_date_sub():
     do = pd.Series([pd.DateOffset(days=i) for i in range(4)])
     expect = dates.astype("object") - do
     np.testing.assert_array_equal(dates - do, expect)
+
+
+@for_date_and_time
+def test_cast_pointwise_result(dtype):
+    cls = _cls(dtype)
+    a = _make_one(dtype)
+    res = a._cast_pointwise_result(SAMPLE_RAW_VALUES[dtype])
+    assert isinstance(res, cls)
+
+    import unittest.mock
+
+    with unittest.mock.patch.object(
+        cls, "_from_scalars", side_effect=TypeError("cannot cast"), create=True
+    ):
+        fallback = a._cast_pointwise_result(SAMPLE_RAW_VALUES[dtype])
+        assert fallback is not None

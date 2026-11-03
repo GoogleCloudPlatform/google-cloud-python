@@ -204,6 +204,28 @@ class DatastreamClient(metaclass=DatastreamClientMeta):
         return m.groupdict() if m else {}
 
     @staticmethod
+    def database_path(
+        project: str,
+        instance: str,
+        database: str,
+    ) -> str:
+        """Returns a fully-qualified database string."""
+        return "projects/{project}/instances/{instance}/databases/{database}".format(
+            project=project,
+            instance=instance,
+            database=database,
+        )
+
+    @staticmethod
+    def parse_database_path(path: str) -> Dict[str, str]:
+        """Parses a database path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/instances/(?P<instance>.+?)/databases/(?P<database>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
     def network_attachment_path(
         project: str,
         region: str,

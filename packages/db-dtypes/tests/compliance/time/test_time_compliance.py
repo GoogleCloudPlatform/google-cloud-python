@@ -85,7 +85,8 @@ class TestInterface(base.BaseInterfaceTests):
         # Until pandas changes the existing tests, this compliance test
         # will continue to fail.
         import numpy as np
-        from pandas.compat.numpy import np_version_gt2
+
+        np_version_gt2 = int(np.__version__.split(".")[0]) >= 2
 
         result_copy1 = np.array(data, copy=True)
         result_copy2 = np.array(data, copy=True)
@@ -112,6 +113,10 @@ class TestMissing(base.BaseMissingTests):
 
 
 class TestMethods(base.BaseMethodsTests):
+    @pytest.mark.xfail(reason="read_json does not preserve custom ExtensionDtype")
+    def test_json_roundtrip(self, data):
+        super().test_json_roundtrip(data)
+
     def test_combine_add(self):
         pytest.skip("Cannot add dates.")
 

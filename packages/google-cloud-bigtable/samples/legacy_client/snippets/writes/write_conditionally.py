@@ -12,7 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# [START bigtable_writes_conditional]
+# [START bigtable_writes_conditional_legacy]
 from datetime import datetime, timezone
 
 from google.cloud import bigtable
@@ -43,4 +43,4 @@ def write_conditional(project_id, instance_id, table_id):
     print("Successfully updated row's os_name.")
 
 
-# [END bigtable_writes_conditional]
+# [END bigtable_writes_conditional_legacy]

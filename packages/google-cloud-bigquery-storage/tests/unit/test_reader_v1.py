@@ -717,3 +717,208 @@ def test_to_dataframe_emits_pending_deprecation_warning(mut):
 
     assert actual_df == mock_df
     mock_parser.to_dataframe.assert_called_once_with(mock_message, dtypes=None)
+
+
+def test_cancel_stops_iteration_without_reconnecting(
+    class_under_test, mock_gapic_client
+):
+    first = types.ReadRowsResponse(row_count=1)
+
+    def pages():
+        yield first
+        raise google.api_core.exceptions.ServiceUnavailable("connection closed")
+
+    wrapped = mock.MagicMock()
+    wrapped.__iter__.return_value = pages()
+    mock_gapic_client.read_rows.return_value = wrapped
+    reader = class_under_test(mock_gapic_client, "teststream", 0, {})
+
+    messages = iter(reader)
+    assert next(messages) is first
+    reader.cancel()
+
+    assert list(messages) == []
+    wrapped.cancel.assert_called_once_with()
+    mock_gapic_client.read_rows.assert_called_once_with(
+        read_stream="teststream", offset=0
+    )
+
+
+def test_cancel_ignores_the_cancelled_call_error(class_under_test, mock_gapic_client):
+    def pages():
+        yield types.ReadRowsResponse(row_count=1)
+        raise google.api_core.exceptions.Cancelled("call cancelled")
+
+    mock_gapic_client.read_rows.return_value = pages()
+    reader = class_under_test(mock_gapic_client, "teststream", 0, {})
+
+    messages = iter(reader)
+    next(messages)
+    reader.cancel()
+
+    assert list(messages) == []
+
+
+def test_cancel_before_iterating_yields_nothing(class_under_test, mock_gapic_client):
+    reader = class_under_test(mock_gapic_client, "teststream", 0, {})
+
+    reader.cancel()
+
+    assert list(reader) == []
+    mock_gapic_client.read_rows.assert_not_called()
+
+
+def test_cancel_during_reconnect_cancels_new_stream(
+    class_under_test, mock_gapic_client
+):
+    reader = class_under_test(mock_gapic_client, "teststream", 0, {})
+    wrapped = mock.MagicMock()
+
+    def cancel_while_opening(**kwargs):
+        reader.cancel()
+        return wrapped
+
+    mock_gapic_client.read_rows.side_effect = cancel_while_opening
+
+    assert list(reader) == []
+    wrapped.cancel.assert_called_once_with()
+    assert reader._wrapped is wrapped
+
+
+def test_cancel_during_reconnect_retry_stops_without_retrying(
+    class_under_test, mock_gapic_client
+):
+    reader = class_under_test(mock_gapic_client, "teststream", 0, {})
+
+    def cancel_and_fail(**kwargs):
+        reader.cancel()
+        raise google.api_core.exceptions.Cancelled("call cancelled")
+
+    mock_gapic_client.read_rows.side_effect = cancel_and_fail
+
+    assert list(reader) == []
+    mock_gapic_client.read_rows.assert_called_once_with(
+        read_stream="teststream", offset=0
+    )
+
+
+def test_del_cancels_unfinished_stream_once(class_under_test, mock_gapic_client):
+    wrapped = mock.MagicMock()
+    mock_gapic_client.read_rows.return_value = wrapped
+    reader = class_under_test(mock_gapic_client, "teststream", 0, {})
+    reader._reconnect()
+
+    del reader
+
+    wrapped.cancel.assert_called_once_with()
+
+
+def test_del_does_not_cancel_twice_or_after_completion(
+    class_under_test, mock_gapic_client
+):
+    cancelled = mock.MagicMock()
+    completed = mock.MagicMock()
+    completed.__iter__.return_value = iter([types.ReadRowsResponse(row_count=1)])
+    mock_gapic_client.read_rows.side_effect = [cancelled, completed]
+
+    reader = class_under_test(mock_gapic_client, "teststream", 0, {})
+    reader._reconnect()
+    reader.cancel()
+    del reader
+
+    finished_reader = class_under_test(mock_gapic_client, "teststream", 0, {})
+    assert len(list(finished_reader)) == 1
+    del finished_reader
+
+    cancelled.cancel.assert_called_once_with()
+    completed.cancel.assert_not_called()
+
+
+def test_del_does_not_call_cancel_after_completion(class_under_test, mock_gapic_client):
+    mock_gapic_client.read_rows.return_value = iter(
+        [types.ReadRowsResponse(row_count=1)]
+    )
+    reader = class_under_test(mock_gapic_client, "teststream", 0, {})
+    assert len(list(reader)) == 1
+
+    with mock.patch.object(class_under_test, "cancel", autospec=True) as cancel:
+        del reader
+
+    cancel.assert_not_called()
+
+
+def test_context_manager_cancels_unfinished_stream(class_under_test, mock_gapic_client):
+    wrapped = mock.MagicMock()
+    wrapped.__iter__.return_value = iter(
+        [types.ReadRowsResponse(row_count=1), types.ReadRowsResponse(row_count=1)]
+    )
+    mock_gapic_client.read_rows.return_value = wrapped
+    reader = class_under_test(mock_gapic_client, "teststream", 0, {})
+
+    with reader as stream:
+        assert stream is reader
+        next(iter(stream))
+
+    wrapped.cancel.assert_called_once_with()
+
+
+def test_context_manager_does_not_cancel_finished_stream(
+    class_under_test, mock_gapic_client
+):
+    mock_gapic_client.read_rows.return_value = iter(
+        [types.ReadRowsResponse(row_count=1)]
+    )
+
+    with mock.patch.object(class_under_test, "cancel", autospec=True) as cancel:
+        with class_under_test(mock_gapic_client, "teststream", 0, {}) as stream:
+            assert len(list(stream)) == 1
+
+    cancel.assert_not_called()
+
+
+def test_context_manager_cancels_and_reraises_on_error(
+    class_under_test, mock_gapic_client
+):
+    wrapped = mock.MagicMock()
+    mock_gapic_client.read_rows.return_value = wrapped
+    reader = class_under_test(mock_gapic_client, "teststream", 0, {})
+
+    with pytest.raises(ValueError, match="stop reading"):
+        with reader:
+            reader._reconnect()
+            raise ValueError("stop reading")
+
+    wrapped.cancel.assert_called_once_with()
+
+
+def test_request_template_not_mutated_across_reconnects(
+    class_under_test, mock_gapic_client
+):
+    template = types.ReadRowsRequest(
+        arrow_serialization_options={"buffer_compression": "LZ4_FRAME"}
+    )
+    mock_gapic_client.read_rows.side_effect = [
+        _pages_w_unavailable([types.ReadRowsResponse(row_count=4)]),
+        iter([types.ReadRowsResponse(row_count=2)]),
+    ]
+    reader = class_under_test(
+        mock_gapic_client,
+        "teststream",
+        10,
+        {},
+        request_template=template,
+    )
+
+    assert [m.row_count for m in reader] == [4, 2]
+    assert template.read_stream == ""
+    assert template.offset == 0
+    assert mock_gapic_client.read_rows.call_args_list == [
+        mock.call(
+            request=types.ReadRowsRequest(
+                read_stream="teststream",
+                offset=offset,
+                arrow_serialization_options={"buffer_compression": "LZ4_FRAME"},
+            )
+        )
+        for offset in (10, 14)
+    ]

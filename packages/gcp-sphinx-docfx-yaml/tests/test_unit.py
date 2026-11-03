@@ -1,9 +1,14 @@
+import tempfile
 import unittest
+from pathlib import Path
+from unittest import mock
 
+from docutils import nodes
 from parameterized import parameterized
+from sphinx import addnodes
 from yaml import Loader, load
 
-from docfx_yaml import extension
+from docfx_yaml import extension, markdown_utils, utils
 
 
 class TestGenerate(unittest.TestCase):
@@ -1287,6 +1292,176 @@ Values:
                     },
                 ],
             ),
+        )
+
+    def test_get_class_lines(self):
+        source = (
+            "class TopLevel:\n"  # line 1
+            "    pass\n"
+            "\n"
+            "@dec1\n"  # line 4
+            "@dec2\n"  # line 5
+            "class Decorated:\n"  # line 6
+            "    class Nested:\n"  # line 7
+            "        pass\n"
+            "\n"
+            "    @nested_dec\n"  # line 10
+            "    class DecoratedNested:\n"  # line 11
+            "        pass\n"
+            "\n"
+            "def factory():\n"  # line 14
+            "    class LocalClass:\n"  # line 15
+            "        pass\n"
+            "\n"
+            "async def async_factory():\n"  # line 18
+            "    @local_dec\n"  # line 19
+            "    class AsyncLocalClass:\n"  # line 20
+            "        pass\n"
+        )
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".py", delete=False
+        ) as tmp_file:
+            tmp_file.write(source)
+            tmp_path = tmp_file.name
+
+        try:
+            extension._get_class_lines.cache_clear()
+            class_lines = extension._get_class_lines(tmp_path)
+            self.assertEqual(
+                class_lines,
+                {
+                    "TopLevel": 1,
+                    "Decorated": 4,
+                    "Decorated.Nested": 7,
+                    "Decorated.DecoratedNested": 10,
+                    "factory.<locals>.LocalClass": 15,
+                    "async_factory.<locals>.AsyncLocalClass": 19,
+                },
+            )
+            # Non-existent file returns empty dict without raising.
+            self.assertEqual(
+                extension._get_class_lines(tmp_path + ".missing"),
+                {},
+            )
+        finally:
+            Path(tmp_path).unlink(missing_ok=True)
+
+    def test_transform_node_does_not_mutate_live_doctree_or_pending_xref(self):
+        app = mock.MagicMock()
+
+        def fake_resolve_references(doctree, fromdocname, builder):
+            for xref in list(doctree.traverse(addnodes.pending_xref)):
+                ref = nodes.reference("", "", refuri=xref["reftarget"])
+                ref.append(nodes.Text(xref.astext()))
+                xref.replace_self(ref)
+
+        app.env.resolve_references.side_effect = fake_resolve_references
+
+        # 1. Detached node without pending_xref skips resolve_references.
+        plain_node = nodes.paragraph("", "Plain text")
+        self.assertEqual(utils.transform_node(app, plain_node).strip(), "Plain text")
+        app.env.resolve_references.assert_not_called()
+
+        # 2. Live doctree node with nested pending_xref is deep-copied so
+        # neither its parent pointer nor its nested pending_xref child is mutated.
+        live_parent = nodes.section()
+        live_para = nodes.paragraph("", "See ")
+        live_xref = addnodes.pending_xref(
+            "",
+            nodes.literal("", "Client"),
+            refdomain="py",
+            reftype="class",
+            reftarget="google.cloud.Client",
+        )
+        live_para.append(live_xref)
+        live_parent.append(live_para)
+
+        rendered = utils.transform_node(app, live_para)
+
+        app.env.resolve_references.assert_called_once()
+        self.assertIs(live_para.parent, live_parent)
+        self.assertIn(live_xref, live_para.children)
+        self.assertIs(live_xref.parent, live_para)
+        self.assertEqual(rendered.strip(), "See <xref:google.cloud.Client>")
+
+    def test_run_sphinx_markdown(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            html_outdir = Path(tmp_dir) / "html"
+            html_outdir.mkdir()
+            markdown_outdir = Path(tmp_dir) / "markdown"
+
+            orig_builder = mock.MagicMock()
+            orig_builder.outdir = str(html_outdir)
+
+            app = mock.MagicMock()
+            app.builder = orig_builder
+            app.env.found_docs = {"b_doc", "a_doc"}
+
+            doctree_a = mock.sentinel.doctree_a
+            doctree_b = mock.sentinel.doctree_b
+            app.env.get_and_resolve_doctree.side_effect = [doctree_a, doctree_b]
+
+            observed_builders = []
+
+            def record_builder(docname, doctree):
+                observed_builders.append((docname, doctree, app.builder))
+
+            with (
+                mock.patch("os.getcwd", return_value="/tmp/work"),
+                mock.patch(
+                    "sphinx_markdown_builder.markdown_builder.MarkdownBuilder"
+                ) as mock_md_builder_cls,
+            ):
+                mock_md_builder = mock_md_builder_cls.return_value
+                mock_md_builder.write_doc.side_effect = record_builder
+
+                markdown_utils.run_sphinx_markdown(app)
+
+                mock_md_builder_cls.assert_called_once_with(app)
+                self.assertEqual(mock_md_builder.outdir, str(markdown_outdir))
+                mock_md_builder.set_environment.assert_called_once_with(app.env)
+                mock_md_builder.init.assert_called_once_with()
+                mock_md_builder.prepare_writing.assert_called_once_with(
+                    ["a_doc", "b_doc"]
+                )
+                self.assertEqual(
+                    observed_builders,
+                    [
+                        ("a_doc", doctree_a, mock_md_builder),
+                        ("b_doc", doctree_b, mock_md_builder),
+                    ],
+                )
+                # Original builder is restored after run_sphinx_markdown completes.
+                self.assertIs(app.builder, orig_builder)
+
+                # Subsequent call when markdown_outdir already exists is a no-op.
+                mock_md_builder_cls.reset_mock()
+                markdown_utils.run_sphinx_markdown(app)
+                mock_md_builder_cls.assert_not_called()
+
+    def test_convert_cross_references_fast_path_checks_both_ends(self):
+        # All UIDs start with "google." and content has no "google." -> fast-path.
+        all_google_uids = ["google.cloud.storage.Client", "google.api_core.Retry"]
+        content_no_google = "Plain description with custom_pkg.Client reference."
+        self.assertEqual(
+            extension.convert_cross_references(
+                content_no_google,
+                "google.cloud.storage.Blob",
+                all_google_uids,
+            ),
+            content_no_google,
+        )
+
+        # Mixed sorted list where known_uids[0] starts with "google." but
+        # known_uids[-1] does not -> must NOT skip non-google references.
+        mixed_uids = ["google.cloud.storage.Client", "custom_pkg.Client"]
+        self.assertEqual(
+            extension.convert_cross_references(
+                content_no_google,
+                "google.cloud.storage.Blob",
+                mixed_uids,
+            ),
+            'Plain description with <xref uid="custom_pkg.Client">custom_pkg.Client</xref> reference.',
         )
 
 

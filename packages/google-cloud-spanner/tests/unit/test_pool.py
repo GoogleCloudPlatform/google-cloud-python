@@ -229,6 +229,27 @@ class TestAbstractSessionPool(TestCase):
         pool = self._make_one()
         self.assertIsNone(pool._resource_info)
 
+    def test_resource_info_bound(self):
+        pool = self._make_one()
+        mock_db = mock.Mock(spec=["_resource_info"])
+        mock_db._resource_info = {"project": "p", "instance": "i", "database": "d"}
+        pool._database = mock_db
+        self.assertEqual(pool._resource_info, mock_db._resource_info)
+
+    def test_resource_info_fallback(self):
+        pool = self._make_one()
+        mock_db = mock.Mock(spec=["_instance", "database_id"])
+        mock_db._instance = mock.Mock(spec=["_client", "instance_id"])
+        mock_db._instance.instance_id = "i"
+        mock_db._instance._client = mock.Mock(spec=["project"])
+        mock_db._instance._client.project = "p"
+        mock_db.database_id = "d"
+        pool._database = mock_db
+        self.assertEqual(
+            pool._resource_info,
+            {"project": "p", "instance": "i", "database": "d"},
+        )
+
     def test__new_session_wo_labels(self):
         pool = self._make_one()
         database = pool._database = build_database()

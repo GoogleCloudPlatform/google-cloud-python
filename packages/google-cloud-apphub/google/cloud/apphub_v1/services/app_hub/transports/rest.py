@@ -38,6 +38,8 @@ from google.cloud.apphub_v1._compat import transcode_request
 from google.cloud.apphub_v1.types import (
     apphub_service,
     application,
+    boundary,
+    extended_metadata_schema,
     service,
     service_project_attachment,
     workload,
@@ -164,6 +166,14 @@ class AppHubRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_get_boundary(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_get_boundary(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_get_discovered_service(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -177,6 +187,14 @@ class AppHubRestInterceptor:
                 return request, metadata
 
             def post_get_discovered_workload(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_get_extended_metadata_schema(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_get_extended_metadata_schema(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -225,6 +243,14 @@ class AppHubRestInterceptor:
                 return request, metadata
 
             def post_list_discovered_workloads(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_list_extended_metadata_schemas(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_extended_metadata_schemas(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -281,6 +307,14 @@ class AppHubRestInterceptor:
                 return request, metadata
 
             def post_update_application(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_boundary(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_boundary(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -792,6 +826,52 @@ class AppHubRestInterceptor:
         """
         return response, metadata
 
+    def pre_get_boundary(
+        self,
+        request: apphub_service.GetBoundaryRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        apphub_service.GetBoundaryRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for get_boundary
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AppHub server.
+        """
+        return request, metadata
+
+    def post_get_boundary(self, response: boundary.Boundary) -> boundary.Boundary:
+        """Post-rpc interceptor for get_boundary
+
+        DEPRECATED. Please use the `post_get_boundary_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AppHub server but before
+        it is returned to user code. This `post_get_boundary` interceptor runs
+        before the `post_get_boundary_with_metadata` interceptor.
+        """
+        return response
+
+    def post_get_boundary_with_metadata(
+        self,
+        response: boundary.Boundary,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[boundary.Boundary, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for get_boundary
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AppHub server but before it is returned to user code.
+
+        We recommend only using this `post_get_boundary_with_metadata`
+        interceptor in new development instead of the `post_get_boundary` interceptor.
+        When both interceptors are used, this `post_get_boundary_with_metadata` interceptor runs after the
+        `post_get_boundary` interceptor. The (possibly modified) response returned by
+        `post_get_boundary` will be passed to
+        `post_get_boundary_with_metadata`.
+        """
+        return response, metadata
+
     def pre_get_discovered_service(
         self,
         request: apphub_service.GetDiscoveredServiceRequest,
@@ -887,6 +967,58 @@ class AppHubRestInterceptor:
         `post_get_discovered_workload` interceptor. The (possibly modified) response returned by
         `post_get_discovered_workload` will be passed to
         `post_get_discovered_workload_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_get_extended_metadata_schema(
+        self,
+        request: apphub_service.GetExtendedMetadataSchemaRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        apphub_service.GetExtendedMetadataSchemaRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for get_extended_metadata_schema
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AppHub server.
+        """
+        return request, metadata
+
+    def post_get_extended_metadata_schema(
+        self, response: extended_metadata_schema.ExtendedMetadataSchema
+    ) -> extended_metadata_schema.ExtendedMetadataSchema:
+        """Post-rpc interceptor for get_extended_metadata_schema
+
+        DEPRECATED. Please use the `post_get_extended_metadata_schema_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AppHub server but before
+        it is returned to user code. This `post_get_extended_metadata_schema` interceptor runs
+        before the `post_get_extended_metadata_schema_with_metadata` interceptor.
+        """
+        return response
+
+    def post_get_extended_metadata_schema_with_metadata(
+        self,
+        response: extended_metadata_schema.ExtendedMetadataSchema,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        extended_metadata_schema.ExtendedMetadataSchema,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for get_extended_metadata_schema
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AppHub server but before it is returned to user code.
+
+        We recommend only using this `post_get_extended_metadata_schema_with_metadata`
+        interceptor in new development instead of the `post_get_extended_metadata_schema` interceptor.
+        When both interceptors are used, this `post_get_extended_metadata_schema_with_metadata` interceptor runs after the
+        `post_get_extended_metadata_schema` interceptor. The (possibly modified) response returned by
+        `post_get_extended_metadata_schema` will be passed to
+        `post_get_extended_metadata_schema_with_metadata`.
         """
         return response, metadata
 
@@ -1185,6 +1317,58 @@ class AppHubRestInterceptor:
         `post_list_discovered_workloads` interceptor. The (possibly modified) response returned by
         `post_list_discovered_workloads` will be passed to
         `post_list_discovered_workloads_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_list_extended_metadata_schemas(
+        self,
+        request: apphub_service.ListExtendedMetadataSchemasRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        apphub_service.ListExtendedMetadataSchemasRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for list_extended_metadata_schemas
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AppHub server.
+        """
+        return request, metadata
+
+    def post_list_extended_metadata_schemas(
+        self, response: apphub_service.ListExtendedMetadataSchemasResponse
+    ) -> apphub_service.ListExtendedMetadataSchemasResponse:
+        """Post-rpc interceptor for list_extended_metadata_schemas
+
+        DEPRECATED. Please use the `post_list_extended_metadata_schemas_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AppHub server but before
+        it is returned to user code. This `post_list_extended_metadata_schemas` interceptor runs
+        before the `post_list_extended_metadata_schemas_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_extended_metadata_schemas_with_metadata(
+        self,
+        response: apphub_service.ListExtendedMetadataSchemasResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        apphub_service.ListExtendedMetadataSchemasResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for list_extended_metadata_schemas
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AppHub server but before it is returned to user code.
+
+        We recommend only using this `post_list_extended_metadata_schemas_with_metadata`
+        interceptor in new development instead of the `post_list_extended_metadata_schemas` interceptor.
+        When both interceptors are used, this `post_list_extended_metadata_schemas_with_metadata` interceptor runs after the
+        `post_list_extended_metadata_schemas` interceptor. The (possibly modified) response returned by
+        `post_list_extended_metadata_schemas` will be passed to
+        `post_list_extended_metadata_schemas_with_metadata`.
         """
         return response, metadata
 
@@ -1541,6 +1725,54 @@ class AppHubRestInterceptor:
         `post_update_application` interceptor. The (possibly modified) response returned by
         `post_update_application` will be passed to
         `post_update_application_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_boundary(
+        self,
+        request: apphub_service.UpdateBoundaryRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        apphub_service.UpdateBoundaryRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for update_boundary
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AppHub server.
+        """
+        return request, metadata
+
+    def post_update_boundary(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for update_boundary
+
+        DEPRECATED. Please use the `post_update_boundary_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AppHub server but before
+        it is returned to user code. This `post_update_boundary` interceptor runs
+        before the `post_update_boundary_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_boundary_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_boundary
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AppHub server but before it is returned to user code.
+
+        We recommend only using this `post_update_boundary_with_metadata`
+        interceptor in new development instead of the `post_update_boundary` interceptor.
+        When both interceptors are used, this `post_update_boundary_with_metadata` interceptor runs after the
+        `post_update_boundary` interceptor. The (possibly modified) response returned by
+        `post_update_boundary` will be passed to
+        `post_update_boundary_with_metadata`.
         """
         return response, metadata
 
@@ -3498,6 +3730,148 @@ class AppHubRestTransport(_BaseAppHubRestTransport):
                 )
             return resp
 
+    class _GetBoundary(_BaseAppHubRestTransport._BaseGetBoundary, AppHubRestStub):
+        def __hash__(self):
+            return hash("AppHubRestTransport.GetBoundary")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: apphub_service.GetBoundaryRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> boundary.Boundary:
+            r"""Call the get boundary method over HTTP.
+
+            Args:
+                request (~.apphub_service.GetBoundaryRequest):
+                    The request object. Request message for
+                AppHub.GetBoundary.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.boundary.Boundary:
+                    Application management boundary.
+            """
+
+            http_options = _BaseAppHubRestTransport._BaseGetBoundary._get_http_options()
+            request, metadata = self._interceptor.pre_get_boundary(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAppHubRestTransport._BaseGetBoundary,
+                    "_BaseGetBoundary__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.apphub_v1.AppHubClient.GetBoundary",
+                    extra={
+                        "serviceName": "google.cloud.apphub.v1.AppHub",
+                        "rpcName": "GetBoundary",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AppHubRestTransport._GetBoundary._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = boundary.Boundary()
+            pb_resp = boundary.Boundary.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_get_boundary(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_get_boundary_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = boundary.Boundary.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.apphub_v1.AppHubClient.get_boundary",
+                    extra={
+                        "serviceName": "google.cloud.apphub.v1.AppHub",
+                        "rpcName": "GetBoundary",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _GetDiscoveredService(
         _BaseAppHubRestTransport._BaseGetDiscoveredService, AppHubRestStub
     ):
@@ -3798,6 +4172,160 @@ class AppHubRestTransport(_BaseAppHubRestTransport):
                     extra={
                         "serviceName": "google.cloud.apphub.v1.AppHub",
                         "rpcName": "GetDiscoveredWorkload",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _GetExtendedMetadataSchema(
+        _BaseAppHubRestTransport._BaseGetExtendedMetadataSchema, AppHubRestStub
+    ):
+        def __hash__(self):
+            return hash("AppHubRestTransport.GetExtendedMetadataSchema")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: apphub_service.GetExtendedMetadataSchemaRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> extended_metadata_schema.ExtendedMetadataSchema:
+            r"""Call the get extended metadata
+            schema method over HTTP.
+
+                Args:
+                    request (~.apphub_service.GetExtendedMetadataSchemaRequest):
+                        The request object. Request for
+                    GetExtendedMetadataSchema.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.extended_metadata_schema.ExtendedMetadataSchema:
+                        ExtendedMetadataSchema represents a
+                    schema for extended metadata of a
+                    service or workload.
+
+            """
+
+            http_options = _BaseAppHubRestTransport._BaseGetExtendedMetadataSchema._get_http_options()
+            request, metadata = self._interceptor.pre_get_extended_metadata_schema(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAppHubRestTransport._BaseGetExtendedMetadataSchema,
+                    "_BaseGetExtendedMetadataSchema__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.apphub_v1.AppHubClient.GetExtendedMetadataSchema",
+                    extra={
+                        "serviceName": "google.cloud.apphub.v1.AppHub",
+                        "rpcName": "GetExtendedMetadataSchema",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AppHubRestTransport._GetExtendedMetadataSchema._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = extended_metadata_schema.ExtendedMetadataSchema()
+            pb_resp = extended_metadata_schema.ExtendedMetadataSchema.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_get_extended_metadata_schema(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_get_extended_metadata_schema_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        extended_metadata_schema.ExtendedMetadataSchema.to_json(
+                            response
+                        )
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.apphub_v1.AppHubClient.get_extended_metadata_schema",
+                    extra={
+                        "serviceName": "google.cloud.apphub.v1.AppHub",
+                        "rpcName": "GetExtendedMetadataSchema",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -4701,6 +5229,161 @@ class AppHubRestTransport(_BaseAppHubRestTransport):
                     extra={
                         "serviceName": "google.cloud.apphub.v1.AppHub",
                         "rpcName": "ListDiscoveredWorkloads",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _ListExtendedMetadataSchemas(
+        _BaseAppHubRestTransport._BaseListExtendedMetadataSchemas, AppHubRestStub
+    ):
+        def __hash__(self):
+            return hash("AppHubRestTransport.ListExtendedMetadataSchemas")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: apphub_service.ListExtendedMetadataSchemasRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> apphub_service.ListExtendedMetadataSchemasResponse:
+            r"""Call the list extended metadata
+            schemas method over HTTP.
+
+                Args:
+                    request (~.apphub_service.ListExtendedMetadataSchemasRequest):
+                        The request object. Request for
+                    ListExtendedMetadataSchemas.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.apphub_service.ListExtendedMetadataSchemasResponse:
+                        Response for
+                    ListExtendedMetadataSchemas.
+
+            """
+
+            http_options = _BaseAppHubRestTransport._BaseListExtendedMetadataSchemas._get_http_options()
+            request, metadata = self._interceptor.pre_list_extended_metadata_schemas(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAppHubRestTransport._BaseListExtendedMetadataSchemas,
+                    "_BaseListExtendedMetadataSchemas__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.apphub_v1.AppHubClient.ListExtendedMetadataSchemas",
+                    extra={
+                        "serviceName": "google.cloud.apphub.v1.AppHub",
+                        "rpcName": "ListExtendedMetadataSchemas",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AppHubRestTransport._ListExtendedMetadataSchemas._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = apphub_service.ListExtendedMetadataSchemasResponse()
+            pb_resp = apphub_service.ListExtendedMetadataSchemasResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_extended_metadata_schemas(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_list_extended_metadata_schemas_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        apphub_service.ListExtendedMetadataSchemasResponse.to_json(
+                            response
+                        )
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.apphub_v1.AppHubClient.list_extended_metadata_schemas",
+                    extra={
+                        "serviceName": "google.cloud.apphub.v1.AppHub",
+                        "rpcName": "ListExtendedMetadataSchemas",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -5758,6 +6441,153 @@ class AppHubRestTransport(_BaseAppHubRestTransport):
                 )
             return resp
 
+    class _UpdateBoundary(_BaseAppHubRestTransport._BaseUpdateBoundary, AppHubRestStub):
+        def __hash__(self):
+            return hash("AppHubRestTransport.UpdateBoundary")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: apphub_service.UpdateBoundaryRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the update boundary method over HTTP.
+
+            Args:
+                request (~.apphub_service.UpdateBoundaryRequest):
+                    The request object. Request message for
+                AppHub.UpdateBoundary.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = (
+                _BaseAppHubRestTransport._BaseUpdateBoundary._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_update_boundary(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAppHubRestTransport._BaseUpdateBoundary,
+                    "_BaseUpdateBoundary__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.apphub_v1.AppHubClient.UpdateBoundary",
+                    extra={
+                        "serviceName": "google.cloud.apphub.v1.AppHub",
+                        "rpcName": "UpdateBoundary",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AppHubRestTransport._UpdateBoundary._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_boundary(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_boundary_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.apphub_v1.AppHubClient.update_boundary",
+                    extra={
+                        "serviceName": "google.cloud.apphub.v1.AppHub",
+                        "rpcName": "UpdateBoundary",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _UpdateService(_BaseAppHubRestTransport._BaseUpdateService, AppHubRestStub):
         def __hash__(self):
             return hash("AppHubRestTransport.UpdateService")
@@ -6144,6 +6974,14 @@ class AppHubRestTransport(_BaseAppHubRestTransport):
         return self._GetApplication(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def get_boundary(
+        self,
+    ) -> Callable[[apphub_service.GetBoundaryRequest], boundary.Boundary]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GetBoundary(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def get_discovered_service(
         self,
     ) -> Callable[
@@ -6162,6 +7000,19 @@ class AppHubRestTransport(_BaseAppHubRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._GetDiscoveredWorkload(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def get_extended_metadata_schema(
+        self,
+    ) -> Callable[
+        [apphub_service.GetExtendedMetadataSchemaRequest],
+        extended_metadata_schema.ExtendedMetadataSchema,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GetExtendedMetadataSchema(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
 
     @property
     def get_service(
@@ -6226,6 +7077,19 @@ class AppHubRestTransport(_BaseAppHubRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._ListDiscoveredWorkloads(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def list_extended_metadata_schemas(
+        self,
+    ) -> Callable[
+        [apphub_service.ListExtendedMetadataSchemasRequest],
+        apphub_service.ListExtendedMetadataSchemasResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListExtendedMetadataSchemas(
             self._session, self._host, self._interceptor
         )  # type: ignore
 
@@ -6308,6 +7172,14 @@ class AppHubRestTransport(_BaseAppHubRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._UpdateApplication(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def update_boundary(
+        self,
+    ) -> Callable[[apphub_service.UpdateBoundaryRequest], operations_pb2.Operation]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateBoundary(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def update_service(

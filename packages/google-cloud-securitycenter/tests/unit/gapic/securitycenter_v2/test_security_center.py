@@ -1900,6 +1900,7 @@ def test_create_big_query_export(request_type, transport: str = "grpc"):
             dataset="dataset_value",
             most_recent_editor="most_recent_editor_value",
             principal="principal_value",
+            deletion_notifications_enabled=True,
         )
         response = client.create_big_query_export(request)
 
@@ -1917,6 +1918,7 @@ def test_create_big_query_export(request_type, transport: str = "grpc"):
     assert response.dataset == "dataset_value"
     assert response.most_recent_editor == "most_recent_editor_value"
     assert response.principal == "principal_value"
+    assert response.deletion_notifications_enabled is True
 
 
 def test_create_big_query_export_non_empty_request_with_auto_populated_field():
@@ -2067,6 +2069,7 @@ async def test_create_big_query_export_async(
                 dataset="dataset_value",
                 most_recent_editor="most_recent_editor_value",
                 principal="principal_value",
+                deletion_notifications_enabled=True,
             )
         )
         response = await client.create_big_query_export(request)
@@ -2085,6 +2088,7 @@ async def test_create_big_query_export_async(
     assert response.dataset == "dataset_value"
     assert response.most_recent_editor == "most_recent_editor_value"
     assert response.principal == "principal_value"
+    assert response.deletion_notifications_enabled is True
 
 
 def test_create_big_query_export_field_headers():
@@ -2998,6 +3002,7 @@ def test_create_notification_config(request_type, transport: str = "grpc"):
             description="description_value",
             pubsub_topic="pubsub_topic_value",
             service_account="service_account_value",
+            deletion_notifications_enabled=True,
         )
         response = client.create_notification_config(request)
 
@@ -3013,6 +3018,7 @@ def test_create_notification_config(request_type, transport: str = "grpc"):
     assert response.description == "description_value"
     assert response.pubsub_topic == "pubsub_topic_value"
     assert response.service_account == "service_account_value"
+    assert response.deletion_notifications_enabled is True
 
 
 def test_create_notification_config_non_empty_request_with_auto_populated_field():
@@ -3161,6 +3167,7 @@ async def test_create_notification_config_async(
                 description="description_value",
                 pubsub_topic="pubsub_topic_value",
                 service_account="service_account_value",
+                deletion_notifications_enabled=True,
             )
         )
         response = await client.create_notification_config(request)
@@ -3177,6 +3184,7 @@ async def test_create_notification_config_async(
     assert response.description == "description_value"
     assert response.pubsub_topic == "pubsub_topic_value"
     assert response.service_account == "service_account_value"
+    assert response.deletion_notifications_enabled is True
 
 
 def test_create_notification_config_field_headers():
@@ -4995,6 +5003,7 @@ def test_get_big_query_export(request_type, transport: str = "grpc"):
             dataset="dataset_value",
             most_recent_editor="most_recent_editor_value",
             principal="principal_value",
+            deletion_notifications_enabled=True,
         )
         response = client.get_big_query_export(request)
 
@@ -5012,6 +5021,7 @@ def test_get_big_query_export(request_type, transport: str = "grpc"):
     assert response.dataset == "dataset_value"
     assert response.most_recent_editor == "most_recent_editor_value"
     assert response.principal == "principal_value"
+    assert response.deletion_notifications_enabled is True
 
 
 def test_get_big_query_export_non_empty_request_with_auto_populated_field():
@@ -5159,6 +5169,7 @@ async def test_get_big_query_export_async(
                 dataset="dataset_value",
                 most_recent_editor="most_recent_editor_value",
                 principal="principal_value",
+                deletion_notifications_enabled=True,
             )
         )
         response = await client.get_big_query_export(request)
@@ -5177,6 +5188,7 @@ async def test_get_big_query_export_async(
     assert response.dataset == "dataset_value"
     assert response.most_recent_editor == "most_recent_editor_value"
     assert response.principal == "principal_value"
+    assert response.deletion_notifications_enabled is True
 
 
 def test_get_big_query_export_field_headers():
@@ -6673,6 +6685,7 @@ def test_get_notification_config(request_type, transport: str = "grpc"):
             description="description_value",
             pubsub_topic="pubsub_topic_value",
             service_account="service_account_value",
+            deletion_notifications_enabled=True,
         )
         response = client.get_notification_config(request)
 
@@ -6688,6 +6701,7 @@ def test_get_notification_config(request_type, transport: str = "grpc"):
     assert response.description == "description_value"
     assert response.pubsub_topic == "pubsub_topic_value"
     assert response.service_account == "service_account_value"
+    assert response.deletion_notifications_enabled is True
 
 
 def test_get_notification_config_non_empty_request_with_auto_populated_field():
@@ -6834,6 +6848,7 @@ async def test_get_notification_config_async(
                 description="description_value",
                 pubsub_topic="pubsub_topic_value",
                 service_account="service_account_value",
+                deletion_notifications_enabled=True,
             )
         )
         response = await client.get_notification_config(request)
@@ -6850,6 +6865,7 @@ async def test_get_notification_config_async(
     assert response.description == "description_value"
     assert response.pubsub_topic == "pubsub_topic_value"
     assert response.service_account == "service_account_value"
+    assert response.deletion_notifications_enabled is True
 
 
 def test_get_notification_config_field_headers():
@@ -14075,6 +14091,7 @@ def test_update_big_query_export(request_type, transport: str = "grpc"):
             dataset="dataset_value",
             most_recent_editor="most_recent_editor_value",
             principal="principal_value",
+            deletion_notifications_enabled=True,
         )
         response = client.update_big_query_export(request)
 
@@ -14092,6 +14109,7 @@ def test_update_big_query_export(request_type, transport: str = "grpc"):
     assert response.dataset == "dataset_value"
     assert response.most_recent_editor == "most_recent_editor_value"
     assert response.principal == "principal_value"
+    assert response.deletion_notifications_enabled is True
 
 
 def test_update_big_query_export_non_empty_request_with_auto_populated_field():
@@ -14236,6 +14254,7 @@ async def test_update_big_query_export_async(
                 dataset="dataset_value",
                 most_recent_editor="most_recent_editor_value",
                 principal="principal_value",
+                deletion_notifications_enabled=True,
             )
         )
         response = await client.update_big_query_export(request)
@@ -14254,6 +14273,7 @@ async def test_update_big_query_export_async(
     assert response.dataset == "dataset_value"
     assert response.most_recent_editor == "most_recent_editor_value"
     assert response.principal == "principal_value"
+    assert response.deletion_notifications_enabled is True
 
 
 def test_update_big_query_export_field_headers():
@@ -15496,6 +15516,7 @@ def test_update_notification_config(request_type, transport: str = "grpc"):
             description="description_value",
             pubsub_topic="pubsub_topic_value",
             service_account="service_account_value",
+            deletion_notifications_enabled=True,
         )
         response = client.update_notification_config(request)
 
@@ -15511,6 +15532,7 @@ def test_update_notification_config(request_type, transport: str = "grpc"):
     assert response.description == "description_value"
     assert response.pubsub_topic == "pubsub_topic_value"
     assert response.service_account == "service_account_value"
+    assert response.deletion_notifications_enabled is True
 
 
 def test_update_notification_config_non_empty_request_with_auto_populated_field():
@@ -15653,6 +15675,7 @@ async def test_update_notification_config_async(
                 description="description_value",
                 pubsub_topic="pubsub_topic_value",
                 service_account="service_account_value",
+                deletion_notifications_enabled=True,
             )
         )
         response = await client.update_notification_config(request)
@@ -15669,6 +15692,7 @@ async def test_update_notification_config_async(
     assert response.description == "description_value"
     assert response.pubsub_topic == "pubsub_topic_value"
     assert response.service_account == "service_account_value"
+    assert response.deletion_notifications_enabled is True
 
 
 def test_update_notification_config_field_headers():
@@ -26149,6 +26173,7 @@ async def test_create_big_query_export_empty_call_grpc_asyncio():
                 dataset="dataset_value",
                 most_recent_editor="most_recent_editor_value",
                 principal="principal_value",
+                deletion_notifications_enabled=True,
             )
         )
         await client.create_big_query_export(request=None)
@@ -26252,6 +26277,7 @@ async def test_create_notification_config_empty_call_grpc_asyncio():
                 description="description_value",
                 pubsub_topic="pubsub_topic_value",
                 service_account="service_account_value",
+                deletion_notifications_enabled=True,
             )
         )
         await client.create_notification_config(request=None)
@@ -26410,6 +26436,7 @@ async def test_get_big_query_export_empty_call_grpc_asyncio():
                 dataset="dataset_value",
                 most_recent_editor="most_recent_editor_value",
                 principal="principal_value",
+                deletion_notifications_enabled=True,
             )
         )
         await client.get_big_query_export(request=None)
@@ -26558,6 +26585,7 @@ async def test_get_notification_config_empty_call_grpc_asyncio():
                 description="description_value",
                 pubsub_topic="pubsub_topic_value",
                 service_account="service_account_value",
+                deletion_notifications_enabled=True,
             )
         )
         await client.get_notification_config(request=None)
@@ -27040,6 +27068,7 @@ async def test_update_big_query_export_empty_call_grpc_asyncio():
                 dataset="dataset_value",
                 most_recent_editor="most_recent_editor_value",
                 principal="principal_value",
+                deletion_notifications_enabled=True,
             )
         )
         await client.update_big_query_export(request=None)
@@ -27176,6 +27205,7 @@ async def test_update_notification_config_empty_call_grpc_asyncio():
                 description="description_value",
                 pubsub_topic="pubsub_topic_value",
                 service_account="service_account_value",
+                deletion_notifications_enabled=True,
             )
         )
         await client.update_notification_config(request=None)
@@ -28177,6 +28207,7 @@ def test_create_big_query_export_rest_call_success(request_type):
         "update_time": {},
         "most_recent_editor": "most_recent_editor_value",
         "principal": "principal_value",
+        "deletion_notifications_enabled": True,
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -28259,6 +28290,7 @@ def test_create_big_query_export_rest_call_success(request_type):
             dataset="dataset_value",
             most_recent_editor="most_recent_editor_value",
             principal="principal_value",
+            deletion_notifications_enabled=True,
         )
 
         # Wrap the value into a proper Response obj
@@ -28281,6 +28313,7 @@ def test_create_big_query_export_rest_call_success(request_type):
     assert response.dataset == "dataset_value"
     assert response.most_recent_editor == "most_recent_editor_value"
     assert response.principal == "principal_value"
+    assert response.deletion_notifications_enabled is True
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -29258,6 +29291,7 @@ def test_create_notification_config_rest_call_success(request_type):
         "service_account": "service_account_value",
         "streaming_config": {"filter": "filter_value"},
         "update_time": {"seconds": 751, "nanos": 543},
+        "deletion_notifications_enabled": True,
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -29338,6 +29372,7 @@ def test_create_notification_config_rest_call_success(request_type):
             description="description_value",
             pubsub_topic="pubsub_topic_value",
             service_account="service_account_value",
+            deletion_notifications_enabled=True,
         )
 
         # Wrap the value into a proper Response obj
@@ -29358,6 +29393,7 @@ def test_create_notification_config_rest_call_success(request_type):
     assert response.description == "description_value"
     assert response.pubsub_topic == "pubsub_topic_value"
     assert response.service_account == "service_account_value"
+    assert response.deletion_notifications_enabled is True
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -30143,6 +30179,7 @@ def test_get_big_query_export_rest_call_success(request_type):
             dataset="dataset_value",
             most_recent_editor="most_recent_editor_value",
             principal="principal_value",
+            deletion_notifications_enabled=True,
         )
 
         # Wrap the value into a proper Response obj
@@ -30165,6 +30202,7 @@ def test_get_big_query_export_rest_call_success(request_type):
     assert response.dataset == "dataset_value"
     assert response.most_recent_editor == "most_recent_editor_value"
     assert response.principal == "principal_value"
+    assert response.deletion_notifications_enabled is True
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -30838,6 +30876,7 @@ def test_get_notification_config_rest_call_success(request_type):
             description="description_value",
             pubsub_topic="pubsub_topic_value",
             service_account="service_account_value",
+            deletion_notifications_enabled=True,
         )
 
         # Wrap the value into a proper Response obj
@@ -30858,6 +30897,7 @@ def test_get_notification_config_rest_call_success(request_type):
     assert response.description == "description_value"
     assert response.pubsub_topic == "pubsub_topic_value"
     assert response.service_account == "service_account_value"
+    assert response.deletion_notifications_enabled is True
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -33081,6 +33121,7 @@ def test_update_big_query_export_rest_call_success(request_type):
         "update_time": {},
         "most_recent_editor": "most_recent_editor_value",
         "principal": "principal_value",
+        "deletion_notifications_enabled": True,
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -33163,6 +33204,7 @@ def test_update_big_query_export_rest_call_success(request_type):
             dataset="dataset_value",
             most_recent_editor="most_recent_editor_value",
             principal="principal_value",
+            deletion_notifications_enabled=True,
         )
 
         # Wrap the value into a proper Response obj
@@ -33185,6 +33227,7 @@ def test_update_big_query_export_rest_call_success(request_type):
     assert response.dataset == "dataset_value"
     assert response.most_recent_editor == "most_recent_editor_value"
     assert response.principal == "principal_value"
+    assert response.deletion_notifications_enabled is True
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -34418,6 +34461,7 @@ def test_update_notification_config_rest_call_success(request_type):
         "service_account": "service_account_value",
         "streaming_config": {"filter": "filter_value"},
         "update_time": {"seconds": 751, "nanos": 543},
+        "deletion_notifications_enabled": True,
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -34498,6 +34542,7 @@ def test_update_notification_config_rest_call_success(request_type):
             description="description_value",
             pubsub_topic="pubsub_topic_value",
             service_account="service_account_value",
+            deletion_notifications_enabled=True,
         )
 
         # Wrap the value into a proper Response obj
@@ -34518,6 +34563,7 @@ def test_update_notification_config_rest_call_success(request_type):
     assert response.description == "description_value"
     assert response.pubsub_topic == "pubsub_topic_value"
     assert response.service_account == "service_account_value"
+    assert response.deletion_notifications_enabled is True
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])

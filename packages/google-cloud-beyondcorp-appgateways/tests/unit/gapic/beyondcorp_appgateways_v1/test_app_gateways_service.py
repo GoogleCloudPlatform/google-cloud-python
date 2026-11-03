@@ -1683,6 +1683,8 @@ def test_get_app_gateway(request_type, transport: str = "grpc"):
             state=app_gateways_service.AppGateway.State.CREATING,
             uri="uri_value",
             host_type=app_gateways_service.AppGateway.HostType.GCP_REGIONAL_MIG,
+            satisfies_pzs=True,
+            satisfies_pzi=True,
         )
         response = client.get_app_gateway(request)
 
@@ -1703,6 +1705,8 @@ def test_get_app_gateway(request_type, transport: str = "grpc"):
     assert (
         response.host_type == app_gateways_service.AppGateway.HostType.GCP_REGIONAL_MIG
     )
+    assert response.satisfies_pzs is True
+    assert response.satisfies_pzi is True
 
 
 def test_get_app_gateway_non_empty_request_with_auto_populated_field():
@@ -1841,6 +1845,8 @@ async def test_get_app_gateway_async(request_type, transport: str = "grpc_asynci
                 state=app_gateways_service.AppGateway.State.CREATING,
                 uri="uri_value",
                 host_type=app_gateways_service.AppGateway.HostType.GCP_REGIONAL_MIG,
+                satisfies_pzs=True,
+                satisfies_pzi=True,
             )
         )
         response = await client.get_app_gateway(request)
@@ -1862,6 +1868,8 @@ async def test_get_app_gateway_async(request_type, transport: str = "grpc_asynci
     assert (
         response.host_type == app_gateways_service.AppGateway.HostType.GCP_REGIONAL_MIG
     )
+    assert response.satisfies_pzs is True
+    assert response.satisfies_pzi is True
 
 
 def test_get_app_gateway_field_headers():
@@ -3767,6 +3775,8 @@ async def test_get_app_gateway_empty_call_grpc_asyncio():
                 state=app_gateways_service.AppGateway.State.CREATING,
                 uri="uri_value",
                 host_type=app_gateways_service.AppGateway.HostType.GCP_REGIONAL_MIG,
+                satisfies_pzs=True,
+                satisfies_pzi=True,
             )
         )
         await client.get_app_gateway(request=None)
@@ -4028,6 +4038,8 @@ def test_get_app_gateway_rest_call_success(request_type):
             state=app_gateways_service.AppGateway.State.CREATING,
             uri="uri_value",
             host_type=app_gateways_service.AppGateway.HostType.GCP_REGIONAL_MIG,
+            satisfies_pzs=True,
+            satisfies_pzi=True,
         )
 
         # Wrap the value into a proper Response obj
@@ -4053,6 +4065,8 @@ def test_get_app_gateway_rest_call_success(request_type):
     assert (
         response.host_type == app_gateways_service.AppGateway.HostType.GCP_REGIONAL_MIG
     )
+    assert response.satisfies_pzs is True
+    assert response.satisfies_pzi is True
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -4174,6 +4188,8 @@ def test_create_app_gateway_rest_call_success(request_type):
         "uri": "uri_value",
         "allocated_connections": [{"psc_uri": "psc_uri_value", "ingress_port": 1311}],
         "host_type": 1,
+        "satisfies_pzs": True,
+        "satisfies_pzi": True,
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency

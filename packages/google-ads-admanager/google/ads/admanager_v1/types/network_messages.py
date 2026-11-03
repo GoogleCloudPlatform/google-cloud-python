@@ -145,7 +145,8 @@ class DefaultThirdPartyDataDeclaration(proto.Message):
             ``DefaultThirdPartyDataDeclaration``. Format:
             ``networks/{network_code}/defaultThirdPartyDataDeclaration``
         third_party_data_declaration (google.ads.admanager_v1.types.ThirdPartyDataDeclaration):
-            Optional. Returns the default [ThirdPartyDataDeclaration]
+            Optional. Returns the default
+            [ThirdPartyDataDeclaration][google.ads.admanager.v1.ThirdPartyDataDeclaration]
             for this network. If this setting has never been updated on
             your network, then this API response will be unset.
 

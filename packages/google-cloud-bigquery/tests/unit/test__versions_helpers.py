@@ -200,6 +200,31 @@ def test_bqstorage_is_read_session_optional_false():
         assert not bqstorage_versions.is_read_session_optional
 
 
+@pytest.mark.skipif(
+    bigquery_storage is None, reason="Requires `google-cloud-bigquery-storage`"
+)
+def test_bqstorage_supports_arrow_serialization_options_true():
+    from google.cloud.bigquery_storage_v1 import reader
+
+    bqstorage_versions = _versions_helpers.BQStorageVersions()
+    with mock.patch.object(reader.ReadRowsStream, "cancel", create=True):
+        assert bqstorage_versions.supports_arrow_serialization_options
+
+
+@pytest.mark.skipif(
+    bigquery_storage is None, reason="Requires `google-cloud-bigquery-storage`"
+)
+def test_bqstorage_supports_arrow_serialization_options_false():
+    from google.cloud.bigquery_storage_v1 import reader
+
+    class ReadRowsStream:
+        """Stands in for a ReadRowsStream from before cancel() was added."""
+
+    bqstorage_versions = _versions_helpers.BQStorageVersions()
+    with mock.patch.object(reader, "ReadRowsStream", ReadRowsStream):
+        assert not bqstorage_versions.supports_arrow_serialization_options
+
+
 @pytest.mark.skipif(pandas is None, reason="pandas is not installed")
 @pytest.mark.parametrize("version", ["1.1.5", "2.0.0", "2.1.0"])
 def test_try_import_raises_no_error_w_recent_pandas(version):

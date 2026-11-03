@@ -37,16 +37,47 @@ VENEER_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
     client_library_version=package_version.__version__
 )
 
+# A ReadRows stream can sit idle for a long time, for example while BigQuery
+# finishes a query job before the first row. Without keepalive pings, a NAT or
+# load balancer can drop the idle connection without telling either side.
+_KEEPALIVE_TIME_MS = 60 * 1000
+_KEEPALIVE_TIMEOUT_MS = 60 * 1000
+
+
+def _create_keepalive_transport(**kwargs):
+    """Create the default gRPC transport with a channel that sends keepalive
+    pings.
+
+    ``BigQueryReadClient`` calls this with the arguments it passes to its
+    default transport.
+    """
+    transport_class = big_query_read.BigQueryReadClient.get_transport_class("grpc")
+
+    def create_channel(*args, options=(), **channel_kwargs):
+        options = list(options) + [
+            ("grpc.keepalive_time_ms", _KEEPALIVE_TIME_MS),
+            ("grpc.keepalive_timeout_ms", _KEEPALIVE_TIMEOUT_MS),
+        ]
+        return transport_class.create_channel(*args, options=options, **channel_kwargs)
+
+    return transport_class(channel=create_channel, **kwargs)
+
 
 class BigQueryReadClient(big_query_read.BigQueryReadClient):
     """Client for interacting with BigQuery Storage API.
 
     The BigQuery storage API can be used to read data stored in BigQuery.
+
+    By default, the client's gRPC channel sends keepalive pings, so idle
+    ``ReadRows`` streams aren't dropped. A ``transport`` passed to the
+    constructor is used as given.
     """
 
     def __init__(self, **kwargs):
         if "client_info" not in kwargs:
             kwargs["client_info"] = VENEER_CLIENT_INFO
+        if kwargs.get("transport") in (None, "grpc"):
+            kwargs["transport"] = _create_keepalive_transport
         super().__init__(**kwargs)
 
     def read_rows(
@@ -57,6 +88,8 @@ class BigQueryReadClient(big_query_read.BigQueryReadClient):
         timeout=google.api_core.gapic_v1.method.DEFAULT,
         metadata=(),
         retry_delay_callback=None,
+        *,
+        arrow_serialization_options=None,
     ):
         """
         Reads rows from the table in the format prescribed by the read
@@ -124,6 +157,14 @@ class BigQueryReadClient(big_query_read.BigQueryReadClient):
                 BigQueryReadClient will call retry_delay_callback with the delay
                 duration (in seconds) before it starts sleeping until the next
                 attempt.
+            arrow_serialization_options (Optional[Union[dict, \
+                ~google.cloud.bigquery_storage_v1.types.ArrowSerializationOptions \
+            ]]):
+                [Beta] Arrow serialization options, such as buffer compression,
+                to send on every ``ReadRows`` request, including after a
+                reconnect. Only job default streams
+                (``projects/{project}/locations/{location}/jobs/{job}/streams/_default``)
+                accept them.
 
         Returns:
             ~google.cloud.bigquery_storage_v1.reader.ReadRowsStream:
@@ -137,6 +178,11 @@ class BigQueryReadClient(big_query_read.BigQueryReadClient):
                     to a retryable error and retry attempts failed.
             ValueError: If the parameters are invalid.
         """
+        request_template = None
+        if arrow_serialization_options is not None:
+            request_template = {
+                "arrow_serialization_options": arrow_serialization_options
+            }
         gapic_client = super(BigQueryReadClient, self)
         stream = reader.ReadRowsStream(
             gapic_client,
@@ -144,6 +190,7 @@ class BigQueryReadClient(big_query_read.BigQueryReadClient):
             offset,
             {"retry": retry, "timeout": timeout, "metadata": metadata},
             retry_delay_callback=retry_delay_callback,
+            request_template=request_template,
         )
         stream._reconnect()
         return stream

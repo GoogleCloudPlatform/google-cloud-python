@@ -1,5 +1,5 @@
-pytest==9.0.3
+pytest==9.1.1
 pytest-dependency==0.6.1
 mock==5.2.0
-google-cloud-testutils==1.8.0
+google-cloud-testutils==1.10.1
 pytest-asyncio==1.4.0

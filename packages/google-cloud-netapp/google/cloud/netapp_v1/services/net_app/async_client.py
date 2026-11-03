@@ -115,6 +115,8 @@ class NetAppAsyncClient:
     parse_backup_policy_path = staticmethod(NetAppClient.parse_backup_policy_path)
     backup_vault_path = staticmethod(NetAppClient.backup_vault_path)
     parse_backup_vault_path = staticmethod(NetAppClient.parse_backup_vault_path)
+    crypto_key_path = staticmethod(NetAppClient.crypto_key_path)
+    parse_crypto_key_path = staticmethod(NetAppClient.parse_crypto_key_path)
     host_group_path = staticmethod(NetAppClient.host_group_path)
     parse_host_group_path = staticmethod(NetAppClient.parse_host_group_path)
     kms_config_path = staticmethod(NetAppClient.kms_config_path)
@@ -1504,7 +1506,7 @@ class NetAppAsyncClient:
                 volume.share_name = "share_name_value"
                 volume.storage_pool = "storage_pool_value"
                 volume.capacity_gib = 1247
-                volume.protocols = ['ISCSI']
+                volume.protocols = ['NVME']
 
                 request = netapp_v1.CreateVolumeRequest(
                     parent="parent_value",
@@ -1656,7 +1658,7 @@ class NetAppAsyncClient:
                 volume.share_name = "share_name_value"
                 volume.storage_pool = "storage_pool_value"
                 volume.capacity_gib = 1247
-                volume.protocols = ['ISCSI']
+                volume.protocols = ['NVME']
 
                 request = netapp_v1.UpdateVolumeRequest(
                     volume=volume,
@@ -1998,6 +2000,247 @@ class NetAppAsyncClient:
             self._client._transport.operations_client,
             volume.Volume,
             metadata_type=cloud_netapp_service.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def start_split(
+        self,
+        request: Optional[Union[volume.StartSplitRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Splits a clone volume from its source volume. This operation
+        will only work for volumes which have clone_details set(clones).
+        For volumes that are not clones, this operation will return an
+        error.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import netapp_v1
+
+            async def sample_start_split():
+                # Create a client
+                client = netapp_v1.NetAppAsyncClient()
+
+                # Initialize request argument(s)
+                request = netapp_v1.StartSplitRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                operation = await client.start_split(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.netapp_v1.types.StartSplitRequest, dict]]):
+                The request object. Request message for splitting a
+                volume.
+            name (:class:`str`):
+                Required. The full name of the clone volume to be split
+                from its source. Format:
+                projects/{project_number}/locations/{location}/volumes/{volume_id}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.netapp_v1.types.Volume` Volume
+                provides a filesystem that you can mount.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, volume.StartSplitRequest):
+            request = volume.StartSplitRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.start_split
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            volume.Volume,
+            metadata_type=cloud_netapp_service.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def get_split_status(
+        self,
+        request: Optional[Union[volume.GetSplitStatusRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> volume.SplitStatus:
+        r"""Retrieves the current state, progress, and details of
+        a split operation for a volume. This method is relevant
+        when the volume is a clone. For volumes that are not
+        clones, this method will return an error.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import netapp_v1
+
+            async def sample_get_split_status():
+                # Create a client
+                client = netapp_v1.NetAppAsyncClient()
+
+                # Initialize request argument(s)
+                request = netapp_v1.GetSplitStatusRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = await client.get_split_status(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.netapp_v1.types.GetSplitStatusRequest, dict]]):
+                The request object. Request message for GetSplitStatus.
+            name (:class:`str`):
+                Required. The full name of the volume. Format:
+                projects/{project_number}/locations/{location}/volumes/{volume_id}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.netapp_v1.types.SplitStatus:
+                Message for SplitStatus.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, volume.GetSplitStatusRequest):
+            request = volume.GetSplitStatusRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.get_split_status
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
         )
 
         # Done; return the response.
@@ -8957,8 +9200,8 @@ class NetAppAsyncClient:
         timeout: Union[float, object] = gapic_v1.method.DEFAULT,
         metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
     ) -> ontap.ExecuteOntapPostResponse:
-        r"""``ExecuteOntapPost`` dispatches the ONTAP ``POST`` request to
-        the ``StoragePool`` cluster.
+        r"""``ExecuteOntapPost`` sends the ONTAP ``POST`` request to the
+        ``StoragePool`` cluster.
 
         .. code-block:: python
 
@@ -9043,7 +9286,7 @@ class NetAppAsyncClient:
         timeout: Union[float, object] = gapic_v1.method.DEFAULT,
         metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
     ) -> ontap.ExecuteOntapGetResponse:
-        r"""``ExecuteOntapGet`` dispatches the ONTAP ``GET`` request to the
+        r"""``ExecuteOntapGet`` sends the ONTAP ``GET`` request to the
         ``StoragePool`` cluster.
 
         .. code-block:: python
@@ -9129,8 +9372,8 @@ class NetAppAsyncClient:
         timeout: Union[float, object] = gapic_v1.method.DEFAULT,
         metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
     ) -> ontap.ExecuteOntapDeleteResponse:
-        r"""``ExecuteOntapDelete`` dispatches the ONTAP ``DELETE`` request
-        to the ``StoragePool`` cluster.
+        r"""``ExecuteOntapDelete`` sends the ONTAP ``DELETE`` request to the
+        ``StoragePool`` cluster.
 
         .. code-block:: python
 
@@ -9215,8 +9458,8 @@ class NetAppAsyncClient:
         timeout: Union[float, object] = gapic_v1.method.DEFAULT,
         metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
     ) -> ontap.ExecuteOntapPatchResponse:
-        r"""``ExecuteOntapPatch`` dispatches the ONTAP ``PATCH`` request to
-        the ``StoragePool`` cluster.
+        r"""``ExecuteOntapPatch`` sends the ONTAP ``PATCH`` request to the
+        ``StoragePool`` cluster.
 
         .. code-block:: python
 
@@ -9288,6 +9531,450 @@ class NetAppAsyncClient:
             retry=retry,
             timeout=timeout,
             metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def restore_volume(
+        self,
+        request: Optional[Union[volume.RestoreVolumeRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        backup_source: Optional[volume.BackupSource] = None,
+        ontap_volume_target: Optional[volume.OntapVolumeTarget] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Restores a backup to an ONTAP-mode volume.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import netapp_v1
+
+            async def sample_restore_volume():
+                # Create a client
+                client = netapp_v1.NetAppAsyncClient()
+
+                # Initialize request argument(s)
+                backup_source = netapp_v1.BackupSource()
+                backup_source.backup = "backup_value"
+
+                ontap_volume_target = netapp_v1.OntapVolumeTarget()
+                ontap_volume_target.volume_uuid = "volume_uuid_value"
+
+                request = netapp_v1.RestoreVolumeRequest(
+                    backup_source=backup_source,
+                    ontap_volume_target=ontap_volume_target,
+                    name="name_value",
+                )
+
+                # Make the request
+                operation = await client.restore_volume(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.netapp_v1.types.RestoreVolumeRequest, dict]]):
+                The request object. Request message for ``RestoreVolume`` API.
+            name (:class:`str`):
+                Required. The resource name of the ONTAP mode storage
+                pool, in the format of
+                ``projects/{project}/locations/{location}/storagePools/{storage_pool}``
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            backup_source (:class:`google.cloud.netapp_v1.types.BackupSource`):
+                The backup source of the restore
+                operation.
+
+                This corresponds to the ``backup_source`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            ontap_volume_target (:class:`google.cloud.netapp_v1.types.OntapVolumeTarget`):
+                The ONTAP volume target of the
+                restore operation.
+
+                This corresponds to the ``ontap_volume_target`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.netapp_v1.types.RestoreVolumeResponse`
+                Response message for RestoreVolume API.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name, backup_source, ontap_volume_target]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, volume.RestoreVolumeRequest):
+            request = volume.RestoreVolumeRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+        if backup_source is not None:
+            request.backup_source = backup_source
+        if ontap_volume_target is not None:
+            request.ontap_volume_target = ontap_volume_target
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.restore_volume
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            volume.RestoreVolumeResponse,
+            metadata_type=cloud_netapp_service.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def list_backup_configs(
+        self,
+        request: Optional[Union[volume.ListBackupConfigsRequest, dict]] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListBackupConfigsAsyncPager:
+        r"""Lists backup configurations for all volumes in an
+        ONTAP-mode Storage Pool.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import netapp_v1
+
+            async def sample_list_backup_configs():
+                # Create a client
+                client = netapp_v1.NetAppAsyncClient()
+
+                # Initialize request argument(s)
+                request = netapp_v1.ListBackupConfigsRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_backup_configs(request=request)
+
+                # Handle the response
+                async for response in page_result:
+                    print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.netapp_v1.types.ListBackupConfigsRequest, dict]]):
+                The request object. Message for requesting list of
+                BackupConfigs in a StoragePool.
+            parent (:class:`str`):
+                Required. The ONTAP StoragePool for which to retrieve
+                backup configuration information, in the format
+                ``projects/{project}/locations/{location}/storagePools/{storage_pool}``.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.netapp_v1.services.net_app.pagers.ListBackupConfigsAsyncPager:
+                Message for response to listing
+                BackupConfigs in an ONTAP StoragePool.
+                Iterating over this object will yield
+                results and resolve additional pages
+                automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, volume.ListBackupConfigsRequest):
+            request = volume.ListBackupConfigsRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.list_backup_configs
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__aiter__` convenience method.
+        response = pagers.ListBackupConfigsAsyncPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def update_backup_config(
+        self,
+        request: Optional[Union[volume.UpdateBackupConfigRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        volume_uuid: Optional[str] = None,
+        backup_config: Optional[volume.BackupConfig] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Updates the backup configuration for an ONTAP-mode
+        volume.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import netapp_v1
+
+            async def sample_update_backup_config():
+                # Create a client
+                client = netapp_v1.NetAppAsyncClient()
+
+                # Initialize request argument(s)
+                request = netapp_v1.UpdateBackupConfigRequest(
+                    name="name_value",
+                    volume_uuid="volume_uuid_value",
+                )
+
+                # Make the request
+                operation = await client.update_backup_config(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.netapp_v1.types.UpdateBackupConfigRequest, dict]]):
+                The request object. Request message for
+                UpdateBackupConfig
+            name (:class:`str`):
+                Required. The resource name of the
+                StoragePool, in the format:
+                projects/{projectNumber}/locations/{locationId}/storagePools/{poolId}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            volume_uuid (:class:`str`):
+                Required. The UUID of the ONTAP-mode
+                volume.
+
+                This corresponds to the ``volume_uuid`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            backup_config (:class:`google.cloud.netapp_v1.types.BackupConfig`):
+                Required. Backup configuration to
+                apply.
+
+                This corresponds to the ``backup_config`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Required. Field mask is used to specify the fields to be
+                overwritten in the BackupConfig for the Volume. The
+                fields specified in the update_mask are relative to the
+                resource, not the full request. A field will be
+                overwritten if it is in the mask.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.netapp_v1.types.UpdateBackupConfigResponse`
+                Response message for UpdateBackupConfig
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name, volume_uuid, backup_config, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, volume.UpdateBackupConfigRequest):
+            request = volume.UpdateBackupConfigRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+        if volume_uuid is not None:
+            request.volume_uuid = volume_uuid
+        if backup_config is not None:
+            request.backup_config = backup_config
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_backup_config
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            volume.UpdateBackupConfigResponse,
+            metadata_type=cloud_netapp_service.OperationMetadata,
         )
 
         # Done; return the response.

@@ -18,11 +18,12 @@ import time
 import warnings
 
 import backoff
-import instanceadmin
 import pytest
 from google.api_core import exceptions
 
 from google.cloud import bigtable
+
+from . import instanceadmin
 
 PROJECT = os.environ["GOOGLE_CLOUD_PROJECT"]
 INSTANCE_ID_FORMAT = "instanceadmin-{:03}-{}"

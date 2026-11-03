@@ -1879,6 +1879,27 @@ class ParticipantsRestTransport(_BaseParticipantsRestTransport):
                 "Method StreamingAnalyzeContent is not available over REST transport"
             )
 
+    class _StreamingReactiveCompanionSuggestions(
+        _BaseParticipantsRestTransport._BaseStreamingReactiveCompanionSuggestions,
+        ParticipantsRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "ParticipantsRestTransport.StreamingReactiveCompanionSuggestions"
+            )
+
+        def __call__(
+            self,
+            request: participant.StreamingReactiveCompanionSuggestionsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> rest_streaming.ResponseIterator:
+            raise NotImplementedError(
+                "Method StreamingReactiveCompanionSuggestions is not available over REST transport"
+            )
+
     class _SuggestArticles(
         _BaseParticipantsRestTransport._BaseSuggestArticles, ParticipantsRestStub
     ):
@@ -2720,6 +2741,19 @@ class ParticipantsRestTransport(_BaseParticipantsRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._StreamingAnalyzeContent(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def streaming_reactive_companion_suggestions(
+        self,
+    ) -> Callable[
+        [participant.StreamingReactiveCompanionSuggestionsRequest],
+        participant.StreamingReactiveCompanionSuggestionsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._StreamingReactiveCompanionSuggestions(
             self._session, self._host, self._interceptor
         )  # type: ignore
 

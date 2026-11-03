@@ -13,41 +13,36 @@
 # limitations under the License.
 
 import os
+from unittest import mock
 
-import mock
 import pytest
 from opentelemetry.sdk.metrics import MeterProvider
 from opentelemetry.sdk.metrics.export import InMemoryMetricReader
 
-from google.cloud.spanner_v1 import Client
-
-# System tests are skipped if the environment variables are not set.
-PROJECT = os.environ.get("GOOGLE_CLOUD_PROJECT")
-INSTANCE_ID = os.environ.get("SPANNER_TEST_INSTANCE")
-DATABASE_ID = "test_metrics_db_system"
-
-
-pytestmark = pytest.mark.skipif(
-    not all([PROJECT, INSTANCE_ID]), reason="System test environment variables not set."
+from google.cloud.spanner_v1._helpers import _GLOBAL_STREAM_DRAINER
+from google.cloud.spanner_v1.metrics import constants
+from google.cloud.spanner_v1.metrics.spanner_metrics_tracer_factory import (
+    SpannerMetricsTracerFactory,
 )
 
 
-@pytest.fixture(scope="module")
-def metrics_database():
-    """Create a database for the test."""
-    client = Client(project=PROJECT)
-    instance = client.instance(INSTANCE_ID)
-    database = instance.database(DATABASE_ID)
-    if database.exists():  # Clean up from previous failed run
-        database.drop()
-    op = database.create()
-    op.result(timeout=300)  # Wait for creation to complete
-    yield database
-    if database.exists():
-        database.drop()
+def _wait_for_stream_drainer(timeout: float = 10.0) -> None:
+    """Wait for pending background stream draining tasks to complete.
+
+    TODO(#18656): Remove this helper once metrics are recorded immediately
+    upon observing PartialResultSet.last=True.
+    """
+    drain_queue = _GLOBAL_STREAM_DRAINER._queue
+    with drain_queue.all_tasks_done:
+        drained = drain_queue.all_tasks_done.wait_for(
+            lambda: drain_queue.unfinished_tasks == 0,
+            timeout=timeout,
+        )
+    if not drained:
+        pytest.fail("Timed out waiting for background stream drainer to complete.")
 
 
-def test_builtin_metrics_with_default_otel(metrics_database):
+def test_builtin_metrics_with_default_otel(not_emulator, shared_database):
     """
     Verifies that built-in metrics are collected by default when a
     transaction is executed.
@@ -55,14 +50,32 @@ def test_builtin_metrics_with_default_otel(metrics_database):
     reader = InMemoryMetricReader()
     meter_provider = MeterProvider(metric_readers=[reader])
 
-    # Patch the client's metric setup to use our in-memory reader.
-    with mock.patch(
-        "google.cloud.spanner_v1.client.MeterProvider",
-        return_value=meter_provider,
-    ):
-        with mock.patch.dict(os.environ, {"SPANNER_DISABLE_BUILTIN_METRICS": "false"}):
-            with metrics_database.snapshot() as snapshot:
+    old_factory = SpannerMetricsTracerFactory._metrics_tracer_factory
+    SpannerMetricsTracerFactory._metrics_tracer_factory = None
+    try:
+        # Patch the meter provider setup to use our in-memory reader.
+        with (
+            mock.patch(
+                "google.cloud.spanner_v1.metrics.metrics_tracer_factory.get_meter_provider",
+                return_value=meter_provider,
+            ),
+            mock.patch(
+                "google.cloud.spanner_v1.client.MeterProvider",
+                return_value=meter_provider,
+            ),
+            mock.patch.dict(os.environ, {"SPANNER_DISABLE_BUILTIN_METRICS": "false"}),
+        ):
+            with shared_database.snapshot() as snapshot:
                 list(snapshot.execute_sql("SELECT 1"))
+            # When PartialResultSet.last is True, stream draining and metric recording
+            # for attempt/GFE/AFE latencies happen asynchronously in the background.
+            # Wait for any pending drain tasks to complete before collecting metrics.
+            # TODO(#18656): Record attempt and front-end metrics when PartialResultSet.last=True
+            # is observed on the stream, rather than waiting for StopIteration in the background
+            # drainer. This synchronization step can then be removed.
+            _wait_for_stream_drainer()
+    finally:
+        SpannerMetricsTracerFactory._metrics_tracer_factory = old_factory
 
     metric_data = reader.get_metrics_data()
 
@@ -74,20 +87,20 @@ def test_builtin_metrics_with_default_otel(metrics_database):
         for metric in metric_data.resource_metrics[0].scope_metrics[0].metrics
     }
     expected_metrics = {
-        "spanner/operation_latencies",
-        "spanner/attempt_latencies",
-        "spanner/operation_count",
-        "spanner/attempt_count",
-        "spanner/gfe_latencies",
-        "spanner/afe_latencies",
+        constants.METRIC_NAME_OPERATION_LATENCIES,
+        constants.METRIC_NAME_ATTEMPT_LATENCIES,
+        constants.METRIC_NAME_OPERATION_COUNT,
+        constants.METRIC_NAME_ATTEMPT_COUNT,
+        constants.METRIC_NAME_GFE_LATENCY,
+        constants.METRIC_NAME_AFE_LATENCY,
     }
     assert expected_metrics.issubset(collected_metrics)
 
     for metric in metric_data.resource_metrics[0].scope_metrics[0].metrics:
-        if metric.name == "spanner/operation_count":
+        if metric.name == constants.METRIC_NAME_OPERATION_COUNT:
             point = next(iter(metric.data.data_points))
             assert point.value == 1
-            assert point.attributes["method"] == "ExecuteSql"
+            assert point.attributes["method"] == "Spanner.ExecuteStreamingSql"
             return
 
-    pytest.fail("Metric 'spanner/operation_count' not found.")
+    pytest.fail(f"Metric '{constants.METRIC_NAME_OPERATION_COUNT}' not found.")

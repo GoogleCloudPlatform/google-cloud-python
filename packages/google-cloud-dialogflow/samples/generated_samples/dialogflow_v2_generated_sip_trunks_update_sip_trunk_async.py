@@ -44,6 +44,7 @@ async def sample_update_sip_trunk():
         "expected_hostname_value1",
         "expected_hostname_value2",
     ]
+    sip_trunk.peer_hostnames.peer_hostname = "peer_hostname_value"
 
     request = dialogflow_v2.UpdateSipTrunkRequest(
         sip_trunk=sip_trunk,

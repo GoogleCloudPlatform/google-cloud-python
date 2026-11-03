@@ -138,7 +138,7 @@ def _get_spanner_log_client_options_env():
     return os.getenv(LOG_CLIENT_OPTIONS_ENV_VAR, "false").lower() == "true"
 
 
-def _initialize_metrics(project, credentials):
+def _initialize_metrics(project, credentials, emulator_host=None):
     """
     Initializes the Spanner built-in metrics.
 
@@ -151,7 +151,11 @@ def _initialize_metrics(project, credentials):
             if not _metrics_monitor_initialized:
                 meter_provider = metrics.NoOpMeterProvider()
                 try:
-                    if not _get_spanner_emulator_host():
+                    if (
+                        not _get_spanner_emulator_host()
+                        and not emulator_host
+                        and not isinstance(credentials, AnonymousCredentials)
+                    ):
                         meter_provider = MeterProvider(
                             metric_readers=[
                                 PeriodicExportingMetricReader(
@@ -417,7 +421,7 @@ class Client(ClientWithProject):
             and not disable_builtin_metrics
             and HAS_GOOGLE_CLOUD_MONITORING_INSTALLED
         ):
-            _initialize_metrics(project, credentials)
+            _initialize_metrics(project, credentials, self._emulator_host)
         else:
             SpannerMetricsTracerFactory(enabled=False)
 

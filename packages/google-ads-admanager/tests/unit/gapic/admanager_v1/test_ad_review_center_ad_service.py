@@ -1013,12 +1013,21 @@ def test_search_ad_review_center_ads_rest_required_fields(
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
         (
+            "adResponseId",
             "adReviewCenterAdId",
+            "adTypes",
+            "advertiserApps",
+            "advertiserDisplayNames",
             "buyerAccountId",
             "dateTimeRange",
+            "labelIds",
+            "languageCodes",
             "manualReviewStatus",
+            "newInLastDays",
             "pageSize",
             "pageToken",
+            "publisherDomains",
+            "regionCodes",
             "searchText",
             "status",
         )
@@ -1560,6 +1569,379 @@ def test_batch_block_ad_review_center_ads_rest_flattened_error(transport: str = 
         )
 
 
+def test_fetch_ad_review_center_custom_labels_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = AdReviewCenterAdServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.fetch_ad_review_center_custom_labels
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.fetch_ad_review_center_custom_labels
+        ] = mock_rpc
+
+        request = {}
+        client.fetch_ad_review_center_custom_labels(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.fetch_ad_review_center_custom_labels(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_fetch_ad_review_center_custom_labels_rest_required_fields(
+    request_type=ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsRequest,
+):
+    transport_class = transports.AdReviewCenterAdServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseFetchAdReviewCenterCustomLabels,
+        "_BaseFetchAdReviewCenterCustomLabels__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+
+    client = AdReviewCenterAdServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = (
+                ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse.pb(
+                    return_value
+                )
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.fetch_ad_review_center_custom_labels(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_fetch_ad_review_center_custom_labels_rest_flattened():
+    client = AdReviewCenterAdServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = (
+            ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse()
+        )
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1/webProperties/sample2"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = (
+            ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse.pb(
+                return_value
+            )
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.fetch_ad_review_center_custom_labels(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*/webProperties/*}/adReviewCenterAds:fetchCustomLabels"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_fetch_ad_review_center_custom_labels_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = AdReviewCenterAdServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.fetch_ad_review_center_custom_labels(
+            ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsRequest(),
+            parent="parent_value",
+        )
+
+
+def test_batch_apply_ad_review_center_custom_labels_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = AdReviewCenterAdServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_apply_ad_review_center_custom_labels
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.batch_apply_ad_review_center_custom_labels
+        ] = mock_rpc
+
+        request = {}
+        client.batch_apply_ad_review_center_custom_labels(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_apply_ad_review_center_custom_labels(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_apply_ad_review_center_custom_labels_rest_required_fields(
+    request_type=ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsRequest,
+):
+    transport_class = transports.AdReviewCenterAdServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchApplyAdReviewCenterCustomLabels,
+        "_BaseBatchApplyAdReviewCenterCustomLabels__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+
+    client = AdReviewCenterAdServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = (
+        ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse()
+    )
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_apply_ad_review_center_custom_labels(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_apply_ad_review_center_custom_labels_rest_flattened():
+    client = AdReviewCenterAdServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = (
+            ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse()
+        )
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1/webProperties/sample2"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = (
+            ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse.pb(
+                return_value
+            )
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_apply_ad_review_center_custom_labels(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*/webProperties/*}/adReviewCenterAds:batchApplyCustomLabels"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_apply_ad_review_center_custom_labels_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = AdReviewCenterAdServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_apply_ad_review_center_custom_labels(
+            ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsRequest(),
+            parent="parent_value",
+        )
+
+
 def test_credentials_transport_error():
     # It is an error to provide credentials and a transport instance.
     transport = transports.AdReviewCenterAdServiceRestTransport(
@@ -2042,6 +2424,303 @@ def test_batch_block_ad_review_center_ads_rest_interceptors(null_interceptor):
         post_with_metadata.assert_called_once()
 
 
+def test_fetch_ad_review_center_custom_labels_rest_bad_request(
+    request_type=ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsRequest,
+):
+    client = AdReviewCenterAdServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1/webProperties/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.fetch_ad_review_center_custom_labels(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsRequest,
+        dict,
+    ],
+)
+def test_fetch_ad_review_center_custom_labels_rest_call_success(request_type):
+    client = AdReviewCenterAdServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1/webProperties/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = (
+            ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse()
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = (
+            ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse.pb(
+                return_value
+            )
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.fetch_ad_review_center_custom_labels(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response, ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse
+    )
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_fetch_ad_review_center_custom_labels_rest_interceptors(null_interceptor):
+    transport = transports.AdReviewCenterAdServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.AdReviewCenterAdServiceRestInterceptor(),
+    )
+    client = AdReviewCenterAdServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.AdReviewCenterAdServiceRestInterceptor,
+            "post_fetch_ad_review_center_custom_labels",
+        ) as post,
+        mock.patch.object(
+            transports.AdReviewCenterAdServiceRestInterceptor,
+            "post_fetch_ad_review_center_custom_labels_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.AdReviewCenterAdServiceRestInterceptor,
+            "pre_fetch_ad_review_center_custom_labels",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = (
+            ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsRequest.pb(
+                ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsRequest()
+            )
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = (
+            ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse.to_json(
+                ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse()
+            )
+        )
+        req.return_value.content = return_value
+
+        request = ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = (
+            ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse()
+        )
+        post_with_metadata.return_value = (
+            ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse(),
+            metadata,
+        )
+
+        client.fetch_ad_review_center_custom_labels(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_apply_ad_review_center_custom_labels_rest_bad_request(
+    request_type=ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsRequest,
+):
+    client = AdReviewCenterAdServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1/webProperties/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_apply_ad_review_center_custom_labels(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsRequest,
+        dict,
+    ],
+)
+def test_batch_apply_ad_review_center_custom_labels_rest_call_success(request_type):
+    client = AdReviewCenterAdServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1/webProperties/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = (
+            ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse()
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = (
+            ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse.pb(
+                return_value
+            )
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_apply_ad_review_center_custom_labels(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response,
+        ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse,
+    )
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_apply_ad_review_center_custom_labels_rest_interceptors(null_interceptor):
+    transport = transports.AdReviewCenterAdServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.AdReviewCenterAdServiceRestInterceptor(),
+    )
+    client = AdReviewCenterAdServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.AdReviewCenterAdServiceRestInterceptor,
+            "post_batch_apply_ad_review_center_custom_labels",
+        ) as post,
+        mock.patch.object(
+            transports.AdReviewCenterAdServiceRestInterceptor,
+            "post_batch_apply_ad_review_center_custom_labels_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.AdReviewCenterAdServiceRestInterceptor,
+            "pre_batch_apply_ad_review_center_custom_labels",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsRequest.pb(
+            ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse.to_json(
+            ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse()
+        )
+        req.return_value.content = return_value
+
+        request = (
+            ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsRequest()
+        )
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = (
+            ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse()
+        )
+        post_with_metadata.return_value = (
+            ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse(),
+            metadata,
+        )
+
+        client.batch_apply_ad_review_center_custom_labels(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
 def test_cancel_operation_rest_bad_request(
     request_type=operations_pb2.CancelOperationRequest,
 ):
@@ -2238,6 +2917,52 @@ def test_batch_block_ad_review_center_ads_empty_call_rest():
         assert args[0] == request_msg
 
 
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_fetch_ad_review_center_custom_labels_empty_call_rest():
+    client = AdReviewCenterAdServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_ad_review_center_custom_labels), "__call__"
+    ) as call:
+        client.fetch_ad_review_center_custom_labels(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = (
+            ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsRequest()
+        )
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_apply_ad_review_center_custom_labels_empty_call_rest():
+    client = AdReviewCenterAdServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_apply_ad_review_center_custom_labels), "__call__"
+    ) as call:
+        client.batch_apply_ad_review_center_custom_labels(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = (
+            ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsRequest()
+        )
+        assert args[0] == request_msg
+
+
 def test_ad_review_center_ad_service_rest_lro_client():
     client = AdReviewCenterAdServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -2280,6 +3005,8 @@ def test_ad_review_center_ad_service_base_transport():
         "search_ad_review_center_ads",
         "batch_allow_ad_review_center_ads",
         "batch_block_ad_review_center_ads",
+        "fetch_ad_review_center_custom_labels",
+        "batch_apply_ad_review_center_custom_labels",
         "get_operation",
         "cancel_operation",
     )
@@ -2438,6 +3165,12 @@ def test_ad_review_center_ad_service_client_transport_session_collision(transpor
     assert session1 != session2
     session1 = client1.transport.batch_block_ad_review_center_ads._session
     session2 = client2.transport.batch_block_ad_review_center_ads._session
+    assert session1 != session2
+    session1 = client1.transport.fetch_ad_review_center_custom_labels._session
+    session2 = client2.transport.fetch_ad_review_center_custom_labels._session
+    assert session1 != session2
+    session1 = client1.transport.batch_apply_ad_review_center_custom_labels._session
+    session2 = client2.transport.batch_apply_ad_review_center_custom_labels._session
     assert session1 != session2
 
 

@@ -19,6 +19,7 @@ from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
@@ -154,6 +155,76 @@ class LineItemServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.create_line_item: gapic_v1.method.wrap_method(
+                self.create_line_item,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_create_line_items: gapic_v1.method.wrap_method(
+                self.batch_create_line_items,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_line_item: gapic_v1.method.wrap_method(
+                self.update_line_item,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_update_line_items: gapic_v1.method.wrap_method(
+                self.batch_update_line_items,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_activate_line_items: gapic_v1.method.wrap_method(
+                self.batch_activate_line_items,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_pause_line_items: gapic_v1.method.wrap_method(
+                self.batch_pause_line_items,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_resume_line_items: gapic_v1.method.wrap_method(
+                self.batch_resume_line_items,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_resume_and_overbook_line_items: gapic_v1.method.wrap_method(
+                self.batch_resume_and_overbook_line_items,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_delete_line_items: gapic_v1.method.wrap_method(
+                self.batch_delete_line_items,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_reserve_line_items: gapic_v1.method.wrap_method(
+                self.batch_reserve_line_items,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_reserve_and_overbook_line_items: gapic_v1.method.wrap_method(
+                self.batch_reserve_and_overbook_line_items,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_release_line_items: gapic_v1.method.wrap_method(
+                self.batch_release_line_items,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_archive_line_items: gapic_v1.method.wrap_method(
+                self.batch_archive_line_items,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_unarchive_line_items: gapic_v1.method.wrap_method(
+                self.batch_unarchive_line_items,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.cancel_operation: gapic_v1.method.wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
@@ -192,6 +263,165 @@ class LineItemServiceTransport(abc.ABC):
         Union[
             line_item_service.ListLineItemsResponse,
             Awaitable[line_item_service.ListLineItemsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_line_item(
+        self,
+    ) -> Callable[
+        [line_item_service.CreateLineItemRequest],
+        Union[line_item_messages.LineItem, Awaitable[line_item_messages.LineItem]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_create_line_items(
+        self,
+    ) -> Callable[
+        [line_item_service.BatchCreateLineItemsRequest],
+        Union[
+            line_item_service.BatchCreateLineItemsResponse,
+            Awaitable[line_item_service.BatchCreateLineItemsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_line_item(
+        self,
+    ) -> Callable[
+        [line_item_service.UpdateLineItemRequest],
+        Union[line_item_messages.LineItem, Awaitable[line_item_messages.LineItem]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_update_line_items(
+        self,
+    ) -> Callable[
+        [line_item_service.BatchUpdateLineItemsRequest],
+        Union[
+            line_item_service.BatchUpdateLineItemsResponse,
+            Awaitable[line_item_service.BatchUpdateLineItemsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_activate_line_items(
+        self,
+    ) -> Callable[
+        [line_item_service.BatchActivateLineItemsRequest],
+        Union[
+            line_item_service.BatchActivateLineItemsResponse,
+            Awaitable[line_item_service.BatchActivateLineItemsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_pause_line_items(
+        self,
+    ) -> Callable[
+        [line_item_service.BatchPauseLineItemsRequest],
+        Union[
+            line_item_service.BatchPauseLineItemsResponse,
+            Awaitable[line_item_service.BatchPauseLineItemsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_resume_line_items(
+        self,
+    ) -> Callable[
+        [line_item_service.BatchResumeLineItemsRequest],
+        Union[
+            line_item_service.BatchResumeLineItemsResponse,
+            Awaitable[line_item_service.BatchResumeLineItemsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_resume_and_overbook_line_items(
+        self,
+    ) -> Callable[
+        [line_item_service.BatchResumeAndOverbookLineItemsRequest],
+        Union[
+            line_item_service.BatchResumeAndOverbookLineItemsResponse,
+            Awaitable[line_item_service.BatchResumeAndOverbookLineItemsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_delete_line_items(
+        self,
+    ) -> Callable[
+        [line_item_service.BatchDeleteLineItemsRequest],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_reserve_line_items(
+        self,
+    ) -> Callable[
+        [line_item_service.BatchReserveLineItemsRequest],
+        Union[
+            line_item_service.BatchReserveLineItemsResponse,
+            Awaitable[line_item_service.BatchReserveLineItemsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_reserve_and_overbook_line_items(
+        self,
+    ) -> Callable[
+        [line_item_service.BatchReserveAndOverbookLineItemsRequest],
+        Union[
+            line_item_service.BatchReserveAndOverbookLineItemsResponse,
+            Awaitable[line_item_service.BatchReserveAndOverbookLineItemsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_release_line_items(
+        self,
+    ) -> Callable[
+        [line_item_service.BatchReleaseLineItemsRequest],
+        Union[
+            line_item_service.BatchReleaseLineItemsResponse,
+            Awaitable[line_item_service.BatchReleaseLineItemsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_archive_line_items(
+        self,
+    ) -> Callable[
+        [line_item_service.BatchArchiveLineItemsRequest],
+        Union[
+            line_item_service.BatchArchiveLineItemsResponse,
+            Awaitable[line_item_service.BatchArchiveLineItemsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_unarchive_line_items(
+        self,
+    ) -> Callable[
+        [line_item_service.BatchUnarchiveLineItemsRequest],
+        Union[
+            line_item_service.BatchUnarchiveLineItemsResponse,
+            Awaitable[line_item_service.BatchUnarchiveLineItemsResponse],
         ],
     ]:
         raise NotImplementedError()

@@ -89,6 +89,23 @@ class _BaseAppTopologyRestTransport(AppTopologyTransport):
             api_audience=api_audience,
         )
 
+    class _BaseExploreSchema:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{name=projects/*/locations/*/domains/*/schema}:explore",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
     class _BaseGenerateDiscoveredResourcesTopology:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")

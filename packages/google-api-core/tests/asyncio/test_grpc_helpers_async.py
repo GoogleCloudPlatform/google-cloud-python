@@ -17,7 +17,7 @@ try:
     from unittest.mock import AsyncMock  # pragma: NO COVER  # noqa: F401
 except ImportError:  # pragma: NO COVER
     import mock  # type: ignore
-import pytest
+import pytest  # noqa: I202
 
 from ..helpers import warn_deprecated_credentials_file
 
@@ -737,9 +737,371 @@ def test_create_channel(grpc_secure_channel):
     credentials.with_scopes.assert_called_once_with(scopes, default_scopes=None)
 
 
+@mock.patch("grpc.ssl_channel_credentials")
+@mock.patch("grpc.composite_channel_credentials")
+@mock.patch(
+    "google.auth.default",
+    autospec=True,
+    return_value=(mock.sentinel.credentials, mock.sentinel.project),
+)
+@mock.patch("grpc.aio.secure_channel")
+def test_create_channel_attempt_direct_path_xds_over_interconnect_default_ssl(
+    grpc_secure_channel,
+    google_auth_default,
+    composite_creds_call,
+    ssl_creds_call,
+):
+    composite_creds = composite_creds_call.return_value
+    default_ssl_creds = ssl_creds_call.return_value
+
+    channel = grpc_helpers_async.create_channel(
+        "storage-direct.googleapis.com:443",
+        attempt_direct_path=True,
+        attempt_direct_path_xds_over_interconnect=True,
+    )
+
+    assert channel is grpc_secure_channel.return_value
+    ssl_creds_call.assert_called_once_with()
+    assert composite_creds_call.call_args.args[0] is default_ssl_creds
+    grpc_secure_channel.assert_called_once_with(
+        "google-c2p:///storage-direct.googleapis.com?force-xds",
+        composite_creds,
+        compression=None,
+        options=(("grpc.default_authority", "storage.googleapis.com"),),
+    )
+
+
+@mock.patch("grpc.composite_channel_credentials")
+@mock.patch(
+    "google.auth.default",
+    autospec=True,
+    return_value=(mock.sentinel.credentials, mock.sentinel.project),
+)
+@mock.patch("grpc.aio.secure_channel")
+def test_create_channel_attempt_direct_path_xds_over_interconnect_custom_ssl(
+    grpc_secure_channel,
+    google_auth_default,
+    composite_creds_call,
+):
+    composite_creds = composite_creds_call.return_value
+    custom_ssl_creds = mock.sentinel.custom_ssl_creds
+
+    channel = grpc_helpers_async.create_channel(
+        "storage-direct.googleapis.com:443",
+        ssl_credentials=custom_ssl_creds,
+        attempt_direct_path=True,
+        attempt_direct_path_xds_over_interconnect=True,
+    )
+
+    assert channel is grpc_secure_channel.return_value
+    assert composite_creds_call.call_args.args[0] is custom_ssl_creds
+    grpc_secure_channel.assert_called_once_with(
+        "google-c2p:///storage-direct.googleapis.com?force-xds",
+        composite_creds,
+        compression=None,
+        options=(("grpc.default_authority", "storage.googleapis.com"),),
+    )
+
+
+@mock.patch("grpc.compute_engine_channel_credentials")
+@mock.patch(
+    "google.auth.default",
+    autospec=True,
+    return_value=(mock.sentinel.credentials, mock.sentinel.project),
+)
+@mock.patch("grpc.aio.secure_channel")
+def test_create_channel_interconnect_fallback(
+    grpc_secure_channel,
+    google_auth_default,
+    composite_creds_call,
+):
+    composite_creds = composite_creds_call.return_value
+
+    channel = grpc_helpers_async.create_channel(
+        "storage-direct.googleapis.com:443",
+        attempt_direct_path=False,
+        attempt_direct_path_xds_over_interconnect=False,
+    )
+
+    assert channel is grpc_secure_channel.return_value
+    grpc_secure_channel.assert_called_once_with(
+        "storage.googleapis.com:443",
+        composite_creds,
+        compression=None,
+    )
+
+
+@mock.patch("grpc.compute_engine_channel_credentials")
+@mock.patch(
+    "google.auth.default",
+    autospec=True,
+    return_value=(mock.sentinel.credentials, mock.sentinel.project),
+)
+@mock.patch("grpc.aio.secure_channel")
+def test_create_channel_interconnect_fallback_preserves_non_google_direct_host(
+    grpc_secure_channel,
+    google_auth_default,
+    composite_creds_call,
+):
+    composite_creds = composite_creds_call.return_value
+
+    channel = grpc_helpers_async.create_channel(
+        "my-direct.example.com:443",
+        attempt_direct_path=False,
+        attempt_direct_path_xds_over_interconnect=False,
+    )
+
+    assert channel is grpc_secure_channel.return_value
+    grpc_secure_channel.assert_called_once_with(
+        "my-direct.example.com:443",
+        composite_creds,
+        compression=None,
+    )
+
+    channel2 = grpc_helpers_async.create_channel(
+        "storage-direct.googleapis.com.example.com:443",
+        attempt_direct_path=False,
+        attempt_direct_path_xds_over_interconnect=False,
+    )
+    assert channel2 is grpc_secure_channel.return_value
+    grpc_secure_channel.assert_called_with(
+        "storage-direct.googleapis.com.example.com:443",
+        composite_creds,
+        compression=None,
+    )
+
+
+def test_create_channel_async_invalid_env_var_raises(monkeypatch):
+    monkeypatch.setenv(
+        "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT", "invalid"
+    )
+    with pytest.raises(
+        ValueError,
+        match="Invalid value for GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT",
+    ):
+        grpc_helpers_async.create_channel(
+            "storage-direct.googleapis.com:443",
+            attempt_direct_path=True,
+        )
+
+
+@mock.patch("grpc.ssl_channel_credentials")
+@mock.patch("grpc.composite_channel_credentials")
+@mock.patch(
+    "google.auth.default",
+    autospec=True,
+    return_value=(mock.sentinel.credentials, mock.sentinel.project),
+)
+@mock.patch("grpc.aio.secure_channel")
+def test_create_channel_async_interconnect_authority_branches(
+    grpc_secure_channel,
+    google_auth_default,
+    composite_creds_call,
+    ssl_creds_call,
+):
+    composite_creds = composite_creds_call.return_value
+
+    # Authority is None (target does not contain -direct.googleapis.com)
+    grpc_helpers_async.create_channel(
+        "storage.googleapis.com:443",
+        attempt_direct_path_xds_over_interconnect=True,
+    )
+    grpc_secure_channel.assert_called_with(
+        "google-c2p:///storage.googleapis.com?force-xds",
+        composite_creds,
+        compression=None,
+    )
+
+    # Authority exists, but grpc.default_authority is already provided
+    custom_options_default = (("grpc.default_authority", "custom.googleapis.com"),)
+    grpc_helpers_async.create_channel(
+        "storage-direct.googleapis.com:443",
+        attempt_direct_path_xds_over_interconnect=True,
+        options=custom_options_default,
+    )
+    grpc_secure_channel.assert_called_with(
+        "google-c2p:///storage-direct.googleapis.com?force-xds",
+        composite_creds,
+        compression=None,
+        options=custom_options_default,
+    )
+
+    # Authority exists, but grpc.ssl_target_name_override is already provided
+    custom_options_ssl = (("grpc.ssl_target_name_override", "custom.googleapis.com"),)
+    grpc_helpers_async.create_channel(
+        "storage-direct.googleapis.com:443",
+        attempt_direct_path_xds_over_interconnect=True,
+        options=custom_options_ssl,
+    )
+    grpc_secure_channel.assert_called_with(
+        "google-c2p:///storage-direct.googleapis.com?force-xds",
+        composite_creds,
+        compression=None,
+        options=custom_options_ssl,
+    )
+
+
+@mock.patch("grpc.ssl_channel_credentials")
+@mock.patch("grpc.composite_channel_credentials")
+@mock.patch("grpc.compute_engine_channel_credentials")
+@mock.patch(
+    "google.auth.default",
+    autospec=True,
+    return_value=(mock.sentinel.credentials, mock.sentinel.project),
+)
+@mock.patch("grpc.aio.secure_channel")
+def test_create_channel_async_interconnect_gated_by_attempt_direct_path(
+    grpc_secure_channel,
+    google_auth_default,
+    compute_engine_creds_call,
+    composite_creds_call,
+    ssl_creds_call,
+    monkeypatch,
+):
+    monkeypatch.setenv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT", "true")
+    composite_creds = composite_creds_call.return_value
+    compute_creds = compute_engine_creds_call.return_value
+
+    # When attempt_direct_path is False (default), env var override is ignored
+    grpc_helpers_async.create_channel(
+        "storage-direct.googleapis.com:443",
+        attempt_direct_path=False,
+    )
+    grpc_secure_channel.assert_called_with(
+        "storage.googleapis.com:443",
+        compute_creds,
+        compression=None,
+    )
+
+    # When attempt_direct_path is True, env var override activates DirectPath Interconnect
+    grpc_helpers_async.create_channel(
+        "storage-direct.googleapis.com:443",
+        attempt_direct_path=True,
+    )
+    grpc_secure_channel.assert_called_with(
+        "google-c2p:///storage-direct.googleapis.com?force-xds",
+        composite_creds,
+        compression=None,
+        options=(("grpc.default_authority", "storage.googleapis.com"),),
+    )
+
+    # When attempt_direct_path_xds_over_interconnect is True explicitly, Interconnect activates
+    grpc_helpers_async.create_channel(
+        "storage-direct.googleapis.com:443",
+        attempt_direct_path=False,
+        attempt_direct_path_xds_over_interconnect=True,
+    )
+    grpc_secure_channel.assert_called_with(
+        "google-c2p:///storage-direct.googleapis.com?force-xds",
+        composite_creds,
+        compression=None,
+        options=(("grpc.default_authority", "storage.googleapis.com"),),
+    )
+
+    # When target already starts with google-c2p:/// and attempt_direct_path=False, preserve target
+    grpc_helpers_async.create_channel(
+        "google-c2p:///storage-direct.googleapis.com",
+        attempt_direct_path=False,
+    )
+    grpc_secure_channel.assert_called_with(
+        "google-c2p:///storage-direct.googleapis.com",
+        compute_creds,
+        compression=None,
+    )
+
+
 @pytest.mark.asyncio
 async def test_fake_stream_unary_call():
     fake_call = grpc_helpers_async.FakeStreamUnaryCall()
     await fake_call.wait_for_connection()
     response = await fake_call
     assert fake_call.response == response
+
+
+def test_apply_channel_interceptors_none_or_empty():
+    channel = mock.Mock()
+    assert grpc_helpers_async.apply_channel_interceptors(channel, None) is channel
+    assert grpc_helpers_async.apply_channel_interceptors(channel, []) is channel
+
+
+def test_apply_channel_interceptors_channel_without_attr():
+    channel = object()
+    interceptor = mock.Mock()
+    assert (
+        grpc_helpers_async.apply_channel_interceptors(channel, [interceptor]) is channel
+    )
+
+
+def test_apply_channel_interceptors_list():
+    interceptor1 = mock.Mock()
+    interceptor2 = mock.Mock()
+    channel = mock.Mock()
+    channel._unary_unary_interceptors = [interceptor1]
+
+    result = grpc_helpers_async.apply_channel_interceptors(
+        channel, [interceptor1, interceptor2]
+    )
+    assert result is channel
+    assert channel._unary_unary_interceptors == [interceptor1, interceptor2]
+
+
+def test_apply_channel_interceptors_mock():
+    interceptor1 = mock.Mock()
+    interceptor2 = mock.Mock()
+    channel = mock.Mock()
+    channel._unary_unary_interceptors = mock.Mock(spec=["append"])
+
+    result = grpc_helpers_async.apply_channel_interceptors(
+        channel, [interceptor1, interceptor2]
+    )
+    assert result is channel
+    channel._unary_unary_interceptors.append.assert_any_call(interceptor1)
+    channel._unary_unary_interceptors.append.assert_any_call(interceptor2)
+
+
+def test_apply_channel_interceptors_inner_target_not_appendable():
+    channel = mock.Mock(spec=["_unary_unary_interceptors"])
+    channel._unary_unary_interceptors = 123
+    interceptor = mock.Mock(spec=["intercept_unary_unary"])
+    assert (
+        grpc_helpers_async.apply_channel_interceptors(channel, [interceptor]) is channel
+    )
+
+
+def test_apply_channel_interceptors_fallback_not_appendable():
+    channel = mock.Mock(spec=["_unary_unary_interceptors"])
+    channel._unary_unary_interceptors = 123
+    interceptor = mock.Mock(spec=[])
+    assert (
+        grpc_helpers_async.apply_channel_interceptors(channel, [interceptor]) is channel
+    )
+
+
+def test_apply_channel_interceptors_fallback_unary_unary_list():
+    class CustomInterceptor:
+        pass
+
+    interceptor1 = CustomInterceptor()
+    interceptor2 = CustomInterceptor()
+    channel = mock.Mock(spec=["_unary_unary_interceptors"])
+    channel._unary_unary_interceptors = [interceptor1]
+
+    result = grpc_helpers_async.apply_channel_interceptors(
+        channel, [interceptor1, interceptor2]
+    )
+    assert result is channel
+    assert channel._unary_unary_interceptors == [interceptor1, interceptor2]
+
+
+def test_apply_channel_interceptors_fallback_unary_unary_appendable():
+    class CustomInterceptor:
+        pass
+
+    interceptor = CustomInterceptor()
+    channel = mock.Mock(spec=["_unary_unary_interceptors"])
+    mock_append = mock.Mock(spec=["append"])
+    channel._unary_unary_interceptors = mock_append
+
+    result = grpc_helpers_async.apply_channel_interceptors(channel, [interceptor])
+    assert result is channel
+    mock_append.append.assert_called_once_with(interceptor)

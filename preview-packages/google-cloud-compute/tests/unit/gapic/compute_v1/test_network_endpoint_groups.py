@@ -5035,10 +5035,12 @@ def test_get_rest_call_success(request_type):
             kind="kind_value",
             name="name_value",
             network="network_value",
+            network_attachment="network_attachment_value",
             network_endpoint_type="network_endpoint_type_value",
             psc_target_service="psc_target_service_value",
             region="region_value",
             self_link="self_link_value",
+            service_class_id="service_class_id_value",
             size=443,
             subnetwork="subnetwork_value",
             zone="zone_value",
@@ -5065,10 +5067,12 @@ def test_get_rest_call_success(request_type):
     assert response.kind == "kind_value"
     assert response.name == "name_value"
     assert response.network == "network_value"
+    assert response.network_attachment == "network_attachment_value"
     assert response.network_endpoint_type == "network_endpoint_type_value"
     assert response.psc_target_service == "psc_target_service_value"
     assert response.region == "region_value"
     assert response.self_link == "self_link_value"
+    assert response.service_class_id == "service_class_id_value"
     assert response.size == 443
     assert response.subnetwork == "subnetwork_value"
     assert response.zone == "zone_value"
@@ -5200,6 +5204,7 @@ def test_insert_rest_call_success(request_type):
         "kind": "kind_value",
         "name": "name_value",
         "network": "network_value",
+        "network_attachment": "network_attachment_value",
         "network_endpoint_type": "network_endpoint_type_value",
         "psc_data": {
             "consumer_psc_address": "consumer_psc_address_value",
@@ -5210,6 +5215,7 @@ def test_insert_rest_call_success(request_type):
         "psc_target_service": "psc_target_service_value",
         "region": "region_value",
         "self_link": "self_link_value",
+        "service_class_id": "service_class_id_value",
         "size": 443,
         "subnetwork": "subnetwork_value",
         "zone": "zone_value",

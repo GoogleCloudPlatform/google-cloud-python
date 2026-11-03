@@ -31,9 +31,9 @@ from google.cloud.aio._cross_sync import CrossSync
 from google.cloud.spanner_v1._async._helpers import _drain_stream, _retry
 from google.cloud.spanner_v1._async.streamed import StreamedResultSet
 from google.cloud.spanner_v1._helpers import (
-    AtomicCounter,
     _augment_error_with_request_id,
     _check_rst_stream_error,
+    _make_execute_sql_request,
     _make_value_pb,
     _merge_client_context,
     _merge_query_options,
@@ -45,6 +45,9 @@ from google.cloud.spanner_v1._helpers import (
 )
 from google.cloud.spanner_v1._opentelemetry_tracing import add_span_event, trace_call
 from google.cloud.spanner_v1.metrics.metrics_capture import MetricsCapture
+from google.cloud.spanner_v1.metrics.spanner_metrics_tracer_factory import (
+    SpannerMetricsTracerFactory,
+)
 from google.cloud.spanner_v1.types import MultiplexedSessionPrecommitToken
 from google.cloud.spanner_v1.types.mutation import Mutation
 from google.cloud.spanner_v1.types.result_set import PartialResultSet, ResultSet
@@ -120,21 +123,25 @@ async def _restart_on_unavailable(
     current_request_id = None
     stream_finished = False
 
+    metrics_tracer = None
+    factory = SpannerMetricsTracerFactory()
+    if factory.enabled:
+        metrics_tracer = factory.create_metrics_tracer(resource_info)
+        if metrics_tracer:
+            metrics_tracer.record_operation_start()
+
     try:
         while True:
             try:
                 # Get results iterator.
                 if iterator is None:
-                    with (
-                        trace_call(
-                            trace_name,
-                            session,
-                            attributes,
-                            observability_options=observability_options,
-                            metadata=metadata,
-                        ) as span,
-                        MetricsCapture(resource_info),
-                    ):
+                    with trace_call(
+                        trace_name,
+                        session,
+                        attributes,
+                        observability_options=observability_options,
+                        metadata=metadata,
+                    ) as span:
                         (
                             call_metadata,
                             current_request_id,
@@ -144,11 +151,25 @@ async def _restart_on_unavailable(
                             metadata,
                             span,
                         )
-                        iterator = await CrossSync.run_if_async(
-                            method,
-                            request=request,
-                            metadata=call_metadata,
-                        )
+                        token = None
+                        if metrics_tracer is not None:
+                            token = SpannerMetricsTracerFactory.set_current_tracer(
+                                metrics_tracer
+                            )
+                        try:
+                            iterator = await CrossSync.run_if_async(
+                                method,
+                                request=request,
+                                metadata=call_metadata,
+                            )
+                        finally:
+                            if token is not None:
+                                try:
+                                    SpannerMetricsTracerFactory.reset_current_tracer(
+                                        token
+                                    )
+                                except ValueError:
+                                    pass
 
                 # Add items from iterator to buffer.
                 item: PartialResultSet
@@ -224,17 +245,30 @@ async def _restart_on_unavailable(
             if stream_finished:
                 break
     finally:
-        if iterator is not None and hasattr(iterator, "cancel"):
-            try:
-                iterator.cancel()
-            except Exception:
-                pass
+        try:
+            if metrics_tracer is not None:
+                try:
+                    metrics_tracer.record_operation_completion()
+                except Exception:
+                    pass
+        finally:
+            if iterator is not None and hasattr(iterator, "cancel"):
+                try:
+                    iterator.cancel()
+                except Exception:
+                    pass
 
 
 class _SnapshotBase(_SessionWrapper):
     """Base class for Snapshot.
 
     Allows reuse of API request methods with different transaction selector.
+
+    .. note::
+        Single-use snapshots (``multi_use=False``) are designed for a single read
+        or query operation and are thread-confined; they are not safe for concurrent
+        invocation across multiple threads. Multi-use snapshots and transactions
+        synchronize concurrent operations using internal locks.
 
     :type session: :class:`~google.cloud.spanner_v1.session.Session`
     :param session: the session used to perform transaction operations.
@@ -243,12 +277,15 @@ class _SnapshotBase(_SessionWrapper):
     _read_only: bool = True
     _multi_use: bool = False
 
-    def __init__(self, session, client_context=None):
+    def __init__(self, session, client_context=None, multi_use: Optional[bool] = None):
         super().__init__(session)
         self._client_context = _validate_client_context(client_context)
         self._execute_sql_request_count: int = 0
         self._read_request_count: int = 0
         self._begin_request_sent: bool = False
+
+        if multi_use is not None:
+            self._multi_use = multi_use
 
         # Identifier for the transaction.
         self._transaction_id: Optional[bytes] = None
@@ -256,21 +293,14 @@ class _SnapshotBase(_SessionWrapper):
 
         # Operations within a transaction can be performed concurrently, so we
         # need to use a lock when updating the transaction.
-        self._lock: CrossSync.Lock = CrossSync.Lock()
-
-        # Event to coordinate concurrent requests beginning the transaction.
-        # This is used to prevent the "Transaction has not begun" race condition.
-        self._transaction_begin_event: CrossSync.Event = CrossSync.Event()
-
-    @property
-    def _resource_info(self):
-        """Resource information for metrics labels."""
-        database = self._session._database
-        return {
-            "project": database._instance._client.project,
-            "instance": database._instance.instance_id,
-            "database": database.database_id,
-        }
+        # Single-use snapshots never execute concurrently or begin transactions,
+        # so we skip allocating Lock and Event for them.
+        if self._multi_use:
+            self._lock: Optional[CrossSync.Lock] = CrossSync.Lock()
+            self._transaction_begin_event: Optional[CrossSync.Event] = CrossSync.Event()
+        else:
+            self._lock = None
+            self._transaction_begin_event = None
 
     @CrossSync.convert
     async def _wait_for_transaction_begin(self) -> None:
@@ -281,15 +311,23 @@ class _SnapshotBase(_SessionWrapper):
         id is available, must wait for that first request to complete instead
         of assuming that the transaction has not begun.
 
+        For single-use snapshots, this method checks and enforces sequential
+        reuse prevention without synchronization, as single-use snapshots are
+        thread-confined.
+
         :raises ValueError: if the transaction has already been used to execute
             a request, but is not a multi-use transaction, or if the concurrent
             request that began the transaction did not complete in time.
         """
 
+        if not self._multi_use:
+            if self._begin_request_sent or self._read_request_count > 0:
+                raise ValueError("Cannot re-use single-use snapshot.")
+            self._begin_request_sent = True
+            return
+
         async with self._lock:
             if self._begin_request_sent or self._read_request_count > 0:
-                if not self._multi_use:
-                    raise ValueError("Cannot re-use single-use snapshot.")
                 wait_needed = self._transaction_id is None
             else:
                 wait_needed = False
@@ -432,20 +470,20 @@ class _SnapshotBase(_SessionWrapper):
         )
         request_options = _merge_request_options(request_options, client_context)
 
-        if request_options is None:
-            request_options = RequestOptions()
-        elif type(request_options) is dict:
-            request_options = RequestOptions(request_options)
+        if request_options is not None:
+            if self._read_only:
+                request_options.transaction_tag = None
+            elif self.transaction_tag is not None:
+                request_options.transaction_tag = self.transaction_tag
+        elif not self._read_only and self.transaction_tag is not None:
+            request_options = RequestOptions(transaction_tag=self.transaction_tag)
 
-        if self._read_only:
-            request_options.transaction_tag = None
-            if (
-                directed_read_options is None
-                and database._directed_read_options is not None
-            ):
-                directed_read_options = database._directed_read_options
-        elif self.transaction_tag is not None:
-            request_options.transaction_tag = self.transaction_tag
+        if (
+            self._read_only
+            and directed_read_options is None
+            and database._directed_read_options is not None
+        ):
+            directed_read_options = database._directed_read_options
 
         read_request = ReadRequest(
             session=session.name,
@@ -626,28 +664,28 @@ class _SnapshotBase(_SessionWrapper):
         )
         request_options = _merge_request_options(request_options, client_context)
 
-        if request_options is None:
-            request_options = RequestOptions()
-        elif type(request_options) is dict:
-            request_options = RequestOptions(request_options)
+        if request_options is not None:
+            if self._read_only:
+                request_options.transaction_tag = None
+            elif self.transaction_tag is not None:
+                request_options.transaction_tag = self.transaction_tag
+        elif not self._read_only and self.transaction_tag is not None:
+            request_options = RequestOptions(transaction_tag=self.transaction_tag)
 
-        if self._read_only:
-            request_options.transaction_tag = None
-            if (
-                directed_read_options is None
-                and database._directed_read_options is not None
-            ):
-                directed_read_options = database._directed_read_options
-        elif self.transaction_tag is not None:
-            request_options.transaction_tag = self.transaction_tag
+        if (
+            self._read_only
+            and directed_read_options is None
+            and database._directed_read_options is not None
+        ):
+            directed_read_options = database._directed_read_options
 
-        execute_sql_request = ExecuteSqlRequest(
-            session=session.name,
+        execute_sql_request = _make_execute_sql_request(
+            session_name=session.name,
             sql=sql,
             params=params_pb,
             param_types=param_types,
             query_mode=query_mode,
-            partition_token=partition,
+            partition=partition,
             seqno=self._execute_sql_request_count,
             query_options=query_options,
             request_options=request_options,
@@ -686,7 +724,7 @@ class _SnapshotBase(_SessionWrapper):
         trace_name = f"CloudSpanner.{type(self).__name__}.{trace_method_name}"
 
         is_inline_begin = False
-        if self._transaction_id is None:
+        if self._multi_use and self._transaction_id is None:
             is_inline_begin = True
             await self._lock.acquire()
 
@@ -783,20 +821,20 @@ class _SnapshotBase(_SessionWrapper):
             MetricsCapture(self._resource_info),
         ):
             nth_request = getattr(database, "_next_nth_request", 0)
-            attempt = AtomicCounter()
+            attempt = 0
 
             async def attempt_tracking_method():
+                nonlocal attempt
+                attempt += 1
                 all_metadata = database.metadata_with_request_id(
-                    nth_request, attempt.increment(), metadata, span
+                    nth_request, attempt, metadata, span
                 )
-                partition_read_method = functools.partial(
-                    api.partition_read,
+                return await api.partition_read(
                     request=partition_read_request,
                     metadata=all_metadata,
                     retry=retry,
                     timeout=timeout,
                 )
-                return await partition_read_method()
 
             response = await _retry(
                 attempt_tracking_method,
@@ -866,20 +904,20 @@ class _SnapshotBase(_SessionWrapper):
             MetricsCapture(self._resource_info),
         ):
             nth_request = getattr(database, "_next_nth_request", 0)
-            attempt = AtomicCounter()
+            attempt = 0
 
             async def attempt_tracking_method():
+                nonlocal attempt
+                attempt += 1
                 all_metadata = database.metadata_with_request_id(
-                    nth_request, attempt.increment(), metadata, span
+                    nth_request, attempt, metadata, span
                 )
-                partition_query_method = functools.partial(
-                    api.partition_query,
+                return await api.partition_query(
                     request=partition_query_request,
                     metadata=all_metadata,
                     retry=retry,
                     timeout=timeout,
                 )
-                return await partition_query_method()
 
             response = await _retry(
                 attempt_tracking_method,
@@ -940,22 +978,22 @@ class _SnapshotBase(_SessionWrapper):
             MetricsCapture(self._resource_info),
         ):
             nth_request = getattr(database, "_next_nth_request", 0)
-            attempt = AtomicCounter()
+            attempt = 0
 
             async def wrapped_method():
+                nonlocal attempt
+                attempt += 1
                 begin_transaction_request = BeginTransactionRequest(
                     **begin_request_kwargs
                 )
                 call_metadata, error_augmenter = database.with_error_augmentation(
-                    nth_request, attempt.increment(), metadata, span
-                )
-                begin_transaction_method = functools.partial(
-                    api.begin_transaction,
-                    request=begin_transaction_request,
-                    metadata=call_metadata,
+                    nth_request, attempt, metadata, span
                 )
                 with error_augmenter:
-                    return await begin_transaction_method()
+                    return await api.begin_transaction(
+                        request=begin_transaction_request,
+                        metadata=call_metadata,
+                    )
 
             async def before_next_retry(nth_retry, delay_in_seconds):
                 add_span_event(
@@ -1006,7 +1044,8 @@ class _SnapshotBase(_SessionWrapper):
         if self._transaction_id is None and transaction_pb.id:
             self._transaction_id = transaction_pb.id
             # Release any request waiting for this transaction to begin.
-            self._transaction_begin_event.set()
+            if self._transaction_begin_event is not None:
+                self._transaction_begin_event.set()
 
         if transaction_pb._pb.HasField("precommit_token"):
             self._update_for_precommit_token_pb_unsafe(transaction_pb.precommit_token)
@@ -1016,7 +1055,10 @@ class _SnapshotBase(_SessionWrapper):
         self, precommit_token_pb: MultiplexedSessionPrecommitToken
     ) -> None:
         """Updates the snapshot for the given multiplexed session precommit token."""
-        async with self._lock:
+        if self._lock is not None:
+            async with self._lock:
+                self._update_for_precommit_token_pb_unsafe(precommit_token_pb)
+        else:
             self._update_for_precommit_token_pb_unsafe(precommit_token_pb)
 
     def _update_for_precommit_token_pb_unsafe(
@@ -1052,7 +1094,9 @@ class Snapshot(_SnapshotBase):
         transaction_id=None,
         client_context=None,
     ):
-        super(Snapshot, self).__init__(session, client_context=client_context)
+        super(Snapshot, self).__init__(
+            session, client_context=client_context, multi_use=multi_use
+        )
         opts = [read_timestamp, min_read_timestamp, max_staleness, exact_staleness]
         flagged = [opt for opt in opts if opt is not None]
         if len(flagged) > 1:
@@ -1070,7 +1114,6 @@ class Snapshot(_SnapshotBase):
         self._min_read_timestamp = min_read_timestamp
         self._max_staleness = max_staleness
         self._exact_staleness = exact_staleness
-        self._multi_use = multi_use
         self._transaction_id = transaction_id
 
     def _build_transaction_options_pb(self) -> TransactionOptions:

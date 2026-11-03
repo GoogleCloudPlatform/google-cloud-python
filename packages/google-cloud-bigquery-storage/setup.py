@@ -55,7 +55,7 @@ dependencies = [
 ]
 extras = {
     "pandas": [
-        "pandas >= 1.1.3, < 3.0.0",
+        "pandas >= 1.1.3, < 4.0.0",
         "pyarrow >= 3.0.0",
         "pandas-gbq >= 0.35.1, < 2.0.0",
     ],

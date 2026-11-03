@@ -1127,6 +1127,7 @@ __protobuf__ = proto.module(
         "InterconnectRemoteLocationPermittedConnections",
         "InterconnectsGetDiagnosticsResponse",
         "InterconnectsGetMacsecConfigResponse",
+        "InterconnectsSetNameRequest",
         "Interval",
         "InvalidateCacheRegionUrlMapRequest",
         "InvalidateCacheUrlMapRequest",
@@ -1921,6 +1922,7 @@ __protobuf__ = proto.module(
         "SetMetadataInstanceRequest",
         "SetMinCpuPlatformInstanceRequest",
         "SetNameInstanceRequest",
+        "SetNameInterconnectRequest",
         "SetNamedPortsInstanceGroupRequest",
         "SetNamedPortsRegionInstanceGroupRequest",
         "SetNodeTemplateNodeGroupRequest",
@@ -28569,13 +28571,13 @@ class Commitment(proto.Message):
             GRAPHICS_OPTIMIZED_G4,GRAPHICS_OPTIMIZED_G4_VGPU,MEMORY_OPTIMIZED,
             MEMORY_OPTIMIZED_M3,MEMORY_OPTIMIZED_X4,
             STORAGE_OPTIMIZED_Z3,STORAGE_OPTIMIZED_Z4DS,
-            STORAGE_OPTIMIZED_Z4DH,STORAGE_OPTIMIZED_Z4D4T. For example,
-            type MEMORY_OPTIMIZED specifies a commitment that applies
-            only to eligible resources of memory optimized M1 and M2
-            machine series. Type GENERAL_PURPOSE specifies a commitment
-            that applies only to eligible resources of general purpose
-            N1 machine series. Check the Type enum for the list of
-            possible values.
+            STORAGE_OPTIMIZED_Z4DH,STORAGE_OPTIMIZED_Z4D4T,STORAGE_OPTIMIZED_Z4M.
+            For example, type MEMORY_OPTIMIZED specifies a commitment
+            that applies only to eligible resources of memory optimized
+            M1 and M2 machine series. Type GENERAL_PURPOSE specifies a
+            commitment that applies only to eligible resources of
+            general purpose N1 machine series. Check the Type enum for
+            the list of possible values.
 
             This field is a member of `oneof`_ ``_type``.
     """
@@ -28684,11 +28686,12 @@ class Commitment(proto.Message):
         GRAPHICS_OPTIMIZED_G4,GRAPHICS_OPTIMIZED_G4_VGPU,MEMORY_OPTIMIZED,
         MEMORY_OPTIMIZED_M3,MEMORY_OPTIMIZED_X4,
         STORAGE_OPTIMIZED_Z3,STORAGE_OPTIMIZED_Z4DS,
-        STORAGE_OPTIMIZED_Z4DH,STORAGE_OPTIMIZED_Z4D4T. For example, type
-        MEMORY_OPTIMIZED specifies a commitment that applies only to
-        eligible resources of memory optimized M1 and M2 machine series.
-        Type GENERAL_PURPOSE specifies a commitment that applies only to
-        eligible resources of general purpose N1 machine series.
+        STORAGE_OPTIMIZED_Z4DH,STORAGE_OPTIMIZED_Z4D4T,STORAGE_OPTIMIZED_Z4M.
+        For example, type MEMORY_OPTIMIZED specifies a commitment that
+        applies only to eligible resources of memory optimized M1 and M2
+        machine series. Type GENERAL_PURPOSE specifies a commitment that
+        applies only to eligible resources of general purpose N1 machine
+        series.
 
         Values:
             UNDEFINED_TYPE (0):
@@ -28792,6 +28795,8 @@ class Commitment(proto.Message):
                 CUD bucket for Z4DH machines.
             STORAGE_OPTIMIZED_Z4DS (35233733):
                 CUD bucket for Z4DS machines.
+            STORAGE_OPTIMIZED_Z4M (157002327):
+                CUD bucket for Z4M (bare metal) machines.
             TYPE_UNSPECIFIED (437714322):
                 Note for internal users: When adding a new enum Type for v1,
                 make sure to also add it in the comment for the
@@ -28846,6 +28851,7 @@ class Commitment(proto.Message):
         STORAGE_OPTIMIZED_Z4D4T = 18503022
         STORAGE_OPTIMIZED_Z4DH = 35233722
         STORAGE_OPTIMIZED_Z4DS = 35233733
+        STORAGE_OPTIMIZED_Z4M = 157002327
         TYPE_UNSPECIFIED = 437714322
 
     auto_renew: bool = proto.Field(
@@ -42474,9 +42480,13 @@ class FirewallPolicy(proto.Message):
                 A value indicating that the enum field is not
                 set.
             SYSTEM (313484847):
-                No description available.
+                A system-level policy managed by an internal
+                service like GKE. This value is reserved for
+                internal services and cannot be set by users
+                during policy creation. Policies with a SYSTEM
+                source cannot be modified or deleted by users.
             USER_DEFINED (491485557):
-                No description available.
+                A regular firewall policy.
         """
 
         UNDEFINED_POLICY_SOURCE = 0
@@ -67415,6 +67425,9 @@ class Instance(proto.Message):
             UNDEFINED_LOCAL_SSD_ENCRYPTION_MODE (0):
                 A value indicating that the enum field is not
                 set.
+            CMEK_ENCRYPTION (35518610):
+                The given VM will use customer-managed
+                encryption keys for encryption of Local SSDs.
             EPHEMERAL_KEY_ENCRYPTION (413047941):
                 The given VM will opt-in for using ephemeral
                 key for encryption of Local SSDs.
@@ -67431,6 +67444,7 @@ class Instance(proto.Message):
         """
 
         UNDEFINED_LOCAL_SSD_ENCRYPTION_MODE = 0
+        CMEK_ENCRYPTION = 35518610
         EPHEMERAL_KEY_ENCRYPTION = 413047941
         LOCAL_SSD_ENCRYPTION_MODE_UNSPECIFIED = 454655720
         STANDARD_ENCRYPTION = 269392453
@@ -73111,6 +73125,9 @@ class InstanceProperties(proto.Message):
             UNDEFINED_LOCAL_SSD_ENCRYPTION_MODE (0):
                 A value indicating that the enum field is not
                 set.
+            CMEK_ENCRYPTION (35518610):
+                The given VM will use customer-managed
+                encryption keys for encryption of Local SSDs.
             EPHEMERAL_KEY_ENCRYPTION (413047941):
                 The given VM will opt-in for using ephemeral
                 key for encryption of Local SSDs.
@@ -73127,6 +73144,7 @@ class InstanceProperties(proto.Message):
         """
 
         UNDEFINED_LOCAL_SSD_ENCRYPTION_MODE = 0
+        CMEK_ENCRYPTION = 35518610
         EPHEMERAL_KEY_ENCRYPTION = 413047941
         LOCAL_SSD_ENCRYPTION_MODE_UNSPECIFIED = 454655720
         STANDARD_ENCRYPTION = 269392453
@@ -82042,6 +82060,38 @@ class InterconnectsGetMacsecConfigResponse(proto.Message):
         number=139315229,
         optional=True,
         message="InterconnectMacsecConfig",
+    )
+
+
+class InterconnectsSetNameRequest(proto.Message):
+    r"""Request to rename an interconnect.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        current_name (str):
+            The current name of the interconnect.
+            The name must be 1-63 characters long, and
+            comply with RFC1035.
+
+            This field is a member of `oneof`_ ``_current_name``.
+        name (str):
+            The new name of the interconnect.
+            The name must be 1-63 characters long, and
+            comply with RFC1035.
+
+            This field is a member of `oneof`_ ``_name``.
+    """
+
+    current_name: str = proto.Field(
+        proto.STRING,
+        number=394983825,
+        optional=True,
+    )
+    name: str = proto.Field(
+        proto.STRING,
+        number=3373707,
+        optional=True,
     )
 
 
@@ -145366,10 +145416,15 @@ class RouterNatRule(proto.Message):
 
             ``destination.ip == '1.1.0.1' || destination.ip == '8.8.8.8'``
 
-            The following example is a valid match expression for
+            The following examples are valid match expressions for
             private NAT:
 
+            (NAT 44)
             ``nexthop.hub == '//networkconnectivity.googleapis.com/projects/my-project/locations/global/hubs/hub-1'``
+
+            ``nexthop.is_hybrid``
+
+            (NAT 64) ``isIPv6(source.ip)``
 
             This field is a member of `oneof`_ ``_match``.
         rule_number (int):
@@ -154997,6 +155052,66 @@ class SetNameInstanceRequest(proto.Message):
     zone: str = proto.Field(
         proto.STRING,
         number=3744684,
+    )
+
+
+class SetNameInterconnectRequest(proto.Message):
+    r"""A request message for Interconnects.SetName. See the method
+    description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        interconnect (str):
+            Name of the interconnect to update.
+        interconnects_set_name_request_resource (google.cloud.compute_v1beta.types.InterconnectsSetNameRequest):
+            The body resource for this request
+        project (str):
+            Project ID for this request.
+        request_id (str):
+            An optional request ID to identify requests.
+            Specify a unique request ID so that if you must
+            retry your request, the server will know to
+            ignore the request if it has already been
+            completed.
+
+            For example, consider a situation where you make
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
+            prevents clients from accidentally creating
+            duplicate commitments.
+
+            The request ID must be
+            a valid UUID with the exception that zero UUID
+            is not supported
+            (00000000-0000-0000-0000-000000000000).
+
+            This field is a member of `oneof`_ ``_request_id``.
+    """
+
+    interconnect: str = proto.Field(
+        proto.STRING,
+        number=224601230,
+    )
+    interconnects_set_name_request_resource: "InterconnectsSetNameRequest" = (
+        proto.Field(
+            proto.MESSAGE,
+            number=316267707,
+            message="InterconnectsSetNameRequest",
+        )
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=227560217,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=37109963,
+        optional=True,
     )
 
 

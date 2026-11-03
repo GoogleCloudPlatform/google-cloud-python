@@ -28,6 +28,7 @@ __version__ = package_version.__version__
 __lazy_modules__ = {
     "google.cloud.dialogflow_v2beta1.services.agents",
     "google.cloud.dialogflow_v2beta1.services.answer_records",
+    "google.cloud.dialogflow_v2beta1.services.companion_agents",
     "google.cloud.dialogflow_v2beta1.services.contexts",
     "google.cloud.dialogflow_v2beta1.services.conversation_profiles",
     "google.cloud.dialogflow_v2beta1.services.conversations",
@@ -53,6 +54,7 @@ __lazy_modules__ = {
     "google.cloud.dialogflow_v2beta1.types.audio_config",
     "google.cloud.dialogflow_v2beta1.types.ces_app",
     "google.cloud.dialogflow_v2beta1.types.ces_tool",
+    "google.cloud.dialogflow_v2beta1.types.companion_agent",
     "google.cloud.dialogflow_v2beta1.types.context",
     "google.cloud.dialogflow_v2beta1.types.conversation",
     "google.cloud.dialogflow_v2beta1.types.conversation_event",
@@ -65,6 +67,7 @@ __lazy_modules__ = {
     "google.cloud.dialogflow_v2beta1.types.gcs",
     "google.cloud.dialogflow_v2beta1.types.generator",
     "google.cloud.dialogflow_v2beta1.types.generator_evaluation",
+    "google.cloud.dialogflow_v2beta1.types.grounding",
     "google.cloud.dialogflow_v2beta1.types.human_agent_assistant_event",
     "google.cloud.dialogflow_v2beta1.types.intent",
     "google.cloud.dialogflow_v2beta1.types.knowledge_base",
@@ -85,6 +88,7 @@ __lazy_modules__ = {
 
 from .services.agents import AgentsAsyncClient, AgentsClient
 from .services.answer_records import AnswerRecordsAsyncClient, AnswerRecordsClient
+from .services.companion_agents import CompanionAgentsAsyncClient, CompanionAgentsClient
 from .services.contexts import ContextsAsyncClient, ContextsClient
 from .services.conversation_profiles import (
     ConversationProfilesAsyncClient,
@@ -161,6 +165,16 @@ from .types.audio_config import (
 )
 from .types.ces_app import CesAppSpec
 from .types.ces_tool import CesToolSpec
+from .types.companion_agent import (
+    CompanionAgent,
+    CreateCompanionAgentRequest,
+    DeleteCompanionAgentRequest,
+    GetCompanionAgentRequest,
+    GuidanceInstruction,
+    ListCompanionAgentsRequest,
+    ListCompanionAgentsResponse,
+    UpdateCompanionAgentRequest,
+)
 from .types.context import (
     Context,
     CreateContextRequest,
@@ -310,6 +324,13 @@ from .types.generator_evaluation import (
     ListGeneratorEvaluationsResponse,
     SummarizationEvaluationMetrics,
 )
+from .types.grounding import (
+    GroundingChunk,
+    GroundingMetadata,
+    GroundingSupport,
+    SearchEntryPoint,
+    Segment,
+)
 from .types.human_agent_assistant_event import HumanAgentAssistantEvent
 from .types.intent import (
     BatchDeleteIntentsRequest,
@@ -345,6 +366,8 @@ from .types.participant import (
     AutomatedAgentReply,
     BidiStreamingAnalyzeContentRequest,
     BidiStreamingAnalyzeContentResponse,
+    CancelQuery,
+    CompanionSuggestion,
     CompileSuggestionRequest,
     CompileSuggestionResponse,
     CreateParticipantRequest,
@@ -352,6 +375,7 @@ from .types.participant import (
     DialogflowAssistAnswer,
     DtmfParameters,
     FaqAnswer,
+    GenerateCompanionSuggestionsResponse,
     GenerateSuggestionsResponse,
     GetParticipantRequest,
     IngestedContextReferenceDebugInfo,
@@ -373,6 +397,8 @@ from .types.participant import (
     SmartReplyAnswer,
     StreamingAnalyzeContentRequest,
     StreamingAnalyzeContentResponse,
+    StreamingReactiveCompanionSuggestionsRequest,
+    StreamingReactiveCompanionSuggestionsResponse,
     SuggestArticlesRequest,
     SuggestArticlesResponse,
     SuggestDialogflowAssistsResponse,
@@ -386,6 +412,8 @@ from .types.participant import (
     SuggestKnowledgeAssistResponse,
     SuggestSmartRepliesRequest,
     SuggestSmartRepliesResponse,
+    ToolCallEvents,
+    ToolCallSuggestion,
     UpdateParticipantRequest,
 )
 from .types.phone_number import (
@@ -460,6 +488,7 @@ from .types.webhook import OriginalDetectIntentRequest, WebhookRequest, WebhookR
 __all__ = (
     "AgentsAsyncClient",
     "AnswerRecordsAsyncClient",
+    "CompanionAgentsAsyncClient",
     "ContextsAsyncClient",
     "ConversationProfilesAsyncClient",
     "ConversationsAsyncClient",
@@ -512,11 +541,15 @@ __all__ = (
     "BatchUpdateIntentsResponse",
     "BidiStreamingAnalyzeContentRequest",
     "BidiStreamingAnalyzeContentResponse",
+    "CancelQuery",
     "CesAppSpec",
     "CesToolSpec",
     "ClearSuggestionFeatureConfigOperationMetadata",
     "ClearSuggestionFeatureConfigRequest",
     "CloudConversationDebuggingInfo",
+    "CompanionAgent",
+    "CompanionAgentsClient",
+    "CompanionSuggestion",
     "CompileSuggestionRequest",
     "CompileSuggestionResponse",
     "CompleteConversationRequest",
@@ -530,6 +563,7 @@ __all__ = (
     "ConversationProfile",
     "ConversationProfilesClient",
     "ConversationsClient",
+    "CreateCompanionAgentRequest",
     "CreateContextRequest",
     "CreateConversationProfileRequest",
     "CreateConversationRequest",
@@ -550,6 +584,7 @@ __all__ = (
     "DatastoreResponseReason",
     "DeleteAgentRequest",
     "DeleteAllContextsRequest",
+    "DeleteCompanionAgentRequest",
     "DeleteContextRequest",
     "DeleteConversationProfileRequest",
     "DeleteDocumentRequest",
@@ -592,6 +627,7 @@ __all__ = (
     "GcsDestination",
     "GcsSource",
     "GcsSources",
+    "GenerateCompanionSuggestionsResponse",
     "GenerateStatelessSuggestionRequest",
     "GenerateStatelessSuggestionResponse",
     "GenerateStatelessSummaryRequest",
@@ -607,6 +643,7 @@ __all__ = (
     "GeneratorsClient",
     "GetAgentRequest",
     "GetAnswerRecordRequest",
+    "GetCompanionAgentRequest",
     "GetContextRequest",
     "GetConversationProfileRequest",
     "GetConversationRequest",
@@ -626,6 +663,10 @@ __all__ = (
     "GetToolRequest",
     "GetValidationResultRequest",
     "GetVersionRequest",
+    "GroundingChunk",
+    "GroundingMetadata",
+    "GroundingSupport",
+    "GuidanceInstruction",
     "HumanAgentAssistantConfig",
     "HumanAgentAssistantEvent",
     "HumanAgentHandoffConfig",
@@ -656,6 +697,8 @@ __all__ = (
     "KnowledgeOperationMetadata",
     "ListAnswerRecordsRequest",
     "ListAnswerRecordsResponse",
+    "ListCompanionAgentsRequest",
+    "ListCompanionAgentsResponse",
     "ListContextsRequest",
     "ListContextsResponse",
     "ListConversationProfilesRequest",
@@ -715,10 +758,12 @@ __all__ = (
     "RestoreAgentRequest",
     "SearchAgentsRequest",
     "SearchAgentsResponse",
+    "SearchEntryPoint",
     "SearchKnowledgeAnswer",
     "SearchKnowledgeDebugInfo",
     "SearchKnowledgeRequest",
     "SearchKnowledgeResponse",
+    "Segment",
     "Sentiment",
     "SentimentAnalysisRequestConfig",
     "SentimentAnalysisResult",
@@ -743,6 +788,8 @@ __all__ = (
     "StreamingAnalyzeContentResponse",
     "StreamingDetectIntentRequest",
     "StreamingDetectIntentResponse",
+    "StreamingReactiveCompanionSuggestionsRequest",
+    "StreamingReactiveCompanionSuggestionsResponse",
     "StreamingRecognitionResult",
     "SubAgent",
     "SuggestArticlesRequest",
@@ -773,13 +820,16 @@ __all__ = (
     "TextToSpeechSettings",
     "Tool",
     "ToolCall",
+    "ToolCallEvents",
     "ToolCallResult",
+    "ToolCallSuggestion",
     "ToolsClient",
     "ToolsetTool",
     "TrainAgentRequest",
     "TriggerEvent",
     "UndeletePhoneNumberRequest",
     "UpdateAnswerRecordRequest",
+    "UpdateCompanionAgentRequest",
     "UpdateContextRequest",
     "UpdateConversationProfileRequest",
     "UpdateDocumentRequest",

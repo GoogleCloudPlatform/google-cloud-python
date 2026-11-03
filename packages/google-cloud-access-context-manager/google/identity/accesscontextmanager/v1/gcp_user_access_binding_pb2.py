@@ -43,7 +43,7 @@ from google.api import field_behavior_pb2 as google_dot_api_dot_field__behavior_
 from google.api import resource_pb2 as google_dot_api_dot_resource__pb2
 
 DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(
-    b"\nEgoogle/identity/accesscontextmanager/v1/gcp_user_access_binding.proto\x12'google.identity.accesscontextmanager.v1\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\"\xa3\x02\n\x14GcpUserAccessBinding\x12\x11\n\x04name\x18\x01 \x01(\tB\x03\xe0\x41\x05\x12\x19\n\tgroup_key\x18\x02 \x01(\tB\x06\xe0\x41\x02\xe0\x41\x05\x12N\n\raccess_levels\x18\x03 \x03(\tB7\xe0\x41\x02\xfa\x41\x31\n/accesscontextmanager.googleapis.com/AccessLevel:\x8c\x01\xea\x41\x88\x01\n8accesscontextmanager.googleapis.com/GcpUserAccessBinding\x12Lorganizations/{organization}/gcpUserAccessBindings/{gcp_user_access_binding}B\xb0\x02\n+com.google.identity.accesscontextmanager.v1B\x19GcpUserAccessBindingProtoP\x01Z\\cloud.google.com/go/accesscontextmanager/apiv1/accesscontextmanagerpb;accesscontextmanagerpb\xa2\x02\x04GACM\xaa\x02'Google.Identity.AccessContextManager.V1\xca\x02'Google\\Identity\\AccessContextManager\\V1\xea\x02*Google::Identity::AccessContextManager::V1b\x06proto3"
+    b"\nEgoogle/identity/accesscontextmanager/v1/gcp_user_access_binding.proto\x12'google.identity.accesscontextmanager.v1\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\"\xa4\x02\n\x14GcpUserAccessBinding\x12\x12\n\x04name\x18\x01 \x01(\tB\x04\xe2\x41\x01\x05\x12\x18\n\tgroup_key\x18\x02 \x01(\tB\x05\xe2\x41\x02\x02\x05\x12O\n\raccess_levels\x18\x03 \x03(\tB8\xe2\x41\x01\x02\xfa\x41\x31\n/accesscontextmanager.googleapis.com/AccessLevel:\x8c\x01\xea\x41\x88\x01\n8accesscontextmanager.googleapis.com/GcpUserAccessBinding\x12Lorganizations/{organization}/gcpUserAccessBindings/{gcp_user_access_binding}B\xb0\x02\n+com.google.identity.accesscontextmanager.v1B\x19GcpUserAccessBindingProtoP\x01Z\\cloud.google.com/go/accesscontextmanager/apiv1/accesscontextmanagerpb;accesscontextmanagerpb\xa2\x02\x04GACM\xaa\x02'Google.Identity.AccessContextManager.V1\xca\x02'Google\\Identity\\AccessContextManager\\V1\xea\x02*Google::Identity::AccessContextManager::V1b\x06proto3"
 )
 
 _globals = globals()
@@ -61,23 +61,23 @@ if not _descriptor._USE_C_DESCRIPTORS:
     _globals["_GCPUSERACCESSBINDING"].fields_by_name["name"]._loaded_options = None
     _globals["_GCPUSERACCESSBINDING"].fields_by_name[
         "name"
-    ]._serialized_options = b"\340A\005"
+    ]._serialized_options = b"\342A\001\005"
     _globals["_GCPUSERACCESSBINDING"].fields_by_name["group_key"]._loaded_options = None
     _globals["_GCPUSERACCESSBINDING"].fields_by_name[
         "group_key"
-    ]._serialized_options = b"\340A\002\340A\005"
+    ]._serialized_options = b"\342A\002\002\005"
     _globals["_GCPUSERACCESSBINDING"].fields_by_name[
         "access_levels"
     ]._loaded_options = None
     _globals["_GCPUSERACCESSBINDING"].fields_by_name[
         "access_levels"
     ]._serialized_options = (
-        b"\340A\002\372A1\n/accesscontextmanager.googleapis.com/AccessLevel"
+        b"\342A\001\002\372A1\n/accesscontextmanager.googleapis.com/AccessLevel"
     )
     _globals["_GCPUSERACCESSBINDING"]._loaded_options = None
     _globals[
         "_GCPUSERACCESSBINDING"
     ]._serialized_options = b"\352A\210\001\n8accesscontextmanager.googleapis.com/GcpUserAccessBinding\022Lorganizations/{organization}/gcpUserAccessBindings/{gcp_user_access_binding}"
     _globals["_GCPUSERACCESSBINDING"]._serialized_start = 175
-    _globals["_GCPUSERACCESSBINDING"]._serialized_end = 466
+    _globals["_GCPUSERACCESSBINDING"]._serialized_end = 467
 # @@protoc_insertion_point(module_scope)

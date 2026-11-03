@@ -1,5 +1,6 @@
 {
   "extends": [
+    "group:all",
     "config:recommended"
   ],
   "prConcurrentLimit": 5,

@@ -98,7 +98,7 @@ class _BaseAccountLimitsServiceRestTransport(AccountLimitsServiceTransport):
             http_options: List[Dict[str, str]] = [
                 {
                     "method": "get",
-                    "uri": "/accounts/v1/{name=accounts/*/limits/*}",
+                    "uri": "/quota/v1/{name=accounts/*/limits/*}",
                 },
             ]
             return http_options
@@ -116,7 +116,7 @@ class _BaseAccountLimitsServiceRestTransport(AccountLimitsServiceTransport):
             http_options: List[Dict[str, str]] = [
                 {
                     "method": "get",
-                    "uri": "/accounts/v1/{parent=accounts/*}/limits",
+                    "uri": "/quota/v1/{parent=accounts/*}/limits",
                 },
             ]
             return http_options

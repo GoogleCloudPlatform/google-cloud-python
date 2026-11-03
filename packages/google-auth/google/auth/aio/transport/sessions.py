@@ -19,7 +19,6 @@ import http.client as http_client
 import inspect
 import logging
 import time
-import urllib.parse
 import warnings
 from contextlib import asynccontextmanager
 from typing import TYPE_CHECKING, Mapping, Optional, Union
@@ -44,11 +43,6 @@ else:
         ClientTimeout = None
 
 _LOGGER = logging.getLogger(__name__)
-_MTLS_URL_PREFIXES = [
-    "mtls.googleapis.com",
-    "mtls.sandbox.googleapis.com",
-    "p.googleapis.com",
-]
 
 # Tracks the internal aiohttp installation and usage
 try:
@@ -482,13 +476,9 @@ class AsyncAuthorizedSession:
                     async def _recover_auth_state():
                         is_mtls_endpoint = False
                         if self._is_mtls:
-                            hostname = urllib.parse.urlsplit(url).hostname
-                            if hostname:
-                                is_mtls_endpoint = any(
-                                    hostname == prefix
-                                    or hostname.endswith("." + prefix)
-                                    for prefix in _MTLS_URL_PREFIXES
-                                )
+                            is_mtls_endpoint = (
+                                google.auth.transport._mtls_helper.is_mtls_endpoint(url)
+                            )
                             # Snapshot the stale certificate state BEFORE acquiring the lock.
                             # This represents the cert that caused the 401 rejection.
                             if is_mtls_endpoint:

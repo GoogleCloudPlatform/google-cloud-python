@@ -1,4 +1,4 @@
-{% set rest_async_io_enabled = api.all_library_settings[api.naming.proto_package].python_settings.experimental_features.rest_async_io_enabled %}
+{% set rest_async_io_enabled = api.all_library_settings[api.naming.proto_package].python_settings.experimental_features.rest_async_io_enabled or api.has_resumable_upload_methods %}
 {% if rest_async_io_enabled %}
 # -*- coding: utf-8 -*-
 {% from '_pypi_packages.j2' import pypi_packages %}
@@ -8,8 +8,13 @@
 # pinning their versions to their lower bounds.
 # For example, if setup.py has "google-cloud-foo >= 1.14.0, < 2.0.0",
 # then this file should have google-cloud-foo==1.14.0
+{% if api.has_resumable_upload_methods %}
+google-api-core==2.41.0
+{% else %}
 google-api-core==2.28.0
-google-auth==2.35.0
+{% endif %}
+google-auth==2.60.0
+aiohttp==3.8.0
 grpcio==1.59.0
 proto-plus==1.26.1
 protobuf==6.33.5

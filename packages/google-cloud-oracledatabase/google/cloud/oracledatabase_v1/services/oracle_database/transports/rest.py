@@ -49,6 +49,7 @@ from google.cloud.oracledatabase_v1.types import (
     goldengate_deployment_type,
     goldengate_deployment_version,
     minor_version,
+    odb_dns_zone,
     odb_network,
     odb_subnet,
     oracledatabase,
@@ -68,6 +69,7 @@ from google.cloud.oracledatabase_v1.types import (
 from google.cloud.oracledatabase_v1.types import (
     goldengate_deployment as gco_goldengate_deployment,
 )
+from google.cloud.oracledatabase_v1.types import odb_dns_zone as gco_odb_dns_zone
 from google.cloud.oracledatabase_v1.types import odb_network as gco_odb_network
 from google.cloud.oracledatabase_v1.types import odb_subnet as gco_odb_subnet
 
@@ -192,6 +194,14 @@ class OracleDatabaseRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_create_odb_dns_zone(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_create_odb_dns_zone(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_create_odb_network(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -277,6 +287,14 @@ class OracleDatabaseRestInterceptor:
                 return request, metadata
 
             def post_delete_goldengate_deployment(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_delete_odb_dns_zone(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_delete_odb_dns_zone(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -397,6 +415,14 @@ class OracleDatabaseRestInterceptor:
                 return request, metadata
 
             def post_get_goldengate_deployment(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_get_odb_dns_zone(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_get_odb_dns_zone(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -629,6 +655,14 @@ class OracleDatabaseRestInterceptor:
                 return request, metadata
 
             def post_list_minor_versions(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_list_odb_dns_zones(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_odb_dns_zones(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -1247,6 +1281,55 @@ class OracleDatabaseRestInterceptor:
         """
         return response, metadata
 
+    def pre_create_odb_dns_zone(
+        self,
+        request: gco_odb_dns_zone.CreateOdbDnsZoneRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        gco_odb_dns_zone.CreateOdbDnsZoneRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for create_odb_dns_zone
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_create_odb_dns_zone(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for create_odb_dns_zone
+
+        DEPRECATED. Please use the `post_create_odb_dns_zone_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_create_odb_dns_zone` interceptor runs
+        before the `post_create_odb_dns_zone_with_metadata` interceptor.
+        """
+        return response
+
+    def post_create_odb_dns_zone_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for create_odb_dns_zone
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_create_odb_dns_zone_with_metadata`
+        interceptor in new development instead of the `post_create_odb_dns_zone` interceptor.
+        When both interceptors are used, this `post_create_odb_dns_zone_with_metadata` interceptor runs after the
+        `post_create_odb_dns_zone` interceptor. The (possibly modified) response returned by
+        `post_create_odb_dns_zone` will be passed to
+        `post_create_odb_dns_zone_with_metadata`.
+        """
+        return response, metadata
+
     def pre_create_odb_network(
         self,
         request: gco_odb_network.CreateOdbNetworkRequest,
@@ -1780,6 +1863,54 @@ class OracleDatabaseRestInterceptor:
         `post_delete_goldengate_deployment` interceptor. The (possibly modified) response returned by
         `post_delete_goldengate_deployment` will be passed to
         `post_delete_goldengate_deployment_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_delete_odb_dns_zone(
+        self,
+        request: odb_dns_zone.DeleteOdbDnsZoneRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        odb_dns_zone.DeleteOdbDnsZoneRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for delete_odb_dns_zone
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_delete_odb_dns_zone(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for delete_odb_dns_zone
+
+        DEPRECATED. Please use the `post_delete_odb_dns_zone_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_delete_odb_dns_zone` interceptor runs
+        before the `post_delete_odb_dns_zone_with_metadata` interceptor.
+        """
+        return response
+
+    def post_delete_odb_dns_zone_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for delete_odb_dns_zone
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_delete_odb_dns_zone_with_metadata`
+        interceptor in new development instead of the `post_delete_odb_dns_zone` interceptor.
+        When both interceptors are used, this `post_delete_odb_dns_zone_with_metadata` interceptor runs after the
+        `post_delete_odb_dns_zone` interceptor. The (possibly modified) response returned by
+        `post_delete_odb_dns_zone` will be passed to
+        `post_delete_odb_dns_zone_with_metadata`.
         """
         return response, metadata
 
@@ -2526,6 +2657,54 @@ class OracleDatabaseRestInterceptor:
         `post_get_goldengate_deployment` interceptor. The (possibly modified) response returned by
         `post_get_goldengate_deployment` will be passed to
         `post_get_goldengate_deployment_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_get_odb_dns_zone(
+        self,
+        request: odb_dns_zone.GetOdbDnsZoneRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        odb_dns_zone.GetOdbDnsZoneRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for get_odb_dns_zone
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_get_odb_dns_zone(
+        self, response: odb_dns_zone.OdbDnsZone
+    ) -> odb_dns_zone.OdbDnsZone:
+        """Post-rpc interceptor for get_odb_dns_zone
+
+        DEPRECATED. Please use the `post_get_odb_dns_zone_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_get_odb_dns_zone` interceptor runs
+        before the `post_get_odb_dns_zone_with_metadata` interceptor.
+        """
+        return response
+
+    def post_get_odb_dns_zone_with_metadata(
+        self,
+        response: odb_dns_zone.OdbDnsZone,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[odb_dns_zone.OdbDnsZone, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for get_odb_dns_zone
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_get_odb_dns_zone_with_metadata`
+        interceptor in new development instead of the `post_get_odb_dns_zone` interceptor.
+        When both interceptors are used, this `post_get_odb_dns_zone_with_metadata` interceptor runs after the
+        `post_get_odb_dns_zone` interceptor. The (possibly modified) response returned by
+        `post_get_odb_dns_zone` will be passed to
+        `post_get_odb_dns_zone_with_metadata`.
         """
         return response, metadata
 
@@ -4005,6 +4184,56 @@ class OracleDatabaseRestInterceptor:
         `post_list_minor_versions` interceptor. The (possibly modified) response returned by
         `post_list_minor_versions` will be passed to
         `post_list_minor_versions_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_list_odb_dns_zones(
+        self,
+        request: odb_dns_zone.ListOdbDnsZonesRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        odb_dns_zone.ListOdbDnsZonesRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for list_odb_dns_zones
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_list_odb_dns_zones(
+        self, response: odb_dns_zone.ListOdbDnsZonesResponse
+    ) -> odb_dns_zone.ListOdbDnsZonesResponse:
+        """Post-rpc interceptor for list_odb_dns_zones
+
+        DEPRECATED. Please use the `post_list_odb_dns_zones_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_list_odb_dns_zones` interceptor runs
+        before the `post_list_odb_dns_zones_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_odb_dns_zones_with_metadata(
+        self,
+        response: odb_dns_zone.ListOdbDnsZonesResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        odb_dns_zone.ListOdbDnsZonesResponse, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for list_odb_dns_zones
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_list_odb_dns_zones_with_metadata`
+        interceptor in new development instead of the `post_list_odb_dns_zones` interceptor.
+        When both interceptors are used, this `post_list_odb_dns_zones_with_metadata` interceptor runs after the
+        `post_list_odb_dns_zones` interceptor. The (possibly modified) response returned by
+        `post_list_odb_dns_zones` will be passed to
+        `post_list_odb_dns_zones_with_metadata`.
         """
         return response, metadata
 
@@ -6576,6 +6805,154 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
                 )
             return resp
 
+    class _CreateOdbDnsZone(
+        _BaseOracleDatabaseRestTransport._BaseCreateOdbDnsZone, OracleDatabaseRestStub
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.CreateOdbDnsZone")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: gco_odb_dns_zone.CreateOdbDnsZoneRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the create odb dns zone method over HTTP.
+
+            Args:
+                request (~.gco_odb_dns_zone.CreateOdbDnsZoneRequest):
+                    The request object. The request for ``OdbDnsZone.Create``.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseCreateOdbDnsZone._get_http_options()
+            request, metadata = self._interceptor.pre_create_odb_dns_zone(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseCreateOdbDnsZone,
+                    "_BaseCreateOdbDnsZone__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.CreateOdbDnsZone",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "CreateOdbDnsZone",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = OracleDatabaseRestTransport._CreateOdbDnsZone._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_create_odb_dns_zone(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_create_odb_dns_zone_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.create_odb_dns_zone",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "CreateOdbDnsZone",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _CreateOdbNetwork(
         _BaseOracleDatabaseRestTransport._BaseCreateOdbNetwork, OracleDatabaseRestStub
     ):
@@ -8218,6 +8595,152 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
                     extra={
                         "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
                         "rpcName": "DeleteGoldengateDeployment",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _DeleteOdbDnsZone(
+        _BaseOracleDatabaseRestTransport._BaseDeleteOdbDnsZone, OracleDatabaseRestStub
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.DeleteOdbDnsZone")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: odb_dns_zone.DeleteOdbDnsZoneRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the delete odb dns zone method over HTTP.
+
+            Args:
+                request (~.odb_dns_zone.DeleteOdbDnsZoneRequest):
+                    The request object. The request for ``OdbDnsZone.Delete``.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseDeleteOdbDnsZone._get_http_options()
+            request, metadata = self._interceptor.pre_delete_odb_dns_zone(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseDeleteOdbDnsZone,
+                    "_BaseDeleteOdbDnsZone__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.DeleteOdbDnsZone",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "DeleteOdbDnsZone",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = OracleDatabaseRestTransport._DeleteOdbDnsZone._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_delete_odb_dns_zone(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_delete_odb_dns_zone_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.delete_odb_dns_zone",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "DeleteOdbDnsZone",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -10500,6 +11023,153 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
                     extra={
                         "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
                         "rpcName": "GetGoldengateDeployment",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _GetOdbDnsZone(
+        _BaseOracleDatabaseRestTransport._BaseGetOdbDnsZone, OracleDatabaseRestStub
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.GetOdbDnsZone")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: odb_dns_zone.GetOdbDnsZoneRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> odb_dns_zone.OdbDnsZone:
+            r"""Call the get odb dns zone method over HTTP.
+
+            Args:
+                request (~.odb_dns_zone.GetOdbDnsZoneRequest):
+                    The request object. The request for ``OdbDnsZone.Get``.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.odb_dns_zone.OdbDnsZone:
+                    Represents OdbDnsZone resource.
+            """
+
+            http_options = (
+                _BaseOracleDatabaseRestTransport._BaseGetOdbDnsZone._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_get_odb_dns_zone(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseGetOdbDnsZone,
+                    "_BaseGetOdbDnsZone__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.GetOdbDnsZone",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "GetOdbDnsZone",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = OracleDatabaseRestTransport._GetOdbDnsZone._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = odb_dns_zone.OdbDnsZone()
+            pb_resp = odb_dns_zone.OdbDnsZone.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_get_odb_dns_zone(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_get_odb_dns_zone_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = odb_dns_zone.OdbDnsZone.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.get_odb_dns_zone",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "GetOdbDnsZone",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -14902,6 +15572,153 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
                 )
             return resp
 
+    class _ListOdbDnsZones(
+        _BaseOracleDatabaseRestTransport._BaseListOdbDnsZones, OracleDatabaseRestStub
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.ListOdbDnsZones")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: odb_dns_zone.ListOdbDnsZonesRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> odb_dns_zone.ListOdbDnsZonesResponse:
+            r"""Call the list odb dns zones method over HTTP.
+
+            Args:
+                request (~.odb_dns_zone.ListOdbDnsZonesRequest):
+                    The request object. The request for ``OdbDnsZone.List``.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.odb_dns_zone.ListOdbDnsZonesResponse:
+                    The response for ``OdbDnsZone.List``.
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseListOdbDnsZones._get_http_options()
+            request, metadata = self._interceptor.pre_list_odb_dns_zones(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseListOdbDnsZones,
+                    "_BaseListOdbDnsZones__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.ListOdbDnsZones",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "ListOdbDnsZones",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = OracleDatabaseRestTransport._ListOdbDnsZones._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = odb_dns_zone.ListOdbDnsZonesResponse()
+            pb_resp = odb_dns_zone.ListOdbDnsZonesResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_odb_dns_zones(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_list_odb_dns_zones_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = odb_dns_zone.ListOdbDnsZonesResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.list_odb_dns_zones",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "ListOdbDnsZones",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _ListOdbNetworks(
         _BaseOracleDatabaseRestTransport._BaseListOdbNetworks, OracleDatabaseRestStub
     ):
@@ -17315,6 +18132,14 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
         )  # type: ignore
 
     @property
+    def create_odb_dns_zone(
+        self,
+    ) -> Callable[[gco_odb_dns_zone.CreateOdbDnsZoneRequest], operations_pb2.Operation]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._CreateOdbDnsZone(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def create_odb_network(
         self,
     ) -> Callable[[gco_odb_network.CreateOdbNetworkRequest], operations_pb2.Operation]:
@@ -17434,6 +18259,14 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
         return self._DeleteGoldengateDeployment(
             self._session, self._host, self._interceptor
         )  # type: ignore
+
+    @property
+    def delete_odb_dns_zone(
+        self,
+    ) -> Callable[[odb_dns_zone.DeleteOdbDnsZoneRequest], operations_pb2.Operation]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._DeleteOdbDnsZone(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def delete_odb_network(
@@ -17598,6 +18431,14 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
         return self._GetGoldengateDeployment(
             self._session, self._host, self._interceptor
         )  # type: ignore
+
+    @property
+    def get_odb_dns_zone(
+        self,
+    ) -> Callable[[odb_dns_zone.GetOdbDnsZoneRequest], odb_dns_zone.OdbDnsZone]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GetOdbDnsZone(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def get_odb_network(
@@ -17931,6 +18772,16 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._ListMinorVersions(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def list_odb_dns_zones(
+        self,
+    ) -> Callable[
+        [odb_dns_zone.ListOdbDnsZonesRequest], odb_dns_zone.ListOdbDnsZonesResponse
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListOdbDnsZones(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def list_odb_networks(

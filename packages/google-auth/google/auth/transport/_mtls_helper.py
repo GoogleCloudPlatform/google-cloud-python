@@ -32,9 +32,10 @@ CONTEXT_AWARE_METADATA_PATH = "~/.secureConnect/context_aware_metadata.json"
 
 # Default gcloud config path, to be used with path.expanduser for cross-platform compatibility.
 CERTIFICATE_CONFIGURATION_DEFAULT_PATH = "~/.config/gcloud/certificate_config.json"
+_GKE_CREDENTIAL_BUNDLE_PATH = "/var/run/secrets/workload-spiffe-credentials/x509.credential-bundle.private-key.pem"
 _CERT_PROVIDER_COMMAND = "cert_provider_command"
 _CERT_REGEX = re.compile(
-    b"-----BEGIN CERTIFICATE-----.+-----END CERTIFICATE-----\r?\n?", re.DOTALL
+    b"-----BEGIN CERTIFICATE-----.+?-----END CERTIFICATE-----\r?\n?", re.DOTALL
 )
 
 # support various format of key files, e.g.
@@ -43,7 +44,7 @@ _CERT_REGEX = re.compile(
 # "-----BEGIN RSA PRIVATE KEY-----..."
 # "-----BEGIN ENCRYPTED PRIVATE KEY-----"
 _KEY_REGEX = re.compile(
-    b"-----BEGIN [A-Z ]*PRIVATE KEY-----.+-----END [A-Z ]*PRIVATE KEY-----\r?\n?",
+    b"-----BEGIN [A-Z ]*PRIVATE KEY-----.+?-----END [A-Z ]*PRIVATE KEY-----\r?\n?",
     re.DOTALL,
 )
 
@@ -367,12 +368,37 @@ def _load_json_file(path):
     return json_data
 
 
+def _has_explicit_cert_config_env():
+    """Returns True if an explicit certificate config environment variable is set."""
+    return bool(
+        environ.get(environment_vars.GOOGLE_API_CERTIFICATE_CONFIG)
+        or environ.get(
+            environment_vars.CLOUDSDK_CONTEXT_AWARE_CERTIFICATE_CONFIG_FILE_PATH
+        )
+    )
+
+
+def _should_use_gke_credential_bundle(config_file_path=None):
+    """Returns True if no certificate config is present and the GKE credential bundle file is present."""
+    if config_file_path is not None or _has_explicit_cert_config_env():
+        return False
+    try:
+        return _agent_identity_utils._is_certificate_file_ready(
+            _GKE_CREDENTIAL_BUNDLE_PATH
+        )
+    except PermissionError:
+        return False
+
+
 def _get_workload_cert_and_key(
     certificate_config_path=None, include_context_aware=True
 ):
     """Read the workload identity cert and key files specified in the certificate config provided.
     If no config path is provided, check the environment variable: "GOOGLE_API_CERTIFICATE_CONFIG"
-    first, then the well known gcloud location: "~/.config/gcloud/certificate_config.json".
+    first, then the well known gcloud location: "~/.config/gcloud/certificate_config.json",
+    and finally fall back to the GKE workload credential bundle at
+    "/var/run/secrets/workload-spiffe-credentials/x509.credential-bundle.private-key.pem"
+    when no explicit or implicit certificate_config.json is present.
 
     Args:
         certificate_config_path (string): The certificate config path. If no path is provided,
@@ -389,11 +415,15 @@ def _get_workload_cert_and_key(
         the certificate or key information.
     """
 
-    cert_path, key_path = _get_workload_cert_and_key_paths(
+    cert_path, key_path, config_file_path = _get_workload_cert_and_key_paths(
         certificate_config_path, include_context_aware
     )
 
     if cert_path is None and key_path is None:
+        if certificate_config_path is None and _should_use_gke_credential_bundle(
+            config_file_path
+        ):
+            return _read_credential_bundle_file(_GKE_CREDENTIAL_BUNDLE_PATH)
         return None, None
 
     return _read_cert_and_key_files(cert_path, key_path)
@@ -453,10 +483,10 @@ def _get_cert_config_path(certificate_config_path=None, include_context_aware=Tr
     return certificate_config_path
 
 
-def _get_workload_cert_and_key_paths(config_path, include_context_aware=True):
+def _get_workload_cert_and_key_paths(config_path=None, include_context_aware=True):
     absolute_path = _get_cert_config_path(config_path, include_context_aware)
     if absolute_path is None:
-        return None, None
+        return None, None, None
 
     data = _load_json_file(absolute_path)
 
@@ -503,13 +533,15 @@ def _get_workload_cert_and_key_paths(config_path, include_context_aware=True):
                 pass
 
     if not isinstance(cert_configs, dict) or "workload" not in cert_configs:
-        return None, None
+        return None, None, absolute_path
     workload = cert_configs["workload"]
 
     if (
         not isinstance(workload, dict)
-        or "cert_path" not in workload
-        or "key_path" not in workload
+        or not isinstance(workload.get("cert_path"), str)
+        or not workload.get("cert_path")
+        or not isinstance(workload.get("key_path"), str)
+        or not workload.get("key_path")
     ):
         raise exceptions.ClientCertError(
             'Workload certificate configuration is missing "cert_path" or "key_path" in {}'.format(
@@ -519,7 +551,20 @@ def _get_workload_cert_and_key_paths(config_path, include_context_aware=True):
     cert_path = workload["cert_path"]
     key_path = workload["key_path"]
 
-    return cert_path, key_path
+    return cert_path, key_path, absolute_path
+
+
+def _read_credential_bundle_file(bundle_path):
+    """Reads a combined PEM credential bundle containing certificate(s) and a private key."""
+    # Read the bundle once so a certificate rotation on disk cannot pair an
+    # old certificate chain with a new private key.
+    with open(bundle_path, "rb") as bundle_file:
+        bundle_data = bundle_file.read()
+
+    return (
+        _extract_cert_chain(bundle_data, bundle_path),
+        _extract_private_key(bundle_data, bundle_path),
+    )
 
 
 def _read_cert_and_key_files(cert_path, key_path):
@@ -529,24 +574,32 @@ def _read_cert_and_key_files(cert_path, key_path):
     return cert_data, key_data
 
 
-def _read_cert_file(cert_path):
-    with open(cert_path, "rb") as cert_file:
-        cert_data = cert_file.read()
+def _join_cert_chain(cert_match):
+    return b"".join(
+        m if m.endswith(b"\n") or i == len(cert_match) - 1 else m + b"\n"
+        for i, m in enumerate(cert_match)
+    )
 
+
+def _has_unmatched_pem_markers(pem_bytes, cert_blocks):
+    """Checks that every BEGIN/END CERTIFICATE marker belongs to a complete cert block."""
+    return len(cert_blocks) != pem_bytes.count(b"-----BEGIN CERTIFICATE-----") or len(
+        cert_blocks
+    ) != pem_bytes.count(b"-----END CERTIFICATE-----")
+
+
+def _extract_cert_chain(cert_data, cert_path):
     cert_match = re.findall(_CERT_REGEX, cert_data)
-    if len(cert_match) != 1:
+    if not cert_match or _has_unmatched_pem_markers(cert_data, cert_match):
         raise exceptions.ClientCertError(
-            "Certificate file {} is in an invalid format, a single PEM formatted certificate is expected".format(
+            "Certificate file {} is in an invalid format, at least one PEM formatted certificate is expected".format(
                 cert_path
             )
         )
-    return cert_match[0]
+    return _join_cert_chain(cert_match)
 
 
-def _read_key_file(key_path):
-    with open(key_path, "rb") as key_file:
-        key_data = key_file.read()
-
+def _extract_private_key(key_data, key_path):
     key_match = re.findall(_KEY_REGEX, key_data)
     if len(key_match) != 1:
         raise exceptions.ClientCertError(
@@ -556,6 +609,20 @@ def _read_key_file(key_path):
         )
 
     return key_match[0]
+
+
+def _read_cert_file(cert_path):
+    with open(cert_path, "rb") as cert_file:
+        cert_data = cert_file.read()
+
+    return _extract_cert_chain(cert_data, cert_path)
+
+
+def _read_key_file(key_path):
+    with open(key_path, "rb") as key_file:
+        key_data = key_file.read()
+
+    return _extract_private_key(key_data, key_path)
 
 
 def _run_cert_provider_command(command, expect_encrypted_key=False):
@@ -591,8 +658,9 @@ def _run_cert_provider_command(command, expect_encrypted_key=False):
 
     # Extract certificate (chain), key and passphrase.
     cert_match = re.findall(_CERT_REGEX, stdout)
-    if len(cert_match) != 1:
+    if not cert_match or _has_unmatched_pem_markers(stdout, cert_match):
         raise exceptions.ClientCertError("Client SSL certificate is missing or invalid")
+    cert_chain = _join_cert_chain(cert_match)
     key_match = re.findall(_KEY_REGEX, stdout)
     if len(key_match) != 1:
         raise exceptions.ClientCertError("Client SSL key is missing or invalid")
@@ -603,13 +671,13 @@ def _run_cert_provider_command(command, expect_encrypted_key=False):
             raise exceptions.ClientCertError("Passphrase is missing or invalid")
         if b"ENCRYPTED" not in key_match[0]:
             raise exceptions.ClientCertError("Encrypted private key is expected")
-        return cert_match[0], key_match[0], passphrase_match[0].strip()
+        return cert_chain, key_match[0], passphrase_match[0].strip()
 
     if b"ENCRYPTED" in key_match[0]:
         raise exceptions.ClientCertError("Encrypted private key is not expected")
     if len(passphrase_match) > 0:
         raise exceptions.ClientCertError("Passphrase is not expected")
-    return cert_match[0], key_match[0], None
+    return cert_chain, key_match[0], None
 
 
 def get_client_ssl_credentials(
@@ -768,7 +836,9 @@ def check_use_client_cert():
     as True (auto-enabled) if a workload config file exists (pointed at by
     GOOGLE_API_CERTIFICATE_CONFIG or CLOUDSDK_CONTEXT_AWARE_CERTIFICATE_CONFIG_FILE_PATH,
     or the default path like ~/.config/gcloud/certificate_config.json)
-    containing a "workload" section.
+    containing a "workload" section, or if no certificate config file is
+    configured/present and the GKE credential bundle exists at
+    /var/run/secrets/workload-spiffe-credentials/x509.credential-bundle.private-key.pem.
     Otherwise, it returns False.
 
     Returns:
@@ -806,22 +876,26 @@ def check_use_client_cert():
             "mTLS auto-enablement failed: Certificate configuration file at %s is missing the required ['cert_configs']['workload'] section.",
             cert_path,
         )
-    return False
+        return False
+
+    return _should_use_gke_credential_bundle(cert_path)
 
 
 def check_parameters_for_unauthorized_response(cached_cert):
     """Returns the cached and current cert fingerprint for reconfiguring mTLS.
 
     Args:
-        cached_cert(bytes): The cached client certificate.
+        cached_cert (Optional[bytes]): The cached client certificate.
 
     Returns:
-        bytes: The client callback cert bytes.
-        bytes: The client callback key bytes.
-        str: The base64-encoded SHA256 cached fingerprint.
-        str: The base64-encoded SHA256 current cert fingerprint.
+        Tuple[Optional[bytes], Optional[bytes], Optional[str], Optional[str]]:
+            The client callback cert bytes, client callback key bytes,
+            base64-encoded SHA256 cached fingerprint, and base64-encoded SHA256
+            current cert fingerprint.
     """
     call_cert_bytes, call_key_bytes = call_client_cert_callback()
+    if not call_cert_bytes:
+        return None, None, None, None
     cert_obj = _agent_identity_utils.parse_certificate(call_cert_bytes)
     current_cert_fingerprint = _agent_identity_utils.calculate_certificate_fingerprint(
         cert_obj
@@ -837,8 +911,10 @@ def check_parameters_for_unauthorized_response(cached_cert):
 
 def call_client_cert_callback():
     """Calls the client cert callback and returns the certificate and key."""
-    _, cert_bytes, key_bytes, passphrase = get_client_ssl_credentials(
-        generate_encrypted_key=True
+    # Callers load the key without a passphrase, so request an unencrypted
+    # key, as get_client_cert_and_key() does.
+    _, cert_bytes, key_bytes, _ = get_client_ssl_credentials(
+        generate_encrypted_key=False
     )
     return cert_bytes, key_bytes
 
@@ -847,16 +923,19 @@ _MTLS_HOST_SUFFIXES = (
     ".mtls.googleapis.com",
     ".mtls.sandbox.googleapis.com",
     ".p.googleapis.com",
+    ".mtls.run.app",
 )
 _MTLS_EXACT_HOSTS = (
     "mtls.googleapis.com",
     "mtls.sandbox.googleapis.com",
     "p.googleapis.com",
+    "mtls.run.app",
 )
 
 
 def is_mtls_endpoint(url: Optional[Union[str, bytes, object]]) -> bool:
-    """Checks if the given URL corresponds to an mTLS or Private Service Connect (PSC) endpoint.
+    """Checks if the given URL corresponds to an mTLS (Google APIs or Cloud Run)
+    or Private Service Connect (PSC) endpoint.
 
     Args:
         url (Optional[Union[str, bytes, object]]): The request URL.

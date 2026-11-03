@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import threading
-import time
 import unittest
 
 from google.cloud.spanner_v1.metrics.metrics_capture import MetricsCapture
@@ -34,6 +33,7 @@ class TestMetricsConcurrency(unittest.TestCase):
         factory.enabled = True
 
         errors = []
+        barrier = threading.Barrier(10)
 
         def worker(idx):
             try:
@@ -43,14 +43,15 @@ class TestMetricsConcurrency(unittest.TestCase):
                     tracer = SpannerMetricsTracerFactory.get_current_tracer()
                     if tracer is None:
                         errors.append(f"Thread {idx}: Tracer is None inside Capture")
+                        barrier.abort()
                         return
 
                     # Set a unique attribute for this thread
                     project_name = f"project-{idx}"
                     tracer.set_project(project_name)
 
-                    # Simulate some work
-                    time.sleep(0.01)
+                    # Synchronize all threads so they are all concurrently inside MetricsCapture
+                    barrier.wait(timeout=10.0)
 
                     # Verify verify we still have OUR tracer
                     current_tracer = SpannerMetricsTracerFactory.get_current_tracer()
@@ -67,7 +68,10 @@ class TestMetricsConcurrency(unittest.TestCase):
                     if interceptor_tracer is not tracer:
                         errors.append(f"Thread {idx}: Interceptor tracer mismatch")
 
+            except threading.BrokenBarrierError:
+                pass
             except Exception as e:
+                barrier.abort()
                 errors.append(f"Thread {idx}: Exception {e}")
 
         threads = []
@@ -79,6 +83,7 @@ class TestMetricsConcurrency(unittest.TestCase):
         for t in threads:
             t.join()
 
+        self.assertFalse(barrier.broken, "Barrier timed out or was broken")
         self.assertEqual(errors, [], f"Concurrency errors found: {errors}")
 
     def test_context_var_cleanup(self):

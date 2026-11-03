@@ -21,12 +21,15 @@ import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
 
 from google.cloud.apphub_v1.types import attributes as gca_attributes
+from google.cloud.apphub_v1.types import properties
 
 __protobuf__ = proto.module(
     package="google.cloud.apphub.v1",
     manifest={
         "Application",
+        "ApplicationType",
         "Scope",
+        "ApplicationProperties",
     },
 )
 
@@ -64,6 +67,11 @@ class Application(proto.Message):
             format) for the ``Application``.
         state (google.cloud.apphub_v1.types.Application.State):
             Output only. Application state.
+        application_properties (google.cloud.apphub_v1.types.ApplicationProperties):
+            Output only. Properties of an underlying
+            cloud resource that can comprise an Application.
+        application_type (google.cloud.apphub_v1.types.ApplicationType):
+            Output only. Application type.
     """
 
     class State(proto.Enum):
@@ -127,6 +135,44 @@ class Application(proto.Message):
         number=11,
         enum=State,
     )
+    application_properties: "ApplicationProperties" = proto.Field(
+        proto.MESSAGE,
+        number=12,
+        message="ApplicationProperties",
+    )
+    application_type: "ApplicationType" = proto.Field(
+        proto.MESSAGE,
+        number=13,
+        message="ApplicationType",
+    )
+
+
+class ApplicationType(proto.Message):
+    r"""Application type.
+
+    Attributes:
+        type_ (google.cloud.apphub_v1.types.ApplicationType.Type):
+            The type of the application.
+    """
+
+    class Type(proto.Enum):
+        r"""Application type enum.
+
+        Values:
+            TYPE_UNSPECIFIED (0):
+                Unspecified type.
+            AI_APPLICATION (1):
+                AI Application type.
+        """
+
+        TYPE_UNSPECIFIED = 0
+        AI_APPLICATION = 1
+
+    type_: Type = proto.Field(
+        proto.ENUM,
+        number=1,
+        enum=Type,
+    )
 
 
 class Scope(proto.Message):
@@ -157,6 +203,28 @@ class Scope(proto.Message):
         proto.ENUM,
         number=1,
         enum=Type,
+    )
+
+
+class ApplicationProperties(proto.Message):
+    r"""Additional system properties of an Application.
+
+    Attributes:
+        extended_metadata (MutableMapping[str, google.cloud.apphub_v1.types.ExtendedMetadata]):
+            Output only. Additional metadata specific to the App Hub
+            application. The key is a string that identifies the type of
+            metadata and the value is the metadata contents specific to
+            that type. Key format:
+            ``apphub.googleapis.com/{metadataType}``
+    """
+
+    extended_metadata: MutableMapping[str, properties.ExtendedMetadata] = (
+        proto.MapField(
+            proto.STRING,
+            proto.MESSAGE,
+            number=1,
+            message=properties.ExtendedMetadata,
+        )
     )
 
 

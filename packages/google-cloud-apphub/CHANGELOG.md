@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-cloud-apphub/#history
 
+## [0.5.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-apphub-v0.5.1...google-cloud-apphub-v0.5.2) (2026-10-08)
+
+
+### Features
+
+* update API sources and regenerate ([#18593](https://github.com/googleapis/google-cloud-python/issues/18593)) ([d0505e8](https://github.com/googleapis/google-cloud-python/commit/d0505e8bc7615f2c649d3e25ebc7e3ccca45f22b))
+
 ## [0.5.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-apphub-v0.5.0...google-cloud-apphub-v0.5.1) (2026-10-01)
 
 

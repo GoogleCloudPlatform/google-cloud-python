@@ -55,7 +55,7 @@ class BackupVault(proto.Message):
             Optional. Type of backup vault to be created. Default is
             IN_REGION.
         source_region (str):
-            Output only. Region in which the backup vault is created.
+            Optional. Region in which the backup vault is created.
             Format: ``projects/{project_id}/locations/{location}``
         backup_region (str):
             Optional. Region where the backups are stored. Format:

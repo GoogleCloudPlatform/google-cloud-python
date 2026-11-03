@@ -45,6 +45,8 @@ from google.cloud.apptopology_v1.types.schema import (
     StringValue,
 )
 from google.cloud.apptopology_v1.types.service import (
+    ExploreSchemaRequest,
+    ExploreSchemaResponse,
     GenerateDiscoveredResourcesTopologyRequest,
     GenerateDiscoveredResourcesTopologyResponse,
     GetDomainRequest,
@@ -78,6 +80,8 @@ __all__ = (
     "Property",
     "Schema",
     "StringValue",
+    "ExploreSchemaRequest",
+    "ExploreSchemaResponse",
     "GenerateDiscoveredResourcesTopologyRequest",
     "GenerateDiscoveredResourcesTopologyResponse",
     "GetDomainRequest",

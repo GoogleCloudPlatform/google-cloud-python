@@ -187,6 +187,9 @@ class TransactionRetryHelper:
                     else:
                         cursor = self._connection.cursor()
                         cursor._in_retry_mode = True
+                        cursor._timeout = getattr(
+                            statement_result_details.cursor, "_timeout", None
+                        )
                         self._cursor_map[statement_result_details.cursor] = cursor
                     try:
                         _handle_statement(statement_result_details, cursor)

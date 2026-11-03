@@ -1,5 +1,2 @@
-apache-beam==2.60.0; python_version == '3.8'
-apache-beam==2.69.0; python_version == '3.9'
-apache-beam==2.71.0; python_version >= '3.10'
-google-cloud-bigtable==2.35.0
-google-cloud-core==2.5.0
+apache-beam==2.77.0
+google-cloud-bigtable

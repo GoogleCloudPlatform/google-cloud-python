@@ -419,10 +419,12 @@ class User(proto.Message):
                 Read-only. Login for a service account that
                 belongs to the Cloud IAM group.
             CLOUD_IAM_WORKFORCE_IDENTITY (6):
-                Cloud IAM workforce identity user managed via
-                workforce identity federation.
+                Cloud IAM workforce identity managed by
+                Workforce Identity Federation.
             ENTRAID_USER (7):
                 Microsoft Entra ID user.
+            ACTIVE_DIRECTORY_USER (8):
+                Active Directory user.
         """
 
         BUILT_IN = 0
@@ -433,6 +435,7 @@ class User(proto.Message):
         CLOUD_IAM_GROUP_SERVICE_ACCOUNT = 5
         CLOUD_IAM_WORKFORCE_IDENTITY = 6
         ENTRAID_USER = 7
+        ACTIVE_DIRECTORY_USER = 8
 
     class DualPasswordType(proto.Enum):
         r"""The type of retained password.
@@ -554,9 +557,9 @@ class SqlServerUserDetails(proto.Message):
 
     Attributes:
         disabled (bool):
-            If the user has been disabled
+            Indicates if the user has been disabled.
         server_roles (MutableSequence[str]):
-            The server roles for this user
+            Indicates the server roles for this user.
     """
 
     disabled: bool = proto.Field(

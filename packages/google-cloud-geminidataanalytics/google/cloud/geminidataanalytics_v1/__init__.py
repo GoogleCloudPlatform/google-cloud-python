@@ -126,6 +126,7 @@ from .types.data_chat_service import (
     UserMessage,
 )
 from .types.datasource import (
+    BigQueryDatasetReference,
     BigQueryPropertyGraphReference,
     BigQueryTableReference,
     BigQueryTableReferences,
@@ -138,6 +139,7 @@ from .types.datasource import (
     LookerExploreReferences,
     PrivateLookerInstanceInfo,
     Schema,
+    SearchScope,
     StudioDatasourceReference,
     StudioDatasourceReferences,
 )
@@ -149,6 +151,7 @@ __all__ = (
     "AnalysisMessage",
     "AnalysisOptions",
     "AnalysisQuery",
+    "BigQueryDatasetReference",
     "BigQueryJob",
     "BigQueryPropertyGraphReference",
     "BigQueryRoutine",
@@ -220,6 +223,7 @@ __all__ = (
     "SchemaMessage",
     "SchemaQuery",
     "SchemaResult",
+    "SearchScope",
     "SetAgentOpsObservabilityMetadata",
     "SetAgentOpsObservabilityRequest",
     "SetAgentOpsObservabilityResponse",

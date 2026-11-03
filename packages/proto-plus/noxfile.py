@@ -23,6 +23,11 @@ import nox
 BLACK_VERSION = "black[jupyter]==23.7.0"
 ISORT_VERSION = "isort==5.11.0"
 RUFF_VERSION = "ruff==0.14.14"
+# Temporarily pin pytest<9.2 because pytest 9.2.0 applies filterwarnings=error
+# before pytest_configure hooks run, turning pytest-asyncio's unset
+# asyncio_default_fixture_loop_scope warning (inherited via shared CI venvs)
+# into an error. Remove once pytest 9.2+ deprecations are resolved.
+PYTEST_VERSION = "pytest<9.2"
 
 LINT_PATHS = ["docs", "proto", "tests", "noxfile.py", "setup.py"]
 
@@ -64,7 +69,7 @@ def unit(session, implementation):
     )
 
     session.env["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = implementation
-    session.install("coverage", "pytest", "pytest-cov", "pytz")
+    session.install("coverage", PYTEST_VERSION, "pytest-cov", "pytz")
     session.install("-e", ".[testing]", "-c", constraints_path)
 
     # TODO(https://github.com/googleapis/proto-plus-python/issues/403): re-enable `-W=error`
@@ -100,7 +105,7 @@ def prerelease_deps(session, implementation):
     session.env["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = implementation
 
     # Install test environment dependencies
-    session.install("coverage", "pytest", "pytest-cov", "pytz")
+    session.install("coverage", PYTEST_VERSION, "pytest-cov", "pytz")
 
     # Install the package without dependencies
     session.install("-e", ".", "--no-deps")
@@ -157,7 +162,7 @@ def core_deps_from_source(session, implementation):
     session.env["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = implementation
 
     # Install test environment dependencies
-    session.install("coverage", "pytest", "pytest-cov", "pytz")
+    session.install("coverage", PYTEST_VERSION, "pytest-cov", "pytz")
 
     # Install the package without dependencies
     session.install("-e", ".", "--no-deps")

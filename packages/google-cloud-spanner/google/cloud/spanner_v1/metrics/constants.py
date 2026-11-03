@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import Any
+
 BUILT_IN_METRICS_METER_NAME = "gax-python"
 NATIVE_METRICS_PREFIX = "spanner.googleapis.com/internal/client"
 SPANNER_RESOURCE_TYPE = "spanner_instance_client"
@@ -20,6 +22,18 @@ GOOGLE_CLOUD_RESOURCE_KEY = "google-cloud-resource-prefix"
 GOOGLE_CLOUD_REGION_KEY = "cloud.region"
 GOOGLE_CLOUD_REGION_GLOBAL = "global"
 SPANNER_METHOD_PREFIX = "/google.spanner.v1."
+
+
+def _safe_decode_utf8(value: Any) -> str:
+    """Safely decode bytes to str or return str representation without raising."""
+    if value is None:
+        return ""
+    if isinstance(value, str):
+        return value
+    if isinstance(value, bytes):
+        return value.decode("utf-8", errors="replace")
+    return str(value)
+
 
 # Monitored resource labels
 MONITORED_RES_LABEL_KEY_PROJECT = "project_id"

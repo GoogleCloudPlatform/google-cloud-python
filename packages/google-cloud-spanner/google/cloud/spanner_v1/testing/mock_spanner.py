@@ -38,12 +38,24 @@ class MockSpanner:
         self.execute_streaming_sql_results = {}
         self.partition_results = {}
         self.errors = {}
+        self.headers = {}
 
     def clear_results(self):
         self.results = {}
         self.execute_streaming_sql_results = {}
         self.partition_results = {}
         self.errors = {}
+        self.headers = {}
+
+    def add_header(self, method: str, header: str, value: str):
+        if method not in self.headers:
+            self.headers[method] = []
+        self.headers[method].append((header, value))
+
+    def send_initial_metadata(self, method_name: str, context):
+        headers = self.headers.get(method_name)
+        if headers:
+            context.send_initial_metadata(tuple(headers))
 
     def add_result(self, sql: str, result: result_set.ResultSet):
         self.results[sql.lower().strip()] = result
@@ -202,6 +214,7 @@ class SpannerServicer(spanner_grpc.SpannerServicer):
     def ExecuteSql(self, request, context):
         self._requests.append(request)
         self.mock_spanner.pop_error(context)
+        self.mock_spanner.send_initial_metadata("ExecuteSql", context)
         started_transaction = self.__maybe_create_transaction(request)
         result: result_set.ResultSet = self.mock_spanner.get_result(request.sql)
         if started_transaction:
@@ -212,6 +225,7 @@ class SpannerServicer(spanner_grpc.SpannerServicer):
     def ExecuteStreamingSql(self, request, context):
         self._requests.append(request)
         self.mock_spanner.pop_error(context)
+        self.mock_spanner.send_initial_metadata("ExecuteStreamingSql", context)
         started_transaction = self.__maybe_create_transaction(request)
         partials = self.mock_spanner.get_execute_streaming_sql_results(
             request.sql, started_transaction
@@ -222,6 +236,7 @@ class SpannerServicer(spanner_grpc.SpannerServicer):
     def ExecuteBatchDml(self, request, context):
         self._requests.append(request)
         self.mock_spanner.pop_error(context)
+        self.mock_spanner.send_initial_metadata("ExecuteBatchDml", context)
         response = spanner.ExecuteBatchDmlResponse()
         started_transaction = self.__maybe_create_transaction(request)
 
@@ -254,10 +269,14 @@ class SpannerServicer(spanner_grpc.SpannerServicer):
 
     def Read(self, request, context):
         self._requests.append(request)
+        self.mock_spanner.pop_error(context)
+        self.mock_spanner.send_initial_metadata("Read", context)
         return result_set.ResultSet()
 
     def StreamingRead(self, request, context):
         self._requests.append(request)
+        self.mock_spanner.pop_error(context)
+        self.mock_spanner.send_initial_metadata("StreamingRead", context)
         for result in [result_set.PartialResultSet(), result_set.PartialResultSet()]:
             yield result
 

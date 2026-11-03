@@ -98,6 +98,11 @@ class BigQueryExport(proto.Message):
             Output only. The service account that needs
             permission to create table and upload data to
             the BigQuery dataset.
+        deletion_notifications_enabled (bool):
+            Optional. Indicates whether the notifications
+            will be sent for deleted findings. When enabled,
+            the filter is still respected when sending
+            deletion notifications.
     """
 
     name: str = proto.Field(
@@ -133,6 +138,10 @@ class BigQueryExport(proto.Message):
     principal: str = proto.Field(
         proto.STRING,
         number=8,
+    )
+    deletion_notifications_enabled: bool = proto.Field(
+        proto.BOOL,
+        number=10,
     )
 
 

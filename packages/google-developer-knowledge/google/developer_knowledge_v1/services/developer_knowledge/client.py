@@ -124,11 +124,14 @@ class DeveloperKnowledgeClient(metaclass=DeveloperKnowledgeClientMeta):
 
     A typical use case is to first use
     [DeveloperKnowledge.SearchDocumentChunks][google.developers.knowledge.v1.DeveloperKnowledge.SearchDocumentChunks]
-    to find relevant page URIs based on a query, and then use
+    to find relevant document chunks based on a query, and then use
     [DeveloperKnowledge.GetDocument][google.developers.knowledge.v1.DeveloperKnowledge.GetDocument]
     or
     [DeveloperKnowledge.BatchGetDocuments][google.developers.knowledge.v1.DeveloperKnowledge.BatchGetDocuments]
-    to fetch the full content of the top results.
+    with document resource names (such as
+    [DocumentChunk.parent][google.developers.knowledge.v1.DocumentChunk.parent]
+    or ``documents/{uri_without_scheme}``) to fetch the full content of
+    the top results.
 
     All document content is provided in Markdown format.
     """

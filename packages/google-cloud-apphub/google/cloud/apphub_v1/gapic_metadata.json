@@ -60,6 +60,11 @@
                 "get_application"
               ]
             },
+            "GetBoundary": {
+              "methods": [
+                "get_boundary"
+              ]
+            },
             "GetDiscoveredService": {
               "methods": [
                 "get_discovered_service"
@@ -68,6 +73,11 @@
             "GetDiscoveredWorkload": {
               "methods": [
                 "get_discovered_workload"
+              ]
+            },
+            "GetExtendedMetadataSchema": {
+              "methods": [
+                "get_extended_metadata_schema"
               ]
             },
             "GetService": {
@@ -98,6 +108,11 @@
             "ListDiscoveredWorkloads": {
               "methods": [
                 "list_discovered_workloads"
+              ]
+            },
+            "ListExtendedMetadataSchemas": {
+              "methods": [
+                "list_extended_metadata_schemas"
               ]
             },
             "ListServiceProjectAttachments": {
@@ -133,6 +148,11 @@
             "UpdateApplication": {
               "methods": [
                 "update_application"
+              ]
+            },
+            "UpdateBoundary": {
+              "methods": [
+                "update_boundary"
               ]
             },
             "UpdateService": {
@@ -200,6 +220,11 @@
                 "get_application"
               ]
             },
+            "GetBoundary": {
+              "methods": [
+                "get_boundary"
+              ]
+            },
             "GetDiscoveredService": {
               "methods": [
                 "get_discovered_service"
@@ -208,6 +233,11 @@
             "GetDiscoveredWorkload": {
               "methods": [
                 "get_discovered_workload"
+              ]
+            },
+            "GetExtendedMetadataSchema": {
+              "methods": [
+                "get_extended_metadata_schema"
               ]
             },
             "GetService": {
@@ -238,6 +268,11 @@
             "ListDiscoveredWorkloads": {
               "methods": [
                 "list_discovered_workloads"
+              ]
+            },
+            "ListExtendedMetadataSchemas": {
+              "methods": [
+                "list_extended_metadata_schemas"
               ]
             },
             "ListServiceProjectAttachments": {
@@ -273,6 +308,11 @@
             "UpdateApplication": {
               "methods": [
                 "update_application"
+              ]
+            },
+            "UpdateBoundary": {
+              "methods": [
+                "update_boundary"
               ]
             },
             "UpdateService": {
@@ -340,6 +380,11 @@
                 "get_application"
               ]
             },
+            "GetBoundary": {
+              "methods": [
+                "get_boundary"
+              ]
+            },
             "GetDiscoveredService": {
               "methods": [
                 "get_discovered_service"
@@ -348,6 +393,11 @@
             "GetDiscoveredWorkload": {
               "methods": [
                 "get_discovered_workload"
+              ]
+            },
+            "GetExtendedMetadataSchema": {
+              "methods": [
+                "get_extended_metadata_schema"
               ]
             },
             "GetService": {
@@ -378,6 +428,11 @@
             "ListDiscoveredWorkloads": {
               "methods": [
                 "list_discovered_workloads"
+              ]
+            },
+            "ListExtendedMetadataSchemas": {
+              "methods": [
+                "list_extended_metadata_schemas"
               ]
             },
             "ListServiceProjectAttachments": {
@@ -413,6 +468,11 @@
             "UpdateApplication": {
               "methods": [
                 "update_application"
+              ]
+            },
+            "UpdateBoundary": {
+              "methods": [
+                "update_boundary"
               ]
             },
             "UpdateService": {

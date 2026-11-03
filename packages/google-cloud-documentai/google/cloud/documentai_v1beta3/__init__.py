@@ -148,7 +148,13 @@ from .types.document_service import (
 from .types.evaluation import Evaluation, EvaluationReference
 from .types.geometry import BoundingPoly, NormalizedVertex, Vertex
 from .types.operation_metadata import CommonOperationMetadata
-from .types.processor import Processor, ProcessorVersion, ProcessorVersionAlias
+from .types.processor import (
+    GroundingSettings,
+    Processor,
+    ProcessorVersion,
+    ProcessorVersionAlias,
+    ProcessorVersionOverrides,
+)
 from .types.processor_type import ProcessorType
 
 __all__ = (
@@ -211,6 +217,7 @@ __all__ = (
     "GetProcessorRequest",
     "GetProcessorTypeRequest",
     "GetProcessorVersionRequest",
+    "GroundingSettings",
     "HumanReviewStatus",
     "ImportDocumentsMetadata",
     "ImportDocumentsRequest",
@@ -237,6 +244,7 @@ __all__ = (
     "ProcessorType",
     "ProcessorVersion",
     "ProcessorVersionAlias",
+    "ProcessorVersionOverrides",
     "PropertyMetadata",
     "RawDocument",
     "RawDocuments",
