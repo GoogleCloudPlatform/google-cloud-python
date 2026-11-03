@@ -1,0 +1,430 @@
+// Copyright 2026 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// gcscore.proto — local IPC contract between a thin language client (Go,
+// Python, Java, C++) and the Rust GCS core running as a gRPC server over a
+// Unix Domain Socket (either out-of-process as a shared sidecar daemon or
+// in-process on a background runtime thread).
+syntax = "proto3";
+
+package gcscore.v1;
+
+option go_package = "cloud.google.com/go/storage/internal/gcscorepb;gcscorepb";
+
+service GcsCore {
+  // Round-trip health check and latency/throughput microbenchmark; echoes `payload`.
+  rpc Ping(PingRequest) returns (PingResponse);
+
+  // One-shot or range read (ReadObject over JSON HTTP or gRPC CloudPath).
+  // The first streamed ReadChunk carries ObjectMeta.
+  rpc ReadObject(ReadObjectRequest) returns (stream ReadChunk);
+
+  // Persistent gRPC BidiReadObject session: open once to obtain a descriptor
+  // handle, issue concurrent ReadRange calls, and release via CloseObject.
+  rpc OpenObject(OpenObjectRequest) returns (OpenObjectResponse);
+  rpc ReadRange(ReadRangeRequest) returns (stream ReadChunk);
+  rpc CloseObject(CloseObjectRequest) returns (Empty);
+
+  // Client-streaming upload (WriteObject over JSON HTTP or BidiWriteObject over gRPC).
+  // The first message on the stream must carry `header`.
+  rpc WriteObject(stream WriteRequest) returns (WriteObjectResponse);
+
+  // Single-page control-plane listing (mirrors language SDK iterators / PageInfo).
+  rpc ListObjects(ListObjectsRequest) returns (ListObjectsResponse);
+  rpc ListBuckets(ListBucketsRequest) returns (ListBucketsResponse);
+
+  // Linux shared-memory zero-copy read data plane: the client obtains a sealed
+  // memfd over the companion `<socket>.shm` SCM_RIGHTS channel and mmaps it;
+  // the server writes object bytes directly into the shared mapping and streams
+  // only (offset, len) descriptors over gRPC.
+  rpc ReadObjectShm(ReadObjectShmRequest) returns (stream ShmChunk);
+
+  // Per-caller credential sessions. The host application obtains short-lived
+  // OAuth2 bearer tokens from its own TokenSource and lends them to the server;
+  // data RPCs pass the session id in `x-session` metadata. Every session is
+  // cryptographically bound to the caller's kernel-verified (UID, PID) via SO_PEERCRED.
+  rpc CreateSession(CreateSessionRequest) returns (CreateSessionResponse);
+  rpc UpdateToken(UpdateTokenRequest) returns (Empty);
+  rpc CloseSession(SessionRef) returns (Empty);
+
+  // Process-level CPU and memory telemetry for benchmark accounting.
+  rpc Stats(StatsRequest) returns (StatsResponse);
+
+  // Initiates a graceful server shutdown.
+  rpc Shutdown(Empty) returns (Empty);
+
+  // ---------------------------------------------------------------------------
+  // v2 additions (additive only: existing RPCs, messages and field numbers are
+  // untouched so PR #7350 clients stay wire-compatible).
+  // ---------------------------------------------------------------------------
+
+  // Capability/version negotiation; thin clients call once per channel.
+  rpc GetServerInfo(Empty) returns (ServerInfo);
+
+  // One stream == one google_cloud_storage::object_descriptor::ObjectDescriptor.
+  // The first request MUST be `open`. Payload bytes are delivered in SHM slots
+  // of the caller's read region (`read_region_id == 0` selects inline bytes).
+  rpc BidiReadObject(stream BidiReadObjectRequest) returns (stream BidiReadObjectResponse);
+
+  // One stream == one google_cloud_storage::appendable_object_writer::AppendableObjectWriter.
+  // The first request MUST be `open`. Append payload is referenced by SHM slot
+  // of the caller's write region (`write_region_id == 0` selects inline bytes).
+  rpc BidiWriteObject(stream BidiWriteObjectRequest) returns (stream BidiWriteObjectResponse);
+}
+
+message Empty {}
+
+enum Transport {
+  TRANSPORT_UNSPECIFIED = 0;
+  JSON = 1;  // storage.googleapis.com JSON API over HTTP (reqwest)
+  GRPC = 2;  // storage.googleapis.com gRPC v2 over CloudPath (tonic)
+}
+
+message PingRequest { bytes payload = 1; }
+message PingResponse { bytes payload = 1; }
+
+message ObjectMeta {
+  int64 size = 1;
+  int64 generation = 2;
+  int64 metageneration = 3;
+  string content_type = 4;
+  string content_encoding = 5;
+  uint32 crc32c = 6;
+}
+
+message ReadObjectRequest {
+  string bucket = 1;
+  string object = 2;
+  int64 offset = 3;                        // Range start offset (< 0 for suffix range)
+  int64 length = 4;                        // -1 reads to end of object
+  int64 generation = 5;                    // 0 = latest generation
+  optional int64 if_generation_match = 6;  // Unset or < 0 = no precondition; 0 = DoesNotExist
+  Transport transport = 7;
+  uint32 chunk_size = 8;                   // Target bytes per ReadChunk; 0 = server default
+}
+
+message ReadChunk {
+  // Vector of slices so the server forwards underlying network buffers without
+  // an intermediate concatenation copy; clients consume slices in order.
+  repeated bytes data = 1;
+  ObjectMeta meta = 2;  // Populated on the first chunk only
+}
+
+message ReadObjectShmRequest {
+  ReadObjectRequest read = 1;
+  uint64 region = 2;       // Region ID received from the `.shm` side channel
+  uint64 base_offset = 3;  // Offset within the region to begin writing
+  uint64 capacity = 4;     // Available bytes starting at base_offset
+}
+
+message ShmChunk {
+  uint64 offset = 1;    // Absolute byte offset in the shared region
+  uint64 len = 2;       // Byte length written
+  ObjectMeta meta = 3;  // Populated on the first chunk only
+}
+
+message OpenObjectRequest {
+  string bucket = 1;
+  string object = 2;
+  int64 generation = 3;
+}
+
+message OpenObjectResponse {
+  uint64 handle = 1;
+  ObjectMeta meta = 2;
+}
+
+message ReadRangeRequest {
+  uint64 handle = 1;
+  int64 offset = 2;
+  int64 length = 3;
+  uint32 chunk_size = 4;
+}
+
+message CloseObjectRequest { uint64 handle = 1; }
+
+message WriteHeader {
+  string bucket = 1;
+  string object = 2;
+  string content_type = 3;
+  optional int64 if_generation_match = 4;  // Unset or < 0 = no precondition; 0 = DoesNotExist
+  optional int64 known_size = 5;           // >= 0 enables single-shot upload on JSON path
+  uint32 chunk_size = 6;                   // Resumable upload flush size; 0 = default
+  Transport transport = 7;
+}
+
+message WriteRequest {
+  oneof msg {
+    WriteHeader header = 1;
+    bytes data = 2;
+  }
+}
+
+message WriteObjectResponse {
+  int64 size = 1;
+  int64 generation = 2;
+  uint32 crc32c = 3;
+  Transport transport_used = 4;
+}
+
+message ListObjectsRequest {
+  string bucket = 1;
+  string prefix = 2;
+  string delimiter = 3;
+  string start_offset = 4;
+  string end_offset = 5;
+  string page_token = 6;
+  int32 page_size = 7;
+  bool versions = 8;
+}
+
+message ListedObject {
+  string name = 1;
+  int64 size = 2;
+  int64 generation = 3;
+  int64 metageneration = 4;
+  string content_type = 5;
+  string storage_class = 6;
+  int64 updated_unix_secs = 7;
+  uint32 crc32c = 8;
+}
+
+message ListObjectsResponse {
+  repeated ListedObject items = 1;
+  repeated string prefixes = 2;
+  string next_page_token = 3;
+}
+
+message ListBucketsRequest {
+  string project = 1;
+  string prefix = 2;
+  string page_token = 3;
+  int32 page_size = 4;
+}
+
+message ListedBucket {
+  string name = 1;
+  string location = 2;
+  string storage_class = 3;
+  int64 metageneration = 4;
+  int64 created_unix_secs = 5;
+}
+
+message ListBucketsResponse {
+  repeated ListedBucket items = 1;
+  string next_page_token = 2;
+}
+
+message CreateSessionRequest {
+  string access_token = 1;      // Short-lived OAuth2 bearer token (never a key file)
+  int64 expiry_unix_secs = 2;
+  string quota_project = 3;
+  // v2 additive fields (tags 1-3 unchanged). When `anonymous` is set or
+  // `access_token` is empty and any of these fields is present, the session
+  // shares one cached `Storage` per (endpoint, universe_domain, anonymous).
+  optional string endpoint = 4;
+  optional string universe_domain = 5;
+  optional bool anonymous = 6;
+}
+
+message CreateSessionResponse { string session_id = 1; }
+
+message UpdateTokenRequest {
+  string session_id = 1;
+  string access_token = 2;
+  int64 expiry_unix_secs = 3;
+}
+
+message SessionRef { string session_id = 1; }
+
+message StatsRequest { bool reset_peak_rss = 1; }
+
+message StatsResponse {
+  int32 pid = 1;
+  double cpu_user_secs = 2;
+  double cpu_sys_secs = 3;
+  int64 rss_bytes = 4;       // Current VmRSS
+  int64 peak_rss_bytes = 5;  // VmHWM (since last reset)
+  int32 threads = 6;
+  int64 uptime_ms = 7;
+  int64 rpcs_served = 8;
+}
+
+// =============================================================================
+// v2: zero-copy shared-memory BidiReadObject / BidiWriteObject sessions.
+// =============================================================================
+
+message ServerInfo {
+  string server_version = 1;           // storage-grpc-uds version
+  string storage_crate_version = 2;    // linked google-cloud-storage version
+  repeated string features = 3;        // "bidi-read-shm", "bidi-write-shm", "memfd", "posix-shm", "inline"
+  uint32 max_ranges_per_request = 4;   // 1000
+  uint64 shm_region_size = 5;          // bytes per <socket>.shm region
+  uint32 shm_slot_size = 6;            // 2 MiB (== Rust MAX_WRITE_CHUNK_SIZE)
+  int32 pid = 7;
+  uint32 uid = 8;
+}
+
+message ShmSlotRef {
+  uint64 region_id = 1;  // from the <socket>.shm SCM_RIGHTS handshake (16-byte LE header)
+  uint32 slot = 2;       // byte offset = slot * shm_slot_size
+  uint32 length = 3;     // valid bytes, 0 < length <= shm_slot_size
+}
+
+message ObjectResource {
+  string bucket = 1;
+  string name = 2;
+  int64 generation = 3;
+  int64 metageneration = 4;
+  int64 size = 5;
+  string storage_class = 6;
+  string etag = 7;
+  string content_type = 8;
+  string content_encoding = 9;
+  bool finalized = 10;              // model::Object.finalize_time.is_some()
+  optional uint32 crc32c = 11;      // model::Object.checksums.crc32c
+  bytes md5_hash = 12;
+  map<string, string> metadata = 13;
+  string kms_key = 14;
+  string object_json = 15;          // serde_json of model::Object: proto3-JSON of google.storage.v2.Object (UTF-8)
+}
+
+message ObjectAttrs {
+  string storage_class = 1;
+  string content_type = 2;
+  string content_encoding = 3;
+  string content_language = 4;
+  string content_disposition = 5;
+  string cache_control = 6;
+  map<string, string> metadata = 7;
+  string kms_key = 8;
+  optional int64 custom_time_secs = 9;    // -> wkt::Timestamp::clamp(secs, nanos)
+  bytes contexts_json = 10;               // model::ObjectContexts as proto3 JSON (optional)
+  optional int32 custom_time_nanos = 11;
+}
+
+// ---------------- BidiReads ----------------
+message BidiReadObjectRequest {
+  oneof op {
+    OpenReadSpec open = 1;
+    ReadRanges read = 2;
+    ReleaseSlots release = 3;
+    CancelRanges cancel = 4;
+  }
+}
+
+message OpenReadSpec {
+  string bucket = 1;                        // "b" or "projects/_/buckets/b"
+  string object = 2;
+  int64 generation = 3;                     // 0 = latest
+  optional int64 if_generation_match = 4;
+  optional int64 if_generation_not_match = 5;
+  optional int64 if_metageneration_match = 6;
+  optional int64 if_metageneration_not_match = 7;
+  uint64 read_region_id = 8;                // 0 => inline_data fallback
+  bool compute_full_crc32c = 9;             // OpenObject::compute_crc32c
+  bytes read_handle = 10;                   // accepted for forward-compat; ignored by the unmodified SDK
+  string quota_project = 11;                // OpenObject::with_quota_project
+  string user_agent = 12;                   // OpenObject::with_user_agent
+}
+
+message RangeSpec {
+  int64 range_id = 1;                       // client-chosen, unique per session
+  int64 offset = 2;                         // >= 0; < 0 => ReadRange::tail(-offset)
+  int64 length = 3;                         // 0 => ReadRange::offset(offset) (to EOF, unknown size OK)
+}
+
+message ReadRanges { repeated RangeSpec ranges = 1; }   // <= max_ranges_per_request
+message ReleaseSlots { repeated uint32 slots = 1; }
+message CancelRanges { repeated int64 range_ids = 1; }
+
+message BidiReadObjectResponse {
+  oneof msg {
+    ReadOpened opened = 1;
+    RangeData data = 2;
+    RangeError range_error = 3;             // per-range failure; the session stays usable
+  }
+}
+
+message ReadOpened { ObjectResource object = 1; }
+
+message RangeData {
+  int64 range_id = 1;
+  int64 range_offset = 2;                   // absolute object offset of this piece
+  ShmSlotRef slot = 3;                      // zero-copy payload (Linux/macOS)
+  bytes inline_data = 4;                    // fallback when read_region_id == 0
+  bool range_end = 5;                       // last piece of the range (may carry 0 bytes)
+}
+
+message RangeError {
+  int64 range_id = 1;
+  int32 code = 2;                           // google.rpc.Code
+  string message = 3;
+  bool checksum_mismatch = 4;               // ReadError::ChecksumMismatch -> Python DataCorruption
+}
+
+// ---------------- BidiWrites ----------------
+message BidiWriteObjectRequest {
+  oneof op {
+    OpenAppendSpec open = 1;
+    Append append = 2;
+    Flush flush = 3;
+    Close close = 4;
+    Finalize finalize = 5;
+  }
+  uint64 op_id = 15;                        // echoed on Flushed/Closed/Finalized
+}
+
+message OpenAppendSpec {
+  string bucket = 1;
+  string object = 2;
+  optional int64 reopen_generation = 3;     // unset => open_appendable_object; set => reopen_appendable_object(b, o, g)
+  optional int64 if_generation_match = 4;   // Python generation == 0 => 0 (DoesNotExist)
+  optional int64 if_metageneration_match = 5;
+  optional int64 if_metageneration_not_match = 6;
+  bytes write_handle = 7;                   // BidiWriteHandle.handle -> ReopenAppendableObject::set_write_handle
+  string routing_token = 8;                 // -> ReopenAppendableObject::set_routing_token
+  ObjectAttrs attrs = 9;                    // create only
+  uint64 write_region_id = 10;              // 0 => inline_data fallback
+  string quota_project = 11;
+  optional int64 if_generation_not_match = 12;  // OpenAppendableObject::set_if_generation_not_match
+  string user_agent = 13;                   // with_user_agent
+}
+
+message Append {
+  ShmSlotRef slot = 1;
+  bytes inline_data = 2;                    // fallback only
+}
+
+message Flush {}
+message Close {}
+message Finalize { optional uint32 full_object_crc32c = 1; }
+
+message BidiWriteObjectResponse {
+  oneof msg {
+    WriteOpened opened = 1;
+    SlotsReleased released = 2;             // emitted when SlotLease owners drop (replay ack / tail copy)
+    Flushed flushed = 3;
+    Closed closed = 4;
+    Finalized finalized = 5;
+  }
+  uint64 op_id = 15;
+}
+
+message WriteOpened { int64 generation = 1; int64 persisted_size = 2; }
+message SlotsReleased { repeated uint32 slots = 1; }
+message Flushed { int64 persisted_size = 1; }
+message Closed { int64 persisted_size = 1; }
+message Finalized { ObjectResource object = 1; }
+// Fatal errors terminate the stream with a grpc Status (the writer is dead, same as the Rust SDK).

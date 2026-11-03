@@ -58,6 +58,13 @@ _COMMON_READ_RETRYABLE_EXCEPTIONS = (
 logger = logging.getLogger(__name__)
 
 
+def _uds_selected(client) -> bool:
+    """Whether the opt-in Rust Core SDK (gRPC-over-UDS) backend handles ``client``."""
+    from google.cloud.storage.asyncio._uds import _config
+
+    return _config.should_use_uds(client)
+
+
 def _is_open_retryable(exc):
     """Determine whether opening a read stream should be retried."""
     if isinstance(exc, _COMMON_READ_RETRYABLE_EXCEPTIONS):
@@ -215,6 +222,8 @@ class AsyncMultiRangeDownloader:
         self._open_retries: int = 0
         self.is_finalized: bool = False
         self.full_obj_server_crc32c: Optional[int] = None
+        # Private Rust Core SDK (gRPC-over-UDS) session; None on the default GAPIC path.
+        self._uds = None
 
     async def __aenter__(self):
         """Opens the underlying bidi-gRPC connection to read from the object."""
@@ -243,6 +252,10 @@ class AsyncMultiRangeDownloader:
         """Opens the bidi-gRPC connection to read from the object."""
         if self._is_stream_open:
             raise ValueError("Underlying bidi-gRPC stream is already open")
+
+        if _uds_selected(self.client):
+            if await self._open_uds(retry_policy, metadata):
+                return
 
         if retry_policy is None:
 
@@ -317,6 +330,58 @@ class AsyncMultiRangeDownloader:
 
         await retry_policy(_do_open)()
         self._multiplexer = _StreamMultiplexer(self.read_obj_str)
+
+    async def _open_uds(self, retry_policy, metadata) -> bool:
+        """Opens the object through the Rust Core SDK ``gcs-core-server``.
+
+        Returns ``False`` only in ``auto`` mode when the backend is unavailable (the
+        caller then uses the GAPIC path); raises ``CoreSdkUnavailableError`` in
+        ``force`` mode. GCS errors (``NotFound``, ...) propagate unchanged. GCS-level
+        retries and redirects (``routing_token``) are handled inside the Rust SDK;
+        ``retry_policy`` only governs re-opening the local UDS session.
+        """
+        from google.cloud.storage.asyncio._uds import _config
+        from google.cloud.storage.asyncio._uds.errors import CoreSdkUnavailableError
+        from google.cloud.storage.asyncio._uds.read_session import UdsReadSession
+        from google.cloud.storage.asyncio._uds.runtime import get_runtime
+
+        try:
+            runtime = await get_runtime(self.client)
+        except CoreSdkUnavailableError as exc:
+            if _config.uds_mode() == "force":
+                raise
+            _config.log_fallback(str(exc))
+            return False
+
+        session = UdsReadSession(
+            runtime,
+            self.bucket_name,
+            self.object_name,
+            generation=self.generation,
+            metadata=metadata,
+        )
+
+        async def _do_open():
+            return await session.open()
+
+        policy = retry_policy or AsyncRetry(
+            predicate=lambda exc: isinstance(exc, exceptions.ServiceUnavailable)
+            and not isinstance(exc, CoreSdkUnavailableError)
+        )
+        resource = await policy(_do_open)()
+        self._uds = session
+        if resource.generation:
+            self.generation = resource.generation
+        self.persisted_size = resource.size
+        self.is_finalized = bool(resource.finalized)
+        self.full_obj_server_crc32c = (
+            resource.crc32c
+            if self.is_finalized and resource.HasField("crc32c")
+            else None
+        )
+        # `read_handle` stays as provided: the unmodified Rust SDK does not expose it.
+        self._is_stream_open = True
+        return True
 
     def _create_stream_factory(self, state, metadata):
         """Create a factory that opens a new stream with current routing state."""
@@ -411,6 +476,16 @@ class AsyncMultiRangeDownloader:
 
         if not self._is_stream_open:
             raise ValueError("Underlying bidi-gRPC stream is not open")
+
+        if self._uds is not None:
+            # Rust validates per-chunk and full-object CRC32C before data reaches us.
+            try:
+                await self._uds.download_ranges(read_ranges)
+            except DataCorruption:
+                if self.is_stream_open:
+                    await self.close()
+                raise
+            return
 
         if retry_policy is None:
             retry_policy = AsyncRetry(predicate=_is_read_retryable)
@@ -550,6 +625,14 @@ class AsyncMultiRangeDownloader:
         if not self._is_stream_open:
             raise ValueError("Underlying bidi-gRPC stream is not open")
 
+        if self._uds is not None:
+            session, self._uds = self._uds, None
+            try:
+                await session.close()
+            finally:
+                self._is_stream_open = False
+            return
+
         if self._multiplexer:
             await self._multiplexer.close()
             self._multiplexer = None
@@ -569,4 +652,6 @@ class AsyncMultiRangeDownloader:
     @property
     def object_metadata(self) -> Optional[_storage_v2.Object]:
         """The metadata of the object being downloaded."""
+        if self._uds is not None:
+            return self._uds.object_metadata
         return self.read_obj_str.object_metadata if self.read_obj_str else None

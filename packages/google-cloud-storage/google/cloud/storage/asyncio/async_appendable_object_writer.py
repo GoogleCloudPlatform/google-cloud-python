@@ -52,6 +52,21 @@ _BIDI_WRITE_REDIRECTED_TYPE_URL = (
 logger = logging.getLogger(__name__)
 
 
+def _uds_selected(client) -> bool:
+    """Whether the opt-in Rust Core SDK (gRPC-over-UDS) backend handles ``client``."""
+    from google.cloud.storage.asyncio._uds import _config
+
+    return _config.should_use_uds(client)
+
+
+def _datetime_to_secs_nanos(value):
+    from google.protobuf import timestamp_pb2
+
+    ts = timestamp_pb2.Timestamp()
+    ts.FromDatetime(value)
+    return ts.seconds, ts.nanos
+
+
 def _is_write_retryable(exc):
     """Predicate to determine if a write operation should be retried."""
 
@@ -219,6 +234,8 @@ class AsyncAppendableObjectWriter:
         self.object_resource: Optional[_storage_v2.Object] = None
         self._flush_count = 0
         self.blob: Optional[Blob] = None
+        # Private Rust Core SDK (gRPC-over-UDS) session; None on the default GAPIC path.
+        self._uds = None
 
     @classmethod
     def from_blob(
@@ -286,6 +303,16 @@ class AsyncAppendableObjectWriter:
         if not self._is_stream_open:
             raise ValueError("Stream is not open. Call open() before state_lookup().")
 
+        if self._uds is not None:
+            # No pure state-lookup exists on the unmodified Rust writer: return the
+            # latest known persisted size, or persist pending bytes first.
+            if self._uds.has_unflushed_bytes():
+                self.persisted_size = await self._uds.flush()
+                self.bytes_appended_since_last_flush = 0
+            elif self._uds.last_persisted_size is not None:
+                self.persisted_size = self._uds.last_persisted_size
+            return self.persisted_size
+
         await self.write_obj_stream.send(
             _storage_v2.BidiWriteObjectRequest(
                 state_lookup=True,
@@ -343,6 +370,10 @@ class AsyncAppendableObjectWriter:
         if self._is_stream_open:
             raise ValueError("Underlying bidi-gRPC stream is already open")
 
+        if _uds_selected(self.client):
+            if await self._open_uds(retry_policy, metadata):
+                return
+
         retry_policy = self._merge_retry_policy(retry_policy)
 
         async def _do_open():
@@ -394,6 +425,128 @@ class AsyncAppendableObjectWriter:
 
         await retry_policy(_do_open)()
 
+    def _uds_open_spec(self, metadata):
+        from google.cloud.storage.asyncio._uds import gcscore_pb2 as pb
+
+        spec = pb.OpenAppendSpec(bucket=self.bucket_name, object=self.object_name)
+        for key, value in metadata or ():
+            if key.lower() == "x-goog-user-project":
+                spec.quota_project = value
+        if self.generation is not None and self.generation > 0:
+            spec.reopen_generation = self.generation
+            if self.write_handle is not None and getattr(self.write_handle, "handle", None):
+                spec.write_handle = bytes(self.write_handle.handle)
+            if self._routing_token:
+                spec.routing_token = self._routing_token
+            return spec
+        if self.generation == 0:
+            spec.if_generation_match = 0
+        attrs = pb.ObjectAttrs()
+        if self.storage_class:
+            attrs.storage_class = self.storage_class
+        blob = self.blob
+        if blob is not None:
+            for field, attr in (
+                ("content_type", "content_type"),
+                ("content_encoding", "content_encoding"),
+                ("content_language", "content_language"),
+                ("content_disposition", "content_disposition"),
+                ("cache_control", "cache_control"),
+                ("kms_key", "kms_key_name"),
+                ("storage_class", "storage_class"),
+            ):
+                value = getattr(blob, attr, None)
+                if value:
+                    setattr(attrs, field, value)
+            if blob.metadata:
+                attrs.metadata.update(blob.metadata)
+            if blob.custom_time is not None:
+                secs, nanos = _datetime_to_secs_nanos(blob.custom_time)
+                attrs.custom_time_secs = secs
+                attrs.custom_time_nanos = nanos
+            contexts = getattr(blob, "contexts", None)
+            if contexts and contexts.custom:
+                import json
+
+                attrs.contexts_json = json.dumps(
+                    {
+                        "custom": {
+                            key: {"value": payload.value}
+                            for key, payload in contexts.custom.items()
+                        }
+                    }
+                ).encode("utf-8")
+        spec.attrs.CopyFrom(attrs)
+        return spec
+
+    async def _open_uds(self, retry_policy, metadata) -> bool:
+        """Opens the writer through the Rust Core SDK ``gcs-core-server``.
+
+        Returns ``False`` only in ``auto`` mode when the backend cannot serve this writer
+        (the caller then uses the GAPIC path); raises ``CoreSdkUnavailableError`` in
+        ``force`` mode. GCS errors propagate unchanged.
+        """
+        from google.cloud.storage.asyncio._uds import _config
+        from google.cloud.storage.asyncio._uds.errors import CoreSdkUnavailableError
+        from google.cloud.storage.asyncio._uds.runtime import get_runtime
+        from google.cloud.storage.asyncio._uds.write_session import UdsWriteSession
+
+        unsupported = _config.unsupported_blob_attrs(self.blob)
+        if unsupported:
+            msg = (
+                f"Blob attributes {unsupported} cannot be set by the Rust Core SDK "
+                "appendable writer"
+            )
+            if _config.uds_mode() == "force":
+                raise CoreSdkUnavailableError(msg)
+            _config.log_fallback(msg)
+            return False
+        try:
+            runtime = await get_runtime(self.client)
+        except CoreSdkUnavailableError as exc:
+            if _config.uds_mode() == "force":
+                raise
+            _config.log_fallback(str(exc))
+            return False
+
+        spec = self._uds_open_spec(metadata)
+        session = UdsWriteSession(runtime)
+
+        async def _do_open():
+            return await session.open(spec)
+
+        policy = retry_policy or AsyncRetry(
+            predicate=lambda exc: isinstance(exc, exceptions.ServiceUnavailable)
+            and not isinstance(exc, CoreSdkUnavailableError)
+        )
+        generation, persisted_size = await policy(_do_open)()
+        self._uds = session
+        if generation:
+            self.generation = generation
+        self.persisted_size = persisted_size
+        self.offset = persisted_size
+        self._is_stream_open = True
+        self._routing_token = None
+        return True
+
+    async def _append_uds(self, data) -> None:
+        view = memoryview(data)
+        if view.format != "B" or view.ndim != 1:
+            view = view.cast("B")
+        pos, total = 0, len(view)
+        while pos < total:
+            room = self.flush_interval - self.bytes_appended_since_last_flush
+            n = total - pos if room <= 0 else min(room, total - pos)
+            await self._uds.append(view[pos : pos + n])
+            pos += n
+            self.offset = (self.offset or 0) + n
+            self.bytes_appended_since_last_flush += n
+            if self.bytes_appended_since_last_flush >= self.flush_interval:
+                # Flush-interval parity with `_WriteResumptionStrategy` (flush+state_lookup).
+                self.persisted_size = await self._uds.flush()
+                self._flush_count += 1
+                self.bytes_appended_since_last_flush = 0
+
     async def append(
         self,
         data: bytes,
@@ -429,6 +582,11 @@ class AsyncAppendableObjectWriter:
             raise ValueError("Stream is not open. Call open() before append().")
         if not data:
             logger.debug("No data provided to append; returning without action.")
+            return
+
+        if self._uds is not None:
+            # Rust computes per-chunk CRC32C (enable_checksum=False is still checksummed).
+            await self._append_uds(data)
             return
 
         if retry_policy is None:
@@ -538,6 +696,11 @@ class AsyncAppendableObjectWriter:
         if not self._is_stream_open:
             raise ValueError("Stream is not open. Call open() before simple_flush().")
 
+        if self._uds is not None:
+            await self._uds.flush()
+            self.bytes_appended_since_last_flush = 0
+            return
+
         await self.write_obj_stream.send(
             _storage_v2.BidiWriteObjectRequest(
                 flush=True,
@@ -556,6 +719,12 @@ class AsyncAppendableObjectWriter:
         """
         if not self._is_stream_open:
             raise ValueError("Stream is not open. Call open() before flush().")
+
+        if self._uds is not None:
+            self.persisted_size = await self._uds.flush()
+            self.offset = self.persisted_size
+            self.bytes_appended_since_last_flush = 0
+            return self.persisted_size
 
         await self.write_obj_stream.send(
             _storage_v2.BidiWriteObjectRequest(
@@ -625,6 +794,14 @@ class AsyncAppendableObjectWriter:
                 full_object_checksum=full_object_checksum,
                 retry_policy=retry_policy,
             )
+
+        if self._uds is not None:
+            session, self._uds = self._uds, None
+            try:
+                self.persisted_size = await session.close()
+                return self.persisted_size
+            finally:
+                self._is_stream_open = False
 
         retry_policy = self._merge_retry_policy(retry_policy)
 
@@ -717,6 +894,19 @@ class AsyncAppendableObjectWriter:
                     crc32c=full_object_checksum
                 ),
             )
+
+        if self._uds is not None:
+            from google.cloud.storage.asyncio._uds.errors import object_from_resource
+
+            session, self._uds = self._uds, None
+            try:
+                resource = await session.finalize(full_object_checksum)
+                self.object_resource = object_from_resource(resource)
+                self.persisted_size = self.object_resource.size
+                return self.object_resource
+            finally:
+                self._is_stream_open = False
+                self.offset = None
 
         retry_policy = self._merge_retry_policy(retry_policy)
 

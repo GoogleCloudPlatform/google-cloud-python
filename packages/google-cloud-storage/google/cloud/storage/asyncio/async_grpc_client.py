@@ -14,6 +14,8 @@
 
 """An async client for interacting with Google Cloud Storage using the gRPC API."""
 
+import inspect
+
 import grpc
 from google.auth import credentials as auth_credentials
 
@@ -27,6 +29,31 @@ from google.cloud.storage.grpc_client import (
     _resolve_direct_path_interconnect,
     _rewrite_host_for_interconnect,
 )
+
+
+class _AttemptDirectPathDefault:
+    """Sentinel for an omitted ``attempt_direct_path`` (behaves as ``True``).
+
+    It lets the client tell ``AsyncGrpcClient()`` apart from an explicit
+    ``AsyncGrpcClient(attempt_direct_path=True)`` (which enforces DirectPath) while the
+    public signature still reports ``attempt_direct_path=True``.
+    """
+
+    def __bool__(self):
+        return True
+
+    def __repr__(self):
+        return "True"
+
+
+_ATTEMPT_DIRECT_PATH_DEFAULT = _AttemptDirectPathDefault()
+
+
+def _uds_mode():
+    """Returns the Rust Core SDK UDS backend mode ("off", "auto" or "force")."""
+    from google.cloud.storage.asyncio._uds import _config
+
+    return _config.uds_mode()
 
 
 def _validate_metadata(metadata):
@@ -94,11 +121,32 @@ class AsyncGrpcClient:
         client_info=None,
         client_options=None,
         *,
-        attempt_direct_path=True,
+        attempt_direct_path=_ATTEMPT_DIRECT_PATH_DEFAULT,
         attempt_direct_path_xds_over_interconnect=False,
         enable_metrics=None,
         enable_debug_metrics=None,
     ):
+        # Remember constructor inputs privately (used by the opt-in UDS backend).
+        self._credentials = credentials
+        self._client_options = client_options
+        self._client_info = client_info
+        self._direct_path_enforced = (
+            attempt_direct_path is not _ATTEMPT_DIRECT_PATH_DEFAULT
+            and attempt_direct_path is True
+        )
+        uds_enabled = _uds_mode() != "off"
+        if attempt_direct_path is _ATTEMPT_DIRECT_PATH_DEFAULT:
+            # The Rust Core SDK only supports gRPC CloudPath; when its UDS backend is
+            # enabled, the un-enforced default uses CloudPath for the GAPIC (non-bidi)
+            # calls too. With the backend off, the default stays `True` (unchanged).
+            attempt_direct_path = not uds_enabled
+        if uds_enabled:
+            from google.cloud.storage.asyncio._uds import _config
+
+            _config.check_direct_path_not_enforced(
+                self._direct_path_enforced, client_options
+            )
+        self._attempt_direct_path = attempt_direct_path
         self._enable_metrics = enable_metrics
         self._enable_debug_metrics = enable_debug_metrics
         self._metrics_enabled = _opentelemetry_metrics.is_metrics_enabled(
@@ -126,10 +174,18 @@ class AsyncGrpcClient:
         agent_version = f"gcloud-python/{__version__}"
         if agent_version not in client_info.user_agent:
             client_info.user_agent += f" {agent_version} "
+        self._client_info = client_info
 
         use_dp_interconnect = _resolve_direct_path_interconnect(
             attempt_direct_path_xds_over_interconnect
         )
+        if uds_enabled and use_dp_interconnect:
+            from google.cloud.storage.asyncio._uds import _config
+
+            raise _config._core_errors()(
+                "DirectPath over Cloud Interconnect is enforced but the Rust Core SDK "
+                "UDS backend only supports gRPC CloudPath."
+            )
 
         self._grpc_client = self._create_async_grpc_client(
             credentials=credentials,
@@ -138,6 +194,8 @@ class AsyncGrpcClient:
             attempt_direct_path=attempt_direct_path,
             attempt_direct_path_xds_over_interconnect=use_dp_interconnect,
         )
+        if uds_enabled and _prewarm_requested():
+            _prewarm_uds(self)
 
     @property
     def metrics_enabled(self) -> bool:
@@ -378,3 +436,41 @@ class AsyncGrpcClient:
             timeout=timeout,
             retry=retry,
         )
+
+
+# Keep the public signature byte-identical (`attempt_direct_path=True`) while the
+# implementation uses a private sentinel to detect an explicit `True`.
+_INIT_SIGNATURE = inspect.signature(AsyncGrpcClient.__init__)
+AsyncGrpcClient.__init__.__signature__ = _INIT_SIGNATURE.replace(
+    parameters=[
+        p.replace(default=True) if p.name == "attempt_direct_path" else p
+        for p in _INIT_SIGNATURE.parameters.values()
+    ]
+)
+
+
+def _prewarm_requested():
+    import os
+
+    return os.environ.get("GOOGLE_CLOUD_STORAGE_UDS_PREWARM", "").strip().lower() in (
+        "1",
+        "true",
+    )
+
+
+def _prewarm_uds(client):
+    """Starts (non-blocking) the UDS daemon attach-or-spawn for ``client``."""
+    import threading
+
+    def _run():
+        try:
+            from google.cloud.storage.asyncio._uds import runtime, server_manager
+
+            endpoint, _anon, _creds, _quota = runtime._client_config(client)
+            server_manager.ServerManager(endpoint=endpoint).ensure_server()
+        except Exception as exc:  # pragma: NO COVER - best effort
+            import logging
+
+            logging.getLogger(__name__).debug("UDS prewarm failed: %s", exc)
+
+    threading.Thread(target=_run, name="gcs-uds-prewarm", daemon=True).start()

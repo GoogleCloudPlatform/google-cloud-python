@@ -1,0 +1,57 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Companion platform wheel `google-cloud-storage-core`: ships the `gcs-core-server`
+# executable (storage-grpc-uds) used by `google-cloud-storage[uds]` as its Rust Core
+# SDK backend. No Rust <-> Python FFI: the Python package is a pure locator.
+#
+#   maturin build --release   # platform wheel (py3-none-<platform>)
+#   maturin sdist             # source distribution for regulated environments
+
+[build-system]
+requires      = ["maturin>=1.7,<2.0"]
+build-backend = "maturin"
+
+[project]
+name            = "google-cloud-storage-core"
+version         = "0.1.0"
+description     = "Rust Core SDK (gcs-core-server gRPC-over-UDS daemon) for google-cloud-storage"
+readme          = "README.md"
+requires-python = ">=3.9"
+license         = { text = "Apache-2.0" }
+authors         = [{ name = "Google LLC", email = "googleapis-packages@google.com" }]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: POSIX :: Linux",
+  "Operating System :: MacOS",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Rust",
+  "Topic :: Internet",
+]
+
+[project.urls]
+Repository = "https://github.com/googleapis/google-cloud-rust"
+
+[tool.maturin]
+manifest-path = "../Cargo.toml"
+bindings      = "bin"
+python-source = "."
+module-name   = "google_cloud_storage_core"
+strip         = true
+# The bidi APIs of google-cloud-storage are gated behind this cfg; it must reach every
+# crate in the graph, so it is set as cargo `build.rustflags` (an explicit RUSTFLAGS
+# environment variable still takes precedence).
+config = ["build.rustflags=[\"--cfg\", \"google_cloud_unstable_storage_bidi\"]"]

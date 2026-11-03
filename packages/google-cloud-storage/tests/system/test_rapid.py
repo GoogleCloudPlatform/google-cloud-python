@@ -27,6 +27,8 @@ from google.api_core.exceptions import FailedPrecondition, NotFound, OutOfRange
 
 from google.cloud import kms
 from google.cloud.storage._helpers import _parse_bool_env
+from google.cloud.storage.asyncio._uds import _config as _uds_config
+from google.cloud.storage.asyncio._uds.errors import CoreSdkUnavailableError
 from google.cloud.storage.asyncio.async_appendable_object_writer import (
     _DEFAULT_FLUSH_INTERVAL_BYTES,
     AsyncAppendableObjectWriter,
@@ -58,6 +60,17 @@ _CROSS_REGION_BUCKET = os.getenv("CROSS_REGION_BUCKET")
 _BYTES_TO_UPLOAD = b"dummy_bytes_to_write_read_and_delete_appendable_object"
 
 RCU_SYSTEM_TESTS = _parse_bool_env("RUN_RCU_SYSTEM_TESTS", default=False)
+
+
+def _uds_enabled():
+    """True when the Rust Core SDK (gRPC-over-UDS) backend is enabled.
+
+    E.g. ``pytest tests/system/test_rapid.py --force-use-core-sdk`` or
+    ``GOOGLE_CLOUD_STORAGE_UDS=auto|on``. The Rust Core SDK supports gRPC CloudPath
+    only, so DirectPath-enforcing clients are not created in that mode and the
+    DirectPath fixtures resolve to the CloudPath client.
+    """
+    return _uds_config.is_enabled()
 _RCU_BUCKET = os.getenv("RCU_BUCKET")
 _BUCKET_UNDER_TEST = _RCU_BUCKET if RCU_SYSTEM_TESTS else _RAPID_BUCKET
 
@@ -142,17 +155,19 @@ def grpc_clients(event_loop, run_system_tests_on_preprod):
     # https://github.com/grpc/grpc/blob/61fe9b40a986792ab7d4eb8924027b671faf26ba/src/python/grpcio/grpc/aio/_channel.py#L369
     # https://github.com/grpc/grpc/blob/61fe9b40a986792ab7d4eb8924027b671faf26ba/src/python/grpcio/grpc/_cython/_cygrpc/aio/common.pyx.pxi#L249
     clients = {
-        True: event_loop.run_until_complete(
-            create_async_grpc_client(
-                attempt_direct_path=True, preprod=run_system_tests_on_preprod
-            )
-        ),
         False: event_loop.run_until_complete(
             create_async_grpc_client(
                 attempt_direct_path=False, preprod=run_system_tests_on_preprod
             )
         ),
     }
+    if not _uds_enabled():
+        # Enforcing DirectPath raises CoreSdkUnavailableError in UDS mode (CloudPath only).
+        clients[True] = event_loop.run_until_complete(
+            create_async_grpc_client(
+                attempt_direct_path=True, preprod=run_system_tests_on_preprod
+            )
+        )
     return clients
 
 
@@ -164,7 +179,8 @@ def grpc_client(grpc_clients):
 
 @pytest.fixture
 def grpc_client_direct(grpc_clients):
-    return grpc_clients[True]
+    # In UDS mode every bidi test runs over gRPC CloudPath through the Rust UDS-server.
+    return grpc_clients[False] if _uds_enabled() else grpc_clients[True]
 
 
 def _get_equal_dist(a: int, b: int) -> tuple[int, int]:
@@ -208,7 +224,10 @@ def test_basic_wrd_x_region(
         buffer = BytesIO()
         mrd = AsyncMultiRangeDownloader(grpc_client, _CROSS_REGION_BUCKET, object_name)
         async with mrd:
-            assert mrd._open_retries == 1
+            if not _uds_enabled():
+                # In UDS mode the cross-region routing_token redirect retry happens
+                # inside the Rust UDS-server, so Python records no open retries.
+                assert mrd._open_retries == 1
             # (0, 0) means read the whole object
             await mrd.download_ranges([(0, 0, buffer)])
             assert mrd.persisted_size == object_size
@@ -244,10 +263,19 @@ def test_basic_wrd(
     object_size,
     event_loop,
     grpc_clients,
+    run_system_tests_on_preprod,
 ):
     object_name = f"test_basic_wrd-{str(uuid.uuid4())}"
 
     async def _run():
+        if attempt_direct_path and _uds_enabled():
+            # The Rust Core SDK supports gRPC CloudPath only: enforcing DirectPath
+            # while the UDS backend is enabled must fail closed.
+            with pytest.raises(CoreSdkUnavailableError):
+                await create_async_grpc_client(
+                    attempt_direct_path=True, preprod=run_system_tests_on_preprod
+                )
+            return
         object_data = os.urandom(object_size)
         object_checksum = google_crc32c.value(object_data)
         grpc_client = grpc_clients[attempt_direct_path]
@@ -279,6 +307,44 @@ def test_basic_wrd(
         )
         del writer
         gc.collect()
+
+    event_loop.run_until_complete(_run())
+
+
+def test_direct_path_enforced_raises_in_uds_mode(monkeypatch, event_loop):
+    """Enforcing DirectPath while the UDS backend is enabled raises CoreSdkUnavailableError.
+
+    Runs in every mode: when the UDS backend is not already enabled (e.g. the default
+    GAPIC system-test run), it is enabled in ``auto`` mode for this test only.
+    """
+    if not _uds_enabled():
+        monkeypatch.setenv(_uds_config.ENV_MODE, "auto")
+    assert _uds_enabled()
+
+    async def _run():
+        monkeypatch.delenv(_uds_config.ENV_DIRECT_PATH_XDS, raising=False)
+        with pytest.raises(CoreSdkUnavailableError):
+            AsyncGrpcClient(attempt_direct_path=True)
+        with pytest.raises(CoreSdkUnavailableError):
+            AsyncGrpcClient(
+                client_options=ClientOptions(
+                    api_endpoint="google-c2p:///storage.googleapis.com"
+                )
+            )
+        with pytest.raises(CoreSdkUnavailableError):
+            AsyncGrpcClient(
+                attempt_direct_path=False,
+                client_options=ClientOptions(
+                    api_endpoint="google-c2p-experimental:///storage.googleapis.com"
+                ),
+            )
+        monkeypatch.setenv(_uds_config.ENV_DIRECT_PATH_XDS, "1")
+        with pytest.raises(CoreSdkUnavailableError):
+            AsyncGrpcClient()
+        monkeypatch.delenv(_uds_config.ENV_DIRECT_PATH_XDS, raising=False)
+        # Un-enforced default and explicit CloudPath clients are accepted.
+        assert AsyncGrpcClient()._direct_path_enforced is False
+        assert AsyncGrpcClient(attempt_direct_path=False)._direct_path_enforced is False
 
     event_loop.run_until_complete(_run())
 
