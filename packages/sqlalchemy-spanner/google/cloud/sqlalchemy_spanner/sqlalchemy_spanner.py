@@ -1252,12 +1252,23 @@ class SpannerDialect(DefaultDialect):
             end = str_repr.index(")")
             size = int_from_size(str_repr[6:end])
             return _type_map["BYTES"](length=size)
-        elif str_repr.startswith("ARRAY"):
-            inner_type_str = str_repr[6:-1]
+        elif str_repr.startswith("ARRAY<") and ">" in str_repr:
+            # Vector columns append their length to the type, as in
+            # ARRAY<FLOAT32>(vector_length=>128).
+            end = str_repr.index(">")
+            inner_type_str = str_repr[6:end]
             inner_type = self._designate_type(inner_type_str)
             return _type_map["ARRAY"](inner_type)
-        else:
+        elif str_repr in _type_map:
             return _type_map[str_repr]
+        else:
+            # For example, PROTO and ENUM columns, whose type is the name of
+            # the proto message or enum, like `my.package.Message`.
+            sqlalchemy.util.warn(
+                f"Did not recognize Spanner type '{str_repr}'; "
+                "reflecting it as NullType."
+            )
+            return types.NullType()
 
     @engine_to_connection
     def get_multi_indexes(

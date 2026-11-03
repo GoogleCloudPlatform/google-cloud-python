@@ -14,7 +14,8 @@
 
 from unittest.mock import MagicMock
 
-from sqlalchemy.testing import eq_
+from sqlalchemy import types
+from sqlalchemy.testing import eq_, expect_warnings
 from sqlalchemy.testing.plugin.plugin_base import fixtures
 
 from google.cloud.sqlalchemy_spanner.sqlalchemy_spanner import SpannerDialect
@@ -100,3 +101,66 @@ class TestSpannerDialect(fixtures.TestBase):
         eq_(SpannerDialect.max_size, MAX_SIZE)
         eq_(int_from_size("MAX"), 2621440)
         eq_(int_from_size("100"), 100)
+
+    def test_designate_type_known_types(self):
+        """Test the mapping of Spanner types that the dialect knows."""
+        dialect = SpannerDialect()
+        eq_(dialect._designate_type("INT64"), types.BIGINT)
+        string_type = dialect._designate_type("STRING(MAX)")
+        assert isinstance(string_type, types.String)
+        eq_(string_type.length, 2621440)
+        eq_(dialect._designate_type("BYTES(10)").length, 10)
+        array_type = dialect._designate_type("ARRAY<STRING(MAX)>")
+        assert isinstance(array_type, types.ARRAY)
+        assert isinstance(array_type.item_type, types.String)
+
+    def test_designate_type_vector_columns(self):
+        """Test vector columns are reflected as arrays of their element type."""
+        dialect = SpannerDialect()
+        for str_repr, item_type in (
+            ("ARRAY<FLOAT32>(vector_length=>128)", types.REAL),
+            ("ARRAY<FLOAT64>(vector_length=>3)", types.Float),
+        ):
+            col_type = dialect._designate_type(str_repr)
+            assert isinstance(col_type, types.ARRAY)
+            assert isinstance(col_type.item_type, item_type)
+
+    def test_designate_type_unrecognized_types(self):
+        """Test unrecognized types, like PROTO and ENUM, are reflected as NullType."""
+        dialect = SpannerDialect()
+        for str_repr in ("`my.package.Message`", "`my.package.Status`"):
+            with expect_warnings(f"Did not recognize Spanner type '{str_repr}'"):
+                col_type = dialect._designate_type(str_repr)
+            assert isinstance(col_type, types.NullType)
+
+        with expect_warnings("Did not recognize Spanner type '`my.package.Message`'"):
+            col_type = dialect._designate_type("ARRAY<`my.package.Message`>")
+        assert isinstance(col_type, types.ARRAY)
+        assert isinstance(col_type.item_type, types.NullType)
+
+        # An array type without its closing ">" also falls back to NullType.
+        with expect_warnings("Did not recognize Spanner type 'ARRAY<FLOAT32'"):
+            col_type = dialect._designate_type("ARRAY<FLOAT32")
+        assert isinstance(col_type, types.NullType)
+
+    def test_get_multi_columns_with_unrecognized_type(self):
+        """Test a column of an unrecognized type doesn't break reflection."""
+        dialect = SpannerDialect()
+        connection = MagicMock()
+        mock_snapshot = MagicMock()
+        # Mock rows: schema, table, column, spanner_type, is_nullable,
+        # generation_expression, column_default
+        mock_snapshot.execute_sql.return_value = [
+            ["", "my_table", "id", "INT64", "NO", None, None],
+            ["", "my_table", "message", "`my.package.Message`", "YES", None, None],
+        ]
+        connection.connection.database.snapshot.return_value.__enter__.return_value = (
+            mock_snapshot
+        )
+
+        with expect_warnings("Did not recognize Spanner type"):
+            res = dialect.get_multi_columns(connection)
+
+        columns = res[(None, "my_table")]
+        eq_([column["name"] for column in columns], ["id", "message"])
+        assert isinstance(columns[1]["type"], types.NullType)

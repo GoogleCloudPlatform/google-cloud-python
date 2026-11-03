@@ -1279,6 +1279,29 @@ class ComponentReflectionTest(_ComponentReflectionTest):
 
         Table("text_table", metadata, autoload=True)
 
+    def test_reflect_vector_column(self, connection):
+        """
+        SPANNER SPECIFIC TEST:
+
+        Spanner reports the type of a vector column with its length, like
+        ARRAY<FLOAT32>(vector_length=>3). Checks that such a column is
+        reflected as an array of its element type.
+        """
+        connection.exec_driver_sql(
+            "CREATE TABLE vector_table (id INT64 NOT NULL, "
+            "embedding ARRAY<FLOAT32>(vector_length=>3)) PRIMARY KEY (id)"
+        )
+        connection.connection.commit()
+        try:
+            columns = inspect(connection).get_columns("vector_table")
+            eq_([column["name"] for column in columns], ["id", "embedding"])
+            embedding_type = columns[1]["type"]
+            assert isinstance(embedding_type, sqlalchemy.types.ARRAY)
+            assert isinstance(embedding_type.item_type, sqlalchemy.types.REAL)
+        finally:
+            connection.exec_driver_sql("DROP TABLE vector_table")
+            connection.connection.commit()
+
     def test_reflect_bytes_column_max_len(self, connection):
         """
         SPANNER SPECIFIC TEST:
