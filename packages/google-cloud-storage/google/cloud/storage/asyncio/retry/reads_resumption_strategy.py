@@ -255,8 +255,21 @@ class _ReadResumptionStrategy(_BaseResumptionStrategy):
         """Writes a verified chunk to its buffer and runs the end-of-range checks."""
         read_state = state["download_states"][chunk.read_id]
         data = chunk.data
+        chunk_size = len(data)
         try:
             # Update State & Write Data
+            # Reject a response longer than the range before it reaches the
+            # destination, which may be the caller's preallocated buffer.
+            if (
+                read_state.initial_length != 0
+                and read_state.bytes_written + chunk_size > read_state.initial_length
+            ):
+                raise DataCorruption(
+                    chunk.response,
+                    f"Byte count mismatch for read_id {chunk.read_id}. "
+                    f"Expected {read_state.initial_length}, "
+                    f"got {read_state.bytes_written + chunk_size}",
+                )
             read_state.user_buffer.write(data)
 
             # Commit updates only after the write succeeds
@@ -265,24 +278,15 @@ class _ReadResumptionStrategy(_BaseResumptionStrategy):
                 and read_state.rolling_checksum is not None
             ):
                 read_state.rolling_checksum.update(data)
-            read_state.bytes_written += len(data)
+            read_state.bytes_written += chunk_size
         except BaseException:
             # Keep every read resumable right after its written bytes.
             self.discard_pending_checksums(state)
             raise
 
-        # Final Byte Count & Full Object Checksum Verification
+        # Full Object Checksum Verification
         if chunk.range_end:
             read_state.is_complete = True
-            if (
-                read_state.initial_length != 0
-                and read_state.bytes_written > read_state.initial_length
-            ):
-                raise DataCorruption(
-                    chunk.response,
-                    f"Byte count mismatch for read_id {chunk.read_id}. "
-                    f"Expected {read_state.initial_length}, got {read_state.bytes_written}",
-                )
 
             # Perform full-object checksum verification once the stream finishes.
             if (
