@@ -104,6 +104,8 @@ class ResumableUploadServiceTransport(abc.ABC):
         self._scopes = scopes
         if not hasattr(self, "_ignore_credentials"):
             self._ignore_credentials: bool = False
+        if not hasattr(self, "_user_provided_channel"):
+            self._user_provided_channel: bool = False
 
         # If no credentials are provided, then determine the appropriate
         # defaults.
@@ -141,7 +143,7 @@ class ResumableUploadServiceTransport(abc.ABC):
         # super().__init__, self._host is not used to create the channel and
         # cannot be trusted as the default span endpoint.
         self._default_host: Optional[str] = (
-            None if getattr(self, "_grpc_channel", None) is not None else self._host
+            None if self._user_provided_channel else self._host
         )
         self._wrapped_methods: Dict[Callable, Callable] = {}
 

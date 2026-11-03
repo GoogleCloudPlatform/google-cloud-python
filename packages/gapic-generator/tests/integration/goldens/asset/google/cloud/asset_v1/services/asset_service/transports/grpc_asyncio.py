@@ -269,6 +269,7 @@ class AssetServiceGrpcAsyncIOTransport(AssetServiceTransport):
             self._ignore_credentials = True
             # If a channel was explicitly provided, set it.
             self._grpc_channel = channel
+            self._user_provided_channel = True
             self._ssl_channel_credentials = None
         else:
             if api_mtls_endpoint:

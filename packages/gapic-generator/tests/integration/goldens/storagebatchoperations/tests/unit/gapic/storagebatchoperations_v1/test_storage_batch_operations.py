@@ -7083,6 +7083,8 @@ def test_storage_batch_operations_grpc_transport_channel():
     assert transport.grpc_channel == channel
     assert transport._host == "squid.clam.whelk:443"
     assert transport._ssl_channel_credentials == None
+    assert transport._user_provided_channel is True
+    assert transport._default_host is None
 
 
 def test_storage_batch_operations_grpc_asyncio_transport_channel():
@@ -7096,6 +7098,8 @@ def test_storage_batch_operations_grpc_asyncio_transport_channel():
     assert transport.grpc_channel == channel
     assert transport._host == "squid.clam.whelk:443"
     assert transport._ssl_channel_credentials == None
+    assert transport._user_provided_channel is True
+    assert transport._default_host is None
 
 
 # Remove this test when deprecated arguments (api_mtls_endpoint, client_cert_source) are
@@ -8547,6 +8551,7 @@ def test_storage_batch_operations_base_transport_client_options_object(
     )
     assert transport._client_options is options
     assert transport._client_options.api_endpoint == initial_endpoint
+    assert transport._user_provided_channel is False
     assert transport._default_host == "default.example.com:443"
 
 
@@ -8576,6 +8581,7 @@ def test_storage_batch_operations_base_transport_client_options_dict(
     )
     assert transport._client_options is options
     assert transport._client_options.get("api_endpoint") == expected_endpoint
+    assert transport._user_provided_channel is False
     assert transport._default_host == "default.example.com:443"
     assert options == initial_options
 
@@ -8584,7 +8590,7 @@ def test_storage_batch_operations_base_transport_default_host_ignored_when_custo
     class _CustomChannelTransport(transports.StorageBatchOperationsTransport):
         def __init__(self, **kwargs):
             self._ignore_credentials = True
-            self._grpc_channel = mock.sentinel.custom_channel
+            self._user_provided_channel = True
             super().__init__(**kwargs)
 
     options = client_options.ClientOptions()
@@ -8594,6 +8600,7 @@ def test_storage_batch_operations_base_transport_default_host_ignored_when_custo
     )
     assert transport._client_options is options
     assert transport._client_options.api_endpoint is None
+    assert transport._user_provided_channel is True
     assert transport._default_host is None
 
 
