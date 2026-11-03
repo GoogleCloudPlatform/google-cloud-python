@@ -13,7 +13,7 @@
 # limitations under the License.
 
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools >= 77.0.3"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -22,5 +22,26 @@ version = "1.9.0"
 description = "A python wrapper of the C library 'Google CRC32C'"
 readme = "README.md"
 requires-python = ">=3.10"
-license = {text = "Apache-2.0"}
-dynamic = ["classifiers"]
+authors = [{name = "Google LLC", email = "googleapis-packages@google.com"}]
+urls = {Homepage = "https://github.com/googleapis/google-cloud-python/tree/main/packages/google-crc32c"}
+optional-dependencies = {testing = ["pytest"]}
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
+]
+
+[tool.setuptools]
+include-package-data = false
+package-data = {google_crc32c = ["py.typed"]}
+platforms = ["Posix", "MacOS X", "Windows"]
+zip-safe = true
