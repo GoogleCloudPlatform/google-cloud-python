@@ -19,12 +19,15 @@ from typing import MutableMapping, MutableSequence
 
 import proto  # type: ignore
 
+from google.cloud.ces_v1beta.types import auth
+
 __protobuf__ = proto.module(
     package="google.cloud.ces.v1beta",
     manifest={
         "AgentCard",
         "AgentInterface",
         "AgentSkill",
+        "RemoteA2aConfig",
         "RemoteAgentTool",
     },
 )
@@ -184,6 +187,85 @@ class AgentSkill(proto.Message):
     )
 
 
+class RemoteA2aConfig(proto.Message):
+    r"""Shared configuration for connecting to a remote
+    `A2A <https://github.com/a2aproject/A2A>`__ agent.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        agent_card (google.cloud.ces_v1beta.types.AgentCard):
+            Optional. The full agent card defined inline.
+
+            This field is a member of `oneof`_ ``agent_spec``.
+        agent_registry (str):
+            Optional. Reference to the agent in the Agent Registry.
+            Format:
+            ``projects/{project}/locations/{location}/agents/{agent}``
+
+            This field is a member of `oneof`_ ``agent_spec``.
+        api_authentication (google.cloud.ces_v1beta.types.ApiAuthentication):
+            Optional. Authentication configuration for
+            calling the remote agent. Optional if the
+            registry reference already handles
+            authentication.
+        input_variable_mapping (MutableMapping[str, str]):
+            Optional. Mapping of input variable names of
+            remote agent to GECX variable names.
+        output_variable_mapping (MutableMapping[str, str]):
+            Optional. Mapping of output variable names of
+            remote agent to GECX variable names.
+        streaming_enabled (bool):
+            Optional. Whether streaming is enabled for
+            the remote agent.
+        context_id (str):
+            Optional. If not empty, interactions with the remote A2A
+            agent will use this context ID. This context_id field can
+            refer to a session variable like
+            ``$context.variables.order_agent_session_id``.
+    """
+
+    agent_card: "AgentCard" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        oneof="agent_spec",
+        message="AgentCard",
+    )
+    agent_registry: str = proto.Field(
+        proto.STRING,
+        number=2,
+        oneof="agent_spec",
+    )
+    api_authentication: auth.ApiAuthentication = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=auth.ApiAuthentication,
+    )
+    input_variable_mapping: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=4,
+    )
+    output_variable_mapping: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=5,
+    )
+    streaming_enabled: bool = proto.Field(
+        proto.BOOL,
+        number=6,
+    )
+    context_id: str = proto.Field(
+        proto.STRING,
+        number=7,
+    )
+
+
 class RemoteAgentTool(proto.Message):
     r"""Represents a tool that allows the agent to call another
     remote agent.
@@ -196,6 +278,20 @@ class RemoteAgentTool(proto.Message):
         agent_card (google.cloud.ces_v1beta.types.AgentCard):
             Required. The agent card of the remote agent
             that this tool invokes.
+        api_authentication (google.cloud.ces_v1beta.types.ApiAuthentication):
+            Optional. Authentication configuration for
+            calling the remote agent.
+        stateful_agent (bool):
+            Optional. When enabled, the interaction between the CXAS app
+            and the remote agent will share the same context. If the
+            remote agent returns a context_id, it will be persisted for
+            the entirety of the session for this remote agent tool.
+        input_variable_mapping (MutableMapping[str, str]):
+            Optional. Mapping of input variable names of
+            remote agent to GECX variable names.
+        output_variable_mapping (MutableMapping[str, str]):
+            Optional. Mapping of output variable names of
+            remote agent to GECX variable names.
     """
 
     name: str = proto.Field(
@@ -210,6 +306,25 @@ class RemoteAgentTool(proto.Message):
         proto.MESSAGE,
         number=3,
         message="AgentCard",
+    )
+    api_authentication: auth.ApiAuthentication = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message=auth.ApiAuthentication,
+    )
+    stateful_agent: bool = proto.Field(
+        proto.BOOL,
+        number=5,
+    )
+    input_variable_mapping: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=6,
+    )
+    output_variable_mapping: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=7,
     )
 
 

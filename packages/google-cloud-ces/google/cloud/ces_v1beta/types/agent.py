@@ -20,7 +20,7 @@ from typing import MutableMapping, MutableSequence
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
 
-from google.cloud.ces_v1beta.types import agent_transfers, common
+from google.cloud.ces_v1beta.types import agent_card, agent_transfers, common
 
 __protobuf__ = proto.module(
     package="google.cloud.ces.v1beta",
@@ -57,6 +57,12 @@ class Agent(proto.Message):
             the app, you should grant ``roles/dialogflow.client`` to the
             CES service agent
             ``service-<PROJECT-NUMBER>@gcp-sa-ces.iam.gserviceaccount.com``.
+
+            This field is a member of `oneof`_ ``agent_type``.
+        remote_a2a_agent (google.cloud.ces_v1beta.types.Agent.RemoteA2aAgent):
+            Optional. The remote
+            `A2A <https://github.com/a2aproject/A2A>`__ agent to be used
+            for the agent execution.
 
             This field is a member of `oneof`_ ``agent_type``.
         name (str):
@@ -243,6 +249,21 @@ class Agent(proto.Message):
             number=7,
         )
 
+    class RemoteA2aAgent(proto.Message):
+        r"""The agent which will transfer execution to a remote
+        `A2A <https://github.com/a2aproject/A2A>`__ agent.
+
+        Attributes:
+            a2a_config (google.cloud.ces_v1beta.types.RemoteA2aConfig):
+                Required. The A2A connection configuration.
+        """
+
+        a2a_config: agent_card.RemoteA2aConfig = proto.Field(
+            proto.MESSAGE,
+            number=1,
+            message=agent_card.RemoteA2aConfig,
+        )
+
     class AgentToolset(proto.Message):
         r"""A toolset with a selection of its tools.
 
@@ -275,6 +296,12 @@ class Agent(proto.Message):
         number=27,
         oneof="agent_type",
         message=RemoteDialogflowAgent,
+    )
+    remote_a2a_agent: RemoteA2aAgent = proto.Field(
+        proto.MESSAGE,
+        number=41,
+        oneof="agent_type",
+        message=RemoteA2aAgent,
     )
     name: str = proto.Field(
         proto.STRING,
