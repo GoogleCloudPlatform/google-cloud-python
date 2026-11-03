@@ -295,6 +295,8 @@ class _GapicCallable(object):
             Client information used for metadata headers. Defaults to None.
         kind (str): The transport kind for the RPC method. Defaults to "grpc".
             Allowed values for OpenTelemetry method tracing are "grpc" and "rest".
+        default_host (Optional[str]): Fallback transport host when ``api_endpoint``
+            is not set on ``client_options``. Defaults to None.
     """
 
     _SUPPORTED_TRACING_KINDS = (_TRANSPORT_KIND_GRPC, _TRANSPORT_KIND_REST)
@@ -311,6 +313,7 @@ class _GapicCallable(object):
         is_streaming=False,
         client_info=None,
         kind=_DEFAULT_TRANSPORT_KIND,
+        default_host=None,
     ):
         self._target = target
         self._retry = retry
@@ -352,7 +355,7 @@ class _GapicCallable(object):
 
                 span_name, _, _ = _extract_rpc_identity(method_name)
                 endpoint_attrs = _observability._extract_endpoint_attributes(
-                    client_options
+                    client_options, default_host=default_host
                 )
                 span_attributes = {
                     "rpc.system.name": "http" if kind.startswith("rest") else "grpc",
@@ -452,6 +455,7 @@ def wrap_method(
     method_name=None,
     is_streaming=False,
     kind=_DEFAULT_TRANSPORT_KIND,
+    default_host=None,
 ):
     """Wrap an RPC method with common behavior.
 
@@ -546,6 +550,8 @@ def wrap_method(
             Streaming methods are currently gated and do not generate Tier 3 spans.
         kind (str): The transport kind for the RPC method. Defaults to "grpc".
             Allowed values for OpenTelemetry method tracing are "grpc" and "rest".
+        default_host (Optional[str]): Fallback transport host when ``api_endpoint``
+            is not set on ``client_options``. Defaults to None.
 
     Returns:
         Callable: A new callable that takes optional ``retry``, ``timeout``,
@@ -578,5 +584,6 @@ def wrap_method(
             is_streaming=is_streaming,
             client_info=client_info,
             kind=kind,
+            default_host=default_host,
         )
     )
