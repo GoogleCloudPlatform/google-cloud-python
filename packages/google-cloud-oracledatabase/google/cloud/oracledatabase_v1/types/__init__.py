@@ -236,6 +236,14 @@ from .minor_version import (
     ListMinorVersionsResponse,
     MinorVersion,
 )
+from .odb_dns_zone import (
+    CreateOdbDnsZoneRequest,
+    DeleteOdbDnsZoneRequest,
+    GetOdbDnsZoneRequest,
+    ListOdbDnsZonesRequest,
+    ListOdbDnsZonesResponse,
+    OdbDnsZone,
+)
 from .odb_network import (
     CreateOdbNetworkRequest,
     DeleteOdbNetworkRequest,
@@ -491,6 +499,12 @@ __all__ = (
     "ListMinorVersionsRequest",
     "ListMinorVersionsResponse",
     "MinorVersion",
+    "CreateOdbDnsZoneRequest",
+    "DeleteOdbDnsZoneRequest",
+    "GetOdbDnsZoneRequest",
+    "ListOdbDnsZonesRequest",
+    "ListOdbDnsZonesResponse",
+    "OdbDnsZone",
     "CreateOdbNetworkRequest",
     "DeleteOdbNetworkRequest",
     "GetOdbNetworkRequest",

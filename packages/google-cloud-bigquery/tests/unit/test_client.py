@@ -9580,6 +9580,101 @@ class TestClientUpload(object):
         sent_config = load_table_from_file.mock_calls[0][2]["job_config"]
         assert sent_config.source_format == job.SourceFormat.CSV
 
+    def test_load_table_from_dataframe_with_csv_source_format_datetime_objects(self):
+        pandas = pytest.importorskip("pandas")
+        from google.cloud.bigquery import job
+        from google.cloud.bigquery.schema import SchemaField
+
+        client = self._make_client()
+        schema = [
+            SchemaField("dt_col", "DATETIME"),
+            SchemaField("ts_col", "TIMESTAMP"),
+            SchemaField("str_col", "STRING"),
+        ]
+        dataframe = pandas.DataFrame(
+            {
+                "dt_col": [
+                    datetime.datetime(1, 1, 1, 0, 0, 0),
+                    None,
+                    pandas.NaT,
+                    datetime.datetime(9999, 12, 31, 23, 59, 59, 999999),
+                ],
+                "ts_col": [
+                    datetime.datetime(1, 1, 1, 0, 0, 0, tzinfo=datetime.timezone.utc),
+                    None,
+                    "0002-01-01 00:00:00+00:00",
+                    datetime.datetime(
+                        9999, 12, 31, 23, 59, 59, 999999, tzinfo=datetime.timezone.utc
+                    ),
+                ],
+                "str_col": ["a", None, "b", "c"],
+            },
+            dtype="object",
+        )
+        job_config = job.LoadJobConfig(
+            schema=schema,
+            source_format=job.SourceFormat.CSV,
+        )
+
+        captured_csv = []
+
+        def fake_load_table_from_file(self_client, file_obj, *args, **kwargs):
+            captured_csv.append(file_obj.read().decode("utf-8"))
+            return mock.Mock()
+
+        load_patch = mock.patch(
+            "google.cloud.bigquery.client.Client.load_table_from_file",
+            autospec=True,
+            side_effect=fake_load_table_from_file,
+        )
+        with load_patch:
+            client.load_table_from_dataframe(
+                dataframe, self.TABLE_REF, job_config=job_config
+            )
+
+        assert captured_csv == [
+            "0001-01-01 00:00:00,0001-01-01 00:00:00+00:00,a\n"
+            ",,\n"
+            ",0002-01-01 00:00:00+00:00,b\n"
+            "9999-12-31 23:59:59.999999,9999-12-31 23:59:59.999999+00:00,c\n"
+        ]
+
+    def test_load_table_from_dataframe_with_csv_source_format_no_schema(self):
+        pandas = pytest.importorskip("pandas")
+        from google.cloud.bigquery import job
+
+        client = self._make_client()
+        dataframe = pandas.DataFrame({"x": [object(), object()]})
+        job_config = job.LoadJobConfig(
+            write_disposition=job.WriteDisposition.WRITE_TRUNCATE,
+            source_format=job.SourceFormat.CSV,
+        )
+
+        load_patch = mock.patch(
+            "google.cloud.bigquery.client.Client.load_table_from_file", autospec=True
+        )
+        schema_patch = mock.patch(
+            "google.cloud.bigquery._pandas_helpers.dataframe_to_bq_schema",
+            autospec=True,
+            return_value=None,
+        )
+        with (
+            load_patch as load_table_from_file,
+            schema_patch,
+            pytest.warns(
+                PendingDeprecationWarning,
+                match="Schema could not be detected for all columns",
+            ),
+        ):
+            client.load_table_from_dataframe(
+                dataframe, self.TABLE_REF, job_config=job_config
+            )
+
+        load_table_from_file.assert_called_once()
+        sent_config = load_table_from_file.mock_calls[0][2]["job_config"]
+        assert sent_config.schema is None
+        assert sent_config.source_format == job.SourceFormat.CSV
+
     def test_load_table_from_dataframe_w_higher_scale_decimal128_datatype(self):
         pandas = pytest.importorskip("pandas")
         pytest.importorskip("pyarrow")

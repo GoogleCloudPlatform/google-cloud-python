@@ -8,7 +8,7 @@
     ],
     "language": "PYTHON",
     "name": "google-cloud-sql",
-    "version": "0.1.2"
+    "version": "0.1.3"
   },
   "snippets": [
     {
@@ -12683,7 +12683,7 @@
         "parameters": [
           {
             "name": "request",
-            "type": "google.cloud.sqladmin_v1beta4.types.SqlWorkloadCapturesStartReplayRequest"
+            "type": "google.cloud.sqladmin_v1beta4.types.WorkloadCapturesStartReplayRequest"
           },
           {
             "name": "retry",
@@ -12759,7 +12759,7 @@
         "parameters": [
           {
             "name": "request",
-            "type": "google.cloud.sqladmin_v1beta4.types.SqlWorkloadCapturesStartReplayRequest"
+            "type": "google.cloud.sqladmin_v1beta4.types.WorkloadCapturesStartReplayRequest"
           },
           {
             "name": "retry",
@@ -12836,7 +12836,7 @@
         "parameters": [
           {
             "name": "request",
-            "type": "google.cloud.sqladmin_v1beta4.types.SqlWorkloadCapturesStartRequest"
+            "type": "google.cloud.sqladmin_v1beta4.types.WorkloadCapturesStartRequest"
           },
           {
             "name": "retry",
@@ -12912,7 +12912,7 @@
         "parameters": [
           {
             "name": "request",
-            "type": "google.cloud.sqladmin_v1beta4.types.SqlWorkloadCapturesStartRequest"
+            "type": "google.cloud.sqladmin_v1beta4.types.WorkloadCapturesStartRequest"
           },
           {
             "name": "retry",
@@ -12989,7 +12989,7 @@
         "parameters": [
           {
             "name": "request",
-            "type": "google.cloud.sqladmin_v1beta4.types.SqlWorkloadCapturesStopReplayRequest"
+            "type": "google.cloud.sqladmin_v1beta4.types.WorkloadCapturesStopReplayRequest"
           },
           {
             "name": "retry",
@@ -13065,7 +13065,7 @@
         "parameters": [
           {
             "name": "request",
-            "type": "google.cloud.sqladmin_v1beta4.types.SqlWorkloadCapturesStopReplayRequest"
+            "type": "google.cloud.sqladmin_v1beta4.types.WorkloadCapturesStopReplayRequest"
           },
           {
             "name": "retry",
@@ -13142,7 +13142,7 @@
         "parameters": [
           {
             "name": "request",
-            "type": "google.cloud.sqladmin_v1beta4.types.SqlWorkloadCapturesStopRequest"
+            "type": "google.cloud.sqladmin_v1beta4.types.WorkloadCapturesStopRequest"
           },
           {
             "name": "retry",
@@ -13218,7 +13218,7 @@
         "parameters": [
           {
             "name": "request",
-            "type": "google.cloud.sqladmin_v1beta4.types.SqlWorkloadCapturesStopRequest"
+            "type": "google.cloud.sqladmin_v1beta4.types.WorkloadCapturesStopRequest"
           },
           {
             "name": "retry",

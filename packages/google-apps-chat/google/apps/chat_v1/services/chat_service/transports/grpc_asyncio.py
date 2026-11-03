@@ -2915,6 +2915,50 @@ class ChatServiceGrpcAsyncIOTransport(ChatServiceTransport):
             )
         return self._stubs["move_section_item"]
 
+    @property
+    def replace_message_cards(
+        self,
+    ) -> Callable[
+        [message.ReplaceMessageCardsRequest],
+        Awaitable[message.ReplaceMessageCardsResponse],
+    ]:
+        r"""Return a callable for the replace message cards method over gRPC.
+
+        Replaces the cards included in a message.
+
+        A Chat app can only replace cards on a human-created message if
+        the message already contains cards, and the cards were created
+        by the app.
+
+        If the app replaces the cards with an empty list, the cards are
+        removed. After removing the cards, the app cannot add cards back
+        to the message.
+
+        Requires `app
+        authentication <https://developers.google.com/workspace/chat/authenticate-authorize-chat-app>`__
+        with the `authorization
+        scope <https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes>`__:
+
+        - ``https://www.googleapis.com/auth/chat.bot``
+
+        Returns:
+            Callable[[~.ReplaceMessageCardsRequest],
+                    Awaitable[~.ReplaceMessageCardsResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "replace_message_cards" not in self._stubs:
+            self._stubs["replace_message_cards"] = self._logged_channel.unary_unary(
+                "/google.chat.v1.ChatService/ReplaceMessageCards",
+                request_serializer=message.ReplaceMessageCardsRequest.serialize,
+                response_deserializer=message.ReplaceMessageCardsResponse.deserialize,
+            )
+        return self._stubs["replace_message_cards"]
+
     def _prep_wrapped_messages(self, client_info):
         """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
         self._wrapped_methods = {
@@ -3607,6 +3651,20 @@ class ChatServiceGrpcAsyncIOTransport(ChatServiceTransport):
             ),
             self.move_section_item: self._wrap_method(
                 self.move_section_item,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=30.0,
+                ),
+                default_timeout=30.0,
+                client_info=client_info,
+            ),
+            self.replace_message_cards: self._wrap_method(
+                self.replace_message_cards,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
                     maximum=10.0,

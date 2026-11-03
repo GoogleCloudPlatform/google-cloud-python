@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/googleapis/google-cloud-python/compare/google-cloud-sql-v0.1.2...google-cloud-sql-v0.1.3) (2026-10-29)
+
+
+### Features
+
+* update API sources and regenerate ([#18889](https://github.com/googleapis/google-cloud-python/issues/18889)) ([8705243](https://github.com/googleapis/google-cloud-python/commit/870524380c52ea234235e0c449f5c9aee2945283))
+
 ## [0.1.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-sql-v0.1.1...google-cloud-sql-v0.1.2) (2026-10-22)
 
 

@@ -14,7 +14,7 @@
 
 """User-friendly container for Google Cloud Bigtable Row."""
 
-from google.api_core.exceptions import GoogleAPICallError
+from google.api_core.exceptions import DeadlineExceeded, GoogleAPICallError
 from google.cloud._helpers import (
     _datetime_from_microseconds,  # type: ignore
     _microseconds_from_datetime,  # type: ignore
@@ -24,6 +24,8 @@ from google.rpc import code_pb2, status_pb2
 
 from google.cloud.bigtable.data import mutations
 from google.cloud.bigtable.data import read_modify_write_rules as rmw_rules
+from google.cloud.bigtable.data._helpers import _get_status
+from google.cloud.bigtable.data.exceptions import RetryExceptionGroup
 
 MAX_MUTATIONS = 100000
 """The maximum number of mutations that a row can accumulate."""
@@ -218,6 +220,10 @@ class _SetDeleteRow(Row):
                 mutations.DeleteAllFromFamily(family_to_delete=column_family_id)
             )
         else:
+            if isinstance(columns, (str, bytes)):
+                raise TypeError(
+                    "columns must be an iterable of column names, not str or bytes"
+                )
             timestamps = time_range._to_dict() if time_range else {}
             start_timestamp_micros = timestamps.get("start_timestamp_micros")
             end_timestamp_micros = timestamps.get("end_timestamp_micros")
@@ -475,18 +481,39 @@ class DirectRow(_SetDeleteRow):
 
         try:
             self._table._table_impl.mutate_row(self.row_key, self._get_mutations())
-            return status_pb2.Status(code=code_pb2.OK)
+            status = status_pb2.Status(code=code_pb2.OK)
         except GoogleAPICallError as e:
-            # If the RPC call returns an error, extract the error into a status object, if possible.
-            return status_pb2.Status(
-                code=e.grpc_status_code.value[0]
-                if e.grpc_status_code is not None
-                else code_pb2.UNKNOWN,
-                message=e.message,
-                details=getattr(e, "details", []),
-            )
-        finally:
-            self.clear()
+            # On timeout the data client raises a synthetic DeadlineExceeded
+            # chained with the errors seen on the wire, which would mask the
+            # real failure, so report the terminal one instead. Only that case
+            # is unwrapped: otherwise the raised error already is the terminal
+            # one and the group holds only earlier attempts. The synthetic
+            # error is the one with no response, as server errors carry one.
+            cause = e.__cause__
+            if (
+                isinstance(e, DeadlineExceeded)
+                and e.response is None
+                and isinstance(cause, RetryExceptionGroup)
+                and cause.exceptions
+            ):
+                status = _get_status(cause.exceptions[-1])
+            else:
+                # If the RPC call returns an error, extract the error into a status object, if possible.
+                status = status_pb2.Status(
+                    code=(
+                        e.grpc_status_code.value[0]
+                        if e.grpc_status_code is not None
+                        else code_pb2.UNKNOWN
+                    ),
+                    message=e.message,
+                    details=getattr(e, "details", []),
+                )
+
+        # Clear once a status is produced, success or failure. An error that
+        # cannot be turned into a status propagates instead, and the mutations
+        # stay on the row so the caller can retry them.
+        self.clear()
+        return status
 
     def clear(self):
         """Removes all currently accumulated mutations on the current row.

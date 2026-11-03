@@ -3333,6 +3333,14 @@ class ZoneDistributionConfig(proto.Message):
             field would be used to allocate all resources in that zone.
             This is not applicable to MULTI_ZONE, and would be ignored
             for MULTI_ZONE clusters.
+        zones (MutableSequence[str]):
+            Optional. Specify the zones of a multi-zone
+            cluster where Redis Cluster allocates resources.
+            This flag isn't applicable for single-zone
+            clusters.
+        active_zones (MutableSequence[str]):
+            Output only. The exact list of zones where
+            the cluster currently has active VMs.
     """
 
     class ZoneDistributionMode(proto.Enum):
@@ -3362,6 +3370,14 @@ class ZoneDistributionConfig(proto.Message):
     zone: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+    zones: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+    active_zones: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=4,
     )
 
 

@@ -48,7 +48,10 @@ class RowSet(object):
 
     @property
     def row_ranges(self):
-        return self._read_rows_query.row_ranges
+        return [
+            r if isinstance(r, RowRange) else RowRange._from_pb(r._to_pb())
+            for r in self._read_rows_query.row_ranges
+        ]
 
     def add_row_key(self, row_key):
         """Add row key to row_keys list.
@@ -156,6 +159,31 @@ class RowRange(_MappableAttributesMixin, BaseRowRange):
         "start_inclusive": "start_is_inclusive",
         "end_inclusive": "end_is_inclusive",
     }
+
+    def __init__(self, *args, **kwargs):
+        start_inc = kwargs.get(
+            "start_inclusive",
+            kwargs.get("start_is_inclusive", args[2] if len(args) > 2 else None),
+        )
+        end_inc = kwargs.get(
+            "end_inclusive",
+            kwargs.get("end_is_inclusive", args[3] if len(args) > 3 else None),
+        )
+        super().__init__(*args, **kwargs)
+        self._start_inclusive = True if start_inc is None else bool(start_inc)
+        self._end_inclusive = False if end_inc is None else bool(end_inc)
+
+    @property
+    def start_inclusive(self) -> bool:
+        if self.start_key is not None:
+            return self.start_is_inclusive
+        return getattr(self, "_start_inclusive", True)
+
+    @property
+    def end_inclusive(self) -> bool:
+        if self.end_key is not None:
+            return self.end_is_inclusive
+        return getattr(self, "_end_inclusive", False)
 
     def get_range_kwargs(self):
         """Convert row range object to dict which can be passed to

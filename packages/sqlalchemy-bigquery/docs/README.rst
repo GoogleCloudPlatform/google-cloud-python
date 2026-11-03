@@ -84,7 +84,7 @@ Installations when processing large datasets
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When handling large datasets, you may see speed increases by also installing the
-`bqstorage` dependencies. See the instructions above about creating a virtual 
+`bqstorage` dependencies. See the instructions above about creating a virtual
 environment and then install `sqlalchemy-bigquery` using the `bqstorage` extras:
 
 .. code-block:: console
@@ -117,7 +117,7 @@ Project
 Authentication
 ^^^^^^^^^^^^^^
 
-Follow the `Google Cloud library guide <https://google-cloud-python.readthedocs.io/en/latest/core/auth.html>`_ for authentication. 
+Follow the `Google Cloud library guide <https://google-cloud-python.readthedocs.io/en/latest/core/auth.html>`_ for authentication.
 
 Alternatively, you can choose either of the following approaches:
 
@@ -131,10 +131,10 @@ Alternatively, you can choose either of the following approaches:
 * pass the credentials in ``create_engine()`` as a Python dictionary using the ``credentials_info`` parameter:
 
 .. code-block:: python
-    
+
     # provide credentials as a Python dictionary
     credentials_info = {
-        "type": "service_account", 
+        "type": "service_account",
         "project_id": "your-service-account-project-id"
     }
     engine = create_engine('bigquery://', credentials_info=credentials_info)
@@ -349,6 +349,22 @@ To create an integer-range partitioned table
         ),
         bigquery_require_partition_filter=True,
     )
+
+
+Casting with ``SAFE_CAST``
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To generate a BigQuery ``SAFE_CAST`` expression (which returns ``NULL`` instead
+of raising an error when a cast fails), use ``safe_cast`` from
+``sqlalchemy_bigquery`` (or ``sqlalchemy.try_cast`` on SQLAlchemy 2.0+):
+
+.. code-block:: python
+
+    from sqlalchemy import Integer, select
+    from sqlalchemy_bigquery import safe_cast
+
+    stmt = select(safe_cast(table.c.string_col, Integer))
+
 
 
 Threading and Multiprocessing

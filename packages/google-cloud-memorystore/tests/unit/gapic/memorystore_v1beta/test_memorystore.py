@@ -22058,7 +22058,12 @@ def test_create_instance_rest_call_success(request_type):
         "engine_version": "engine_version_value",
         "engine_configs": {},
         "node_config": {"size_gb": 0.739},
-        "zone_distribution_config": {"zone": "zone_value", "mode": 1},
+        "zone_distribution_config": {
+            "zone": "zone_value",
+            "zones": ["zones_value1", "zones_value2"],
+            "active_zones": ["active_zones_value1", "active_zones_value2"],
+            "mode": 1,
+        },
         "deletion_protection_enabled": True,
         "psc_auto_connections": [
             {
@@ -22619,7 +22624,12 @@ def test_update_instance_rest_call_success(request_type):
         "engine_version": "engine_version_value",
         "engine_configs": {},
         "node_config": {"size_gb": 0.739},
-        "zone_distribution_config": {"zone": "zone_value", "mode": 1},
+        "zone_distribution_config": {
+            "zone": "zone_value",
+            "zones": ["zones_value1", "zones_value2"],
+            "active_zones": ["active_zones_value1", "active_zones_value2"],
+            "mode": 1,
+        },
         "deletion_protection_enabled": True,
         "psc_auto_connections": [
             {

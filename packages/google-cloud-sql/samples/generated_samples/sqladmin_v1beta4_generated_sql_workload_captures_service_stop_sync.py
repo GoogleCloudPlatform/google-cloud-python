@@ -39,7 +39,7 @@ def sample_stop():
     client = sqladmin_v1beta4.SqlWorkloadCapturesServiceClient()
 
     # Initialize request argument(s)
-    request = sqladmin_v1beta4.SqlWorkloadCapturesStopRequest(
+    request = sqladmin_v1beta4.WorkloadCapturesStopRequest(
         project="project_value",
         instance="instance_value",
     )

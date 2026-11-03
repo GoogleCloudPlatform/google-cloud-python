@@ -60,6 +60,7 @@ import contextlib
 import csv
 import json
 import time
+from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import Any
 
@@ -92,10 +93,12 @@ if not HAS_TIER3_TRACING:
         allow_module_level=True,
     )
 
+import requests.exceptions
 from google import showcase
 from google.api_core import exceptions
 from google.api_core import retry as retries
 from google.api_core.client_options import ClientOptions
+from google.protobuf import duration_pb2
 from google.rpc import code_pb2, status_pb2
 from google.showcase import (
     AttemptSequenceRequest,
@@ -119,7 +122,16 @@ except (ImportError, ValueError):
 # while production defaults use exponential backoffs and multi-second retry windows,
 # test scenarios require ultra-fast, deterministic execution to keep the CI suite snappy
 # without flaking under high concurrency.
-SHORT_CLIENT_TIMEOUT_SECONDS = 0.2
+# Use a negative deadline (-1.0s) for gRPC so C-core immediately expires the call
+# locally with DEADLINE_EXCEEDED without writing a near-zero `grpc-timeout` header
+# to the wire (which can race with the Go Showcase server sending HTTP/2 RST_STREAM CANCEL).
+GRPC_CLIENT_TIMEOUT_SECONDS = -1.0
+REST_CLIENT_TIMEOUT_SECONDS = 0.2
+CLIENT_TIMEOUT_SECONDS = {
+    "grpc": GRPC_CLIENT_TIMEOUT_SECONDS,
+    "rest": REST_CLIENT_TIMEOUT_SECONDS,
+}
+SERVER_BLOCK_DELAY_SECONDS = 2
 FAST_RETRY_BACKOFF_SECONDS = 0.01
 # Setting multiplier to 1.0 enforces constant/linear polling intervals, bypassing
 # exponential backoff delay calculation during retry loops:
@@ -223,19 +235,21 @@ def construct_observability_client(
     )
 
 
-def run_echo_call(client: EchoClient, scenario: str):
+def run_echo_call(client: EchoClient, scenario: str, transport: str) -> None:
     """Executes unary RPC requests against an injected EchoClient.
 
     This runner exercises the three standard unary RPC lifecycle scenarios:
     - 'Happy Path' / 'Tracing Off': Dispatches a successful unary EchoRequest.
     - 'Server Failure': Injects a non-retryable INVALID_ARGUMENT gRPC status on the
       Showcase server, expecting an immediate InvalidArgument or BadRequest exception.
-    - 'Client Timeout': Enforces a tight client-side timeout (`SHORT_CLIENT_TIMEOUT_SECONDS`)
-      with retries disabled, expecting a DeadlineExceeded or GatewayTimeout exception.
+    - 'Client Timeout': Enforces a transport-appropriate client-side timeout
+      (`CLIENT_TIMEOUT_SECONDS[transport]`) with retries disabled, expecting a
+      DeadlineExceeded or Timeout exception.
 
     Args:
         client: The instantiated EchoClient (injected by `execute_scenario`).
         scenario: The scenario name string from the CSV matrix row.
+        transport: Normalized transport string ('grpc' or 'rest') derived from the CSV matrix row.
     """
     if scenario in ("Happy Path", "Tracing Off"):
         client.echo(showcase.EchoRequest(content="hello"))
@@ -250,15 +264,19 @@ def run_echo_call(client: EchoClient, scenario: str):
                 )
             )
     elif scenario == "Client Timeout":
-        with pytest.raises((exceptions.DeadlineExceeded, exceptions.GatewayTimeout)):
-            client.echo(
-                showcase.EchoRequest(
-                    error=status_pb2.Status(
-                        code=code_pb2.DEADLINE_EXCEEDED,
-                        message="Client deadline exceeded",
-                    )
+        with pytest.raises(
+            (
+                exceptions.DeadlineExceeded,
+                requests.exceptions.Timeout,
+            )
+        ):
+            client.block(
+                showcase.BlockRequest(
+                    response_delay=duration_pb2.Duration(
+                        seconds=SERVER_BLOCK_DELAY_SECONDS
+                    ),
                 ),
-                timeout=SHORT_CLIENT_TIMEOUT_SECONDS,
+                timeout=CLIENT_TIMEOUT_SECONDS[transport],
                 retry=None,
             )
 
@@ -384,7 +402,7 @@ def execute_scenario(
 
     if scenario in ("Happy Path", "Server Failure", "Client Timeout", "Tracing Off"):
         client = construct_observability_client(EchoClient, transport, client_options)
-        run_echo_call(client, scenario)
+        run_echo_call(client, scenario, transport)
     else:
         client = construct_observability_client(
             SequenceServiceClient, transport, client_options
@@ -544,11 +562,7 @@ def _assert_integer_attributes(span, row: dict[str, str]):
 
 
 def _assert_status_message(span, row: dict[str, str]):
-    """Validates status.message via substring containment matching.
-
-    Because gRPC and REST backends format error message payloads slightly differently,
-    the matrix specifies key error phrases (e.g. 'Persistent outage') that must appear
-    inside the captured `status.message` attribute.
+    """Validates status.message via exact string equality.
 
     Args:
         span: The OpenTelemetry ReadableSpan being validated.
@@ -556,8 +570,8 @@ def _assert_status_message(span, row: dict[str, str]):
     """
 
     def _match_message(attr: str, actual: Any, expected: str):
-        assert expected in str(actual), (
-            f"Attribute {attr}: expected '{expected}' in '{actual}'"
+        assert str(actual) == expected, (
+            f"Attribute {attr}: expected '{expected}', got '{actual}'"
         )
 
     _assert_attribute(
@@ -617,21 +631,66 @@ def _assert_parent_span_id(span, row: dict[str, str], t3_spans: list[Any]):
         pytest.fail(f"Unsupported parent_span_id value in matrix: {expected_parent!r}")
 
 
-def assert_span_matches_row(span, row: dict[str, str], t3_spans: list[Any]):
+def _assert_t3_t4_inheritance(span, row: Mapping[str, str], t4_spans: Sequence[Any]):
+    """Validates cross-tier attribute inheritance from child T4 spans to the parent T3 span.
+
+    Enforces Test Plan requirements:
+    - `url.template` on HTTP T3 is populated from the first T4 span (`T4_1`).
+    - `http.response.status_code`, `error.type`, and `status.message` on HTTP T3 are
+      consistent with / inherited from the last T4 span when present on that T4 span.
+
+    Args:
+        span: The OpenTelemetry ReadableSpan being validated.
+        row: The CSV requirements dictionary for this feature.
+        t4_spans: List of captured child (T4) spans in the current trace.
+    """
+    if row.get("Tier") != "T3" or not t4_spans:
+        return
+
+    first_t4 = t4_spans[0]
+    if "url.template" in first_t4.attributes:
+        assert span.attributes.get("url.template") == first_t4.attributes.get(
+            "url.template"
+        ), (
+            "T3 url.template must be inherited from the first T4 span: T3="
+            f"{span.attributes.get('url.template')!r} != "
+            f"T4_1={first_t4.attributes.get('url.template')!r}"
+        )
+
+    last_t4 = t4_spans[-1]
+    for inherited_attr in ("http.response.status_code", "error.type", "status.message"):
+        if inherited_attr in last_t4.attributes:
+            assert span.attributes.get(inherited_attr) == last_t4.attributes.get(
+                inherited_attr
+            ), (
+                f"T3 {inherited_attr} must match the last T4 span: T3="
+                f"{span.attributes.get(inherited_attr)!r} != "
+                f"T4_last={last_t4.attributes.get(inherited_attr)!r}"
+            )
+
+
+def assert_span_matches_row(
+    span,
+    row: Mapping[str, str],
+    t3_spans: Sequence[Any],
+    t4_spans: Sequence[Any] | None = None,
+):
     """Master validator delegating single-span verification across specialized sub-validators.
 
     Coordinates verification of:
     1. Top-level Span Metadata (Name, Kind, Status)
     2. String Attributes (System, Method, URL, Error Type)
     3. Integer Attributes (HTTP / gRPC Status Codes, Port)
-    4. Status Error Message (Substring containment)
+    4. Status Error Message (Exact string equality)
     5. Retry Resend Count (Protocol-aware retry progression)
     6. Parent Span ID Hierarchy Invariant
+    7. Cross-tier T3/T4 Attribute Inheritance
 
     Args:
         span: The OpenTelemetry ReadableSpan instance being checked.
         row: The CSV requirements dictionary for this feature.
         t3_spans: Captured T3 root spans used to validate parent-child linkage.
+        t4_spans: Captured T4 child spans used to validate cross-tier inheritance.
     """
     _assert_span_metadata(span, row)
     _assert_string_attributes(span, row)
@@ -639,6 +698,8 @@ def assert_span_matches_row(span, row: dict[str, str], t3_spans: list[Any]):
     _assert_status_message(span, row)
     _assert_resend_count(span, row)
     _assert_parent_span_id(span, row, t3_spans)
+    if t4_spans is not None:
+        _assert_t3_t4_inheritance(span, row, t4_spans)
 
 
 # ---------------------------------------------------------------------------
@@ -715,7 +776,8 @@ def test_feature(feature_id: str, row: dict[str, str], span_exporter, monkeypatc
         f"(captured {len(tier_spans)} {tier} spans)"
     )
     target_span = tier_spans[attempt_idx]
-    assert_span_matches_row(target_span, row, t3_spans)
+    with conftest.skip_on_core_mismatch():
+        assert_span_matches_row(target_span, row, t3_spans, t4_spans)
 
 
 # ---------------------------------------------------------------------------

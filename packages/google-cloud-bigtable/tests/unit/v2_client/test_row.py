@@ -181,6 +181,17 @@ def test_direct_row_set_cell_with_integer_value():
     _set_cell_helper(value=value)
 
 
+def test_direct_row_set_cell_with_min_int64_value():
+    _set_cell_helper(value=-(2**63))
+
+
+@pytest.mark.parametrize("bool_val", [True, False])
+def test_direct_row_set_cell_with_bool_value(bool_val):
+    row = _make_direct_row(b"row_key", object())
+    with pytest.raises(TypeError):
+        row.set_cell("column_family_id", b"column", bool_val)
+
+
 def test_direct_row_set_cell_with_non_bytes_value():
     row_key = b"row_key"
     column = b"column"
@@ -258,6 +269,22 @@ def test_direct_row_delete_cells_non_iterable():
     columns = object()  # Not iterable
     with pytest.raises(TypeError):
         row.delete_cells(column_family_id, columns)
+
+
+@pytest.mark.parametrize("columns", ["col_abc", b"col_abc"])
+def test_direct_row_delete_cells_rejects_str_and_bytes(columns):
+    row = _make_direct_row(b"row_key", object())
+    with pytest.raises(TypeError, match="columns must be an iterable of column names"):
+        row.delete_cells("column_family_id", columns)
+    assert row._mutations == []
+
+
+@pytest.mark.parametrize("columns", ["col_abc", b"col_abc"])
+def test_conditional_row_delete_cells_rejects_str_and_bytes(columns):
+    row = _make_conditional_row(b"row_key", object(), filter_=object())
+    with pytest.raises(TypeError, match="columns must be an iterable of column names"):
+        row.delete_cells("column_family_id", columns, state=True)
+    assert row._true_pb_mutations == []
 
 
 def test_direct_row_delete_cells_all_columns():
@@ -477,6 +504,97 @@ def test_direct_row_commit_with_unknown_exception():
     )
     call_args = api.mutate_row.call_args
     assert app_profile_id == call_args.app_profile_id[0]
+
+
+def _make_row_for_commit():
+    """Build a DirectRow holding a single pending mutation."""
+    credentials = _make_credentials()
+    client = _make_client(project="project-id", credentials=credentials, admin=True)
+    table = _Table("projects/more-stuff", client=client, app_profile_id=None)
+    row = _make_direct_row(b"row_key", table)
+    row.set_cell("column_family_id", b"column", b"bytes-value")
+    return row
+
+
+def _commit_with_operation_error(exc):
+    """Commit a row whose underlying ``mutate_row`` fails with ``exc``."""
+    row = _make_row_for_commit()
+
+    with mock.patch.object(row._table._table_impl, "mutate_row") as mutate_row_mock:
+        mutate_row_mock.side_effect = exc
+        return row.commit()
+
+
+def test_direct_row_commit_unwraps_retry_exception_group():
+    """On timeout the synthetic DeadlineExceeded is unwrapped, so that a single
+    row commit reports the same wire error as the equivalent bulk call."""
+    from google.api_core.exceptions import ServiceUnavailable
+    from google.api_core.retry import RetryFailureReason
+    from google.rpc import code_pb2
+
+    from google.cloud.bigtable.data._helpers import _retry_exception_factory
+
+    source_exc, _ = _retry_exception_factory(
+        [ServiceUnavailable("first failure"), ServiceUnavailable("final failure")],
+        RetryFailureReason.TIMEOUT,
+        60.0,
+    )
+
+    result = _commit_with_operation_error(source_exc)
+
+    assert result.code == code_pb2.Code.UNAVAILABLE
+    assert result.message == "final failure"
+
+
+def test_direct_row_commit_reports_terminal_error_when_not_timed_out():
+    """When retries stop for any other reason the raised exception already is
+    the terminal error, so the chained earlier attempts are not unwrapped."""
+    from google.api_core.exceptions import PermissionDenied, ServiceUnavailable
+    from google.api_core.retry import RetryFailureReason
+    from google.rpc import code_pb2
+
+    from google.cloud.bigtable.data._helpers import _retry_exception_factory
+
+    source_exc, _ = _retry_exception_factory(
+        [ServiceUnavailable("earlier attempt"), PermissionDenied("terminal failure")],
+        RetryFailureReason.NON_RETRYABLE_ERROR,
+        60.0,
+    )
+
+    result = _commit_with_operation_error(source_exc)
+
+    assert result.code == code_pb2.Code.PERMISSION_DENIED
+    assert result.message == "terminal failure"
+
+
+def test_direct_row_commit_keeps_deadline_exceeded_returned_by_server():
+    """A DeadlineExceeded returned by the server is the terminal error and is
+    reported as-is, unlike the locally built one."""
+    from google.api_core.exceptions import DeadlineExceeded, ServiceUnavailable
+    from google.rpc import code_pb2
+
+    from google.cloud.bigtable.data.exceptions import RetryExceptionGroup
+
+    exc = DeadlineExceeded("server deadline exceeded", response=mock.Mock())
+    exc.__cause__ = RetryExceptionGroup([ServiceUnavailable("earlier attempt")])
+
+    result = _commit_with_operation_error(exc)
+
+    assert result.code == code_pb2.Code.DEADLINE_EXCEEDED
+    assert result.message == "server deadline exceeded"
+
+
+def test_direct_row_commit_keeps_mutations_when_it_raises():
+    """An error that cannot be reported as a status escapes to the caller, who
+    is left with no outcome to act on, so the mutations are kept."""
+    row = _make_row_for_commit()
+
+    with mock.patch.object(row._table._table_impl, "mutate_row") as mutate_row_mock:
+        mutate_row_mock.side_effect = RuntimeError("failed with unspecified exception")
+        with pytest.raises(RuntimeError):
+            row.commit()
+
+    assert len(row._get_mutations()) == 1
 
 
 def test_direct_row_commit_with_invalid_argument():

@@ -344,7 +344,7 @@ class SqlWorkloadCapturesServiceGrpcAsyncIOTransport(
     def start(
         self,
     ) -> Callable[
-        [cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest],
+        [cloud_sql_workload_captures.WorkloadCapturesStartRequest],
         Awaitable[cloud_sql_resources.Operation],
     ]:
         r"""Return a callable for the start method over gRPC.
@@ -358,7 +358,7 @@ class SqlWorkloadCapturesServiceGrpcAsyncIOTransport(
         applying them to production.
 
         Returns:
-            Callable[[~.SqlWorkloadCapturesStartRequest],
+            Callable[[~.WorkloadCapturesStartRequest],
                     Awaitable[~.Operation]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
@@ -370,7 +370,7 @@ class SqlWorkloadCapturesServiceGrpcAsyncIOTransport(
         if "start" not in self._stubs:
             self._stubs["start"] = self._logged_channel.unary_unary(
                 "/google.cloud.sql.v1beta4.SqlWorkloadCapturesService/Start",
-                request_serializer=cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest.serialize,
+                request_serializer=cloud_sql_workload_captures.WorkloadCapturesStartRequest.serialize,
                 response_deserializer=cloud_sql_resources.Operation.deserialize,
             )
         return self._stubs["start"]
@@ -379,7 +379,7 @@ class SqlWorkloadCapturesServiceGrpcAsyncIOTransport(
     def stop(
         self,
     ) -> Callable[
-        [cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest],
+        [cloud_sql_workload_captures.WorkloadCapturesStopRequest],
         Awaitable[cloud_sql_resources.Operation],
     ]:
         r"""Return a callable for the stop method over gRPC.
@@ -388,7 +388,7 @@ class SqlWorkloadCapturesServiceGrpcAsyncIOTransport(
         operations executed on the primary instance.
 
         Returns:
-            Callable[[~.SqlWorkloadCapturesStopRequest],
+            Callable[[~.WorkloadCapturesStopRequest],
                     Awaitable[~.Operation]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
@@ -400,7 +400,7 @@ class SqlWorkloadCapturesServiceGrpcAsyncIOTransport(
         if "stop" not in self._stubs:
             self._stubs["stop"] = self._logged_channel.unary_unary(
                 "/google.cloud.sql.v1beta4.SqlWorkloadCapturesService/Stop",
-                request_serializer=cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest.serialize,
+                request_serializer=cloud_sql_workload_captures.WorkloadCapturesStopRequest.serialize,
                 response_deserializer=cloud_sql_resources.Operation.deserialize,
             )
         return self._stubs["stop"]
@@ -409,7 +409,7 @@ class SqlWorkloadCapturesServiceGrpcAsyncIOTransport(
     def start_replay(
         self,
     ) -> Callable[
-        [cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest],
+        [cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest],
         Awaitable[cloud_sql_resources.Operation],
     ]:
         r"""Return a callable for the start replay method over gRPC.
@@ -420,7 +420,7 @@ class SqlWorkloadCapturesServiceGrpcAsyncIOTransport(
         without affecting the primary instance.
 
         Returns:
-            Callable[[~.SqlWorkloadCapturesStartReplayRequest],
+            Callable[[~.WorkloadCapturesStartReplayRequest],
                     Awaitable[~.Operation]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
@@ -432,7 +432,7 @@ class SqlWorkloadCapturesServiceGrpcAsyncIOTransport(
         if "start_replay" not in self._stubs:
             self._stubs["start_replay"] = self._logged_channel.unary_unary(
                 "/google.cloud.sql.v1beta4.SqlWorkloadCapturesService/StartReplay",
-                request_serializer=cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest.serialize,
+                request_serializer=cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest.serialize,
                 response_deserializer=cloud_sql_resources.Operation.deserialize,
             )
         return self._stubs["start_replay"]
@@ -441,7 +441,7 @@ class SqlWorkloadCapturesServiceGrpcAsyncIOTransport(
     def stop_replay(
         self,
     ) -> Callable[
-        [cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest],
+        [cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest],
         Awaitable[cloud_sql_resources.Operation],
     ]:
         r"""Return a callable for the stop replay method over gRPC.
@@ -450,7 +450,7 @@ class SqlWorkloadCapturesServiceGrpcAsyncIOTransport(
         SQL replay instance.
 
         Returns:
-            Callable[[~.SqlWorkloadCapturesStopReplayRequest],
+            Callable[[~.WorkloadCapturesStopReplayRequest],
                     Awaitable[~.Operation]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
@@ -462,7 +462,7 @@ class SqlWorkloadCapturesServiceGrpcAsyncIOTransport(
         if "stop_replay" not in self._stubs:
             self._stubs["stop_replay"] = self._logged_channel.unary_unary(
                 "/google.cloud.sql.v1beta4.SqlWorkloadCapturesService/StopReplay",
-                request_serializer=cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest.serialize,
+                request_serializer=cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest.serialize,
                 response_deserializer=cloud_sql_resources.Operation.deserialize,
             )
         return self._stubs["stop_replay"]

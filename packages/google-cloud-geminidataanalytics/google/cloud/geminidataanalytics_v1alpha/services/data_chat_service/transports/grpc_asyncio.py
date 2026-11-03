@@ -353,7 +353,8 @@ class DataChatServiceGrpcAsyncIOTransport(DataChatServiceTransport):
         r"""Return a callable for the chat method over gRPC.
 
         Answers a data question by generating a stream of
-        [Message][google.cloud.geminidataanalytics.v1.Message] objects.
+        [Message][google.cloud.geminidataanalytics.v1alpha.Message]
+        objects.
 
         Returns:
             Callable[[~.ChatRequest],

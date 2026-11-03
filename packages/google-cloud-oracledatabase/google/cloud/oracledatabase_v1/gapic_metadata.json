@@ -60,6 +60,11 @@
                 "create_goldengate_deployment"
               ]
             },
+            "CreateOdbDnsZone": {
+              "methods": [
+                "create_odb_dns_zone"
+              ]
+            },
             "CreateOdbNetwork": {
               "methods": [
                 "create_odb_network"
@@ -113,6 +118,11 @@
             "DeleteGoldengateDeployment": {
               "methods": [
                 "delete_goldengate_deployment"
+              ]
+            },
+            "DeleteOdbDnsZone": {
+              "methods": [
+                "delete_odb_dns_zone"
               ]
             },
             "DeleteOdbNetwork": {
@@ -188,6 +198,11 @@
             "GetGoldengateDeployment": {
               "methods": [
                 "get_goldengate_deployment"
+              ]
+            },
+            "GetOdbDnsZone": {
+              "methods": [
+                "get_odb_dns_zone"
               ]
             },
             "GetOdbNetwork": {
@@ -333,6 +348,11 @@
             "ListMinorVersions": {
               "methods": [
                 "list_minor_versions"
+              ]
+            },
+            "ListOdbDnsZones": {
+              "methods": [
+                "list_odb_dns_zones"
               ]
             },
             "ListOdbNetworks": {
@@ -465,6 +485,11 @@
                 "create_goldengate_deployment"
               ]
             },
+            "CreateOdbDnsZone": {
+              "methods": [
+                "create_odb_dns_zone"
+              ]
+            },
             "CreateOdbNetwork": {
               "methods": [
                 "create_odb_network"
@@ -518,6 +543,11 @@
             "DeleteGoldengateDeployment": {
               "methods": [
                 "delete_goldengate_deployment"
+              ]
+            },
+            "DeleteOdbDnsZone": {
+              "methods": [
+                "delete_odb_dns_zone"
               ]
             },
             "DeleteOdbNetwork": {
@@ -593,6 +623,11 @@
             "GetGoldengateDeployment": {
               "methods": [
                 "get_goldengate_deployment"
+              ]
+            },
+            "GetOdbDnsZone": {
+              "methods": [
+                "get_odb_dns_zone"
               ]
             },
             "GetOdbNetwork": {
@@ -738,6 +773,11 @@
             "ListMinorVersions": {
               "methods": [
                 "list_minor_versions"
+              ]
+            },
+            "ListOdbDnsZones": {
+              "methods": [
+                "list_odb_dns_zones"
               ]
             },
             "ListOdbNetworks": {
@@ -870,6 +910,11 @@
                 "create_goldengate_deployment"
               ]
             },
+            "CreateOdbDnsZone": {
+              "methods": [
+                "create_odb_dns_zone"
+              ]
+            },
             "CreateOdbNetwork": {
               "methods": [
                 "create_odb_network"
@@ -923,6 +968,11 @@
             "DeleteGoldengateDeployment": {
               "methods": [
                 "delete_goldengate_deployment"
+              ]
+            },
+            "DeleteOdbDnsZone": {
+              "methods": [
+                "delete_odb_dns_zone"
               ]
             },
             "DeleteOdbNetwork": {
@@ -998,6 +1048,11 @@
             "GetGoldengateDeployment": {
               "methods": [
                 "get_goldengate_deployment"
+              ]
+            },
+            "GetOdbDnsZone": {
+              "methods": [
+                "get_odb_dns_zone"
               ]
             },
             "GetOdbNetwork": {
@@ -1143,6 +1198,11 @@
             "ListMinorVersions": {
               "methods": [
                 "list_minor_versions"
+              ]
+            },
+            "ListOdbDnsZones": {
+              "methods": [
+                "list_odb_dns_zones"
               ]
             },
             "ListOdbNetworks": {

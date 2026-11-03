@@ -1,5 +1,5 @@
 {
-    "api_description": "This API converts video files into formats suitable for consumer\ndistribution. For more information, see the \u003ca\nhref=\"https://cloud.google.com/transcoder/docs/concepts/overview\"\u003eTranscoder\nAPI overview\u003c/a\u003e.",
+    "api_description": "This API converts video files into formats suitable for consumer\ndistribution.",
     "api_id": "transcoder.googleapis.com",
     "api_shortname": "transcoder",
     "client_documentation": "https://cloud.google.com/python/docs/reference/transcoder/latest",

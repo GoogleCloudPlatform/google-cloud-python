@@ -17,7 +17,6 @@
 
 """Context manager for Cloud Spanner batched writes."""
 
-import functools
 import time
 from typing import List, Optional
 
@@ -25,7 +24,6 @@ from google.api_core.exceptions import InternalServerError
 from google.cloud._helpers import _datetime_to_pb_timestamp
 
 from google.cloud.spanner_v1._helpers import (
-    AtomicCounter,
     _check_rst_stream_error,
     _make_list_value_pb,
     _make_list_value_pbs,
@@ -284,11 +282,8 @@ class Batch(_BatchBase):
                 call_metadata, error_augmenter = database.with_error_augmentation(
                     getattr(database, "_next_nth_request", 0), 1, metadata, span
                 )
-                commit_method = functools.partial(
-                    api.commit, request=commit_request, metadata=call_metadata
-                )
                 with error_augmenter:
-                    return commit_method()
+                    return api.commit(request=commit_request, metadata=call_metadata)
 
             response = _retry_on_aborted_exception(
                 wrapped_method,
@@ -394,24 +389,24 @@ class MutationGroups(_SessionWrapper):
             ) as span,
             MetricsCapture(self._resource_info),
         ):
-            attempt = AtomicCounter(0)
+            attempt = 0
             nth_request = getattr(database, "_next_nth_request", 0)
 
             def wrapped_method():
+                nonlocal attempt
+                attempt += 1
                 batch_write_request = BatchWriteRequest(
                     session=session.name,
                     mutation_groups=mutation_groups,
                     request_options=request_options,
                     exclude_txn_from_change_streams=exclude_txn_from_change_streams,
                 )
-                batch_write_method = functools.partial(
-                    api.batch_write,
+                return api.batch_write(
                     request=batch_write_request,
                     metadata=database.metadata_with_request_id(
-                        nth_request, attempt.increment(), metadata, span
+                        nth_request, attempt, metadata, span
                     ),
                 )
-                return batch_write_method()
 
             response = _retry(
                 wrapped_method,

@@ -3,6 +3,5 @@ Services for Google Cloud Geminidataanalytics v1alpha API
 .. toctree::
     :maxdepth: 2
 
-    data_a2a_service
     data_agent_service
     data_chat_service

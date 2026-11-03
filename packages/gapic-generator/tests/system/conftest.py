@@ -13,10 +13,13 @@
 # limitations under the License.
 
 
+import contextlib
 import os
+from pathlib import Path
 from typing import Sequence, Tuple
 from unittest import mock
 
+import google.api_core
 import grpc
 import pytest
 import pytest_asyncio
@@ -29,6 +32,73 @@ try:
 except ImportError:
     _observability = None
 
+
+def _installed_core_matches_monorepo() -> bool:
+    """Returns True if the installed google.api_core matches the monorepo source.
+
+    When running Showcase tests against PyPI dependencies (e.g. non-canary CI jobs),
+    the installed `google-api-core` release may lag behind unreleased changes in
+    `packages/google-api-core`. Comparing the installed package files against the
+    monorepo source allows system tests to still execute end-to-end RPCs against
+    PyPI `google-api-core` while deferring strict monorepo-specific assertions to
+    `showcase-canary` (`INSTALL_LOCAL_CORE=true`).
+    """
+    repo_root = Path(__file__).resolve().parents[4]
+    monorepo_core_dir = (
+        repo_root / "packages" / "google-api-core" / "google" / "api_core"
+    )
+    installed_core_init = getattr(google.api_core, "__file__", None)
+
+    # Are we running outside the monorepo (e.g. in a standalone export)
+    # where the sibling `packages/google-api-core` directory does not exist?
+    # If so, there is no local monorepo source to compare against, so do not skip tests.
+    has_monorepo_source = monorepo_core_dir.is_dir() and installed_core_init is not None
+    if not has_monorepo_source:
+        return True
+
+    # Was `google-api-core` installed in editable mode (`pip install -e`)
+    # or via PYTHONPATH directly from the monorepo (`showcase-canary`)?
+    # If both paths resolve to the same directory, the code is guaranteed to match.
+    installed_core_dir = Path(installed_core_init).resolve().parent
+    is_editable_monorepo_install = installed_core_dir == monorepo_core_dir
+    if is_editable_monorepo_install:
+        return True
+
+    # Is `google-api-core` installed from PyPI into `site-packages`.
+    # Because `version.py` on `main` is not bumped until release time, we cannot
+    # rely on `__version__` to detect unreleased commits. Instead, verify that every
+    # Python file in the monorepo exists in the installed package with identical text.
+    for monorepo_file in monorepo_core_dir.rglob("*.py"):
+        relative_path = monorepo_file.relative_to(monorepo_core_dir)
+        installed_file = installed_core_dir / relative_path
+        if not installed_file.is_file():
+            return False
+
+        monorepo_code = monorepo_file.read_text(encoding="utf-8")
+        installed_code = installed_file.read_text(encoding="utf-8")
+        if monorepo_code != installed_code:
+            return False
+
+    return True
+
+
+INSTALLED_CORE_MATCHES_MONOREPO = _installed_core_matches_monorepo()
+
+
+@contextlib.contextmanager
+def skip_on_core_mismatch():
+    """Runs assertions and skips only if they fail while PyPI google-api-core lags monorepo."""
+    try:
+        yield
+    except AssertionError:
+        if not INSTALLED_CORE_MATCHES_MONOREPO:
+            pytest.skip(
+                "Installed PyPI google-api-core differs from monorepo source; "
+                "validated by showcase-canary (INSTALL_LOCAL_CORE=true)."
+            )
+        raise
+
+
 try:
     from google.auth.aio import credentials as ga_credentials_async
 
@@ -38,8 +108,8 @@ except ImportError:  # pragma: NO COVER
     HAS_GOOGLE_AUTH_AIO = False
 import google.auth
 from google.auth import credentials as ga_credentials
-
 from google.showcase import EchoClient, IdentityClient, MessagingClient
+
 try:
     from google.showcase import ResumableUploadServiceClient
 
@@ -74,8 +144,8 @@ if os.environ.get("GAPIC_PYTHON_ASYNC", "true") == "true":
     try:
         from google.showcase import ResumableUploadServiceAsyncClient
         from google.showcase_v1beta1.services.resumable_upload_service.transports.rest_asyncio import (
-            AsyncResumableUploadServiceRestTransport,
             AsyncResumableUploadServiceRestInterceptor,
+            AsyncResumableUploadServiceRestTransport,
         )
 
         HAS_ASYNC_REST_RESUMABLE_UPLOAD_TRANSPORT = True

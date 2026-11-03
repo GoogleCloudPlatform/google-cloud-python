@@ -14,6 +14,7 @@
 
 from __future__ import annotations
 
+import logging
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -59,6 +60,8 @@ if TYPE_CHECKING:
 __CROSS_SYNC_OUTPUT__ = (
     "google.cloud.bigtable.data.execute_query._sync_autogen.execute_query_iterator"
 )
+
+_LOGGER = logging.getLogger(__name__)
 
 
 def _has_resume_token(response: ExecuteQueryResponse) -> bool:
@@ -144,6 +147,13 @@ class ExecuteQueryIteratorAsync:
         )
         self._req_metadata = req_metadata
         self._column_info = column_info
+        if CrossSync.is_async:
+            try:
+                CrossSync.verify_async_event_loop()
+            except RuntimeError as e:
+                raise RuntimeError(
+                    f"{self.__class__.__name__} must be created within an async event loop context."
+                ) from e
         try:
             self._register_instance_task = CrossSync.create_task(
                 self._client._register_instance,
@@ -152,10 +162,12 @@ class ExecuteQueryIteratorAsync:
                 id(self),
                 sync_executor=self._client._executor,
             )
-        except RuntimeError as e:
-            raise RuntimeError(
-                f"{self.__class__.__name__} must be created within an async event loop context."
-            ) from e
+        except Exception as e:
+            _LOGGER.warning(
+                f"Failed to start background instance registration: {e}. "
+                "Requests will proceed without proactive channel warming."
+            )
+            self._register_instance_task = None
 
     @property
     def is_closed(self) -> bool:

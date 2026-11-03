@@ -20925,7 +20925,12 @@ def test_update_cluster_rest_call_success(request_type):
         },
         "redis_configs": {},
         "precise_size_gb": 0.15810000000000002,
-        "zone_distribution_config": {"mode": 1, "zone": "zone_value"},
+        "zone_distribution_config": {
+            "mode": 1,
+            "zone": "zone_value",
+            "zones": ["zones_value1", "zones_value2"],
+            "active_zones": ["active_zones_value1", "active_zones_value2"],
+        },
         "cross_cluster_replication_config": {
             "cluster_role": 1,
             "primary_cluster": {"cluster": "cluster_value", "uid": "uid_value"},
@@ -21991,7 +21996,12 @@ def test_create_cluster_rest_call_success(request_type):
         },
         "redis_configs": {},
         "precise_size_gb": 0.15810000000000002,
-        "zone_distribution_config": {"mode": 1, "zone": "zone_value"},
+        "zone_distribution_config": {
+            "mode": 1,
+            "zone": "zone_value",
+            "zones": ["zones_value1", "zones_value2"],
+            "active_zones": ["active_zones_value1", "active_zones_value2"],
+        },
         "cross_cluster_replication_config": {
             "cluster_role": 1,
             "primary_cluster": {"cluster": "cluster_value", "uid": "uid_value"},

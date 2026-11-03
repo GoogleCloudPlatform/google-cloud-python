@@ -57,7 +57,7 @@ SYSTEM_TEST_STANDARD_DEPENDENCIES: List[str] = [
     "google-cloud-testutils",
 ]
 SYSTEM_TEST_EXTERNAL_DEPENDENCIES: List[str] = [
-    "pytest-asyncio==0.21.2",
+    "pytest-asyncio>=0.26.0",
     "pytest-order==1.3.0",
     RUFF_VERSION,
     "pyyaml==6.0.2",

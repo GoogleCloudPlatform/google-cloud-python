@@ -48,6 +48,7 @@ from google.cloud.oracledatabase_v1.types import (
     goldengate_deployment_type,
     goldengate_deployment_version,
     minor_version,
+    odb_dns_zone,
     odb_network,
     odb_subnet,
     oracledatabase,
@@ -67,6 +68,7 @@ from google.cloud.oracledatabase_v1.types import (
 from google.cloud.oracledatabase_v1.types import (
     goldengate_deployment as gco_goldengate_deployment,
 )
+from google.cloud.oracledatabase_v1.types import odb_dns_zone as gco_odb_dns_zone
 from google.cloud.oracledatabase_v1.types import odb_network as gco_odb_network
 from google.cloud.oracledatabase_v1.types import odb_subnet as gco_odb_subnet
 
@@ -1569,6 +1571,112 @@ class OracleDatabaseGrpcTransport(OracleDatabaseTransport):
                 response_deserializer=operations_pb2.Operation.FromString,
             )
         return self._stubs["delete_odb_subnet"]
+
+    @property
+    def list_odb_dns_zones(
+        self,
+    ) -> Callable[
+        [odb_dns_zone.ListOdbDnsZonesRequest], odb_dns_zone.ListOdbDnsZonesResponse
+    ]:
+        r"""Return a callable for the list odb dns zones method over gRPC.
+
+        Lists all the ODB DNS Zones in a given ODB Network.
+
+        Returns:
+            Callable[[~.ListOdbDnsZonesRequest],
+                    ~.ListOdbDnsZonesResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_odb_dns_zones" not in self._stubs:
+            self._stubs["list_odb_dns_zones"] = self._logged_channel.unary_unary(
+                "/google.cloud.oracledatabase.v1.OracleDatabase/ListOdbDnsZones",
+                request_serializer=odb_dns_zone.ListOdbDnsZonesRequest.serialize,
+                response_deserializer=odb_dns_zone.ListOdbDnsZonesResponse.deserialize,
+            )
+        return self._stubs["list_odb_dns_zones"]
+
+    @property
+    def get_odb_dns_zone(
+        self,
+    ) -> Callable[[odb_dns_zone.GetOdbDnsZoneRequest], odb_dns_zone.OdbDnsZone]:
+        r"""Return a callable for the get odb dns zone method over gRPC.
+
+        Gets details of a single ODB DNS Zone.
+
+        Returns:
+            Callable[[~.GetOdbDnsZoneRequest],
+                    ~.OdbDnsZone]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_odb_dns_zone" not in self._stubs:
+            self._stubs["get_odb_dns_zone"] = self._logged_channel.unary_unary(
+                "/google.cloud.oracledatabase.v1.OracleDatabase/GetOdbDnsZone",
+                request_serializer=odb_dns_zone.GetOdbDnsZoneRequest.serialize,
+                response_deserializer=odb_dns_zone.OdbDnsZone.deserialize,
+            )
+        return self._stubs["get_odb_dns_zone"]
+
+    @property
+    def create_odb_dns_zone(
+        self,
+    ) -> Callable[[gco_odb_dns_zone.CreateOdbDnsZoneRequest], operations_pb2.Operation]:
+        r"""Return a callable for the create odb dns zone method over gRPC.
+
+        Creates a new ODB DNS Zone in a given ODB Network.
+
+        Returns:
+            Callable[[~.CreateOdbDnsZoneRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_odb_dns_zone" not in self._stubs:
+            self._stubs["create_odb_dns_zone"] = self._logged_channel.unary_unary(
+                "/google.cloud.oracledatabase.v1.OracleDatabase/CreateOdbDnsZone",
+                request_serializer=gco_odb_dns_zone.CreateOdbDnsZoneRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["create_odb_dns_zone"]
+
+    @property
+    def delete_odb_dns_zone(
+        self,
+    ) -> Callable[[odb_dns_zone.DeleteOdbDnsZoneRequest], operations_pb2.Operation]:
+        r"""Return a callable for the delete odb dns zone method over gRPC.
+
+        Deletes a single ODB DNS Zone.
+
+        Returns:
+            Callable[[~.DeleteOdbDnsZoneRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_odb_dns_zone" not in self._stubs:
+            self._stubs["delete_odb_dns_zone"] = self._logged_channel.unary_unary(
+                "/google.cloud.oracledatabase.v1.OracleDatabase/DeleteOdbDnsZone",
+                request_serializer=odb_dns_zone.DeleteOdbDnsZoneRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["delete_odb_dns_zone"]
 
     @property
     def list_exadb_vm_clusters(

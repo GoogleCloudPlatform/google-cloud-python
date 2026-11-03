@@ -19,6 +19,7 @@ import abc
 import google.cloud.bigtable_v2.types.data as data_pb
 
 # value must fit in 64-bit signed integer
+_MIN_INCREMENT_VALUE = -(1 << 63)
 _MAX_INCREMENT_VALUE = (1 << 63) - 1
 
 
@@ -61,11 +62,11 @@ class IncrementRule(ReadModifyWriteRule):
     """
 
     def __init__(self, family: str, qualifier: bytes | str, increment_amount: int = 1):
-        if not isinstance(increment_amount, int):
+        if isinstance(increment_amount, bool) or not isinstance(increment_amount, int):
             raise TypeError("increment_amount must be an integer")
-        if abs(increment_amount) > _MAX_INCREMENT_VALUE:
+        if not (_MIN_INCREMENT_VALUE <= increment_amount <= _MAX_INCREMENT_VALUE):
             raise ValueError(
-                "increment_amount must be between -2**63 and 2**63 (64-bit signed int)"
+                "increment_amount must be between -2**63 and 2**63 - 1 (64-bit signed int)"
             )
         super().__init__(family, qualifier)
         self.increment_amount = increment_amount

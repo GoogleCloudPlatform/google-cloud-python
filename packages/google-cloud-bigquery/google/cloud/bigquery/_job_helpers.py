@@ -575,6 +575,10 @@ def query_and_wait(
         request_body["maxResults"] = page_size or max_results
     if client.default_job_creation_mode:
         request_body["jobCreationMode"] = client.default_job_creation_mode
+    elif query_results_format == enums.QueryResultsFormat.ARROW:
+        # ARROW callers want low latency, so let BigQuery skip creating a
+        # job when it can return every row in the first response.
+        request_body["jobCreationMode"] = enums.JobCreationMode.JOB_CREATION_OPTIONAL
 
     query_sent_factory = QuerySentEventFactory()
 

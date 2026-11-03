@@ -1243,3 +1243,66 @@ def test_timestamp_range_to_pb_backwards_compatibility():
     assert hasattr(tr, "to_pb")
     with pytest.deprecated_call():
         assert tr.to_pb() == tr._to_pb()
+
+
+def test_timestamp_range_filter_repr_and_cross_layer_eq():
+    from datetime import datetime, timezone
+
+    from google.cloud.bigtable import row_filters as classic_rf
+    from google.cloud.bigtable.data import row_filters as data_rf
+
+    t1 = datetime(2023, 1, 1, tzinfo=timezone.utc)
+    t2 = datetime(2023, 1, 2, tzinfo=timezone.utc)
+    tr = classic_rf.TimestampRange(start=t1, end=t2)
+    classic_trf = classic_rf.TimestampRangeFilter(tr)
+
+    assert repr(classic_trf) == f"TimestampRangeFilter(range_={tr!r})"
+    assert (
+        eval(
+            repr(classic_trf),
+            {
+                "TimestampRangeFilter": classic_rf.TimestampRangeFilter,
+                "TimestampRange": classic_rf.TimestampRange,
+                "datetime": __import__("datetime"),
+            },
+        )
+        == classic_trf
+    )
+
+    empty_trf = classic_rf.TimestampRangeFilter(None)
+    assert repr(empty_trf) == "TimestampRangeFilter(range_=None)"
+
+    data_trf = data_rf.TimestampRangeFilter(start=t1, end=t2)
+    data_trf_from_range = data_rf.TimestampRangeFilter(tr)
+    assert data_trf_from_range._to_pb() == classic_trf._to_pb()
+    assert classic_trf == data_trf
+    assert data_trf == classic_trf
+    assert classic_trf.__eq__(data_trf) is True
+    assert data_trf.__eq__(classic_trf) is True
+
+    classic_crf = classic_rf.ColumnRangeFilter(
+        "cf1", start_column=b"c1", end_column=b"c2"
+    )
+    data_crf = data_rf.ColumnRangeFilter(
+        "cf1", start_qualifier=b"c1", end_qualifier=b"c2"
+    )
+    assert classic_crf == data_crf
+    assert data_crf == classic_crf
+    assert classic_crf.__eq__(data_crf) is True
+    assert data_crf.__eq__(classic_crf) is True
+
+    classic_cond = classic_rf.ConditionalRowFilter(
+        classic_rf.PassAllFilter(True),
+        true_filter=classic_rf.StripValueTransformerFilter(True),
+    )
+    data_cond = data_rf.ConditionalRowFilter(
+        data_rf.PassAllFilter(True),
+        true_filter=data_rf.StripValueTransformerFilter(True),
+    )
+    assert classic_cond == data_cond
+    assert data_cond == classic_cond
+    assert classic_cond.__eq__(data_cond) is True
+    assert data_cond.__eq__(classic_cond) is True
+
+    assert classic_rf.ValueRegexFilter(b"abc") != classic_rf.ExactValueFilter(b"abc")
+    assert classic_rf.ExactValueFilter(b"abc") != classic_rf.ValueRegexFilter(b"abc")

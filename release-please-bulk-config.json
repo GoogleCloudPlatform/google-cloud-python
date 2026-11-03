@@ -984,6 +984,18 @@
         "google/cloud/common/gapic_version.py"
       ]
     },
+    "packages/google-cloud-compute": {
+      "component": "google-cloud-compute",
+      "extra-files": [
+        "google/cloud/compute/gapic_version.py",
+        "google/cloud/compute_v1/gapic_version.py",
+        {
+          "jsonpath": "$.clientLibrary.version",
+          "path": "samples/generated_samples/snippet_metadata_google.cloud.compute.v1.json",
+          "type": "json"
+        }
+      ]
+    },
     "packages/google-cloud-compute-v1beta": {
       "component": "google-cloud-compute-v1beta",
       "extra-files": [

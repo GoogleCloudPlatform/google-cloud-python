@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# [START bigtable_writes_simple]
+# [START bigtable_writes_simple_legacy]
 from datetime import datetime, timezone
 
 from google.cloud import bigtable
@@ -39,4 +39,4 @@ def write_simple(project_id, instance_id, table_id):
     print("Successfully wrote row {}.".format(row_key))
 
 
-# [END bigtable_writes_simple]
+# [END bigtable_writes_simple_legacy]

@@ -6864,6 +6864,26 @@ def test_create_template_rest_call_success(request_type):
                 "confidence_level": 1,
             },
             "malicious_uri_filter_settings": {"filter_enforcement": 1},
+            "filter_rule_settings": {
+                "rule_sets": [
+                    {
+                        "filter_types": [1],
+                        "rules": [
+                            {
+                                "exclusion_rule": {
+                                    "dictionary": {
+                                        "word_list": {
+                                            "words": ["words_value1", "words_value2"]
+                                        }
+                                    },
+                                    "regex": {"pattern": "pattern_value"},
+                                    "matching_scope": 1,
+                                }
+                            }
+                        ],
+                    }
+                ]
+            },
         },
         "template_metadata": {
             "ignore_partial_invocation_failures": True,
@@ -7098,6 +7118,26 @@ def test_update_template_rest_call_success(request_type):
                 "confidence_level": 1,
             },
             "malicious_uri_filter_settings": {"filter_enforcement": 1},
+            "filter_rule_settings": {
+                "rule_sets": [
+                    {
+                        "filter_types": [1],
+                        "rules": [
+                            {
+                                "exclusion_rule": {
+                                    "dictionary": {
+                                        "word_list": {
+                                            "words": ["words_value1", "words_value2"]
+                                        }
+                                    },
+                                    "regex": {"pattern": "pattern_value"},
+                                    "matching_scope": 1,
+                                }
+                            }
+                        ],
+                    }
+                ]
+            },
         },
         "template_metadata": {
             "ignore_partial_invocation_failures": True,
@@ -7573,6 +7613,26 @@ def test_update_floor_setting_rest_call_success(request_type):
                 "confidence_level": 1,
             },
             "malicious_uri_filter_settings": {"filter_enforcement": 1},
+            "filter_rule_settings": {
+                "rule_sets": [
+                    {
+                        "filter_types": [1],
+                        "rules": [
+                            {
+                                "exclusion_rule": {
+                                    "dictionary": {
+                                        "word_list": {
+                                            "words": ["words_value1", "words_value2"]
+                                        }
+                                    },
+                                    "regex": {"pattern": "pattern_value"},
+                                    "matching_scope": 1,
+                                }
+                            }
+                        ],
+                    }
+                ]
+            },
         },
         "enable_floor_setting_enforcement": True,
         "integrated_services": [1],

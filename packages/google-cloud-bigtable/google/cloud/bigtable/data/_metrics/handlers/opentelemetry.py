@@ -185,30 +185,35 @@ class OpenTelemetryMetricsHandler(MetricsHandler):
         """
         labels = {
             "method": op.op_type.value,
-            "status": op.final_status.name,
             "resource_zone": op.zone,
             "resource_cluster": op.cluster_id,
             **self._get_operation_labels(op),
         }
+        status = op.final_status.name
         is_streaming = str(op.is_streaming)
 
         self.otel.operation_latencies.record(
-            op.duration_ns / NS_TO_MS, {"streaming": is_streaming, **labels}
+            op.duration_ns / NS_TO_MS,
+            {"streaming": is_streaming, "status": status, **labels},
         )
         if (
             op.op_type == OperationType.READ_ROWS
             and op.first_response_latency_ns is not None
         ):
             self.otel.first_response_latencies.record(
-                op.first_response_latency_ns / NS_TO_MS, labels
+                op.first_response_latency_ns / NS_TO_MS, {"status": status, **labels}
             )
         # only record completed attempts if there were retries
         if op.completed_attempts:
-            self.otel.retry_count.add(len(op.completed_attempts) - 1, labels)
+            self.otel.retry_count.add(
+                len(op.completed_attempts) - 1, {"status": status, **labels}
+            )
         if (
             op.op_type == OperationType.BULK_MUTATE_ROWS
             and op.flow_throttling_time_ns > 0
         ):
+            # throttling happens before any attempt is made, so this metric
+            # has no status label
             self.otel.throttling_latencies.record(
                 op.flow_throttling_time_ns / NS_TO_MS, labels
             )
