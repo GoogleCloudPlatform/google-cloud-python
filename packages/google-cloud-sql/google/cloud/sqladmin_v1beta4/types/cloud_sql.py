@@ -2534,7 +2534,8 @@ class ExecuteSqlPayload(proto.Message):
             sequence of statements separated by semicolons.
         database (str):
             Optional. Name of the database on which the
-            statement will be executed.
+            statement will be executed. For Postgres and SQL
+            Server it's required, for MySQL it's optional.
         password_secret_version (str):
             Optional. The resource name of the Secret Manager secret
             holding the password for the user to log into the database.
@@ -2630,7 +2631,7 @@ class ExecuteSqlPayload(proto.Message):
 
 
 class SqlInstancesExecuteSqlResponse(proto.Message):
-    r"""Execute SQL statements response.
+    r"""
 
     Attributes:
         messages (MutableSequence[google.cloud.sqladmin_v1beta4.types.SqlInstancesExecuteSqlResponse.Message]):

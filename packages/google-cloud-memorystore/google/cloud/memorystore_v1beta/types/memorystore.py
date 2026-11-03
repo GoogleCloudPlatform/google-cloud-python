@@ -30,10 +30,16 @@ __protobuf__ = proto.module(
         "PscConnectionStatus",
         "ConnectionType",
         "Instance",
+        "AclPolicyInfo",
         "StartMigrationRequest",
         "FinishMigrationRequest",
         "SelfManagedSource",
         "MigrationConfig",
+        "AclPolicy",
+        "AclPolicyRevision",
+        "AclPolicyRevisionStatus",
+        "InstanceAclPolicyAttachment",
+        "AclRule",
         "AutomatedBackupConfig",
         "BackupCollection",
         "Backup",
@@ -52,11 +58,20 @@ __protobuf__ = proto.module(
         "NodeConfig",
         "ZoneDistributionConfig",
         "RescheduleMaintenanceRequest",
+        "ListAclPoliciesRequest",
+        "ListAclPoliciesResponse",
+        "ListAclPolicyRevisionsRequest",
+        "ListAclPolicyRevisionsResponse",
         "ListInstancesRequest",
         "ListInstancesResponse",
+        "GetAclPolicyRequest",
+        "GetAclPolicyRevisionRequest",
         "GetInstanceRequest",
+        "CreateAclPolicyRequest",
         "CreateInstanceRequest",
+        "UpdateAclPolicyRequest",
         "UpdateInstanceRequest",
+        "DeleteAclPolicyRequest",
         "DeleteInstanceRequest",
         "ListBackupCollectionsRequest",
         "ListBackupCollectionsResponse",
@@ -321,6 +336,14 @@ class Instance(proto.Message):
         migration_config (google.cloud.memorystore_v1beta.types.MigrationConfig):
             Output only. Migration config for the
             instance.
+        acl_policy (str):
+            Optional. The ACL policy for the instance. Format:
+            projects/{project}/locations/{location}/aclPolicies/{acl_policy}
+
+            This field is a member of `oneof`_ ``_acl_policy``.
+        acl_policy_info (google.cloud.memorystore_v1beta.types.AclPolicyInfo):
+            Output only. Details of the applied ACL
+            policy.
     """
 
     class State(proto.Enum):
@@ -862,6 +885,57 @@ class Instance(proto.Message):
         number=59,
         message="MigrationConfig",
     )
+    acl_policy: str = proto.Field(
+        proto.STRING,
+        number=60,
+        optional=True,
+    )
+    acl_policy_info: "AclPolicyInfo" = proto.Field(
+        proto.MESSAGE,
+        number=62,
+        message="AclPolicyInfo",
+    )
+
+
+class AclPolicyInfo(proto.Message):
+    r"""Details of the applied ACL policy.
+
+    Attributes:
+        applied_acl_policy (str):
+            Output only. The resource name of the applied ACL policy.
+            Format:
+            "projects/{project}/locations/{location}/aclPolicies/{acl_policy}".
+        applied_acl_policy_revision (str):
+            Output only. The resource name of the applied ACL policy
+            revision. Format:
+            "projects/{project}/locations/{location}/aclPolicies/{acl_policy}/revisions/{revision}".
+        applied_acl_policy_revision_number (int):
+            Output only. The revision number of the
+            applied ACL policy revision.
+        acl_policy_revision_statuses (MutableSequence[google.cloud.memorystore_v1beta.types.AclPolicyRevisionStatus]):
+            Output only. A list of status for various
+            revisions of this ACL policy on the instance.
+    """
+
+    applied_acl_policy: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    applied_acl_policy_revision: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    applied_acl_policy_revision_number: int = proto.Field(
+        proto.INT64,
+        number=3,
+    )
+    acl_policy_revision_statuses: MutableSequence["AclPolicyRevisionStatus"] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=4,
+            message="AclPolicyRevisionStatus",
+        )
+    )
 
 
 class StartMigrationRequest(proto.Message):
@@ -1032,6 +1106,251 @@ class MigrationConfig(proto.Message):
     force_finish_migration: bool = proto.Field(
         proto.BOOL,
         number=4,
+    )
+
+
+class AclPolicy(proto.Message):
+    r"""The ACL policy resource.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        name (str):
+            Identifier. Full resource path of the ACL
+            policy.
+        rules (MutableSequence[google.cloud.memorystore_v1beta.types.AclRule]):
+            Required. The ACL rules within the ACL
+            policy.
+        state (google.cloud.memorystore_v1beta.types.AclPolicy.State):
+            Output only. The state of the ACL policy.
+        etag (str):
+            Output only. Etag of the ACL policy.
+
+            This field is a member of `oneof`_ ``_etag``.
+        instance_acl_policy_attachments (MutableSequence[google.cloud.memorystore_v1beta.types.InstanceAclPolicyAttachment]):
+            Output only. The ACL policy attachment status
+            for each attached instance.
+        create_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The timestamp that the ACL
+            policy was created.
+        update_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The timestamp that the ACL
+            policy was last updated.
+    """
+
+    class State(proto.Enum):
+        r"""Represents the different states of an ACL policy.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                Not set.
+            ACTIVE (1):
+                ACL policy has been created and is fully
+                usable.
+            UPDATING (2):
+                ACL policy is being updated.
+            DELETING (3):
+                ACL policy is being deleted.
+        """
+
+        STATE_UNSPECIFIED = 0
+        ACTIVE = 1
+        UPDATING = 2
+        DELETING = 3
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    rules: MutableSequence["AclRule"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message="AclRule",
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=3,
+        enum=State,
+    )
+    etag: str = proto.Field(
+        proto.STRING,
+        number=5,
+        optional=True,
+    )
+    instance_acl_policy_attachments: MutableSequence["InstanceAclPolicyAttachment"] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=6,
+            message="InstanceAclPolicyAttachment",
+        )
+    )
+    create_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=7,
+        message=timestamp_pb2.Timestamp,
+    )
+    update_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=8,
+        message=timestamp_pb2.Timestamp,
+    )
+
+
+class AclPolicyRevision(proto.Message):
+    r"""The ACL policy revision resource.
+
+    Attributes:
+        name (str):
+            Identifier. The name of the ACL policy revision. Format:
+            "projects/{project}/locations/{location}/aclPolicies/{acl_policy}/revisions/{revision}".
+        revision_number (int):
+            Output only. The revision number of the ACL
+            policy revision.
+        snapshot (google.cloud.memorystore_v1beta.types.AclPolicy):
+            Output only. The snapshot of the ACL policy
+            at the time of revision creation.
+        create_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The timestamp that the revision
+            was created.
+        attached_instances (MutableSequence[str]):
+            Output only. A list of instances that are
+            attached to this ACL policy revision.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    revision_number: int = proto.Field(
+        proto.INT64,
+        number=2,
+    )
+    snapshot: "AclPolicy" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message="AclPolicy",
+    )
+    create_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message=timestamp_pb2.Timestamp,
+    )
+    attached_instances: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=5,
+    )
+
+
+class AclPolicyRevisionStatus(proto.Message):
+    r"""AclPolicyRevisionStatus stores the per-revision status for an
+    attached instance.
+
+    Attributes:
+        acl_policy_revision (str):
+            Output only. The resource name of the ACL policy revision
+            this status refers to. Format:
+            "projects/{project}/locations/{location}/aclPolicies/{acl_policy}/revisions/{revision}".
+        acl_policy_revision_number (int):
+            Output only. The revision number of the ACL
+            policy revision this status refers to.
+        state (google.cloud.memorystore_v1beta.types.AclPolicyRevisionStatus.State):
+            Output only. AclPolicyRevision state.
+        error_message (str):
+            Output only. Human-readable error message
+            providing more details for FAILED states.
+    """
+
+    class State(proto.Enum):
+        r"""Enum indicating the status of this ACL policy revision on the
+        instance.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                Not set.
+            APPLYING (1):
+                The instance is attempting to apply this
+                revision.
+            APPLIED (2):
+                The instance has successfully applied this
+                revision.
+            FAILED (3):
+                The instance failed to apply this revision.
+        """
+
+        STATE_UNSPECIFIED = 0
+        APPLYING = 1
+        APPLIED = 2
+        FAILED = 3
+
+    acl_policy_revision: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    acl_policy_revision_number: int = proto.Field(
+        proto.INT64,
+        number=2,
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=3,
+        enum=State,
+    )
+    error_message: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+
+
+class InstanceAclPolicyAttachment(proto.Message):
+    r"""InstanceAclPolicyAttachment stores the ACL policy status for
+    an attached instance for the revisions successfully applied,
+    under application or failed.
+
+    Attributes:
+        instance (str):
+            Output only. The resource name of the
+            attached instance. Format:
+
+            "projects/{project}/locations/{location}/instances/{instance}".
+        acl_policy_revision_statuses (MutableSequence[google.cloud.memorystore_v1beta.types.AclPolicyRevisionStatus]):
+            Output only. A list of status for various
+            revisions of this ACL policy on the instance.
+    """
+
+    instance: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    acl_policy_revision_statuses: MutableSequence["AclPolicyRevisionStatus"] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=2,
+            message="AclPolicyRevisionStatus",
+        )
+    )
+
+
+class AclRule(proto.Message):
+    r"""A single ACL rule which defines the policy for a user.
+
+    Attributes:
+        username (str):
+            Required. Specifies the IAM user or service
+            account to be added to the ACL policy. This
+            username will be directly set on the Valkey OSS.
+        rule (str):
+            Required. The rule to be applied to the username. Ex: "on
+            >password123 ~\* +@all" The format of the rule is defined by
+            Valkey OSS: https://valkey.io/topics/acl/
+    """
+
+    username: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    rule: str = proto.Field(
+        proto.STRING,
+        number=2,
     )
 
 
@@ -2079,6 +2398,14 @@ class ZoneDistributionConfig(proto.Message):
         zone (str):
             Optional. Defines zone where all resources will be allocated
             with SINGLE_ZONE mode. Ignored for MULTI_ZONE mode.
+        zones (MutableSequence[str]):
+            Optional. Specify the zones of a multi-zone
+            instance where Memorystore instance allocates
+            resources. This flag isn't applicable for
+            single-zone instances.
+        active_zones (MutableSequence[str]):
+            Output only. The exact list of zones where
+            the instance currently has active VMs.
         mode (google.cloud.memorystore_v1beta.types.ZoneDistributionConfig.ZoneDistributionMode):
             Optional. Current zone distribution mode. Defaults to
             MULTI_ZONE.
@@ -2105,6 +2432,14 @@ class ZoneDistributionConfig(proto.Message):
     zone: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+    zones: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+    active_zones: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=4,
     )
     mode: ZoneDistributionMode = proto.Field(
         proto.ENUM,
@@ -2161,6 +2496,147 @@ class RescheduleMaintenanceRequest(proto.Message):
         proto.MESSAGE,
         number=3,
         message=timestamp_pb2.Timestamp,
+    )
+
+
+class ListAclPoliciesRequest(proto.Message):
+    r"""Request for ``ListAclPolicies``.
+
+    Attributes:
+        parent (str):
+            Required. The resource name of the ACL policy location using
+            the form: ``projects/{project}/locations/{location}`` where
+            ``location`` refers to a Google Cloud region.
+        page_size (int):
+            Optional. The maximum number of items to return.
+
+            If not specified, a default value of 1000 will be used by
+            the service. Regardless of the page_size value, the response
+            may include a partial list and a caller should only rely on
+            response's ``next_page_token`` to determine if there are
+            more ACL policies left to be queried.
+
+            The maximum value is 1000; values above 1000 will be coerced
+            to 1000.
+        page_token (str):
+            Optional. The ``next_page_token`` value returned from a
+            previous ``ListAclPolicies`` request, if any.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class ListAclPoliciesResponse(proto.Message):
+    r"""Response for ``ListAclPolicies``.
+
+    Attributes:
+        acl_policies (MutableSequence[google.cloud.memorystore_v1beta.types.AclPolicy]):
+            A list of ACL policies in the project in the specified
+            location, or across all locations.
+
+            If the ``location`` in the parent field of the request is
+            "-", all regions available to the project are queried, and
+            the results aggregated.
+        next_page_token (str):
+            Token to retrieve the next page of results,
+            or empty if there are no more results in the
+            list.
+        unreachable (MutableSequence[str]):
+            Unordered list. Locations that could not be
+            reached.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    acl_policies: MutableSequence["AclPolicy"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="AclPolicy",
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    unreachable: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+
+
+class ListAclPolicyRevisionsRequest(proto.Message):
+    r"""Request for ``ListAclPolicyRevisions``.
+
+    Attributes:
+        parent (str):
+            Required. The resource name of the ACL policy to list
+            revisions for. Format:
+            "projects/{project}/locations/{location}/aclPolicies/{acl_policy}".
+        page_size (int):
+            Optional. The maximum number of items to
+            return.
+        page_token (str):
+            Optional. The ``next_page_token`` value returned from a
+            previous ``ListAclPolicyRevisions`` request, if any.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class ListAclPolicyRevisionsResponse(proto.Message):
+    r"""Response for ``ListAclPolicyRevisions``.
+
+    Attributes:
+        acl_policy_revisions (MutableSequence[google.cloud.memorystore_v1beta.types.AclPolicyRevision]):
+            A list of ACL policy revisions.
+        next_page_token (str):
+            Token to retrieve the next page of results,
+            or empty if there are no more results in the
+            list.
+        unreachable (MutableSequence[str]):
+            Unordered list. Locations that could not be
+            reached.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    acl_policy_revisions: MutableSequence["AclPolicyRevision"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="AclPolicyRevision",
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    unreachable: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
     )
 
 
@@ -2244,6 +2720,40 @@ class ListInstancesResponse(proto.Message):
     )
 
 
+class GetAclPolicyRequest(proto.Message):
+    r"""Request for ``GetAclPolicy``.
+
+    Attributes:
+        name (str):
+            Required. Memorystore ACL policy resource name using the
+            form:
+            ``projects/{project}/locations/{location}/aclPolicies/{acl_policy}``
+            where ``location`` refers to a Google Cloud region.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class GetAclPolicyRevisionRequest(proto.Message):
+    r"""Request for ``GetAclPolicyRevision``.
+
+    Attributes:
+        name (str):
+            Required. Memorystore ACL policy revision resource name
+            using the form:
+            ``projects/{project}/locations/{location}/aclPolicies/{acl_policy}/revisions/{revision}``
+            where ``location`` refers to a Google Cloud region.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
 class GetInstanceRequest(proto.Message):
     r"""Request message for ``GetInstance``.
 
@@ -2257,6 +2767,50 @@ class GetInstanceRequest(proto.Message):
     name: str = proto.Field(
         proto.STRING,
         number=1,
+    )
+
+
+class CreateAclPolicyRequest(proto.Message):
+    r"""Request for ``CreateAclPolicy``.
+
+    Attributes:
+        parent (str):
+            Required. The resource name of the ACL policy location using
+            the form: ``projects/{project}/locations/{location}`` where
+            ``location`` refers to a Google Cloud region.
+        acl_policy_id (str):
+            Required. The logical name of the ACL policy in the customer
+            project with the following restrictions:
+
+            - Must contain only lowercase letters, numbers, and hyphens.
+            - Must start with a letter.
+            - Must be between 1-63 characters.
+            - Must end with a number or a letter.
+            - Must be unique within the customer project / location
+        acl_policy (google.cloud.memorystore_v1beta.types.AclPolicy):
+            Required. The ACL policy that is to be
+            created.
+        request_id (str):
+            Optional. Idempotent request UUID.
+            .
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    acl_policy_id: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    acl_policy: "AclPolicy" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message="AclPolicy",
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=4,
     )
 
 
@@ -2322,6 +2876,39 @@ class CreateInstanceRequest(proto.Message):
     )
 
 
+class UpdateAclPolicyRequest(proto.Message):
+    r"""Request for ``UpdateAclPolicy``.
+
+    Attributes:
+        acl_policy (google.cloud.memorystore_v1beta.types.AclPolicy):
+            Required. The ACL policy to be updated.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. Mask of fields to be updated. At least one path
+            must be supplied in this field. The elements of the repeated
+            paths field may only include these fields from
+            ``AclPolicy``:
+
+            - ``rules``
+        request_id (str):
+            Optional. Idempotent request UUID.
+    """
+
+    acl_policy: "AclPolicy" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="AclPolicy",
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask_pb2.FieldMask,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
 class UpdateInstanceRequest(proto.Message):
     r"""Request message for [UpdateInstance][].
 
@@ -2365,6 +2952,37 @@ class UpdateInstanceRequest(proto.Message):
         message="Instance",
     )
     request_id: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class DeleteAclPolicyRequest(proto.Message):
+    r"""Request for ``DeleteAclPolicy``.
+
+    Attributes:
+        name (str):
+            Required. Memorystore ACL policy resource name using the
+            form:
+            ``projects/{project}/locations/{location}/aclPolicies/{acl_policy_id}``
+            where ``location`` refers to a Google Cloud region.
+        request_id (str):
+            Optional. Idempotent request UUID.
+        etag (str):
+            Optional. Etag of the ACL policy. If this is
+            different from the server's etag, the request
+            will fail with an ABORTED error.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    etag: str = proto.Field(
         proto.STRING,
         number=3,
     )

@@ -39,7 +39,7 @@ __protobuf__ = proto.module(
 
 
 class GetCompanyRequest(proto.Message):
-    r"""Request object for [GetCompany][] method.
+    r"""Request object for ``GetCompany`` method.
 
     Attributes:
         name (str):
@@ -54,24 +54,27 @@ class GetCompanyRequest(proto.Message):
 
 
 class ListCompaniesRequest(proto.Message):
-    r"""Request object for [ListCompanies][] method.
+    r"""Request object for ``ListCompanies`` method.
 
     Attributes:
         parent (str):
             Required. The parent, which owns this collection of
-            [Companies][]. Format: ``networks/{network_code}``
+            [Companies][google.ads.admanager.v1.Company]. Format:
+            ``networks/{network_code}``
         page_size (int):
-            Optional. The maximum number of [Companies][] to return. The
+            Optional. The maximum number of
+            [Companies][google.ads.admanager.v1.Company] to return. The
             service may return fewer than this value. If unspecified, at
-            most 50 [Companies][] will be returned. The maximum value is
-            1000; values greater than 1000 will be coerced to 1000.
+            most 50 [Companies][google.ads.admanager.v1.Company] will be
+            returned. The maximum value is 1000; values greater than
+            1000 will be coerced to 1000.
         page_token (str):
             Optional. A page token, received from a previous
-            [ListCompanies][] call. Provide this to retrieve the
+            ``ListCompanies`` call. Provide this to retrieve the
             subsequent page.
 
             When paginating, all other parameters provided to
-            [ListCompanies][] must match the call that provided the page
+            ``ListCompanies`` must match the call that provided the page
             token.
         filter (str):
             Optional. Expression to filter the response. See syntax
@@ -129,10 +132,8 @@ class ListCompaniesRequest(proto.Message):
 
 
 class ListCompaniesResponse(proto.Message):
-    r"""Response object for
-    [ListCompaniesRequest][google.ads.admanager.v1.ListCompaniesRequest]
-    containing matching [Company][google.ads.admanager.v1.Company]
-    objects.
+    r"""Response object for ``ListCompaniesRequest`` containing matching
+    [Company][google.ads.admanager.v1.Company] objects.
 
     Attributes:
         companies (MutableSequence[google.ads.admanager_v1.types.Company]):
@@ -177,7 +178,7 @@ class ListCompaniesResponse(proto.Message):
 
 
 class CreateCompanyRequest(proto.Message):
-    r"""Request object for [CreateCompany][] method.
+    r"""Request object for ``CreateCompany`` method.
 
     Attributes:
         parent (str):
@@ -201,11 +202,12 @@ class CreateCompanyRequest(proto.Message):
 
 
 class BatchCreateCompaniesRequest(proto.Message):
-    r"""Request object for [BatchCreateCompanies][] method.
+    r"""Request object for ``BatchCreateCompanies`` method.
 
     Attributes:
         parent (str):
-            Required. The parent resource where [Companies][] will be
+            Required. The parent resource where
+            [Companies][google.ads.admanager.v1.Company] will be
             created. Format: ``networks/{network_code}`` The parent
             field in the CreateCompanyRequest must match this field.
         requests (MutableSequence[google.ads.admanager_v1.types.CreateCompanyRequest]):
@@ -226,7 +228,7 @@ class BatchCreateCompaniesRequest(proto.Message):
 
 
 class BatchCreateCompaniesResponse(proto.Message):
-    r"""Response object for [BatchCreateCompanies][] method.
+    r"""Response object for ``BatchCreateCompanies`` method.
 
     Attributes:
         companies (MutableSequence[google.ads.admanager_v1.types.Company]):
@@ -242,7 +244,7 @@ class BatchCreateCompaniesResponse(proto.Message):
 
 
 class UpdateCompanyRequest(proto.Message):
-    r"""Request object for [UpdateCompany][] method.
+    r"""Request object for ``UpdateCompany`` method.
 
     Attributes:
         company (google.ads.admanager_v1.types.Company):
@@ -269,11 +271,12 @@ class UpdateCompanyRequest(proto.Message):
 
 
 class BatchUpdateCompaniesRequest(proto.Message):
-    r"""Request object for [BatchUpdateCompanies][] method.
+    r"""Request object for ``BatchUpdateCompanies`` method.
 
     Attributes:
         parent (str):
-            Required. The parent resource where [Companies][] will be
+            Required. The parent resource where
+            [Companies][google.ads.admanager.v1.Company] will be
             updated. Format: ``networks/{network_code}`` The parent
             field in the UpdateCompanyRequest must match this field.
         requests (MutableSequence[google.ads.admanager_v1.types.UpdateCompanyRequest]):
@@ -294,7 +297,7 @@ class BatchUpdateCompaniesRequest(proto.Message):
 
 
 class BatchUpdateCompaniesResponse(proto.Message):
-    r"""Response object for [BatchUpdateCompanies][] method.
+    r"""Response object for ``BatchUpdateCompanies`` method.
 
     Attributes:
         companies (MutableSequence[google.ads.admanager_v1.types.Company]):

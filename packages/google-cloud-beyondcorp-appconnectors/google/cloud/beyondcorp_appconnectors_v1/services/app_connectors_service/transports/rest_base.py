@@ -175,6 +175,22 @@ class _BaseAppConnectorsServiceRestTransport(AppConnectorsServiceTransport):
             ]
             return http_options
 
+    class _BaseResolveInstanceConfig:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{app_connector=projects/*/locations/*/appConnectors/*}:resolveInstanceConfig",
+                },
+            ]
+            return http_options
+
     class _BaseUpdateAppConnector:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -243,11 +259,11 @@ class _BaseAppConnectorsServiceRestTransport(AppConnectorsServiceTransport):
                 },
                 {
                     "method": "get",
-                    "uri": "/v1/{resource=projects/*/locations/*/clientConnectorServices/*}:getIamPolicy",
+                    "uri": "/v1/{resource=projects/*/locations/*/securityGateways/*}:getIamPolicy",
                 },
                 {
                     "method": "get",
-                    "uri": "/v1/{resource=projects/*/locations/*/clientGateways/*}:getIamPolicy",
+                    "uri": "/v1/{resource=projects/*/locations/*/securityGateways/*/applications/*}:getIamPolicy",
                 },
             ]
             return http_options
@@ -276,12 +292,12 @@ class _BaseAppConnectorsServiceRestTransport(AppConnectorsServiceTransport):
                 },
                 {
                     "method": "post",
-                    "uri": "/v1/{resource=projects/*/locations/*/clientConnectorServices/*}:setIamPolicy",
+                    "uri": "/v1/{resource=projects/*/locations/*/securityGateways/*}:setIamPolicy",
                     "body": "*",
                 },
                 {
                     "method": "post",
-                    "uri": "/v1/{resource=projects/*/locations/*/clientGateways/*}:setIamPolicy",
+                    "uri": "/v1/{resource=projects/*/locations/*/securityGateways/*/applications/*}:setIamPolicy",
                     "body": "*",
                 },
             ]
@@ -311,12 +327,12 @@ class _BaseAppConnectorsServiceRestTransport(AppConnectorsServiceTransport):
                 },
                 {
                     "method": "post",
-                    "uri": "/v1/{resource=projects/*/locations/*/clientConnectorServices/*}:testIamPermissions",
+                    "uri": "/v1/{resource=projects/*/locations/*/securityGateways/*}:testIamPermissions",
                     "body": "*",
                 },
                 {
                     "method": "post",
-                    "uri": "/v1/{resource=projects/*/locations/*/clientGateways/*}:testIamPermissions",
+                    "uri": "/v1/{resource=projects/*/locations/*/securityGateways/*/applications/*}:testIamPermissions",
                     "body": "*",
                 },
             ]
@@ -334,6 +350,11 @@ class _BaseAppConnectorsServiceRestTransport(AppConnectorsServiceTransport):
                     "uri": "/v1/{name=projects/*/locations/*/operations/*}:cancel",
                     "body": "*",
                 },
+                {
+                    "method": "post",
+                    "uri": "/v1/{name=organizations/*/locations/*/operations/*}:cancel",
+                    "body": "*",
+                },
             ]
             return http_options
 
@@ -347,6 +368,10 @@ class _BaseAppConnectorsServiceRestTransport(AppConnectorsServiceTransport):
                 {
                     "method": "delete",
                     "uri": "/v1/{name=projects/*/locations/*/operations/*}",
+                },
+                {
+                    "method": "delete",
+                    "uri": "/v1/{name=organizations/*/locations/*/operations/*}",
                 },
             ]
             return http_options
@@ -362,6 +387,10 @@ class _BaseAppConnectorsServiceRestTransport(AppConnectorsServiceTransport):
                     "method": "get",
                     "uri": "/v1/{name=projects/*/locations/*/operations/*}",
                 },
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=organizations/*/locations/*/operations/*}",
+                },
             ]
             return http_options
 
@@ -375,6 +404,10 @@ class _BaseAppConnectorsServiceRestTransport(AppConnectorsServiceTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{name=projects/*/locations/*}/operations",
+                },
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=organizations/*/locations/*}/operations",
                 },
             ]
             return http_options

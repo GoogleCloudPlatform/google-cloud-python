@@ -701,7 +701,7 @@ class PartnerServiceClient(metaclass=PartnerServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.GetPartnerRequest, dict]):
-                The request object. Request object for [GetPartner][] method.
+                The request object. Request object for ``GetPartner`` method.
             name (str):
                 Required. The resource name of the
                 [Partner][google.ads.admanager.v1.Partner]. Format:
@@ -817,10 +817,10 @@ class PartnerServiceClient(metaclass=PartnerServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.ListPartnersRequest, dict]):
-                The request object. Request object for [ListPartners][] method.
+                The request object. Request object for ``ListPartners`` method.
             parent (str):
                 Required. The parent, which owns this collection of
-                [Partner][google.ads.admanager.v1.Partner]s. Format:
+                [Partners][google.ads.admanager.v1.Partner]. Format:
                 ``networks/{network_code}``
 
                 This corresponds to the ``parent`` field
@@ -836,9 +836,7 @@ class PartnerServiceClient(metaclass=PartnerServiceClientMeta):
 
         Returns:
             google.ads.admanager_v1.services.partner_service.pagers.ListPartnersPager:
-                Response object for
-                   [ListPartnersRequest][google.ads.admanager.v1.ListPartnersRequest]
-                   containing matching
+                Response object for ListPartnersRequest containing matching
                    [Partner][google.ads.admanager.v1.Partner] objects.
 
                 Iterating over this object will yield results and
@@ -941,7 +939,7 @@ class PartnerServiceClient(metaclass=PartnerServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.UpdatePartnerRequest, dict]):
-                The request object. Request object for [UpdatePartner][] method.
+                The request object. Request object for ``UpdatePartner`` method.
             partner (google.ads.admanager_v1.types.Partner):
                 Required. The [Partner][google.ads.admanager.v1.Partner]
                 to update.
@@ -1076,14 +1074,13 @@ class PartnerServiceClient(metaclass=PartnerServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.BatchUpdatePartnersRequest, dict]):
-                The request object. Request object for [BatchUpdatePartners][] method.
+                The request object. Request object for ``BatchUpdatePartners`` method.
             parent (str):
                 Required. The parent resource where
-                [Partner][google.ads.admanager.v1.Partner]s will be
+                [Partners][google.ads.admanager.v1.Partner] will be
                 updated. Format: ``networks/{network_code}`` The parent
-                field in the
-                [UpdatePartnerRequest][google.ads.admanager.v1.UpdatePartnerRequest]
-                must match this field.
+                field in the ``UpdatePartnerRequest`` must match this
+                field.
 
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -1106,7 +1103,7 @@ class PartnerServiceClient(metaclass=PartnerServiceClientMeta):
 
         Returns:
             google.ads.admanager_v1.types.BatchUpdatePartnersResponse:
-                Response object for [BatchUpdatePartners][] method.
+                Response object for BatchUpdatePartners method.
         """
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have

@@ -13,17 +13,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import pickle
 import logging as std_logging
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import Any, Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import TYPE_CHECKING
 
+from google.showcase_v1beta1._compat import _observability, apply_async_channel_interceptors
+
+from google.api_core import client_options as client_options_lib
 from google.api_core import gapic_v1
 from google.api_core import grpc_helpers_async
 from google.api_core import exceptions as core_exceptions
 from google.api_core import retry_async as retries
+from google.api_core import resumable_transfer
 from google.auth import credentials as ga_credentials   # type: ignore
 from google.auth.transport.grpc import SslCredentials  # type: ignore
 from google.protobuf.json_format import MessageToJson
@@ -40,6 +44,12 @@ from google.longrunning import operations_pb2 # type: ignore
 from google.showcase_v1beta1.types import resumable_upload
 from .base import ResumableUploadServiceTransport, DEFAULT_CLIENT_INFO
 from .grpc import ResumableUploadServiceGrpcTransport
+try:
+    from .rest_asyncio import AsyncResumableUploadServiceRestTransport
+    HAS_ASYNC_REST = True  # pragma: NO COVER
+except ImportError:  # pragma: NO COVER
+    HAS_ASYNC_REST = False
+
 
 try:
     from google.api_core import client_logging  # type: ignore
@@ -181,6 +191,8 @@ class ResumableUploadServiceGrpcAsyncIOTransport(ResumableUploadServiceTransport
             client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
             always_use_jwt_access: Optional[bool] = False,
             api_audience: Optional[str] = None,
+            interceptors: Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]] = None,
+            client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
             ) -> None:
         """Instantiate the transport.
 
@@ -232,6 +244,12 @@ class ResumableUploadServiceGrpcAsyncIOTransport(ResumableUploadServiceTransport
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -242,6 +260,13 @@ class ResumableUploadServiceGrpcAsyncIOTransport(ResumableUploadServiceTransport
         self._grpc_channel = None
         self._ssl_channel_credentials = ssl_channel_credentials
         self._stubs: Dict[str, Callable] = {}
+        # Resumable upload RPCs operate over HTTP/REST rather than gRPC.
+        # Since gRPC is the default transport for GAPIC clients and services
+        # mix standard gRPC RPCs with resumable upload RPCs on the same client,
+        # gRPC transports delegate resumable upload calls to an internal REST
+        # transport instance.
+        self._rest_transport: Optional[Any] = None
+        self._client_cert_source_for_mtls = client_cert_source_for_mtls
 
         if api_mtls_endpoint:
             warnings.warn("api_mtls_endpoint is deprecated", DeprecationWarning)
@@ -286,6 +311,7 @@ class ResumableUploadServiceGrpcAsyncIOTransport(ResumableUploadServiceTransport
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -307,10 +333,27 @@ class ResumableUploadServiceGrpcAsyncIOTransport(ResumableUploadServiceTransport
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
+        )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if (
+            _observability is not None
+            and hasattr(_observability, "apply_otel_async_channel_interceptors")
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
         self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -327,14 +370,14 @@ class ResumableUploadServiceGrpcAsyncIOTransport(ResumableUploadServiceTransport
     @property
     def upload_media(self) -> Callable[
             [resumable_upload.UploadMediaRequest],
-            Awaitable[resumable_upload.UploadMediaResponse]]:
+            Awaitable[resumable_transfer.AsyncResumableUploadSession]]:
         r"""Return a callable for the upload media method over gRPC.
 
         A method with media_upload annotation enabled.
 
         Returns:
             Callable[[~.UploadMediaRequest],
-                    Awaitable[~.UploadMediaResponse]]:
+                    Awaitable[~.AsyncResumableUploadSession]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -343,75 +386,122 @@ class ResumableUploadServiceGrpcAsyncIOTransport(ResumableUploadServiceTransport
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
         if 'upload_media' not in self._stubs:
-            self._stubs['upload_media'] = self._logged_channel.unary_unary(
-                '/google.showcase.v1beta1.ResumableUploadService/UploadMedia',
-                request_serializer=resumable_upload.UploadMediaRequest.serialize,
-                response_deserializer=resumable_upload.UploadMediaResponse.deserialize,
-            )
+            class _ErrorStub:
+                def __init__(self, error: Exception):
+                    self._error = error
+
+                def __call__(self, *args, **kwargs):
+                    async def _raise():
+                        raise self._error
+                    return _raise()
+
+            if not self._credentials:
+                self._stubs['upload_media'] = _ErrorStub(
+                    core_exceptions.GoogleAPICallError(
+                        "Resumable upload methods operate over REST and cannot be invoked when the transport is initialized with a pre-constructed gRPC channel. Please supply credentials directly instead of a gRPC channel to use resumable upload functionality."
+                    )
+                )
+            elif self._client_cert_source_for_mtls:
+                self._stubs['upload_media'] = _ErrorStub(
+                    core_exceptions.AsyncRestUnsupportedParameterError(
+                        "Mutual TLS (client_cert_source_for_mtls) is not currently supported for async resumable upload methods."
+                    )
+                )
+            elif HAS_ASYNC_REST:
+                transport = self
+                class _AsyncRestStub:
+                    def __call__(self, *args, **kwargs):
+                        if transport._rest_transport is None:
+                            transport._rest_transport = AsyncResumableUploadServiceRestTransport(
+                                host=transport._host,
+                                credentials=transport._credentials,
+                                client_info=transport._client_info,
+                                client_options=getattr(transport, "_client_options", None),
+                            )
+                        return transport._rest_transport.upload_media(*args, **kwargs)
+                self._stubs['upload_media'] = _AsyncRestStub()
+            else:
+                self._stubs['upload_media'] = _ErrorStub(
+                    NotImplementedError(
+                        "Async REST transport is required for async resumable upload methods. "
+                        "Install the library with the `async_rest` extra using "
+                        "`pip install google-showcase[async_rest]`."
+                    )
+                )
         return self._stubs['upload_media']
 
     def _prep_wrapped_messages(self, client_info):
-        """ Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.upload_media: self._wrap_method(
+            self.upload_media: self._wrap_async_method(
                 self.upload_media,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.ResumableUploadService/UploadMedia",
             ),
-            self.list_locations: self._wrap_method(
+            self.list_locations: self._wrap_async_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.get_location: self._wrap_method(
+            self.get_location: self._wrap_async_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.set_iam_policy: self._wrap_method(
+            self.set_iam_policy: self._wrap_async_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/SetIamPolicy",
             ),
-            self.get_iam_policy: self._wrap_method(
+            self.get_iam_policy: self._wrap_async_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/GetIamPolicy",
             ),
-            self.test_iam_permissions: self._wrap_method(
+            self.test_iam_permissions: self._wrap_async_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/TestIamPermissions",
             ),
-            self.list_operations: self._wrap_method(
+            self.list_operations: self._wrap_async_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.delete_operation: self._wrap_method(
+            self.delete_operation: self._wrap_async_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.cancel_operation: self._wrap_method(
+            self.cancel_operation: self._wrap_async_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
         }
 
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
-
-    def close(self):
-        return self._logged_channel.close()
+    async def close(self):
+        await self._logged_channel.close()
+        if self._rest_transport is not None:
+            await self._rest_transport.close()
 
     @property
     def kind(self) -> str:

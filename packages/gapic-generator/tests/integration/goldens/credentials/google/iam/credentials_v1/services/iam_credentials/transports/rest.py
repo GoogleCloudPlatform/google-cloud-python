@@ -18,12 +18,13 @@ import json  # type: ignore
 
 from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.auth import credentials as ga_credentials  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import retry as retries
 from google.api_core import rest_helpers
 from google.api_core import rest_streaming
 from google.api_core import gapic_v1
-from google.iam.credentials_v1._compat import transcode_request
+from google.iam.credentials_v1._compat import transcode_request, trace_http_request
 import google.protobuf
 
 from google.protobuf import json_format
@@ -264,6 +265,7 @@ class IAMCredentialsRestStub:
     _session: AuthorizedSession
     _host: str
     _interceptor: IAMCredentialsRestInterceptor
+    _client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None
 
 
 class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
@@ -300,6 +302,8 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             url_scheme: str = 'https',
             interceptor: Optional[IAMCredentialsRestInterceptor] = None,
             api_audience: Optional[str] = None,
+            client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
+            **kwargs,
             ) -> None:
         """Instantiate the transport.
 
@@ -343,6 +347,9 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
         # Run the base constructor
         # TODO(yon-mg): resolve other ctor params i.e. scopes, quota, etc.
@@ -354,7 +361,9 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             url_scheme=url_scheme,
-            api_audience=api_audience
+            api_audience=api_audience,
+            client_options=client_options,
+            **kwargs,
         )
         self._session = AuthorizedSession(
             self._credentials, default_host=self.DEFAULT_HOST)
@@ -375,20 +384,35 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: common.GenerateAccessTokenRequest, *,
@@ -451,7 +475,17 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
                 )
 
             # Send the request
-            response = IAMCredentialsRestTransport._GenerateAccessToken._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = IAMCredentialsRestTransport._GenerateAccessToken._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -463,7 +497,6 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             pb_resp = common.GenerateAccessTokenResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_generate_access_token(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_generate_access_token_with_metadata(resp, response_metadata)
@@ -500,20 +533,35 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: common.GenerateIdTokenRequest, *,
@@ -576,7 +624,17 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
                 )
 
             # Send the request
-            response = IAMCredentialsRestTransport._GenerateIdToken._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = IAMCredentialsRestTransport._GenerateIdToken._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -588,7 +646,6 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             pb_resp = common.GenerateIdTokenResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_generate_id_token(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_generate_id_token_with_metadata(resp, response_metadata)
@@ -625,20 +682,35 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: common.SignBlobRequest, *,
@@ -701,7 +773,17 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
                 )
 
             # Send the request
-            response = IAMCredentialsRestTransport._SignBlob._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = IAMCredentialsRestTransport._SignBlob._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -713,7 +795,6 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             pb_resp = common.SignBlobResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_sign_blob(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_sign_blob_with_metadata(resp, response_metadata)
@@ -750,20 +831,35 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: common.SignJwtRequest, *,
@@ -826,7 +922,17 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
                 )
 
             # Send the request
-            response = IAMCredentialsRestTransport._SignJwt._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = IAMCredentialsRestTransport._SignJwt._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -838,7 +944,6 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             pb_resp = common.SignJwtResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_sign_jwt(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_sign_jwt_with_metadata(resp, response_metadata)
@@ -869,7 +974,7 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             common.GenerateAccessTokenResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GenerateAccessToken(self._session, self._host, self._interceptor) # type: ignore
+        return self._GenerateAccessToken(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def generate_id_token(self) -> Callable[
@@ -877,7 +982,7 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             common.GenerateIdTokenResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GenerateIdToken(self._session, self._host, self._interceptor) # type: ignore
+        return self._GenerateIdToken(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def sign_blob(self) -> Callable[
@@ -885,7 +990,7 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             common.SignBlobResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._SignBlob(self._session, self._host, self._interceptor) # type: ignore
+        return self._SignBlob(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def sign_jwt(self) -> Callable[
@@ -893,7 +998,7 @@ class IAMCredentialsRestTransport(_BaseIAMCredentialsRestTransport):
             common.SignJwtResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._SignJwt(self._session, self._host, self._interceptor) # type: ignore
+        return self._SignJwt(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def kind(self) -> str:

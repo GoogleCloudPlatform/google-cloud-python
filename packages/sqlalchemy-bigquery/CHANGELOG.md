@@ -8,6 +8,13 @@ Older versions of this project were distributed as [pybigquery][0].
 
 [1]: https://pypi.org/project/sqlalchemy-bigquery/#history
 
+## [1.17.3](https://github.com/googleapis/google-cloud-python/compare/sqlalchemy-bigquery-v1.17.2...sqlalchemy-bigquery-v1.17.3) (2026-10-02)
+
+
+### Performance Improvements
+
+* **sqlalchemy-bigquery:** parallelize compliance tests with worker-partitioned datasets and pytest-xdist ([#18534](https://github.com/googleapis/google-cloud-python/issues/18534)) ([855bbde](https://github.com/googleapis/google-cloud-python/commit/855bbde93ea4a5556d2843a6ea6d2b8ee118ba9a))
+
 ## [1.17.2](https://github.com/googleapis/google-cloud-python/compare/sqlalchemy-bigquery-v1.17.1...sqlalchemy-bigquery-v1.17.2) (2026-08-06)
 
 

@@ -52,7 +52,7 @@ class ListAppConnectionsRequest(proto.Message):
             service. Regardless of the page_size value, the response may
             include a partial list and a caller should only rely on
             response's
-            [next_page_token][BeyondCorp.ListAppConnectionsResponse.next_page_token]
+            [next_page_token][google.cloud.beyondcorp.appconnections.v1.ListAppConnectionsResponse.next_page_token]
             to determine if there are more instances left to be queried.
         page_token (str):
             Optional. The next_page_token value returned from a previous
@@ -165,9 +165,9 @@ class CreateAppConnectionRequest(proto.Message):
             for at least 60 minutes since the first request.
 
             For example, consider a situation where you make
-            an initial request and t he request times out.
-            If you make the request again with the same
-            request ID, the server can check if original
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if the original
             operation with the same request ID was received,
             and if so, will ignore the second request. This
             prevents clients from accidentally creating
@@ -231,9 +231,9 @@ class UpdateAppConnectionRequest(proto.Message):
             for at least 60 minutes since the first request.
 
             For example, consider a situation where you make
-            an initial request and t he request times out.
-            If you make the request again with the same
-            request ID, the server can check if original
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if the original
             operation with the same request ID was received,
             and if so, will ignore the second request. This
             prevents clients from accidentally creating
@@ -291,9 +291,9 @@ class DeleteAppConnectionRequest(proto.Message):
             for at least 60 minutes after the first request.
 
             For example, consider a situation where you make
-            an initial request and t he request times out.
-            If you make the request again with the same
-            request ID, the server can check if original
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if the original
             operation with the same request ID was received,
             and if so, will ignore the second request. This
             prevents clients from accidentally creating
@@ -340,7 +340,7 @@ class ResolveAppConnectionsRequest(proto.Message):
             service. Regardless of the page_size value, the response may
             include a partial list and a caller should only rely on
             response's
-            [next_page_token][BeyondCorp.ResolveAppConnectionsResponse.next_page_token]
+            [next_page_token][google.cloud.beyondcorp.appconnections.v1.ResolveAppConnectionsResponse.next_page_token]
             to determine if there are more instances left to be queried.
         page_token (str):
             Optional. The next_page_token value returned from a previous
@@ -426,8 +426,11 @@ class AppConnection(proto.Message):
     r"""A BeyondCorp AppConnection resource represents a BeyondCorp
     protected AppConnection to a remote application. It creates all
     the necessary GCP components needed for creating a BeyondCorp
-    protected AppConnection. Multiple connectors can be authorised
+    protected AppConnection. Multiple connectors can be authorized
     for a single AppConnection.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
     Attributes:
         name (str):
@@ -458,12 +461,20 @@ class AppConnection(proto.Message):
         connectors (MutableSequence[str]):
             Optional. List of
             [google.cloud.beyondcorp.v1main.Connector.name] that are
-            authorised to be associated with this AppConnection.
+            authorized to be associated with this AppConnection.
         state (google.cloud.beyondcorp_appconnections_v1.types.AppConnection.State):
             Output only. The current state of the
             AppConnection.
         gateway (google.cloud.beyondcorp_appconnections_v1.types.AppConnection.Gateway):
             Optional. Gateway used by the AppConnection.
+        satisfies_pzs (bool):
+            Output only. Reserved for future use.
+
+            This field is a member of `oneof`_ ``_satisfies_pzs``.
+        satisfies_pzi (bool):
+            Output only. Reserved for future use.
+
+            This field is a member of `oneof`_ ``_satisfies_pzi``.
     """
 
     class Type(proto.Enum):
@@ -548,6 +559,9 @@ class AppConnection(proto.Message):
             app_gateway (str):
                 Required. AppGateway name in following format:
                 ``projects/{project_id}/locations/{location_id}/appgateways/{gateway_id}``
+            l7psc (str):
+                Output only. L7 private service connection
+                for this resource.
         """
 
         class Type(proto.Enum):
@@ -580,6 +594,10 @@ class AppConnection(proto.Message):
         app_gateway: str = proto.Field(
             proto.STRING,
             number=5,
+        )
+        l7psc: str = proto.Field(
+            proto.STRING,
+            number=6,
         )
 
     name: str = proto.Field(
@@ -633,6 +651,16 @@ class AppConnection(proto.Message):
         number=11,
         message=Gateway,
     )
+    satisfies_pzs: bool = proto.Field(
+        proto.BOOL,
+        number=12,
+        optional=True,
+    )
+    satisfies_pzi: bool = proto.Field(
+        proto.BOOL,
+        number=13,
+        optional=True,
+    )
 
 
 class AppConnectionOperationMetadata(proto.Message):
@@ -657,9 +685,11 @@ class AppConnectionOperationMetadata(proto.Message):
         requested_cancellation (bool):
             Output only. Identifies whether the user has requested
             cancellation of the operation. Operations that have
-            successfully been cancelled have [Operation.error][] value
-            with a [google.rpc.Status.code][google.rpc.Status.code] of
-            1, corresponding to ``Code.CANCELLED``.
+            successfully been cancelled have
+            [google.longrunning.Operation.error][google.longrunning.Operation.error]
+            value with a
+            [google.rpc.Status.code][google.rpc.Status.code] of 1,
+            corresponding to ``Code.CANCELLED``.
         api_version (str):
             Output only. API version used to start the
             operation.

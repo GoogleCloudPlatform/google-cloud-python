@@ -303,9 +303,6 @@ def install_unittest_dependencies(session, *constraints):
 def unit(session, protobuf_implementation, install_extras=True):
     # Install all test dependencies, then install this package in-place.
 
-    if session.python == "3.15":
-        session.skip("Skipping 3.15 until wheels are available for pyarrow.")
-
     constraints_path = str(
         CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
     )

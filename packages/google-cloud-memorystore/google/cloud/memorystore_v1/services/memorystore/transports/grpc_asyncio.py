@@ -353,6 +353,44 @@ class MemorystoreGrpcAsyncIOTransport(MemorystoreTransport):
         return self._operations_client
 
     @property
+    def list_acl_policies(
+        self,
+    ) -> Callable[
+        [memorystore.ListAclPoliciesRequest],
+        Awaitable[memorystore.ListAclPoliciesResponse],
+    ]:
+        r"""Return a callable for the list acl policies method over gRPC.
+
+        Lists all ACL policies owned by a project in either the
+        specified location (region) or all locations.
+
+        The location should have the following format:
+
+        - ``projects/{project_id}/locations/{location_id}``
+
+        If ``location_id`` is specified as ``-`` (wildcard), then all
+        regions available to the project are queried, and the results
+        are aggregated.
+
+        Returns:
+            Callable[[~.ListAclPoliciesRequest],
+                    Awaitable[~.ListAclPoliciesResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_acl_policies" not in self._stubs:
+            self._stubs["list_acl_policies"] = self._logged_channel.unary_unary(
+                "/google.cloud.memorystore.v1.Memorystore/ListAclPolicies",
+                request_serializer=memorystore.ListAclPoliciesRequest.serialize,
+                response_deserializer=memorystore.ListAclPoliciesResponse.deserialize,
+            )
+        return self._stubs["list_acl_policies"]
+
+    @property
     def list_instances(
         self,
     ) -> Callable[
@@ -381,6 +419,33 @@ class MemorystoreGrpcAsyncIOTransport(MemorystoreTransport):
         return self._stubs["list_instances"]
 
     @property
+    def get_acl_policy(
+        self,
+    ) -> Callable[[memorystore.GetAclPolicyRequest], Awaitable[memorystore.AclPolicy]]:
+        r"""Return a callable for the get acl policy method over gRPC.
+
+        Gets the details of a specific Memorystore ACL
+        policy.
+
+        Returns:
+            Callable[[~.GetAclPolicyRequest],
+                    Awaitable[~.AclPolicy]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_acl_policy" not in self._stubs:
+            self._stubs["get_acl_policy"] = self._logged_channel.unary_unary(
+                "/google.cloud.memorystore.v1.Memorystore/GetAclPolicy",
+                request_serializer=memorystore.GetAclPolicyRequest.serialize,
+                response_deserializer=memorystore.AclPolicy.deserialize,
+            )
+        return self._stubs["get_acl_policy"]
+
+    @property
     def get_instance(
         self,
     ) -> Callable[[memorystore.GetInstanceRequest], Awaitable[memorystore.Instance]]:
@@ -405,6 +470,36 @@ class MemorystoreGrpcAsyncIOTransport(MemorystoreTransport):
                 response_deserializer=memorystore.Instance.deserialize,
             )
         return self._stubs["get_instance"]
+
+    @property
+    def create_acl_policy(
+        self,
+    ) -> Callable[
+        [memorystore.CreateAclPolicyRequest], Awaitable[memorystore.AclPolicy]
+    ]:
+        r"""Return a callable for the create acl policy method over gRPC.
+
+        Creates an ACL policy.
+        The creation is executed synchronously and the policy is
+        available for use immediately after the RPC returns.
+
+        Returns:
+            Callable[[~.CreateAclPolicyRequest],
+                    Awaitable[~.AclPolicy]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_acl_policy" not in self._stubs:
+            self._stubs["create_acl_policy"] = self._logged_channel.unary_unary(
+                "/google.cloud.memorystore.v1.Memorystore/CreateAclPolicy",
+                request_serializer=memorystore.CreateAclPolicyRequest.serialize,
+                response_deserializer=memorystore.AclPolicy.deserialize,
+            )
+        return self._stubs["create_acl_policy"]
 
     @property
     def create_instance(
@@ -436,6 +531,45 @@ class MemorystoreGrpcAsyncIOTransport(MemorystoreTransport):
         return self._stubs["create_instance"]
 
     @property
+    def update_acl_policy(
+        self,
+    ) -> Callable[
+        [memorystore.UpdateAclPolicyRequest], Awaitable[operations_pb2.Operation]
+    ]:
+        r"""Return a callable for the update acl policy method over gRPC.
+
+        Updates the ACL policy.
+
+        The operation will apply the updated ACL policy to all
+        the linked instances. The operation will return success
+        if it successfully applied the policy to all the
+        instances. If the operation completed with a failure,
+        the service will continue to apply the policy via
+        reconciliation for the failed instances even after
+        operation completion to ensure eventual consistency.
+
+        Completed longrunning.Operation will contain the new ACL
+        policy object in the response field.
+
+        Returns:
+            Callable[[~.UpdateAclPolicyRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_acl_policy" not in self._stubs:
+            self._stubs["update_acl_policy"] = self._logged_channel.unary_unary(
+                "/google.cloud.memorystore.v1.Memorystore/UpdateAclPolicy",
+                request_serializer=memorystore.UpdateAclPolicyRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["update_acl_policy"]
+
+    @property
     def update_instance(
         self,
     ) -> Callable[
@@ -462,6 +596,95 @@ class MemorystoreGrpcAsyncIOTransport(MemorystoreTransport):
                 response_deserializer=operations_pb2.Operation.FromString,
             )
         return self._stubs["update_instance"]
+
+    @property
+    def delete_acl_policy(
+        self,
+    ) -> Callable[
+        [memorystore.DeleteAclPolicyRequest], Awaitable[operations_pb2.Operation]
+    ]:
+        r"""Return a callable for the delete acl policy method over gRPC.
+
+        Deletes a specific ACL policy. This action will
+        delete the ACL policy and all the rules associated with
+        it. An ACL policy cannot be deleted if it is attached to
+        an instance.
+
+        Returns:
+            Callable[[~.DeleteAclPolicyRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_acl_policy" not in self._stubs:
+            self._stubs["delete_acl_policy"] = self._logged_channel.unary_unary(
+                "/google.cloud.memorystore.v1.Memorystore/DeleteAclPolicy",
+                request_serializer=memorystore.DeleteAclPolicyRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["delete_acl_policy"]
+
+    @property
+    def get_acl_policy_revision(
+        self,
+    ) -> Callable[
+        [memorystore.GetAclPolicyRevisionRequest],
+        Awaitable[memorystore.AclPolicyRevision],
+    ]:
+        r"""Return a callable for the get acl policy revision method over gRPC.
+
+        Gets details of a specific ACL policy revision.
+
+        Returns:
+            Callable[[~.GetAclPolicyRevisionRequest],
+                    Awaitable[~.AclPolicyRevision]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_acl_policy_revision" not in self._stubs:
+            self._stubs["get_acl_policy_revision"] = self._logged_channel.unary_unary(
+                "/google.cloud.memorystore.v1.Memorystore/GetAclPolicyRevision",
+                request_serializer=memorystore.GetAclPolicyRevisionRequest.serialize,
+                response_deserializer=memorystore.AclPolicyRevision.deserialize,
+            )
+        return self._stubs["get_acl_policy_revision"]
+
+    @property
+    def list_acl_policy_revisions(
+        self,
+    ) -> Callable[
+        [memorystore.ListAclPolicyRevisionsRequest],
+        Awaitable[memorystore.ListAclPolicyRevisionsResponse],
+    ]:
+        r"""Return a callable for the list acl policy revisions method over gRPC.
+
+        Lists all ACL policy revisions in a given ACL policy.
+
+        Returns:
+            Callable[[~.ListAclPolicyRevisionsRequest],
+                    Awaitable[~.ListAclPolicyRevisionsResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_acl_policy_revisions" not in self._stubs:
+            self._stubs["list_acl_policy_revisions"] = self._logged_channel.unary_unary(
+                "/google.cloud.memorystore.v1.Memorystore/ListAclPolicyRevisions",
+                request_serializer=memorystore.ListAclPolicyRevisionsRequest.serialize,
+                response_deserializer=memorystore.ListAclPolicyRevisionsResponse.deserialize,
+            )
+        return self._stubs["list_acl_policy_revisions"]
 
     @property
     def delete_instance(
@@ -1104,8 +1327,36 @@ class MemorystoreGrpcAsyncIOTransport(MemorystoreTransport):
     def _prep_wrapped_messages(self, client_info):
         """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
         self._wrapped_methods = {
+            self.list_acl_policies: self._wrap_method(
+                self.list_acl_policies,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
             self.list_instances: self._wrap_method(
                 self.list_instances,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_acl_policy: self._wrap_method(
+                self.get_acl_policy,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
                     maximum=10.0,
@@ -1132,14 +1383,57 @@ class MemorystoreGrpcAsyncIOTransport(MemorystoreTransport):
                 default_timeout=60.0,
                 client_info=client_info,
             ),
+            self.create_acl_policy: self._wrap_method(
+                self.create_acl_policy,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
             self.create_instance: self._wrap_method(
                 self.create_instance,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
+            self.update_acl_policy: self._wrap_method(
+                self.update_acl_policy,
                 default_timeout=600.0,
                 client_info=client_info,
             ),
             self.update_instance: self._wrap_method(
                 self.update_instance,
                 default_timeout=600.0,
+                client_info=client_info,
+            ),
+            self.delete_acl_policy: self._wrap_method(
+                self.delete_acl_policy,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
+            self.get_acl_policy_revision: self._wrap_method(
+                self.get_acl_policy_revision,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_acl_policy_revisions: self._wrap_method(
+                self.list_acl_policy_revisions,
+                default_retry=retries.AsyncRetry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
                 client_info=client_info,
             ),
             self.delete_instance: self._wrap_method(

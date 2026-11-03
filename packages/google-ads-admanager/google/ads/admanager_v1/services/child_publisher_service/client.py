@@ -655,7 +655,7 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.GetChildPublisherRequest, dict]):
-                The request object. Request object for [GetChildPublisher][] method.
+                The request object. Request object for ``GetChildPublisher`` method.
             name (str):
                 Required. The resource name of the
                 [ChildPublisher][google.ads.admanager.v1.ChildPublisher].
@@ -769,10 +769,10 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.ListChildPublishersRequest, dict]):
-                The request object. Request object for [ListChildPublishers][] method.
+                The request object. Request object for ``ListChildPublishers`` method.
             parent (str):
                 Required. The parent, which owns this collection of
-                [ChildPublisher][google.ads.admanager.v1.ChildPublisher]s.
+                [ChildPublishers][google.ads.admanager.v1.ChildPublisher].
                 Format: ``networks/{network_code}``
 
                 This corresponds to the ``parent`` field
@@ -788,7 +788,7 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
 
         Returns:
             google.ads.admanager_v1.services.child_publisher_service.pagers.ListChildPublishersPager:
-                Response object for [ListChildPublishers][] containing matching
+                Response object for ListChildPublishers containing matching
                    [ChildPublisher][google.ads.admanager.v1.ChildPublisher]
                    objects.
 
@@ -896,7 +896,7 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.CreateChildPublisherRequest, dict]):
-                The request object. Request object for [CreateChildPublisher][] method.
+                The request object. Request object for ``CreateChildPublisher`` method.
             parent (str):
                 Required. The parent resource where this
                 [ChildPublisher][google.ads.admanager.v1.ChildPublisher]
@@ -1025,11 +1025,11 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.BatchCreateChildPublishersRequest, dict]):
-                The request object. Request object for [BatchCreateChildPublishers][]
+                The request object. Request object for ``BatchCreateChildPublishers``
                 method.
             parent (str):
                 Required. The parent resource where
-                [ChildPublisher][google.ads.admanager.v1.ChildPublisher]s
+                [ChildPublishers][google.ads.admanager.v1.ChildPublisher]
                 will be created. Format: ``networks/{network_code}`` The
                 parent field in the CreateChildPublisherRequest must
                 match this field.
@@ -1056,9 +1056,7 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
 
         Returns:
             google.ads.admanager_v1.types.BatchCreateChildPublishersResponse:
-                Response object for [BatchCreateChildPublishers][]
-                method.
-
+                Response object for BatchCreateChildPublishers method.
         """
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
@@ -1154,7 +1152,7 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.UpdateChildPublisherRequest, dict]):
-                The request object. Request object for [UpdateChildPublisher][] method.
+                The request object. Request object for ``UpdateChildPublisher`` method.
             child_publisher (google.ads.admanager_v1.types.ChildPublisher):
                 Required. The
                 [ChildPublisher][google.ads.admanager.v1.ChildPublisher]
@@ -1287,11 +1285,11 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.BatchUpdateChildPublishersRequest, dict]):
-                The request object. Request object for [BatchUpdateChildPublishers][]
+                The request object. Request object for ``BatchUpdateChildPublishers``
                 method.
             parent (str):
                 Required. The parent resource where
-                [ChildPublisher][google.ads.admanager.v1.ChildPublisher]s
+                [ChildPublishers][google.ads.admanager.v1.ChildPublisher]
                 will be updated. Format: ``networks/{network_code}`` The
                 parent field in the UpdateChildPublisherRequest must
                 match this field.
@@ -1318,9 +1316,7 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
 
         Returns:
             google.ads.admanager_v1.types.BatchUpdateChildPublishersResponse:
-                Response object for [BatchUpdateChildPublishers][]
-                method.
-
+                Response object for BatchUpdateChildPublishers method.
         """
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
@@ -1428,7 +1424,7 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
         Args:
             request (Union[google.ads.admanager_v1.types.BatchResendChildPublisherInvitationEmailsRequest, dict]):
                 The request object. Request message for
-                [BatchResendChildPublisherInvitationEmails][] method.
+                ``BatchResendChildPublisherInvitationEmails`` method.
             parent (str):
                 Required. Format: ``networks/{network_code}``
                 This corresponds to the ``parent`` field
@@ -1436,7 +1432,7 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
                 should not be set.
             names (MutableSequence[str]):
                 Required. Resource names of the
-                [ChildPublisher][google.ads.admanager.v1.ChildPublisher]s
+                [ChildPublishers][google.ads.admanager.v1.ChildPublisher]
                 that should be resent invitation emails. Format:
                 ``networks/{network_code}/childPublisher/{child_publisher_id}``
 
@@ -1454,7 +1450,7 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
         Returns:
             google.ads.admanager_v1.types.BatchResendChildPublisherInvitationEmailsResponse:
                 Response message for
-                [BatchResendChildPublisherInvitationEmails][] method.
+                BatchResendChildPublisherInvitationEmails method.
 
         """
         # Create or coerce a protobuf request object.
@@ -1574,7 +1570,7 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
         Args:
             request (Union[google.ads.admanager_v1.types.BatchRenegotiateChildPublisherAgreementsRequest, dict]):
                 The request object. Request message for
-                [BatchRenegotiateChildPublisherAgreements][] method.
+                ``BatchRenegotiateChildPublisherAgreements`` method.
             parent (str):
                 Required. Format: ``networks/{network_code}``
                 This corresponds to the ``parent`` field
@@ -1599,7 +1595,7 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
         Returns:
             google.ads.admanager_v1.types.BatchRenegotiateChildPublisherAgreementsResponse:
                 Response message for
-                [BatchRenegotiateChildPublisherAgreements][] method.
+                BatchRenegotiateChildPublisherAgreements method.
 
         """
         # Create or coerce a protobuf request object.
@@ -1686,7 +1682,7 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
         that are not yet associated with an Ad Manager network.
 
         To sever the relationship from the parent publisher's side, use
-        [BatchWithdrawChildPublisher][].
+        ``BatchWithdrawChildPublishers``.
 
         .. code-block:: python
 
@@ -1717,7 +1713,7 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.BatchRejectChildPublishersRequest, dict]):
-                The request object. Request message for [BatchRejectChildPublishers][]
+                The request object. Request message for ``BatchRejectChildPublishers``
                 method.
             parent (str):
                 Required. Format: ``networks/{network_code}``
@@ -1726,7 +1722,7 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
                 should not be set.
             names (MutableSequence[str]):
                 Required. Resource names of the
-                [ChildPublisher][google.ads.admanager.v1.ChildPublisher]s
+                [ChildPublishers][google.ads.admanager.v1.ChildPublisher]
                 to reject. Format:
                 ``networks/{network_code}/childPublisher/{child_publisher_id}``
 
@@ -1743,9 +1739,7 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
 
         Returns:
             google.ads.admanager_v1.types.BatchRejectChildPublishersResponse:
-                Response message for [BatchRejectChildPublishers][]
-                method.
-
+                Response message for BatchRejectChildPublishers method.
         """
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
@@ -1812,12 +1806,12 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
         metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
     ) -> child_publisher_service.BatchWithdrawChildPublishersResponse:
         r"""Batch withdraws
-        [ChildPublisher][google.ads.admanager.v1.ChildPublisher]s.
+        [ChildPublishers][google.ads.admanager.v1.ChildPublisher].
 
         Only expired, pending, and accepted
-        [ChildPublisher][google.ads.admanager.v1.ChildPublisher]s can be
+        [ChildPublishers][google.ads.admanager.v1.ChildPublisher] can be
         withdrawn. Rejected or withdrawn
-        [ChildPublisher][google.ads.admanager.v1.ChildPublisher]s will
+        [ChildPublishers][google.ads.admanager.v1.ChildPublisher] will
         be ignored.
 
         .. code-block:: python
@@ -1849,7 +1843,7 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.BatchWithdrawChildPublishersRequest, dict]):
-                The request object. Request message for [BatchWithdrawChildPublishers][]
+                The request object. Request message for ``BatchWithdrawChildPublishers``
                 method.
             parent (str):
                 Required. Format: ``networks/{network_code}``
@@ -1858,7 +1852,7 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
                 should not be set.
             names (MutableSequence[str]):
                 Required. Resource names of the
-                [ChildPublisher][google.ads.admanager.v1.ChildPublisher]s
+                [ChildPublishers][google.ads.admanager.v1.ChildPublisher]
                 to withdraw. Format:
                 ``networks/{network_code}/childPublisher/{child_publisher_id}``
 
@@ -1875,7 +1869,7 @@ class ChildPublisherServiceClient(metaclass=ChildPublisherServiceClientMeta):
 
         Returns:
             google.ads.admanager_v1.types.BatchWithdrawChildPublishersResponse:
-                Response message for [BatchWithdrawChildPublishers][]
+                Response message for BatchWithdrawChildPublishers
                 method.
 
         """

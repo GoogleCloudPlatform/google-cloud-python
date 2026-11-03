@@ -15,7 +15,6 @@
 import unittest
 
 import mock
-from google.auth.credentials import AnonymousCredentials
 
 from google.cloud.spanner_v1 import DefaultTransactionOptions
 
@@ -51,6 +50,17 @@ class TestInstance(unittest.TestCase):
 
     def _make_one(self, *args, **kwargs):
         return self._getTargetClass()(*args, **kwargs)
+
+    @staticmethod
+    def _make_database_admin_api():
+        from google.cloud.spanner_admin_database_v1 import DatabaseAdminClient
+        from google.cloud.spanner_admin_database_v1.services.database_admin.transports.base import (
+            DatabaseAdminTransport,
+        )
+
+        mock_transport = mock.create_autospec(DatabaseAdminTransport, instance=True)
+        mock_transport._wrapped_methods = {}
+        return DatabaseAdminClient(transport=mock_transport)
 
     def test_constructor_defaults(self):
         from google.cloud.spanner_v1.instance import DEFAULT_NODE_COUNT
@@ -585,15 +595,75 @@ class TestInstance(unittest.TestCase):
         self.assertIs(database.database_role, DATABASE_ROLE)
         self.assertIs(database._proto_descriptors, proto_descriptors)
 
+    def test_database_factory_pool_database_role(self):
+        from google.cloud.spanner_v1.database import Database
+
+        client = _Client(self.PROJECT)
+        instance = self._make_one(self.INSTANCE_ID, client, self.CONFIG_NAME)
+        database_id = "database-id"
+        pool = _Pool(database_role="pool-role")
+
+        database = instance.database(
+            database_id,
+            pool=pool,
+        )
+
+        self.assertIsInstance(database, Database)
+        self.assertIs(database._pool, pool)
+        self.assertIs(pool._bound, database)
+        self.assertEqual(pool.database_role, "pool-role")
+
+    def test_database_factory_pool_inherits_database_role(self):
+        from google.cloud.spanner_v1.database import Database
+
+        client = _Client(self.PROJECT)
+        instance = self._make_one(self.INSTANCE_ID, client, self.CONFIG_NAME)
+        database_id = "database-id"
+        database_role = "db-role"
+        pool = _Pool()
+
+        database = instance.database(
+            database_id,
+            pool=pool,
+            database_role=database_role,
+        )
+
+        self.assertIsInstance(database, Database)
+        self.assertIs(database._pool, pool)
+        self.assertIs(pool._bound, database)
+        self.assertEqual(database.database_role, database_role)
+        self.assertEqual(pool.database_role, database_role)
+
+    def test_database_factory_pool_database_role_precedence(self):
+        from google.cloud.spanner_v1.database import Database
+
+        client = _Client(self.PROJECT)
+        instance = self._make_one(self.INSTANCE_ID, client, self.CONFIG_NAME)
+        database_id = "database-id"
+        pool = _Pool(database_role="pool-role")
+
+        database = instance.database(
+            database_id,
+            pool=pool,
+            database_role="db-role",
+        )
+
+        self.assertIsInstance(database, Database)
+        self.assertIs(database._pool, pool)
+        self.assertIs(pool._bound, database)
+        self.assertEqual(database.database_role, "db-role")
+        self.assertEqual(pool.database_role, "pool-role")
+
     def test_list_databases(self):
-        from google.cloud.spanner_admin_database_v1 import Database as DatabasePB
         from google.cloud.spanner_admin_database_v1 import (
-            DatabaseAdminClient,
+            Database as DatabasePB,
+        )
+        from google.cloud.spanner_admin_database_v1 import (
             ListDatabasesRequest,
             ListDatabasesResponse,
         )
 
-        api = DatabaseAdminClient(credentials=AnonymousCredentials())
+        api = self._make_database_admin_api()
         client = _Client(self.PROJECT)
         client.database_admin_api = api
         instance = self._make_one(self.INSTANCE_ID, client)
@@ -629,12 +699,11 @@ class TestInstance(unittest.TestCase):
 
     def test_list_databases_w_options(self):
         from google.cloud.spanner_admin_database_v1 import (
-            DatabaseAdminClient,
             ListDatabasesRequest,
             ListDatabasesResponse,
         )
 
-        api = DatabaseAdminClient(credentials=AnonymousCredentials())
+        api = self._make_database_admin_api()
         client = _Client(self.PROJECT)
         client.database_admin_api = api
         instance = self._make_one(self.INSTANCE_ID, client)
@@ -711,14 +780,15 @@ class TestInstance(unittest.TestCase):
         self.assertEqual(backup._encryption_config, encryption_config)
 
     def test_list_backups_defaults(self):
-        from google.cloud.spanner_admin_database_v1 import Backup as BackupPB
         from google.cloud.spanner_admin_database_v1 import (
-            DatabaseAdminClient,
+            Backup as BackupPB,
+        )
+        from google.cloud.spanner_admin_database_v1 import (
             ListBackupsRequest,
             ListBackupsResponse,
         )
 
-        api = DatabaseAdminClient(credentials=AnonymousCredentials())
+        api = self._make_database_admin_api()
         client = _Client(self.PROJECT)
         client.database_admin_api = api
         instance = self._make_one(self.INSTANCE_ID, client)
@@ -752,14 +822,15 @@ class TestInstance(unittest.TestCase):
         )
 
     def test_list_backups_w_options(self):
-        from google.cloud.spanner_admin_database_v1 import Backup as BackupPB
         from google.cloud.spanner_admin_database_v1 import (
-            DatabaseAdminClient,
+            Backup as BackupPB,
+        )
+        from google.cloud.spanner_admin_database_v1 import (
             ListBackupsRequest,
             ListBackupsResponse,
         )
 
-        api = DatabaseAdminClient(credentials=AnonymousCredentials())
+        api = self._make_database_admin_api()
         client = _Client(self.PROJECT)
         client.database_admin_api = api
         instance = self._make_one(self.INSTANCE_ID, client)
@@ -801,12 +872,11 @@ class TestInstance(unittest.TestCase):
 
         from google.cloud.spanner_admin_database_v1 import (
             CreateBackupMetadata,
-            DatabaseAdminClient,
             ListBackupOperationsRequest,
             ListBackupOperationsResponse,
         )
 
-        api = DatabaseAdminClient(credentials=AnonymousCredentials())
+        api = self._make_database_admin_api()
         client = _Client(self.PROJECT)
         client.database_admin_api = api
         instance = self._make_one(self.INSTANCE_ID, client)
@@ -849,12 +919,11 @@ class TestInstance(unittest.TestCase):
 
         from google.cloud.spanner_admin_database_v1 import (
             CreateBackupMetadata,
-            DatabaseAdminClient,
             ListBackupOperationsRequest,
             ListBackupOperationsResponse,
         )
 
-        api = DatabaseAdminClient(credentials=AnonymousCredentials())
+        api = self._make_database_admin_api()
         client = _Client(self.PROJECT)
         client.database_admin_api = api
         instance = self._make_one(self.INSTANCE_ID, client)
@@ -899,13 +968,12 @@ class TestInstance(unittest.TestCase):
 
         from google.cloud.spanner_admin_database_v1 import (
             CreateDatabaseMetadata,
-            DatabaseAdminClient,
             ListDatabaseOperationsRequest,
             ListDatabaseOperationsResponse,
             OptimizeRestoredDatabaseMetadata,
         )
 
-        api = DatabaseAdminClient(credentials=AnonymousCredentials())
+        api = self._make_database_admin_api()
         client = _Client(self.PROJECT)
         client.database_admin_api = api
         instance = self._make_one(self.INSTANCE_ID, client)
@@ -955,7 +1023,6 @@ class TestInstance(unittest.TestCase):
         from google.protobuf.any_pb2 import Any
 
         from google.cloud.spanner_admin_database_v1 import (
-            DatabaseAdminClient,
             ListDatabaseOperationsRequest,
             ListDatabaseOperationsResponse,
             RestoreDatabaseMetadata,
@@ -963,7 +1030,7 @@ class TestInstance(unittest.TestCase):
             UpdateDatabaseDdlMetadata,
         )
 
-        api = DatabaseAdminClient(credentials=AnonymousCredentials())
+        api = self._make_database_admin_api()
         client = _Client(self.PROJECT)
         client.database_admin_api = api
         instance = self._make_one(self.INSTANCE_ID, client)
@@ -1116,5 +1183,9 @@ class _FauxOperationFuture(object):
 class _Pool(object):
     _bound = None
 
+    def __init__(self, database_role=None):
+        self.database_role = database_role
+
     def bind(self, database):
         self._bound = database
+        self.database_role = self.database_role or database.database_role

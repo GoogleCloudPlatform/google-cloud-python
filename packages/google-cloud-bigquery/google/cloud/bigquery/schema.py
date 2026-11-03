@@ -143,6 +143,7 @@ class _SchemaFieldKey(typing.NamedTuple):
     timestamp_precision: Optional[int]
     rounding_mode: Optional[str]
     foreign_type_definition: Optional[str]
+    data_policies: Optional[tuple[DataPolicy, ...]]
 
 
 class SchemaField(object):
@@ -239,6 +240,14 @@ class SchemaField(object):
             Defaults to `enums.TimestampPrecision.MICROSECOND` (`None`) for
             microsecond precision. Use `enums.TimestampPrecision.PICOSECOND`
             (`12`) for picosecond precision.
+
+        data_policies: Optional[Iterable[google.cloud.bigquery.schema.DataPolicy]]
+            Data policies attached directly to the field.
+            Serialized as the REST ``dataPolicies`` field. If omitted, the
+            property is not included in the API representation.
+            ``None`` is serialized as ``null`` and an empty iterable as ``[]``.
+            A single ``str`` or ``bytes`` value raises :class:`TypeError`;
+            use an iterable of :class:`DataPolicy` objects instead.
     """
 
     def __init__(
@@ -257,6 +266,10 @@ class SchemaField(object):
         rounding_mode: Union[enums.RoundingMode, str, None] = None,
         foreign_type_definition: Optional[str] = None,
         timestamp_precision: Optional[enums.TimestampPrecision] = None,
+        *,
+        data_policies: Union[
+            Iterable[DataPolicy], None, _DefaultSentinel
+        ] = _DEFAULT_VALUE,
     ):
         self._properties: Dict[str, Any] = {
             "name": name,
@@ -296,6 +309,20 @@ class SchemaField(object):
             self._properties["roundingMode"] = rounding_mode
         if foreign_type_definition is not None:
             self._properties["foreignTypeDefinition"] = foreign_type_definition
+        if data_policies is not _DEFAULT_VALUE:
+            if isinstance(data_policies, (str, bytes)):
+                raise TypeError(
+                    "data_policies must be an iterable of DataPolicy objects, "
+                    "not str or bytes"
+                )
+            self._properties["dataPolicies"] = (
+                [
+                    _helpers._isinstance_or_raise(policy, DataPolicy).to_api_repr()
+                    for policy in data_policies
+                ]
+                if data_policies is not None
+                else None
+            )
 
         if fields:  # Don't set the property if it's not set.
             self._properties["fields"] = [field.to_api_repr() for field in fields]
@@ -433,6 +460,25 @@ class SchemaField(object):
         return PolicyTagList.from_api_repr(resource) if resource is not None else None
 
     @property
+    def data_policies(self) -> Optional[tuple[DataPolicy, ...]]:
+        """Optional[Tuple[google.cloud.bigquery.schema.DataPolicy, ...]]:
+        Data policies for this field.
+
+        Returns objects from the REST ``dataPolicies`` field, or ``None`` if
+        unset. An explicitly empty list is returned as an empty tuple. Each
+        object preserves all properties from its API representation.
+
+        See:
+            https://cloud.google.com/bigquery/docs/reference/rest/v2/tables#TableFieldSchema
+        """
+        resource = self._properties.get("dataPolicies")
+        return (
+            tuple(DataPolicy.from_api_repr(policy) for policy in resource)
+            if resource is not None
+            else None
+        )
+
+    @property
     def timestamp_precision(self) -> enums.TimestampPrecision:
         """Precision (maximum number of total digits in base 10) for seconds of
         TIMESTAMP type.
@@ -478,6 +524,7 @@ class SchemaField(object):
         policy_tags = (
             None if self.policy_tags is None else tuple(sorted(self.policy_tags.names))
         )
+        data_policies = self.data_policies
 
         timestamp_precision = self._properties.get("timestampPrecision")
 
@@ -499,6 +546,11 @@ class SchemaField(object):
             timestamp_precision=timestamp_precision,
             rounding_mode=rounding_mode,
             foreign_type_definition=self.foreign_type_definition,
+            data_policies=(
+                None
+                if data_policies is None
+                else tuple(sorted(data_policies, key=lambda policy: policy._key()))
+            ),
         )
 
     def to_standard_sql(self) -> standard_sql.StandardSqlField:
@@ -553,8 +605,20 @@ class SchemaField(object):
         policy_tags_inst = (
             None if key.policy_tags is None else PolicyTagList(key.policy_tags)
         )
-        adjusted_key = tuple(key._replace(policy_tags=policy_tags_inst))
-        return f"{self.__class__.__name__}{adjusted_key}"
+        # Keep keyword-only arguments separate from the existing positional repr.
+        kwarg_only_args = ("data_policies",)
+        key_to_show = key._replace(policy_tags=policy_tags_inst)
+        adjusted_key = tuple(
+            getattr(key_to_show, field)
+            for field in key_to_show._fields
+            if field not in kwarg_only_args
+        )
+        representation = f"{self.__class__.__name__}{adjusted_key}"
+        for field in kwarg_only_args:
+            value = getattr(key_to_show, field)
+            if value is not None:
+                representation = f"{representation[:-1]}, {field}={value!r})"
+        return representation
 
 
 def _parse_schema_resource(info):
@@ -623,6 +687,68 @@ def _to_schema_fields(schema):
 
     else:
         raise TypeError("Schema must be a Sequence (e.g. a list) or None.")
+
+
+class DataPolicy:
+    """A data policy attached directly to a column.
+
+    Args:
+        name (str): Data policy resource name in the form
+            ``projects/{project}/locations/{location}/dataPolicies/{policy}``.
+
+    See:
+        https://cloud.google.com/bigquery/docs/reference/rest/v2/tables#DataPolicyOption
+    """
+
+    def __init__(self, name: str):
+        self._properties: Dict[str, Any] = {"name": name}
+
+    @property
+    def name(self) -> str:
+        """str: The data policy resource name."""
+        return self._properties["name"]
+
+    @classmethod
+    def from_api_repr(cls, api_repr: dict) -> DataPolicy:
+        """Construct a data policy from its API representation.
+
+        The returned object retains the supplied dictionary, including
+        properties not yet exposed by this class.
+
+        Args:
+            api_repr (dict): A data policy representation from the API.
+
+        Returns:
+            google.cloud.bigquery.schema.DataPolicy: The data policy object.
+        """
+        policy = cls(name=api_repr["name"])
+        policy._properties = api_repr
+        return policy
+
+    def to_api_repr(self) -> dict:
+        """Return the properties dictionary representing this data policy.
+
+        Returns:
+            dict: The data policy in the format used by the BigQuery API.
+        """
+        return self._properties
+
+    def _key(self):
+        return (self.name,)
+
+    def __eq__(self, other):
+        if not isinstance(other, DataPolicy):
+            return NotImplemented
+        return self._key() == other._key()
+
+    def __ne__(self, other):
+        return not self == other
+
+    def __hash__(self):
+        return hash(self._key())
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(name={self.name!r})"
 
 
 class PolicyTagList(object):

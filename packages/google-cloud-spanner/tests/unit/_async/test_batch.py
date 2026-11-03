@@ -50,6 +50,33 @@ class Test_BatchBase(unittest.IsolatedAsyncioTestCase):
         self.assertIs(base._session, session)
         self.assertEqual(len(base._mutations), 0)
 
+    def test_resource_info_with_database(self):
+        session = mock.Mock()
+        mock_db = mock.Mock(spec=["_resource_info"])
+        mock_db._resource_info = {"project": "p", "instance": "i", "database": "d"}
+        session._database = mock_db
+        base = self._make_one(session)
+        self.assertEqual(base._resource_info, mock_db._resource_info)
+
+    def test_resource_info_fallback(self):
+        session = mock.Mock()
+        mock_db = mock.Mock(spec=["_instance", "database_id"])
+        mock_db._instance = mock.Mock(spec=["_client", "instance_id"])
+        mock_db._instance.instance_id = "i"
+        mock_db._instance._client = mock.Mock(spec=["project"])
+        mock_db._instance._client.project = "p"
+        mock_db.database_id = "d"
+        session._database = mock_db
+        base = self._make_one(session)
+        self.assertEqual(
+            base._resource_info,
+            {"project": "p", "instance": "i", "database": "d"},
+        )
+
+    def test_resource_info_none(self):
+        base = self._make_one(None)
+        self.assertIsNone(base._resource_info)
+
     def test_insert(self):
         session = mock.Mock()
         base = self._make_one(session)
@@ -258,6 +285,33 @@ class TestMutationGroups(unittest.IsolatedAsyncioTestCase):
         session._database.database_id = "database"
 
         return session
+
+    def test_resource_info_with_database(self):
+        session = mock.Mock()
+        mock_db = mock.Mock(spec=["_resource_info"])
+        mock_db._resource_info = {"project": "p", "instance": "i", "database": "d"}
+        session._database = mock_db
+        groups = self._make_one(session)
+        self.assertEqual(groups._resource_info, mock_db._resource_info)
+
+    def test_resource_info_fallback(self):
+        session = mock.Mock()
+        mock_db = mock.Mock(spec=["_instance", "database_id"])
+        mock_db._instance = mock.Mock(spec=["_client", "instance_id"])
+        mock_db._instance.instance_id = "i"
+        mock_db._instance._client = mock.Mock(spec=["project"])
+        mock_db._instance._client.project = "p"
+        mock_db.database_id = "d"
+        session._database = mock_db
+        groups = self._make_one(session)
+        self.assertEqual(
+            groups._resource_info,
+            {"project": "p", "instance": "i", "database": "d"},
+        )
+
+    def test_resource_info_none(self):
+        groups = self._make_one(None)
+        self.assertIsNone(groups._resource_info)
 
     async def test_batch_write_ok(self):
         session = self._make_session()

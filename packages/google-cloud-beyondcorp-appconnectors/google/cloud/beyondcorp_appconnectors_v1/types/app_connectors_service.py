@@ -21,6 +21,7 @@ import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
 
+from google.cloud.beyondcorp_appconnectors_v1.types import app_connector_instance_config
 from google.cloud.beyondcorp_appconnectors_v1.types import (
     resource_info as gcba_resource_info,
 )
@@ -34,6 +35,8 @@ __protobuf__ = proto.module(
         "CreateAppConnectorRequest",
         "UpdateAppConnectorRequest",
         "DeleteAppConnectorRequest",
+        "ResolveInstanceConfigRequest",
+        "ResolveInstanceConfigResponse",
         "ReportStatusRequest",
         "AppConnector",
         "AppConnectorOperationMetadata",
@@ -55,7 +58,7 @@ class ListAppConnectorsRequest(proto.Message):
             service. Regardless of the page_size value, the response may
             include a partial list and a caller should only rely on
             response's
-            [next_page_token][BeyondCorp.ListAppConnectorsResponse.next_page_token]
+            [next_page_token][google.cloud.beyondcorp.appconnectors.v1.ListAppConnectorsResponse.next_page_token]
             to determine if there are more instances left to be queried.
         page_token (str):
             Optional. The next_page_token value returned from a previous
@@ -167,11 +170,11 @@ class CreateAppConnectorRequest(proto.Message):
             for at least 60 minutes since the first request.
 
             For example, consider a situation where you make
-            an initial request and t he request times out.
-            If you make the request again with the same
-            request ID, the server can check if original
-            operation with the same request ID was received,
-            and if so, will ignore the second request. This
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
             prevents clients from accidentally creating
             duplicate commitments.
 
@@ -231,11 +234,11 @@ class UpdateAppConnectorRequest(proto.Message):
             for at least 60 minutes since the first request.
 
             For example, consider a situation where you make
-            an initial request and t he request times out.
-            If you make the request again with the same
-            request ID, the server can check if original
-            operation with the same request ID was received,
-            and if so, will ignore the second request. This
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
             prevents clients from accidentally creating
             duplicate commitments.
 
@@ -284,11 +287,11 @@ class DeleteAppConnectorRequest(proto.Message):
             for at least 60 minutes after the first request.
 
             For example, consider a situation where you make
-            an initial request and t he request times out.
-            If you make the request again with the same
-            request ID, the server can check if original
-            operation with the same request ID was received,
-            and if so, will ignore the second request. This
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
             prevents clients from accidentally creating
             duplicate commitments.
 
@@ -315,6 +318,38 @@ class DeleteAppConnectorRequest(proto.Message):
     )
 
 
+class ResolveInstanceConfigRequest(proto.Message):
+    r"""Request message for BeyondCorp.ResolveInstanceConfig.
+
+    Attributes:
+        app_connector (str):
+            Required. BeyondCorp AppConnector name using the form:
+            ``projects/{project_id}/locations/{location_id}/appConnectors/{app_connector}``
+    """
+
+    app_connector: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class ResolveInstanceConfigResponse(proto.Message):
+    r"""Response message for BeyondCorp.ResolveInstanceConfig.
+
+    Attributes:
+        instance_config (google.cloud.beyondcorp_appconnectors_v1.types.AppConnectorInstanceConfig):
+            AppConnectorInstanceConfig.
+    """
+
+    instance_config: app_connector_instance_config.AppConnectorInstanceConfig = (
+        proto.Field(
+            proto.MESSAGE,
+            number=1,
+            message=app_connector_instance_config.AppConnectorInstanceConfig,
+        )
+    )
+
+
 class ReportStatusRequest(proto.Message):
     r"""Request report the connector status.
 
@@ -333,11 +368,11 @@ class ReportStatusRequest(proto.Message):
             for at least 60 minutes since the first request.
 
             For example, consider a situation where you make
-            an initial request and t he request times out.
-            If you make the request again with the same
-            request ID, the server can check if original
-            operation with the same request ID was received,
-            and if so, will ignore the second request. This
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
             prevents clients from accidentally creating
             duplicate commitments.
 
@@ -533,9 +568,11 @@ class AppConnectorOperationMetadata(proto.Message):
         requested_cancellation (bool):
             Output only. Identifies whether the user has requested
             cancellation of the operation. Operations that have
-            successfully been cancelled have [Operation.error][] value
-            with a [google.rpc.Status.code][google.rpc.Status.code] of
-            1, corresponding to ``Code.CANCELLED``.
+            successfully been cancelled have
+            [google.longrunning.Operation.error][google.longrunning.Operation.error]
+            value with a
+            [google.rpc.Status.code][google.rpc.Status.code] of ``1``,
+            corresponding to ``Code.CANCELLED``.
         api_version (str):
             Output only. API version used to start the
             operation.

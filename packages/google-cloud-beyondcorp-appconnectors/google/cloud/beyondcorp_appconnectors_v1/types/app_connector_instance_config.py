@@ -116,10 +116,16 @@ class ImageConfig(proto.Message):
     Attributes:
         target_image (str):
             The initial image the remote agent will
-            attempt to run for the control plane.
+            attempt to run for the control plane. Format
+            would be a gcr image path, e.g.:
+
+            gcr.io/PROJECT-ID/my-image:tag1
         stable_image (str):
             The stable image that the remote agent will
-            fallback to if the target image fails.
+            fallback to if the target image fails. Format
+            would be a gcr image path, e.g.:
+
+            gcr.io/PROJECT-ID/my-image:tag1
     """
 
     target_image: str = proto.Field(

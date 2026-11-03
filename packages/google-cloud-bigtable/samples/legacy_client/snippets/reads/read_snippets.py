@@ -14,7 +14,7 @@
 # limitations under the License.
 
 
-# [START bigtable_reads_row]
+# [START bigtable_reads_row_legacy]
 def read_row(project_id, instance_id, table_id):
     from google.cloud import bigtable
 
@@ -28,10 +28,10 @@ def read_row(project_id, instance_id, table_id):
     print_row(row)
 
 
-# [END bigtable_reads_row]
+# [END bigtable_reads_row_legacy]
 
 
-# [START bigtable_reads_row_partial]
+# [START bigtable_reads_row_partial_legacy]
 def read_row_partial(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable import row_filters
@@ -47,8 +47,8 @@ def read_row_partial(project_id, instance_id, table_id):
     print_row(row)
 
 
-# [END bigtable_reads_row_partial]
-# [START bigtable_reads_rows]
+# [END bigtable_reads_row_partial_legacy]
+# [START bigtable_reads_rows_legacy]
 def read_rows(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable.row_set import RowSet
@@ -66,8 +66,8 @@ def read_rows(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_reads_rows]
-# [START bigtable_reads_row_range]
+# [END bigtable_reads_rows_legacy]
+# [START bigtable_reads_row_range_legacy]
 def read_row_range(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable.row_set import RowSet
@@ -86,8 +86,8 @@ def read_row_range(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_reads_row_range]
-# [START bigtable_reads_row_ranges]
+# [END bigtable_reads_row_range_legacy]
+# [START bigtable_reads_row_ranges_legacy]
 def read_row_ranges(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable.row_set import RowSet
@@ -109,8 +109,8 @@ def read_row_ranges(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_reads_row_ranges]
-# [START bigtable_reads_prefix]
+# [END bigtable_reads_row_ranges_legacy]
+# [START bigtable_reads_prefix_legacy]
 def read_prefix(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable.row_set import RowSet
@@ -129,8 +129,8 @@ def read_prefix(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_reads_prefix]
-# [START bigtable_reads_filter]
+# [END bigtable_reads_prefix_legacy]
+# [START bigtable_reads_filter_legacy]
 def read_filter(project_id, instance_id, table_id):
     from google.cloud import bigtable
     from google.cloud.bigtable import row_filters
@@ -144,10 +144,10 @@ def read_filter(project_id, instance_id, table_id):
         print_row(row)
 
 
-# [END bigtable_reads_filter]
+# [END bigtable_reads_filter_legacy]
 
 
-# [START bigtable_reads_print]
+# [START bigtable_reads_print_legacy]
 def print_row(row):
     print("Reading data for {}:".format(row.row_key.decode("utf-8")))
     for cf, cols in sorted(row.cells.items()):
@@ -168,4 +168,4 @@ def print_row(row):
     print("")
 
 
-# [END bigtable_reads_print]
+# [END bigtable_reads_print_legacy]

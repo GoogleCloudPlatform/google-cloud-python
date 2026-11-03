@@ -3,9 +3,6 @@ on:
     branches:
       - main
   pull_request:
-    branches:
-      - main
-      - preview
   # Trigger workflow on GitHub merge queue events
   # See https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#merge_group
   merge_group:
@@ -24,6 +21,7 @@ env:
   NOX_ENVDIR: "/tmp/shared_nox_envs"
   NOX_DEFAULT_VENV_BACKEND: "uv"
   UV_VENV_SEED: "1"
+  UV_CONCURRENT_BUILDS: "1"
   # Run checks in parallel using 4 cores
   PARALLEL_WORKERS: "4"
 
@@ -41,7 +39,7 @@ jobs:
       PACKAGE_WEIGHTS: |
         google-ads-admanager: 9
         google-cloud-compute: 50
-        google-cloud-compute-v1beta: 100
+        google-cloud-compute-v1beta: 120
         google-cloud-dialogflow: 9
         google-cloud-dialogflow-cx: 9
         google-cloud-discoveryengine: 15
@@ -49,7 +47,7 @@ jobs:
         google-cloud-retail: 9
     steps:
     - name: Checkout
-      uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         fetch-depth: 0
         filter: blob:none
@@ -63,9 +61,11 @@ jobs:
           echo "is_full_run=false" >> $GITHUB_OUTPUT
         fi
     - name: Setup Python
-      uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
       with:
-        python-version: "3.10"
+        python-version: |
+          3.10
+          3.15
     - name: Get package shards
       id: set-matrix
       env:
@@ -92,7 +92,7 @@ jobs:
     name: ${{ matrix.package_shard.is_sharded && format('docs ({0})', matrix.package_shard.name) || format('docs ({0})', matrix.package_shard.description) }}
     steps:
     - name: Checkout
-      uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       # Use a fetch-depth of 2 to avoid error `fatal: origin/main...HEAD: no merge base`
       # See https://github.com/googleapis/google-cloud-python/issues/12013
       # and https://github.com/actions/checkout#checkout-head.
@@ -100,9 +100,11 @@ jobs:
         fetch-depth: 2
         persist-credentials: false
     - name: Setup Python
-      uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
       with:
-        python-version: "3.10"
+        python-version: |
+          3.10
+          3.15
     - name: Install nox
       run: |
         python -m pip install --upgrade setuptools pip wheel
@@ -136,12 +138,18 @@ jobs:
         fi
         echo "All docs shards passed or were skipped!"
 
-  docfx:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  docfx-shard:
+    needs: initialize
+    if: needs.initialize.outputs.matrix != '[]' && needs.initialize.outputs.matrix != ''
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        package_shard: ${{ fromJson(needs.initialize.outputs.matrix) }}
+    name: ${{ matrix.package_shard.is_sharded && format('docfx ({0})', matrix.package_shard.name) || format('docfx ({0})', matrix.package_shard.description) }}
     steps:
     - name: Checkout
-      uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       # Use a fetch-depth of 2 to avoid error `fatal: origin/main...HEAD: no merge base`
       # See https://github.com/googleapis/google-cloud-python/issues/12013
       # and https://github.com/actions/checkout#checkout-head.
@@ -149,19 +157,50 @@ jobs:
         fetch-depth: 2
         persist-credentials: false
     - name: Setup Python
-      uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
       with:
-        python-version: "3.10"
+        python-version: |
+          3.10
+          3.15
     - name: Install nox
       run: |
         python -m pip install --upgrade setuptools pip wheel
         python -m pip install nox uv
-    - name: Run docfx
+    - name: Build local gcp-sphinx-docfx-yaml wheel
+      run: |
+        mkdir -p /tmp/local_wheels
+        python -m pip wheel --no-deps packages/gcp-sphinx-docfx-yaml -w /tmp/local_wheels
+        WHEEL_PATH=$(ls /tmp/local_wheels/gcp_sphinx_docfx_yaml-*.whl)
+        echo "Built local wheel: ${WHEEL_PATH}"
+        echo "gcp-sphinx-docfx-yaml @ file://${WHEEL_PATH}" > /tmp/uv_overrides.txt
+        echo "UV_OVERRIDE=/tmp/uv_overrides.txt" >> $GITHUB_ENV
+        echo "UV_FIND_LINKS=/tmp/local_wheels" >> $GITHUB_ENV
+        echo "PIP_FIND_LINKS=/tmp/local_wheels" >> $GITHUB_ENV
+    - name: Run docfx for ${{ matrix.package_shard.description }}
       env:
         BUILD_TYPE: presubmit
         TARGET_BRANCH: ${{ github.base_ref || github.event.merge_group.base_ref || github.ref_name }}
         TEST_TYPE: docfx
+        PACKAGE_LIST: ${{ matrix.package_shard.packages }}
         # TODO(https://github.com/googleapis/google-cloud-python/issues/13775): Specify `PY_VERSION` rather than relying on the default python version of the nox session.
         PY_VERSION: "unused"
       run: |
         ci/run_conditional_tests.sh
+
+  docfx:
+    if: always()
+    needs: [initialize, docfx-shard]
+    runs-on: ubuntu-latest
+    name: docfx
+    steps:
+    - name: Check docfx job status
+      run: |
+        if [[ "${{ needs.initialize.result }}" != "success" ]]; then
+          echo "Error: The initialize job status was: ${{ needs.initialize.result }}"
+          exit 1
+        fi
+        if [[ "${{ needs['docfx-shard'].result }}" != "success" && "${{ needs['docfx-shard'].result }}" != "skipped" ]]; then
+          echo "docfx failed with result: ${{ needs['docfx-shard'].result }}"
+          exit 1
+        fi
+        echo "All docfx shards passed or were skipped!"

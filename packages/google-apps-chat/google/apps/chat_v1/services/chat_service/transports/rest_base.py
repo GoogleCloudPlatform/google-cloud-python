@@ -780,6 +780,23 @@ class _BaseChatServiceRestTransport(ChatServiceTransport):
             ]
             return http_options
 
+    class _BaseReplaceMessageCards:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{name=spaces/*/messages/*}:replaceCards",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
     class _BaseSearchMessages:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")

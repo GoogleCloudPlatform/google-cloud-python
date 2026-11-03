@@ -18,7 +18,7 @@ import uuid
 
 import pytest
 
-from ...utils import create_table_cm
+from ....utils import create_table_cm
 from . import read_snippets
 from .snapshots.snap_reads_test import snapshots
 

@@ -15,6 +15,7 @@
 """DB-API Connection for the Google Cloud Spanner."""
 
 import warnings
+from typing import Optional
 
 from google.api_core.client_options import ClientOptions
 from google.api_core.exceptions import Aborted
@@ -102,6 +103,10 @@ class Connection:
         or autocommit connections are automatically partitioned and executed in parallel.
         Defaults to False.
 
+    :type timeout: Optional[float]
+    :param timeout: (Optional) The amount of time, in seconds, to wait
+                    for requests to complete.
+
     **kwargs: Initial value for connection variables.
     """
 
@@ -112,6 +117,7 @@ class Connection:
         read_only=False,
         data_boost_enabled=False,
         auto_partition_mode=False,
+        timeout=None,
         **kwargs,
     ):
         self._instance = instance
@@ -133,6 +139,7 @@ class Connection:
         self._auto_partition_mode = bool(auto_partition_mode)
         self._staleness = None
         self.request_priority = None
+        self.timeout = timeout
         self._transaction_begin_marked = False
         self._transaction_isolation_level = None
         # whether transaction started at Spanner. This means that we had
@@ -221,7 +228,11 @@ class Connection:
         :type value: bool
         :param value: New autocommit mode state.
         """
-        if value and not self._autocommit and self._spanner_transaction_started:
+        if (
+            value
+            and not self._autocommit
+            and (self._spanner_transaction_started or self._ddl_statements)
+        ):
             self.commit()
 
         self._autocommit = value
@@ -512,6 +523,8 @@ class Connection:
         if self._spanner_transaction_started and not self._read_only:
             self._transaction.rollback()
 
+        self._ddl_statements = []
+
         if self._own_pool and self.database:
             self.database._sessions_manager._pool.clear()
 
@@ -549,8 +562,8 @@ class Connection:
                 )
             return
 
-        self.run_prior_DDL_statements()
         try:
+            self.run_prior_DDL_statements()
             if self._spanner_transaction_started and not self._read_only:
                 self._transaction.commit()
         except Aborted:
@@ -581,6 +594,7 @@ class Connection:
         self._transaction_begin_marked = False
         self._transaction_isolation_level = None
         self._spanner_transaction_started = False
+        self._ddl_statements = []
 
     @check_not_closed
     def cursor(self):
@@ -598,7 +612,10 @@ class Connection:
             return self.database.update_ddl(ddl_statements).result()
 
     def run_statement(
-        self, statement: Statement, request_options: RequestOptions = None
+        self,
+        statement: Statement,
+        request_options: RequestOptions = None,
+        timeout: Optional[float] = None,
     ):
         """Run single SQL statement in begun transaction.
 
@@ -616,17 +633,31 @@ class Connection:
         :type request_options: :class:`RequestOptions`
         :param request_options: Request options to use for this statement.
 
+        :type timeout: Optional[float]
+        :param timeout: (Optional) The amount of time, in seconds, to wait
+                        for the request to complete. Defaults to the
+                        connection's timeout if None; when the connection's
+                        timeout is set, passing None will use the connection's
+                        timeout rather than the underlying RPC default timeout.
+
         :rtype: :class:`google.cloud.spanner_v1.streamed.StreamedResultSet`,
                 :class:`google.cloud.spanner_dbapi.checksum.ResultsChecksum`
         :returns: Streamed result set of the statement and a
                   checksum of this statement results.
         """
         transaction = self.transaction_checkout()
+        kwargs = {
+            "param_types": statement.param_types,
+            "request_options": request_options or self.request_options,
+        }
+        effective_timeout = timeout if timeout is not None else self.timeout
+        if effective_timeout is not None:
+            kwargs["timeout"] = effective_timeout
+
         return transaction.execute_sql(
             statement.sql,
             statement.params,
-            param_types=statement.param_types,
-            request_options=request_options or self.request_options,
+            **kwargs,
         )
 
     @check_not_closed
@@ -646,8 +677,11 @@ class Connection:
         """
         if self.database is None:
             raise ValueError("Database needs to be passed for this operation")
+        kwargs = {}
+        if self.timeout is not None:
+            kwargs["timeout"] = self.timeout
         with self.database.snapshot() as snapshot:
-            result = list(snapshot.execute_sql("SELECT 1"))
+            result = list(snapshot.execute_sql("SELECT 1", **kwargs))
             if result != [[1]]:
                 raise OperationalError(
                     "The checking query (SELECT 1) returned an unexpected result: %s. "
@@ -822,9 +856,14 @@ def connect(
     auto_partition_mode=False,
     username=None,
     password=None,
+    timeout=None,
     **kwargs,
 ):
     """Creates a connection to a Google Cloud Spanner database.
+
+    :type timeout: float
+    :param timeout: (Optional) The amount of time, in seconds, to wait
+                    for requests to complete.
 
     :type instance_id: str
     :param instance_id: The ID of the instance to connect to.
@@ -1024,6 +1063,7 @@ def connect(
         database,
         data_boost_enabled=data_boost_enabled,
         auto_partition_mode=auto_partition_mode,
+        timeout=timeout,
         **kwargs,
     )
     if pool is not None:

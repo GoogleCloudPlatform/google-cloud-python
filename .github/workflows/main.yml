@@ -29,14 +29,14 @@ jobs:
     permissions:
       pull-requests: write # for googleapis/code-suggester
     name: Update API List PR
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     # don't run the workflow on forks of googleapis/google-cloud-python
     if: ${{github.repository == 'googleapis/google-cloud-python'}}
     steps:
       - name: Get current date
         id: date
         run: echo "current_date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         # Use a fetch-depth of 2
         # See https://github.com/googleapis/google-cloud-python/issues/12013
         # and https://github.com/actions/checkout#checkout-head.
@@ -44,9 +44,9 @@ jobs:
           fetch-depth: 2
           persist-credentials: false
       - name: Set up Python 3.10
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
-          python-version: "3.14"
+          python-version: "3.15"
       - name: Install script dependencies
         run: pip3 install -r requirements.txt
         working-directory: ./scripts

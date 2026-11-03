@@ -14,8 +14,11 @@
 
 """Asynchronous tests for Resumable Upload protocol implementation."""
 
+# mypy: disable-error-code="arg-type"
+
 import asyncio
 import datetime
+import inspect
 import io
 import json
 from typing import (
@@ -32,6 +35,7 @@ from typing import (
 from unittest import mock
 
 import pytest
+from google.auth import exceptions as auth_exceptions
 from google.protobuf import empty_pb2
 
 from google.api_core import exceptions
@@ -52,6 +56,8 @@ from tests.helpers import EchoResponse
 try:
     import aiohttp  # noqa: F401
     import google.auth.aio.transport  # noqa: F401
+    from google.auth.aio import credentials as aio_credentials
+    from google.auth.aio.transport import sessions as aio_sessions
 
     GOOGLE_AUTH_AIO_INSTALLED = True
 except ImportError:
@@ -260,6 +266,98 @@ async def test_async_upload_direct_execution() -> None:
     assert session.finished is True
     assert session.bytes_uploaded == 10
     assert session.upload_url == "https://upload.example.com/resumable-async"
+
+
+def _make_single_chunk_async_transport() -> DummyAsyncSession:
+    """Builds a DummyAsyncSession returning a start response and a final chunk response."""
+    start_resp = DummyAsyncResponse(
+        status=200,
+        headers={
+            "X-Goog-Upload-Status": "active",
+            "X-Goog-Upload-URL": "https://upload.example.com/resumable-async",
+        },
+        body=b"",
+    )
+    chunk_resp = DummyAsyncResponse(
+        status=200,
+        headers={"X-Goog-Upload-Status": "final"},
+        body=b"",
+    )
+    return DummyAsyncSession([start_resp, chunk_resp])
+
+
+@pytest.mark.asyncio
+async def test_async_upload_uses_session_request_body() -> None:
+    """Verifies the constructor request_body is sent with the start request by default."""
+    async_transport = _make_single_chunk_async_transport()
+    session = AsyncResumableUploadSession(
+        upload_url="https://api.example.com/start",
+        transport=async_transport,
+        request_body='{"name": "from-init"}',
+    )
+
+    await session.upload(stream=b"payload")
+
+    _, _, start_kwargs = async_transport.requests[0]
+    assert start_kwargs["data"] == b'{"name": "from-init"}'
+    assert start_kwargs["headers"]["X-Goog-Upload-Command"] == "start"
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "override, expected",
+    [
+        ('{"name": "override"}', b'{"name": "override"}'),
+        (b'{"name": "override-bytes"}', b'{"name": "override-bytes"}'),
+        ("", b""),
+    ],
+)
+async def test_async_upload_request_body_argument_overrides_session_default(
+    override: Union[str, bytes], expected: bytes
+) -> None:
+    """Verifies an explicit per-call request_body (even empty) overrides the constructor default."""
+    async_transport = _make_single_chunk_async_transport()
+    session = AsyncResumableUploadSession(
+        upload_url="https://api.example.com/start",
+        transport=async_transport,
+        request_body='{"name": "from-init"}',
+    )
+
+    await session.upload(stream=b"payload", request_body=override)
+
+    _, _, start_kwargs = async_transport.requests[0]
+    assert start_kwargs["data"] == expected
+
+
+@pytest.mark.asyncio
+async def test_async_upload_request_body_positional_override() -> None:
+    """Verifies request_body remains the second positional parameter of upload()."""
+    async_transport = _make_single_chunk_async_transport()
+    session = AsyncResumableUploadSession(
+        upload_url="https://api.example.com/start",
+        transport=async_transport,
+        request_body='{"name": "from-init"}',
+    )
+
+    await session.upload(b"payload", '{"name": "positional"}')
+
+    _, _, start_kwargs = async_transport.requests[0]
+    assert start_kwargs["data"] == b'{"name": "positional"}'
+
+
+@pytest.mark.asyncio
+async def test_async_upload_request_body_defaults_to_empty() -> None:
+    """Verifies the start request carries an empty payload when no request_body is configured."""
+    async_transport = _make_single_chunk_async_transport()
+    session = AsyncResumableUploadSession(
+        upload_url="https://api.example.com/start",
+        transport=async_transport,
+    )
+
+    await session.upload(stream=b"payload")
+
+    _, _, start_kwargs = async_transport.requests[0]
+    assert start_kwargs["data"] == b""
 
 
 @pytest.mark.asyncio
@@ -1325,12 +1423,12 @@ def test_async_transport_missing_errors() -> None:
         upload_url="https://api.example.com/start",
     )
     with pytest.raises(
-        ValueError, match="An aiohttp.ClientSession transport must be provided"
+        ValueError, match="or AsyncAuthorizedSession transport must be provided"
     ):
         session.upload(stream=b"data")
 
     with pytest.raises(
-        ValueError, match="An aiohttp.ClientSession transport must be provided"
+        ValueError, match="or AsyncAuthorizedSession transport must be provided"
     ):
         session.resume(upload_url="https://upload.example.com/123", stream=b"data")
 
@@ -1342,7 +1440,7 @@ async def test_async_cancel_missing_transport_and_error() -> None:
         upload_url="https://upload.example.com/123",
     )
     with pytest.raises(
-        ValueError, match="An aiohttp.ClientSession transport must be provided"
+        ValueError, match="or AsyncAuthorizedSession transport must be provided"
     ):
         await session.cancel()
 
@@ -2292,3 +2390,204 @@ def test_async_retry_predicate_includes_asyncio_timeout_error() -> None:
     session = AsyncResumableUploadSession(upload_url="https://api.example.com/start")
     predicate = session._get_retry_predicate()
     assert predicate(asyncio.TimeoutError()) is True
+
+
+# =====================================================================
+# 11. google.auth AsyncAuthorizedSession Transport Tests
+# =====================================================================
+
+
+START_HEADERS = {
+    "X-Goog-Upload-Status": "active",
+    "X-Goog-Upload-URL": "https://upload.example.com/123",
+}
+
+
+def _auth_response(
+    status_code: int = 200,
+    headers: Optional[Mapping[str, str]] = None,
+    body: bytes = b"",
+) -> mock.Mock:
+    """Builds a ``google.auth.aio.transport.Response`` double."""
+    return mock.Mock(
+        status_code=status_code,
+        headers=dict(headers or {}),
+        read=mock.AsyncMock(return_value=body),
+        close=mock.AsyncMock(),
+    )
+
+
+def _authorized_session(
+    *outcomes: Union[mock.Mock, BaseException],
+) -> Tuple["aio_sessions.AsyncAuthorizedSession", mock.AsyncMock]:
+    """Builds a real AsyncAuthorizedSession whose HTTP adapter replays ``outcomes``.
+
+    google-auth invokes the adapter positionally as
+    ``(url, method, body, headers, timeout, **kwargs)``.
+    """
+    auth_request = mock.AsyncMock(side_effect=list(outcomes))
+    transport = aio_sessions.AsyncAuthorizedSession(
+        aio_credentials.AnonymousCredentials(), auth_request=auth_request
+    )
+    return transport, auth_request
+
+
+def _adapter_commands(auth_request: mock.AsyncMock) -> List[str]:
+    return [c.args[3]["X-Goog-Upload-Command"] for c in auth_request.call_args_list]
+
+
+def _supports_total_attempts() -> bool:
+    """Returns True if google-auth (>= 2.49.0) accepts ``total_attempts``."""
+    params = inspect.signature(aio_sessions.AsyncAuthorizedSession.request).parameters
+    return "total_attempts" in params
+
+
+@pytest.mark.asyncio
+async def test_async_authorized_session_upload() -> None:
+    """Uploads through a real AsyncAuthorizedSession (the generated REST client transport).
+
+    Unlike aiohttp.ClientSession, its ``request()`` is a coroutine returning a
+    ``google.auth.aio.transport.Response`` (``status_code``, explicit ``close()``).
+    """
+    responses = [
+        _auth_response(200, START_HEADERS),
+        _auth_response(200, {"X-Goog-Upload-Status": "active"}),
+        _auth_response(
+            200, {"X-Goog-Upload-Status": "final"}, b'{"name": "auth.txt", "size": 6}'
+        ),
+    ]
+    transport, auth_request = _authorized_session(*responses)
+    session = AsyncResumableUploadSession(
+        upload_url="https://api.example.com/start",
+        config=ResumableUploadConfig(chunk_size=4),
+        transport=transport,
+        response_type=DummyResponse,
+        start_timeout=7.5,
+    )
+
+    with mock.patch.object(transport, "request", wraps=transport.request) as spy:
+        result = await session.upload(stream=b"012345")
+
+    assert isinstance(result, DummyResponse)
+    assert (result.name, result.size) == ("auth.txt", 6)
+    assert session.bytes_uploaded == 6
+    assert _adapter_commands(auth_request) == ["start", "upload", "upload, finalize"]
+    assert [c.args[2] for c in auth_request.call_args_list] == [b"", b"0123", b"45"]
+    assert [c.args[0] for c in auth_request.call_args_list] == [
+        "https://api.example.com/start",
+        "https://upload.example.com/123",
+        "https://upload.example.com/123",
+    ]
+    for response in responses:
+        response.close.assert_awaited_once()
+    # api_core owns the timeout: google-auth's wall-clock guard is bounded by the
+    # same per-attempt timeout, and nothing extra leaks through to the adapter.
+    assert spy.call_args_list[0].kwargs["timeout"] == 7.5
+    expected_total_attempts = 1 if _supports_total_attempts() else None
+    for call in spy.call_args_list:
+        assert call.kwargs["max_allowed_time"] == call.kwargs["timeout"]
+        assert call.kwargs.get("total_attempts") == expected_total_attempts
+    assert all(c.kwargs == {} for c in auth_request.call_args_list)
+
+
+@pytest.mark.asyncio
+async def test_async_authorized_session_server_error_not_retried_internally() -> None:
+    """Verifies a 5xx reaches api_core's retry layer instead of google-auth's.
+
+    AsyncAuthorizedSession retries retryable status codes itself by default;
+    api_core passes ``total_attempts=1`` (google-auth >= 2.49.0) so that its
+    protocol-aware retry and offset recovery is the single retry layer.
+    """
+    if not _supports_total_attempts():
+        pytest.skip("google-auth < 2.49.0 retries 5xx responses internally")
+    response = _auth_response(503, body=b"Service Unavailable")
+    transport, auth_request = _authorized_session(response)
+    session = AsyncResumableUploadSession(
+        upload_url="https://api.example.com/start",
+        transport=transport,
+        start_retry=google.api_core.retry.AsyncRetry(predicate=lambda exc: False),
+    )
+
+    with pytest.raises(exceptions.ServiceUnavailable, match="Service Unavailable"):
+        await session.upload(stream=b"data")
+
+    assert auth_request.await_count == 1
+    response.close.assert_awaited_once()
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("on_read", [False, True], ids=["request", "read"])
+async def test_async_authorized_session_timeout_raises_transfer_stalled(
+    on_read: bool,
+) -> None:
+    """Verifies google.auth.exceptions.TimeoutError feeds stall control.
+
+    It is not a subclass of asyncio.TimeoutError, so it is normalized to one
+    (keeping the original as the cause) to surface as TransferStalledError.
+    """
+    read_resp = _auth_response(200, {"X-Goog-Upload-Status": "final"})
+    read_resp.read.side_effect = auth_exceptions.TimeoutError("read timed out")
+    chunk_outcome: Any = (
+        read_resp if on_read else auth_exceptions.TimeoutError("timed out")
+    )
+    transport, auth_request = _authorized_session(
+        _auth_response(200, START_HEADERS), chunk_outcome
+    )
+    session = AsyncResumableUploadSession(
+        upload_url="https://api.example.com/start", transport=transport
+    )
+    no_retry = google.api_core.retry.AsyncStreamingRetry(
+        predicate=lambda e: False, timeout=0.001
+    )
+
+    with pytest.raises(TransferStalledError) as exc_info:
+        await session.upload(stream=b"data", retry=no_retry)
+
+    cause = exc_info.value.__cause__
+    assert isinstance(cause, asyncio.TimeoutError)
+    assert isinstance(cause.__cause__, auth_exceptions.TimeoutError)
+    assert _adapter_commands(auth_request) == ["start", "upload, finalize"]
+    if on_read:
+        read_resp.close.assert_awaited_once()
+
+
+@pytest.mark.asyncio
+async def test_async_authorized_session_transport_error_recovers() -> None:
+    """Verifies google.auth.exceptions.TransportError triggers offset recovery."""
+    transport, auth_request = _authorized_session(
+        _auth_response(200, START_HEADERS),
+        auth_exceptions.TransportError("connection reset"),
+        _auth_response(
+            200, {"X-Goog-Upload-Status": "active", "X-Goog-Upload-Size-Received": "0"}
+        ),
+        _auth_response(200, {"X-Goog-Upload-Status": "final"}, b'{"name": "f"}'),
+    )
+    session = AsyncResumableUploadSession(
+        upload_url="https://api.example.com/start",
+        transport=transport,
+        response_type=DummyResponse,
+    )
+
+    result = await session.upload(
+        stream=b"data",
+        retry=google.api_core.retry.AsyncStreamingRetry(initial=0.01, maximum=0.01),
+    )
+
+    assert isinstance(result, DummyResponse)
+    assert result.name == "f"
+    assert _adapter_commands(auth_request) == [
+        "start",
+        "upload, finalize",
+        "query",
+        "upload, finalize",
+    ]
+
+
+def test_async_retry_predicate_includes_google_auth_errors() -> None:
+    """Verifies google-auth transport errors are retryable, unlike its other errors."""
+    session = AsyncResumableUploadSession(upload_url="https://api.example.com/start")
+    for is_start in (True, False):
+        predicate = session._get_retry_predicate(is_start=is_start)
+        assert predicate(auth_exceptions.TransportError()) is True
+        assert predicate(auth_exceptions.ResponseError()) is True
+        assert predicate(auth_exceptions.RefreshError()) is False

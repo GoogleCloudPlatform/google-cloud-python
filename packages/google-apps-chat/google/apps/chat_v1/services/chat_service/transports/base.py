@@ -909,6 +909,20 @@ class ChatServiceTransport(abc.ABC):
                 default_timeout=30.0,
                 client_info=client_info,
             ),
+            self.replace_message_cards: gapic_v1.method.wrap_method(
+                self.replace_message_cards,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=30.0,
+                ),
+                default_timeout=30.0,
+                client_info=client_info,
+            ),
         }
 
     def close(self):
@@ -1418,6 +1432,18 @@ class ChatServiceTransport(abc.ABC):
         [section.MoveSectionItemRequest],
         Union[
             section.MoveSectionItemResponse, Awaitable[section.MoveSectionItemResponse]
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def replace_message_cards(
+        self,
+    ) -> Callable[
+        [message.ReplaceMessageCardsRequest],
+        Union[
+            message.ReplaceMessageCardsResponse,
+            Awaitable[message.ReplaceMessageCardsResponse],
         ],
     ]:
         raise NotImplementedError()

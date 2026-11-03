@@ -165,6 +165,20 @@ class AppTopologyTransport(abc.ABC):
                 default_timeout=60.0,
                 client_info=client_info,
             ),
+            self.explore_schema: gapic_v1.method.wrap_method(
+                self.explore_schema,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
             self.get_domain: gapic_v1.method.wrap_method(
                 self.get_domain,
                 default_retry=retries.Retry(
@@ -251,6 +265,15 @@ class AppTopologyTransport(abc.ABC):
         self,
     ) -> Callable[
         [service.GetSchemaRequest], Union[schema.Schema, Awaitable[schema.Schema]]
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def explore_schema(
+        self,
+    ) -> Callable[
+        [service.ExploreSchemaRequest],
+        Union[service.ExploreSchemaResponse, Awaitable[service.ExploreSchemaResponse]],
     ]:
         raise NotImplementedError()
 

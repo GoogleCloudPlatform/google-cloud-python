@@ -270,13 +270,34 @@ class Conversation(proto.Message):
                 display_name (str):
                     The agent's name.
                 team (str):
-                    A user-specified string representing the
-                    agent's team.
+                    A user-specified string representing the agent's team.
+                    Deprecated in favor of the ``teams`` field.
+                teams (MutableSequence[str]):
+                    User-specified strings representing the
+                    agent's teams.
                 disposition_code (str):
                     A user-provided string indicating the outcome
                     of the agent's segment of the call.
                 agent_type (google.cloud.contact_center_insights_v1.types.ConversationParticipant.Role):
                     The agent type, e.g. HUMAN_AGENT.
+                location (str):
+                    The agent's location.
+                deployment_id (str):
+                    The agent's deployment ID. Only applicable to
+                    automated agents.
+                deployment_display_name (str):
+                    The agent's deployment display name. Only
+                    applicable to automated agents.
+                version_id (str):
+                    The agent's version ID. Only applicable to
+                    automated agents.
+                version_display_name (str):
+                    The agent's version display name. Only
+                    applicable to automated agents.
+                entry_subagent_display_name (str):
+                    The entry subagent's display name.
+                entry_subagent_id (str):
+                    The entry subagent's ID.
             """
 
             agent_id: str = proto.Field(
@@ -291,6 +312,10 @@ class Conversation(proto.Message):
                 proto.STRING,
                 number=3,
             )
+            teams: MutableSequence[str] = proto.RepeatedField(
+                proto.STRING,
+                number=6,
+            )
             disposition_code: str = proto.Field(
                 proto.STRING,
                 number=4,
@@ -299,6 +324,34 @@ class Conversation(proto.Message):
                 proto.ENUM,
                 number=5,
                 enum="ConversationParticipant.Role",
+            )
+            location: str = proto.Field(
+                proto.STRING,
+                number=7,
+            )
+            deployment_id: str = proto.Field(
+                proto.STRING,
+                number=8,
+            )
+            deployment_display_name: str = proto.Field(
+                proto.STRING,
+                number=9,
+            )
+            version_id: str = proto.Field(
+                proto.STRING,
+                number=10,
+            )
+            version_display_name: str = proto.Field(
+                proto.STRING,
+                number=11,
+            )
+            entry_subagent_display_name: str = proto.Field(
+                proto.STRING,
+                number=12,
+            )
+            entry_subagent_id: str = proto.Field(
+                proto.STRING,
+                number=13,
             )
 
         customer_satisfaction_rating: int = proto.Field(

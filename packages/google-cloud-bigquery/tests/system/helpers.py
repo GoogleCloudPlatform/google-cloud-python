@@ -110,11 +110,19 @@ retry_403 = test_utils.retry.RetryErrors(
 def patch_tracked_requests():
     """Context manager to patch google-auth requests and track/close their HTTP sessions.
 
-    This prevents socket leaks in system tests that use Workload Identity or metadata server auth.
+    This prevents socket leaks in system tests that use Workload Identity or metadata server auth,
+    including background Regional Access Boundary (RAB) refresh threads that deepcopy Request.
     """
+    import threading
+    import time
     import google.auth.transport.requests
 
     original_init = google.auth.transport.requests.Request.__init__
+    # Only a __setstate__ defined on Request itself is put back on exit, so an
+    # inherited one isn't copied onto the class.
+    original_setstate = google.auth.transport.requests.Request.__dict__.get(
+        "__setstate__"
+    )
     tracked_requests = []
 
     def patched_init(self, session=None):
@@ -122,11 +130,34 @@ def patch_tracked_requests():
         if session is None:
             tracked_requests.append(self)
 
+    def patched_setstate(self, state):
+        # Regional Access Boundary (RAB) refresh threads in google-auth
+        # copy.deepcopy() the Request object, which bypasses __init__ and
+        # restores state via __setstate__. Track those cloned instances so
+        # their urllib3 sessions are also closed on exit.
+        if original_setstate is not None:
+            original_setstate(self, state)
+        else:
+            self.__dict__.update(state)
+        tracked_requests.append(self)
+
     google.auth.transport.requests.Request.__init__ = patched_init
+    google.auth.transport.requests.Request.__setstate__ = patched_setstate
     try:
         yield tracked_requests
     finally:
         google.auth.transport.requests.Request.__init__ = original_init
+        if original_setstate is not None:
+            google.auth.transport.requests.Request.__setstate__ = original_setstate
+        else:
+            delattr(google.auth.transport.requests.Request, "__setstate__")
+        # Wait up to 5 seconds in total for in-flight background RAB refresh
+        # threads before closing the tracked HTTP sessions, so they don't open
+        # a new socket after close().
+        deadline = time.monotonic() + 5.0
+        for thread in list(threading.enumerate()):
+            if type(thread).__name__ == "_RegionalAccessBoundaryRefreshThread":
+                thread.join(timeout=max(0.0, deadline - time.monotonic()))
         for req in tracked_requests:
             if hasattr(req, "session") and req.session is not None:
                 req.session.close()

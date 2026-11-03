@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-cloud-firestore/#history
 
+## [2.34.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-firestore-v2.34.0...google-cloud-firestore-v2.34.1) (2026-10-08)
+
+
+### Bug Fixes
+
+* **firestore:** add generic typing for DocumentSnapshot ([#18587](https://github.com/googleapis/google-cloud-python/issues/18587)) ([947949b](https://github.com/googleapis/google-cloud-python/commit/947949ba602195eaf93aa55e26cb33b95e1461f4))
+
 ## [2.34.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-firestore-v2.33.0...google-cloud-firestore-v2.34.0) (2026-10-01)
 
 

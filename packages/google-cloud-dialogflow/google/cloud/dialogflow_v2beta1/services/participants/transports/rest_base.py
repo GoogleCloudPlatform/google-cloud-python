@@ -211,6 +211,10 @@ class _BaseParticipantsRestTransport(ParticipantsTransport):
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
 
+    class _BaseStreamingReactiveCompanionSuggestions:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
     class _BaseSuggestArticles:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")

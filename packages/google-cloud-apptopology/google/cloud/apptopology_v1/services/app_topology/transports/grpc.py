@@ -391,6 +391,33 @@ class AppTopologyGrpcTransport(AppTopologyTransport):
         return self._stubs["get_schema"]
 
     @property
+    def explore_schema(
+        self,
+    ) -> Callable[[service.ExploreSchemaRequest], service.ExploreSchemaResponse]:
+        r"""Return a callable for the explore schema method over gRPC.
+
+        Explores the topology schema starting from given node
+        types or label names up to a specified hop depth.
+
+        Returns:
+            Callable[[~.ExploreSchemaRequest],
+                    ~.ExploreSchemaResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "explore_schema" not in self._stubs:
+            self._stubs["explore_schema"] = self._logged_channel.unary_unary(
+                "/google.cloud.apptopology.v1.AppTopology/ExploreSchema",
+                request_serializer=service.ExploreSchemaRequest.serialize,
+                response_deserializer=service.ExploreSchemaResponse.deserialize,
+            )
+        return self._stubs["explore_schema"]
+
+    @property
     def get_domain(self) -> Callable[[service.GetDomainRequest], schema.Domain]:
         r"""Return a callable for the get domain method over gRPC.
 

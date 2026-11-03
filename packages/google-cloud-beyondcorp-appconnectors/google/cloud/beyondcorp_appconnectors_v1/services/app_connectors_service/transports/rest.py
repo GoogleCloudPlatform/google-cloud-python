@@ -118,6 +118,14 @@ class AppConnectorsServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_resolve_instance_config(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_resolve_instance_config(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_update_app_connector(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -379,6 +387,58 @@ class AppConnectorsServiceRestInterceptor:
         `post_report_status` interceptor. The (possibly modified) response returned by
         `post_report_status` will be passed to
         `post_report_status_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_resolve_instance_config(
+        self,
+        request: app_connectors_service.ResolveInstanceConfigRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        app_connectors_service.ResolveInstanceConfigRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for resolve_instance_config
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AppConnectorsService server.
+        """
+        return request, metadata
+
+    def post_resolve_instance_config(
+        self, response: app_connectors_service.ResolveInstanceConfigResponse
+    ) -> app_connectors_service.ResolveInstanceConfigResponse:
+        """Post-rpc interceptor for resolve_instance_config
+
+        DEPRECATED. Please use the `post_resolve_instance_config_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AppConnectorsService server but before
+        it is returned to user code. This `post_resolve_instance_config` interceptor runs
+        before the `post_resolve_instance_config_with_metadata` interceptor.
+        """
+        return response
+
+    def post_resolve_instance_config_with_metadata(
+        self,
+        response: app_connectors_service.ResolveInstanceConfigResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        app_connectors_service.ResolveInstanceConfigResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for resolve_instance_config
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AppConnectorsService server but before it is returned to user code.
+
+        We recommend only using this `post_resolve_instance_config_with_metadata`
+        interceptor in new development instead of the `post_resolve_instance_config` interceptor.
+        When both interceptors are used, this `post_resolve_instance_config_with_metadata` interceptor runs after the
+        `post_resolve_instance_config` interceptor. The (possibly modified) response returned by
+        `post_resolve_instance_config` will be passed to
+        `post_resolve_instance_config_with_metadata`.
         """
         return response, metadata
 
@@ -675,6 +735,10 @@ class AppConnectorsServiceRestTransport(_BaseAppConnectorsServiceRestTransport):
     The AppConnectorsService provides methods to manage
     (create/read/update/delete) BeyondCorp AppConnectors.
 
+    Deprecated: App Connector is deprecated and creation of new App
+    Connector resources is no longer permitted. Use Security Gateway
+    instead.
+
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
     and call it.
@@ -773,11 +837,20 @@ class AppConnectorsServiceRestTransport(_BaseAppConnectorsServiceRestTransport):
                         "uri": "/v1/{name=projects/*/locations/*/operations/*}:cancel",
                         "body": "*",
                     },
+                    {
+                        "method": "post",
+                        "uri": "/v1/{name=organizations/*/locations/*/operations/*}:cancel",
+                        "body": "*",
+                    },
                 ],
                 "google.longrunning.Operations.DeleteOperation": [
                     {
                         "method": "delete",
                         "uri": "/v1/{name=projects/*/locations/*/operations/*}",
+                    },
+                    {
+                        "method": "delete",
+                        "uri": "/v1/{name=organizations/*/locations/*/operations/*}",
                     },
                 ],
                 "google.longrunning.Operations.GetOperation": [
@@ -785,11 +858,19 @@ class AppConnectorsServiceRestTransport(_BaseAppConnectorsServiceRestTransport):
                         "method": "get",
                         "uri": "/v1/{name=projects/*/locations/*/operations/*}",
                     },
+                    {
+                        "method": "get",
+                        "uri": "/v1/{name=organizations/*/locations/*/operations/*}",
+                    },
                 ],
                 "google.longrunning.Operations.ListOperations": [
                     {
                         "method": "get",
                         "uri": "/v1/{name=projects/*/locations/*}/operations",
+                    },
+                    {
+                        "method": "get",
+                        "uri": "/v1/{name=organizations/*/locations/*}/operations",
                     },
                 ],
             }
@@ -1573,6 +1654,161 @@ class AppConnectorsServiceRestTransport(_BaseAppConnectorsServiceRestTransport):
                 )
             return resp
 
+    class _ResolveInstanceConfig(
+        _BaseAppConnectorsServiceRestTransport._BaseResolveInstanceConfig,
+        AppConnectorsServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("AppConnectorsServiceRestTransport.ResolveInstanceConfig")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: app_connectors_service.ResolveInstanceConfigRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> app_connectors_service.ResolveInstanceConfigResponse:
+            r"""Call the resolve instance config method over HTTP.
+
+            Args:
+                request (~.app_connectors_service.ResolveInstanceConfigRequest):
+                    The request object. Request message for
+                BeyondCorp.ResolveInstanceConfig.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.app_connectors_service.ResolveInstanceConfigResponse:
+                    Response message for
+                BeyondCorp.ResolveInstanceConfig.
+
+            """
+
+            http_options = _BaseAppConnectorsServiceRestTransport._BaseResolveInstanceConfig._get_http_options()
+            request, metadata = self._interceptor.pre_resolve_instance_config(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAppConnectorsServiceRestTransport._BaseResolveInstanceConfig,
+                    "_BaseResolveInstanceConfig__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.beyondcorp.appconnectors_v1.AppConnectorsServiceClient.ResolveInstanceConfig",
+                    extra={
+                        "serviceName": "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+                        "rpcName": "ResolveInstanceConfig",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                AppConnectorsServiceRestTransport._ResolveInstanceConfig._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = app_connectors_service.ResolveInstanceConfigResponse()
+            pb_resp = app_connectors_service.ResolveInstanceConfigResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_resolve_instance_config(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_resolve_instance_config_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        app_connectors_service.ResolveInstanceConfigResponse.to_json(
+                            response
+                        )
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.beyondcorp.appconnectors_v1.AppConnectorsServiceClient.resolve_instance_config",
+                    extra={
+                        "serviceName": "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+                        "rpcName": "ResolveInstanceConfig",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _UpdateAppConnector(
         _BaseAppConnectorsServiceRestTransport._BaseUpdateAppConnector,
         AppConnectorsServiceRestStub,
@@ -1776,6 +2012,17 @@ class AppConnectorsServiceRestTransport(_BaseAppConnectorsServiceRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._ReportStatus(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def resolve_instance_config(
+        self,
+    ) -> Callable[
+        [app_connectors_service.ResolveInstanceConfigRequest],
+        app_connectors_service.ResolveInstanceConfigResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ResolveInstanceConfig(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def update_app_connector(

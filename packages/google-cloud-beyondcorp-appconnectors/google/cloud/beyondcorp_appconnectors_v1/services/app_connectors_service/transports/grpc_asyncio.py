@@ -137,6 +137,10 @@ class AppConnectorsServiceGrpcAsyncIOTransport(AppConnectorsServiceTransport):
     The AppConnectorsService provides methods to manage
     (create/read/update/delete) BeyondCorp AppConnectors.
 
+    Deprecated: App Connector is deprecated and creation of new App
+    Connector resources is no longer permitted. Use Security Gateway
+    instead.
+
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
     and call it.
@@ -516,6 +520,37 @@ class AppConnectorsServiceGrpcAsyncIOTransport(AppConnectorsServiceTransport):
         return self._stubs["delete_app_connector"]
 
     @property
+    def resolve_instance_config(
+        self,
+    ) -> Callable[
+        [app_connectors_service.ResolveInstanceConfigRequest],
+        Awaitable[app_connectors_service.ResolveInstanceConfigResponse],
+    ]:
+        r"""Return a callable for the resolve instance config method over gRPC.
+
+        Gets instance configuration for a given AppConnector.
+        An internal method called by a AppConnector to get its
+        container config.
+
+        Returns:
+            Callable[[~.ResolveInstanceConfigRequest],
+                    Awaitable[~.ResolveInstanceConfigResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "resolve_instance_config" not in self._stubs:
+            self._stubs["resolve_instance_config"] = self._logged_channel.unary_unary(
+                "/google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService/ResolveInstanceConfig",
+                request_serializer=app_connectors_service.ResolveInstanceConfigRequest.serialize,
+                response_deserializer=app_connectors_service.ResolveInstanceConfigResponse.deserialize,
+            )
+        return self._stubs["resolve_instance_config"]
+
+    @property
     def report_status(
         self,
     ) -> Callable[
@@ -569,6 +604,11 @@ class AppConnectorsServiceGrpcAsyncIOTransport(AppConnectorsServiceTransport):
             ),
             self.delete_app_connector: self._wrap_method(
                 self.delete_app_connector,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.resolve_instance_config: self._wrap_method(
+                self.resolve_instance_config,
                 default_timeout=None,
                 client_info=client_info,
             ),

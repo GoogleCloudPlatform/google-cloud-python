@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Asynchronous Resumable Upload session and helpers using aiohttp."""
+"""Asynchronous Resumable Upload session and helpers."""
 
 import asyncio
 import datetime
@@ -28,6 +28,7 @@ from typing import (
     Awaitable,
     BinaryIO,
     Callable,
+    Dict,
     Generator,
     Generic,
     Iterable,
@@ -37,6 +38,7 @@ from typing import (
     Tuple,
     TypeVar,
     Union,
+    cast,
 )
 
 try:
@@ -45,6 +47,14 @@ try:
     _HAS_AIOHTTP = True
 except ImportError:  # pragma: NO COVER
     _HAS_AIOHTTP = False
+
+try:
+    from google.auth import exceptions as auth_exceptions
+    from google.auth.aio.transport.sessions import AsyncAuthorizedSession
+
+    _HAS_GOOGLE_AUTH_AIO = True
+except ImportError:  # pragma: NO COVER
+    _HAS_GOOGLE_AUTH_AIO = False
 
 import google.api_core.retry
 from google.api_core import exceptions
@@ -58,6 +68,20 @@ from google.api_core.resumable_transfer.common import (
 
 _LOGGER = logging.getLogger(__name__)
 _monotonic_clock = time.monotonic
+
+
+AsyncTransport = Union["aiohttp.ClientSession", "AsyncAuthorizedSession"]
+"""Asynchronous HTTP transports accepted by :class:`AsyncResumableUploadSession`.
+
+``google.auth.aio.transport.sessions.AsyncAuthorizedSession`` is the transport
+used by generated asynchronous REST clients.
+"""
+
+# google-auth >= 2.49.0 accepts ``total_attempts`` to cap AsyncAuthorizedSession's
+# own status-code retries; older releases forward unknown kwargs to aiohttp.
+_HAS_TOTAL_ATTEMPTS = _HAS_GOOGLE_AUTH_AIO and (
+    "total_attempts" in inspect.signature(AsyncAuthorizedSession.request).parameters
+)
 
 
 def _get_buffer_size(stream: object) -> Optional[int]:
@@ -166,11 +190,12 @@ class AsyncResumableUploadSession:
         self,
         upload_url: Optional[str] = None,
         config: Optional[ResumableUploadConfig] = None,
-        transport: Optional[Any] = None,
+        transport: Optional[AsyncTransport] = None,
         content_type: Optional[str] = None,
         response_type: Optional[Any] = None,
         start_retry: Optional[google.api_core.retry.AsyncRetry] = None,
         start_timeout: float = DEFAULT_START_TIMEOUT,
+        request_body: Optional[Union[str, bytes]] = None,
     ) -> None:
         """Initializes an AsyncResumableUploadSession.
 
@@ -179,7 +204,7 @@ class AsyncResumableUploadSession:
                 new upload, or the pre-existing upload session URL when resuming.
             config: Optional upload configuration parameters. Defaults to
                 ``ResumableUploadConfig()`` when ``None``.
-            transport: Optional aiohttp.ClientSession. When ``None``, a
+            transport: Optional :data:`AsyncTransport`. When ``None``, a
                 transport must be provided to ``upload()`` or ``resume()``.
             content_type: Optional MIME type of the stream payload. When
                 ``None``, no content-type header is sent unless overridden.
@@ -198,6 +223,9 @@ class AsyncResumableUploadSession:
                 retried.
             start_timeout: Timeout in seconds for the start request. Defaults to
                 ``60.0`` seconds.
+            request_body: Optional default metadata payload sent with the start request.
+                Used by ``upload()`` whenever it is called without an explicit
+                ``request_body``. When ``None``, an empty payload is sent.
         """
         self._config = config or ResumableUploadConfig()
         self._transport = transport
@@ -205,6 +233,9 @@ class AsyncResumableUploadSession:
         self._response_type = response_type
         self._start_retry = start_retry
         self._start_timeout = start_timeout
+        self._request_body: Union[str, bytes] = (
+            request_body if request_body is not None else ""
+        )
         self._response: Optional[Any] = None
         self._state = upload_state._ProtocolState(
             upload_url=upload_url,
@@ -275,6 +306,93 @@ class AsyncResumableUploadSession:
                 "The aiohttp library is required to use AsyncResumableUploadSession. "
                 "Please install google-api-core[async_rest]."
             )
+
+    def _get_transport(self, transport: Optional[AsyncTransport]) -> AsyncTransport:
+        """Returns the transport to use, raising ValueError when none is set."""
+        sess = transport or self._transport
+        if sess is None:
+            raise ValueError(
+                "An aiohttp.ClientSession or AsyncAuthorizedSession transport "
+                "must be provided."
+            )
+        return sess
+
+    async def _send_request(
+        self,
+        transport: AsyncTransport,
+        method: str,
+        url: str,
+        payload: bytes,
+        headers: Mapping[str, str],
+        timeout: float,
+    ) -> Tuple[int, Mapping[str, str], bytes]:
+        """Sends one request over ``transport`` and reads the whole response.
+
+        Args:
+            transport: The transport to dispatch the request over.
+            method: HTTP method verb.
+            url: Request URL.
+            payload: Request body bytes.
+            headers: Request headers.
+            timeout: Total timeout in seconds for this attempt.
+
+        Returns:
+            Tuple of (status code, response headers, response body bytes).
+
+        Raises:
+            exceptions.GoogleAPICallError: If the status is not 200 or 201.
+            asyncio.TimeoutError: If the attempt times out, whichever transport
+                is used.
+        """
+        if _HAS_GOOGLE_AUTH_AIO and isinstance(transport, AsyncAuthorizedSession):
+            # google-auth applies its own overall deadline (``max_allowed_time``,
+            # 180s by default) on top of the per-request ``timeout``; use the
+            # caller's timeout for both. Where supported, a single attempt also
+            # disables google-auth's own status-code retries so that this module
+            # is the only retry layer.
+            retry_kwargs: Dict[str, Any] = (
+                {"total_attempts": 1} if _HAS_TOTAL_ATTEMPTS else {}
+            )
+            try:
+                response = await transport.request(
+                    method,
+                    url,
+                    data=payload,
+                    headers=headers,
+                    timeout=timeout,
+                    max_allowed_time=timeout,
+                    **retry_kwargs,
+                )
+                try:
+                    status_code = response.status_code
+                    resp_headers: Mapping[str, str] = dict(response.headers)
+                    body = await response.read()
+                finally:
+                    await response.close()
+            except auth_exceptions.TimeoutError as exc:
+                # google-auth raises its own TimeoutError (not an asyncio one, and
+                # not reliably chained to one); re-raise it as asyncio.TimeoutError
+                # so stall control sees the same type as with aiohttp.ClientSession.
+                raise asyncio.TimeoutError(str(exc)) from exc
+        else:
+            # mypy cannot narrow the negative of the guarded check above.
+            session = cast("aiohttp.ClientSession", transport)
+            async with session.request(
+                method,
+                url,
+                data=payload,
+                headers=headers,
+                timeout=aiohttp.ClientTimeout(total=timeout),
+            ) as resp:
+                status_code = resp.status
+                resp_headers = dict(resp.headers)
+                body = await resp.read()
+
+        if status_code not in (200, 201):
+            raise exceptions.from_http_status(
+                status_code, body.decode("utf-8", errors="replace")
+            )
+        return status_code, resp_headers, body
 
     def _enrich_exception(self, exc: BaseException) -> None:
         """Attaches session diagnostic metadata to an active exception.
@@ -366,7 +484,9 @@ class AsyncResumableUploadSession:
                    ``UnseekableStreamError``) always return ``False``.
                 2. Protocol-recoverable errors during chunk transfer
                    (``RECOVERABLE_STATUS_CODES`` and ``MissingStatusHeaderError``)
-                   and transport errors (``aiohttp.ClientError`` and
+                   and transport errors (``aiohttp.ClientError``,
+                   ``google.auth.exceptions.TransportError``,
+                   ``google.auth.exceptions.ResponseError``, and
                    ``asyncio.TimeoutError``) always return ``True`` so the session
                    can query server state and recover.
 
@@ -387,6 +507,10 @@ class AsyncResumableUploadSession:
                 return True
             if isinstance(exc, asyncio.TimeoutError) or (
                 _HAS_AIOHTTP and isinstance(exc, aiohttp.ClientError)
+            ):
+                return True
+            if _HAS_GOOGLE_AUTH_AIO and isinstance(
+                exc, (auth_exceptions.TransportError, auth_exceptions.ResponseError)
             ):
                 return True
             if (
@@ -453,7 +577,7 @@ class AsyncResumableUploadSession:
 
     async def _initiate(
         self,
-        transport: Any,
+        transport: AsyncTransport,
         request_body: Union[str, bytes] = "",
         size: Optional[int] = None,
         progress_queue: Optional[List[UploadProgress]] = None,
@@ -462,7 +586,7 @@ class AsyncResumableUploadSession:
         """Initiates the upload session asynchronously.
 
         Args:
-            transport: The aiohttp client session.
+            transport: The asynchronous transport to dispatch requests over.
             request_body: Initial metadata payload sent with start request.
             size: Total stream size in bytes, if known.
             progress_queue: Optional queue to receive progress event.
@@ -483,21 +607,15 @@ class AsyncResumableUploadSession:
         )
 
         async def do_initiate() -> str:
-            timeout_sec = self._get_start_timeout()
-            client_timeout = aiohttp.ClientTimeout(total=timeout_sec)
-            async with transport.request(
-                method, url, data=payload, headers=headers, timeout=client_timeout
-            ) as resp:
-                resp_headers = dict(resp.headers)
-                body = await resp.read()
-                if resp.status not in (200, 201):
-                    raise exceptions.from_http_status(
-                        resp.status, body.decode("utf-8", errors="replace")
-                    )
-                session_url = self._state.process_start_response(
-                    resp.status, resp_headers
-                )
-                return session_url
+            status_code, resp_headers, _ = await self._send_request(
+                transport,
+                method,
+                url,
+                payload,
+                headers,
+                timeout=self._get_start_timeout(),
+            )
+            return self._state.process_start_response(status_code, resp_headers)
 
         retry_policy = self._get_async_retry()
         retryable_initiate = retry_policy(do_initiate)
@@ -507,7 +625,7 @@ class AsyncResumableUploadSession:
 
     async def _transmit_chunk(
         self,
-        transport: Any,
+        transport: AsyncTransport,
         reader_fn: Callable[[int], Awaitable[bytes]],
         size: Optional[int],
         progress_queue: Optional[List[UploadProgress]] = None,
@@ -516,7 +634,7 @@ class AsyncResumableUploadSession:
         """Transmits the next data chunk asynchronously with stall control.
 
         Args:
-            transport: The aiohttp client session.
+            transport: The asynchronous transport to dispatch requests over.
             reader_fn: Async callable returning chunk bytes.
             size: Total stream size in bytes, if known.
             progress_queue: Optional queue to receive progress updates.
@@ -563,23 +681,16 @@ class AsyncResumableUploadSession:
         per_attempt_timeout = self._compute_chunk_timeout(
             data_len, timeout_override=timeout
         )
-        client_timeout = aiohttp.ClientTimeout(total=per_attempt_timeout)
         t_start = _monotonic_clock()
         try:
-            async with transport.request(
+            status_code, resp_headers, resp_body = await self._send_request(
+                transport,
                 method,
                 url,
-                data=payload,
-                headers=headers,
-                timeout=client_timeout,
-            ) as resp:
-                resp_headers = dict(resp.headers)
-                resp_body = await resp.read()
-                if resp.status not in (200, 201):
-                    raise exceptions.from_http_status(
-                        resp.status, resp_body.decode("utf-8", errors="replace")
-                    )
-                status_code = resp.status
+                payload,
+                headers,
+                timeout=per_attempt_timeout,
+            )
             t_elapsed = _monotonic_clock() - t_start
         except Exception as exc:
             self._enrich_exception(exc)
@@ -684,14 +795,14 @@ class AsyncResumableUploadSession:
 
     async def _recover(
         self,
-        transport: Any,
+        transport: AsyncTransport,
         stream_obj: Optional[object] = None,
         progress_queue: Optional[List[UploadProgress]] = None,
     ) -> Tuple[int, Mapping[str, str], bytes]:
         """Queries server for committed byte offset and adjusts buffer.
 
         Args:
-            transport: The aiohttp client session.
+            transport: The asynchronous transport to dispatch requests over.
             stream_obj: Underlying stream object to rewind if seekable.
             progress_queue: Optional queue to receive progress updates.
 
@@ -703,18 +814,14 @@ class AsyncResumableUploadSession:
             exceptions.GoogleAPICallError: If query request fails on the server.
         """
         method, url, headers, payload = self._state.build_query_request()
-        timeout_sec = self._get_start_timeout()
-        client_timeout = aiohttp.ClientTimeout(total=timeout_sec)
-        async with transport.request(
-            method, url, data=payload, headers=headers, timeout=client_timeout
-        ) as resp:
-            resp_headers = dict(resp.headers)
-            body = await resp.read()
-            if resp.status not in (200, 201):
-                raise exceptions.from_http_status(
-                    resp.status, body.decode("utf-8", errors="replace")
-                )
-            status_code = resp.status
+        status_code, resp_headers, body = await self._send_request(
+            transport,
+            method,
+            url,
+            payload,
+            headers,
+            timeout=self._get_start_timeout(),
+        )
 
         received = self._state.process_query_response(status_code, resp_headers)
         self._notify_progress(common.ProgressState.OFFSET_RECEIVED, progress_queue)
@@ -760,37 +867,32 @@ class AsyncResumableUploadSession:
             chunk_size=self.chunk_size,
         )
 
-    async def cancel(self, transport: Optional[Any] = None) -> None:
+    async def cancel(self, transport: Optional[AsyncTransport] = None) -> None:
         """Cancels the resumable upload session asynchronously.
 
         Args:
-            transport: Optional aiohttp client session.
+            transport: Optional aiohttp.ClientSession or AsyncAuthorizedSession.
 
         Raises:
             ValueError: If transport is missing.
             exceptions.GoogleAPICallError: If cancellation request fails on the server.
         """
         self._ensure_aiohttp()
-        sess = transport or self._transport
-        if sess is None:
-            raise ValueError("An aiohttp.ClientSession transport must be provided.")
+        sess = self._get_transport(transport)
         method, url, headers, payload = self._state.build_cancel_request()
-        timeout_sec = self._get_start_timeout()
-        client_timeout = aiohttp.ClientTimeout(total=timeout_sec)
-        async with sess.request(
-            method, url, data=payload, headers=headers, timeout=client_timeout
-        ) as resp:
-            resp_headers = dict(resp.headers)
-            body = await resp.read()
-            if resp.status not in (200, 201):
-                raise exceptions.from_http_status(
-                    resp.status, body.decode("utf-8", errors="replace")
-                )
-            self._state.process_cancel_response(resp.status, resp_headers)
+        status_code, resp_headers, _ = await self._send_request(
+            sess,
+            method,
+            url,
+            payload,
+            headers,
+            timeout=self._get_start_timeout(),
+        )
+        self._state.process_cancel_response(status_code, resp_headers)
 
     async def _transmit_all_chunks(
         self,
-        transport: Any,
+        transport: AsyncTransport,
         reader_fn: Callable[[int], Awaitable[bytes]],
         computed_size: Optional[int],
         progress_queue: Optional[List[UploadProgress]] = None,
@@ -801,7 +903,7 @@ class AsyncResumableUploadSession:
         """Transmits chunks until completion using a single outer AsyncStreamingRetry coordinator.
 
         Args:
-            transport: The aiohttp client session.
+            transport: The asynchronous transport to dispatch requests over.
             reader_fn: Async callable returning chunk bytes.
             computed_size: Total stream size in bytes, if known.
             progress_queue: Optional list receiving UploadProgress snapshots.
@@ -885,9 +987,9 @@ class AsyncResumableUploadSession:
     def upload(
         self,
         stream: Union[AsyncIterable[bytes], BinaryIO, bytes, Iterable[bytes]],
-        request_body: Union[str, bytes] = "",
+        request_body: Optional[Union[str, bytes]] = None,
         size: Optional[int] = None,
-        transport: Optional[Any] = None,
+        transport: Optional[AsyncTransport] = None,
         content_type: Optional[str] = None,
         retry: Optional[google.api_core.retry.AsyncStreamingRetry] = None,
         timeout: Optional[float] = None,
@@ -897,8 +999,10 @@ class AsyncResumableUploadSession:
         Args:
             stream: Data payload to upload (async iterable, binary stream, bytes, or iterable).
             request_body: Initial metadata payload sent with the start request.
+                When ``None``, the ``request_body`` supplied to the session constructor
+                (if any) is used.
             size: Total stream size in bytes, if known.
-            transport: Optional aiohttp client session.
+            transport: Optional aiohttp.ClientSession or AsyncAuthorizedSession.
             content_type: Optional MIME type of the stream payload.
             retry: Optional retry configuration (``AsyncStreamingRetry``) for
                 chunk upload requests. Use this to customize exponential backoff timing between chunk retries or to
@@ -919,12 +1023,12 @@ class AsyncResumableUploadSession:
             ValueError: If transport is missing.
         """
         self._ensure_aiohttp()
-        sess = transport or self._transport
-        if sess is None:
-            raise ValueError("An aiohttp.ClientSession transport must be provided.")
+        sess = self._get_transport(transport)
 
         if content_type is not None:
             self._content_type = content_type
+        if request_body is None:
+            request_body = self._request_body
 
         self._reset_transfer_state()
         progress_queue: List[UploadProgress] = []
@@ -963,7 +1067,7 @@ class AsyncResumableUploadSession:
         stream: Union[AsyncIterable[bytes], BinaryIO, bytes, Iterable[bytes]],
         size: Optional[int] = None,
         chunk_size: Optional[int] = None,
-        transport: Optional[Any] = None,
+        transport: Optional[AsyncTransport] = None,
         retry: Optional[google.api_core.retry.AsyncStreamingRetry] = None,
         timeout: Optional[float] = None,
     ) -> AsyncUploadOperation:
@@ -975,7 +1079,7 @@ class AsyncResumableUploadSession:
                 Data payload to resume uploading.
             size (Optional[int]): Total stream size in bytes, if known.
             chunk_size (Optional[int]): Optional chunk size override in bytes.
-            transport (Optional[Any]): Optional aiohttp client session.
+            transport (Optional[AsyncTransport]): Optional transport override.
             retry (Optional[google.api_core.retry.AsyncStreamingRetry]): Optional
                 retry configuration (``AsyncStreamingRetry``) for chunk upload
                 requests. Use this to customize exponential backoff timing
@@ -998,9 +1102,7 @@ class AsyncResumableUploadSession:
             ValueError: If transport, upload_url, or stream is missing.
         """
         self._ensure_aiohttp()
-        sess = transport or self._transport
-        if sess is None:
-            raise ValueError("An aiohttp.ClientSession transport must be provided.")
+        sess = self._get_transport(transport)
         actual_url = upload_url or self.upload_url
         if not actual_url:
             raise ValueError("An upload URL must be provided to resume.")

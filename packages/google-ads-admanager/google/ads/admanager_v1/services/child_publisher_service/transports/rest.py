@@ -867,7 +867,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
                 Args:
                     request (~.child_publisher_service.BatchCreateChildPublishersRequest):
-                        The request object. Request object for [BatchCreateChildPublishers][]
+                        The request object. Request object for ``BatchCreateChildPublishers``
                     method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
@@ -879,7 +879,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
                 Returns:
                     ~.child_publisher_service.BatchCreateChildPublishersResponse:
-                        Response object for [BatchCreateChildPublishers][]
+                        Response object for ``BatchCreateChildPublishers``
                     method.
 
             """
@@ -1025,7 +1025,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
                 Args:
                     request (~.child_publisher_service.BatchRejectChildPublishersRequest):
-                        The request object. Request message for [BatchRejectChildPublishers][]
+                        The request object. Request message for ``BatchRejectChildPublishers``
                     method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
@@ -1037,7 +1037,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
                 Returns:
                     ~.child_publisher_service.BatchRejectChildPublishersResponse:
-                        Response message for [BatchRejectChildPublishers][]
+                        Response message for ``BatchRejectChildPublishers``
                     method.
 
             """
@@ -1186,7 +1186,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
                 Args:
                     request (~.child_publisher_service.BatchRenegotiateChildPublisherAgreementsRequest):
                         The request object. Request message for
-                    [BatchRenegotiateChildPublisherAgreements][] method.
+                    ``BatchRenegotiateChildPublisherAgreements`` method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
                     timeout (float): The timeout for this request.
@@ -1198,7 +1198,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
                 Returns:
                     ~.child_publisher_service.BatchRenegotiateChildPublisherAgreementsResponse:
                         Response message for
-                    [BatchRenegotiateChildPublisherAgreements][] method.
+                    ``BatchRenegotiateChildPublisherAgreements`` method.
 
             """
 
@@ -1350,7 +1350,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
                 Args:
                     request (~.child_publisher_service.BatchResendChildPublisherInvitationEmailsRequest):
                         The request object. Request message for
-                    [BatchResendChildPublisherInvitationEmails][] method.
+                    ``BatchResendChildPublisherInvitationEmails`` method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
                     timeout (float): The timeout for this request.
@@ -1362,7 +1362,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
                 Returns:
                     ~.child_publisher_service.BatchResendChildPublisherInvitationEmailsResponse:
                         Response message for
-                    [BatchResendChildPublisherInvitationEmails][] method.
+                    ``BatchResendChildPublisherInvitationEmails`` method.
 
             """
 
@@ -1513,7 +1513,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
                 Args:
                     request (~.child_publisher_service.BatchUpdateChildPublishersRequest):
-                        The request object. Request object for [BatchUpdateChildPublishers][]
+                        The request object. Request object for ``BatchUpdateChildPublishers``
                     method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
@@ -1525,7 +1525,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
                 Returns:
                     ~.child_publisher_service.BatchUpdateChildPublishersResponse:
-                        Response object for [BatchUpdateChildPublishers][]
+                        Response object for ``BatchUpdateChildPublishers``
                     method.
 
             """
@@ -1673,7 +1673,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
                 Args:
                     request (~.child_publisher_service.BatchWithdrawChildPublishersRequest):
-                        The request object. Request message for [BatchWithdrawChildPublishers][]
+                        The request object. Request message for ``BatchWithdrawChildPublishers``
                     method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
@@ -1685,7 +1685,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
                 Returns:
                     ~.child_publisher_service.BatchWithdrawChildPublishersResponse:
-                        Response message for [BatchWithdrawChildPublishers][]
+                        Response message for ``BatchWithdrawChildPublishers``
                     method.
 
             """
@@ -1830,7 +1830,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
             Args:
                 request (~.child_publisher_service.CreateChildPublisherRequest):
-                    The request object. Request object for [CreateChildPublisher][] method.
+                    The request object. Request object for ``CreateChildPublisher`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -1984,7 +1984,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
             Args:
                 request (~.child_publisher_service.GetChildPublisherRequest):
-                    The request object. Request object for [GetChildPublisher][] method.
+                    The request object. Request object for ``GetChildPublisher`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -2137,7 +2137,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
             Args:
                 request (~.child_publisher_service.ListChildPublishersRequest):
-                    The request object. Request object for [ListChildPublishers][] method.
+                    The request object. Request object for ``ListChildPublishers`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -2148,7 +2148,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
             Returns:
                 ~.child_publisher_service.ListChildPublishersResponse:
-                    Response object for [ListChildPublishers][] containing
+                    Response object for ``ListChildPublishers`` containing
                 matching
                 [ChildPublisher][google.ads.admanager.v1.ChildPublisher]
                 objects.
@@ -2294,7 +2294,7 @@ class ChildPublisherServiceRestTransport(_BaseChildPublisherServiceRestTransport
 
             Args:
                 request (~.child_publisher_service.UpdateChildPublisherRequest):
-                    The request object. Request object for [UpdateChildPublisher][] method.
+                    The request object. Request object for ``UpdateChildPublisher`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.

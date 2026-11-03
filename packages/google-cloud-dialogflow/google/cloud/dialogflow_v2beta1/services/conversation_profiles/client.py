@@ -201,6 +201,28 @@ class ConversationProfilesClient(metaclass=ConversationProfilesClientMeta):
         return m.groupdict() if m else {}
 
     @staticmethod
+    def companion_agent_path(
+        project: str,
+        location: str,
+        companion_agent: str,
+    ) -> str:
+        """Returns a fully-qualified companion_agent string."""
+        return "projects/{project}/locations/{location}/companionAgents/{companion_agent}".format(
+            project=project,
+            location=location,
+            companion_agent=companion_agent,
+        )
+
+    @staticmethod
+    def parse_companion_agent_path(path: str) -> Dict[str, str]:
+        """Parses a companion_agent path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/companionAgents/(?P<companion_agent>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
     def conversation_profile_path(
         project: str,
         conversation_profile: str,

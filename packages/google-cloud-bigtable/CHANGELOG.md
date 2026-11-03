@@ -4,6 +4,29 @@
 
 [1]: https://pypi.org/project/google-cloud-bigtable/#history
 
+## [2.50.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigtable-v2.50.1...google-cloud-bigtable-v2.50.2) (2026-10-22)
+
+
+### Bug Fixes
+
+* **bigtable:** preserve resource labels on batcher metrics ([#18712](https://github.com/googleapis/google-cloud-python/issues/18712)) ([f18cc6b](https://github.com/googleapis/google-cloud-python/commit/f18cc6b4086a3a1ea38c5bd45ccca79d927185ab))
+* **bigtable:** resolve O(n^2) bottleneck in ReadRowsQuery.add_range ([#18706](https://github.com/googleapis/google-cloud-python/issues/18706)) ([5ac7cc6](https://github.com/googleapis/google-cloud-python/commit/5ac7cc6b1168fa674340e11598bc6e5866a53c16))
+
+## [2.50.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigtable-v2.50.0...google-cloud-bigtable-v2.50.1) (2026-10-15)
+
+
+### Bug Fixes
+
+* **bigtable:** avoid hang when batcher not closed on process exit ([#18610](https://github.com/googleapis/google-cloud-python/issues/18610)) ([7674c91](https://github.com/googleapis/google-cloud-python/commit/7674c91a81a984e01166f72a8895cb18c8a8216b))
+* **bigtable:** fix authentication scopes for metrics exporter ([#18609](https://github.com/googleapis/google-cloud-python/issues/18609)) ([722d34e](https://github.com/googleapis/google-cloud-python/commit/722d34e519dbb8305c4a48ac83790078f5ff9d57))
+
+## [2.50.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigtable-v2.49.0...google-cloud-bigtable-v2.50.0) (2026-10-08)
+
+
+### Features
+
+* update API sources and regenerate ([#18593](https://github.com/googleapis/google-cloud-python/issues/18593)) ([d0505e8](https://github.com/googleapis/google-cloud-python/commit/d0505e8bc7615f2c649d3e25ebc7e3ccca45f22b))
+
 ## [2.49.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigtable-v2.48.0...google-cloud-bigtable-v2.49.0) (2026-10-01)
 
 

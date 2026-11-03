@@ -36,7 +36,7 @@ __protobuf__ = proto.module(
 
 
 class GetPartnerRequest(proto.Message):
-    r"""Request object for [GetPartner][] method.
+    r"""Request object for ``GetPartner`` method.
 
     Attributes:
         name (str):
@@ -52,27 +52,27 @@ class GetPartnerRequest(proto.Message):
 
 
 class ListPartnersRequest(proto.Message):
-    r"""Request object for [ListPartners][] method.
+    r"""Request object for ``ListPartners`` method.
 
     Attributes:
         parent (str):
             Required. The parent, which owns this collection of
-            [Partner][google.ads.admanager.v1.Partner]s. Format:
+            [Partners][google.ads.admanager.v1.Partner]. Format:
             ``networks/{network_code}``
         page_size (int):
             Optional. The maximum number of
-            [Partner][google.ads.admanager.v1.Partner]s to return. The
+            [Partners][google.ads.admanager.v1.Partner] to return. The
             service may return fewer than this value. If unspecified, at
-            most 50 [Partner][google.ads.admanager.v1.Partner]s will be
+            most 50 [Partners][google.ads.admanager.v1.Partner] will be
             returned. The maximum value is 1000; values greater than
             1000 will be coerced to 1000.
         page_token (str):
             Optional. A page token, received from a previous
-            [ListPartners][] call. Provide this to retrieve the
+            ``ListPartners`` call. Provide this to retrieve the
             subsequent page.
 
             When paginating, all other parameters provided to
-            [ListPartners][] must match the call that provided the page
+            ``ListPartners`` must match the call that provided the page
             token.
         filter (str):
             Optional. Expression to filter the response. See syntax
@@ -126,10 +126,8 @@ class ListPartnersRequest(proto.Message):
 
 
 class ListPartnersResponse(proto.Message):
-    r"""Response object for
-    [ListPartnersRequest][google.ads.admanager.v1.ListPartnersRequest]
-    containing matching [Partner][google.ads.admanager.v1.Partner]
-    objects.
+    r"""Response object for ``ListPartnersRequest`` containing matching
+    [Partner][google.ads.admanager.v1.Partner] objects.
 
     Attributes:
         partners (MutableSequence[google.ads.admanager_v1.types.Partner]):
@@ -174,7 +172,7 @@ class ListPartnersResponse(proto.Message):
 
 
 class UpdatePartnerRequest(proto.Message):
-    r"""Request object for [UpdatePartner][] method.
+    r"""Request object for ``UpdatePartner`` method.
 
     Attributes:
         partner (google.ads.admanager_v1.types.Partner):
@@ -201,15 +199,14 @@ class UpdatePartnerRequest(proto.Message):
 
 
 class BatchUpdatePartnersRequest(proto.Message):
-    r"""Request object for [BatchUpdatePartners][] method.
+    r"""Request object for ``BatchUpdatePartners`` method.
 
     Attributes:
         parent (str):
             Required. The parent resource where
-            [Partner][google.ads.admanager.v1.Partner]s will be updated.
+            [Partners][google.ads.admanager.v1.Partner] will be updated.
             Format: ``networks/{network_code}`` The parent field in the
-            [UpdatePartnerRequest][google.ads.admanager.v1.UpdatePartnerRequest]
-            must match this field.
+            ``UpdatePartnerRequest`` must match this field.
         requests (MutableSequence[google.ads.admanager_v1.types.UpdatePartnerRequest]):
             Required. The [Partner][google.ads.admanager.v1.Partner]
             objects to update. A maximum of 100 objects can be updated
@@ -228,7 +225,7 @@ class BatchUpdatePartnersRequest(proto.Message):
 
 
 class BatchUpdatePartnersResponse(proto.Message):
-    r"""Response object for [BatchUpdatePartners][] method.
+    r"""Response object for ``BatchUpdatePartners`` method.
 
     Attributes:
         partners (MutableSequence[google.ads.admanager_v1.types.Partner]):

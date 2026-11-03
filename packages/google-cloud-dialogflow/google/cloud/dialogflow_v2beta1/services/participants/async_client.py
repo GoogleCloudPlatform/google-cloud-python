@@ -49,6 +49,8 @@ except AttributeError:  # pragma: NO COVER
     OptionalRetry = Union[retries.AsyncRetry, object, None]  # type: ignore
 
 import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
+import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
+import google.rpc.status_pb2 as status_pb2  # type: ignore
 from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 
@@ -1116,6 +1118,98 @@ class ParticipantsAsyncClient:
         # and friendly error handling.
         rpc = self._client._transport._wrapped_methods[
             self._client._transport.streaming_analyze_content
+        ]
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            requests,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def streaming_reactive_companion_suggestions(
+        self,
+        requests: Optional[
+            AsyncIterator[participant.StreamingReactiveCompanionSuggestionsRequest]
+        ] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> Awaitable[
+        AsyncIterable[participant.StreamingReactiveCompanionSuggestionsResponse]
+    ]:
+        r"""External streaming API for human-agent queries to the
+        companion bot.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import dialogflow_v2beta1
+
+            async def sample_streaming_reactive_companion_suggestions():
+                # Create a client
+                client = dialogflow_v2beta1.ParticipantsAsyncClient()
+
+                # Initialize request argument(s)
+                request = dialogflow_v2beta1.StreamingReactiveCompanionSuggestionsRequest(
+                    text_input="text_input_value",
+                    participant="participant_value",
+                )
+
+                # This method expects an iterator which contains
+                # 'dialogflow_v2beta1.StreamingReactiveCompanionSuggestionsRequest' objects
+                # Here we create a generator that yields a single `request` for
+                # demonstrative purposes.
+                requests = [request]
+
+                def request_generator():
+                    for request in requests:
+                        yield request
+
+                # Make the request
+                stream = await client.streaming_reactive_companion_suggestions(requests=request_generator())
+
+                # Handle the response
+                async for response in stream:
+                    print(response)
+
+        Args:
+            requests (AsyncIterator[`google.cloud.dialogflow_v2beta1.types.StreamingReactiveCompanionSuggestionsRequest`]):
+                The request object AsyncIterator. The request message for
+                [Participants.StreamingReactiveCompanionSuggestions][google.cloud.dialogflow.v2beta1.Participants.StreamingReactiveCompanionSuggestions].
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            AsyncIterable[google.cloud.dialogflow_v2beta1.types.StreamingReactiveCompanionSuggestionsResponse]:
+                The response message for
+                   [Participants.StreamingReactiveCompanionSuggestions][google.cloud.dialogflow.v2beta1.Participants.StreamingReactiveCompanionSuggestions].
+
+        """
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.streaming_reactive_companion_suggestions
         ]
 
         # Validate the universe domain.

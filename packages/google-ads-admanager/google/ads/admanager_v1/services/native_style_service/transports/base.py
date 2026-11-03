@@ -154,8 +154,18 @@ class NativeStyleServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.create_native_style: gapic_v1.method.wrap_method(
+                self.create_native_style,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.batch_create_native_styles: gapic_v1.method.wrap_method(
                 self.batch_create_native_styles,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_native_style: gapic_v1.method.wrap_method(
+                self.update_native_style,
                 default_timeout=None,
                 client_info=client_info,
             ),
@@ -225,6 +235,18 @@ class NativeStyleServiceTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def create_native_style(
+        self,
+    ) -> Callable[
+        [native_style_service.CreateNativeStyleRequest],
+        Union[
+            native_style_messages.NativeStyle,
+            Awaitable[native_style_messages.NativeStyle],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def batch_create_native_styles(
         self,
     ) -> Callable[
@@ -232,6 +254,18 @@ class NativeStyleServiceTransport(abc.ABC):
         Union[
             native_style_service.BatchCreateNativeStylesResponse,
             Awaitable[native_style_service.BatchCreateNativeStylesResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_native_style(
+        self,
+    ) -> Callable[
+        [native_style_service.UpdateNativeStyleRequest],
+        Union[
+            native_style_messages.NativeStyle,
+            Awaitable[native_style_messages.NativeStyle],
         ],
     ]:
         raise NotImplementedError()

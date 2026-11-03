@@ -12,7 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# [START bigtable_writes_increment]
+# [START bigtable_writes_increment_legacy]
 from google.cloud import bigtable
 
 
@@ -33,4 +33,4 @@ def write_increment(project_id, instance_id, table_id):
     print("Successfully updated row {}.".format(row_key))
 
 
-# [END bigtable_writes_increment]
+# [END bigtable_writes_increment_legacy]

@@ -13,13 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import pickle
 import logging as std_logging
 import warnings
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import TYPE_CHECKING
 
+from google.showcase_v1beta1._compat import _observability, apply_async_channel_interceptors
+
+from google.api_core import client_options as client_options_lib
 from google.api_core import gapic_v1
 from google.api_core import grpc_helpers_async
 from google.api_core import exceptions as core_exceptions
@@ -41,6 +44,7 @@ from google.longrunning import operations_pb2 # type: ignore
 from google.showcase_v1beta1.types import echo as gs_echo
 from .base import EchoTransport, DEFAULT_CLIENT_INFO
 from .grpc import EchoGrpcTransport
+
 
 try:
     from google.api_core import client_logging  # type: ignore
@@ -188,6 +192,8 @@ class EchoGrpcAsyncIOTransport(EchoTransport):
             client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
             always_use_jwt_access: Optional[bool] = False,
             api_audience: Optional[str] = None,
+            interceptors: Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]] = None,
+            client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
             ) -> None:
         """Instantiate the transport.
 
@@ -239,6 +245,12 @@ class EchoGrpcAsyncIOTransport(EchoTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -294,6 +306,7 @@ class EchoGrpcAsyncIOTransport(EchoTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -315,10 +328,27 @@ class EchoGrpcAsyncIOTransport(EchoTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
+        )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if (
+            _observability is not None
+            and hasattr(_observability, "apply_otel_async_channel_interceptors")
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
         self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -670,9 +700,12 @@ class EchoGrpcAsyncIOTransport(EchoTransport):
         return self._stubs['block']
 
     def _prep_wrapped_messages(self, client_info):
-        """ Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.echo: self._wrap_method(
+            self.echo: self._wrap_async_method(
                 self.echo,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -686,18 +719,21 @@ class EchoGrpcAsyncIOTransport(EchoTransport):
                 ),
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/Echo",
             ),
-            self.echo_error_details: self._wrap_method(
+            self.echo_error_details: self._wrap_async_method(
                 self.echo_error_details,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/EchoErrorDetails",
             ),
-            self.fail_echo_with_details: self._wrap_method(
+            self.fail_echo_with_details: self._wrap_async_method(
                 self.fail_echo_with_details,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/FailEchoWithDetails",
             ),
-            self.expand: self._wrap_method(
+            self.expand: self._wrap_async_method(
                 self.expand,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -711,18 +747,24 @@ class EchoGrpcAsyncIOTransport(EchoTransport):
                 ),
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/Expand",
+                is_streaming=True,
             ),
-            self.collect: self._wrap_method(
+            self.collect: self._wrap_async_method(
                 self.collect,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/Collect",
+                is_streaming=True,
             ),
-            self.chat: self._wrap_method(
+            self.chat: self._wrap_async_method(
                 self.chat,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/Chat",
+                is_streaming=True,
             ),
-            self.paged_expand: self._wrap_method(
+            self.paged_expand: self._wrap_async_method(
                 self.paged_expand,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -736,78 +778,87 @@ class EchoGrpcAsyncIOTransport(EchoTransport):
                 ),
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/PagedExpand",
             ),
-            self.paged_expand_legacy: self._wrap_method(
+            self.paged_expand_legacy: self._wrap_async_method(
                 self.paged_expand_legacy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/PagedExpandLegacy",
             ),
-            self.paged_expand_legacy_mapped: self._wrap_method(
+            self.paged_expand_legacy_mapped: self._wrap_async_method(
                 self.paged_expand_legacy_mapped,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/PagedExpandLegacyMapped",
             ),
-            self.wait: self._wrap_method(
+            self.wait: self._wrap_async_method(
                 self.wait,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/Wait",
             ),
-            self.block: self._wrap_method(
+            self.block: self._wrap_async_method(
                 self.block,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.showcase.v1beta1.Echo/Block",
             ),
-            self.list_locations: self._wrap_method(
+            self.list_locations: self._wrap_async_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.get_location: self._wrap_method(
+            self.get_location: self._wrap_async_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.set_iam_policy: self._wrap_method(
+            self.set_iam_policy: self._wrap_async_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/SetIamPolicy",
             ),
-            self.get_iam_policy: self._wrap_method(
+            self.get_iam_policy: self._wrap_async_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/GetIamPolicy",
             ),
-            self.test_iam_permissions: self._wrap_method(
+            self.test_iam_permissions: self._wrap_async_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/TestIamPermissions",
             ),
-            self.list_operations: self._wrap_method(
+            self.list_operations: self._wrap_async_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.delete_operation: self._wrap_method(
+            self.delete_operation: self._wrap_async_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.cancel_operation: self._wrap_method(
+            self.cancel_operation: self._wrap_async_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

@@ -35,7 +35,7 @@ class AdRuleFillOrderDirectionEnum(proto.Message):
 
     class AdRuleFillOrderDirection(proto.Enum):
         r"""Defines the fill order direction of ad breaks with
-        AdBreakOptimizationType.POSITION.
+        [AdBreakOptimizationTypeEnum.AdBreakOptimizationType.POSITION][google.ads.admanager.v1.AdBreakOptimizationTypeEnum.AdBreakOptimizationType.POSITION].
 
         Values:
             AD_RULE_FILL_ORDER_DIRECTION_UNSPECIFIED (0):

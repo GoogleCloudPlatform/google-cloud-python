@@ -27,7 +27,6 @@ from google.cloud.spanner_v1._helpers import (
     _metadata_with_span_context,
 )
 from google.cloud.spanner_v1.gapic_version import __version__ as gapic_version
-from google.cloud.spanner_v1.metrics.metrics_capture import MetricsCapture
 from google.cloud.spanner_v1.services.spanner.client import SpannerClient
 
 TRACER_NAME = "cloud.google.com/python/spanner"
@@ -98,16 +97,14 @@ def trace_call(
         ):
             child_span = trace.NonRecordingSpan(current_span.get_span_context())
             with trace.use_span(child_span):
-                with MetricsCapture():
-                    if enable_end_to_end_tracing:
-                        _metadata_with_span_context(metadata)
-                    yield child_span
+                if enable_end_to_end_tracing:
+                    _metadata_with_span_context(metadata)
+                yield child_span
             return
 
-        with MetricsCapture():
-            if enable_end_to_end_tracing:
-                _metadata_with_span_context(metadata)
-            yield trace.INVALID_SPAN
+        if enable_end_to_end_tracing:
+            _metadata_with_span_context(metadata)
+        yield trace.INVALID_SPAN
         return
 
     # Slow path: resolve attributes and configure span when tracing is active.
@@ -158,29 +155,28 @@ def trace_call(
     with tracer.start_as_current_span(
         name, kind=trace.SpanKind.CLIENT, attributes=attributes
     ) as span:
-        with MetricsCapture():
-            try:
-                if enable_end_to_end_tracing:
-                    _metadata_with_span_context(metadata)
-                yield span
-            except Exception as error:
-                span.set_status(Status(StatusCode.ERROR, str(error)))
-                # OpenTelemetry-Python imposes invoking span.record_exception on __exit__
-                # on any exception. We should file a bug later on with them to only
-                # invoke .record_exception if not already invoked, hence we should not
-                # invoke .record_exception on our own else we shall have 2 exceptions.
-                raise
-            else:
-                # All spans still have set_status available even if for example
-                # NonRecordingSpan doesn't have "_status".
-                absent_span_status = getattr(span, "_status", None) is None
-                if absent_span_status or span._status.status_code == StatusCode.UNSET:
-                    # OpenTelemetry-Python only allows a status change
-                    # if the current code is UNSET or ERROR. At the end
-                    # of the generator's consumption, only set it to OK
-                    # it wasn't previously set otherwise.
-                    # https://github.com/googleapis/python-spanner/issues/1246
-                    span.set_status(Status(StatusCode.OK))
+        try:
+            if enable_end_to_end_tracing:
+                _metadata_with_span_context(metadata)
+            yield span
+        except Exception as error:
+            span.set_status(Status(StatusCode.ERROR, str(error)))
+            # OpenTelemetry-Python imposes invoking span.record_exception on __exit__
+            # on any exception. We should file a bug later on with them to only
+            # invoke .record_exception if not already invoked, hence we should not
+            # invoke .record_exception on our own else we shall have 2 exceptions.
+            raise
+        else:
+            # All spans still have set_status available even if for example
+            # NonRecordingSpan doesn't have "_status".
+            absent_span_status = getattr(span, "_status", None) is None
+            if absent_span_status or span._status.status_code == StatusCode.UNSET:
+                # OpenTelemetry-Python only allows a status change
+                # if the current code is UNSET or ERROR. At the end
+                # of the generator's consumption, only set it to OK
+                # it wasn't previously set otherwise.
+                # https://github.com/googleapis/python-spanner/issues/1246
+                span.set_status(Status(StatusCode.OK))
 
 
 def get_current_span():
@@ -188,4 +184,5 @@ def get_current_span():
 
 
 def add_span_event(span, event_name, event_attributes=None):
-    span.add_event(event_name, event_attributes)
+    if span and span.is_recording():
+        span.add_event(event_name, event_attributes)

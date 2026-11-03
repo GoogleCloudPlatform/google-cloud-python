@@ -53,9 +53,9 @@ except ImportError:  # pragma: NO COVER
 {% endmacro %}
 
 {% macro create_metadata(method) %}
+    {% if not method.client_streaming %}
     {% if method.explicit_routing %}
         header_params: dict[str, str] = {}
-        {% if not method.client_streaming %}
         {% for routing_param in method.routing_rule.routing_parameters %}
         {% if routing_param.path_template %} {# Need to match. #}
 
@@ -71,7 +71,6 @@ except ImportError:  # pragma: NO COVER
 
         {% endif %}
         {% endfor %} {# method.routing_rule.routing_parameters #}
-        {% endif %} {# if not method.client_streaming #}
 
         if header_params:
             metadata = tuple(metadata) + (
@@ -83,14 +82,13 @@ except ImportError:  # pragma: NO COVER
         # add these here.
         metadata = tuple(metadata) + (
             gapic_v1.routing_header.to_grpc_metadata((
-                {% if not method.client_streaming %}
                 {% for field_header in method.field_headers %}
                 ("{{ field_header.raw }}", request.{{ field_header.disambiguated }}),
                 {% endfor %}{# for field_header in method.field_headers #}
-                {% endif %}{# not method.client_streaming #}
             )),
         )
     {% endif %}{# method.explicit_routing #}
+    {% endif %}{# not method.client_streaming #}
 {% endmacro %}{# create_metadata #}
 
 {% macro add_api_version_header_to_metadata(service_version) %}
@@ -132,13 +130,13 @@ from google.longrunning import operations_pb2  # type: ignore
 {% endif %}{# import_ns.has_operations_mixin #}
 {% endmacro %}
 
-{% macro http_options_method(rules) %}
+{% macro http_options_method(rules, is_resumable_upload=False, resumable_upload_prefix="resumable/upload") %}
 @staticmethod
 def _get_http_options():
     http_options: List[Dict[str, str]] = [
     {%- for rule in rules %}{
         'method': '{{ rule.method }}',
-        'uri': '{{ rule.uri }}',
+        'uri': '{% if is_resumable_upload %}/{{ resumable_upload_prefix }}{% endif %}{{ rule.uri }}',
         {% if rule.body %}
         'body': '{{ rule.body }}',
         {% endif %}{# rule.body #}
@@ -159,30 +157,45 @@ def _get_http_options():
     session,
     timeout,
     transcoded_request,
-    body=None):
-    
+    body=None,
+    client_options=None,
+    url_template=None):
+    """Execute the HTTP request over the transport session with
+    OpenTelemetry tracing and metadata propagation."""
+
     uri = transcoded_request['uri']
     method = transcoded_request['method']
     headers = dict(metadata)
     headers['Content-Type'] = 'application/json'
-    response = {{ await_prefix }}getattr(session, method)(
-        "{host}{uri}".format(host=host, uri=uri),
-        timeout=timeout,
+    url = "{host}{uri}".format(host=host, uri=uri)
+
+    with trace_http_request(
+        client_options=client_options,
+        method=method,
+        url=url,
+        url_template=url_template,
         headers=headers,
-        params=rest_helpers.flatten_query_params(query_params, strict=True),
-        {% if body_spec %}
-        data=body,
-        {% endif %}
-        {% if not is_async and is_streaming_method %}
-        {# NOTE: The underlying `requests` library used for making a sync request
-         # requires us to set `stream=True` to avoid loading the entire response
-         # into memory at once. For an async request, given its nature where it
-         # reads data chunk by chunk, this is not required.
-        #}
-        stream=True,
-        {% endif %}
-        )
-    return response
+        body=body,
+    ) as trace_ctx:
+        response = {{ await_prefix }}getattr(session, method)(
+            url,
+            timeout=timeout,
+            headers=headers,
+            params=rest_helpers.flatten_query_params(query_params, strict=True),
+            {% if body_spec %}
+            data=body,
+            {% endif %}
+            {% if not is_async and is_streaming_method %}
+            {# NOTE: The underlying `requests` library used for making a sync request
+             # requires us to set `stream=True` to avoid loading the entire response
+             # into memory at once. For an async request, given its nature where it
+             # reads data chunk by chunk, this is not required.
+            #}
+            stream=True,
+            {% endif %}
+            )
+        trace_ctx.record_response(response)
+        return response
 {% endmacro %}
 
 {# rest_call_method_common includes the common code for a rest __call__ method to be
@@ -240,13 +253,25 @@ def _get_http_options():
         )
 
     # Send the request
-    response = {{ await_prefix }}{{ async_class_prefix }}{{ service_name }}RestTransport._{{method_name}}._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request{% if body_spec %}, body{% endif %})
+    response = {{ await_prefix }}{{ async_class_prefix }}{{ service_name }}RestTransport._{{method_name}}._get_response(
+        self._host,
+        metadata,
+        query_params,
+        self._session,
+        timeout,
+        transcoded_request,
+        {% if body_spec %}
+        body,
+        {% endif %}
+        client_options=getattr(self, "_client_options", None),
+        url_template=http_options[0].get("uri") if http_options else None,
+    )
 
     # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
     # subclass.
     if response.status_code >= 400:
-        {# Note: format_http_response_error takes in more parameters than from_http_response and the 
-        latter only supports a response of type requests.Response. 
+        {# Note: format_http_response_error takes in more parameters than from_http_response and the
+        latter only supports a response of type requests.Response.
         TODO: Clean up the sync response error handling and use format_http_response_error.
         See issue: https://github.com/googleapis/gapic-generator-python/issues/2116. #}
         {% if is_async %}
@@ -261,6 +286,68 @@ def _get_http_options():
         {% endif %}{# is_async #}
 
 {% endmacro %}
+
+
+{# rest_resumable_upload_call_method_common includes the common code for a rest
+    resumable upload __call__ method to be re-used for sync and async REST
+    __call__ implementation.
+
+    Args:
+        method: The method.
+        service: The service.
+        is_async (bool): Used to determine the code path i.e. whether for sync or async call.
+        rest_numeric_enums (bool): Used to determine whether to encode enums as numbers. #}
+{% macro rest_resumable_upload_call_method_common(method, service, is_async=False, rest_numeric_enums=False) %}
+{% set service_name = service.name %}
+{% set method_name = method.name %}
+{% set body_spec = method.http_options[0].body %}
+{% set await_prefix = "await " if is_async else "" %}
+{% set client_output_ident = method.client_output_async.ident if is_async else method.client_output.ident %}
+{% set retry_class = "retries.AsyncRetry" if is_async else "retries.Retry" %}
+http_options = _Base{{ service_name }}RestTransport._Base{{ method_name }}._get_http_options()
+request, metadata = {{ await_prefix }}self._interceptor.pre_{{ method_name|snake_case }}(request, metadata)
+transcoded_request, body, query_params = transcode_request(
+    http_options,
+    request,
+    required_fields_default_values=getattr(
+        _Base{{ service_name }}RestTransport._Base{{ method_name }},
+        "_Base{{ method_name }}__REQUIRED_FIELDS_DEFAULT_VALUES",
+        None,
+    ),
+    rest_numeric_enums={{ rest_numeric_enums }},
+)
+
+uri = transcoded_request["uri"]
+params = rest_helpers.flatten_query_params(query_params, strict=True)
+query_string = f"?{urllib.parse.urlencode(params)}" if params else ""
+upload_url = f"{self._host}{uri}{query_string}"
+headers: Dict[str, Any] = {**dict(metadata), **dict((config.headers or {}) if config else {})}
+headers["Content-Type"] = "application/json"
+if config is None:
+    config = resumable_transfer.ResumableUploadConfig(headers=headers)
+else:
+    config = dataclasses.replace(config, headers=headers)
+
+session_kwargs: Dict[str, Any] = (
+    {"start_timeout": timeout}
+    if isinstance(timeout, (int, float))
+    else {}
+)
+# ``start_retry`` is used instead of ``retry`` because ``_GapicCallable``
+# consumes the ``retry`` argument before invoking the transport callable
+# and only forwards extra keyword arguments such as ``start_retry``.
+return {{ client_output_ident }}(
+    upload_url=upload_url,
+    config=config,
+    transport=self._session,
+    response_type={{ method.output.ident }},
+    start_retry=start_retry if isinstance(start_retry, {{ retry_class }}) else None,
+    {% if body_spec %}
+    request_body=body,
+    {% endif %}
+    **session_kwargs,
+)
+{%- endmacro %}
 
 
 {% macro unary_request_interceptor_common(service) %}
@@ -299,12 +386,16 @@ def _get_http_options():
 {%- endmacro %}
 
 
-{% macro prep_wrapped_messages_async_method(api, service) %}
+{% macro prep_wrapped_messages_async_method(api, service, is_rest_asyncio=False) %}
+{% set rest_async_io_enabled = api.all_library_settings[api.naming.proto_package].python_settings.experimental_features.rest_async_io_enabled %}
 def _prep_wrapped_messages(self, client_info):
-    """ Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+    """Precompute and cache wrapped methods for async RPC dispatch.
+
+    Overrides the base class method to use asynchronous wrappers and retries.
+    """
     self._wrapped_methods = {
-        {% for method in service.methods.values() %}
-        self.{{ method.transport_safe_name|snake_case }}: self._wrap_method(
+        {% for method in service.methods.values() if not is_rest_asyncio or rest_async_io_enabled or method.is_resumable_upload %}
+        self.{{ method.transport_safe_name|snake_case }}: self._wrap_async_method(
             self.{{ method.transport_safe_name|snake_case }},
             {% if method.retry %}
             default_retry=retries.AsyncRetry(
@@ -327,18 +418,25 @@ def _prep_wrapped_messages(self, client_info):
             {% endif %}
             default_timeout={{ method.timeout }},
             client_info=client_info,
+            method_name="{{ '.'.join(method.meta.address.package) }}.{{ service.name }}/{{ method.name }}",
+            {% if method.client_streaming or method.server_streaming %}
+            is_streaming=True,
+            {% endif %}
         ),
         {% endfor %}{# service.methods.values() #}
+        {% if not is_rest_asyncio or rest_async_io_enabled %}
         {% for method_name in api.mixin_api_methods.keys() %}
         {# TODO(https://github.com/googleapis/gapic-generator-python/issues/2197): Use `transport_safe_name` similar
          # to what we do for non-mixin methods above.
         #}
-        self.{{ method_name|snake_case }}: self._wrap_method(
+        self.{{ method_name|snake_case }}: self._wrap_async_method(
             self.{{ method_name|snake_case }},
             default_timeout=None,
             client_info=client_info,
+            method_name="{{ api.mixin_api_signatures[method_name].rpc_name }}",
         ),
         {% endfor %}{# method_name in api.mixin_api_methods.keys() #}
+        {% endif %}
     }
 {% endmacro %}
 
@@ -362,6 +460,7 @@ def _wrap_method(self, func, *args, **kwargs):
  # synchronous and asynchronous rest transports
 #}
 {% macro create_interceptor_class(api, service, method, is_async=False) %}
+{% set rest_async_io_enabled = api.all_library_settings[api.naming.proto_package].python_settings.experimental_features.rest_async_io_enabled %}
 {% set async_prefix = "async " if is_async else "" %}
 {% set async_method_name_prefix = "Async" if is_async else "" %}
 {% set async_docstring = "Asynchronous " if is_async else "" %}
@@ -382,12 +481,12 @@ class {{ async_method_name_prefix }}{{ service.name }}RestInterceptor:
 
     .. code-block:: python
         class MyCustom{{ service.name }}Interceptor({{ service.name }}RestInterceptor):
-    {% for _, method in service.methods|dictsort if not method.client_streaming %}
+    {% for _, method in service.methods|dictsort if not method.client_streaming and (not is_async or rest_async_io_enabled or method.is_resumable_upload) %}
             {{ async_prefix }}def pre_{{ method.name|snake_case }}(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
 
-    {% if not method.void %}
+    {% if not method.void and not method.is_resumable_upload %}
             {{ async_prefix }}def post_{{ method.name|snake_case }}(self, response):
                 logging.log(f"Received response: {response}")
                 return response
@@ -400,7 +499,7 @@ class {{ async_method_name_prefix }}{{ service.name }}RestInterceptor:
 
 
     """
-    {% for method in service.methods.values()|sort(attribute="name") if not method.client_streaming and method.http_options %}
+    {% for method in service.methods.values()|sort(attribute="name") if not method.client_streaming and method.http_options and (not is_async or rest_async_io_enabled or method.is_resumable_upload) %}
     {# TODO(https://github.com/googleapis/gapic-generator-python/issues/2147): Remove the condition below once async rest transport supports the guarded methods. #}
     {{ async_prefix }}def pre_{{ method.name|snake_case }}(self, request: {{method.input.ident}}, {{ client_method_metadata_argument() }}) -> Tuple[{{method.input.ident}}, {{ client_method_metadata_type() }}]:
         """Pre-rpc interceptor for {{ method.name|snake_case }}
@@ -410,7 +509,7 @@ class {{ async_method_name_prefix }}{{ service.name }}RestInterceptor:
         """
         return request, metadata
 
-    {% if not method.void %}
+    {% if not method.void and not method.is_resumable_upload %}
     {% if not method.server_streaming %}
     {{ async_prefix }}def post_{{ method.name|snake_case }}(self, response: {{method.output.ident}}) -> {{method.output.ident}}:
     {% else %}
@@ -437,11 +536,11 @@ class {{ async_method_name_prefix }}{{ service.name }}RestInterceptor:
 
         Override in a subclass to read or manipulate the response or metadata after it
         is returned by the {{ service.name }} server but before it is returned to user code.
-        
+
         We recommend only using this `post_{{ method.name|snake_case }}_with_metadata`
         interceptor in new development instead of the `post_{{ method.name|snake_case }}` interceptor.
         When both interceptors are used, this `post_{{ method.name|snake_case }}_with_metadata` interceptor runs after the
-        `post_{{ method.name|snake_case }}` interceptor. The (possibly modified) response returned by 
+        `post_{{ method.name|snake_case }}` interceptor. The (possibly modified) response returned by
         `post_{{ method.name|snake_case }}` will be passed to
         `post_{{ method.name|snake_case }}_with_metadata`.
         """
@@ -450,6 +549,7 @@ class {{ async_method_name_prefix }}{{ service.name }}RestInterceptor:
     {% endif %}{# not method.void #}
     {% endfor %}
 
+    {% if not is_async or rest_async_io_enabled %}
     {% for name, signature in api.mixin_api_signatures.items() %}
     {{ async_prefix }}def pre_{{ name|snake_case }}(
         self, request: {{signature.request_type}}, {{ client_method_metadata_argument() }}
@@ -473,6 +573,7 @@ class {{ async_method_name_prefix }}{{ service.name }}RestInterceptor:
         return response
 
     {% endfor %}
+    {% endif %}
 {% endmacro %}
 
 {% macro generate_mixin_call_method(service, api, name, sig, is_async) %}
@@ -487,7 +588,7 @@ class {{ async_method_name_prefix }}{{ service.name }}RestInterceptor:
 
 @property
 def {{ name|snake_case }}(self):
-    return self.{{ name|make_private }}(self._session, self._host, self._interceptor) # type: ignore
+    return self.{{ name|make_private }}(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
 class {{ name|make_private }}(_Base{{ service.name }}RestTransport._Base{{name}}, {{ async_method_name_prefix }}{{service.name}}RestStub):
     def __hash__(self):
@@ -495,7 +596,7 @@ class {{ name|make_private }}(_Base{{ service.name }}RestTransport._Base{{name}}
 
     {% set body_spec = api.mixin_http_options["{}".format(name)][0].body %}
     {{ response_method(body_spec, is_async=is_async, is_streaming_method=None) | indent(4) }}
-    
+
     {{ async_prefix }}def __call__(self,
         request: {{ sig.request_type }}, *,
         retry: OptionalRetry=gapic_v1.method.DEFAULT,
@@ -521,7 +622,7 @@ class {{ name|make_private }}(_Base{{ service.name }}RestTransport._Base{{name}}
         {% endif %}
         """
         {{ rest_call_method_common(body_spec, name, service, is_async)|indent(4) }}
-        
+
         {% if sig.response_type == "None" %}
         return {{ await_prefix }}self._interceptor.post_{{ name|snake_case }}(None)
         {% else %}
@@ -543,7 +644,7 @@ class {{ name|make_private }}(_Base{{ service.name }}RestTransport._Base{{name}}
                 "payload": response_payload,
                 "headers":  dict(response.headers),
                 "status": response.status_code,
-            }        
+            }
             _LOGGER.debug(
                 "Received response for {{ service.meta.address.proto_package_versioned }}.{{ service.async_client_name }}.{{ name }}",
                 extra = {
@@ -565,7 +666,7 @@ class {{ name|make_private }}(_Base{{ service.name }}RestTransport._Base{{name}}
 
 {% macro client_method_metadata_default_value() %}(){% endmacro %}
 
-{% macro client_method_metadata_argument_doc() %}metadata ({{ client_method_metadata_type() }}): Key/value pairs which should be 
+{% macro client_method_metadata_argument_doc() %}metadata ({{ client_method_metadata_type() }}): Key/value pairs which should be
             sent along with the request as metadata. Normally, each value must be of type `str`,
             but for metadata keys ending with the suffix `-bin`, the corresponding values must
             be of type `bytes`.{% endmacro %}

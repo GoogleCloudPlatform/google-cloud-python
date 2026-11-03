@@ -366,6 +366,115 @@ def test_sync_upload_iterative_progress():
     assert session.response.size == 8
 
 
+def _make_single_chunk_sync_transport() -> mock.Mock:
+    """Builds a mock requests.Session returning a start response and a final chunk response."""
+    session_transport = mock.create_autospec(requests.Session, instance=True)
+    start_resp = mock.Mock(
+        ok=True,
+        status_code=200,
+        headers={
+            "X-Goog-Upload-Status": "active",
+            "X-Goog-Upload-URL": "https://upload.example.com/resumable-123",
+        },
+    )
+    chunk_resp = mock.Mock(
+        ok=True,
+        status_code=200,
+        headers={"X-Goog-Upload-Status": "final"},
+        content=b"",
+    )
+    session_transport.request.side_effect = [start_resp, chunk_resp]
+    return session_transport
+
+
+def test_sync_upload_uses_session_request_body():
+    # A request_body supplied to the constructor is sent with the start
+    # request when upload() is called without an explicit request_body.
+    session_transport = _make_single_chunk_sync_transport()
+    session = ResumableUploadSession(
+        upload_url="https://api.example.com/start",
+        transport=session_transport,
+        request_body='{"name": "from-init"}',
+    )
+
+    session.upload(stream=b"payload")
+
+    start_call = session_transport.request.call_args_list[0]
+    assert start_call.kwargs["data"] == b'{"name": "from-init"}'
+    assert start_call.kwargs["headers"]["X-Goog-Upload-Command"] == "start"
+
+
+def test_sync_iter_upload_uses_session_request_body():
+    session_transport = _make_single_chunk_sync_transport()
+    session = ResumableUploadSession(
+        upload_url="https://api.example.com/start",
+        transport=session_transport,
+        request_body=b'{"name": "from-init-bytes"}',
+    )
+
+    list(session.iter_upload(stream=b"payload"))
+
+    start_call = session_transport.request.call_args_list[0]
+    assert start_call.kwargs["data"] == b'{"name": "from-init-bytes"}'
+
+
+@pytest.mark.parametrize(
+    "override, expected",
+    [
+        ('{"name": "override"}', b'{"name": "override"}'),
+        (b'{"name": "override-bytes"}', b'{"name": "override-bytes"}'),
+        ("", b""),
+    ],
+)
+def test_sync_upload_request_body_argument_overrides_session_default(
+    override, expected
+):
+    # An explicit per-call request_body (including an empty one) takes
+    # precedence over the request_body supplied to the constructor.
+    session_transport = _make_single_chunk_sync_transport()
+    session = ResumableUploadSession(
+        upload_url="https://api.example.com/start",
+        transport=session_transport,
+        request_body='{"name": "from-init"}',
+    )
+
+    session.upload(stream=b"payload", request_body=override)
+
+    start_call = session_transport.request.call_args_list[0]
+    assert start_call.kwargs["data"] == expected
+
+
+def test_sync_upload_request_body_positional_override():
+    # request_body stays the second positional parameter, so callers that
+    # pass it positionally are not broken by the constructor default.
+    session_transport = _make_single_chunk_sync_transport()
+    session = ResumableUploadSession(
+        upload_url="https://api.example.com/start",
+        transport=session_transport,
+        request_body='{"name": "from-init"}',
+    )
+
+    session.upload(b"payload", '{"name": "positional"}')
+
+    start_call = session_transport.request.call_args_list[0]
+    assert start_call.kwargs["data"] == b'{"name": "positional"}'
+
+
+def test_sync_upload_request_body_defaults_to_empty():
+    # Without a request_body on the constructor or the call, the start
+    # request carries an empty payload.
+    session_transport = _make_single_chunk_sync_transport()
+    session = ResumableUploadSession(
+        upload_url="https://api.example.com/start",
+        transport=session_transport,
+    )
+
+    session.upload(stream=b"payload")
+
+    start_call = session_transport.request.call_args_list[0]
+    assert start_call.kwargs["data"] == b""
+
+
 def test_sync_resume():
     session_transport = mock.create_autospec(requests.Session, instance=True)
 

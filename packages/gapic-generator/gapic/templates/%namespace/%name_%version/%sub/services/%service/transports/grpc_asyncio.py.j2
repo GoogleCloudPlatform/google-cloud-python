@@ -5,19 +5,26 @@
 {% block content %}
 {% import "%namespace/%name_%version/%sub/services/%service/_shared_macros.j2" as shared_macros %}
 
-import inspect
 import json
 import pickle
 import logging as std_logging
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import {% if service.has_resumable_upload_methods %}Any, {% endif %}Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import TYPE_CHECKING
 
+{% set package_path = api.naming.module_namespace|join('.') + "." + api.naming.versioned_module_name %}
+from {{package_path}}._compat import _observability, apply_async_channel_interceptors
+
+from google.api_core import client_options as client_options_lib
 from google.api_core import gapic_v1
 from google.api_core import grpc_helpers_async
 from google.api_core import exceptions as core_exceptions
 from google.api_core import retry_async as retries
 {% if service.has_lro %}
 from google.api_core import operations_v1
+{% endif %}
+{% if service.has_resumable_upload_methods %}
+from google.api_core import resumable_transfer
 {% endif %}
 from google.auth import credentials as ga_credentials   # type: ignore
 from google.auth.transport.grpc import SslCredentials  # type: ignore
@@ -54,6 +61,14 @@ from google.longrunning import operations_pb2 # type: ignore
 {% endfilter %}
 from .base import {{ service.name }}Transport, DEFAULT_CLIENT_INFO
 from .grpc import {{ service.name }}GrpcTransport
+{% if service.has_resumable_upload_methods %}
+try:
+    from .rest_asyncio import Async{{ service.name }}RestTransport
+    HAS_ASYNC_REST = True  # pragma: NO COVER
+except ImportError:  # pragma: NO COVER
+    HAS_ASYNC_REST = False
+{% endif %}
+
 
 try:
     from google.api_core import client_logging  # type: ignore
@@ -85,7 +100,7 @@ class _LoggingClientAIOInterceptor(grpc.aio.UnaryUnaryClientInterceptor):  # pra
             grpc_response = {
                 "payload": response_payload,
                 "metadata": metadata,
-                "status": "OK", 
+                "status": "OK",
             }
             _LOGGER.debug(
                 f"Received response to rpc {client_call_details.method}.",
@@ -171,6 +186,8 @@ class {{ service.grpc_asyncio_transport_name }}({{ service.name }}Transport):
             client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
             always_use_jwt_access: Optional[bool] = False,
             api_audience: Optional[str] = None,
+            interceptors: Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]] = None,
+            client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
             ) -> None:
         """Instantiate the transport.
 
@@ -192,7 +209,7 @@ class {{ service.grpc_asyncio_transport_name }}({{ service.name }}Transport):
                 are passed to :func:`google.auth.default`.
             channel (Optional[Union[aio.Channel, Callable[..., aio.Channel]]]):
                 A ``Channel`` instance through which to make calls, or a Callable
-                that constructs and returns one. If set to None, ``self.create_channel`` 
+                that constructs and returns one. If set to None, ``self.create_channel``
                 is used to create the channel. If a Callable is given, it will be called
                 with the same arguments as used in ``self.create_channel``.
             api_mtls_endpoint (Optional[str]): Deprecated. The mutual TLS endpoint.
@@ -222,6 +239,12 @@ class {{ service.grpc_asyncio_transport_name }}({{ service.name }}Transport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -234,6 +257,15 @@ class {{ service.grpc_asyncio_transport_name }}({{ service.name }}Transport):
         self._stubs: Dict[str, Callable] = {}
         {% if service.has_lro %}
         self._operations_client: Optional[operations_v1.OperationsAsyncClient] = None
+        {% endif %}
+        {% if service.has_resumable_upload_methods %}
+        # Resumable upload RPCs operate over HTTP/REST rather than gRPC.
+        # Since gRPC is the default transport for GAPIC clients and services
+        # mix standard gRPC RPCs with resumable upload RPCs on the same client,
+        # gRPC transports delegate resumable upload calls to an internal REST
+        # transport instance.
+        self._rest_transport: Optional[Any] = None
+        self._client_cert_source_for_mtls = client_cert_source_for_mtls
         {% endif %}
 
         if api_mtls_endpoint:
@@ -279,6 +311,7 @@ class {{ service.grpc_asyncio_transport_name }}({{ service.name }}Transport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -300,10 +333,27 @@ class {{ service.grpc_asyncio_transport_name }}({{ service.name }}Transport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
+        )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if (
+            _observability is not None
+            and hasattr(_observability, "apply_otel_async_channel_interceptors")
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
         self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -339,7 +389,7 @@ class {{ service.grpc_asyncio_transport_name }}({{ service.name }}Transport):
     @property
     def {{ method.transport_safe_name|snake_case }}(self) -> Callable[
             [{{ method.input.ident }}],
-            Awaitable[{{ method.output.ident }}]]:
+            Awaitable[{% if method.is_resumable_upload %}{{ method.client_output_async.ident }}{% else %}{{ method.output.ident }}{% endif %}]]:
         r"""Return a callable for the{{ ' ' }}
         {{- (method.name|snake_case).replace('_',' ')|wrap(
                 width=70, offset=40, indent=8) -}}
@@ -349,7 +399,7 @@ class {{ service.grpc_asyncio_transport_name }}({{ service.name }}Transport):
 
         Returns:
             Callable[[~.{{ method.input.name }}],
-                    Awaitable[~.{{ method.output.name }}]]:
+                    Awaitable[~.{% if method.is_resumable_upload %}{{ method.client_output_async.name }}{% else %}{{ method.output.name }}{% endif %}]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -358,11 +408,56 @@ class {{ service.grpc_asyncio_transport_name }}({{ service.name }}Transport):
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
         if '{{ method.transport_safe_name|snake_case }}' not in self._stubs:
+            {% if method.is_resumable_upload %}
+            class _ErrorStub:
+                def __init__(self, error: Exception):
+                    self._error = error
+
+                def __call__(self, *args, **kwargs):
+                    async def _raise():
+                        raise self._error
+                    return _raise()
+
+            if not self._credentials:
+                self._stubs['{{ method.transport_safe_name|snake_case }}'] = _ErrorStub(
+                    core_exceptions.GoogleAPICallError(
+                        "Resumable upload methods operate over REST and cannot be invoked when the transport is initialized with a pre-constructed gRPC channel. Please supply credentials directly instead of a gRPC channel to use resumable upload functionality."
+                    )
+                )
+            elif self._client_cert_source_for_mtls:
+                self._stubs['{{ method.transport_safe_name|snake_case }}'] = _ErrorStub(
+                    core_exceptions.AsyncRestUnsupportedParameterError(
+                        "Mutual TLS (client_cert_source_for_mtls) is not currently supported for async resumable upload methods."
+                    )
+                )
+            elif HAS_ASYNC_REST:
+                transport = self
+                class _AsyncRestStub:
+                    def __call__(self, *args, **kwargs):
+                        if transport._rest_transport is None:
+                            transport._rest_transport = Async{{ service.name }}RestTransport(
+                                host=transport._host,
+                                credentials=transport._credentials,
+                                client_info=transport._client_info,
+                                client_options=getattr(transport, "_client_options", None),
+                            )
+                        return transport._rest_transport.{{ method.transport_safe_name|snake_case }}(*args, **kwargs)
+                self._stubs['{{ method.transport_safe_name|snake_case }}'] = _AsyncRestStub()
+            else:
+                self._stubs['{{ method.transport_safe_name|snake_case }}'] = _ErrorStub(
+                    NotImplementedError(
+                        "Async REST transport is required for async resumable upload methods. "
+                        "Install the library with the `async_rest` extra using "
+                        "`pip install {{ api.naming.warehouse_package_name }}[async_rest]`."
+                    )
+                )
+            {% else %}
             self._stubs['{{ method.transport_safe_name|snake_case }}'] = self._logged_channel.{{ method.grpc_stub_type }}(
                 '/{{ '.'.join(method.meta.address.package) }}.{{ service.name }}/{{ method.name }}',
                 request_serializer={{ method.input.ident }}.{% if method.input.ident.python_import.module.endswith('_pb2') %}SerializeToString{% else %}serialize{% endif %},
                 response_deserializer={{ method.output.ident }}.{% if method.output.ident.python_import.module.endswith('_pb2') %}FromString{% else %}deserialize{% endif %},
             )
+            {% endif %}
         return self._stubs['{{ method.transport_safe_name|snake_case }}']
     {% endfor %}
 
@@ -451,11 +546,16 @@ class {{ service.grpc_asyncio_transport_name }}({{ service.name }}Transport):
 
     {{ shared_macros.prep_wrapped_messages_async_method(api, service)|indent(4) }}
 
-    {{ shared_macros.wrap_async_method_macro()|indent(4) }}
-
+    {% if service.has_resumable_upload_methods %}
+    async def close(self):
+        await self._logged_channel.close()
+        if self._rest_transport is not None:
+            await self._rest_transport.close()
+    {% else %}
     def close(self):
         return self._logged_channel.close()
-    
+    {% endif %}
+
     @property
     def kind(self) -> str:
         return "grpc_asyncio"

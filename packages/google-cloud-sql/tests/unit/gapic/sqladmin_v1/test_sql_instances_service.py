@@ -16560,9 +16560,74 @@ def test_parse_backup_dr_backup_path():
     assert expected == actual
 
 
-def test_network_path():
+def test_crypto_key_path():
     project = "whelk"
-    network = "octopus"
+    location = "octopus"
+    key_ring = "oyster"
+    crypto_key = "nudibranch"
+    expected = "projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}".format(
+        project=project,
+        location=location,
+        key_ring=key_ring,
+        crypto_key=crypto_key,
+    )
+    actual = SqlInstancesServiceClient.crypto_key_path(
+        project, location, key_ring, crypto_key
+    )
+    assert expected == actual
+
+
+def test_parse_crypto_key_path():
+    expected = {
+        "project": "cuttlefish",
+        "location": "mussel",
+        "key_ring": "winkle",
+        "crypto_key": "nautilus",
+    }
+    path = SqlInstancesServiceClient.crypto_key_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = SqlInstancesServiceClient.parse_crypto_key_path(path)
+    assert expected == actual
+
+
+def test_crypto_key_version_path():
+    project = "scallop"
+    location = "abalone"
+    key_ring = "squid"
+    crypto_key = "clam"
+    crypto_key_version = "whelk"
+    expected = "projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}/cryptoKeyVersions/{crypto_key_version}".format(
+        project=project,
+        location=location,
+        key_ring=key_ring,
+        crypto_key=crypto_key,
+        crypto_key_version=crypto_key_version,
+    )
+    actual = SqlInstancesServiceClient.crypto_key_version_path(
+        project, location, key_ring, crypto_key, crypto_key_version
+    )
+    assert expected == actual
+
+
+def test_parse_crypto_key_version_path():
+    expected = {
+        "project": "octopus",
+        "location": "oyster",
+        "key_ring": "nudibranch",
+        "crypto_key": "cuttlefish",
+        "crypto_key_version": "mussel",
+    }
+    path = SqlInstancesServiceClient.crypto_key_version_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = SqlInstancesServiceClient.parse_crypto_key_version_path(path)
+    assert expected == actual
+
+
+def test_network_path():
+    project = "winkle"
+    network = "nautilus"
     expected = "projects/{project}/global/networks/{network}".format(
         project=project,
         network=network,
@@ -16573,13 +16638,41 @@ def test_network_path():
 
 def test_parse_network_path():
     expected = {
-        "project": "oyster",
-        "network": "nudibranch",
+        "project": "scallop",
+        "network": "abalone",
     }
     path = SqlInstancesServiceClient.network_path(**expected)
 
     # Check that the path construction is reversible.
     actual = SqlInstancesServiceClient.parse_network_path(path)
+    assert expected == actual
+
+
+def test_network_attachment_path():
+    project = "squid"
+    region = "clam"
+    network_attachment = "whelk"
+    expected = "projects/{project}/regions/{region}/networkAttachments/{network_attachment}".format(
+        project=project,
+        region=region,
+        network_attachment=network_attachment,
+    )
+    actual = SqlInstancesServiceClient.network_attachment_path(
+        project, region, network_attachment
+    )
+    assert expected == actual
+
+
+def test_parse_network_attachment_path():
+    expected = {
+        "project": "octopus",
+        "region": "oyster",
+        "network_attachment": "nudibranch",
+    }
+    path = SqlInstancesServiceClient.network_attachment_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = SqlInstancesServiceClient.parse_network_attachment_path(path)
     assert expected == actual
 
 

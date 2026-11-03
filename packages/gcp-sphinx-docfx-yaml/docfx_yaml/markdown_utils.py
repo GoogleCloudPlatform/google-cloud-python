@@ -510,26 +510,37 @@ def remove_unused_pages(
 
 
 def run_sphinx_markdown(app: sphinx.application) -> None:
-    """Runs sphinx-build with Markdown builder in the plugin.
+    """Runs Markdown builder in-process reusing the already-read Sphinx environment.
 
     Args:
         app (sphinx.application): The sphinx application.
     """
-    cwd = os.getcwd()
-    relative_srcdir = app.srcdir.removeprefix(f"{cwd}/")
-    relative_outdir = app.outdir.removeprefix(f"{cwd}/").removesuffix("/html")
-    # Skip running sphinx-build for Markdown for some unit tests.
+    # Skip running Markdown builder for some unit tests.
     # Not required other than to output DocFX YAML.
-    if "docs" in cwd:
+    markdown_outdir = Path(app.builder.outdir).parent / "markdown"
+    if (
+        "docs" in os.getcwd()
+        or markdown_outdir.exists()
+        or not getattr(app.env, "found_docs", None)
+    ):
         return
 
-    return shell.run(
-        [
-            "sphinx-build",
-            "-M",
-            "markdown",
-            relative_srcdir,
-            relative_outdir,
-        ],
-        hide_output=False,
-    )
+    from sphinx.util.osutil import ensuredir
+    from sphinx_markdown_builder.markdown_builder import MarkdownBuilder
+
+    ensuredir(str(markdown_outdir))
+    docnames = sorted(app.env.found_docs)
+    orig_builder = app.builder
+    md_builder = MarkdownBuilder(app)
+    md_builder.outdir = str(markdown_outdir)
+    md_builder.set_environment(app.env)
+    md_builder.init()
+    md_builder.prepare_writing(docnames)
+    app.builder = md_builder
+    try:
+        for docname in docnames:
+            doctree = app.env.get_and_resolve_doctree(docname, md_builder)
+            md_builder.write_doc_serialized(docname, doctree)
+            md_builder.write_doc(docname, doctree)
+    finally:
+        app.builder = orig_builder

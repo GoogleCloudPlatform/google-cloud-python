@@ -247,7 +247,7 @@ class AsyncClient(BaseClient):
         timeout: float | None = None,
         *,
         read_time: datetime.datetime | None = None,
-    ) -> AsyncGenerator[DocumentSnapshot, Any]:
+    ) -> AsyncGenerator[DocumentSnapshot[AsyncDocumentReference], Any]:
         """Retrieve a batch of documents.
 
         .. note::
@@ -385,13 +385,13 @@ class AsyncClient(BaseClient):
         num_deleted: int = 0
 
         if isinstance(reference, AsyncCollectionReference):
-            chunk: List[DocumentSnapshot]
+            chunk: List[DocumentSnapshot[AsyncDocumentReference]]
             async for chunk in (
                 reference.recursive()
                 .select([FieldPath.document_id()])
                 ._chunkify(chunk_size)
             ):
-                doc_snap: DocumentSnapshot
+                doc_snap: DocumentSnapshot[AsyncDocumentReference]
                 for doc_snap in chunk:
                     num_deleted += 1
                     bulk_writer.delete(doc_snap.reference)

@@ -105,6 +105,7 @@ class ResumableUploadSession:
         response_type: Optional[Any] = None,
         start_retry: Optional[google.api_core.retry.Retry] = None,
         start_timeout: float = DEFAULT_START_TIMEOUT,
+        request_body: Optional[Union[str, bytes]] = None,
     ) -> None:
         """Initializes a ResumableUploadSession.
 
@@ -132,6 +133,9 @@ class ResumableUploadSession:
                 ``UnseekableStreamError``) are never retried.
             start_timeout: Timeout in seconds for the start request. Defaults to
                 ``60.0`` seconds.
+            request_body: Optional default metadata payload sent with the start request.
+                Used by ``upload()`` and ``iter_upload()`` whenever they are called
+                without an explicit ``request_body``. When ``None``, an empty payload is sent.
         """
         self._config = config or ResumableUploadConfig()
         self._transport = transport
@@ -139,6 +143,9 @@ class ResumableUploadSession:
         self._response_type = response_type
         self._start_retry = start_retry
         self._start_timeout = start_timeout
+        self._request_body: Union[str, bytes] = (
+            request_body if request_body is not None else ""
+        )
         self._response: Optional[Any] = None
         self._state = upload_state._ProtocolState(
             upload_url=upload_url,
@@ -810,7 +817,7 @@ class ResumableUploadSession:
     def upload(
         self,
         stream: Union[BinaryIO, bytes, Iterable[bytes]],
-        request_body: Union[str, bytes] = "",
+        request_body: Optional[Union[str, bytes]] = None,
         size: Optional[int] = None,
         transport: Optional[requests.Session] = None,
         content_type: Optional[str] = None,
@@ -822,6 +829,8 @@ class ResumableUploadSession:
         Args:
             stream: Data payload to upload (file-like stream, bytes, or iterable of bytes).
             request_body: Initial metadata payload sent with the start request.
+                When ``None``, the ``request_body`` supplied to the session constructor
+                (if any) is used.
             size: Total stream size in bytes, if known.
             transport: Optional requests session.
             content_type: Optional MIME type of the stream payload.
@@ -859,7 +868,7 @@ class ResumableUploadSession:
     def iter_upload(
         self,
         stream: Union[BinaryIO, bytes, Iterable[bytes]],
-        request_body: Union[str, bytes] = "",
+        request_body: Optional[Union[str, bytes]] = None,
         size: Optional[int] = None,
         transport: Optional[requests.Session] = None,
         content_type: Optional[str] = None,
@@ -871,6 +880,8 @@ class ResumableUploadSession:
         Args:
             stream: Data payload to upload (file-like stream, bytes, or iterable of bytes).
             request_body: Initial metadata payload sent with the start request.
+                When ``None``, the ``request_body`` supplied to the session constructor
+                (if any) is used.
             size: Total stream size in bytes, if known.
             transport: Optional requests session.
             content_type: Optional MIME type of the stream payload.
@@ -896,6 +907,8 @@ class ResumableUploadSession:
         sess = self._get_transport(transport)
         if content_type is not None:
             self._content_type = content_type
+        if request_body is None:
+            request_body = self._request_body
         self._reset_transfer_state()
         progress_queue: List[UploadProgress] = []
         try:

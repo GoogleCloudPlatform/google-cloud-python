@@ -727,6 +727,64 @@ class NetAppGrpcTransport(NetAppTransport):
         return self._stubs["revert_volume"]
 
     @property
+    def start_split(
+        self,
+    ) -> Callable[[volume.StartSplitRequest], operations_pb2.Operation]:
+        r"""Return a callable for the start split method over gRPC.
+
+        Splits a clone volume from its source volume. This operation
+        will only work for volumes which have clone_details set(clones).
+        For volumes that are not clones, this operation will return an
+        error.
+
+        Returns:
+            Callable[[~.StartSplitRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "start_split" not in self._stubs:
+            self._stubs["start_split"] = self._logged_channel.unary_unary(
+                "/google.cloud.netapp.v1.NetApp/StartSplit",
+                request_serializer=volume.StartSplitRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["start_split"]
+
+    @property
+    def get_split_status(
+        self,
+    ) -> Callable[[volume.GetSplitStatusRequest], volume.SplitStatus]:
+        r"""Return a callable for the get split status method over gRPC.
+
+        Retrieves the current state, progress, and details of
+        a split operation for a volume. This method is relevant
+        when the volume is a clone. For volumes that are not
+        clones, this method will return an error.
+
+        Returns:
+            Callable[[~.GetSplitStatusRequest],
+                    ~.SplitStatus]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_split_status" not in self._stubs:
+            self._stubs["get_split_status"] = self._logged_channel.unary_unary(
+                "/google.cloud.netapp.v1.NetApp/GetSplitStatus",
+                request_serializer=volume.GetSplitStatusRequest.serialize,
+                response_deserializer=volume.SplitStatus.deserialize,
+            )
+        return self._stubs["get_split_status"]
+
+    @property
     def establish_volume_peering(
         self,
     ) -> Callable[[volume.EstablishVolumePeeringRequest], operations_pb2.Operation]:
@@ -2186,8 +2244,8 @@ class NetAppGrpcTransport(NetAppTransport):
     ) -> Callable[[ontap.ExecuteOntapPostRequest], ontap.ExecuteOntapPostResponse]:
         r"""Return a callable for the execute ontap post method over gRPC.
 
-        ``ExecuteOntapPost`` dispatches the ONTAP ``POST`` request to
-        the ``StoragePool`` cluster.
+        ``ExecuteOntapPost`` sends the ONTAP ``POST`` request to the
+        ``StoragePool`` cluster.
 
         Returns:
             Callable[[~.ExecuteOntapPostRequest],
@@ -2213,7 +2271,7 @@ class NetAppGrpcTransport(NetAppTransport):
     ) -> Callable[[ontap.ExecuteOntapGetRequest], ontap.ExecuteOntapGetResponse]:
         r"""Return a callable for the execute ontap get method over gRPC.
 
-        ``ExecuteOntapGet`` dispatches the ONTAP ``GET`` request to the
+        ``ExecuteOntapGet`` sends the ONTAP ``GET`` request to the
         ``StoragePool`` cluster.
 
         Returns:
@@ -2240,8 +2298,8 @@ class NetAppGrpcTransport(NetAppTransport):
     ) -> Callable[[ontap.ExecuteOntapDeleteRequest], ontap.ExecuteOntapDeleteResponse]:
         r"""Return a callable for the execute ontap delete method over gRPC.
 
-        ``ExecuteOntapDelete`` dispatches the ONTAP ``DELETE`` request
-        to the ``StoragePool`` cluster.
+        ``ExecuteOntapDelete`` sends the ONTAP ``DELETE`` request to the
+        ``StoragePool`` cluster.
 
         Returns:
             Callable[[~.ExecuteOntapDeleteRequest],
@@ -2267,8 +2325,8 @@ class NetAppGrpcTransport(NetAppTransport):
     ) -> Callable[[ontap.ExecuteOntapPatchRequest], ontap.ExecuteOntapPatchResponse]:
         r"""Return a callable for the execute ontap patch method over gRPC.
 
-        ``ExecuteOntapPatch`` dispatches the ONTAP ``PATCH`` request to
-        the ``StoragePool`` cluster.
+        ``ExecuteOntapPatch`` sends the ONTAP ``PATCH`` request to the
+        ``StoragePool`` cluster.
 
         Returns:
             Callable[[~.ExecuteOntapPatchRequest],
@@ -2287,6 +2345,86 @@ class NetAppGrpcTransport(NetAppTransport):
                 response_deserializer=ontap.ExecuteOntapPatchResponse.deserialize,
             )
         return self._stubs["execute_ontap_patch"]
+
+    @property
+    def restore_volume(
+        self,
+    ) -> Callable[[volume.RestoreVolumeRequest], operations_pb2.Operation]:
+        r"""Return a callable for the restore volume method over gRPC.
+
+        Restores a backup to an ONTAP-mode volume.
+
+        Returns:
+            Callable[[~.RestoreVolumeRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "restore_volume" not in self._stubs:
+            self._stubs["restore_volume"] = self._logged_channel.unary_unary(
+                "/google.cloud.netapp.v1.NetApp/RestoreVolume",
+                request_serializer=volume.RestoreVolumeRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["restore_volume"]
+
+    @property
+    def list_backup_configs(
+        self,
+    ) -> Callable[[volume.ListBackupConfigsRequest], volume.ListBackupConfigsResponse]:
+        r"""Return a callable for the list backup configs method over gRPC.
+
+        Lists backup configurations for all volumes in an
+        ONTAP-mode Storage Pool.
+
+        Returns:
+            Callable[[~.ListBackupConfigsRequest],
+                    ~.ListBackupConfigsResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_backup_configs" not in self._stubs:
+            self._stubs["list_backup_configs"] = self._logged_channel.unary_unary(
+                "/google.cloud.netapp.v1.NetApp/ListBackupConfigs",
+                request_serializer=volume.ListBackupConfigsRequest.serialize,
+                response_deserializer=volume.ListBackupConfigsResponse.deserialize,
+            )
+        return self._stubs["list_backup_configs"]
+
+    @property
+    def update_backup_config(
+        self,
+    ) -> Callable[[volume.UpdateBackupConfigRequest], operations_pb2.Operation]:
+        r"""Return a callable for the update backup config method over gRPC.
+
+        Updates the backup configuration for an ONTAP-mode
+        volume.
+
+        Returns:
+            Callable[[~.UpdateBackupConfigRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_backup_config" not in self._stubs:
+            self._stubs["update_backup_config"] = self._logged_channel.unary_unary(
+                "/google.cloud.netapp.v1.NetApp/UpdateBackupConfig",
+                request_serializer=volume.UpdateBackupConfigRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["update_backup_config"]
 
     def close(self):
         self._logged_channel.close()

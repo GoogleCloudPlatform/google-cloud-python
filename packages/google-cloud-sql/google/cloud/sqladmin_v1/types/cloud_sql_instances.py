@@ -98,6 +98,7 @@ __protobuf__ = proto.module(
         "PointInTimeRestoreContext",
         "BinLogCoordinates",
         "DatabaseInstance",
+        "BlueGreenDeploymentInfo",
         "GeminiInstanceConfig",
         "ReplicationCluster",
         "AvailableDatabaseVersion",
@@ -169,6 +170,9 @@ class SqlInstanceType(proto.Enum):
             read-replica.
         READ_POOL_INSTANCE (5):
             A Cloud SQL read pool.
+        GREEN_INSTANCE (7):
+            A Cloud SQL instance acting as a Blue-Green
+            deployment target primary. (MySQL only)
     """
 
     SQL_INSTANCE_TYPE_UNSPECIFIED = 0
@@ -176,6 +180,7 @@ class SqlInstanceType(proto.Enum):
     ON_PREMISES_INSTANCE = 2
     READ_REPLICA_INSTANCE = 3
     READ_POOL_INSTANCE = 5
+    GREEN_INSTANCE = 7
 
 
 class SqlSuspensionReason(proto.Enum):
@@ -2042,6 +2047,11 @@ class InstancesRestoreBackupRequest(proto.Message):
             restore_instance_settings, changes any instance settings
             stored in the backup you are restoring from. With the
             difference that these fields are cleared in the settings.
+        ignore_maintenance_version (bool):
+            Optional. If true, the restore operation
+            proceeds even if the target instance's
+            maintenance version is older than the source
+            instance's maintenance version.
     """
 
     restore_backup_context: "RestoreBackupContext" = proto.Field(
@@ -2067,6 +2077,10 @@ class InstancesRestoreBackupRequest(proto.Message):
             proto.STRING,
             number=5,
         )
+    )
+    ignore_maintenance_version: bool = proto.Field(
+        proto.BOOL,
+        number=6,
     )
 
 
@@ -2799,6 +2813,12 @@ class DatabaseInstance(proto.Message):
             instance is initiated.
 
             This field is a member of `oneof`_ ``_include_replicas_for_major_version_upgrade``.
+        skip_precheck (google.protobuf.wrappers_pb2.BoolValue):
+            Optional. Input only. Determines whether the
+            precheck step is skipped during a major version
+            upgrade.
+
+            This field is a member of `oneof`_ ``_skip_precheck``.
         tags (MutableMapping[str, str]):
             Optional. Input only. Immutable. Tag keys and tag values
             that are bound to this instance. You must represent each
@@ -2824,6 +2844,12 @@ class DatabaseInstance(proto.Message):
         dns_names (MutableSequence[google.cloud.sqladmin_v1.types.DnsNameMapping]):
             Output only. The list of DNS names used by
             this instance.
+        deployment_info (google.cloud.sqladmin_v1.types.BlueGreenDeploymentInfo):
+            Output only. Deployment info for the
+            instance. This is set if the instance is
+            currently part of any blue-green setup.
+
+            This field is a member of `oneof`_ ``_deployment_info``.
         database_center_integration_enabled (google.protobuf.wrappers_pb2.BoolValue):
             Optional. If true, instance metadata is sent
             to the Database Center. If false, instance
@@ -3360,6 +3386,12 @@ class DatabaseInstance(proto.Message):
         optional=True,
         message=wrappers_pb2.BoolValue,
     )
+    skip_precheck: wrappers_pb2.BoolValue = proto.Field(
+        proto.MESSAGE,
+        number=77,
+        optional=True,
+        message=wrappers_pb2.BoolValue,
+    )
     tags: MutableMapping[str, str] = proto.MapField(
         proto.STRING,
         proto.STRING,
@@ -3382,6 +3414,12 @@ class DatabaseInstance(proto.Message):
             message=cloud_sql_resources.DnsNameMapping,
         )
     )
+    deployment_info: "BlueGreenDeploymentInfo" = proto.Field(
+        proto.MESSAGE,
+        number=73,
+        optional=True,
+        message="BlueGreenDeploymentInfo",
+    )
     database_center_integration_enabled: wrappers_pb2.BoolValue = proto.Field(
         proto.MESSAGE,
         number=72,
@@ -3392,6 +3430,123 @@ class DatabaseInstance(proto.Message):
         number=76,
         optional=True,
         enum=DatabaseCenterIntegration,
+    )
+
+
+class BlueGreenDeploymentInfo(proto.Message):
+    r"""Blue-green deployment metadata for a database instance. In a
+    blue-green deployment, we maintain two environments, one of
+    which is live. This message contains details about the
+    blue-green deployment.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        deployment_id (str):
+            Output only. The resource ID of the
+            blue-green deployment.
+
+            This field is a member of `oneof`_ ``_deployment_id``.
+        source (google.cloud.sqladmin_v1.types.BlueGreenDeploymentInfo.SourceRole):
+            Output only. The source instance for the
+            Blue-Green deployment.
+
+            This field is a member of `oneof`_ ``role_details``.
+        target (google.cloud.sqladmin_v1.types.BlueGreenDeploymentInfo.TargetRole):
+            Output only. The target instance for the
+            Blue-Green deployment.
+
+            This field is a member of `oneof`_ ``role_details``.
+        state (google.cloud.sqladmin_v1.types.BlueGreenDeploymentInfo.State):
+            Output only. The current state of
+            blue-green-deployment for UI tags
+
+            This field is a member of `oneof`_ ``_state``.
+    """
+
+    class State(proto.Enum):
+        r"""The state of blue-green-deployment for UI tags
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                The state of the deployment is unknown.
+            PRE_SWITCHOVER (1):
+                The deployment is pre-switchover.
+            POST_SWITCHOVER (2):
+                The deployment is post-switchover.
+        """
+
+        STATE_UNSPECIFIED = 0
+        PRE_SWITCHOVER = 1
+        POST_SWITCHOVER = 2
+
+    class SourceRole(proto.Message):
+        r"""The source instance for the Blue-Green deployment.
+
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+        Attributes:
+            target_id (google.cloud.sqladmin_v1.types.InstanceReference):
+                Output only. The target instance paired with
+                this source instance in a blue-green deployment.
+
+                This field is a member of `oneof`_ ``_target_id``.
+        """
+
+        target_id: cloud_sql_resources.InstanceReference = proto.Field(
+            proto.MESSAGE,
+            number=1,
+            optional=True,
+            message=cloud_sql_resources.InstanceReference,
+        )
+
+    class TargetRole(proto.Message):
+        r"""The target instance for the Blue-Green deployment.
+
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+        Attributes:
+            source_id (google.cloud.sqladmin_v1.types.InstanceReference):
+                Output only. The source instance paired with
+                this target instance in a blue-green deployment.
+
+                This field is a member of `oneof`_ ``_source_id``.
+        """
+
+        source_id: cloud_sql_resources.InstanceReference = proto.Field(
+            proto.MESSAGE,
+            number=1,
+            optional=True,
+            message=cloud_sql_resources.InstanceReference,
+        )
+
+    deployment_id: str = proto.Field(
+        proto.STRING,
+        number=1,
+        optional=True,
+    )
+    source: SourceRole = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        oneof="role_details",
+        message=SourceRole,
+    )
+    target: TargetRole = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        oneof="role_details",
+        message=TargetRole,
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=4,
+        optional=True,
+        enum=State,
     )
 
 
@@ -4058,6 +4213,15 @@ class SqlExternalSyncSettingError(proto.Message):
                 privileges to setup DDL replication. (e.g.
                 CREATE EVENT TRIGGER, CREATE SCHEMA) for
                 PostgreSQL.
+            WRITABLE_DESTINATION_REPLICA_RECREATION_DOWNTIME (59):
+                Read replicas of the Writable Destination
+                instance will be recreated after external
+                synchronization is complete, causing downtime on
+                read replicas.
+            WRITABLE_DESTINATION_STORAGE_AUTO_INCREASE_DISABLED (60):
+                A warning that disk storage auto increase is
+                disabled on the destination instance for a
+                Writable Destination migration.
         """
 
         SQL_EXTERNAL_SYNC_SETTING_ERROR_TYPE_UNSPECIFIED = 0
@@ -4119,6 +4283,8 @@ class SqlExternalSyncSettingError(proto.Message):
         PROMPT_DELETE_EXISTING = 56
         WILL_DELETE_EXISTING = 57
         PG_DDL_REPLICATION_INSUFFICIENT_PRIVILEGE = 58
+        WRITABLE_DESTINATION_REPLICA_RECREATION_DOWNTIME = 59
+        WRITABLE_DESTINATION_STORAGE_AUTO_INCREASE_DISABLED = 60
 
     kind: str = proto.Field(
         proto.STRING,
@@ -4325,7 +4491,7 @@ class ReplicaConfiguration(proto.Message):
 
 
 class SqlInstancesExecuteSqlRequest(proto.Message):
-    r"""Execute SQL statements request.
+    r"""
 
     Attributes:
         instance (str):
@@ -4380,7 +4546,8 @@ class ExecuteSqlPayload(proto.Message):
             sequence of statements separated by semicolons.
         database (str):
             Optional. Name of the database on which the
-            statement will be executed.
+            statement will be executed. For Postgres and SQL
+            Server it's required, for MySQL it's optional.
         password_secret_version (str):
             Optional. The resource name of the Secret Manager secret
             holding the password for the user to log into the database.
@@ -4476,7 +4643,7 @@ class ExecuteSqlPayload(proto.Message):
 
 
 class SqlInstancesExecuteSqlResponse(proto.Message):
-    r"""Execute SQL statements response.
+    r"""
 
     Attributes:
         messages (MutableSequence[google.cloud.sqladmin_v1.types.SqlInstancesExecuteSqlResponse.Message]):

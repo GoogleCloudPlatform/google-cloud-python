@@ -147,8 +147,18 @@ class CloudRedisClusterTransport(abc.ABC):
                 default_timeout=600.0,
                 client_info=client_info,
             ),
+            self.list_acl_policies: gapic_v1.method.wrap_method(
+                self.list_acl_policies,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
             self.get_cluster: gapic_v1.method.wrap_method(
                 self.get_cluster,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
+            self.get_acl_policy: gapic_v1.method.wrap_method(
+                self.get_acl_policy,
                 default_timeout=600.0,
                 client_info=client_info,
             ),
@@ -157,13 +167,38 @@ class CloudRedisClusterTransport(abc.ABC):
                 default_timeout=600.0,
                 client_info=client_info,
             ),
+            self.update_acl_policy: gapic_v1.method.wrap_method(
+                self.update_acl_policy,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
             self.delete_cluster: gapic_v1.method.wrap_method(
                 self.delete_cluster,
                 default_timeout=600.0,
                 client_info=client_info,
             ),
+            self.delete_acl_policy: gapic_v1.method.wrap_method(
+                self.delete_acl_policy,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
+            self.get_acl_policy_revision: gapic_v1.method.wrap_method(
+                self.get_acl_policy_revision,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_acl_policy_revisions: gapic_v1.method.wrap_method(
+                self.list_acl_policy_revisions,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.create_cluster: gapic_v1.method.wrap_method(
                 self.create_cluster,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
+            self.create_acl_policy: gapic_v1.method.wrap_method(
+                self.create_acl_policy,
                 default_timeout=600.0,
                 client_info=client_info,
             ),
@@ -215,6 +250,46 @@ class CloudRedisClusterTransport(abc.ABC):
             self.backup_cluster: gapic_v1.method.wrap_method(
                 self.backup_cluster,
                 default_timeout=600.0,
+                client_info=client_info,
+            ),
+            self.list_token_auth_users: gapic_v1.method.wrap_method(
+                self.list_token_auth_users,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_token_auth_user: gapic_v1.method.wrap_method(
+                self.get_token_auth_user,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_auth_tokens: gapic_v1.method.wrap_method(
+                self.list_auth_tokens,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_auth_token: gapic_v1.method.wrap_method(
+                self.get_auth_token,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.add_token_auth_user: gapic_v1.method.wrap_method(
+                self.add_token_auth_user,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_token_auth_user: gapic_v1.method.wrap_method(
+                self.delete_token_auth_user,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.add_auth_token: gapic_v1.method.wrap_method(
+                self.add_auth_token,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_auth_token: gapic_v1.method.wrap_method(
+                self.delete_auth_token,
+                default_timeout=None,
                 client_info=client_info,
             ),
             self.get_location: gapic_v1.method.wrap_method(
@@ -276,6 +351,18 @@ class CloudRedisClusterTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def list_acl_policies(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.ListAclPoliciesRequest],
+        Union[
+            cloud_redis_cluster.ListAclPoliciesResponse,
+            Awaitable[cloud_redis_cluster.ListAclPoliciesResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def get_cluster(
         self,
     ) -> Callable[
@@ -285,10 +372,28 @@ class CloudRedisClusterTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def get_acl_policy(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.GetAclPolicyRequest],
+        Union[cloud_redis_cluster.AclPolicy, Awaitable[cloud_redis_cluster.AclPolicy]],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def update_cluster(
         self,
     ) -> Callable[
         [cloud_redis_cluster.UpdateClusterRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_acl_policy(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.UpdateAclPolicyRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
     ]:
         raise NotImplementedError()
@@ -303,11 +408,53 @@ class CloudRedisClusterTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def delete_acl_policy(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.DeleteAclPolicyRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_acl_policy_revision(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.GetAclPolicyRevisionRequest],
+        Union[
+            cloud_redis_cluster.AclPolicyRevision,
+            Awaitable[cloud_redis_cluster.AclPolicyRevision],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_acl_policy_revisions(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.ListAclPolicyRevisionsRequest],
+        Union[
+            cloud_redis_cluster.ListAclPolicyRevisionsResponse,
+            Awaitable[cloud_redis_cluster.ListAclPolicyRevisionsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def create_cluster(
         self,
     ) -> Callable[
         [cloud_redis_cluster.CreateClusterRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_acl_policy(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.CreateAclPolicyRequest],
+        Union[cloud_redis_cluster.AclPolicy, Awaitable[cloud_redis_cluster.AclPolicy]],
     ]:
         raise NotImplementedError()
 
@@ -412,6 +559,87 @@ class CloudRedisClusterTransport(abc.ABC):
         self,
     ) -> Callable[
         [cloud_redis_cluster.BackupClusterRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_token_auth_users(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.ListTokenAuthUsersRequest],
+        Union[
+            cloud_redis_cluster.ListTokenAuthUsersResponse,
+            Awaitable[cloud_redis_cluster.ListTokenAuthUsersResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_token_auth_user(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.GetTokenAuthUserRequest],
+        Union[
+            cloud_redis_cluster.TokenAuthUser,
+            Awaitable[cloud_redis_cluster.TokenAuthUser],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_auth_tokens(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.ListAuthTokensRequest],
+        Union[
+            cloud_redis_cluster.ListAuthTokensResponse,
+            Awaitable[cloud_redis_cluster.ListAuthTokensResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_auth_token(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.GetAuthTokenRequest],
+        Union[cloud_redis_cluster.AuthToken, Awaitable[cloud_redis_cluster.AuthToken]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def add_token_auth_user(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.AddTokenAuthUserRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_token_auth_user(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.DeleteTokenAuthUserRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def add_auth_token(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.AddAuthTokenRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_auth_token(
+        self,
+    ) -> Callable[
+        [cloud_redis_cluster.DeleteAuthTokenRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
     ]:
         raise NotImplementedError()

@@ -4,6 +4,34 @@
 
 [1]: https://pypi.org/project/google-cloud-redis-cluster/#history
 
+## [0.5.7](https://github.com/googleapis/google-cloud-python/compare/google-cloud-redis-cluster-v0.5.6...google-cloud-redis-cluster-v0.5.7) (2026-10-29)
+
+
+### Features
+
+* update API sources and regenerate ([#18889](https://github.com/googleapis/google-cloud-python/issues/18889)) ([8705243](https://github.com/googleapis/google-cloud-python/commit/870524380c52ea234235e0c449f5c9aee2945283))
+
+## [0.5.6](https://github.com/googleapis/google-cloud-python/compare/google-cloud-redis-cluster-v0.5.5...google-cloud-redis-cluster-v0.5.6) (2026-10-22)
+
+
+### Features
+
+* update API sources and regenerate ([#18797](https://github.com/googleapis/google-cloud-python/issues/18797)) ([be4d954](https://github.com/googleapis/google-cloud-python/commit/be4d954baf9a27cad04637183047b156afa4784a))
+
+## [0.5.5](https://github.com/googleapis/google-cloud-python/compare/google-cloud-redis-cluster-v0.5.4...google-cloud-redis-cluster-v0.5.5) (2026-10-15)
+
+
+### Features
+
+* update API sources and regenerate ([#18699](https://github.com/googleapis/google-cloud-python/issues/18699)) ([1aa57db](https://github.com/googleapis/google-cloud-python/commit/1aa57db6309e47e1a0505be80ed0443d2ca5a4d0))
+
+## [0.5.4](https://github.com/googleapis/google-cloud-python/compare/google-cloud-redis-cluster-v0.5.3...google-cloud-redis-cluster-v0.5.4) (2026-10-08)
+
+
+### Features
+
+* update API sources and regenerate ([#18593](https://github.com/googleapis/google-cloud-python/issues/18593)) ([d0505e8](https://github.com/googleapis/google-cloud-python/commit/d0505e8bc7615f2c649d3e25ebc7e3ccca45f22b))
+
 ## [0.5.3](https://github.com/googleapis/google-cloud-python/compare/google-cloud-redis-cluster-v0.5.2...google-cloud-redis-cluster-v0.5.3) (2026-10-01)
 
 

@@ -15,7 +15,6 @@
 """Context manager for Cloud Spanner batched writes."""
 
 __CROSS_SYNC_OUTPUT__ = "google.cloud.spanner_v1.batch"
-import functools
 import time
 from typing import List, Optional
 
@@ -25,7 +24,6 @@ from google.cloud._helpers import _datetime_to_pb_timestamp
 from google.cloud.aio._cross_sync import CrossSync
 from google.cloud.spanner_v1._async._helpers import _retry, _retry_on_aborted_exception
 from google.cloud.spanner_v1._helpers import (
-    AtomicCounter,
     _check_rst_stream_error,
     _make_list_value_pb,
     _make_list_value_pbs,
@@ -77,16 +75,6 @@ class _BatchBase(_SessionWrapper):
         """Timestamp at which the batch was successfully committed."""
         self.commit_stats: Optional[CommitResponse.CommitStats] = None
         self._client_context = _validate_client_context(client_context)
-
-    @property
-    def _resource_info(self):
-        """Resource information for metrics labels."""
-        database = self._session._database
-        return {
-            "project": database._instance._client.project,
-            "instance": database._instance.instance_id,
-            "database": database.database_id,
-        }
 
     def insert(self, table, columns, values):
         """Insert one or more new table rows.
@@ -341,13 +329,11 @@ class Batch(_BatchBase):
                     metadata,
                     span,
                 )
-                commit_method = functools.partial(
-                    api.commit,
-                    request=commit_request,
-                    metadata=call_metadata,
-                )
                 with error_augmenter:
-                    return await commit_method()
+                    return await api.commit(
+                        request=commit_request,
+                        metadata=call_metadata,
+                    )
 
             response = await _retry_on_aborted_exception(
                 wrapped_method,
@@ -405,16 +391,6 @@ class MutationGroups(_SessionWrapper):
         self._mutation_groups: List[MutationGroup] = []
         self.committed: bool = False
         self._client_context = _validate_client_context(client_context)
-
-    @property
-    def _resource_info(self):
-        """Resource information for metrics labels."""
-        database = self._session._database
-        return {
-            "project": database._instance._client.project,
-            "instance": database._instance.instance_id,
-            "database": database.database_id,
-        }
 
     def group(self):
         """Returns a new `MutationGroup` to which mutations can be added."""
@@ -478,27 +454,27 @@ class MutationGroups(_SessionWrapper):
             ) as span,
             MetricsCapture(self._resource_info),
         ):
-            attempt = AtomicCounter(0)
+            attempt = 0
             nth_request = getattr(database, "_next_nth_request", 0)
 
             def wrapped_method():
+                nonlocal attempt
+                attempt += 1
                 batch_write_request = BatchWriteRequest(
                     session=session.name,
                     mutation_groups=mutation_groups,
                     request_options=request_options,
                     exclude_txn_from_change_streams=exclude_txn_from_change_streams,
                 )
-                batch_write_method = functools.partial(
-                    api.batch_write,
+                return api.batch_write(
                     request=batch_write_request,
                     metadata=database.metadata_with_request_id(
                         nth_request,
-                        attempt.increment(),
+                        attempt,
                         metadata,
                         span,
                     ),
                 )
-                return batch_write_method()
 
             response = await _retry(
                 wrapped_method,

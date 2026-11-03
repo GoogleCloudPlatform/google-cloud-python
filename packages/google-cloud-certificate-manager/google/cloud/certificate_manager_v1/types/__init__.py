@@ -20,6 +20,7 @@ from .certificate_issuance_config import (
     GetCertificateIssuanceConfigRequest,
     ListCertificateIssuanceConfigsRequest,
     ListCertificateIssuanceConfigsResponse,
+    UpdateCertificateIssuanceConfigRequest,
 )
 from .certificate_manager import (
     Certificate,
@@ -70,6 +71,7 @@ __all__ = (
     "GetCertificateIssuanceConfigRequest",
     "ListCertificateIssuanceConfigsRequest",
     "ListCertificateIssuanceConfigsResponse",
+    "UpdateCertificateIssuanceConfigRequest",
     "Certificate",
     "CertificateMap",
     "CertificateMapEntry",

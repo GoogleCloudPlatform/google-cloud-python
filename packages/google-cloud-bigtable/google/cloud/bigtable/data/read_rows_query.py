@@ -87,6 +87,19 @@ class RowRange:
                 init_dict["end_key_open"] = end_key
         self._pb = RowRangePB(**init_dict)
 
+    def _key(
+        self,
+    ) -> tuple[bytes | None, bytes | None, bool | None, bool | None]:
+        return (
+            self.start_key,
+            self.end_key,
+            self.start_is_inclusive,
+            self.end_is_inclusive,
+        )
+
+    def __hash__(self) -> int:
+        return hash(self._key())
+
     @property
     def start_key(self) -> bytes | None:
         """
@@ -229,7 +242,12 @@ class ReadRowsQuery:
         row_filter: a RowFilter to apply to the query
     """
 
-    slots = ("_limit", "_filter", "_row_set")
+    __slots__ = (
+        "_limit",
+        "_filter",
+        "_row_keys",
+        "_row_ranges",
+    )
 
     def __init__(
         self,
@@ -246,10 +264,13 @@ class ReadRowsQuery:
             row_ranges = [row_ranges]
         if not isinstance(row_keys, list):
             row_keys = [row_keys]
-        row_keys = [key.encode() if isinstance(key, str) else key for key in row_keys]
-        self._row_set = RowSetPB(
-            row_keys=row_keys, row_ranges=[r._pb for r in row_ranges]
-        )
+        # Use dicts as ordered sets to preserve insertion order with O(1) deduplication
+        self._row_keys: dict[bytes, None] = {}
+        self._row_ranges: dict[RowRange, None] = {}
+        for k in row_keys:
+            self.add_key(k)
+        for r in row_ranges:
+            self.add_range(r)
         self.limit = limit or None
         self.filter = row_filter
 
@@ -261,7 +282,7 @@ class ReadRowsQuery:
         Returns:
             list[bytes]: the row keys in this query
         """
-        return list(self._row_set.row_keys)
+        return list(self._row_keys)
 
     @property
     def row_ranges(self) -> list[RowRange]:
@@ -271,7 +292,7 @@ class ReadRowsQuery:
         Returns:
             list[RowRange]: the row ranges in this query
         """
-        return [RowRange._from_pb(r) for r in self._row_set.row_ranges]
+        return list(self._row_ranges)
 
     @property
     def limit(self) -> int | None:
@@ -336,8 +357,7 @@ class ReadRowsQuery:
             row_key = row_key.encode()
         elif not isinstance(row_key, bytes):
             raise ValueError("row_key must be string or bytes")
-        if row_key not in self._row_set.row_keys:
-            self._row_set.row_keys.append(row_key)
+        self._row_keys[row_key] = None
 
     def add_range(
         self,
@@ -349,8 +369,7 @@ class ReadRowsQuery:
         Args:
             row_range: a range of row keys to add to this query
         """
-        if row_range not in self.row_ranges:
-            self._row_set.row_ranges.append(row_range._pb)
+        self._row_ranges[row_range] = None
 
     def shard(self, shard_keys: RowKeySamples) -> ShardedQuery:
         """
@@ -491,9 +510,18 @@ class ReadRowsQuery:
             app_profile_id=table.app_profile_id,
             filter=self.filter._to_pb() if self.filter else None,
             rows_limit=self.limit or 0,
-            rows=self._row_set,
+            rows=RowSetPB(
+                row_keys=self.row_keys,
+                row_ranges=[r._pb for r in self._row_ranges],
+            ),
             **table._request_path,
         )
+
+    def __copy__(self) -> ReadRowsQuery:
+        new_query = ReadRowsQuery(limit=self.limit, row_filter=self.filter)
+        new_query._row_keys = self._row_keys.copy()
+        new_query._row_ranges = self._row_ranges.copy()
+        return new_query
 
     def __eq__(self, other):
         """
@@ -509,24 +537,18 @@ class ReadRowsQuery:
         if not isinstance(other, ReadRowsQuery):
             return False
         # empty queries are equal
-        if len(self.row_keys) == 0 and len(other.row_keys) == 0:
-            this_range_empty = len(self.row_ranges) == 0 or all(
-                [bool(r) is False for r in self.row_ranges]
+        if len(self._row_keys) == 0 and len(other._row_keys) == 0:
+            this_range_empty = len(self._row_ranges) == 0 or all(
+                [bool(r) is False for r in self._row_ranges]
             )
-            other_range_empty = len(other.row_ranges) == 0 or all(
-                [bool(r) is False for r in other.row_ranges]
+            other_range_empty = len(other._row_ranges) == 0 or all(
+                [bool(r) is False for r in other._row_ranges]
             )
             if this_range_empty and other_range_empty:
                 return self.filter == other.filter and self.limit == other.limit
-        # otherwise, sets should have same sizes
-        if len(self.row_keys) != len(other.row_keys):
-            return False
-        if len(self.row_ranges) != len(other.row_ranges):
-            return False
-        ranges_match = all([row in other.row_ranges for row in self.row_ranges])
         return (
-            self.row_keys == other.row_keys
-            and ranges_match
+            self._row_keys.keys() == other._row_keys.keys()
+            and self._row_ranges.keys() == other._row_ranges.keys()
             and self.filter == other.filter
             and self.limit == other.limit
         )

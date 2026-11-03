@@ -39,6 +39,7 @@ except ImportError:  # pragma: NO COVER
     HAS_GOOGLE_AUTH_AIO = False
 
 import google.auth
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import google.type.money_pb2 as money_pb2  # type: ignore
 from google.api_core import (
@@ -1736,6 +1737,390 @@ def test_batch_create_audience_segments_rest_flattened_error(transport: str = "r
             requests=[
                 audience_segment_service.CreateAudienceSegmentRequest(
                     parent="parent_value"
+                )
+            ],
+        )
+
+
+def test_update_audience_segment_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = AudienceSegmentServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.update_audience_segment
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.update_audience_segment
+        ] = mock_rpc
+
+        request = {}
+        client.update_audience_segment(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.update_audience_segment(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_update_audience_segment_rest_required_fields(
+    request_type=audience_segment_service.UpdateAudienceSegmentRequest,
+):
+    transport_class = transports.AudienceSegmentServiceRestTransport
+
+    request_init = {}
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseUpdateAudienceSegment,
+        "_BaseUpdateAudienceSegment__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(("updateMask",))
+
+    # verify required fields with non-default values are left alone
+
+    client = AudienceSegmentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = audience_segment_messages.AudienceSegment()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "patch",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = audience_segment_messages.AudienceSegment.pb(return_value)
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.update_audience_segment(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_update_audience_segment_rest_flattened():
+    client = AudienceSegmentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = audience_segment_messages.AudienceSegment()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "audience_segment": {"name": "networks/sample1/audienceSegments/sample2"}
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            audience_segment=audience_segment_messages.AudienceSegment(
+                non_rule_based_first_party_audience_segment=audience_segment_messages.AudienceSegment.NonRuleBasedFirstPartyAudienceSegment(
+                    membership_expiration_days=2782
+                )
+            ),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = audience_segment_messages.AudienceSegment.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.update_audience_segment(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{audience_segment.name=networks/*/audienceSegments/*}"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_update_audience_segment_rest_flattened_error(transport: str = "rest"):
+    client = AudienceSegmentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.update_audience_segment(
+            audience_segment_service.UpdateAudienceSegmentRequest(),
+            audience_segment=audience_segment_messages.AudienceSegment(
+                non_rule_based_first_party_audience_segment=audience_segment_messages.AudienceSegment.NonRuleBasedFirstPartyAudienceSegment(
+                    membership_expiration_days=2782
+                )
+            ),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+
+
+def test_batch_update_audience_segments_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = AudienceSegmentServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_update_audience_segments
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.batch_update_audience_segments
+        ] = mock_rpc
+
+        request = {}
+        client.batch_update_audience_segments(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_update_audience_segments(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_update_audience_segments_rest_required_fields(
+    request_type=audience_segment_service.BatchUpdateAudienceSegmentsRequest,
+):
+    transport_class = transports.AudienceSegmentServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchUpdateAudienceSegments,
+        "_BaseBatchUpdateAudienceSegments__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+
+    client = AudienceSegmentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = audience_segment_service.BatchUpdateAudienceSegmentsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = (
+                audience_segment_service.BatchUpdateAudienceSegmentsResponse.pb(
+                    return_value
+                )
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_update_audience_segments(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_update_audience_segments_rest_flattened():
+    client = AudienceSegmentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = audience_segment_service.BatchUpdateAudienceSegmentsResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            requests=[
+                audience_segment_service.UpdateAudienceSegmentRequest(
+                    audience_segment=audience_segment_messages.AudienceSegment(
+                        non_rule_based_first_party_audience_segment=audience_segment_messages.AudienceSegment.NonRuleBasedFirstPartyAudienceSegment(
+                            membership_expiration_days=2782
+                        )
+                    )
+                )
+            ],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = audience_segment_service.BatchUpdateAudienceSegmentsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_update_audience_segments(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*}/audienceSegments:batchUpdate"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_update_audience_segments_rest_flattened_error(transport: str = "rest"):
+    client = AudienceSegmentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_update_audience_segments(
+            audience_segment_service.BatchUpdateAudienceSegmentsRequest(),
+            parent="parent_value",
+            requests=[
+                audience_segment_service.UpdateAudienceSegmentRequest(
+                    audience_segment=audience_segment_messages.AudienceSegment(
+                        non_rule_based_first_party_audience_segment=audience_segment_messages.AudienceSegment.NonRuleBasedFirstPartyAudienceSegment(
+                            membership_expiration_days=2782
+                        )
+                    )
                 )
             ],
         )
@@ -3537,6 +3922,470 @@ def test_batch_create_audience_segments_rest_interceptors(null_interceptor):
         post_with_metadata.assert_called_once()
 
 
+def test_update_audience_segment_rest_bad_request(
+    request_type=audience_segment_service.UpdateAudienceSegmentRequest,
+):
+    client = AudienceSegmentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "audience_segment": {"name": "networks/sample1/audienceSegments/sample2"}
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.update_audience_segment(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        audience_segment_service.UpdateAudienceSegmentRequest,
+        dict,
+    ],
+)
+def test_update_audience_segment_rest_call_success(request_type):
+    client = AudienceSegmentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "audience_segment": {"name": "networks/sample1/audienceSegments/sample2"}
+    }
+    request_init["audience_segment"] = {
+        "non_rule_based_first_party_audience_segment": {
+            "membership_expiration_days": 2782
+        },
+        "rule_based_first_party_audience_segment": {
+            "page_views": 1066,
+            "recency_days": 1273,
+            "membership_expiration_days": 2782,
+            "rule": {
+                "inventory_targeting": {
+                    "targeted_ad_units": [
+                        {"include_descendants": True, "ad_unit": "ad_unit_value"}
+                    ],
+                    "excluded_ad_units": {},
+                    "targeted_placements": [
+                        "targeted_placements_value1",
+                        "targeted_placements_value2",
+                    ],
+                },
+                "custom_targeting": {
+                    "custom_targeting_clauses": [
+                        {
+                            "custom_targeting_literals": [
+                                {
+                                    "negative": True,
+                                    "custom_targeting_key": "custom_targeting_key_value",
+                                    "custom_targeting_values": [
+                                        "custom_targeting_values_value1",
+                                        "custom_targeting_values_value2",
+                                    ],
+                                }
+                            ],
+                            "audience_segment_targetings": [
+                                {
+                                    "negative": True,
+                                    "audience_segments": [
+                                        "audience_segments_value1",
+                                        "audience_segments_value2",
+                                    ],
+                                }
+                            ],
+                            "cms_metadata_targetings": [
+                                {
+                                    "negative": True,
+                                    "cms_metadata_values": [
+                                        "cms_metadata_values_value1",
+                                        "cms_metadata_values_value2",
+                                    ],
+                                }
+                            ],
+                        }
+                    ]
+                },
+            },
+        },
+        "third_party_audience_segment": {
+            "approval_status": 1,
+            "cost": {
+                "currency_code": "currency_code_value",
+                "units": 563,
+                "nanos": 543,
+            },
+            "license_type": 1,
+            "start_time": {"seconds": 751, "nanos": 543},
+            "end_time": {},
+        },
+        "name": "networks/sample1/audienceSegments/sample2",
+        "shared_id": 931,
+        "display_name": "display_name_value",
+        "category_ids": [1278, 1279],
+        "description": "description_value",
+        "status": 1,
+        "size": 443,
+        "mobile_web_size": 1583,
+        "idfa_size": 942,
+        "ad_id_size": 1035,
+        "ppid_size": 967,
+        "data_provider_display_name": "data_provider_display_name_value",
+        "segment_type": 1,
+    }
+    # The version of a generated dependency at test runtime may differ from the version used during generation.
+    # Delete any fields which are not present in the current runtime dependency
+    # See https://github.com/googleapis/gapic-generator-python/issues/1748
+
+    # Determine if the message type is proto-plus or protobuf
+    test_field = audience_segment_service.UpdateAudienceSegmentRequest.meta.fields[
+        "audience_segment"
+    ]
+
+    def get_message_fields(field):
+        # Given a field which is a message (composite type), return a list with
+        # all the fields of the message.
+        # If the field is not a composite type, return an empty list.
+        message_fields = []
+
+        if hasattr(field, "message") and field.message:
+            is_field_type_proto_plus_type = not hasattr(field.message, "DESCRIPTOR")
+
+            if is_field_type_proto_plus_type:
+                message_fields = field.message.meta.fields.values()
+            # Add `# pragma: NO COVER` because there may not be any `*_pb2` field types
+            else:  # pragma: NO COVER
+                message_fields = field.message.DESCRIPTOR.fields
+        return message_fields
+
+    runtime_nested_fields = [
+        (field.name, nested_field.name)
+        for field in get_message_fields(test_field)
+        for nested_field in get_message_fields(field)
+    ]
+
+    subfields_not_in_runtime = []
+
+    # For each item in the sample request, create a list of sub fields which are not present at runtime
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for field, value in request_init["audience_segment"].items():  # pragma: NO COVER
+        result = None
+        is_repeated = False
+        # For repeated fields
+        if isinstance(value, list) and len(value):
+            is_repeated = True
+            result = value[0]
+        # For fields where the type is another message
+        if isinstance(value, dict):
+            result = value
+
+        if result and hasattr(result, "keys"):
+            for subfield in result.keys():
+                if (field, subfield) not in runtime_nested_fields:
+                    subfields_not_in_runtime.append(
+                        {
+                            "field": field,
+                            "subfield": subfield,
+                            "is_repeated": is_repeated,
+                        }
+                    )
+
+    # Remove fields from the sample request which are not present in the runtime version of the dependency
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for subfield_to_delete in subfields_not_in_runtime:  # pragma: NO COVER
+        field = subfield_to_delete.get("field")
+        field_repeated = subfield_to_delete.get("is_repeated")
+        subfield = subfield_to_delete.get("subfield")
+        if subfield:
+            if field_repeated:
+                for i in range(0, len(request_init["audience_segment"][field])):
+                    del request_init["audience_segment"][field][i][subfield]
+            else:
+                del request_init["audience_segment"][field][subfield]
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = audience_segment_messages.AudienceSegment(
+            name="name_value",
+            shared_id=931,
+            display_name="display_name_value",
+            category_ids=[1277],
+            description="description_value",
+            status=audience_segment_enums.AudienceSegmentStatusEnum.AudienceSegmentStatus.ACTIVE,
+            size=443,
+            mobile_web_size=1583,
+            idfa_size=942,
+            ad_id_size=1035,
+            ppid_size=967,
+            data_provider_display_name="data_provider_display_name_value",
+            segment_type=audience_segment_enums.AudienceSegmentTypeEnum.AudienceSegmentType.FIRST_PARTY,
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = audience_segment_messages.AudienceSegment.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.update_audience_segment(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, audience_segment_messages.AudienceSegment)
+    assert response.name == "name_value"
+    assert response.shared_id == 931
+    assert response.display_name == "display_name_value"
+    assert response.category_ids == [1277]
+    assert response.description == "description_value"
+    assert (
+        response.status
+        == audience_segment_enums.AudienceSegmentStatusEnum.AudienceSegmentStatus.ACTIVE
+    )
+    assert response.size == 443
+    assert response.mobile_web_size == 1583
+    assert response.idfa_size == 942
+    assert response.ad_id_size == 1035
+    assert response.ppid_size == 967
+    assert response.data_provider_display_name == "data_provider_display_name_value"
+    assert (
+        response.segment_type
+        == audience_segment_enums.AudienceSegmentTypeEnum.AudienceSegmentType.FIRST_PARTY
+    )
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_update_audience_segment_rest_interceptors(null_interceptor):
+    transport = transports.AudienceSegmentServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.AudienceSegmentServiceRestInterceptor(),
+    )
+    client = AudienceSegmentServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.AudienceSegmentServiceRestInterceptor,
+            "post_update_audience_segment",
+        ) as post,
+        mock.patch.object(
+            transports.AudienceSegmentServiceRestInterceptor,
+            "post_update_audience_segment_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.AudienceSegmentServiceRestInterceptor,
+            "pre_update_audience_segment",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = audience_segment_service.UpdateAudienceSegmentRequest.pb(
+            audience_segment_service.UpdateAudienceSegmentRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = audience_segment_messages.AudienceSegment.to_json(
+            audience_segment_messages.AudienceSegment()
+        )
+        req.return_value.content = return_value
+
+        request = audience_segment_service.UpdateAudienceSegmentRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = audience_segment_messages.AudienceSegment()
+        post_with_metadata.return_value = (
+            audience_segment_messages.AudienceSegment(),
+            metadata,
+        )
+
+        client.update_audience_segment(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_update_audience_segments_rest_bad_request(
+    request_type=audience_segment_service.BatchUpdateAudienceSegmentsRequest,
+):
+    client = AudienceSegmentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_update_audience_segments(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        audience_segment_service.BatchUpdateAudienceSegmentsRequest,
+        dict,
+    ],
+)
+def test_batch_update_audience_segments_rest_call_success(request_type):
+    client = AudienceSegmentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = audience_segment_service.BatchUpdateAudienceSegmentsResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = audience_segment_service.BatchUpdateAudienceSegmentsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_update_audience_segments(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response, audience_segment_service.BatchUpdateAudienceSegmentsResponse
+    )
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_update_audience_segments_rest_interceptors(null_interceptor):
+    transport = transports.AudienceSegmentServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.AudienceSegmentServiceRestInterceptor(),
+    )
+    client = AudienceSegmentServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.AudienceSegmentServiceRestInterceptor,
+            "post_batch_update_audience_segments",
+        ) as post,
+        mock.patch.object(
+            transports.AudienceSegmentServiceRestInterceptor,
+            "post_batch_update_audience_segments_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.AudienceSegmentServiceRestInterceptor,
+            "pre_batch_update_audience_segments",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = audience_segment_service.BatchUpdateAudienceSegmentsRequest.pb(
+            audience_segment_service.BatchUpdateAudienceSegmentsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = (
+            audience_segment_service.BatchUpdateAudienceSegmentsResponse.to_json(
+                audience_segment_service.BatchUpdateAudienceSegmentsResponse()
+            )
+        )
+        req.return_value.content = return_value
+
+        request = audience_segment_service.BatchUpdateAudienceSegmentsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = (
+            audience_segment_service.BatchUpdateAudienceSegmentsResponse()
+        )
+        post_with_metadata.return_value = (
+            audience_segment_service.BatchUpdateAudienceSegmentsResponse(),
+            metadata,
+        )
+
+        client.batch_update_audience_segments(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
 def test_batch_activate_audience_segments_rest_bad_request(
     request_type=audience_segment_service.BatchActivateAudienceSegmentsRequest,
 ):
@@ -4492,6 +5341,48 @@ def test_batch_create_audience_segments_empty_call_rest():
 
 # This test is a coverage failsafe to make sure that totally empty calls,
 # i.e. request == None and no flattened fields passed, work.
+def test_update_audience_segment_empty_call_rest():
+    client = AudienceSegmentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_audience_segment), "__call__"
+    ) as call:
+        client.update_audience_segment(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = audience_segment_service.UpdateAudienceSegmentRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_update_audience_segments_empty_call_rest():
+    client = AudienceSegmentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_update_audience_segments), "__call__"
+    ) as call:
+        client.batch_update_audience_segments(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = audience_segment_service.BatchUpdateAudienceSegmentsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
 def test_batch_activate_audience_segments_empty_call_rest():
     client = AudienceSegmentServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -4621,6 +5512,8 @@ def test_audience_segment_service_base_transport():
         "list_audience_segments",
         "create_audience_segment",
         "batch_create_audience_segments",
+        "update_audience_segment",
+        "batch_update_audience_segments",
         "batch_activate_audience_segments",
         "batch_deactivate_audience_segments",
         "batch_approve_audience_segments",
@@ -4782,6 +5675,12 @@ def test_audience_segment_service_client_transport_session_collision(transport_n
     assert session1 != session2
     session1 = client1.transport.batch_create_audience_segments._session
     session2 = client2.transport.batch_create_audience_segments._session
+    assert session1 != session2
+    session1 = client1.transport.update_audience_segment._session
+    session2 = client2.transport.update_audience_segment._session
+    assert session1 != session2
+    session1 = client1.transport.batch_update_audience_segments._session
+    session2 = client2.transport.batch_update_audience_segments._session
     assert session1 != session2
     session1 = client1.transport.batch_activate_audience_segments._session
     session2 = client2.transport.batch_activate_audience_segments._session

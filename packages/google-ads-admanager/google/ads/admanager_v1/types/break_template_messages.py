@@ -82,14 +82,16 @@ class BreakTemplate(proto.Message):
         ad_break_optimization_type (google.ads.admanager_v1.types.AdBreakOptimizationTypeEnum.AdBreakOptimizationType):
             Optional. The optimization type of the pod. This field is
             optional and defaults to
-            [AdBreakOptimizationType.REVENUE][].
+            [AdBreakOptimizationTypeEnum.AdBreakOptimizationType.REVENUE][google.ads.admanager.v1.AdBreakOptimizationTypeEnum.AdBreakOptimizationType.REVENUE].
 
             This field is a member of `oneof`_ ``_ad_break_optimization_type``.
         fill_order_direction_type (google.ads.admanager_v1.types.AdRuleFillOrderDirectionEnum.AdRuleFillOrderDirection):
             Optional. The fill order direction of the pod. This value is
-            required if ``adBreakOptimizationType`` is equal to
-            [AdBreakOptimizationType.POSITION][] and should otherwise be
-            unset.
+            required if
+            [adBreakOptimizationType][google.ads.admanager.v1.BreakTemplate.ad_break_optimization_type]
+            is equal to
+            [AdBreakOptimizationTypeEnum.AdBreakOptimizationType.POSITION][google.ads.admanager.v1.AdBreakOptimizationTypeEnum.AdBreakOptimizationType.POSITION]
+            and should otherwise be unset.
 
             This field is a member of `oneof`_ ``_fill_order_direction_type``.
     """

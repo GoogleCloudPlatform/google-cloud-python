@@ -95,6 +95,15 @@ from .cloud_sql import (
     UpdateBackupRequest,
     Value,
 )
+from .cloud_sql_blue_green_deployments import (
+    BlueGreenDeployment,
+    CreateBlueGreenDeploymentRequest,
+    DeleteBlueGreenDeploymentRequest,
+    GetBlueGreenDeploymentRequest,
+    ListBlueGreenDeploymentsRequest,
+    ListBlueGreenDeploymentsResponse,
+    SwitchoverBlueGreenDeploymentRequest,
+)
 from .cloud_sql_connect import (
     ConnectSettings,
     GenerateEphemeralCertRequest,
@@ -128,6 +137,7 @@ from .cloud_sql_resources import (
     BackupRunsListResponse,
     BakType,
     BinLogCoordinates,
+    BlueGreenDeploymentInfo,
     CloneContext,
     ConnectionPoolConfig,
     ConnectionPoolFlags,
@@ -230,6 +240,10 @@ from .cloud_sql_resources import (
     SslCertsInsertRequest,
     SslCertsInsertResponse,
     SslCertsListResponse,
+    StartWorkloadCaptureContext,
+    StartWorkloadReplayContext,
+    StopWorkloadCaptureContext,
+    StopWorkloadReplayContext,
     SyncFlags,
     TruncateLogContext,
 )
@@ -249,6 +263,15 @@ from .cloud_sql_users import (
     User,
     UserPasswordValidationPolicy,
     UsersListResponse,
+)
+from .cloud_sql_workload_captures import (
+    SqlWorkloadCapturesListRequest,
+    WorkloadCapture,
+    WorkloadCapturesListResponse,
+    WorkloadCapturesStartReplayRequest,
+    WorkloadCapturesStartRequest,
+    WorkloadCapturesStopReplayRequest,
+    WorkloadCapturesStopRequest,
 )
 
 __all__ = (
@@ -332,6 +355,13 @@ __all__ = (
     "UpdateBackupRequest",
     "Value",
     "ExternalSyncParallelLevel",
+    "BlueGreenDeployment",
+    "CreateBlueGreenDeploymentRequest",
+    "DeleteBlueGreenDeploymentRequest",
+    "GetBlueGreenDeploymentRequest",
+    "ListBlueGreenDeploymentsRequest",
+    "ListBlueGreenDeploymentsResponse",
+    "SwitchoverBlueGreenDeploymentRequest",
     "ConnectSettings",
     "GenerateEphemeralCertRequest",
     "GenerateEphemeralCertResponse",
@@ -358,6 +388,7 @@ __all__ = (
     "BackupRun",
     "BackupRunsListResponse",
     "BinLogCoordinates",
+    "BlueGreenDeploymentInfo",
     "CloneContext",
     "ConnectionPoolConfig",
     "ConnectionPoolFlags",
@@ -443,6 +474,10 @@ __all__ = (
     "SslCertsInsertRequest",
     "SslCertsInsertResponse",
     "SslCertsListResponse",
+    "StartWorkloadCaptureContext",
+    "StartWorkloadReplayContext",
+    "StopWorkloadCaptureContext",
+    "StopWorkloadReplayContext",
     "SyncFlags",
     "TruncateLogContext",
     "AutoDnsStatus",
@@ -477,4 +512,11 @@ __all__ = (
     "User",
     "UserPasswordValidationPolicy",
     "UsersListResponse",
+    "SqlWorkloadCapturesListRequest",
+    "WorkloadCapture",
+    "WorkloadCapturesListResponse",
+    "WorkloadCapturesStartReplayRequest",
+    "WorkloadCapturesStartRequest",
+    "WorkloadCapturesStopReplayRequest",
+    "WorkloadCapturesStopRequest",
 )

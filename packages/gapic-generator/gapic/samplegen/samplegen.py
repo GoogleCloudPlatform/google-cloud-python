@@ -1183,14 +1183,20 @@ def _get_sample_imports(sample: Dict, rpc: wrappers.Method) -> List[str]:
     module_name = sample["module_name"]
     module_import = f"from {module_namespace} import {module_name}"
 
+    imports = [module_import]
     address = rpc.input.meta.address
     # This checks if the request message is part of the service proto package.
     # If not, we should try to include a separate import statement.
-    if address.proto_package.startswith(address.api_naming.proto_package):
-        return [module_import]
-    else:
-        request_import = str(address.python_import)
-        return sorted([module_import, request_import])
+    if not address.proto_package.startswith(address.api_naming.proto_package):
+        imports.append(str(address.python_import))
+
+    if rpc.is_resumable_upload:
+        imports.append(
+            "from google.api_core.resumable_transfer import ResumableUploadConfig"
+        )
+        imports.append("import io")
+
+    return sorted(imports)
 
 
 def generate_sample(
@@ -1222,6 +1228,7 @@ def generate_sample(
 
     calling_form = types.CallingForm.method_default(rpc)
     sample["is_internal"] = rpc.is_internal
+    sample["is_resumable_upload"] = rpc.is_resumable_upload
 
     v = Validator(rpc, api_schema)
     # Tweak some small aspects of the sample to set defaults for optional

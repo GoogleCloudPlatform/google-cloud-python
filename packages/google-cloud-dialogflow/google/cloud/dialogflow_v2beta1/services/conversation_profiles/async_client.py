@@ -91,6 +91,10 @@ class ConversationProfilesAsyncClient:
 
     agent_path = staticmethod(ConversationProfilesClient.agent_path)
     parse_agent_path = staticmethod(ConversationProfilesClient.parse_agent_path)
+    companion_agent_path = staticmethod(ConversationProfilesClient.companion_agent_path)
+    parse_companion_agent_path = staticmethod(
+        ConversationProfilesClient.parse_companion_agent_path
+    )
     conversation_profile_path = staticmethod(
         ConversationProfilesClient.conversation_profile_path
     )

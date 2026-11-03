@@ -29,15 +29,22 @@ __protobuf__ = proto.module(
         "Protocols",
         "AccessType",
         "SMBSettings",
+        "SplitState",
         "SecurityStyle",
         "RestrictedAction",
         "ListVolumesRequest",
         "ListVolumesResponse",
+        "ListBackupConfigsRequest",
+        "ListBackupConfigsResponse",
+        "VolumeBackupConfig",
         "GetVolumeRequest",
         "CreateVolumeRequest",
         "UpdateVolumeRequest",
         "DeleteVolumeRequest",
         "RevertVolumeRequest",
+        "StartSplitRequest",
+        "GetSplitStatusRequest",
+        "SplitStatus",
         "Volume",
         "LargeCapacityConfig",
         "ExportPolicy",
@@ -58,7 +65,13 @@ __protobuf__ = proto.module(
         "BlockDevice",
         "RestoreBackupFilesRequest",
         "RestoreBackupFilesResponse",
+        "RestoreVolumeRequest",
+        "BackupSource",
+        "OntapVolumeTarget",
+        "RestoreVolumeResponse",
         "EstablishVolumePeeringRequest",
+        "UpdateBackupConfigRequest",
+        "UpdateBackupConfigResponse",
     },
 )
 
@@ -78,6 +91,8 @@ class Protocols(proto.Enum):
             SMB protocol
         ISCSI (4):
             ISCSI protocol
+        NVME (5):
+            NVMe protocol
     """
 
     PROTOCOLS_UNSPECIFIED = 0
@@ -85,6 +100,7 @@ class Protocols(proto.Enum):
     NFSV4 = 2
     SMB = 3
     ISCSI = 4
+    NVME = 5
 
 
 class AccessType(proto.Enum):
@@ -146,6 +162,29 @@ class SMBSettings(proto.Enum):
     SHOW_PREVIOUS_VERSIONS = 7
     ACCESS_BASED_ENUMERATION = 8
     CONTINUOUSLY_AVAILABLE = 9
+
+
+class SplitState(proto.Enum):
+    r"""Enum to indicate the state of the clone in relation to the
+    split process.
+
+    Values:
+        SPLIT_STATE_UNSPECIFIED (0):
+            State is not specified.
+        SPLIT_STATE_NOT_SPLITTING (1):
+            The volume is a thin clone, sharing blocks
+            with its source.
+        SPLIT_STATE_IN_PROGRESS (2):
+            A split operation is currently active and in
+            progress.
+        SPLIT_STATE_FAILED (3):
+            The attempt to split the volume failed.
+    """
+
+    SPLIT_STATE_UNSPECIFIED = 0
+    SPLIT_STATE_NOT_SPLITTING = 1
+    SPLIT_STATE_IN_PROGRESS = 2
+    SPLIT_STATE_FAILED = 3
 
 
 class SecurityStyle(proto.Enum):
@@ -250,6 +289,111 @@ class ListVolumesResponse(proto.Message):
     unreachable: MutableSequence[str] = proto.RepeatedField(
         proto.STRING,
         number=3,
+    )
+
+
+class ListBackupConfigsRequest(proto.Message):
+    r"""Message for requesting list of BackupConfigs in a
+    StoragePool.
+
+    Attributes:
+        parent (str):
+            Required. The ONTAP StoragePool for which to retrieve backup
+            configuration information, in the format
+            ``projects/{project}/locations/{location}/storagePools/{storage_pool}``.
+        page_size (int):
+            Optional. The maximum number of items to
+            return. The service may return fewer than this
+            value. The maximum value is 1000; values above
+            1000 will be coerced to 1000. If unspecified or
+            set to 0, a default of 50 will be used.
+        page_token (str):
+            Optional. The next_page_token value to use if there are
+            additional results to retrieve for this list request.
+        order_by (str):
+            Optional. Sort results. Supported values are "volume_id" or
+            "".
+        filter (str):
+            Optional. The standard list filter.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    filter: str = proto.Field(
+        proto.STRING,
+        number=5,
+    )
+
+
+class ListBackupConfigsResponse(proto.Message):
+    r"""Message for response to listing BackupConfigs in an ONTAP
+    StoragePool.
+
+    Attributes:
+        volume_backup_configs (MutableSequence[google.cloud.netapp_v1.types.VolumeBackupConfig]):
+            A list of backup configurations for volumes
+            in the pool.
+        next_page_token (str):
+            The token you can use to retrieve the next
+            page of results. Not returned if there are no
+            more results in the list.
+        unreachable (MutableSequence[str]):
+            Unordered list. Locations that could not be
+            reached.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    volume_backup_configs: MutableSequence["VolumeBackupConfig"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="VolumeBackupConfig",
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    unreachable: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+
+
+class VolumeBackupConfig(proto.Message):
+    r"""Backup configuration for a volume in a pool.
+
+    Attributes:
+        volume_uuid (str):
+            Provides the Ontap UUID of the volume within
+            the pool.
+        backup_config (google.cloud.netapp_v1.types.BackupConfig):
+            Backup configuration for the volume.
+    """
+
+    volume_uuid: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    backup_config: "BackupConfig" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="BackupConfig",
     )
 
 
@@ -371,6 +515,70 @@ class RevertVolumeRequest(proto.Message):
     snapshot_id: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+
+
+class StartSplitRequest(proto.Message):
+    r"""Request message for splitting a volume.
+
+    Attributes:
+        name (str):
+            Required. The full name of the clone volume to be split from
+            its source. Format:
+            projects/{project_number}/locations/{location}/volumes/{volume_id}
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class GetSplitStatusRequest(proto.Message):
+    r"""Request message for GetSplitStatus.
+
+    Attributes:
+        name (str):
+            Required. The full name of the volume. Format:
+            projects/{project_number}/locations/{location}/volumes/{volume_id}
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class SplitStatus(proto.Message):
+    r"""Message for SplitStatus.
+
+    Attributes:
+        split_state (google.cloud.netapp_v1.types.SplitState):
+            Output only. The current state of the clone
+            split operation.
+        state_details (str):
+            Output only. Human-readable details about the
+            current state. Mostly used for displaying error
+            messages during split failure Examples: "Split
+            in progress", "Error: insufficient capacity".
+        progress_percent (int):
+            Output only. The estimated progress percentage of the split
+            operation (0-100). This is meaningful primarily when
+            split_state is IN_PROGRESS.
+    """
+
+    split_state: "SplitState" = proto.Field(
+        proto.ENUM,
+        number=1,
+        enum="SplitState",
+    )
+    state_details: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    progress_percent: int = proto.Field(
+        proto.INT32,
+        number=3,
     )
 
 
@@ -574,6 +782,9 @@ class Volume(proto.Message):
                 Output only. Shared space in GiB. Determined
                 at volume creation time based on size of source
                 snapshot.
+            split_state (google.cloud.netapp_v1.types.SplitState):
+                Output only. The current state of the clone
+                split operation.
         """
 
         source_snapshot: str = proto.Field(
@@ -587,6 +798,11 @@ class Volume(proto.Message):
         shared_space_gib: int = proto.Field(
             proto.INT64,
             number=3,
+        )
+        split_state: "SplitState" = proto.Field(
+            proto.ENUM,
+            number=4,
+            enum="SplitState",
         )
 
     name: str = proto.Field(
@@ -791,7 +1007,7 @@ class Volume(proto.Message):
 
 class LargeCapacityConfig(proto.Message):
     r"""Configuration for a Large Capacity Volume. A Large Capacity
-    Volume supports sizes ranging from 4.8 TiB to 20 PiB, it is
+    Volume supports sizes ranging from 4.8 TiB to 20 PiB; it is
     composed of multiple internal constituents, and must be created
     in a large capacity pool.
 
@@ -1310,7 +1526,7 @@ class RestoreParameters(proto.Message):
         source_backup (str):
             Full name of the backup resource. Format for standard
             backup:
-            projects/{project}/locations/{location}/backupVaults/{backup_vault_id}/backups/{backup_id}
+            projects/{project}/locations/{location}/backupVaults/{backup_vault_id}/backups/{backup_id}.
             Format for BackupDR backup:
             projects/{project}/locations/{location}/backupVaults/{backup_vault}/dataSources/{data_source}/backups/{backup}
 
@@ -1894,6 +2110,95 @@ class RestoreBackupFilesResponse(proto.Message):
     """
 
 
+class RestoreVolumeRequest(proto.Message):
+    r"""Request message for ``RestoreVolume`` API.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        backup_source (google.cloud.netapp_v1.types.BackupSource):
+            The backup source of the restore operation.
+
+            This field is a member of `oneof`_ ``source``.
+        ontap_volume_target (google.cloud.netapp_v1.types.OntapVolumeTarget):
+            The ONTAP volume target of the restore
+            operation.
+
+            This field is a member of `oneof`_ ``target``.
+        name (str):
+            Required. The resource name of the ONTAP mode storage pool,
+            in the format of
+            ``projects/{project}/locations/{location}/storagePools/{storage_pool}``
+    """
+
+    backup_source: "BackupSource" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        oneof="source",
+        message="BackupSource",
+    )
+    ontap_volume_target: "OntapVolumeTarget" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        oneof="target",
+        message="OntapVolumeTarget",
+    )
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class BackupSource(proto.Message):
+    r"""Represents the backup source of the restore operation.
+
+    Attributes:
+        backup (str):
+            Required. The backup resource name.
+        file_list (MutableSequence[str]):
+            Optional. List of files to be restored in the
+            form of their absolute path as in source volume.
+            If provided, only these files will be restored.
+            If not provided, the entire backup will be
+            restored (Full Backup Restore)
+    """
+
+    backup: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    file_list: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=2,
+    )
+
+
+class OntapVolumeTarget(proto.Message):
+    r"""Represents the ONTAP volume target of the restore operation.
+
+    Attributes:
+        volume_uuid (str):
+            Required. The UUID of the ONTAP volume to
+            restore to.
+        restore_destination_path (str):
+            Optional. Absolute directory path in the
+            destination volume.
+    """
+
+    volume_uuid: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    restore_destination_path: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class RestoreVolumeResponse(proto.Message):
+    r"""Response message for ``RestoreVolume`` API."""
+
+
 class EstablishVolumePeeringRequest(proto.Message):
     r"""EstablishVolumePeeringRequest establishes cluster and svm
     peerings between the source and destination clusters.
@@ -1911,7 +2216,7 @@ class EstablishVolumePeeringRequest(proto.Message):
             vserver svm to be peered with the destination
             vserver svm.
         peer_ip_addresses (MutableSequence[str]):
-            Optional. List of IPv4 ip addresses to be
+            Optional. List of IPv4 IP addresses to be
             used for peering.
         peer_volume_name (str):
             Required. Name of the user's local source
@@ -1937,6 +2242,68 @@ class EstablishVolumePeeringRequest(proto.Message):
     peer_volume_name: str = proto.Field(
         proto.STRING,
         number=5,
+    )
+
+
+class UpdateBackupConfigRequest(proto.Message):
+    r"""Request message for UpdateBackupConfig
+
+    Attributes:
+        name (str):
+            Required. The resource name of the
+            StoragePool, in the format:
+            projects/{projectNumber}/locations/{locationId}/storagePools/{poolId}
+        volume_uuid (str):
+            Required. The UUID of the ONTAP-mode volume.
+        backup_config (google.cloud.netapp_v1.types.BackupConfig):
+            Required. Backup configuration to apply.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Required. Field mask is used to specify the fields to be
+            overwritten in the BackupConfig for the Volume. The fields
+            specified in the update_mask are relative to the resource,
+            not the full request. A field will be overwritten if it is
+            in the mask.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    volume_uuid: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    backup_config: "BackupConfig" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message="BackupConfig",
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message=field_mask_pb2.FieldMask,
+    )
+
+
+class UpdateBackupConfigResponse(proto.Message):
+    r"""Response message for UpdateBackupConfig
+
+    Attributes:
+        volume_uuid (str):
+            The UUID of the ONTAP-mode volume.
+        backup_config (google.cloud.netapp_v1.types.BackupConfig):
+            The updated Backup configuration for the
+            volume.
+    """
+
+    volume_uuid: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    backup_config: "BackupConfig" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="BackupConfig",
     )
 
 

@@ -81,53 +81,65 @@ class DiscoverConnectionProfileRequest(proto.Message):
             Required. The parent resource of the connection profile
             type. Must be in the format ``projects/*/locations/*``.
         connection_profile (google.cloud.datastream_v1.types.ConnectionProfile):
-            An ad-hoc connection profile configuration.
+            Optional. An ad-hoc connection profile
+            configuration.
 
             This field is a member of `oneof`_ ``target``.
         connection_profile_name (str):
-            A reference to an existing connection
-            profile.
+            Optional. A reference to an existing
+            connection profile.
 
             This field is a member of `oneof`_ ``target``.
         full_hierarchy (bool):
-            Whether to retrieve the full hierarchy of
-            data objects (TRUE) or only the current level
-            (FALSE).
+            Optional. Whether to retrieve the full
+            hierarchy of data objects (TRUE) or only the
+            current level (FALSE).
 
             This field is a member of `oneof`_ ``hierarchy``.
         hierarchy_depth (int):
-            The number of hierarchy levels below the
-            current level to be retrieved.
+            Optional. The number of hierarchy levels
+            below the current level to be retrieved.
 
             This field is a member of `oneof`_ ``hierarchy``.
         oracle_rdbms (google.cloud.datastream_v1.types.OracleRdbms):
-            Oracle RDBMS to enrich with child data
-            objects and metadata.
-
-            This field is a member of `oneof`_ ``data_object``.
-        mysql_rdbms (google.cloud.datastream_v1.types.MysqlRdbms):
-            MySQL RDBMS to enrich with child data objects
-            and metadata.
-
-            This field is a member of `oneof`_ ``data_object``.
-        postgresql_rdbms (google.cloud.datastream_v1.types.PostgresqlRdbms):
-            PostgreSQL RDBMS to enrich with child data
-            objects and metadata.
-
-            This field is a member of `oneof`_ ``data_object``.
-        sql_server_rdbms (google.cloud.datastream_v1.types.SqlServerRdbms):
-            SQLServer RDBMS to enrich with child data
-            objects and metadata.
-
-            This field is a member of `oneof`_ ``data_object``.
-        salesforce_org (google.cloud.datastream_v1.types.SalesforceOrg):
-            Salesforce organization to enrich with child
+            Optional. Oracle RDBMS to enrich with child
             data objects and metadata.
 
             This field is a member of `oneof`_ ``data_object``.
+        mysql_rdbms (google.cloud.datastream_v1.types.MysqlRdbms):
+            Optional. MySQL RDBMS to enrich with child
+            data objects and metadata.
+
+            This field is a member of `oneof`_ ``data_object``.
+        postgresql_rdbms (google.cloud.datastream_v1.types.PostgresqlRdbms):
+            Optional. PostgreSQL RDBMS to enrich with
+            child data objects and metadata.
+
+            This field is a member of `oneof`_ ``data_object``.
+        sql_server_rdbms (google.cloud.datastream_v1.types.SqlServerRdbms):
+            Optional. SQLServer RDBMS to enrich with
+            child data objects and metadata.
+
+            This field is a member of `oneof`_ ``data_object``.
+        salesforce_org (google.cloud.datastream_v1.types.SalesforceOrg):
+            Optional. Salesforce organization to enrich
+            with child data objects and metadata.
+
+            This field is a member of `oneof`_ ``data_object``.
         mongodb_cluster (google.cloud.datastream_v1.types.MongodbCluster):
-            MongoDB cluster to enrich with child data
-            objects and metadata.
+            Optional. MongoDB cluster to enrich with
+            child data objects and metadata.
+
+            This field is a member of `oneof`_ ``data_object``.
+        spanner_database (google.cloud.datastream_v1.types.SpannerDatabase):
+            Optional. Spanner database to enrich with
+            child data objects and metadata.
+
+            This field is a member of `oneof`_ ``data_object``.
+        source_catalog (google.cloud.datastream_v1.types.SourceCatalog):
+            Optional. Source catalog to enrich with child
+            data objects and metadata. This is mainly used
+            to represent SaaS sources databases.
 
             This field is a member of `oneof`_ ``data_object``.
     """
@@ -193,6 +205,18 @@ class DiscoverConnectionProfileRequest(proto.Message):
         oneof="data_object",
         message=datastream_resources.MongodbCluster,
     )
+    spanner_database: datastream_resources.SpannerDatabase = proto.Field(
+        proto.MESSAGE,
+        number=106,
+        oneof="data_object",
+        message=datastream_resources.SpannerDatabase,
+    )
+    source_catalog: datastream_resources.SourceCatalog = proto.Field(
+        proto.MESSAGE,
+        number=108,
+        oneof="data_object",
+        message=datastream_resources.SourceCatalog,
+    )
 
 
 class DiscoverConnectionProfileResponse(proto.Message):
@@ -228,6 +252,15 @@ class DiscoverConnectionProfileResponse(proto.Message):
             This field is a member of `oneof`_ ``data_object``.
         mongodb_cluster (google.cloud.datastream_v1.types.MongodbCluster):
             Enriched MongoDB cluster.
+
+            This field is a member of `oneof`_ ``data_object``.
+        spanner_database (google.cloud.datastream_v1.types.SpannerDatabase):
+            Enriched Spanner database.
+
+            This field is a member of `oneof`_ ``data_object``.
+        source_catalog (google.cloud.datastream_v1.types.SourceCatalog):
+            Enriched source catalog. This is mainly used
+            to represent SaaS sources databases.
 
             This field is a member of `oneof`_ ``data_object``.
     """
@@ -268,6 +301,18 @@ class DiscoverConnectionProfileResponse(proto.Message):
         oneof="data_object",
         message=datastream_resources.MongodbCluster,
     )
+    spanner_database: datastream_resources.SpannerDatabase = proto.Field(
+        proto.MESSAGE,
+        number=106,
+        oneof="data_object",
+        message=datastream_resources.SpannerDatabase,
+    )
+    source_catalog: datastream_resources.SourceCatalog = proto.Field(
+        proto.MESSAGE,
+        number=108,
+        oneof="data_object",
+        message=datastream_resources.SourceCatalog,
+    )
 
 
 class FetchStaticIpsRequest(proto.Message):
@@ -279,11 +324,11 @@ class FetchStaticIpsRequest(proto.Message):
             static IPs should be returned. Must be in the format
             ``projects/*/locations/*``.
         page_size (int):
-            Maximum number of Ips to return, will likely
-            not be specified.
+            Optional. Maximum number of Ips to return,
+            will likely not be specified.
         page_token (str):
-            A page token, received from a previous ``ListStaticIps``
-            call. will likely not be specified.
+            Optional. A page token, received from a previous
+            ``ListStaticIps`` call. will likely not be specified.
     """
 
     name: str = proto.Field(
@@ -334,12 +379,13 @@ class ListConnectionProfilesRequest(proto.Message):
             Required. The parent that owns the collection
             of connection profiles.
         page_size (int):
-            Maximum number of connection profiles to
-            return. If unspecified, at most 50 connection
-            profiles will be returned. The maximum value is
-            1000; values above 1000 will be coerced to 1000.
+            Optional. Maximum number of connection
+            profiles to return. If unspecified, at most 50
+            connection profiles will be returned. The
+            maximum value is 1000; values above 1000 will be
+            coerced to 1000.
         page_token (str):
-            Page token received from a previous
+            Optional. Page token received from a previous
             ``ListConnectionProfiles`` call. Provide this to retrieve
             the subsequent page.
 
@@ -347,9 +393,9 @@ class ListConnectionProfilesRequest(proto.Message):
             ``ListConnectionProfiles`` must match the call that provided
             the page token.
         filter (str):
-            Filter request.
+            Optional. Filter request.
         order_by (str):
-            Order by fields for the result.
+            Optional. Order by fields for the result.
     """
 
     parent: str = proto.Field(
@@ -605,21 +651,22 @@ class ListStreamsRequest(proto.Message):
             Required. The parent that owns the collection
             of streams.
         page_size (int):
-            Maximum number of streams to return.
-            If unspecified, at most 50 streams will  be
-            returned. The maximum value is 1000; values
+            Optional. Maximum number of streams to
+            return. If unspecified, at most 50 streams will
+            be returned. The maximum value is 1000; values
             above 1000 will be coerced to 1000.
         page_token (str):
-            Page token received from a previous ``ListStreams`` call.
-            Provide this to retrieve the subsequent page.
+            Optional. Page token received from a previous
+            ``ListStreams`` call. Provide this to retrieve the
+            subsequent page.
 
             When paginating, all other parameters provided to
             ``ListStreams`` must match the call that provided the page
             token.
         filter (str):
-            Filter request.
+            Optional. Filter request.
         order_by (str):
-            Order by fields for the result.
+            Optional. Order by fields for the result.
     """
 
     parent: str = proto.Field(
@@ -942,11 +989,22 @@ class StartBackfillJobRequest(proto.Message):
         object_ (str):
             Required. The name of the stream object
             resource to start a backfill job for.
+        event_filter (google.cloud.datastream_v1.types.EventFilter):
+            Optional. Optional event filter. If not set,
+            or empty, the backfill will be performed on the
+            entire object. This is currently used for
+            partial backfill and only supported for SQL
+            sources.
     """
 
     object_: str = proto.Field(
         proto.STRING,
         number=1,
+    )
+    event_filter: datastream_resources.EventFilter = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=datastream_resources.EventFilter,
     )
 
 
@@ -1008,11 +1066,11 @@ class ListStreamObjectsRequest(proto.Message):
             Required. The parent stream that owns the
             collection of objects.
         page_size (int):
-            Maximum number of objects to return. Default
-            is 50. The maximum value is 1000; values above
-            1000 will be coerced to 1000.
+            Optional. Maximum number of objects to
+            return. Default is 50. The maximum value is
+            1000; values above 1000 will be coerced to 1000.
         page_token (str):
-            Page token received from a previous
+            Optional. Page token received from a previous
             ``ListStreamObjectsRequest`` call. Provide this to retrieve
             the subsequent page.
 
@@ -1219,7 +1277,7 @@ class ListPrivateConnectionsRequest(proto.Message):
             will be returned. The maximum value is 1000;
             values above 1000 will be coerced to 1000.
         page_token (str):
-            Page token received from a previous
+            Optional. Page token received from a previous
             ``ListPrivateConnections`` call. Provide this to retrieve
             the subsequent page.
 
@@ -1227,9 +1285,9 @@ class ListPrivateConnectionsRequest(proto.Message):
             ``ListPrivateConnections`` must match the call that provided
             the page token.
         filter (str):
-            Filter request.
+            Optional. Filter request.
         order_by (str):
-            Order by fields for the result.
+            Optional. Order by fields for the result.
     """
 
     parent: str = proto.Field(
@@ -1412,22 +1470,22 @@ class ListRoutesRequest(proto.Message):
             Required. The parent that owns the collection
             of Routess.
         page_size (int):
-            Maximum number of Routes to return. The
-            service may return fewer than this value. If
+            Optional. Maximum number of Routes to return.
+            The service may return fewer than this value. If
             unspecified, at most 50 Routes will be returned.
             The maximum value is 1000; values above 1000
             will be coerced to 1000.
         page_token (str):
-            Page token received from a previous ``ListRoutes`` call.
-            Provide this to retrieve the subsequent page.
+            Optional. Page token received from a previous ``ListRoutes``
+            call. Provide this to retrieve the subsequent page.
 
             When paginating, all other parameters provided to
             ``ListRoutes`` must match the call that provided the page
             token.
         filter (str):
-            Filter request.
+            Optional. Filter request.
         order_by (str):
-            Order by fields for the result.
+            Optional. Order by fields for the result.
     """
 
     parent: str = proto.Field(

@@ -9,7 +9,8 @@ from google.api_core.exceptions import Aborted
 async def _delay_until_retry(exc, deadline, attempts, default_retry_delay=None):
     from google.cloud.spanner_v1._helpers import _get_retry_delay
 
-    cause = exc.errors[0] if hasattr(exc, "errors") and exc.errors else exc
+    errors = getattr(exc, "errors", None)
+    cause = errors[0] if errors else exc
     now = time.time()
     if now >= deadline:
         raise exc

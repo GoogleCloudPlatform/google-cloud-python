@@ -76,6 +76,48 @@ class TestInstanceExtra(unittest.IsolatedAsyncioTestCase):
         db2 = await self.instance.database("db-id-2", enable_interceptors_in_tests=True)
         self.assertIsInstance(db2, TestDatabase)
 
+    async def test_database_pool_database_role(self):
+        pool = mock.MagicMock()
+        pool.database_role = "pool-role"
+        pool.bind.return_value = None
+
+        database = await self.instance.database("db-id", pool=pool)
+        self.assertIs(database._pool, pool)
+        self.assertEqual(pool.database_role, "pool-role")
+        pool.bind.assert_called_once_with(database)
+
+    async def test_database_pool_inherits_database_role(self):
+        pool = mock.MagicMock()
+        pool.database_role = None
+
+        def _mock_bind(db):
+            pool.database_role = pool.database_role or db.database_role
+
+        pool.bind.side_effect = _mock_bind
+
+        database = await self.instance.database(
+            "db-id", pool=pool, database_role="db-role"
+        )
+        self.assertEqual(database.database_role, "db-role")
+        self.assertEqual(pool.database_role, "db-role")
+        pool.bind.assert_called_once_with(database)
+
+    async def test_database_pool_database_role_precedence(self):
+        pool = mock.MagicMock()
+        pool.database_role = "pool-role"
+
+        def _mock_bind(db):
+            pool.database_role = pool.database_role or db.database_role
+
+        pool.bind.side_effect = _mock_bind
+
+        database = await self.instance.database(
+            "db-id", pool=pool, database_role="db-role"
+        )
+        self.assertEqual(database.database_role, "db-role")
+        self.assertEqual(pool.database_role, "pool-role")
+        pool.bind.assert_called_once_with(database)
+
     def test_backup(self):
         # coverage for lines 551-608
         backup = self.instance.backup("backup-id")

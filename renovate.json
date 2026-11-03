@@ -1,12 +1,17 @@
 {
   "extends": [
-    "config:recommended",
     "group:all",
-    "schedule:weekly"
+    "config:recommended"
   ],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
   "ignorePaths": [
     ".github/workflows/unittest.yml",
     "**/pyproject.toml",
-    "**/setup.py"
+    "**/setup.py",
+    "**/package.json",
+    "**/package-lock.json",
+    "**/pnpm-lock.yaml",
+    "**/yarn.lock"
   ]
 }

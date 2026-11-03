@@ -8,6 +8,7 @@ Services for Google Cloud Compute v1 API
     accelerator_types
     addresses
     advice
+    alias_network_endpoints
     autoscalers
     backend_buckets
     backend_services

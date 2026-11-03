@@ -15,6 +15,7 @@
 #
 import logging as std_logging
 import re
+import warnings
 from collections import OrderedDict
 from typing import (
     Callable,
@@ -90,6 +91,10 @@ class AppConnectionsServiceAsyncClient:
 
     The AppConnectionsService service provides methods to manage
     (create/read/update/delete) BeyondCorp AppConnections.
+
+    Deprecated: App Connector is deprecated and creation of new App
+    Connector resources is no longer permitted. Use Security Gateway
+    instead.
     """
 
     _client: AppConnectionsServiceClient
@@ -408,6 +413,11 @@ class AppConnectionsServiceAsyncClient:
                 automatically.
 
         """
+        warnings.warn(
+            "AppConnectionsServiceAsyncClient.list_app_connections is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.
@@ -534,10 +544,15 @@ class AppConnectionsServiceAsyncClient:
                 It creates all the necessary GCP
                 components needed for creating a
                 BeyondCorp protected AppConnection.
-                Multiple connectors can be authorised
+                Multiple connectors can be authorized
                 for a single AppConnection.
 
         """
+        warnings.warn(
+            "AppConnectionsServiceAsyncClient.get_app_connection is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.
@@ -686,10 +701,15 @@ class AppConnectionsServiceAsyncClient:
                    AppConnection to a remote application. It creates all
                    the necessary GCP components needed for creating a
                    BeyondCorp protected AppConnection. Multiple
-                   connectors can be authorised for a single
+                   connectors can be authorized for a single
                    AppConnection.
 
         """
+        warnings.warn(
+            "AppConnectionsServiceAsyncClient.create_app_connection is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.
@@ -843,10 +863,15 @@ class AppConnectionsServiceAsyncClient:
                    AppConnection to a remote application. It creates all
                    the necessary GCP components needed for creating a
                    BeyondCorp protected AppConnection. Multiple
-                   connectors can be authorised for a single
+                   connectors can be authorized for a single
                    AppConnection.
 
         """
+        warnings.warn(
+            "AppConnectionsServiceAsyncClient.update_app_connection is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.
@@ -986,6 +1011,11 @@ class AppConnectionsServiceAsyncClient:
                       }
 
         """
+        warnings.warn(
+            "AppConnectionsServiceAsyncClient.delete_app_connection is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.
@@ -1115,6 +1145,11 @@ class AppConnectionsServiceAsyncClient:
                 automatically.
 
         """
+        warnings.warn(
+            "AppConnectionsServiceAsyncClient.resolve_app_connections is deprecated",
+            DeprecationWarning,
+        )
+
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
         #   gotten any keyword arguments that map to the request.

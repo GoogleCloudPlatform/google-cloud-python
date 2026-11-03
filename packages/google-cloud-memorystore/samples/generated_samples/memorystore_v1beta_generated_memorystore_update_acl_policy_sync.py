@@ -1,0 +1,61 @@
+# -*- coding: utf-8 -*-
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Generated code. DO NOT EDIT!
+#
+# Snippet for UpdateAclPolicy
+# NOTE: This snippet has been automatically generated for illustrative purposes only.
+# It may require modifications to work in your environment.
+
+# To install the latest published package dependency, execute the following:
+#   python3 -m pip install google-cloud-memorystore
+
+
+# [START memorystore_v1beta_generated_Memorystore_UpdateAclPolicy_sync]
+# This snippet has been automatically generated and should be regarded as a
+# code template only.
+# It will require modifications to work:
+# - It may require correct/in-range values for request initialization.
+# - It may require specifying regional endpoints when creating the service
+#   client as shown in:
+#   https://googleapis.dev/python/google-api-core/latest/client_options.html
+from google.cloud import memorystore_v1beta
+
+
+def sample_update_acl_policy():
+    # Create a client
+    client = memorystore_v1beta.MemorystoreClient()
+
+    # Initialize request argument(s)
+    acl_policy = memorystore_v1beta.AclPolicy()
+    acl_policy.rules.username = "username_value"
+    acl_policy.rules.rule = "rule_value"
+
+    request = memorystore_v1beta.UpdateAclPolicyRequest(
+        acl_policy=acl_policy,
+    )
+
+    # Make the request
+    operation = client.update_acl_policy(request=request)
+
+    print("Waiting for operation to complete...")
+
+    response = operation.result()
+
+    # Handle the response
+    print(response)
+
+
+# [END memorystore_v1beta_generated_Memorystore_UpdateAclPolicy_sync]

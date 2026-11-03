@@ -26,7 +26,6 @@ from google.api_core.exceptions import InternalServerError
 from google.protobuf.struct_pb2 import Struct
 
 from google.cloud.spanner_v1._helpers import (
-    AtomicCounter,
     _check_rst_stream_error,
     _make_value_pb,
     _merge_client_context,
@@ -73,7 +72,9 @@ class Transaction(_SnapshotBase, _BatchBase):
     _read_only: bool = False
 
     def __init__(self, session, client_context=None):
-        super(Transaction, self).__init__(session, client_context=client_context)
+        super(Transaction, self).__init__(
+            session, client_context=client_context, multi_use=True
+        )
         self.rolled_back: bool = False
         self._multiplexed_session_previous_transaction_id: Optional[bytes] = None
 
@@ -124,10 +125,10 @@ class Transaction(_SnapshotBase, _BatchBase):
                     session._database, "observability_options", None
                 ),
                 metadata=metadata,
-            ),
+            ) as span,
             MetricsCapture(self._resource_info),
         ):
-            method = functools.partial(method, request=request)
+            method = functools.partial(method, request=request, span=span)
             response = _retry(
                 method,
                 allowed_exceptions={InternalServerError: _check_rst_stream_error},
@@ -163,22 +164,21 @@ class Transaction(_SnapshotBase, _BatchBase):
                 ) as span,
                 MetricsCapture(self._resource_info),
             ):
-                attempt = AtomicCounter(0)
+                attempt = 0
                 nth_request = database._next_nth_request
 
-                def wrapped_method(*args, **kwargs):
-                    attempt.increment()
+                def wrapped_method():
+                    nonlocal attempt
+                    attempt += 1
                     call_metadata, error_augmenter = database.with_error_augmentation(
-                        nth_request, attempt.value, metadata, span
-                    )
-                    rollback_method = functools.partial(
-                        api.rollback,
-                        session=session.name,
-                        transaction_id=self._transaction_id,
-                        metadata=call_metadata,
+                        nth_request, attempt, metadata, span
                     )
                     with error_augmenter:
-                        return rollback_method(*args, **kwargs)
+                        return api.rollback(
+                            session=session.name,
+                            transaction_id=self._transaction_id,
+                            metadata=call_metadata,
+                        )
 
                 _retry(
                     wrapped_method,
@@ -251,13 +251,12 @@ class Transaction(_SnapshotBase, _BatchBase):
                 database._instance._client._client_context, self._client_context
             )
             request_options = _merge_request_options(request_options, client_context)
-            if request_options is None:
-                request_options = RequestOptions()
-            elif type(request_options) is dict:
-                request_options = RequestOptions(request_options)
-            if self.transaction_tag is not None:
-                request_options.transaction_tag = self.transaction_tag
-            request_options.request_tag = None
+            if request_options is not None:
+                if self.transaction_tag is not None:
+                    request_options.transaction_tag = self.transaction_tag
+                request_options.request_tag = None
+            elif self.transaction_tag is not None:
+                request_options = RequestOptions(transaction_tag=self.transaction_tag)
             common_commit_request_args = {
                 "session": session.name,
                 "transaction_id": self._transaction_id,
@@ -266,11 +265,12 @@ class Transaction(_SnapshotBase, _BatchBase):
                 "request_options": request_options,
             }
             add_span_event(span, "Starting Commit")
-            attempt = AtomicCounter(0)
+            attempt = 0
             nth_request = database._next_nth_request
 
-            def wrapped_method(*args, **kwargs):
-                attempt.increment()
+            def wrapped_method():
+                nonlocal attempt
+                attempt += 1
                 commit_request_args = {
                     "mutations": mutations,
                     **common_commit_request_args,
@@ -279,15 +279,13 @@ class Transaction(_SnapshotBase, _BatchBase):
                 if is_multiplexed and self._precommit_token is not None:
                     commit_request_args["precommit_token"] = self._precommit_token
                 call_metadata, error_augmenter = database.with_error_augmentation(
-                    nth_request, attempt.value, metadata, span
-                )
-                commit_method = functools.partial(
-                    api.commit,
-                    request=CommitRequest(**commit_request_args),
-                    metadata=call_metadata,
+                    nth_request, attempt, metadata, span
                 )
                 with error_augmenter:
-                    return commit_method(*args, **kwargs)
+                    return api.commit(
+                        request=CommitRequest(**commit_request_args),
+                        metadata=call_metadata,
+                    )
 
             commit_retry_event_name = "Transaction Commit Attempt Failed. Retrying"
 
@@ -436,11 +434,10 @@ class Transaction(_SnapshotBase, _BatchBase):
             database._instance._client._client_context, self._client_context
         )
         request_options = _merge_request_options(request_options, client_context)
-        if request_options is None:
-            request_options = RequestOptions()
-        elif type(request_options) is dict:
-            request_options = RequestOptions(request_options)
-        request_options.transaction_tag = self.transaction_tag
+        if request_options is not None:
+            request_options.transaction_tag = self.transaction_tag
+        elif self.transaction_tag is not None:
+            request_options = RequestOptions(transaction_tag=self.transaction_tag)
         trace_attributes = {"db.statement": dml, "request_options": request_options}
         is_inline_begin = False
         if self._transaction_id is None:
@@ -460,22 +457,21 @@ class Transaction(_SnapshotBase, _BatchBase):
                 last_statement=last_statement,
             )
             nth_request = database._next_nth_request
-            attempt = AtomicCounter(0)
+            attempt = 0
 
-            def wrapped_method(*args, **kwargs):
-                attempt.increment()
+            def wrapped_method(request=execute_sql_request, span=None):
+                nonlocal attempt
+                attempt += 1
                 call_metadata, error_augmenter = database.with_error_augmentation(
-                    nth_request, attempt.value, metadata
-                )
-                execute_sql_method = functools.partial(
-                    api.execute_sql,
-                    request=execute_sql_request,
-                    metadata=call_metadata,
-                    retry=retry,
-                    timeout=timeout,
+                    nth_request, attempt, metadata, span
                 )
                 with error_augmenter:
-                    return execute_sql_method(*args, **kwargs)
+                    return api.execute_sql(
+                        request=request,
+                        metadata=call_metadata,
+                        retry=retry,
+                        timeout=timeout,
+                    )
 
             result_set_pb: ResultSet = self._execute_request(
                 wrapped_method,
@@ -575,11 +571,10 @@ class Transaction(_SnapshotBase, _BatchBase):
             database._instance._client._client_context, self._client_context
         )
         request_options = _merge_request_options(request_options, client_context)
-        if request_options is None:
-            request_options = RequestOptions()
-        elif type(request_options) is dict:
-            request_options = RequestOptions(request_options)
-        request_options.transaction_tag = self.transaction_tag
+        if request_options is not None:
+            request_options.transaction_tag = self.transaction_tag
+        elif self.transaction_tag is not None:
+            request_options = RequestOptions(transaction_tag=self.transaction_tag)
         trace_attributes = {
             "db.statement": ";".join([statement.sql for statement in parsed]),
             "request_options": request_options,
@@ -598,22 +593,21 @@ class Transaction(_SnapshotBase, _BatchBase):
                 last_statements=last_statement,
             )
             nth_request = database._next_nth_request
-            attempt = AtomicCounter(0)
+            attempt = 0
 
-            def wrapped_method(*args, **kwargs):
-                attempt.increment()
+            def wrapped_method(request=execute_batch_dml_request, span=None):
+                nonlocal attempt
+                attempt += 1
                 call_metadata, error_augmenter = database.with_error_augmentation(
-                    nth_request, attempt.value, metadata
-                )
-                execute_batch_dml_method = functools.partial(
-                    api.execute_batch_dml,
-                    request=execute_batch_dml_request,
-                    metadata=call_metadata,
-                    retry=retry,
-                    timeout=timeout,
+                    nth_request, attempt, metadata, span
                 )
                 with error_augmenter:
-                    return execute_batch_dml_method(*args, **kwargs)
+                    return api.execute_batch_dml(
+                        request=request,
+                        metadata=call_metadata,
+                        retry=retry,
+                        timeout=timeout,
+                    )
 
             response_pb: ExecuteBatchDmlResponse = self._execute_request(
                 wrapped_method,

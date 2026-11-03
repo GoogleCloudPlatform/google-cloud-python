@@ -22,9 +22,11 @@ from typing import (
     Any,
     Awaitable,
     Dict,
+    Generic,
     Iterable,
     Optional,
     Tuple,
+    TypeVar,
     Union,
 )
 
@@ -359,7 +361,10 @@ class BaseDocumentReference(object):
         raise NotImplementedError
 
 
-class DocumentSnapshot(object):
+DocRefType = TypeVar("DocRefType", bound=BaseDocumentReference)
+
+
+class DocumentSnapshot(Generic[DocRefType]):
     """A snapshot of document data in a Firestore database.
 
     This represents data retrieved at a specific time and may not contain
@@ -371,7 +376,7 @@ class DocumentSnapshot(object):
     :meth:`~google.cloud.DocumentReference.get`.
 
     Args:
-        reference (:class:`~google.cloud.firestore_v1.document.DocumentReference`):
+        reference (Union[:class:`~google.cloud.firestore_v1.document.DocumentReference`, :class:`~google.cloud.firestore_v1.async_document.AsyncDocumentReference`]):
             A document reference corresponding to the document that contains
             the data in this snapshot.
         data (Dict[str, Any]):
@@ -388,9 +393,15 @@ class DocumentSnapshot(object):
     """
 
     def __init__(
-        self, reference, data, exists, read_time, create_time, update_time
+        self,
+        reference: DocRefType,
+        data,
+        exists,
+        read_time,
+        create_time,
+        update_time,
     ) -> None:
-        self._reference = reference
+        self._reference: DocRefType = reference
         # We want immutable data, so callers can't modify this value
         # out from under us.
         self._data = copy.deepcopy(data)
@@ -439,11 +450,11 @@ class DocumentSnapshot(object):
         return self._reference.id
 
     @property
-    def reference(self) -> BaseDocumentReference:
+    def reference(self) -> DocRefType:
         """Document reference corresponding to document that owns this data.
 
         Returns:
-            :class:`~google.cloud.firestore_v1.document.DocumentReference`:
+            Union[:class:`~google.cloud.firestore_v1.document.DocumentReference`, :class:`~google.cloud.firestore_v1.async_document.AsyncDocumentReference`]:
             A document reference corresponding to this document.
         """
         return self._reference

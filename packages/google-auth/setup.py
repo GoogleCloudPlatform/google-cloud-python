@@ -46,7 +46,6 @@ urllib3_extra_require = [
     "packaging >= 20.0",
 ]
 
-rsa_extra_require = ["rsa>=4.0.0,<5"]
 
 grpc_extra_require = [
     "grpcio >= 1.59.0, < 2.0.0; python_version < '3.14'",
@@ -83,7 +82,8 @@ extras = {
     "requests": requests_extra_require,
     "testing": testing_extra_require,
     "urllib3": urllib3_extra_require,
-    "rsa": rsa_extra_require,
+    # rsa is deprecated, kept for backwards compatibility
+    "rsa": [],
     "grpc": grpc_extra_require,
 }
 

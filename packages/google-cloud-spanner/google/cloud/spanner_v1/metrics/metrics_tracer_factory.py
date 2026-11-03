@@ -14,7 +14,7 @@
 
 """Factory for creating MetricTracer instances, facilitating metrics collection and tracing."""
 
-from typing import Dict
+from typing import Dict, Optional
 
 from google.cloud.spanner_v1.metrics.constants import (
     BUILT_IN_METRICS_METER_NAME,
@@ -46,6 +46,12 @@ except ImportError:  # pragma: NO COVER
     HAS_OPENTELEMETRY_INSTALLED = False
 
 from google.cloud.spanner_v1.gapic_version import __version__
+
+
+class _ResourceInfo(dict):
+    """Resource info dictionary containing pre-merged client attributes for metrics."""
+
+    _client_attributes: Optional[Dict[str, str]] = None
 
 
 class MetricsTracerFactory:
@@ -250,19 +256,29 @@ class MetricsTracerFactory:
         self._client_attributes[METRIC_LABEL_KEY_DIRECT_PATH_ENABLED] = enable
         return self
 
-    def create_metrics_tracer(self) -> MetricsTracer:
-        """
-        Create and return a MetricsTracer instance with default settings and client attributes.
+    def create_metrics_tracer(
+        self, resource_info: Optional[Dict[str, str]] = None
+    ) -> Optional[MetricsTracer]:
+        """Create and return a MetricsTracer instance with default settings and client attributes.
 
         This method initializes a MetricsTracer instance with default settings for metrics tracing,
         including metrics tracing enabled if OpenTelemetry is installed and the direct path disabled by default.
-        It also sets the client attributes based on the factory's configuration.
+        It also sets the client attributes based on the factory's configuration and optional resource info.
+
+        Args:
+            resource_info (dict, optional): A dictionary of resource information (project, instance, database).
 
         Returns:
-            MetricsTracer: A MetricsTracer instance with default settings and client attributes.
+            MetricsTracer: A MetricsTracer instance with default settings and client attributes, or None if OpenTelemetry is not installed.
         """
         if not HAS_OPENTELEMETRY_INSTALLED:
             return None
+
+        pre_merged = getattr(resource_info, "_client_attributes", None)
+        if isinstance(pre_merged, dict):
+            client_attributes = pre_merged.copy()
+        else:
+            client_attributes = self._client_attributes.copy()
 
         metrics_tracer = MetricsTracer(
             enabled=self.enabled and HAS_OPENTELEMETRY_INSTALLED,
@@ -270,13 +286,48 @@ class MetricsTracerFactory:
             instrument_attempt_counter=self._instrument_attempt_counter,
             instrument_operation_latency=self._instrument_operation_latency,
             instrument_operation_counter=self._instrument_operation_counter,
-            client_attributes=self._client_attributes.copy(),
+            client_attributes=client_attributes,
             instrument_gfe_latency=self._instrument_gfe_latency,
             instrument_gfe_connectivity_error_count=self._instrument_gfe_connectivity_error_count,
             instrument_afe_latency=self._instrument_afe_latency,
             instrument_afe_connectivity_error_count=self._instrument_afe_connectivity_error_count,
         )
+        if resource_info and not isinstance(pre_merged, dict):
+            metrics_tracer.set_resource_info(resource_info)
         return metrics_tracer
+
+    def create_resource_info(
+        self,
+        project: Optional[str] = None,
+        instance: Optional[str] = None,
+        database: Optional[str] = None,
+    ) -> _ResourceInfo:
+        """Create a resource info dictionary with pre-merged client attributes.
+
+        Args:
+            project (str, optional): The project ID.
+            instance (str, optional): The instance ID.
+            database (str, optional): The database ID.
+
+        Returns:
+            _ResourceInfo: A dictionary with project, instance, and database keys,
+                carrying pre-merged client attributes for metrics tracing.
+        """
+        info = _ResourceInfo(
+            project=project,
+            instance=instance,
+            database=database,
+        )
+        if HAS_OPENTELEMETRY_INSTALLED:
+            client_attributes = self._client_attributes.copy()
+            if project and MONITORED_RES_LABEL_KEY_PROJECT not in client_attributes:
+                client_attributes[MONITORED_RES_LABEL_KEY_PROJECT] = project
+            if instance and MONITORED_RES_LABEL_KEY_INSTANCE not in client_attributes:
+                client_attributes[MONITORED_RES_LABEL_KEY_INSTANCE] = instance
+            if database and METRIC_LABEL_KEY_DATABASE not in client_attributes:
+                client_attributes[METRIC_LABEL_KEY_DATABASE] = database
+            info._client_attributes = client_attributes
+        return info
 
     def _create_metric_instruments(self, service_name: str) -> None:
         """

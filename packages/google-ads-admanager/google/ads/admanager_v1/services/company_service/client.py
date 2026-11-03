@@ -701,7 +701,7 @@ class CompanyServiceClient(metaclass=CompanyServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.GetCompanyRequest, dict]):
-                The request object. Request object for [GetCompany][] method.
+                The request object. Request object for ``GetCompany`` method.
             name (str):
                 Required. The resource name of the Company. Format:
                 ``networks/{network_code}/companies/{company_id}``
@@ -807,10 +807,11 @@ class CompanyServiceClient(metaclass=CompanyServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.ListCompaniesRequest, dict]):
-                The request object. Request object for [ListCompanies][] method.
+                The request object. Request object for ``ListCompanies`` method.
             parent (str):
                 Required. The parent, which owns this collection of
-                [Companies][]. Format: ``networks/{network_code}``
+                [Companies][google.ads.admanager.v1.Company]. Format:
+                ``networks/{network_code}``
 
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -825,9 +826,7 @@ class CompanyServiceClient(metaclass=CompanyServiceClientMeta):
 
         Returns:
             google.ads.admanager_v1.services.company_service.pagers.ListCompaniesPager:
-                Response object for
-                   [ListCompaniesRequest][google.ads.admanager.v1.ListCompaniesRequest]
-                   containing matching
+                Response object for ListCompaniesRequest containing matching
                    [Company][google.ads.admanager.v1.Company] objects.
 
                 Iterating over this object will yield results and
@@ -931,7 +930,7 @@ class CompanyServiceClient(metaclass=CompanyServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.CreateCompanyRequest, dict]):
-                The request object. Request object for [CreateCompany][] method.
+                The request object. Request object for ``CreateCompany`` method.
             parent (str):
                 Required. The parent resource where this
                 [Company][google.ads.admanager.v1.Company] will be
@@ -1055,12 +1054,12 @@ class CompanyServiceClient(metaclass=CompanyServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.BatchCreateCompaniesRequest, dict]):
-                The request object. Request object for [BatchCreateCompanies][] method.
+                The request object. Request object for ``BatchCreateCompanies`` method.
             parent (str):
-                Required. The parent resource where [Companies][] will
-                be created. Format: ``networks/{network_code}`` The
-                parent field in the CreateCompanyRequest must match this
-                field.
+                Required. The parent resource where
+                [Companies][google.ads.admanager.v1.Company] will be
+                created. Format: ``networks/{network_code}`` The parent
+                field in the CreateCompanyRequest must match this field.
 
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -1083,7 +1082,7 @@ class CompanyServiceClient(metaclass=CompanyServiceClientMeta):
 
         Returns:
             google.ads.admanager_v1.types.BatchCreateCompaniesResponse:
-                Response object for [BatchCreateCompanies][] method.
+                Response object for BatchCreateCompanies method.
         """
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
@@ -1172,7 +1171,7 @@ class CompanyServiceClient(metaclass=CompanyServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.UpdateCompanyRequest, dict]):
-                The request object. Request object for [UpdateCompany][] method.
+                The request object. Request object for ``UpdateCompany`` method.
             company (google.ads.admanager_v1.types.Company):
                 Required. The [Company][google.ads.admanager.v1.Company]
                 to update.
@@ -1298,12 +1297,12 @@ class CompanyServiceClient(metaclass=CompanyServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.BatchUpdateCompaniesRequest, dict]):
-                The request object. Request object for [BatchUpdateCompanies][] method.
+                The request object. Request object for ``BatchUpdateCompanies`` method.
             parent (str):
-                Required. The parent resource where [Companies][] will
-                be updated. Format: ``networks/{network_code}`` The
-                parent field in the UpdateCompanyRequest must match this
-                field.
+                Required. The parent resource where
+                [Companies][google.ads.admanager.v1.Company] will be
+                updated. Format: ``networks/{network_code}`` The parent
+                field in the UpdateCompanyRequest must match this field.
 
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -1326,7 +1325,7 @@ class CompanyServiceClient(metaclass=CompanyServiceClientMeta):
 
         Returns:
             google.ads.admanager_v1.types.BatchUpdateCompaniesResponse:
-                Response object for [BatchUpdateCompanies][] method.
+                Response object for BatchUpdateCompanies method.
         """
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have

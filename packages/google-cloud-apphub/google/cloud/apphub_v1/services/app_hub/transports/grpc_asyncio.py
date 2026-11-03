@@ -40,6 +40,8 @@ from grpc.experimental import aio  # type: ignore
 from google.cloud.apphub_v1.types import (
     apphub_service,
     application,
+    boundary,
+    extended_metadata_schema,
     service,
     service_project_attachment,
     workload,
@@ -1162,6 +1164,123 @@ class AppHubGrpcAsyncIOTransport(AppHubTransport):
             )
         return self._stubs["delete_application"]
 
+    @property
+    def get_boundary(
+        self,
+    ) -> Callable[[apphub_service.GetBoundaryRequest], Awaitable[boundary.Boundary]]:
+        r"""Return a callable for the get boundary method over gRPC.
+
+        Gets a Boundary.
+
+        Returns:
+            Callable[[~.GetBoundaryRequest],
+                    Awaitable[~.Boundary]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_boundary" not in self._stubs:
+            self._stubs["get_boundary"] = self._logged_channel.unary_unary(
+                "/google.cloud.apphub.v1.AppHub/GetBoundary",
+                request_serializer=apphub_service.GetBoundaryRequest.serialize,
+                response_deserializer=boundary.Boundary.deserialize,
+            )
+        return self._stubs["get_boundary"]
+
+    @property
+    def update_boundary(
+        self,
+    ) -> Callable[
+        [apphub_service.UpdateBoundaryRequest], Awaitable[operations_pb2.Operation]
+    ]:
+        r"""Return a callable for the update boundary method over gRPC.
+
+        Updates a Boundary.
+
+        Returns:
+            Callable[[~.UpdateBoundaryRequest],
+                    Awaitable[~.Operation]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_boundary" not in self._stubs:
+            self._stubs["update_boundary"] = self._logged_channel.unary_unary(
+                "/google.cloud.apphub.v1.AppHub/UpdateBoundary",
+                request_serializer=apphub_service.UpdateBoundaryRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["update_boundary"]
+
+    @property
+    def get_extended_metadata_schema(
+        self,
+    ) -> Callable[
+        [apphub_service.GetExtendedMetadataSchemaRequest],
+        Awaitable[extended_metadata_schema.ExtendedMetadataSchema],
+    ]:
+        r"""Return a callable for the get extended metadata schema method over gRPC.
+
+        Gets an Extended Metadata Schema.
+
+        Returns:
+            Callable[[~.GetExtendedMetadataSchemaRequest],
+                    Awaitable[~.ExtendedMetadataSchema]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_extended_metadata_schema" not in self._stubs:
+            self._stubs["get_extended_metadata_schema"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.apphub.v1.AppHub/GetExtendedMetadataSchema",
+                    request_serializer=apphub_service.GetExtendedMetadataSchemaRequest.serialize,
+                    response_deserializer=extended_metadata_schema.ExtendedMetadataSchema.deserialize,
+                )
+            )
+        return self._stubs["get_extended_metadata_schema"]
+
+    @property
+    def list_extended_metadata_schemas(
+        self,
+    ) -> Callable[
+        [apphub_service.ListExtendedMetadataSchemasRequest],
+        Awaitable[apphub_service.ListExtendedMetadataSchemasResponse],
+    ]:
+        r"""Return a callable for the list extended metadata schemas method over gRPC.
+
+        Lists Extended Metadata Schemas available in a host
+        project and location.
+
+        Returns:
+            Callable[[~.ListExtendedMetadataSchemasRequest],
+                    Awaitable[~.ListExtendedMetadataSchemasResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_extended_metadata_schemas" not in self._stubs:
+            self._stubs["list_extended_metadata_schemas"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.apphub.v1.AppHub/ListExtendedMetadataSchemas",
+                    request_serializer=apphub_service.ListExtendedMetadataSchemasRequest.serialize,
+                    response_deserializer=apphub_service.ListExtendedMetadataSchemasResponse.deserialize,
+                )
+            )
+        return self._stubs["list_extended_metadata_schemas"]
+
     def _prep_wrapped_messages(self, client_info):
         """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
         self._wrapped_methods = {
@@ -1433,6 +1552,26 @@ class AppHubGrpcAsyncIOTransport(AppHubTransport):
             self.delete_application: self._wrap_method(
                 self.delete_application,
                 default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_boundary: self._wrap_method(
+                self.get_boundary,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_boundary: self._wrap_method(
+                self.update_boundary,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_extended_metadata_schema: self._wrap_method(
+                self.get_extended_metadata_schema,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_extended_metadata_schemas: self._wrap_method(
+                self.list_extended_metadata_schemas,
+                default_timeout=None,
                 client_info=client_info,
             ),
             self.get_location: self._wrap_method(

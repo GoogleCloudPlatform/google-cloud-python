@@ -25,11 +25,12 @@ from google.api_core import exceptions
 from google.api_core.client_options import ClientOptions
 from google.api_core.exceptions import FailedPrecondition, NotFound, OutOfRange
 
-# current library imports
 from google.cloud import kms
+from google.cloud.storage._helpers import _parse_bool_env
 from google.cloud.storage.asyncio.async_appendable_object_writer import (
     _DEFAULT_FLUSH_INTERVAL_BYTES,
     AsyncAppendableObjectWriter,
+    Preconditions,
 )
 from google.cloud.storage.asyncio.async_grpc_client import AsyncGrpcClient
 from google.cloud.storage.asyncio.async_multi_range_downloader import (
@@ -44,8 +45,8 @@ PREPROD_GRPC_ENDPOINT = "storage-preprod-test-grpc.googleusercontent.com:443"
 # Run system test for either Rapid or RCU. But not both => XOR
 pytestmark = pytest.mark.skipif(
     not (
-        (os.getenv("RUN_RAPID_SYSTEM_TESTS") == "True")
-        ^ (os.getenv("RUN_RCU_SYSTEM_TESTS") == "True")
+        _parse_bool_env("RUN_RAPID_SYSTEM_TESTS", default=False)
+        ^ _parse_bool_env("RUN_RCU_SYSTEM_TESTS", default=False)
     ),
     reason="Any one of Rapid or RCU system tests need to be explicitly enabled. This helps scheduling tests in Kokoro and Cloud Build.",
 )
@@ -57,7 +58,7 @@ _RAPID_BUCKET = os.getenv("RAPID_BUCKET")
 _CROSS_REGION_BUCKET = os.getenv("CROSS_REGION_BUCKET")
 _BYTES_TO_UPLOAD = b"dummy_bytes_to_write_read_and_delete_appendable_object"
 
-RCU_SYSTEM_TESTS = os.getenv("RUN_RCU_SYSTEM_TESTS") == "True"
+RCU_SYSTEM_TESTS = _parse_bool_env("RUN_RCU_SYSTEM_TESTS", default=False)
 _RCU_BUCKET = os.getenv("RCU_BUCKET")
 _BUCKET_UNDER_TEST = _RCU_BUCKET if RCU_SYSTEM_TESTS else _RAPID_BUCKET
 
@@ -821,6 +822,175 @@ def test_open_with_generation_zero(
         blobs_to_delete.append(
             storage_client.bucket(_BUCKET_UNDER_TEST).blob(object_name)
         )
+
+    event_loop.run_until_complete(_run())
+
+
+def test_open_with_preconditions(
+    storage_client, blobs_to_delete, event_loop, grpc_client
+):
+    """Tests create-only and compare-and-swap writes using `Preconditions`."""
+    object_name = f"test_append_with_preconditions-{uuid.uuid4()}"
+
+    async def _run():
+        writer = AsyncAppendableObjectWriter(
+            grpc_client,
+            _BUCKET_UNDER_TEST,
+            object_name,
+            preconditions=Preconditions(if_generation_match=0),
+            storage_class="RAPID" if RCU_SYSTEM_TESTS else None,
+        )
+        await writer.open()
+        assert writer.is_stream_open
+        gen_1 = writer.generation
+        await writer.close()
+        assert not writer.is_stream_open
+
+        with pytest.raises(FailedPrecondition) as exc_info:
+            writer_create_fail = AsyncAppendableObjectWriter(
+                grpc_client,
+                _BUCKET_UNDER_TEST,
+                object_name,
+                preconditions=Preconditions(if_generation_match=0),
+                storage_class="RAPID" if RCU_SYSTEM_TESTS else None,
+            )
+            await writer_create_fail.open()
+        assert exc_info.value.code == 400
+
+        writer_cas = AsyncAppendableObjectWriter(
+            grpc_client,
+            _BUCKET_UNDER_TEST,
+            object_name,
+            preconditions=Preconditions(if_generation_match=gen_1),
+            storage_class="RAPID" if RCU_SYSTEM_TESTS else None,
+        )
+        await writer_cas.open()
+        assert writer_cas.generation != gen_1
+        await writer_cas.close()
+
+        with pytest.raises(FailedPrecondition) as exc_info:
+            writer_stale_cas = AsyncAppendableObjectWriter(
+                grpc_client,
+                _BUCKET_UNDER_TEST,
+                object_name,
+                preconditions=Preconditions(if_generation_match=gen_1),
+                storage_class="RAPID" if RCU_SYSTEM_TESTS else None,
+            )
+            await writer_stale_cas.open()
+        assert exc_info.value.code == 400
+
+        # cleanup
+        del writer
+        del writer_cas
+        gc.collect()
+
+        blobs_to_delete.append(
+            storage_client.bucket(_BUCKET_UNDER_TEST).blob(object_name)
+        )
+
+    event_loop.run_until_complete(_run())
+
+
+@pytest.mark.skipif(
+    RCU_SYSTEM_TESTS, reason="Write from blob for RCU not supported in SDK yet"
+)
+def test_from_blob_overwrite_fetched_blob_with_if_generation_match(
+    storage_client, blobs_to_delete, event_loop, grpc_client, rapid_kms_key
+):
+    """A fetched CMEK Blob is overwritten with CAS when `generation=None` is passed."""
+    object_name = f"test_from_blob_cas-{uuid.uuid4()}"
+
+    async def _run():
+        blob = storage_client.bucket(_BUCKET_UNDER_TEST).blob(
+            object_name, kms_key_name=rapid_kms_key
+        )
+        blob.content_type = "text/plain"
+        blob.metadata = {"environment": "system-test"}
+        writer = AsyncAppendableObjectWriter.from_blob(grpc_client, blob)
+        await writer.open()
+        await writer.append(b"v1")
+        await writer.close(finalize_on_close=True)
+        blobs_to_delete.append(blob)
+
+        # The fetched kms_key_name includes the key version.
+        fetched = storage_client.bucket(_BUCKET_UNDER_TEST).get_blob(object_name)
+        writer_cas = AsyncAppendableObjectWriter.from_blob(
+            grpc_client,
+            fetched,
+            generation=None,
+            preconditions=Preconditions(if_generation_match=fetched.generation),
+        )
+        await writer_cas.open()
+        await writer_cas.append(b"v2")
+        await writer_cas.close(finalize_on_close=True)
+
+        obj = await grpc_client.get_object(
+            bucket_name=_BUCKET_UNDER_TEST, object_name=object_name
+        )
+        assert obj.generation != fetched.generation
+        assert obj.content_type == "text/plain"
+        assert obj.metadata["environment"] == "system-test"
+        assert obj.kms_key.startswith(rapid_kms_key)
+
+        # cleanup
+        del writer
+        del writer_cas
+        gc.collect()
+
+    event_loop.run_until_complete(_run())
+
+
+def test_append_with_metageneration_precondition(
+    storage_client, blobs_to_delete, event_loop, grpc_client
+):
+    """Appending without a write_handle enforces metageneration preconditions."""
+    object_name = f"test_append_metageneration-{uuid.uuid4()}"
+
+    async def _run():
+        writer = AsyncAppendableObjectWriter(
+            grpc_client,
+            _BUCKET_UNDER_TEST,
+            object_name,
+            storage_class="RAPID" if RCU_SYSTEM_TESTS else None,
+        )
+        await writer.open()
+        await writer.append(b"v1")
+        await writer.close()
+        blobs_to_delete.append(
+            storage_client.bucket(_BUCKET_UNDER_TEST).blob(object_name)
+        )
+        obj = await grpc_client.get_object(
+            bucket_name=_BUCKET_UNDER_TEST, object_name=object_name
+        )
+
+        with pytest.raises(FailedPrecondition) as exc_info:
+            writer_stale = AsyncAppendableObjectWriter(
+                grpc_client,
+                _BUCKET_UNDER_TEST,
+                object_name,
+                generation=writer.generation,
+                preconditions=Preconditions(
+                    if_metageneration_match=obj.metageneration + 1
+                ),
+            )
+            await writer_stale.open()
+        assert exc_info.value.code == 400
+
+        writer_ok = AsyncAppendableObjectWriter(
+            grpc_client,
+            _BUCKET_UNDER_TEST,
+            object_name,
+            generation=writer.generation,
+            preconditions=Preconditions(if_metageneration_match=obj.metageneration),
+        )
+        await writer_ok.open()
+        await writer_ok.append(b"v2")
+        await writer_ok.close()
+
+        # cleanup
+        del writer
+        del writer_ok
+        gc.collect()
 
     event_loop.run_until_complete(_run())
 

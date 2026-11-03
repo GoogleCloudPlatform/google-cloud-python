@@ -5943,6 +5943,7 @@ def test_create_cluster_rest_call_success(request_type):
             "temp_bucket": "temp_bucket_value",
             "gce_cluster_config": {
                 "zone_uri": "zone_uri_value",
+                "multi_zone_config": {"target_shape": 1},
                 "network_uri": "network_uri_value",
                 "subnetwork_uri": "subnetwork_uri_value",
                 "internal_ip_only": True,
@@ -6109,6 +6110,14 @@ def test_create_cluster_rest_call_success(request_type):
                     "node_group_id": "node_group_id_value",
                 }
             ],
+            "master_flexible_config": {
+                "num_instances": 1399,
+                "core_count": 1073,
+                "boot_disk_size_gb": 1792,
+                "hardware_class": 1,
+            },
+            "worker_flexible_config": {},
+            "secondary_worker_flexible_config": {},
         },
         "virtual_cluster_config": {
             "staging_bucket": "staging_bucket_value",
@@ -6376,6 +6385,7 @@ def test_update_cluster_rest_call_success(request_type):
             "temp_bucket": "temp_bucket_value",
             "gce_cluster_config": {
                 "zone_uri": "zone_uri_value",
+                "multi_zone_config": {"target_shape": 1},
                 "network_uri": "network_uri_value",
                 "subnetwork_uri": "subnetwork_uri_value",
                 "internal_ip_only": True,
@@ -6542,6 +6552,14 @@ def test_update_cluster_rest_call_success(request_type):
                     "node_group_id": "node_group_id_value",
                 }
             ],
+            "master_flexible_config": {
+                "num_instances": 1399,
+                "core_count": 1073,
+                "boot_disk_size_gb": 1792,
+                "hardware_class": 1,
+            },
+            "worker_flexible_config": {},
+            "secondary_worker_flexible_config": {},
         },
         "virtual_cluster_config": {
             "staging_bucket": "staging_bucket_value",

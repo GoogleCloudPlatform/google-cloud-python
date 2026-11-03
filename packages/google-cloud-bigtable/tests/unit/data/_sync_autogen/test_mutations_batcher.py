@@ -250,6 +250,40 @@ class Test_FlowControl:
         count_results = [out for out in instance.add_to_flow(large_count_mutation)]
         assert len(count_results) == 1
 
+    def test_add_to_flow_with_metrics_throttling(self):
+        from google.cloud.bigtable.data._metrics import ActiveOperationMetric
+
+        instance = self._make_one()
+        target = mock.Mock()
+        target._create_operation.side_effect = ActiveOperationMetric
+        mutations = [self._make_mutation(), self._make_mutation()]
+        with mock.patch("time.monotonic_ns", return_value=100) as clock:
+
+            def flow(entries):
+                clock.return_value = 125
+                yield entries[:1]
+                clock.return_value = 240
+                yield entries[1:]
+
+            with mock.patch.object(instance, "add_to_flow", side_effect=flow):
+                results = []
+                for batch, metric in instance.add_to_flow_with_metrics(
+                    mutations, target
+                ):
+                    metric.end_with_status(0)
+                    results.append((batch, metric))
+                    clock.return_value = 200
+        assert len(results) == 2
+        assert target._create_operation.call_count == 2
+        assert ActiveOperationMetric.from_context() is None
+        assert results[0][0] == mutations[:1]
+        assert results[1][0] == mutations[1:]
+        assert results[0][1] is not results[1][1]
+        assert results[0][1].start_time_ns == 100
+        assert results[0][1].flow_throttling_time_ns == 25
+        assert results[1][1].start_time_ns == 200
+        assert results[1][1].flow_throttling_time_ns == 40
+
 
 class TestMutationsBatcher:
     def _get_target_class(self):
@@ -273,6 +307,7 @@ class TestMutationsBatcher:
                 ServiceUnavailable,
             )
             table.client._metrics = BigtableClientSideMetricsController([])
+            table._create_operation.side_effect = table.client._metrics.create_operation
         return self._get_target_class()(table, **kwargs)
 
     @staticmethod
@@ -715,6 +750,44 @@ class TestMutationsBatcher:
                     instance._oldest_exceptions.clear()
                     instance._newest_exceptions.clear()
 
+    @pytest.mark.parametrize("app_profile_id", [None, "test-profile"])
+    @pytest.mark.parametrize("authorized_view", [False, True])
+    def test_flush_metric_resource_labels(self, app_profile_id, authorized_view):
+        from google.cloud.bigtable.data._metrics import (
+            BigtableClientSideMetricsController,
+            OperationType,
+        )
+
+        client = mock.Mock(project="test-project")
+        client._metrics = BigtableClientSideMetricsController([])
+        with mock.patch.object(CrossSync._Sync_Impl, "create_task"):
+            if authorized_view:
+                target = CrossSync._Sync_Impl.AuthorizedView(
+                    client, "test-instance", "test-table", "test-view", app_profile_id
+                )
+            else:
+                target = CrossSync._Sync_Impl.Table(
+                    client, "test-instance", "test-table", app_profile_id
+                )
+        with mock.patch.object(
+            CrossSync._Sync_Impl, "_MutateRowsOperation"
+        ) as operation:
+            operation.return_value.start = CrossSync._Sync_Impl.Mock()
+            with self._make_one(
+                target, flush_interval=None, flow_control_max_mutation_count=1
+            ) as instance:
+                instance.append(self._make_mutation())
+                instance.append(self._make_mutation())
+        assert operation.call_count == 2
+        metrics = [call.kwargs["metric"] for call in operation.call_args_list]
+        assert metrics[0] is not metrics[1]
+        for metric in metrics:
+            assert metric.op_type == OperationType.BULK_MUTATE_ROWS
+            assert metric.project_id == "test-project"
+            assert metric.instance_id == "test-instance"
+            assert metric.table_id == "test-table"
+            assert metric.app_profile_id == app_profile_id
+
     def test_flush_clears_job_list(self):
         """a job should be added to _flush_jobs when _schedule_flush is called,
         and removed when it completes"""
@@ -983,6 +1056,54 @@ class TestMutationsBatcher:
                 assert result == []
                 assert called_with == []
 
+    def test__execute_mutate_rows_batch_completed_callback_unexpected_error(self):
+        from google.rpc import code_pb2, status_pb2
+
+        with mock.patch.object(
+            CrossSync._Sync_Impl._MutateRowsOperation, "start"
+        ) as mutate_rows:
+            mutate_rows.side_effect = RuntimeError("unexpected error")
+            table = mock.Mock()
+            table.default_mutate_rows_operation_timeout = 17
+            table.default_mutate_rows_attempt_timeout = 13
+            table.default_mutate_rows_retryable_errors = ()
+            callback = mock.Mock()
+            with self._make_one(table) as instance:
+                instance._user_batch_completed_callback = callback
+                batch = [self._make_mutation(), self._make_mutation()]
+                with pytest.raises(RuntimeError, match="unexpected error"):
+                    instance._execute_mutate_rows(batch, mock.Mock())
+                callback.assert_called_once_with(
+                    [
+                        status_pb2.Status(code=code_pb2.UNKNOWN),
+                        status_pb2.Status(code=code_pb2.UNKNOWN),
+                    ]
+                )
+
+    def test__wait_for_batch_results_unexpected_task_exception(self):
+        """Unexpected exceptions raised by batch tasks should be wrapped in FailedMutationEntryError."""
+        batch = [self._make_mutation(), self._make_mutation()]
+        expected_err = RuntimeError("task failed")
+        with self._make_one() as instance:
+            with mock.patch.object(
+                instance, "_execute_mutate_rows", side_effect=expected_err
+            ):
+                with mock.patch.object(
+                    instance._flow_control, "add_to_flow"
+                ) as flow_mock:
+
+                    def gen(x):
+                        yield x
+
+                    flow_mock.side_effect = lambda x: gen(x)
+                    instance._flush_internal(batch)
+                    assert len(instance._oldest_exceptions) == 2
+                    for failed_entry in instance._oldest_exceptions:
+                        assert failed_entry.index is None
+                        assert failed_entry.__cause__ is expected_err
+                    instance._oldest_exceptions.clear()
+                    instance._newest_exceptions.clear()
+
     def test__raise_exceptions(self):
         """Raise exceptions and reset error state"""
         from google.cloud.bigtable.data import exceptions
@@ -1024,6 +1145,100 @@ class TestMutationsBatcher:
                     assert instance._flush_jobs == set()
                     assert flush_mock.call_count == 1
                     assert raise_mock.call_count == 1
+
+    def test_close_executor_shutdown_fallback(self):
+        """If create_task raises RuntimeError during close (e.g. atexit), flush synchronously"""
+        with self._make_one() as instance:
+            mutation = self._make_mutation(count=1, size=1)
+            instance._staged_entries = [mutation]
+            with mock.patch.object(
+                CrossSync._Sync_Impl,
+                "create_task",
+                side_effect=RuntimeError("shutdown"),
+            ):
+                with mock.patch.object(
+                    instance, "_execute_mutate_rows", return_value=[]
+                ) as exec_mock:
+                    instance.close()
+                    assert exec_mock.call_count == 1
+                    assert instance._staged_entries == []
+
+    def test_schedule_flush_runtime_error_restores_staged_entries(self):
+        """If create_task raises RuntimeError in _schedule_flush, staged entries are preserved"""
+        with self._make_one() as instance:
+            mutation = self._make_mutation(count=2, size=5)
+            instance.append(mutation)
+            with mock.patch.object(
+                CrossSync._Sync_Impl,
+                "create_task",
+                side_effect=RuntimeError("shutdown"),
+            ):
+                with pytest.raises(RuntimeError, match="shutdown"):
+                    instance._schedule_flush()
+            assert instance._staged_entries == [mutation]
+            assert instance._staged_count == 2
+            assert instance._staged_bytes == 5
+            instance._staged_entries = []
+
+    def test_sync_concurrent_schedule_flush_and_close_thread_safety(self):
+        """Verify that in sync mode:
+        1. Concurrent _schedule_flush() calls from user and timer threads never dispatch
+           duplicate batches (b/574637091).
+        2. Concurrent timer flush and close() never shut down _sync_flush_executor mid-flush
+           or silently lose a batch (b/574637465)."""
+        import threading
+
+        with self._make_one(flush_interval=None) as instance:
+            flushed_batches = []
+            flush_lock = threading.Lock()
+            barrier = threading.Barrier(4)
+
+            def record_flush(entries):
+                with flush_lock:
+                    flushed_batches.append(list(entries))
+
+            with mock.patch.object(
+                instance, "_flush_internal", side_effect=record_flush
+            ):
+                mutation = self._make_mutation(count=1, size=1)
+                instance._staged_entries = [mutation]
+                instance._staged_count = 1
+                instance._staged_bytes = 1
+
+                def worker():
+                    barrier.wait()
+                    instance._schedule_flush()
+
+                threads = [threading.Thread(target=worker) for _ in range(4)]
+                for t in threads:
+                    t.start()
+                for t in threads:
+                    t.join()
+                instance.close()
+                assert len(flushed_batches) == 1
+                assert flushed_batches[0] == [mutation]
+        for _ in range(25):
+            flushed_entries = []
+            flush_lock = threading.Lock()
+            instance = self._make_one(
+                flush_interval=0.001, flush_limit_mutation_count=100
+            )
+            with mock.patch.object(
+                instance,
+                "_execute_mutate_rows",
+                side_effect=lambda batch, metric: (
+                    flush_lock.acquire(),
+                    flushed_entries.extend(batch),
+                    flush_lock.release(),
+                    [],
+                )[-1],
+            ):
+                mutation = self._make_mutation(count=1, size=1)
+                instance.append(mutation)
+                time.sleep(0.001)
+                instance.close()
+                assert instance._flush_timer.exception() is None
+                assert flushed_entries == [mutation]
 
     def test_close_w_exceptions(self):
         """Raise exceptions on close"""

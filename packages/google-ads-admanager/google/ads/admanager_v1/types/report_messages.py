@@ -51,6 +51,9 @@ class Report(proto.Message):
         report_definition (google.ads.admanager_v1.types.ReportDefinition):
             Required. The report definition of the
             report.
+        draft_report_definition (google.ads.admanager_v1.types.ReportDefinition):
+            Optional. The draft report definition of the
+            report.
         display_name (str):
             Optional. Display name for the report.
         update_time (google.protobuf.timestamp_pb2.Timestamp):
@@ -86,6 +89,11 @@ class Report(proto.Message):
     report_definition: gaa_report_definition.ReportDefinition = proto.Field(
         proto.MESSAGE,
         number=4,
+        message=gaa_report_definition.ReportDefinition,
+    )
+    draft_report_definition: gaa_report_definition.ReportDefinition = proto.Field(
+        proto.MESSAGE,
+        number=14,
         message=gaa_report_definition.ReportDefinition,
     )
     display_name: str = proto.Field(

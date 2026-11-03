@@ -474,8 +474,17 @@ class HumanAgentAssistantConfig(proto.Message):
                 features: AI_COACH) and use unredacted ingested context
                 (Supported features: All Agent Assist features)
             enable_async_tool_call (bool):
-                Optional. If true, enable asynchronous
-                execution of tools.
+                Optional. Deprecated: This field is not consulted for tool
+                execution. Configure asynchronous execution per tool using
+                [CesToolSpec.async_execution][google.cloud.dialogflow.v2beta1.CesToolSpec.async_execution]
+                or
+                [ToolsetTool.async_execution][google.cloud.dialogflow.v2beta1.ToolsetTool.async_execution]
+                instead.
+            companion_agent (str):
+                Optional. The resource name of the companion agent to link.
+                This is only supported for
+                ``human_agent_suggestion_config``. Format:
+                ``projects/{project}/locations/{location}/companionAgents/{companion_agent}``
         """
 
         feature_configs: MutableSequence[
@@ -508,6 +517,10 @@ class HumanAgentAssistantConfig(proto.Message):
         enable_async_tool_call: bool = proto.Field(
             proto.BOOL,
             number=9,
+        )
+        companion_agent: str = proto.Field(
+            proto.STRING,
+            number=11,
         )
 
     class SuggestionQueryConfig(proto.Message):

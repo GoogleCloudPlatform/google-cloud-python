@@ -26349,6 +26349,8 @@ class Commitment(proto.Message):
                 No description available.
             COMPUTE_OPTIMIZED_H4D (383251320):
                 No description available.
+            COMPUTE_OPTIMIZED_H4D_3TB (443379866):
+                CUD bucket for COMPUTE_OPTIMIZED_H4D_3TB machines.
             GENERAL_PURPOSE (299793543):
                 No description available.
             GENERAL_PURPOSE_C4 (301911817):
@@ -26446,6 +26448,7 @@ class Commitment(proto.Message):
         COMPUTE_OPTIMIZED_C3D = 383246484
         COMPUTE_OPTIMIZED_H3 = 428004939
         COMPUTE_OPTIMIZED_H4D = 383251320
+        COMPUTE_OPTIMIZED_H4D_3TB = 443379866
         GENERAL_PURPOSE = 299793543
         GENERAL_PURPOSE_C4 = 301911817
         GENERAL_PURPOSE_C4A = 232460888

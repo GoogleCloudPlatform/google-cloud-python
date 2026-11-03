@@ -38,10 +38,14 @@ from google.cloud.beyondcorp_appconnectors_v1.types.app_connectors_service impor
     ListAppConnectorsRequest,
     ListAppConnectorsResponse,
     ReportStatusRequest,
+    ResolveInstanceConfigRequest,
+    ResolveInstanceConfigResponse,
     UpdateAppConnectorRequest,
 )
 from google.cloud.beyondcorp_appconnectors_v1.types.resource_info import (
+    ContainerHealthDetails,
     HealthStatus,
+    RemoteAgentDetails,
     ResourceInfo,
 )
 
@@ -59,7 +63,11 @@ __all__ = (
     "ListAppConnectorsRequest",
     "ListAppConnectorsResponse",
     "ReportStatusRequest",
+    "ResolveInstanceConfigRequest",
+    "ResolveInstanceConfigResponse",
     "UpdateAppConnectorRequest",
+    "ContainerHealthDetails",
+    "RemoteAgentDetails",
     "ResourceInfo",
     "HealthStatus",
 )

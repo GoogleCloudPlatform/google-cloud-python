@@ -93,7 +93,7 @@ class Document(proto.Message):
             ``documents/docs.cloud.google.com/storage/docs/creating-buckets``
         uri (str):
             Output only. Provides the URI of the content, such as
-            ``docs.cloud.google.com/storage/docs/creating-buckets``.
+            ``https://docs.cloud.google.com/storage/docs/creating-buckets``.
         content (str):
             Output only. Contains the full content of the
             document in Markdown format.

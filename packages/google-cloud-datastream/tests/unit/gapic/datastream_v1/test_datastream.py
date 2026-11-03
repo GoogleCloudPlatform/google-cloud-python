@@ -17708,6 +17708,14 @@ def test_create_connection_profile_rest_call_success(request_type):
             "username": "username_value",
             "password": "password_value",
             "database": "database_value",
+            "ssl_config": {
+                "encryption_not_enforced": {},
+                "basic_encryption": {},
+                "encryption_and_server_validation": {
+                    "ca_certificate": "ca_certificate_value",
+                    "server_certificate_hostname": "server_certificate_hostname_value",
+                },
+            },
             "secret_manager_stored_password": "secret_manager_stored_password_value",
         },
         "salesforce_profile": {
@@ -17742,6 +17750,36 @@ def test_create_connection_profile_rest_call_success(request_type):
             },
             "srv_connection_format": {},
             "standard_connection_format": {"direct_connection": True},
+            "additional_options": {},
+        },
+        "spanner_profile": {"database": "database_value", "host": "host_value"},
+        "dataverse_profile": {
+            "tenant_id": "tenant_id_value",
+            "environment_url": "environment_url_value",
+            "oauth_client_credentials": {
+                "client_id": "client_id_value",
+                "client_secret": {
+                    "raw_value": "raw_value_value",
+                    "secret_version": "secret_version_value",
+                },
+            },
+        },
+        "salesforce_marketing_cloud_profile": {
+            "subdomain": "subdomain_value",
+            "oauth_client_credentials": {},
+        },
+        "service_now_profile": {
+            "instance": "instance_value",
+            "user_password_credentials": {"username": "username_value", "password": {}},
+            "oauth_client_credentials": {},
+        },
+        "workday_profile": {
+            "host": "host_value",
+            "tenant": "tenant_value",
+            "oauth_refresh_token_credentials": {
+                "oauth_client_credentials": {},
+                "refresh_token": {},
+            },
         },
         "static_service_ip_connectivity": {},
         "forward_ssh_connectivity": {
@@ -18031,6 +18069,14 @@ def test_update_connection_profile_rest_call_success(request_type):
             "username": "username_value",
             "password": "password_value",
             "database": "database_value",
+            "ssl_config": {
+                "encryption_not_enforced": {},
+                "basic_encryption": {},
+                "encryption_and_server_validation": {
+                    "ca_certificate": "ca_certificate_value",
+                    "server_certificate_hostname": "server_certificate_hostname_value",
+                },
+            },
             "secret_manager_stored_password": "secret_manager_stored_password_value",
         },
         "salesforce_profile": {
@@ -18065,6 +18111,36 @@ def test_update_connection_profile_rest_call_success(request_type):
             },
             "srv_connection_format": {},
             "standard_connection_format": {"direct_connection": True},
+            "additional_options": {},
+        },
+        "spanner_profile": {"database": "database_value", "host": "host_value"},
+        "dataverse_profile": {
+            "tenant_id": "tenant_id_value",
+            "environment_url": "environment_url_value",
+            "oauth_client_credentials": {
+                "client_id": "client_id_value",
+                "client_secret": {
+                    "raw_value": "raw_value_value",
+                    "secret_version": "secret_version_value",
+                },
+            },
+        },
+        "salesforce_marketing_cloud_profile": {
+            "subdomain": "subdomain_value",
+            "oauth_client_credentials": {},
+        },
+        "service_now_profile": {
+            "instance": "instance_value",
+            "user_password_credentials": {"username": "username_value", "password": {}},
+            "oauth_client_credentials": {},
+        },
+        "workday_profile": {
+            "host": "host_value",
+            "tenant": "tenant_value",
+            "oauth_refresh_token_credentials": {
+                "oauth_client_credentials": {},
+                "refresh_token": {},
+            },
         },
         "static_service_ip_connectivity": {},
         "forward_ssh_connectivity": {
@@ -18942,7 +19018,12 @@ def test_create_stream_rest_call_success(request_type):
                 "max_concurrent_cdc_tasks": 2550,
                 "max_concurrent_backfill_tasks": 3076,
                 "transaction_logs": {},
-                "change_tables": {},
+                "change_tables": {
+                    "ddl_config": {
+                        "auto_create_new_capture_instance_on_ddl": True,
+                        "auto_delete_old_capture_instance": True,
+                    }
+                },
             },
             "salesforce_source_config": {
                 "include_objects": {
@@ -18978,6 +19059,70 @@ def test_create_stream_rest_call_success(request_type):
                 },
                 "exclude_objects": {},
                 "max_concurrent_backfill_tasks": 3076,
+                "json_mode": 1,
+            },
+            "spanner_source_config": {
+                "change_stream_name": "change_stream_name_value",
+                "spanner_rpc_priority": 1,
+                "fgac_role": "fgac_role_value",
+                "max_concurrent_cdc_tasks": 2550,
+                "max_concurrent_backfill_tasks": 3076,
+                "include_objects": {
+                    "schemas": [
+                        {
+                            "schema": "schema_value",
+                            "tables": [
+                                {
+                                    "table": "table_value",
+                                    "columns": [
+                                        {
+                                            "column": "column_value",
+                                            "data_type": "data_type_value",
+                                            "is_primary_key": True,
+                                            "ordinal_position": 1725,
+                                        }
+                                    ],
+                                }
+                            ],
+                        }
+                    ]
+                },
+                "exclude_objects": {},
+                "backfill_data_boost_enabled": True,
+            },
+            "dataverse_source_config": {
+                "include_objects": {
+                    "objects": [
+                        {
+                            "object_name": "object_name_value",
+                            "properties": [
+                                {
+                                    "property_name": "property_name_value",
+                                    "properties": {},
+                                    "primary_key": True,
+                                }
+                            ],
+                        }
+                    ]
+                },
+                "exclude_objects": {},
+                "polling_interval": {},
+            },
+            "salesforce_marketing_cloud_source_config": {
+                "include_objects": {},
+                "exclude_objects": {},
+                "polling_interval": {},
+                "full_refresh_polling_interval": {},
+            },
+            "service_now_source_config": {
+                "include_objects": {},
+                "exclude_objects": {},
+                "polling_interval": {},
+            },
+            "workday_source_config": {
+                "include_objects": {},
+                "exclude_objects": {},
+                "polling_interval": {},
             },
         },
         "destination_config": {
@@ -19019,6 +19164,8 @@ def test_create_stream_rest_call_success(request_type):
             "sql_server_excluded_objects": {},
             "salesforce_excluded_objects": {},
             "mongodb_excluded_objects": {},
+            "spanner_excluded_objects": {},
+            "saas_excluded_objects": {},
         },
         "backfill_none": {},
         "errors": [
@@ -19034,6 +19181,62 @@ def test_create_stream_rest_call_success(request_type):
         "last_recovery_time": {},
         "satisfies_pzs": True,
         "satisfies_pzi": True,
+        "rule_sets": [
+            {
+                "customization_rules": [
+                    {
+                        "bigquery_partitioning": {
+                            "integer_range_partition": {
+                                "column": "column_value",
+                                "start": 558,
+                                "end": 311,
+                                "interval": 869,
+                            },
+                            "time_unit_partition": {
+                                "column": "column_value",
+                                "partitioning_time_granularity": 1,
+                            },
+                            "ingestion_time_partition": {
+                                "partitioning_time_granularity": 1
+                            },
+                            "require_partition_filter": True,
+                        },
+                        "bigquery_clustering": {
+                            "columns": ["columns_value1", "columns_value2"]
+                        },
+                    }
+                ],
+                "object_filter": {
+                    "source_object_identifier": {
+                        "oracle_identifier": {
+                            "schema": "schema_value",
+                            "table": "table_value",
+                        },
+                        "mysql_identifier": {
+                            "database": "database_value",
+                            "table": "table_value",
+                        },
+                        "postgresql_identifier": {
+                            "schema": "schema_value",
+                            "table": "table_value",
+                        },
+                        "sql_server_identifier": {
+                            "schema": "schema_value",
+                            "table": "table_value",
+                        },
+                        "salesforce_identifier": {"object_name": "object_name_value"},
+                        "mongodb_identifier": {
+                            "database": "database_value",
+                            "collection": "collection_value",
+                        },
+                        "spanner_identifier": {
+                            "schema": "schema_value",
+                            "table": "table_value",
+                        },
+                    }
+                },
+            }
+        ],
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -19366,7 +19569,12 @@ def test_update_stream_rest_call_success(request_type):
                 "max_concurrent_cdc_tasks": 2550,
                 "max_concurrent_backfill_tasks": 3076,
                 "transaction_logs": {},
-                "change_tables": {},
+                "change_tables": {
+                    "ddl_config": {
+                        "auto_create_new_capture_instance_on_ddl": True,
+                        "auto_delete_old_capture_instance": True,
+                    }
+                },
             },
             "salesforce_source_config": {
                 "include_objects": {
@@ -19402,6 +19610,70 @@ def test_update_stream_rest_call_success(request_type):
                 },
                 "exclude_objects": {},
                 "max_concurrent_backfill_tasks": 3076,
+                "json_mode": 1,
+            },
+            "spanner_source_config": {
+                "change_stream_name": "change_stream_name_value",
+                "spanner_rpc_priority": 1,
+                "fgac_role": "fgac_role_value",
+                "max_concurrent_cdc_tasks": 2550,
+                "max_concurrent_backfill_tasks": 3076,
+                "include_objects": {
+                    "schemas": [
+                        {
+                            "schema": "schema_value",
+                            "tables": [
+                                {
+                                    "table": "table_value",
+                                    "columns": [
+                                        {
+                                            "column": "column_value",
+                                            "data_type": "data_type_value",
+                                            "is_primary_key": True,
+                                            "ordinal_position": 1725,
+                                        }
+                                    ],
+                                }
+                            ],
+                        }
+                    ]
+                },
+                "exclude_objects": {},
+                "backfill_data_boost_enabled": True,
+            },
+            "dataverse_source_config": {
+                "include_objects": {
+                    "objects": [
+                        {
+                            "object_name": "object_name_value",
+                            "properties": [
+                                {
+                                    "property_name": "property_name_value",
+                                    "properties": {},
+                                    "primary_key": True,
+                                }
+                            ],
+                        }
+                    ]
+                },
+                "exclude_objects": {},
+                "polling_interval": {},
+            },
+            "salesforce_marketing_cloud_source_config": {
+                "include_objects": {},
+                "exclude_objects": {},
+                "polling_interval": {},
+                "full_refresh_polling_interval": {},
+            },
+            "service_now_source_config": {
+                "include_objects": {},
+                "exclude_objects": {},
+                "polling_interval": {},
+            },
+            "workday_source_config": {
+                "include_objects": {},
+                "exclude_objects": {},
+                "polling_interval": {},
             },
         },
         "destination_config": {
@@ -19443,6 +19715,8 @@ def test_update_stream_rest_call_success(request_type):
             "sql_server_excluded_objects": {},
             "salesforce_excluded_objects": {},
             "mongodb_excluded_objects": {},
+            "spanner_excluded_objects": {},
+            "saas_excluded_objects": {},
         },
         "backfill_none": {},
         "errors": [
@@ -19458,6 +19732,62 @@ def test_update_stream_rest_call_success(request_type):
         "last_recovery_time": {},
         "satisfies_pzs": True,
         "satisfies_pzi": True,
+        "rule_sets": [
+            {
+                "customization_rules": [
+                    {
+                        "bigquery_partitioning": {
+                            "integer_range_partition": {
+                                "column": "column_value",
+                                "start": 558,
+                                "end": 311,
+                                "interval": 869,
+                            },
+                            "time_unit_partition": {
+                                "column": "column_value",
+                                "partitioning_time_granularity": 1,
+                            },
+                            "ingestion_time_partition": {
+                                "partitioning_time_granularity": 1
+                            },
+                            "require_partition_filter": True,
+                        },
+                        "bigquery_clustering": {
+                            "columns": ["columns_value1", "columns_value2"]
+                        },
+                    }
+                ],
+                "object_filter": {
+                    "source_object_identifier": {
+                        "oracle_identifier": {
+                            "schema": "schema_value",
+                            "table": "table_value",
+                        },
+                        "mysql_identifier": {
+                            "database": "database_value",
+                            "table": "table_value",
+                        },
+                        "postgresql_identifier": {
+                            "schema": "schema_value",
+                            "table": "table_value",
+                        },
+                        "sql_server_identifier": {
+                            "schema": "schema_value",
+                            "table": "table_value",
+                        },
+                        "salesforce_identifier": {"object_name": "object_name_value"},
+                        "mongodb_identifier": {
+                            "database": "database_value",
+                            "collection": "collection_value",
+                        },
+                        "spanner_identifier": {
+                            "schema": "schema_value",
+                            "table": "table_value",
+                        },
+                    }
+                },
+            }
+        ],
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -23403,10 +23733,36 @@ def test_parse_connection_profile_path():
     assert expected == actual
 
 
-def test_network_attachment_path():
+def test_database_path():
     project = "cuttlefish"
-    region = "mussel"
-    network_attachment = "winkle"
+    instance = "mussel"
+    database = "winkle"
+    expected = "projects/{project}/instances/{instance}/databases/{database}".format(
+        project=project,
+        instance=instance,
+        database=database,
+    )
+    actual = DatastreamClient.database_path(project, instance, database)
+    assert expected == actual
+
+
+def test_parse_database_path():
+    expected = {
+        "project": "nautilus",
+        "instance": "scallop",
+        "database": "abalone",
+    }
+    path = DatastreamClient.database_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = DatastreamClient.parse_database_path(path)
+    assert expected == actual
+
+
+def test_network_attachment_path():
+    project = "squid"
+    region = "clam"
+    network_attachment = "whelk"
     expected = "projects/{project}/regions/{region}/networkAttachments/{network_attachment}".format(
         project=project,
         region=region,
@@ -23420,9 +23776,9 @@ def test_network_attachment_path():
 
 def test_parse_network_attachment_path():
     expected = {
-        "project": "nautilus",
-        "region": "scallop",
-        "network_attachment": "abalone",
+        "project": "octopus",
+        "region": "oyster",
+        "network_attachment": "nudibranch",
     }
     path = DatastreamClient.network_attachment_path(**expected)
 
@@ -23432,8 +23788,8 @@ def test_parse_network_attachment_path():
 
 
 def test_networks_path():
-    project = "squid"
-    network = "clam"
+    project = "cuttlefish"
+    network = "mussel"
     expected = "projects/{project}/global/networks/{network}".format(
         project=project,
         network=network,
@@ -23444,8 +23800,8 @@ def test_networks_path():
 
 def test_parse_networks_path():
     expected = {
-        "project": "whelk",
-        "network": "octopus",
+        "project": "winkle",
+        "network": "nautilus",
     }
     path = DatastreamClient.networks_path(**expected)
 
@@ -23455,9 +23811,9 @@ def test_parse_networks_path():
 
 
 def test_private_connection_path():
-    project = "oyster"
-    location = "nudibranch"
-    private_connection = "cuttlefish"
+    project = "scallop"
+    location = "abalone"
+    private_connection = "squid"
     expected = "projects/{project}/locations/{location}/privateConnections/{private_connection}".format(
         project=project,
         location=location,
@@ -23471,9 +23827,9 @@ def test_private_connection_path():
 
 def test_parse_private_connection_path():
     expected = {
-        "project": "mussel",
-        "location": "winkle",
-        "private_connection": "nautilus",
+        "project": "clam",
+        "location": "whelk",
+        "private_connection": "octopus",
     }
     path = DatastreamClient.private_connection_path(**expected)
 
@@ -23483,10 +23839,10 @@ def test_parse_private_connection_path():
 
 
 def test_route_path():
-    project = "scallop"
-    location = "abalone"
-    private_connection = "squid"
-    route = "clam"
+    project = "oyster"
+    location = "nudibranch"
+    private_connection = "cuttlefish"
+    route = "mussel"
     expected = "projects/{project}/locations/{location}/privateConnections/{private_connection}/routes/{route}".format(
         project=project,
         location=location,
@@ -23499,10 +23855,10 @@ def test_route_path():
 
 def test_parse_route_path():
     expected = {
-        "project": "whelk",
-        "location": "octopus",
-        "private_connection": "oyster",
-        "route": "nudibranch",
+        "project": "winkle",
+        "location": "nautilus",
+        "private_connection": "scallop",
+        "route": "abalone",
     }
     path = DatastreamClient.route_path(**expected)
 
@@ -23512,9 +23868,9 @@ def test_parse_route_path():
 
 
 def test_stream_path():
-    project = "cuttlefish"
-    location = "mussel"
-    stream = "winkle"
+    project = "squid"
+    location = "clam"
+    stream = "whelk"
     expected = "projects/{project}/locations/{location}/streams/{stream}".format(
         project=project,
         location=location,
@@ -23526,9 +23882,9 @@ def test_stream_path():
 
 def test_parse_stream_path():
     expected = {
-        "project": "nautilus",
-        "location": "scallop",
-        "stream": "abalone",
+        "project": "octopus",
+        "location": "oyster",
+        "stream": "nudibranch",
     }
     path = DatastreamClient.stream_path(**expected)
 
@@ -23538,10 +23894,10 @@ def test_parse_stream_path():
 
 
 def test_stream_object_path():
-    project = "squid"
-    location = "clam"
-    stream = "whelk"
-    object = "octopus"
+    project = "cuttlefish"
+    location = "mussel"
+    stream = "winkle"
+    object = "nautilus"
     expected = "projects/{project}/locations/{location}/streams/{stream}/objects/{object}".format(
         project=project,
         location=location,
@@ -23554,10 +23910,10 @@ def test_stream_object_path():
 
 def test_parse_stream_object_path():
     expected = {
-        "project": "oyster",
-        "location": "nudibranch",
-        "stream": "cuttlefish",
-        "object": "mussel",
+        "project": "scallop",
+        "location": "abalone",
+        "stream": "squid",
+        "object": "clam",
     }
     path = DatastreamClient.stream_object_path(**expected)
 
@@ -23567,7 +23923,7 @@ def test_parse_stream_object_path():
 
 
 def test_common_billing_account_path():
-    billing_account = "winkle"
+    billing_account = "whelk"
     expected = "billingAccounts/{billing_account}".format(
         billing_account=billing_account,
     )
@@ -23577,7 +23933,7 @@ def test_common_billing_account_path():
 
 def test_parse_common_billing_account_path():
     expected = {
-        "billing_account": "nautilus",
+        "billing_account": "octopus",
     }
     path = DatastreamClient.common_billing_account_path(**expected)
 
@@ -23587,7 +23943,7 @@ def test_parse_common_billing_account_path():
 
 
 def test_common_folder_path():
-    folder = "scallop"
+    folder = "oyster"
     expected = "folders/{folder}".format(
         folder=folder,
     )
@@ -23597,7 +23953,7 @@ def test_common_folder_path():
 
 def test_parse_common_folder_path():
     expected = {
-        "folder": "abalone",
+        "folder": "nudibranch",
     }
     path = DatastreamClient.common_folder_path(**expected)
 
@@ -23607,7 +23963,7 @@ def test_parse_common_folder_path():
 
 
 def test_common_organization_path():
-    organization = "squid"
+    organization = "cuttlefish"
     expected = "organizations/{organization}".format(
         organization=organization,
     )
@@ -23617,7 +23973,7 @@ def test_common_organization_path():
 
 def test_parse_common_organization_path():
     expected = {
-        "organization": "clam",
+        "organization": "mussel",
     }
     path = DatastreamClient.common_organization_path(**expected)
 
@@ -23627,7 +23983,7 @@ def test_parse_common_organization_path():
 
 
 def test_common_project_path():
-    project = "whelk"
+    project = "winkle"
     expected = "projects/{project}".format(
         project=project,
     )
@@ -23637,7 +23993,7 @@ def test_common_project_path():
 
 def test_parse_common_project_path():
     expected = {
-        "project": "octopus",
+        "project": "nautilus",
     }
     path = DatastreamClient.common_project_path(**expected)
 
@@ -23647,8 +24003,8 @@ def test_parse_common_project_path():
 
 
 def test_common_location_path():
-    project = "oyster"
-    location = "nudibranch"
+    project = "scallop"
+    location = "abalone"
     expected = "projects/{project}/locations/{location}".format(
         project=project,
         location=location,
@@ -23659,8 +24015,8 @@ def test_common_location_path():
 
 def test_parse_common_location_path():
     expected = {
-        "project": "cuttlefish",
-        "location": "mussel",
+        "project": "squid",
+        "location": "clam",
     }
     path = DatastreamClient.common_location_path(**expected)
 

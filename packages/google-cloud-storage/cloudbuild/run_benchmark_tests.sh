@@ -16,6 +16,11 @@ ROUNDS="${ROUNDS:-3}"                        # Run benchmark 3 rounds by default
 BUCKET_TYPE="${BUCKET_TYPE:-rapid}"          # "rapid" uses BidiReadObject gRPC DirectPath, "regional" uses REST/gRPC standard
 RAPID_BUCKET="${RAPID_BUCKET:-${DEFAULT_RAPID_BUCKET:-gcs-read-bench-zb-us-west4-a}}"
 REGIONAL_BUCKET="${REGIONAL_BUCKET:-${DEFAULT_STANDARD_BUCKET:-gcs-read-bench-rb-us-west4}}"
+# Limit concurrent ALTS handshakes per worker process to 2 so that 48 worker
+# processes never exceed 96 total concurrent streams against the local GCE
+# metadata server (169.254.169.254:8080, ~100 stream buffer limit), preventing
+# GOAWAY [11] "Buffers full" errors while still handshaking multiple subchannels.
+GRPC_ALTS_MAX_CONCURRENT_HANDSHAKES="${GRPC_ALTS_MAX_CONCURRENT_HANDSHAKES:-2}"
 if [ -n "${TARGET_BUCKET:-}" ]; then
   if [ "${BUCKET_TYPE}" = "regional" ]; then
     REGIONAL_BUCKET="${TARGET_BUCKET}"
@@ -39,6 +44,7 @@ echo " Rounds:           ${ROUNDS}"
 echo " Bucket Type:      ${BUCKET_TYPE}"
 echo " Rapid Bucket:     gs://${RAPID_BUCKET}"
 echo " Regional Bucket:  gs://${REGIONAL_BUCKET}"
+echo " ALTS Handshakes:  ${GRPC_ALTS_MAX_CONCURRENT_HANDSHAKES}"
 echo " Output JSON Path: ${OUTPUT_JSON_PATH}"
 echo " Upload GCS Path:  ${UPLOAD_GCS_PREFIX:-None}"
 echo "========================================================================"
@@ -51,6 +57,7 @@ export FILE_SIZE_MIB="${FILE_SIZE_MIB}"
 export CHUNK_SIZE_KIB="${CHUNK_SIZE_KIB}"
 export ROUNDS="${ROUNDS}"
 export BUCKET_TYPE="${BUCKET_TYPE}"
+export GRPC_ALTS_MAX_CONCURRENT_HANDSHAKES="${GRPC_ALTS_MAX_CONCURRENT_HANDSHAKES}"
 
 # Navigate to package directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

@@ -87,7 +87,7 @@ class AdSpot(proto.Message):
         max_ad_duration (google.protobuf.duration_pb2.Duration):
             Required. The maximum allowed duration for ads in the
             ``AdSpot``. This field is required and must be greater than
-            [min_ad_duration][google.ads.admanager.v1.AdSpot.min_ad_duration].
+            [minAdDuration][google.ads.admanager.v1.AdSpot.min_ad_duration].
 
             This field is a member of `oneof`_ ``_max_ad_duration``.
         max_ads (int):

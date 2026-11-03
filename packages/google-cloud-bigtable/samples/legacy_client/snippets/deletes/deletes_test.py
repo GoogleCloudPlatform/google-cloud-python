@@ -20,7 +20,7 @@ import uuid
 
 import pytest
 
-from ...utils import create_table_cm
+from ....utils import create_table_cm
 from . import deletes_snippets
 
 PROJECT = os.environ["GOOGLE_CLOUD_PROJECT"]
@@ -115,6 +115,42 @@ def test_delete_from_row(capsys, table_id):
 def test_streaming_and_batching(capsys, table_id):
     deletes_snippets.streaming_and_batching(PROJECT, BIGTABLE_INSTANCE, table_id)
     assert_output_match(capsys, "")
+
+
+def test_streaming_and_batching_actually_deletes(table_id):
+    """Verifies that streaming_and_batching actually deletes cells from the table."""
+    from google.cloud import bigtable
+
+    from . import deletes_snippets
+
+    client = bigtable.Client(project=PROJECT, admin=True)
+    instance = client.instance(BIGTABLE_INSTANCE)
+    table = instance.table(table_id)
+
+    # 1. Seed a row in the table with cell_plan:data_plan_01gb
+    row_key = b"phone#4c410523#20190501"
+    row = table.direct_row(row_key)
+    row.set_cell("cell_plan", b"data_plan_01gb", b"true")
+    row.commit()
+
+    # 2. Verify row exists before calling the snippet
+    seeded_row = table.read_row(row_key)
+    assert seeded_row is not None, "Failed to seed row!"
+    assert b"data_plan_01gb" in seeded_row.cells["cell_plan"]
+
+    # 3. Run the snippet
+    deletes_snippets.streaming_and_batching(PROJECT, BIGTABLE_INSTANCE, table_id)
+
+    # 4. Check if the cell was deleted
+    updated_row = table.read_row(row_key)
+    # If the snippet worked, either the row is None (all cells deleted)
+    # or the column data_plan_01gb is absent from cell_plan:
+    has_cell = updated_row is not None and b"data_plan_01gb" in updated_row.cells.get(
+        "cell_plan", {}
+    )
+    assert not has_cell, (
+        "Cell was NOT deleted because batcher received an exhausted generator!"
+    )
 
 
 def test_check_and_mutate(capsys, table_id):

@@ -14,6 +14,7 @@
 
 import datetime
 import decimal
+import json
 from typing import Tuple
 
 import pytest
@@ -162,7 +163,7 @@ def test_query_statistics(bigquery_client, query_api_method):
     assert len(plan) > stages_with_inputs
 
 
-@pytest.mark.parametrize(
+_QUERY_PARAMETER_CASES = pytest.mark.parametrize(
     ("sql", "expected", "query_parameters"),
     (
         (
@@ -438,6 +439,9 @@ def test_query_statistics(bigquery_client, query_api_method):
         ),
     ),
 )
+
+
+@_QUERY_PARAMETER_CASES
 def test_query_parameters(
     bigquery_client, query_api_method, sql, expected, query_parameters
 ):
@@ -452,6 +456,35 @@ def test_query_parameters(
     assert len(rows) == 1
     assert len(rows[0]) == 1
     assert rows[0][0] == expected
+
+
+@_QUERY_PARAMETER_CASES
+def test_query_parameters_arrow(bigquery_client, sql, expected, query_parameters):
+    job_config = bigquery.QueryJobConfig(
+        query_parameters=query_parameters, use_query_cache=False
+    )
+    try:
+        rows = bigquery_client.query_and_wait(
+            sql,
+            job_config=job_config,
+            # jobs.query fails unnamed STRUCT fields with a jobInternalError,
+            # which job_retry would retry until its deadline.
+            job_retry=None,
+            query_results_format=enums.QueryResultsFormat.ARROW,
+        )
+    except exceptions.BadRequest as exc:
+        if not any(error.get("reason") == "jobInternalError" for error in exc.errors):
+            raise
+        pytest.xfail(f"jobs.query can't send unnamed STRUCT fields: {exc.message}")
+    (batch,) = rows.to_arrow_iterable()
+    assert batch.num_rows == 1
+    assert batch.num_columns == 1
+    (value,) = batch.column(0).to_pylist()
+    if batch.schema.field(0).metadata == {
+        b"ARROW:extension:name": b"google:sqlType:json"
+    }:
+        value = json.loads(value)
+    assert value == expected
 
 
 def test_dry_run(

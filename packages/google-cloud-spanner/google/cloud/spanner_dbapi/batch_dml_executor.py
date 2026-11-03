@@ -92,7 +92,9 @@ def run_batch_dml(cursor: "Cursor", statements: List[Statement]):
         statements_tuple.append(statement.get_tuple())
     if not connection._client_transaction_started:
         res = connection.database.run_in_transaction(
-            _do_batch_update_autocommit, statements_tuple
+            _do_batch_update_autocommit,
+            statements_tuple,
+            timeout=cursor.timeout,
         )
         many_result_set.add_iter(res)
         cursor._row_count = sum([max(val, 0) for val in res])
@@ -101,7 +103,10 @@ def run_batch_dml(cursor: "Cursor", statements: List[Statement]):
         while True:
             try:
                 transaction = connection.transaction_checkout()
-                status, res = transaction.batch_update(statements_tuple)
+                kwargs = {}
+                if cursor.timeout is not None:
+                    kwargs["timeout"] = cursor.timeout
+                status, res = transaction.batch_update(statements_tuple, **kwargs)
                 if status.code == ABORTED:
                     connection._transaction = None
                     raise Aborted(status.message)
@@ -133,10 +138,14 @@ def run_batch_dml(cursor: "Cursor", statements: List[Statement]):
                 raise ex
 
 
-def _do_batch_update_autocommit(transaction, statements):
+def _do_batch_update_autocommit(transaction, statements, timeout=None):
     from google.cloud.spanner_dbapi import OperationalError
 
-    status, res = transaction.batch_update(statements, last_statement=True)
+    kwargs = {"last_statement": True}
+    if timeout is not None:
+        kwargs["timeout"] = timeout
+
+    status, res = transaction.batch_update(statements, **kwargs)
     if status.code == ABORTED:
         raise Aborted(status.message)
     elif status.code != OK:

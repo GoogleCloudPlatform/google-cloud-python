@@ -32,6 +32,7 @@ from google.cloud.spanner_v1._helpers import (
     _get_retry_delay,
     _metadata_with_leader_aware_routing,
     _metadata_with_prefix,
+    _resource_info_from_database,
 )
 from google.cloud.spanner_v1._opentelemetry_tracing import (
     add_span_event,
@@ -94,11 +95,7 @@ class Session(object):
     @property
     def _resource_info(self):
         """Resource information for metrics labels."""
-        return {
-            "project": self._database._instance._client.project,
-            "instance": self._database._instance.instance_id,
-            "database": self._database.database_id,
-        }
+        return _resource_info_from_database(self._database)
 
     def __lt__(self, other):
         return self._session_id < other._session_id
@@ -352,7 +349,10 @@ class Session(object):
         metadata = _metadata_with_prefix(database.name)
         nth_request = database._next_nth_request
 
-        with trace_call("CloudSpanner.Session.ping", self) as span:
+        with (
+            trace_call("CloudSpanner.Session.ping", self) as span,
+            MetricsCapture(self._resource_info),
+        ):
             call_metadata, error_augmenter = database.with_error_augmentation(
                 nth_request, 1, metadata, span
             )
@@ -518,6 +518,106 @@ class Session(object):
 
         return Transaction(self, client_context=client_context)
 
+    def _create_transaction_for_attempt(
+        self,
+        client_context=None,
+        transaction_tag=None,
+        exclude_txn_from_change_streams=None,
+        isolation_level=None,
+        read_lock_mode=None,
+        previous_transaction_id=None,
+    ) -> Transaction:
+        """Create and configure a transaction instance for a single attempt.
+
+        :type client_context: :class:`~google.cloud.spanner_v1.client_context.ClientContext`
+        :param client_context: (Optional) client context to use for the transaction.
+
+        :type transaction_tag: str
+        :param transaction_tag: (Optional) transaction tag.
+
+        :type exclude_txn_from_change_streams: bool
+        :param exclude_txn_from_change_streams: (Optional) whether to exclude from change streams.
+
+        :type isolation_level: int
+        :param isolation_level: (Optional) isolation level.
+
+        :type read_lock_mode: int
+        :param read_lock_mode: (Optional) read lock mode.
+
+        :type previous_transaction_id: bytes
+        :param previous_transaction_id: (Optional) previous transaction id for multiplexed sessions.
+
+        :rtype: :class:`~google.cloud.spanner_v1.transaction.Transaction`
+        :returns: A configured Transaction instance.
+        """
+        transaction = self.transaction(client_context=client_context)
+        transaction.transaction_tag = transaction_tag
+        transaction.exclude_txn_from_change_streams = exclude_txn_from_change_streams
+        transaction.isolation_level = isolation_level
+        transaction.read_lock_mode = read_lock_mode
+
+        if self.is_multiplexed:
+            transaction._multiplexed_session_previous_transaction_id = (
+                previous_transaction_id
+            )
+        return transaction
+
+    @CrossSync.convert
+    async def _handle_aborted(
+        self,
+        exception,
+        span,
+        event_name,
+        attempts,
+        deadline,
+        default_retry_delay,
+        include_cause=False,
+    ):
+        """Handle an Aborted error: record trace event and delay until next retry attempt.
+
+        :type exception: :class:`google.api_core.exceptions.Aborted`
+        :param exception: The aborted exception.
+
+        :type span: :class:`opentelemetry.trace.Span`
+        :param span: The current active span.
+
+        :type event_name: str
+        :param event_name: The span event name to record.
+
+        :type attempts: int
+        :param attempts: The retry attempt number.
+
+        :type deadline: float
+        :param deadline: Timestamp deadline for retrying.
+
+        :type default_retry_delay: float
+        :param default_retry_delay: Default delay between retries.
+
+        :type include_cause: bool
+        :param include_cause: (Optional) Whether to include the exception string as cause.
+        """
+        if span and span.is_recording():
+            errors = getattr(exception, "errors", None)
+            cause = errors[0] if errors else exception
+            delay_seconds = _get_retry_delay(
+                cause,
+                attempts,
+                default_retry_delay=default_retry_delay,
+            )
+            attributes = {
+                "attempt": attempts,
+                "delay_seconds": delay_seconds,
+            }
+            if include_cause:
+                attributes["cause"] = str(exception)
+            add_span_event(span, event_name, attributes)
+        await _delay_until_retry(
+            exception,
+            deadline,
+            attempts,
+            default_retry_delay=default_retry_delay,
+        )
+
     @CrossSync.convert
     async def run_in_transaction(self, func, *args, **kw):
         """Perform a unit of work in a transaction, retrying on abort.
@@ -568,126 +668,94 @@ class Session(object):
         database = self._database
         log_commit_stats = database.log_commit_stats
 
-        extra_attributes = {}
-        if transaction_tag:
-            extra_attributes["transaction.tag"] = transaction_tag
+        span = get_current_span()
+        attempts: int = 0
 
-        with (
-            trace_call(
-                "CloudSpanner.Session.run_in_transaction",
-                self,
-                extra_attributes=extra_attributes,
-                observability_options=getattr(database, "observability_options", None),
-            ) as span,
-            MetricsCapture(self._resource_info),
-        ):
-            attempts: int = 0
+        # If a transaction using a multiplexed session is retried after an aborted
+        # user operation, it should include the previous transaction ID in the
+        # transaction options used to begin the transaction. This allows the backend
+        # to recognize the transaction and increase the lock order for the new
+        # transaction that is created.
+        # See :attr:`~google.cloud.spanner_v1.types.TransactionOptions.ReadWrite.multiplexed_session_previous_transaction_id`
+        previous_transaction_id: Optional[bytes] = None
 
-            # If a transaction using a multiplexed session is retried after an aborted
-            # user operation, it should include the previous transaction ID in the
-            # transaction options used to begin the transaction. This allows the backend
-            # to recognize the transaction and increase the lock order for the new
-            # transaction that is created.
-            # See :attr:`~google.cloud.spanner_v1.types.TransactionOptions.ReadWrite.multiplexed_session_previous_transaction_id`
-            previous_transaction_id: Optional[bytes] = None
+        while True:
+            transaction = self._create_transaction_for_attempt(
+                client_context=client_context,
+                transaction_tag=transaction_tag,
+                exclude_txn_from_change_streams=exclude_txn_from_change_streams,
+                isolation_level=isolation_level,
+                read_lock_mode=read_lock_mode,
+                previous_transaction_id=previous_transaction_id,
+            )
+            attempts += 1
 
-            while True:
-                txn = self.transaction(client_context=client_context)
-                txn.transaction_tag = transaction_tag
-                txn.exclude_txn_from_change_streams = exclude_txn_from_change_streams
-                txn.isolation_level = isolation_level
-                txn.read_lock_mode = read_lock_mode
+            try:
+                return_value = await CrossSync.run_if_async(
+                    func, transaction, *args, **kw
+                )
 
-                if self.is_multiplexed:
-                    txn._multiplexed_session_previous_transaction_id = (
-                        previous_transaction_id
+            except Aborted as exc:
+                previous_transaction_id = transaction._transaction_id
+                await self._handle_aborted(
+                    exc,
+                    span,
+                    "Transaction was aborted in user operation, retrying",
+                    attempts,
+                    deadline,
+                    default_retry_delay,
+                    include_cause=True,
+                )
+                continue
+
+            except GoogleAPICallError:
+                add_span_event(
+                    span,
+                    "User operation failed due to GoogleAPICallError, not retrying",
+                    {"attempt": attempts},
+                )
+                raise
+
+            except Exception:
+                add_span_event(
+                    span,
+                    "User operation failed. Invoking Transaction.rollback(), not retrying",
+                    {"attempt": attempts},
+                )
+                await transaction.rollback()
+                raise
+
+            try:
+                await transaction.commit(
+                    return_commit_stats=log_commit_stats,
+                    request_options=commit_request_options,
+                    max_commit_delay=max_commit_delay,
+                )
+
+            except Aborted as exc:
+                previous_transaction_id = transaction._transaction_id
+                await self._handle_aborted(
+                    exc,
+                    span,
+                    "Transaction was aborted during commit, retrying",
+                    attempts,
+                    deadline,
+                    default_retry_delay,
+                )
+                continue
+
+            except GoogleAPICallError:
+                add_span_event(
+                    span,
+                    "Transaction.commit failed due to GoogleAPICallError, not retrying",
+                    {"attempt": attempts},
+                )
+                raise
+
+            else:
+                if log_commit_stats and transaction.commit_stats:
+                    database.logger.info(
+                        "CommitStats: {}".format(transaction.commit_stats),
+                        extra={"commit_stats": transaction.commit_stats},
                     )
-
-                attempts += 1
-                span_attributes = dict(attempt=attempts)
-
-                try:
-                    return_value = await CrossSync.run_if_async(func, txn, *args, **kw)
-
-                except Aborted as exc:
-                    previous_transaction_id = txn._transaction_id
-                    delay_seconds = _get_retry_delay(
-                        exc.errors[0],
-                        attempts,
-                        default_retry_delay=default_retry_delay,
-                    )
-                    attributes = dict(delay_seconds=delay_seconds, cause=str(exc))
-                    attributes.update(span_attributes)
-                    add_span_event(
-                        span,
-                        "Transaction was aborted in user operation, retrying",
-                        attributes,
-                    )
-                    await _delay_until_retry(
-                        exc,
-                        deadline,
-                        attempts,
-                        default_retry_delay=default_retry_delay,
-                    )
-                    continue
-
-                except GoogleAPICallError:
-                    add_span_event(
-                        span,
-                        "User operation failed due to GoogleAPICallError, not retrying",
-                        span_attributes,
-                    )
-                    raise
-
-                except Exception:
-                    add_span_event(
-                        span,
-                        "User operation failed. Invoking Transaction.rollback(), not retrying",
-                        span_attributes,
-                    )
-                    await txn.rollback()
-                    raise
-
-                try:
-                    await txn.commit(
-                        return_commit_stats=log_commit_stats,
-                        request_options=commit_request_options,
-                        max_commit_delay=max_commit_delay,
-                    )
-
-                except Aborted as exc:
-                    previous_transaction_id = txn._transaction_id
-                    delay_seconds = _get_retry_delay(
-                        exc.errors[0],
-                        attempts,
-                        default_retry_delay=default_retry_delay,
-                    )
-                    attributes = dict(delay_seconds=delay_seconds)
-                    attributes.update(span_attributes)
-                    add_span_event(
-                        span,
-                        "Transaction was aborted during commit, retrying",
-                        attributes,
-                    )
-                    await _delay_until_retry(
-                        exc,
-                        deadline,
-                        attempts,
-                        default_retry_delay=default_retry_delay,
-                    )
-
-                except GoogleAPICallError:
-                    add_span_event(
-                        span,
-                        "Transaction.commit failed due to GoogleAPICallError, not retrying",
-                        span_attributes,
-                    )
-                    raise
-
-                else:
-                    if log_commit_stats and txn.commit_stats:
-                        database.logger.info(
-                            "CommitStats: {}".format(txn.commit_stats),
-                            extra={"commit_stats": txn.commit_stats},
-                        )
-                    return return_value
+                return return_value

@@ -635,7 +635,7 @@ class ViewabilityProviderServiceRestTransport(
 
                 Args:
                     request (~.viewability_provider_service.BatchCreateViewabilityProvidersRequest):
-                        The request object. Request object for [BatchCreateViewabilityProviders][]
+                        The request object. Request object for ``BatchCreateViewabilityProviders``
                     method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
@@ -647,7 +647,7 @@ class ViewabilityProviderServiceRestTransport(
 
                 Returns:
                     ~.viewability_provider_service.BatchCreateViewabilityProvidersResponse:
-                        Response object for [BatchCreateViewabilityProviders][]
+                        Response object for ``BatchCreateViewabilityProviders``
                     method.
 
             """
@@ -801,7 +801,7 @@ class ViewabilityProviderServiceRestTransport(
 
                 Args:
                     request (~.viewability_provider_service.BatchUpdateViewabilityProvidersRequest):
-                        The request object. Request object for [BatchUpdateViewabilityProviders][]
+                        The request object. Request object for ``BatchUpdateViewabilityProviders``
                     method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
@@ -813,7 +813,7 @@ class ViewabilityProviderServiceRestTransport(
 
                 Returns:
                     ~.viewability_provider_service.BatchUpdateViewabilityProvidersResponse:
-                        Response object for [BatchUpdateViewabilityProviders][]
+                        Response object for ``BatchUpdateViewabilityProviders``
                     method.
 
             """
@@ -967,7 +967,7 @@ class ViewabilityProviderServiceRestTransport(
 
                 Args:
                     request (~.viewability_provider_service.CreateViewabilityProviderRequest):
-                        The request object. Request object for [CreateViewabilityProvider][] method.
+                        The request object. Request object for ``CreateViewabilityProvider`` method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
                     timeout (float): The timeout for this request.
@@ -1126,7 +1126,7 @@ class ViewabilityProviderServiceRestTransport(
 
             Args:
                 request (~.viewability_provider_service.GetViewabilityProviderRequest):
-                    The request object. Request object for [GetViewabilityProvider][] method.
+                    The request object. Request object for ``GetViewabilityProvider`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -1285,7 +1285,7 @@ class ViewabilityProviderServiceRestTransport(
 
                 Args:
                     request (~.viewability_provider_service.ListViewabilityProvidersRequest):
-                        The request object. Request object for [ListViewabilityProviders][] method.
+                        The request object. Request object for ``ListViewabilityProviders`` method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
                     timeout (float): The timeout for this request.
@@ -1296,7 +1296,7 @@ class ViewabilityProviderServiceRestTransport(
 
                 Returns:
                     ~.viewability_provider_service.ListViewabilityProvidersResponse:
-                        Response object for [ListViewabilityProviders][]
+                        Response object for ``ListViewabilityProviders``
                     containing matching
                     [ViewabilityProvider][google.ads.admanager.v1.ViewabilityProvider]
                     objects.
@@ -1443,7 +1443,7 @@ class ViewabilityProviderServiceRestTransport(
 
                 Args:
                     request (~.viewability_provider_service.UpdateViewabilityProviderRequest):
-                        The request object. Request object for [UpdateViewabilityProvider][] method.
+                        The request object. Request object for ``UpdateViewabilityProvider`` method.
                     retry (google.api_core.retry.Retry): Designation of what errors, if any,
                         should be retried.
                     timeout (float): The timeout for this request.

@@ -41,9 +41,9 @@ class TestLoginClient(unittest.TestCase):
 
         params = authentication_pb2.HashParameters(
             argon2_id_parameters=authentication_pb2.HashParameters.Argon2IdParameters(
-                iteration_count=3,
-                memory_usage=64 * 1024,
-                parallelism=4,
+                iteration_count=1,
+                memory_usage=8,
+                parallelism=1,
                 hash_size=32,
             )
         )
@@ -248,9 +248,9 @@ class TestLoginClient(unittest.TestCase):
         password = "test_password"
         params = authentication_pb2.HashParameters(
             argon2_id_parameters=authentication_pb2.HashParameters.Argon2IdParameters(
-                iteration_count=3,
-                memory_usage=64 * 1024,
-                parallelism=4,
+                iteration_count=1,
+                memory_usage=8,
+                parallelism=1,
                 hash_size=32,
             )
         )

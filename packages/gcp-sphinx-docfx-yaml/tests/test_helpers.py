@@ -1,5 +1,6 @@
 import tempfile
 import unittest
+import unittest.mock
 
 from parameterized import parameterized
 from yaml import Loader, load
@@ -410,6 +411,27 @@ google.cloud.pubsub_v1.message.Message
     def test_is_not_valid_python_code(self, invalid_syntax):
         result = extension.is_valid_python_code(invalid_syntax)
         self.assertFalse(result)
+
+    def test_configure_docfx_and_builder(self):
+        app = unittest.mock.MagicMock()
+        app.config.intersphinx_mapping = {"python": ("https://example.com", None)}
+        viewcode_listener = unittest.mock.MagicMock(id=1)
+        viewcode_listener.handler.__module__ = "sphinx.ext.viewcode"
+        other_listener = unittest.mock.MagicMock(id=2)
+        other_listener.handler.__module__ = "docfx_yaml.extension"
+        app.events.listeners = {"doctree-read": [viewcode_listener, other_listener]}
+
+        extension._configure_docfx(app, app.config)
+
+        self.assertEqual(app.config.intersphinx_mapping, {})
+        app.disconnect.assert_called_once_with(1)
+        self.assertIsNone(extension.DocFXHTMLBuilder.write(None))
+        self.assertIsNone(extension.DocFXHTMLBuilder.finish(None))
+
+    def test_missing_reference_skips_markdown_builder(self):
+        app = unittest.mock.MagicMock()
+        app.builder.name = "markdown"
+        self.assertIsNone(extension.missing_reference(app, None, None, None))
 
 
 if __name__ == "__main__":

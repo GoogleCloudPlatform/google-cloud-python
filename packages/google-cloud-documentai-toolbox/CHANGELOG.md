@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-cloud-documentai-toolbox/#history
 
+## [0.17.5](https://github.com/googleapis/google-cloud-python/compare/google-cloud-documentai-toolbox-v0.17.4...google-cloud-documentai-toolbox-v0.17.5) (2026-10-22)
+
+
+### Features
+
+* support Python 3.15 ([8fceef4](https://github.com/googleapis/google-cloud-python/commit/8fceef49c523bcc8989abf3b6b82bcf143332d50))
+
 ## [0.17.4](https://github.com/googleapis/google-cloud-python/compare/google-cloud-documentai-toolbox-v0.17.3...google-cloud-documentai-toolbox-v0.17.4) (2026-09-29)
 
 

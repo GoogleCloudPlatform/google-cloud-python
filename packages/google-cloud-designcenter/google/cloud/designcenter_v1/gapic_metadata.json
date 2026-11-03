@@ -1,0 +1,1228 @@
+ {
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods",
+  "language": "python",
+  "libraryPackage": "google.cloud.designcenter_v1",
+  "protoPackage": "google.cloud.designcenter.v1",
+  "schema": "1.0",
+  "services": {
+    "DesignCenter": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "DesignCenterClient",
+          "rpcs": {
+            "CommitApplicationTemplate": {
+              "methods": [
+                "commit_application_template"
+              ]
+            },
+            "CreateApplication": {
+              "methods": [
+                "create_application"
+              ]
+            },
+            "CreateApplicationTemplate": {
+              "methods": [
+                "create_application_template"
+              ]
+            },
+            "CreateCatalog": {
+              "methods": [
+                "create_catalog"
+              ]
+            },
+            "CreateCatalogTemplate": {
+              "methods": [
+                "create_catalog_template"
+              ]
+            },
+            "CreateCatalogTemplateRevision": {
+              "methods": [
+                "create_catalog_template_revision"
+              ]
+            },
+            "CreateComponent": {
+              "methods": [
+                "create_component"
+              ]
+            },
+            "CreateConnection": {
+              "methods": [
+                "create_connection"
+              ]
+            },
+            "CreatePolicy": {
+              "methods": [
+                "create_policy"
+              ]
+            },
+            "CreateShare": {
+              "methods": [
+                "create_share"
+              ]
+            },
+            "CreateSpace": {
+              "methods": [
+                "create_space"
+              ]
+            },
+            "DeleteApplication": {
+              "methods": [
+                "delete_application"
+              ]
+            },
+            "DeleteApplicationTemplate": {
+              "methods": [
+                "delete_application_template"
+              ]
+            },
+            "DeleteApplicationTemplateRevision": {
+              "methods": [
+                "delete_application_template_revision"
+              ]
+            },
+            "DeleteCatalog": {
+              "methods": [
+                "delete_catalog"
+              ]
+            },
+            "DeleteCatalogTemplate": {
+              "methods": [
+                "delete_catalog_template"
+              ]
+            },
+            "DeleteCatalogTemplateRevision": {
+              "methods": [
+                "delete_catalog_template_revision"
+              ]
+            },
+            "DeleteComponent": {
+              "methods": [
+                "delete_component"
+              ]
+            },
+            "DeleteConnection": {
+              "methods": [
+                "delete_connection"
+              ]
+            },
+            "DeletePolicy": {
+              "methods": [
+                "delete_policy"
+              ]
+            },
+            "DeleteShare": {
+              "methods": [
+                "delete_share"
+              ]
+            },
+            "DeleteSpace": {
+              "methods": [
+                "delete_space"
+              ]
+            },
+            "DeployApplication": {
+              "methods": [
+                "deploy_application"
+              ]
+            },
+            "ExportApplicationIaC": {
+              "methods": [
+                "export_application_ia_c"
+              ]
+            },
+            "ExportApplicationTemplateIaC": {
+              "methods": [
+                "export_application_template_ia_c"
+              ]
+            },
+            "ExportApplicationTemplateRevisionIaC": {
+              "methods": [
+                "export_application_template_revision_ia_c"
+              ]
+            },
+            "FetchApplicationAssessmentReport": {
+              "methods": [
+                "fetch_application_assessment_report"
+              ]
+            },
+            "FetchFrameworks": {
+              "methods": [
+                "fetch_frameworks"
+              ]
+            },
+            "GenerateApplicationAssessmentReport": {
+              "methods": [
+                "generate_application_assessment_report"
+              ]
+            },
+            "GenerateApplicationIaC": {
+              "methods": [
+                "generate_application_ia_c"
+              ]
+            },
+            "GenerateApplicationTemplateAssessmentReport": {
+              "methods": [
+                "generate_application_template_assessment_report"
+              ]
+            },
+            "GenerateApplicationTemplateIaC": {
+              "methods": [
+                "generate_application_template_ia_c"
+              ]
+            },
+            "GenerateApplicationTemplateRevisionIaC": {
+              "methods": [
+                "generate_application_template_revision_ia_c"
+              ]
+            },
+            "GenerateAssessmentReport": {
+              "methods": [
+                "generate_assessment_report"
+              ]
+            },
+            "GenerateTerraformPlanAssessmentReport": {
+              "methods": [
+                "generate_terraform_plan_assessment_report"
+              ]
+            },
+            "GetApplication": {
+              "methods": [
+                "get_application"
+              ]
+            },
+            "GetApplicationTemplate": {
+              "methods": [
+                "get_application_template"
+              ]
+            },
+            "GetApplicationTemplateRevision": {
+              "methods": [
+                "get_application_template_revision"
+              ]
+            },
+            "GetApplicationTemplateSystemRevision": {
+              "methods": [
+                "get_application_template_system_revision"
+              ]
+            },
+            "GetCatalog": {
+              "methods": [
+                "get_catalog"
+              ]
+            },
+            "GetCatalogTemplate": {
+              "methods": [
+                "get_catalog_template"
+              ]
+            },
+            "GetCatalogTemplateRevision": {
+              "methods": [
+                "get_catalog_template_revision"
+              ]
+            },
+            "GetComponent": {
+              "methods": [
+                "get_component"
+              ]
+            },
+            "GetConnection": {
+              "methods": [
+                "get_connection"
+              ]
+            },
+            "GetPolicy": {
+              "methods": [
+                "get_policy"
+              ]
+            },
+            "GetShare": {
+              "methods": [
+                "get_share"
+              ]
+            },
+            "GetSharedTemplate": {
+              "methods": [
+                "get_shared_template"
+              ]
+            },
+            "GetSharedTemplateRevision": {
+              "methods": [
+                "get_shared_template_revision"
+              ]
+            },
+            "GetSpace": {
+              "methods": [
+                "get_space"
+              ]
+            },
+            "ImportApplicationIaC": {
+              "methods": [
+                "import_application_ia_c"
+              ]
+            },
+            "ImportApplicationTemplate": {
+              "methods": [
+                "import_application_template"
+              ]
+            },
+            "ImportApplicationTemplateIaC": {
+              "methods": [
+                "import_application_template_ia_c"
+              ]
+            },
+            "IngestApplicationTemplateIaC": {
+              "methods": [
+                "ingest_application_template_ia_c"
+              ]
+            },
+            "ListApplicationTemplateRevisions": {
+              "methods": [
+                "list_application_template_revisions"
+              ]
+            },
+            "ListApplicationTemplateSystemRevisions": {
+              "methods": [
+                "list_application_template_system_revisions"
+              ]
+            },
+            "ListApplicationTemplates": {
+              "methods": [
+                "list_application_templates"
+              ]
+            },
+            "ListApplications": {
+              "methods": [
+                "list_applications"
+              ]
+            },
+            "ListCatalogTemplateRevisions": {
+              "methods": [
+                "list_catalog_template_revisions"
+              ]
+            },
+            "ListCatalogTemplates": {
+              "methods": [
+                "list_catalog_templates"
+              ]
+            },
+            "ListCatalogs": {
+              "methods": [
+                "list_catalogs"
+              ]
+            },
+            "ListComponents": {
+              "methods": [
+                "list_components"
+              ]
+            },
+            "ListConnections": {
+              "methods": [
+                "list_connections"
+              ]
+            },
+            "ListPolicies": {
+              "methods": [
+                "list_policies"
+              ]
+            },
+            "ListSharedTemplateRevisions": {
+              "methods": [
+                "list_shared_template_revisions"
+              ]
+            },
+            "ListSharedTemplates": {
+              "methods": [
+                "list_shared_templates"
+              ]
+            },
+            "ListShares": {
+              "methods": [
+                "list_shares"
+              ]
+            },
+            "ListSpaces": {
+              "methods": [
+                "list_spaces"
+              ]
+            },
+            "PreviewApplication": {
+              "methods": [
+                "preview_application"
+              ]
+            },
+            "RecommendIAMRoles": {
+              "methods": [
+                "recommend_iam_roles"
+              ]
+            },
+            "RegisterAppHubApplicationResources": {
+              "methods": [
+                "register_app_hub_application_resources"
+              ]
+            },
+            "SnapshotApplicationTemplate": {
+              "methods": [
+                "snapshot_application_template"
+              ]
+            },
+            "SyncShare": {
+              "methods": [
+                "sync_share"
+              ]
+            },
+            "UpdateApplication": {
+              "methods": [
+                "update_application"
+              ]
+            },
+            "UpdateApplicationTemplate": {
+              "methods": [
+                "update_application_template"
+              ]
+            },
+            "UpdateCatalog": {
+              "methods": [
+                "update_catalog"
+              ]
+            },
+            "UpdateCatalogTemplate": {
+              "methods": [
+                "update_catalog_template"
+              ]
+            },
+            "UpdateComponent": {
+              "methods": [
+                "update_component"
+              ]
+            },
+            "UpdateConnection": {
+              "methods": [
+                "update_connection"
+              ]
+            },
+            "UpdatePolicy": {
+              "methods": [
+                "update_policy"
+              ]
+            },
+            "UpdateSpace": {
+              "methods": [
+                "update_space"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "DesignCenterAsyncClient",
+          "rpcs": {
+            "CommitApplicationTemplate": {
+              "methods": [
+                "commit_application_template"
+              ]
+            },
+            "CreateApplication": {
+              "methods": [
+                "create_application"
+              ]
+            },
+            "CreateApplicationTemplate": {
+              "methods": [
+                "create_application_template"
+              ]
+            },
+            "CreateCatalog": {
+              "methods": [
+                "create_catalog"
+              ]
+            },
+            "CreateCatalogTemplate": {
+              "methods": [
+                "create_catalog_template"
+              ]
+            },
+            "CreateCatalogTemplateRevision": {
+              "methods": [
+                "create_catalog_template_revision"
+              ]
+            },
+            "CreateComponent": {
+              "methods": [
+                "create_component"
+              ]
+            },
+            "CreateConnection": {
+              "methods": [
+                "create_connection"
+              ]
+            },
+            "CreatePolicy": {
+              "methods": [
+                "create_policy"
+              ]
+            },
+            "CreateShare": {
+              "methods": [
+                "create_share"
+              ]
+            },
+            "CreateSpace": {
+              "methods": [
+                "create_space"
+              ]
+            },
+            "DeleteApplication": {
+              "methods": [
+                "delete_application"
+              ]
+            },
+            "DeleteApplicationTemplate": {
+              "methods": [
+                "delete_application_template"
+              ]
+            },
+            "DeleteApplicationTemplateRevision": {
+              "methods": [
+                "delete_application_template_revision"
+              ]
+            },
+            "DeleteCatalog": {
+              "methods": [
+                "delete_catalog"
+              ]
+            },
+            "DeleteCatalogTemplate": {
+              "methods": [
+                "delete_catalog_template"
+              ]
+            },
+            "DeleteCatalogTemplateRevision": {
+              "methods": [
+                "delete_catalog_template_revision"
+              ]
+            },
+            "DeleteComponent": {
+              "methods": [
+                "delete_component"
+              ]
+            },
+            "DeleteConnection": {
+              "methods": [
+                "delete_connection"
+              ]
+            },
+            "DeletePolicy": {
+              "methods": [
+                "delete_policy"
+              ]
+            },
+            "DeleteShare": {
+              "methods": [
+                "delete_share"
+              ]
+            },
+            "DeleteSpace": {
+              "methods": [
+                "delete_space"
+              ]
+            },
+            "DeployApplication": {
+              "methods": [
+                "deploy_application"
+              ]
+            },
+            "ExportApplicationIaC": {
+              "methods": [
+                "export_application_ia_c"
+              ]
+            },
+            "ExportApplicationTemplateIaC": {
+              "methods": [
+                "export_application_template_ia_c"
+              ]
+            },
+            "ExportApplicationTemplateRevisionIaC": {
+              "methods": [
+                "export_application_template_revision_ia_c"
+              ]
+            },
+            "FetchApplicationAssessmentReport": {
+              "methods": [
+                "fetch_application_assessment_report"
+              ]
+            },
+            "FetchFrameworks": {
+              "methods": [
+                "fetch_frameworks"
+              ]
+            },
+            "GenerateApplicationAssessmentReport": {
+              "methods": [
+                "generate_application_assessment_report"
+              ]
+            },
+            "GenerateApplicationIaC": {
+              "methods": [
+                "generate_application_ia_c"
+              ]
+            },
+            "GenerateApplicationTemplateAssessmentReport": {
+              "methods": [
+                "generate_application_template_assessment_report"
+              ]
+            },
+            "GenerateApplicationTemplateIaC": {
+              "methods": [
+                "generate_application_template_ia_c"
+              ]
+            },
+            "GenerateApplicationTemplateRevisionIaC": {
+              "methods": [
+                "generate_application_template_revision_ia_c"
+              ]
+            },
+            "GenerateAssessmentReport": {
+              "methods": [
+                "generate_assessment_report"
+              ]
+            },
+            "GenerateTerraformPlanAssessmentReport": {
+              "methods": [
+                "generate_terraform_plan_assessment_report"
+              ]
+            },
+            "GetApplication": {
+              "methods": [
+                "get_application"
+              ]
+            },
+            "GetApplicationTemplate": {
+              "methods": [
+                "get_application_template"
+              ]
+            },
+            "GetApplicationTemplateRevision": {
+              "methods": [
+                "get_application_template_revision"
+              ]
+            },
+            "GetApplicationTemplateSystemRevision": {
+              "methods": [
+                "get_application_template_system_revision"
+              ]
+            },
+            "GetCatalog": {
+              "methods": [
+                "get_catalog"
+              ]
+            },
+            "GetCatalogTemplate": {
+              "methods": [
+                "get_catalog_template"
+              ]
+            },
+            "GetCatalogTemplateRevision": {
+              "methods": [
+                "get_catalog_template_revision"
+              ]
+            },
+            "GetComponent": {
+              "methods": [
+                "get_component"
+              ]
+            },
+            "GetConnection": {
+              "methods": [
+                "get_connection"
+              ]
+            },
+            "GetPolicy": {
+              "methods": [
+                "get_policy"
+              ]
+            },
+            "GetShare": {
+              "methods": [
+                "get_share"
+              ]
+            },
+            "GetSharedTemplate": {
+              "methods": [
+                "get_shared_template"
+              ]
+            },
+            "GetSharedTemplateRevision": {
+              "methods": [
+                "get_shared_template_revision"
+              ]
+            },
+            "GetSpace": {
+              "methods": [
+                "get_space"
+              ]
+            },
+            "ImportApplicationIaC": {
+              "methods": [
+                "import_application_ia_c"
+              ]
+            },
+            "ImportApplicationTemplate": {
+              "methods": [
+                "import_application_template"
+              ]
+            },
+            "ImportApplicationTemplateIaC": {
+              "methods": [
+                "import_application_template_ia_c"
+              ]
+            },
+            "IngestApplicationTemplateIaC": {
+              "methods": [
+                "ingest_application_template_ia_c"
+              ]
+            },
+            "ListApplicationTemplateRevisions": {
+              "methods": [
+                "list_application_template_revisions"
+              ]
+            },
+            "ListApplicationTemplateSystemRevisions": {
+              "methods": [
+                "list_application_template_system_revisions"
+              ]
+            },
+            "ListApplicationTemplates": {
+              "methods": [
+                "list_application_templates"
+              ]
+            },
+            "ListApplications": {
+              "methods": [
+                "list_applications"
+              ]
+            },
+            "ListCatalogTemplateRevisions": {
+              "methods": [
+                "list_catalog_template_revisions"
+              ]
+            },
+            "ListCatalogTemplates": {
+              "methods": [
+                "list_catalog_templates"
+              ]
+            },
+            "ListCatalogs": {
+              "methods": [
+                "list_catalogs"
+              ]
+            },
+            "ListComponents": {
+              "methods": [
+                "list_components"
+              ]
+            },
+            "ListConnections": {
+              "methods": [
+                "list_connections"
+              ]
+            },
+            "ListPolicies": {
+              "methods": [
+                "list_policies"
+              ]
+            },
+            "ListSharedTemplateRevisions": {
+              "methods": [
+                "list_shared_template_revisions"
+              ]
+            },
+            "ListSharedTemplates": {
+              "methods": [
+                "list_shared_templates"
+              ]
+            },
+            "ListShares": {
+              "methods": [
+                "list_shares"
+              ]
+            },
+            "ListSpaces": {
+              "methods": [
+                "list_spaces"
+              ]
+            },
+            "PreviewApplication": {
+              "methods": [
+                "preview_application"
+              ]
+            },
+            "RecommendIAMRoles": {
+              "methods": [
+                "recommend_iam_roles"
+              ]
+            },
+            "RegisterAppHubApplicationResources": {
+              "methods": [
+                "register_app_hub_application_resources"
+              ]
+            },
+            "SnapshotApplicationTemplate": {
+              "methods": [
+                "snapshot_application_template"
+              ]
+            },
+            "SyncShare": {
+              "methods": [
+                "sync_share"
+              ]
+            },
+            "UpdateApplication": {
+              "methods": [
+                "update_application"
+              ]
+            },
+            "UpdateApplicationTemplate": {
+              "methods": [
+                "update_application_template"
+              ]
+            },
+            "UpdateCatalog": {
+              "methods": [
+                "update_catalog"
+              ]
+            },
+            "UpdateCatalogTemplate": {
+              "methods": [
+                "update_catalog_template"
+              ]
+            },
+            "UpdateComponent": {
+              "methods": [
+                "update_component"
+              ]
+            },
+            "UpdateConnection": {
+              "methods": [
+                "update_connection"
+              ]
+            },
+            "UpdatePolicy": {
+              "methods": [
+                "update_policy"
+              ]
+            },
+            "UpdateSpace": {
+              "methods": [
+                "update_space"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "DesignCenterClient",
+          "rpcs": {
+            "CommitApplicationTemplate": {
+              "methods": [
+                "commit_application_template"
+              ]
+            },
+            "CreateApplication": {
+              "methods": [
+                "create_application"
+              ]
+            },
+            "CreateApplicationTemplate": {
+              "methods": [
+                "create_application_template"
+              ]
+            },
+            "CreateCatalog": {
+              "methods": [
+                "create_catalog"
+              ]
+            },
+            "CreateCatalogTemplate": {
+              "methods": [
+                "create_catalog_template"
+              ]
+            },
+            "CreateCatalogTemplateRevision": {
+              "methods": [
+                "create_catalog_template_revision"
+              ]
+            },
+            "CreateComponent": {
+              "methods": [
+                "create_component"
+              ]
+            },
+            "CreateConnection": {
+              "methods": [
+                "create_connection"
+              ]
+            },
+            "CreatePolicy": {
+              "methods": [
+                "create_policy"
+              ]
+            },
+            "CreateShare": {
+              "methods": [
+                "create_share"
+              ]
+            },
+            "CreateSpace": {
+              "methods": [
+                "create_space"
+              ]
+            },
+            "DeleteApplication": {
+              "methods": [
+                "delete_application"
+              ]
+            },
+            "DeleteApplicationTemplate": {
+              "methods": [
+                "delete_application_template"
+              ]
+            },
+            "DeleteApplicationTemplateRevision": {
+              "methods": [
+                "delete_application_template_revision"
+              ]
+            },
+            "DeleteCatalog": {
+              "methods": [
+                "delete_catalog"
+              ]
+            },
+            "DeleteCatalogTemplate": {
+              "methods": [
+                "delete_catalog_template"
+              ]
+            },
+            "DeleteCatalogTemplateRevision": {
+              "methods": [
+                "delete_catalog_template_revision"
+              ]
+            },
+            "DeleteComponent": {
+              "methods": [
+                "delete_component"
+              ]
+            },
+            "DeleteConnection": {
+              "methods": [
+                "delete_connection"
+              ]
+            },
+            "DeletePolicy": {
+              "methods": [
+                "delete_policy"
+              ]
+            },
+            "DeleteShare": {
+              "methods": [
+                "delete_share"
+              ]
+            },
+            "DeleteSpace": {
+              "methods": [
+                "delete_space"
+              ]
+            },
+            "DeployApplication": {
+              "methods": [
+                "deploy_application"
+              ]
+            },
+            "ExportApplicationIaC": {
+              "methods": [
+                "export_application_ia_c"
+              ]
+            },
+            "ExportApplicationTemplateIaC": {
+              "methods": [
+                "export_application_template_ia_c"
+              ]
+            },
+            "ExportApplicationTemplateRevisionIaC": {
+              "methods": [
+                "export_application_template_revision_ia_c"
+              ]
+            },
+            "FetchApplicationAssessmentReport": {
+              "methods": [
+                "fetch_application_assessment_report"
+              ]
+            },
+            "FetchFrameworks": {
+              "methods": [
+                "fetch_frameworks"
+              ]
+            },
+            "GenerateApplicationAssessmentReport": {
+              "methods": [
+                "generate_application_assessment_report"
+              ]
+            },
+            "GenerateApplicationIaC": {
+              "methods": [
+                "generate_application_ia_c"
+              ]
+            },
+            "GenerateApplicationTemplateAssessmentReport": {
+              "methods": [
+                "generate_application_template_assessment_report"
+              ]
+            },
+            "GenerateApplicationTemplateIaC": {
+              "methods": [
+                "generate_application_template_ia_c"
+              ]
+            },
+            "GenerateApplicationTemplateRevisionIaC": {
+              "methods": [
+                "generate_application_template_revision_ia_c"
+              ]
+            },
+            "GenerateAssessmentReport": {
+              "methods": [
+                "generate_assessment_report"
+              ]
+            },
+            "GenerateTerraformPlanAssessmentReport": {
+              "methods": [
+                "generate_terraform_plan_assessment_report"
+              ]
+            },
+            "GetApplication": {
+              "methods": [
+                "get_application"
+              ]
+            },
+            "GetApplicationTemplate": {
+              "methods": [
+                "get_application_template"
+              ]
+            },
+            "GetApplicationTemplateRevision": {
+              "methods": [
+                "get_application_template_revision"
+              ]
+            },
+            "GetApplicationTemplateSystemRevision": {
+              "methods": [
+                "get_application_template_system_revision"
+              ]
+            },
+            "GetCatalog": {
+              "methods": [
+                "get_catalog"
+              ]
+            },
+            "GetCatalogTemplate": {
+              "methods": [
+                "get_catalog_template"
+              ]
+            },
+            "GetCatalogTemplateRevision": {
+              "methods": [
+                "get_catalog_template_revision"
+              ]
+            },
+            "GetComponent": {
+              "methods": [
+                "get_component"
+              ]
+            },
+            "GetConnection": {
+              "methods": [
+                "get_connection"
+              ]
+            },
+            "GetPolicy": {
+              "methods": [
+                "get_policy"
+              ]
+            },
+            "GetShare": {
+              "methods": [
+                "get_share"
+              ]
+            },
+            "GetSharedTemplate": {
+              "methods": [
+                "get_shared_template"
+              ]
+            },
+            "GetSharedTemplateRevision": {
+              "methods": [
+                "get_shared_template_revision"
+              ]
+            },
+            "GetSpace": {
+              "methods": [
+                "get_space"
+              ]
+            },
+            "ImportApplicationIaC": {
+              "methods": [
+                "import_application_ia_c"
+              ]
+            },
+            "ImportApplicationTemplate": {
+              "methods": [
+                "import_application_template"
+              ]
+            },
+            "ImportApplicationTemplateIaC": {
+              "methods": [
+                "import_application_template_ia_c"
+              ]
+            },
+            "IngestApplicationTemplateIaC": {
+              "methods": [
+                "ingest_application_template_ia_c"
+              ]
+            },
+            "ListApplicationTemplateRevisions": {
+              "methods": [
+                "list_application_template_revisions"
+              ]
+            },
+            "ListApplicationTemplateSystemRevisions": {
+              "methods": [
+                "list_application_template_system_revisions"
+              ]
+            },
+            "ListApplicationTemplates": {
+              "methods": [
+                "list_application_templates"
+              ]
+            },
+            "ListApplications": {
+              "methods": [
+                "list_applications"
+              ]
+            },
+            "ListCatalogTemplateRevisions": {
+              "methods": [
+                "list_catalog_template_revisions"
+              ]
+            },
+            "ListCatalogTemplates": {
+              "methods": [
+                "list_catalog_templates"
+              ]
+            },
+            "ListCatalogs": {
+              "methods": [
+                "list_catalogs"
+              ]
+            },
+            "ListComponents": {
+              "methods": [
+                "list_components"
+              ]
+            },
+            "ListConnections": {
+              "methods": [
+                "list_connections"
+              ]
+            },
+            "ListPolicies": {
+              "methods": [
+                "list_policies"
+              ]
+            },
+            "ListSharedTemplateRevisions": {
+              "methods": [
+                "list_shared_template_revisions"
+              ]
+            },
+            "ListSharedTemplates": {
+              "methods": [
+                "list_shared_templates"
+              ]
+            },
+            "ListShares": {
+              "methods": [
+                "list_shares"
+              ]
+            },
+            "ListSpaces": {
+              "methods": [
+                "list_spaces"
+              ]
+            },
+            "PreviewApplication": {
+              "methods": [
+                "preview_application"
+              ]
+            },
+            "RecommendIAMRoles": {
+              "methods": [
+                "recommend_iam_roles"
+              ]
+            },
+            "RegisterAppHubApplicationResources": {
+              "methods": [
+                "register_app_hub_application_resources"
+              ]
+            },
+            "SnapshotApplicationTemplate": {
+              "methods": [
+                "snapshot_application_template"
+              ]
+            },
+            "SyncShare": {
+              "methods": [
+                "sync_share"
+              ]
+            },
+            "UpdateApplication": {
+              "methods": [
+                "update_application"
+              ]
+            },
+            "UpdateApplicationTemplate": {
+              "methods": [
+                "update_application_template"
+              ]
+            },
+            "UpdateCatalog": {
+              "methods": [
+                "update_catalog"
+              ]
+            },
+            "UpdateCatalogTemplate": {
+              "methods": [
+                "update_catalog_template"
+              ]
+            },
+            "UpdateComponent": {
+              "methods": [
+                "update_component"
+              ]
+            },
+            "UpdateConnection": {
+              "methods": [
+                "update_connection"
+              ]
+            },
+            "UpdatePolicy": {
+              "methods": [
+                "update_policy"
+              ]
+            },
+            "UpdateSpace": {
+              "methods": [
+                "update_space"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

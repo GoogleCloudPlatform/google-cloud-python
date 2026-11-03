@@ -28,10 +28,10 @@ jobs:
     outputs:
       run_generator: ${{ steps.filter.outputs.generator }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
         id: filter
         with:
           filters: |
@@ -63,11 +63,11 @@ jobs:
         logging_scope: ["", "google"]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - name: Set up Python
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: "${{ matrix.python }}"
           allow-prereleases: true
@@ -103,11 +103,11 @@ jobs:
           logging_scope: ["", "google"]
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
           with:
             persist-credentials: false
         - name: Set up Python "${{ matrix.python }}"
-          uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+          uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
           with:
             python-version: "${{ matrix.python }}"
             cache: 'pip'
@@ -144,7 +144,7 @@ jobs:
             nox -s ${{ matrix.target }}-${MATRIX_PYTHON}
         - name: Upload Raw Spans Artifact
           if: always()
-          uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+          uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
           with:
             name: raw-spans-${{ matrix.target }}-${{ matrix.python }}${{ matrix.logging_scope && format('-{0}', matrix.logging_scope) || '' }}
             path: packages/gapic-generator/tests/system/raw_spans_output.json
@@ -159,11 +159,11 @@ jobs:
           target: [showcase, showcase_w_rest_async]
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
           with:
             persist-credentials: false
         - name: Set up Python "${{ matrix.python }}"
-          uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+          uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
           with:
             python-version: "${{ matrix.python }}"
             cache: 'pip'
@@ -199,7 +199,7 @@ jobs:
             nox -s ${{ matrix.target }}-${MATRIX_PYTHON}
         - name: Upload Raw Spans Artifact
           if: always()
-          uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+          uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
           with:
             name: raw-spans-canary-${{ matrix.target }}-${{ matrix.python }}
             path: packages/gapic-generator/tests/system/raw_spans_output.json
@@ -209,16 +209,37 @@ jobs:
     needs: python_config
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - name: Set up Python
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: ${{ needs.python_config.outputs.latest_stable_python }}
       - name: Install System Deps
         run: sudo apt-get update && sudo apt-get install -y pandoc
-      - name: Run Mypy
+      - name: Run Mypy with released version of google-api-core from PyPI
+        run: |
+          pip install nox
+          cd packages/gapic-generator
+          nox -s showcase_mypy
+
+  showcase-mypy-canary:
+    needs: python_config
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: ${{ needs.python_config.outputs.latest_stable_python }}
+      - name: Install System Deps
+        run: sudo apt-get update && sudo apt-get install -y pandoc
+      - name: Run Mypy Canary with local google-api-core
+        env:
+          INSTALL_LOCAL_CORE: "true"
         run: |
           pip install nox
           cd packages/gapic-generator
@@ -228,11 +249,11 @@ jobs:
     needs: python_config
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - name: Set up Python
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: ${{ needs.python_config.outputs.latest_stable_python }}
       - name: Install System Deps
@@ -264,11 +285,11 @@ jobs:
     needs: python_config
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - name: Set up Python ${{ needs.python_config.outputs.prerelease_python }}
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: ${{ needs.python_config.outputs.prerelease_python }}
           allow-prereleases: true
@@ -296,11 +317,11 @@ jobs:
         python: ${{ fromJSON(needs.python_config.outputs.trimmed_python) }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - name: Set up Python
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: ${{ matrix.python }}
           allow-prereleases: true
@@ -336,12 +357,12 @@ jobs:
     runs-on: ubuntu-latest
     container: gcr.io/gapic-images/googleapis # zizmor: ignore[unpinned-images]
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - name: Cache Bazel files
         id: cache-bazel
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: ~/.cache/bazel
           # Ensure CACHE_VERSION is defined in the mono-repo secrets!
@@ -358,7 +379,7 @@ jobs:
   # This job will be reported as 'Success' if all its dependencies either
   # pass or are skipped due to path filtering.
   status:
-    needs: [check_changes, python_config, showcase-unit, showcase, showcase-mypy, goldens, goldens-prerelease, fragment-snippet, integration]
+    needs: [check_changes, python_config, showcase-unit, showcase, showcase-mypy, showcase-mypy-canary, goldens, goldens-prerelease, fragment-snippet, integration]
     if: always()
     runs-on: ubuntu-latest
     steps:

@@ -18,12 +18,13 @@ import json  # type: ignore
 
 from google.auth.transport.requests import AuthorizedSession  # type: ignore
 from google.auth import credentials as ga_credentials  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import retry as retries
 from google.api_core import rest_helpers
 from google.api_core import rest_streaming
 from google.api_core import gapic_v1
-from google.cloud.asset_v1._compat import transcode_request
+from google.cloud.asset_v1._compat import transcode_request, trace_http_request
 import google.protobuf
 
 from google.protobuf import json_format
@@ -1060,6 +1061,7 @@ class AssetServiceRestStub:
     _session: AuthorizedSession
     _host: str
     _interceptor: AssetServiceRestInterceptor
+    _client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None
 
 
 class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
@@ -1087,6 +1089,8 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             url_scheme: str = 'https',
             interceptor: Optional[AssetServiceRestInterceptor] = None,
             api_audience: Optional[str] = None,
+            client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
+            **kwargs,
             ) -> None:
         """Instantiate the transport.
 
@@ -1130,6 +1134,9 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
         # Run the base constructor
         # TODO(yon-mg): resolve other ctor params i.e. scopes, quota, etc.
@@ -1141,7 +1148,9 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             url_scheme=url_scheme,
-            api_audience=api_audience
+            api_audience=api_audience,
+            client_options=client_options,
+            **kwargs,
         )
         self._session = AuthorizedSession(
             self._credentials, default_host=self.DEFAULT_HOST)
@@ -1194,19 +1203,34 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.AnalyzeIamPolicyRequest, *,
@@ -1272,7 +1296,16 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._AnalyzeIamPolicy._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = AssetServiceRestTransport._AnalyzeIamPolicy._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1284,7 +1317,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             pb_resp = asset_service.AnalyzeIamPolicyResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_analyze_iam_policy(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_analyze_iam_policy_with_metadata(resp, response_metadata)
@@ -1321,20 +1353,35 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.AnalyzeIamPolicyLongrunningRequest, *,
@@ -1402,7 +1449,17 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._AnalyzeIamPolicyLongrunning._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = AssetServiceRestTransport._AnalyzeIamPolicyLongrunning._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1412,7 +1469,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_analyze_iam_policy_longrunning(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_analyze_iam_policy_longrunning_with_metadata(resp, response_metadata)
@@ -1449,19 +1505,34 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.AnalyzeMoveRequest, *,
@@ -1527,7 +1598,16 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._AnalyzeMove._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = AssetServiceRestTransport._AnalyzeMove._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1539,7 +1619,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             pb_resp = asset_service.AnalyzeMoveResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_analyze_move(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_analyze_move_with_metadata(resp, response_metadata)
@@ -1576,19 +1655,34 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.AnalyzeOrgPoliciesRequest, *,
@@ -1654,7 +1748,16 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._AnalyzeOrgPolicies._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = AssetServiceRestTransport._AnalyzeOrgPolicies._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1666,7 +1769,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             pb_resp = asset_service.AnalyzeOrgPoliciesResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_analyze_org_policies(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_analyze_org_policies_with_metadata(resp, response_metadata)
@@ -1703,19 +1805,34 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.AnalyzeOrgPolicyGovernedAssetsRequest, *,
@@ -1782,7 +1899,16 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._AnalyzeOrgPolicyGovernedAssets._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = AssetServiceRestTransport._AnalyzeOrgPolicyGovernedAssets._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1794,7 +1920,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             pb_resp = asset_service.AnalyzeOrgPolicyGovernedAssetsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_analyze_org_policy_governed_assets(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_analyze_org_policy_governed_assets_with_metadata(resp, response_metadata)
@@ -1831,19 +1956,34 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.AnalyzeOrgPolicyGovernedContainersRequest, *,
@@ -1910,7 +2050,16 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._AnalyzeOrgPolicyGovernedContainers._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = AssetServiceRestTransport._AnalyzeOrgPolicyGovernedContainers._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1922,7 +2071,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             pb_resp = asset_service.AnalyzeOrgPolicyGovernedContainersResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_analyze_org_policy_governed_containers(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_analyze_org_policy_governed_containers_with_metadata(resp, response_metadata)
@@ -1959,19 +2107,34 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.BatchGetAssetsHistoryRequest, *,
@@ -2034,7 +2197,16 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._BatchGetAssetsHistory._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = AssetServiceRestTransport._BatchGetAssetsHistory._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2046,7 +2218,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             pb_resp = asset_service.BatchGetAssetsHistoryResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_batch_get_assets_history(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_batch_get_assets_history_with_metadata(resp, response_metadata)
@@ -2083,19 +2254,34 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.BatchGetEffectiveIamPoliciesRequest, *,
@@ -2162,7 +2348,16 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._BatchGetEffectiveIamPolicies._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = AssetServiceRestTransport._BatchGetEffectiveIamPolicies._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2174,7 +2369,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             pb_resp = asset_service.BatchGetEffectiveIamPoliciesResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_batch_get_effective_iam_policies(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_batch_get_effective_iam_policies_with_metadata(resp, response_metadata)
@@ -2211,20 +2405,35 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.CreateFeedRequest, *,
@@ -2295,7 +2504,17 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._CreateFeed._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = AssetServiceRestTransport._CreateFeed._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2307,7 +2526,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             pb_resp = asset_service.Feed.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_feed(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_feed_with_metadata(resp, response_metadata)
@@ -2344,20 +2562,35 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.CreateSavedQueryRequest, *,
@@ -2422,7 +2655,17 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._CreateSavedQuery._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = AssetServiceRestTransport._CreateSavedQuery._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2434,7 +2677,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             pb_resp = asset_service.SavedQuery.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_create_saved_query(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_create_saved_query_with_metadata(resp, response_metadata)
@@ -2471,19 +2713,34 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.DeleteFeedRequest, *,
@@ -2542,7 +2799,16 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._DeleteFeed._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = AssetServiceRestTransport._DeleteFeed._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2561,19 +2827,34 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.DeleteSavedQueryRequest, *,
@@ -2632,7 +2913,16 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._DeleteSavedQuery._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = AssetServiceRestTransport._DeleteSavedQuery._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2651,20 +2941,35 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.ExportAssetsRequest, *,
@@ -2730,7 +3035,17 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._ExportAssets._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = AssetServiceRestTransport._ExportAssets._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2740,7 +3055,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             # Return the response
             resp = operations_pb2.Operation()
             json_format.Parse(response.content, resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_export_assets(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_export_assets_with_metadata(resp, response_metadata)
@@ -2777,19 +3091,34 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.GetFeedRequest, *,
@@ -2860,7 +3189,16 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._GetFeed._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = AssetServiceRestTransport._GetFeed._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2872,7 +3210,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             pb_resp = asset_service.Feed.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_feed(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_feed_with_metadata(resp, response_metadata)
@@ -2909,19 +3246,34 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.GetSavedQueryRequest, *,
@@ -2986,7 +3338,16 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._GetSavedQuery._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = AssetServiceRestTransport._GetSavedQuery._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2998,7 +3359,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             pb_resp = asset_service.SavedQuery.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_get_saved_query(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_get_saved_query_with_metadata(resp, response_metadata)
@@ -3035,19 +3395,34 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.ListAssetsRequest, *,
@@ -3110,7 +3485,16 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._ListAssets._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = AssetServiceRestTransport._ListAssets._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3122,7 +3506,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             pb_resp = asset_service.ListAssetsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_assets(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_assets_with_metadata(resp, response_metadata)
@@ -3159,19 +3542,34 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.ListFeedsRequest, *,
@@ -3234,7 +3632,16 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._ListFeeds._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = AssetServiceRestTransport._ListFeeds._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3246,7 +3653,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             pb_resp = asset_service.ListFeedsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_feeds(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_feeds_with_metadata(resp, response_metadata)
@@ -3283,19 +3689,34 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.ListSavedQueriesRequest, *,
@@ -3358,7 +3779,16 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._ListSavedQueries._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = AssetServiceRestTransport._ListSavedQueries._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3370,7 +3800,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             pb_resp = asset_service.ListSavedQueriesResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_list_saved_queries(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_list_saved_queries_with_metadata(resp, response_metadata)
@@ -3407,20 +3836,35 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.QueryAssetsRequest, *,
@@ -3483,7 +3927,17 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._QueryAssets._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = AssetServiceRestTransport._QueryAssets._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3495,7 +3949,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             pb_resp = asset_service.QueryAssetsResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_query_assets(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_query_assets_with_metadata(resp, response_metadata)
@@ -3532,19 +3985,34 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.SearchAllIamPoliciesRequest, *,
@@ -3607,7 +4075,16 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._SearchAllIamPolicies._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = AssetServiceRestTransport._SearchAllIamPolicies._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3619,7 +4096,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             pb_resp = asset_service.SearchAllIamPoliciesResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_search_all_iam_policies(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_search_all_iam_policies_with_metadata(resp, response_metadata)
@@ -3656,19 +4132,34 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.SearchAllResourcesRequest, *,
@@ -3731,7 +4222,16 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._SearchAllResources._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = AssetServiceRestTransport._SearchAllResources._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3743,7 +4243,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             pb_resp = asset_service.SearchAllResourcesResponse.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_search_all_resources(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_search_all_resources_with_metadata(resp, response_metadata)
@@ -3780,20 +4279,35 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.UpdateFeedRequest, *,
@@ -3864,7 +4378,17 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._UpdateFeed._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = AssetServiceRestTransport._UpdateFeed._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -3876,7 +4400,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             pb_resp = asset_service.Feed.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_feed(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_feed_with_metadata(resp, response_metadata)
@@ -3913,20 +4436,35 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                data=body,
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    data=body,
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
                 request: asset_service.UpdateSavedQueryRequest, *,
@@ -3991,7 +4529,17 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._UpdateSavedQuery._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request, body)
+            response = AssetServiceRestTransport._UpdateSavedQuery._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -4003,7 +4551,6 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             pb_resp = asset_service.SavedQuery.pb(resp)
 
             json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
-
             resp = self._interceptor.post_update_saved_query(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_update_saved_query_with_metadata(resp, response_metadata)
@@ -4034,7 +4581,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             asset_service.AnalyzeIamPolicyResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._AnalyzeIamPolicy(self._session, self._host, self._interceptor) # type: ignore
+        return self._AnalyzeIamPolicy(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def analyze_iam_policy_longrunning(self) -> Callable[
@@ -4042,7 +4589,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._AnalyzeIamPolicyLongrunning(self._session, self._host, self._interceptor) # type: ignore
+        return self._AnalyzeIamPolicyLongrunning(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def analyze_move(self) -> Callable[
@@ -4050,7 +4597,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             asset_service.AnalyzeMoveResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._AnalyzeMove(self._session, self._host, self._interceptor) # type: ignore
+        return self._AnalyzeMove(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def analyze_org_policies(self) -> Callable[
@@ -4058,7 +4605,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             asset_service.AnalyzeOrgPoliciesResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._AnalyzeOrgPolicies(self._session, self._host, self._interceptor) # type: ignore
+        return self._AnalyzeOrgPolicies(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def analyze_org_policy_governed_assets(self) -> Callable[
@@ -4066,7 +4613,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             asset_service.AnalyzeOrgPolicyGovernedAssetsResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._AnalyzeOrgPolicyGovernedAssets(self._session, self._host, self._interceptor) # type: ignore
+        return self._AnalyzeOrgPolicyGovernedAssets(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def analyze_org_policy_governed_containers(self) -> Callable[
@@ -4074,7 +4621,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             asset_service.AnalyzeOrgPolicyGovernedContainersResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._AnalyzeOrgPolicyGovernedContainers(self._session, self._host, self._interceptor) # type: ignore
+        return self._AnalyzeOrgPolicyGovernedContainers(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def batch_get_assets_history(self) -> Callable[
@@ -4082,7 +4629,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             asset_service.BatchGetAssetsHistoryResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._BatchGetAssetsHistory(self._session, self._host, self._interceptor) # type: ignore
+        return self._BatchGetAssetsHistory(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def batch_get_effective_iam_policies(self) -> Callable[
@@ -4090,7 +4637,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             asset_service.BatchGetEffectiveIamPoliciesResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._BatchGetEffectiveIamPolicies(self._session, self._host, self._interceptor) # type: ignore
+        return self._BatchGetEffectiveIamPolicies(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def create_feed(self) -> Callable[
@@ -4098,7 +4645,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             asset_service.Feed]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateFeed(self._session, self._host, self._interceptor) # type: ignore
+        return self._CreateFeed(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def create_saved_query(self) -> Callable[
@@ -4106,7 +4653,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             asset_service.SavedQuery]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateSavedQuery(self._session, self._host, self._interceptor) # type: ignore
+        return self._CreateSavedQuery(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def delete_feed(self) -> Callable[
@@ -4114,7 +4661,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             empty_pb2.Empty]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteFeed(self._session, self._host, self._interceptor) # type: ignore
+        return self._DeleteFeed(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def delete_saved_query(self) -> Callable[
@@ -4122,7 +4669,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             empty_pb2.Empty]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteSavedQuery(self._session, self._host, self._interceptor) # type: ignore
+        return self._DeleteSavedQuery(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def export_assets(self) -> Callable[
@@ -4130,7 +4677,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ExportAssets(self._session, self._host, self._interceptor) # type: ignore
+        return self._ExportAssets(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def get_feed(self) -> Callable[
@@ -4138,7 +4685,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             asset_service.Feed]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetFeed(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetFeed(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def get_saved_query(self) -> Callable[
@@ -4146,7 +4693,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             asset_service.SavedQuery]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetSavedQuery(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetSavedQuery(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def list_assets(self) -> Callable[
@@ -4154,7 +4701,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             asset_service.ListAssetsResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListAssets(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListAssets(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def list_feeds(self) -> Callable[
@@ -4162,7 +4709,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             asset_service.ListFeedsResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListFeeds(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListFeeds(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def list_saved_queries(self) -> Callable[
@@ -4170,7 +4717,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             asset_service.ListSavedQueriesResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListSavedQueries(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListSavedQueries(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def query_assets(self) -> Callable[
@@ -4178,7 +4725,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             asset_service.QueryAssetsResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._QueryAssets(self._session, self._host, self._interceptor) # type: ignore
+        return self._QueryAssets(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def search_all_iam_policies(self) -> Callable[
@@ -4186,7 +4733,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             asset_service.SearchAllIamPoliciesResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._SearchAllIamPolicies(self._session, self._host, self._interceptor) # type: ignore
+        return self._SearchAllIamPolicies(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def search_all_resources(self) -> Callable[
@@ -4194,7 +4741,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             asset_service.SearchAllResourcesResponse]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._SearchAllResources(self._session, self._host, self._interceptor) # type: ignore
+        return self._SearchAllResources(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def update_feed(self) -> Callable[
@@ -4202,7 +4749,7 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             asset_service.Feed]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateFeed(self._session, self._host, self._interceptor) # type: ignore
+        return self._UpdateFeed(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def update_saved_query(self) -> Callable[
@@ -4210,11 +4757,11 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             asset_service.SavedQuery]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateSavedQuery(self._session, self._host, self._interceptor) # type: ignore
+        return self._UpdateSavedQuery(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     @property
     def get_operation(self):
-        return self._GetOperation(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetOperation(self._session, self._host, self._interceptor, getattr(self, "_client_options", None)) # type: ignore
 
     class _GetOperation(_BaseAssetServiceRestTransport._BaseGetOperation, AssetServiceRestStub):
         def __hash__(self):
@@ -4228,19 +4775,34 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
             session,
             timeout,
             transcoded_request,
-            body=None):
+            body=None,
+            client_options=None,
+            url_template=None):
+            """Execute the HTTP request over the transport session with
+            OpenTelemetry tracing and metadata propagation."""
 
             uri = transcoded_request['uri']
             method = transcoded_request['method']
             headers = dict(metadata)
             headers['Content-Type'] = 'application/json'
-            response = getattr(session, method)(
-                "{host}{uri}".format(host=host, uri=uri),
-                timeout=timeout,
+            url = "{host}{uri}".format(host=host, uri=uri)
+
+            with trace_http_request(
+                client_options=client_options,
+                method=method,
+                url=url,
+                url_template=url_template,
                 headers=headers,
-                params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
-            return response
+                body=body,
+            ) as trace_ctx:
+                response = getattr(session, method)(
+                    url,
+                    timeout=timeout,
+                    headers=headers,
+                    params=rest_helpers.flatten_query_params(query_params, strict=True),
+                    )
+                trace_ctx.record_response(response)
+                return response
 
         def __call__(self,
             request: operations_pb2.GetOperationRequest, *,
@@ -4303,7 +4865,16 @@ class AssetServiceRestTransport(_BaseAssetServiceRestTransport):
                 )
 
             # Send the request
-            response = AssetServiceRestTransport._GetOperation._get_response(self._host, metadata, query_params, self._session, timeout, transcoded_request)
+            response = AssetServiceRestTransport._GetOperation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                client_options=getattr(self, "_client_options", None),
+                url_template=http_options[0].get("uri") if http_options else None,
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.

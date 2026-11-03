@@ -10,6 +10,11 @@
         "grpc": {
           "libraryClient": "AppTopologyClient",
           "rpcs": {
+            "ExploreSchema": {
+              "methods": [
+                "explore_schema"
+              ]
+            },
             "GenerateDiscoveredResourcesTopology": {
               "methods": [
                 "generate_discovered_resources_topology"
@@ -35,6 +40,11 @@
         "grpc-async": {
           "libraryClient": "AppTopologyAsyncClient",
           "rpcs": {
+            "ExploreSchema": {
+              "methods": [
+                "explore_schema"
+              ]
+            },
             "GenerateDiscoveredResourcesTopology": {
               "methods": [
                 "generate_discovered_resources_topology"
@@ -60,6 +70,11 @@
         "rest": {
           "libraryClient": "AppTopologyClient",
           "rpcs": {
+            "ExploreSchema": {
+              "methods": [
+                "explore_schema"
+              ]
+            },
             "GenerateDiscoveredResourcesTopology": {
               "methods": [
                 "generate_discovered_resources_topology"

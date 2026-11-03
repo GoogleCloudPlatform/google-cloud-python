@@ -20,7 +20,7 @@ import uuid
 
 import pytest
 
-from ...utils import create_table_cm
+from ....utils import create_table_cm
 from . import filter_snippets
 from .snapshots.snap_filters_test import snapshots
 

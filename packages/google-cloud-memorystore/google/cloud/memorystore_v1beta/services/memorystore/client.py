@@ -178,6 +178,54 @@ class MemorystoreClient(metaclass=MemorystoreClientMeta):
         return self._transport
 
     @staticmethod
+    def acl_policy_path(
+        project: str,
+        location: str,
+        acl_policy: str,
+    ) -> str:
+        """Returns a fully-qualified acl_policy string."""
+        return (
+            "projects/{project}/locations/{location}/aclPolicies/{acl_policy}".format(
+                project=project,
+                location=location,
+                acl_policy=acl_policy,
+            )
+        )
+
+    @staticmethod
+    def parse_acl_policy_path(path: str) -> Dict[str, str]:
+        """Parses a acl_policy path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/aclPolicies/(?P<acl_policy>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def acl_policy_revision_path(
+        project: str,
+        location: str,
+        acl_policy: str,
+        revision: str,
+    ) -> str:
+        """Returns a fully-qualified acl_policy_revision string."""
+        return "projects/{project}/locations/{location}/aclPolicies/{acl_policy}/revisions/{revision}".format(
+            project=project,
+            location=location,
+            acl_policy=acl_policy,
+            revision=revision,
+        )
+
+    @staticmethod
+    def parse_acl_policy_revision_path(path: str) -> Dict[str, str]:
+        """Parses a acl_policy_revision path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/aclPolicies/(?P<acl_policy>.+?)/revisions/(?P<revision>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
     def auth_token_path(
         project: str,
         location: str,
@@ -893,6 +941,138 @@ class MemorystoreClient(metaclass=MemorystoreClientMeta):
                     },
                 )
 
+    def list_acl_policies(
+        self,
+        request: Optional[Union[memorystore.ListAclPoliciesRequest, dict]] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListAclPoliciesPager:
+        r"""Lists all ACL policies owned by a project in either the
+        specified location (region) or all locations.
+
+        The location should have the following format:
+
+        - ``projects/{project_id}/locations/{location_id}``
+
+        If ``location_id`` is specified as ``-`` (wildcard), then all
+        regions available to the project are queried, and the results
+        are aggregated.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import memorystore_v1beta
+
+            def sample_list_acl_policies():
+                # Create a client
+                client = memorystore_v1beta.MemorystoreClient()
+
+                # Initialize request argument(s)
+                request = memorystore_v1beta.ListAclPoliciesRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_acl_policies(request=request)
+
+                # Handle the response
+                for response in page_result:
+                    print(response)
+
+        Args:
+            request (Union[google.cloud.memorystore_v1beta.types.ListAclPoliciesRequest, dict]):
+                The request object. Request for ``ListAclPolicies``.
+            parent (str):
+                Required. The resource name of the ACL policy location
+                using the form:
+                ``projects/{project}/locations/{location}`` where
+                ``location`` refers to a Google Cloud region.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.memorystore_v1beta.services.memorystore.pagers.ListAclPoliciesPager:
+                Response for ListAclPolicies.
+
+                Iterating over this object will yield results and
+                resolve additional pages automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, memorystore.ListAclPoliciesRequest):
+            request = memorystore.ListAclPoliciesRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.list_acl_policies]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__iter__` convenience method.
+        response = pagers.ListAclPoliciesPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
     def list_instances(
         self,
         request: Optional[Union[memorystore.ListInstancesRequest, dict]] = None,
@@ -1015,6 +1195,114 @@ class MemorystoreClient(metaclass=MemorystoreClientMeta):
         # Done; return the response.
         return response
 
+    def get_acl_policy(
+        self,
+        request: Optional[Union[memorystore.GetAclPolicyRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> memorystore.AclPolicy:
+        r"""Gets the details of a specific Memorystore ACL
+        policy.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import memorystore_v1beta
+
+            def sample_get_acl_policy():
+                # Create a client
+                client = memorystore_v1beta.MemorystoreClient()
+
+                # Initialize request argument(s)
+                request = memorystore_v1beta.GetAclPolicyRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.get_acl_policy(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.memorystore_v1beta.types.GetAclPolicyRequest, dict]):
+                The request object. Request for ``GetAclPolicy``.
+            name (str):
+                Required. Memorystore ACL policy resource name using the
+                form:
+                ``projects/{project}/locations/{location}/aclPolicies/{acl_policy}``
+                where ``location`` refers to a Google Cloud region.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.memorystore_v1beta.types.AclPolicy:
+                The ACL policy resource.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, memorystore.GetAclPolicyRequest):
+            request = memorystore.GetAclPolicyRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.get_acl_policy]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
     def get_instance(
         self,
         request: Optional[Union[memorystore.GetInstanceRequest, dict]] = None,
@@ -1105,6 +1393,148 @@ class MemorystoreClient(metaclass=MemorystoreClientMeta):
         # add these here.
         metadata = tuple(metadata) + (
             gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def create_acl_policy(
+        self,
+        request: Optional[Union[memorystore.CreateAclPolicyRequest, dict]] = None,
+        *,
+        parent: Optional[str] = None,
+        acl_policy: Optional[memorystore.AclPolicy] = None,
+        acl_policy_id: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> memorystore.AclPolicy:
+        r"""Creates an ACL policy.
+        The creation is executed synchronously and the policy is
+        available for use immediately after the RPC returns.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import memorystore_v1beta
+
+            def sample_create_acl_policy():
+                # Create a client
+                client = memorystore_v1beta.MemorystoreClient()
+
+                # Initialize request argument(s)
+                acl_policy = memorystore_v1beta.AclPolicy()
+                acl_policy.rules.username = "username_value"
+                acl_policy.rules.rule = "rule_value"
+
+                request = memorystore_v1beta.CreateAclPolicyRequest(
+                    parent="parent_value",
+                    acl_policy_id="acl_policy_id_value",
+                    acl_policy=acl_policy,
+                )
+
+                # Make the request
+                response = client.create_acl_policy(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.memorystore_v1beta.types.CreateAclPolicyRequest, dict]):
+                The request object. Request for ``CreateAclPolicy``.
+            parent (str):
+                Required. The resource name of the ACL policy location
+                using the form:
+                ``projects/{project}/locations/{location}`` where
+                ``location`` refers to a Google Cloud region.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            acl_policy (google.cloud.memorystore_v1beta.types.AclPolicy):
+                Required. The ACL policy that is to
+                be created.
+
+                This corresponds to the ``acl_policy`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            acl_policy_id (str):
+                Required. The logical name of the ACL policy in the
+                customer project with the following restrictions:
+
+                - Must contain only lowercase letters, numbers, and
+                  hyphens.
+                - Must start with a letter.
+                - Must be between 1-63 characters.
+                - Must end with a number or a letter.
+                - Must be unique within the customer project / location
+
+                This corresponds to the ``acl_policy_id`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.memorystore_v1beta.types.AclPolicy:
+                The ACL policy resource.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent, acl_policy, acl_policy_id]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, memorystore.CreateAclPolicyRequest):
+            request = memorystore.CreateAclPolicyRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+            if acl_policy is not None:
+                request.acl_policy = acl_policy
+            if acl_policy_id is not None:
+                request.acl_policy_id = acl_policy_id
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.create_acl_policy]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
         )
 
         # Validate the universe domain.
@@ -1274,6 +1704,159 @@ class MemorystoreClient(metaclass=MemorystoreClientMeta):
         # Done; return the response.
         return response
 
+    def update_acl_policy(
+        self,
+        request: Optional[Union[memorystore.UpdateAclPolicyRequest, dict]] = None,
+        *,
+        acl_policy: Optional[memorystore.AclPolicy] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Updates the ACL policy.
+
+        The operation will apply the updated ACL policy to all
+        the linked instances. The operation will return success
+        if it successfully applied the policy to all the
+        instances. If the operation completed with a failure,
+        the service will continue to apply the policy via
+        reconciliation for the failed instances even after
+        operation completion to ensure eventual consistency.
+
+        Completed longrunning.Operation will contain the new ACL
+        policy object in the response field.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import memorystore_v1beta
+
+            def sample_update_acl_policy():
+                # Create a client
+                client = memorystore_v1beta.MemorystoreClient()
+
+                # Initialize request argument(s)
+                acl_policy = memorystore_v1beta.AclPolicy()
+                acl_policy.rules.username = "username_value"
+                acl_policy.rules.rule = "rule_value"
+
+                request = memorystore_v1beta.UpdateAclPolicyRequest(
+                    acl_policy=acl_policy,
+                )
+
+                # Make the request
+                operation = client.update_acl_policy(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.memorystore_v1beta.types.UpdateAclPolicyRequest, dict]):
+                The request object. Request for ``UpdateAclPolicy``.
+            acl_policy (google.cloud.memorystore_v1beta.types.AclPolicy):
+                Required. The ACL policy to be
+                updated.
+
+                This corresponds to the ``acl_policy`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (google.protobuf.field_mask_pb2.FieldMask):
+                Optional. Mask of fields to be updated. At least one
+                path must be supplied in this field. The elements of the
+                repeated paths field may only include these fields from
+                ``AclPolicy``:
+
+                - ``rules``
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.memorystore_v1beta.types.AclPolicy`
+                The ACL policy resource.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [acl_policy, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, memorystore.UpdateAclPolicyRequest):
+            request = memorystore.UpdateAclPolicyRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if acl_policy is not None:
+                request.acl_policy = acl_policy
+            if update_mask is not None:
+                request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.update_acl_policy]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("acl_policy.name", request.acl_policy.name),)
+            ),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            memorystore.AclPolicy,
+            metadata_type=memorystore.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
     def update_instance(
         self,
         request: Optional[Union[memorystore.UpdateInstanceRequest, dict]] = None,
@@ -1401,6 +1984,373 @@ class MemorystoreClient(metaclass=MemorystoreClientMeta):
             self._transport.operations_client,
             memorystore.Instance,
             metadata_type=memorystore.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def delete_acl_policy(
+        self,
+        request: Optional[Union[memorystore.DeleteAclPolicyRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Deletes a specific ACL policy. This action will
+        delete the ACL policy and all the rules associated with
+        it. An ACL policy cannot be deleted if it is attached to
+        an instance.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import memorystore_v1beta
+
+            def sample_delete_acl_policy():
+                # Create a client
+                client = memorystore_v1beta.MemorystoreClient()
+
+                # Initialize request argument(s)
+                request = memorystore_v1beta.DeleteAclPolicyRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                operation = client.delete_acl_policy(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.memorystore_v1beta.types.DeleteAclPolicyRequest, dict]):
+                The request object. Request for ``DeleteAclPolicy``.
+            name (str):
+                Required. Memorystore ACL policy resource name using the
+                form:
+                ``projects/{project}/locations/{location}/aclPolicies/{acl_policy_id}``
+                where ``location`` refers to a Google Cloud region.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.protobuf.empty_pb2.Empty` A generic empty message that you can re-use to avoid defining duplicated
+                   empty messages in your APIs. A typical example is to
+                   use it as the request or the response type of an API
+                   method. For instance:
+
+                      service Foo {
+                         rpc Bar(google.protobuf.Empty) returns
+                         (google.protobuf.Empty);
+
+                      }
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, memorystore.DeleteAclPolicyRequest):
+            request = memorystore.DeleteAclPolicyRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.delete_acl_policy]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            empty_pb2.Empty,
+            metadata_type=memorystore.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def get_acl_policy_revision(
+        self,
+        request: Optional[Union[memorystore.GetAclPolicyRevisionRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> memorystore.AclPolicyRevision:
+        r"""Gets details of a specific ACL policy revision.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import memorystore_v1beta
+
+            def sample_get_acl_policy_revision():
+                # Create a client
+                client = memorystore_v1beta.MemorystoreClient()
+
+                # Initialize request argument(s)
+                request = memorystore_v1beta.GetAclPolicyRevisionRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.get_acl_policy_revision(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.memorystore_v1beta.types.GetAclPolicyRevisionRequest, dict]):
+                The request object. Request for ``GetAclPolicyRevision``.
+            name (str):
+                Required. Memorystore ACL policy revision resource name
+                using the form:
+                ``projects/{project}/locations/{location}/aclPolicies/{acl_policy}/revisions/{revision}``
+                where ``location`` refers to a Google Cloud region.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.memorystore_v1beta.types.AclPolicyRevision:
+                The ACL policy revision resource.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, memorystore.GetAclPolicyRevisionRequest):
+            request = memorystore.GetAclPolicyRevisionRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.get_acl_policy_revision]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def list_acl_policy_revisions(
+        self,
+        request: Optional[
+            Union[memorystore.ListAclPolicyRevisionsRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListAclPolicyRevisionsPager:
+        r"""Lists all ACL policy revisions in a given ACL policy.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import memorystore_v1beta
+
+            def sample_list_acl_policy_revisions():
+                # Create a client
+                client = memorystore_v1beta.MemorystoreClient()
+
+                # Initialize request argument(s)
+                request = memorystore_v1beta.ListAclPolicyRevisionsRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_acl_policy_revisions(request=request)
+
+                # Handle the response
+                for response in page_result:
+                    print(response)
+
+        Args:
+            request (Union[google.cloud.memorystore_v1beta.types.ListAclPolicyRevisionsRequest, dict]):
+                The request object. Request for ``ListAclPolicyRevisions``.
+            parent (str):
+                Required. The resource name of the ACL policy to list
+                revisions for. Format:
+                "projects/{project}/locations/{location}/aclPolicies/{acl_policy}"
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.memorystore_v1beta.services.memorystore.pagers.ListAclPolicyRevisionsPager:
+                Response for ListAclPolicyRevisions.
+
+                Iterating over this object will yield results and
+                resolve additional pages automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, memorystore.ListAclPolicyRevisionsRequest):
+            request = memorystore.ListAclPolicyRevisionsRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.list_acl_policy_revisions
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__iter__` convenience method.
+        response = pagers.ListAclPolicyRevisionsPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
         )
 
         # Done; return the response.

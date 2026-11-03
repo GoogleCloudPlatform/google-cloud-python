@@ -14,6 +14,7 @@
 
 import io
 import logging
+from dataclasses import dataclass
 from io import BufferedReader
 from typing import Dict, List, Optional, Tuple, Union
 
@@ -49,6 +50,7 @@ _DEFAULT_FLUSH_INTERVAL_BYTES = 16 * 1024 * 1024  # 16 MiB
 _BIDI_WRITE_REDIRECTED_TYPE_URL = (
     "type.googleapis.com/google.storage.v2.BidiWriteObjectRedirectedError"
 )
+_marker = object()
 logger = logging.getLogger(__name__)
 
 
@@ -100,6 +102,46 @@ def _is_write_retryable(exc):
     return False
 
 
+@dataclass(frozen=True)
+class Preconditions:
+    """Preconditions for :class:`AsyncAppendableObjectWriter` operations.
+
+    Generation preconditions (``if_generation_match``,
+    ``if_generation_not_match``) apply only when creating or overwriting an
+    object (``WriteObjectSpec``). Metageneration preconditions
+    (``if_metageneration_match``, ``if_metageneration_not_match``) apply to both
+    creating/overwriting (``WriteObjectSpec``) and appending to an existing
+    appendable object (``AppendObjectSpec``). GCS only checks metageneration
+    preconditions when no ``write_handle`` is sent, so they cannot be combined
+    with ``write_handle``.
+
+    :type if_generation_match: Optional[int]
+    :param if_generation_match: (Optional) Makes the operation conditional on
+        whether the object's current generation matches the given value. Setting
+        to ``0`` makes the operation succeed only if there are no live versions
+        of the object.
+
+    :type if_generation_not_match: Optional[int]
+    :param if_generation_not_match: (Optional) Makes the operation conditional
+        on whether the object's current generation does not match the given
+        value. If no live object exists, the precondition fails.
+
+    :type if_metageneration_match: Optional[int]
+    :param if_metageneration_match: (Optional) Makes the operation conditional
+        on whether the object's current metageneration matches the given value.
+
+    :type if_metageneration_not_match: Optional[int]
+    :param if_metageneration_not_match: (Optional) Makes the operation
+        conditional on whether the object's current metageneration does not
+        match the given value.
+    """
+
+    if_generation_match: Optional[int] = None
+    if_generation_not_match: Optional[int] = None
+    if_metageneration_match: Optional[int] = None
+    if_metageneration_not_match: Optional[int] = None
+
+
 class AsyncAppendableObjectWriter:
     """Class for appending data to a GCS Appendable Object asynchronously."""
 
@@ -112,6 +154,7 @@ class AsyncAppendableObjectWriter:
         write_handle: Optional[_storage_v2.BidiWriteHandle] = None,
         writer_options: Optional[dict] = None,
         storage_class: Optional[str] = None,
+        preconditions: Optional[Preconditions] = None,
     ):
         """
         Class for appending data to a GCS Appendable Object.
@@ -165,7 +208,8 @@ class AsyncAppendableObjectWriter:
             object doesn't exist in the bucket (useful for not accidentally
             overwriting existing objects).
 
-            Warning: If `None`, a new object is created. If an object with the
+            Warning: If `None` and no generation precondition is set in
+            `preconditions`, a new object is created. If an object with the
             same name already exists, it will be overwritten the moment
             `writer.open()` is called.
 
@@ -184,14 +228,66 @@ class AsyncAppendableObjectWriter:
         :param storage_class: (Optional) Storage class of the object bytes.
             If specified, it overrides the bucket's `storage_class`. If not, object storage class
             will be the same as bucket's storage_class.
+
+        :type preconditions: Optional[:class:`Preconditions`]
+        :param preconditions: (Optional) Preconditions for the write operation.
+            Generation preconditions (``if_generation_match``,
+            ``if_generation_not_match``) require ``generation`` to be ``None``.
+            Metageneration preconditions (``if_metageneration_match``,
+            ``if_metageneration_not_match``) apply to the existing object: the
+            one being overwritten, or the one being appended to when
+            ``generation > 0``. They cannot be combined with ``write_handle``,
+            because GCS only checks them when ``write_handle`` is empty. A
+            mismatch raises :class:`google.api_core.exceptions.FailedPrecondition`
+            from ``open()``. Preconditions are not re-sent when the writer
+            reconnects to a generation it created.
+
+        :raises TypeError: If ``preconditions`` is not a :class:`Preconditions`
+            instance.
+        :raises ValueError: If ``generation`` is set together with a generation
+            precondition, or ``write_handle`` together with a metageneration
+            precondition, in ``preconditions``.
         """
         _utils.raise_if_no_fast_crc32c()
+        if preconditions is not None and not isinstance(preconditions, Preconditions):
+            raise TypeError("preconditions must be an instance of Preconditions")
+        if (
+            generation is not None
+            and preconditions is not None
+            and (
+                preconditions.if_generation_match is not None
+                or preconditions.if_generation_not_match is not None
+            )
+        ):
+            raise ValueError(
+                "if_generation_match/if_generation_not_match require generation=None; "
+                "generation=0 already means if_generation_match=0 and generation > 0 "
+                "appends to an existing object. To overwrite using a fetched Blob, "
+                "pass generation=None to from_blob."
+            )
+        if (
+            write_handle
+            and preconditions is not None
+            and (
+                preconditions.if_metageneration_match is not None
+                or preconditions.if_metageneration_not_match is not None
+            )
+        ):
+            raise ValueError(
+                "if_metageneration_match/if_metageneration_not_match cannot be "
+                "combined with write_handle: GCS only checks metageneration "
+                "preconditions when write_handle is empty."
+            )
         self.client = client
         self.bucket_name = bucket_name
         self.object_name = object_name
         self.write_handle = write_handle
         self.generation = generation
         self.storage_class = storage_class
+        self.preconditions = preconditions
+        # Set once this writer creates a new generation; `preconditions` then no
+        # longer apply to the object being reconnected to.
+        self._created_generation = False
 
         self.write_obj_stream: Optional[_AsyncWriteObjectStream] = None
         self._is_stream_open: bool = False
@@ -227,6 +323,8 @@ class AsyncAppendableObjectWriter:
         blob: Blob,
         write_handle: Optional[_storage_v2.BidiWriteHandle] = None,
         writer_options: Optional[dict] = None,
+        preconditions: Optional[Preconditions] = None,
+        generation=_marker,
     ) -> "AsyncAppendableObjectWriter":
         """Creates an AsyncAppendableObjectWriter from an existing Blob object.
 
@@ -259,17 +357,36 @@ class AsyncAppendableObjectWriter:
         :param writer_options: (Optional) Configuration settings for the underlying
             appendable writer.
 
+        :type preconditions: Optional[:class:`Preconditions`]
+        :param preconditions: (Optional) Preconditions for the write operation.
+            Generation preconditions require ``generation`` to be ``None``.
+            Warning: a Blob fetched from GCS has ``blob.generation`` set, so
+            unless ``generation=None`` is passed the writer appends to that
+            generation, including when only metageneration preconditions are
+            given.
+
+        :type generation: Optional[int]
+        :param generation: (Optional) Overrides ``blob.generation``, which is
+            used by default. Pass ``None`` to overwrite the object using a
+            fetched Blob, for example with
+            ``Preconditions(if_generation_match=blob.generation)``.
+
         :rtype: :class:`AsyncAppendableObjectWriter`
         :returns: An initialized writer instance.
+        :raises ValueError: If ``generation`` (``blob.generation`` by default)
+            is set together with a generation precondition, or
+            ``write_handle`` together with a metageneration precondition, in
+            ``preconditions``.
         """
         instance = cls(
             client=client,
             bucket_name=blob.bucket.name,
             object_name=blob.name,
-            generation=blob.generation,
+            generation=blob.generation if generation is _marker else generation,
             write_handle=write_handle,
             writer_options=writer_options,
             storage_class=blob.storage_class,
+            preconditions=preconditions,
         )
         instance.blob = blob
         return instance
@@ -304,6 +421,9 @@ class AsyncAppendableObjectWriter:
             if redirect_proto.write_handle:
                 self.write_handle = redirect_proto.write_handle
             if redirect_proto.generation:
+                if not self.generation:
+                    # The redirected create already produced this generation.
+                    self._created_generation = True
                 self.generation = redirect_proto.generation
 
     def _merge_retry_policy(
@@ -338,6 +458,8 @@ class AsyncAppendableObjectWriter:
         """Opens the underlying bidi-gRPC stream.
 
         :raises ValueError: If the stream is already open.
+        :raises google.api_core.exceptions.FailedPrecondition: If a precondition
+            in ``preconditions`` (or ``generation=0``) is not met.
 
         """
         if self._is_stream_open:
@@ -347,6 +469,7 @@ class AsyncAppendableObjectWriter:
 
         async def _do_open():
             current_metadata = list(metadata) if metadata else []
+            creating = not self.generation
 
             # Cleanup stream from previous failed attempt, if any.
             if self.write_obj_stream:
@@ -369,6 +492,7 @@ class AsyncAppendableObjectWriter:
                 write_handle=self.write_handle,
                 routing_token=self._routing_token,
                 storage_class=self.storage_class,
+                preconditions=None if self._created_generation else self.preconditions,
             )
 
             if self._routing_token:
@@ -381,6 +505,8 @@ class AsyncAppendableObjectWriter:
             )
 
             if self.write_obj_stream.generation_number:
+                if creating:
+                    self._created_generation = True
                 self.generation = self.write_obj_stream.generation_number
             if self.write_obj_stream.write_handle:
                 self.write_handle = self.write_obj_stream.write_handle

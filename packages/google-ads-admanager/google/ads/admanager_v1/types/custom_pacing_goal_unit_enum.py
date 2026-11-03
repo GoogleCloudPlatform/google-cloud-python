@@ -41,7 +41,8 @@ class CustomPacingGoalUnitEnum(proto.Message):
                 Default value. This value is unused.
             ABSOLUTE (1):
                 The custom pacing goal amounts represent absolute numbers
-                corresponding to the line item's [Goal.unitType][].
+                corresponding to the line item's
+                [Goal.unitType][google.ads.admanager.v1.Goal.unit_type].
             MILLI_PERCENT (2):
                 The custom pacing goal amounts represent a
                 millipercent. For example, 15000 millipercent

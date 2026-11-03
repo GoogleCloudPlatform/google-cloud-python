@@ -18,7 +18,11 @@ import logging as std_logging
 import pickle
 import warnings
 from typing import Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import TYPE_CHECKING
 
+from google.cloud.logging_v2._compat import _observability, apply_channel_interceptors
+
+from google.api_core import client_options as client_options_lib
 from google.api_core import grpc_helpers
 from google.api_core import gapic_v1
 import google.auth                         # type: ignore
@@ -34,6 +38,10 @@ from google.cloud.logging_v2.types import logging
 from google.longrunning import operations_pb2 # type: ignore
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 from .base import LoggingServiceV2Transport, DEFAULT_CLIENT_INFO
+
+if TYPE_CHECKING:  # pragma: NO COVER
+    # ClientInterceptor was added in google-api-core 2.36.0+; ignore attribute-defined for older api-core versions during type checking
+    from google.api_core.grpc_helpers import ClientInterceptor  # type: ignore[attr-defined]
 
 try:
     from google.api_core import client_logging  # type: ignore
@@ -131,6 +139,8 @@ class LoggingServiceV2GrpcTransport(LoggingServiceV2Transport):
             client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
             always_use_jwt_access: Optional[bool] = False,
             api_audience: Optional[str] = None,
+            interceptors: Optional[Sequence[Union["ClientInterceptor", Callable[[grpc.Channel], grpc.Channel]]]] = None,
+            client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
             ) -> None:
         """Instantiate the transport.
 
@@ -181,6 +191,12 @@ class LoggingServiceV2GrpcTransport(LoggingServiceV2Transport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[ClientInterceptor, Callable[[grpc.Channel], grpc.Channel]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
           google.auth.exceptions.MutualTLSChannelError: If mutual TLS transport
@@ -236,6 +252,7 @@ class LoggingServiceV2GrpcTransport(LoggingServiceV2Transport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -257,8 +274,19 @@ class LoggingServiceV2GrpcTransport(LoggingServiceV2Transport):
                 ],
             )
 
+        channel_interceptors = list(interceptors) if interceptors else []
+        if (
+            _observability is not None
+            and (otel_interceptor := _observability.get_otel_interceptor(self._client_options)) is not None
+            and otel_interceptor not in channel_interceptors
+            and not any(getattr(i, "_is_otel_interceptor", None) is True for i in channel_interceptors)
+        ):
+            channel_interceptors.append(otel_interceptor)
+
+        self._grpc_channel = apply_channel_interceptors(self._grpc_channel, channel_interceptors)
+
         self._interceptor = _LoggingClientInterceptor()
-        self._logged_channel =  grpc.intercept_channel(self._grpc_channel, self._interceptor)
+        self._logged_channel = grpc.intercept_channel(self._grpc_channel, self._interceptor)
 
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)

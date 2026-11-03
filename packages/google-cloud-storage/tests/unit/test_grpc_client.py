@@ -197,3 +197,270 @@ class TestGrpcClient(unittest.TestCase):
             client_info=None,
             client_options=expected_options,
         )
+
+    @mock.patch("google.cloud.storage.grpc_client.ClientWithProject")
+    @mock.patch("google.cloud._storage_v2.StorageClient")
+    def test_grpc_client_attempt_direct_path_xds_over_interconnect(
+        self, mock_storage_client, mock_base_client
+    ):
+        mock_transport_cls = mock.MagicMock()
+        mock_storage_client.get_transport_class.return_value = mock_transport_cls
+        mock_creds = _make_credentials()
+        mock_base_client.return_value._credentials = mock_creds
+
+        grpc_client.GrpcClient(
+            project="test-project",
+            credentials=mock_creds,
+            attempt_direct_path_xds_over_interconnect=True,
+        )
+
+        mock_transport_cls.create_channel.assert_called_once_with(
+            host="storage-direct.googleapis.com",
+            credentials=mock_creds,
+            attempt_direct_path=True,
+            attempt_direct_path_xds_over_interconnect=True,
+        )
+
+    @mock.patch("google.cloud.storage.grpc_client.ClientWithProject")
+    @mock.patch("google.cloud._storage_v2.StorageClient")
+    def test_grpc_client_attempt_direct_path_xds_over_interconnect_with_quota_project(
+        self, mock_storage_client, mock_base_client
+    ):
+        mock_transport_cls = mock.MagicMock()
+        mock_storage_client.get_transport_class.return_value = mock_transport_cls
+        mock_creds = _make_credentials()
+        mock_base_client.return_value._credentials = mock_creds
+
+        grpc_client.GrpcClient(
+            project="test-project",
+            credentials=mock_creds,
+            client_options={"quota_project_id": "my-quota-proj"},
+            attempt_direct_path_xds_over_interconnect=True,
+        )
+
+        mock_transport_cls.create_channel.assert_called_once_with(
+            host="storage-direct.googleapis.com",
+            credentials=mock_creds,
+            quota_project_id="my-quota-proj",
+            attempt_direct_path=True,
+            attempt_direct_path_xds_over_interconnect=True,
+        )
+
+    @mock.patch("google.cloud.storage.grpc_client.ClientWithProject")
+    @mock.patch("google.cloud._storage_v2.StorageClient")
+    def test_create_gapic_client_custom_client_options_with_interconnect(
+        self, mock_storage_client, mock_base_client
+    ):
+        mock_transport_cls = mock.MagicMock()
+        mock_storage_client.get_transport_class.return_value = mock_transport_cls
+        mock_creds = _make_credentials()
+        mock_base_client.return_value._credentials = mock_creds
+
+        client_options_obj = client_options_lib.ClientOptions(
+            api_endpoint="custom.endpoint.com",
+            quota_project_id="my-quota-proj",
+        )
+        grpc_client.GrpcClient(
+            project="test-project",
+            credentials=mock_creds,
+            client_options=client_options_obj,
+            attempt_direct_path_xds_over_interconnect=True,
+        )
+
+        mock_transport_cls.create_channel.assert_called_once_with(
+            host="custom.endpoint.com",
+            credentials=mock_creds,
+            quota_project_id="my-quota-proj",
+            attempt_direct_path=True,
+            attempt_direct_path_xds_over_interconnect=True,
+        )
+
+    @mock.patch("google.cloud.storage.grpc_client.ClientWithProject")
+    @mock.patch("google.cloud._storage_v2.StorageClient")
+    def test_grpc_client_attempt_direct_path_xds_over_interconnect_env_override(
+        self, mock_storage_client, mock_base_client
+    ):
+        mock_transport_cls = mock.MagicMock()
+        mock_storage_client.get_transport_class.return_value = mock_transport_cls
+        mock_creds = _make_credentials()
+        mock_base_client.return_value._credentials = mock_creds
+
+        with mock.patch.dict(
+            "os.environ",
+            {"GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT": " TRUE "},
+        ):
+            grpc_client.GrpcClient(
+                project="test-project",
+                credentials=mock_creds,
+                attempt_direct_path_xds_over_interconnect=False,
+            )
+
+        mock_transport_cls.create_channel.assert_called_once_with(
+            host="storage-direct.googleapis.com",
+            credentials=mock_creds,
+            attempt_direct_path=True,
+            attempt_direct_path_xds_over_interconnect=True,
+        )
+
+        mock_transport_cls.create_channel.reset_mock()
+        with mock.patch.dict(
+            "os.environ",
+            {"GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT": " FALSE "},
+        ):
+            grpc_client.GrpcClient(
+                project="test-project",
+                credentials=mock_creds,
+                attempt_direct_path_xds_over_interconnect=True,
+            )
+
+        mock_transport_cls.create_channel.assert_called_once_with(
+            attempt_direct_path=True
+        )
+
+        with mock.patch.dict(
+            "os.environ",
+            {"GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS_OVER_INTERCONNECT": "invalid"},
+        ):
+            with self.assertRaises(ValueError):
+                grpc_client.GrpcClient(
+                    project="test-project",
+                    credentials=mock_creds,
+                )
+
+    def test_rewrite_host_for_interconnect_delimiters(self):
+        cases = [
+            ("storage.googleapis.com", "storage-direct.googleapis.com"),
+            ("storage.googleapis.com:443", "storage-direct.googleapis.com:443"),
+            ("storage.googleapis.com/path", "storage-direct.googleapis.com/path"),
+            (
+                "storage.googleapis.com?query=val",
+                "storage-direct.googleapis.com?query=val",
+            ),
+            ("storage.googleapis.com#section", "storage-direct.googleapis.com#section"),
+            ("https://storage.googleapis.com", "https://storage-direct.googleapis.com"),
+            (
+                "https://storage.googleapis.com:443?q=1",
+                "https://storage-direct.googleapis.com:443?q=1",
+            ),
+            (
+                "dns:///storage.googleapis.com:443",
+                "dns:///storage-direct.googleapis.com:443",
+            ),
+            (
+                "storage.googleapis.com.evil.com",
+                "storage.googleapis.com.evil.com",
+            ),
+            (
+                "google-c2p:///storage-direct.googleapis.com",
+                "google-c2p:///storage-direct.googleapis.com",
+            ),
+        ]
+        for original_host, expected_host in cases:
+            self.assertEqual(
+                grpc_client._rewrite_host_for_interconnect(original_host),
+                expected_host,
+            )
+
+    @mock.patch("google.cloud._storage_v2.StorageClient")
+    def test_metrics_properties(self, mock_storage_client):
+        from google.cloud.storage import _opentelemetry_metrics
+
+        mock_creds = _make_credentials()
+
+        with mock.patch.multiple(
+            _opentelemetry_metrics,
+            HAS_OPENTELEMETRY_METRICS=True,
+            _ENABLE_METRICS_DEV_GATE=True,
+        ):
+            client = grpc_client.GrpcClient(
+                project="test-project",
+                credentials=mock_creds,
+                enable_metrics=True,
+                enable_debug_metrics=True,
+            )
+            self.assertTrue(client.metrics_enabled)
+            self.assertTrue(client.debug_metrics_enabled)
+
+            client_base_false = grpc_client.GrpcClient(
+                project="test-project",
+                credentials=mock_creds,
+                enable_metrics=False,
+                enable_debug_metrics=True,
+            )
+            self.assertFalse(client_base_false.metrics_enabled)
+            self.assertTrue(client_base_false.debug_metrics_enabled)
+
+            client_both_false = grpc_client.GrpcClient(
+                project="test-project",
+                credentials=mock_creds,
+                enable_metrics=False,
+                enable_debug_metrics=False,
+            )
+            self.assertFalse(client_both_false.metrics_enabled)
+            self.assertFalse(client_both_false.debug_metrics_enabled)
+
+        with mock.patch.multiple(
+            _opentelemetry_metrics,
+            HAS_OPENTELEMETRY_METRICS=True,
+            _ENABLE_METRICS_DEV_GATE=False,
+        ):
+            client = grpc_client.GrpcClient(
+                project="test-project",
+                credentials=mock_creds,
+                enable_metrics=True,
+                enable_debug_metrics=True,
+            )
+            self.assertFalse(client.metrics_enabled)
+            self.assertFalse(client.debug_metrics_enabled)
+
+    @mock.patch("google.cloud._storage_v2.StorageClient")
+    def test_ctor_w_invalid_enable_metrics_raises_type_error(self, mock_storage_client):
+        mock_creds = _make_credentials()
+        with self.assertRaises(TypeError):
+            grpc_client.GrpcClient(
+                project="test-project",
+                credentials=mock_creds,
+                enable_metrics="true",
+            )
+        with self.assertRaises(TypeError):
+            grpc_client.GrpcClient(
+                project="test-project",
+                credentials=mock_creds,
+                enable_debug_metrics="true",
+            )
+
+    @mock.patch("google.cloud._storage_v2.StorageClient")
+    def test_ctor_metrics_defaults_and_env_fallback(self, mock_storage_client):
+        from google.cloud.storage import _opentelemetry_metrics
+
+        mock_creds = _make_credentials()
+
+        with mock.patch.multiple(
+            _opentelemetry_metrics,
+            HAS_OPENTELEMETRY_METRICS=True,
+            _ENABLE_METRICS_DEV_GATE=True,
+        ):
+            with mock.patch.dict("os.environ", {}, clear=True):
+                client = grpc_client.GrpcClient(
+                    project="test-project",
+                    credentials=mock_creds,
+                )
+                self.assertIsNone(client._enable_metrics)
+                self.assertIsNone(client._enable_debug_metrics)
+                self.assertFalse(client.metrics_enabled)
+                self.assertFalse(client.debug_metrics_enabled)
+
+            with mock.patch.dict(
+                "os.environ",
+                {
+                    "GCP_STORAGE_PYTHON_ENABLE_OTEL_METRICS": "true",
+                    "GCP_STORAGE_PYTHON_ENABLE_OTEL_DEBUG_METRICS": "true",
+                },
+                clear=True,
+            ):
+                client = grpc_client.GrpcClient(
+                    project="test-project",
+                    credentials=mock_creds,
+                )
+                self.assertTrue(client.metrics_enabled)
+                self.assertTrue(client.debug_metrics_enabled)

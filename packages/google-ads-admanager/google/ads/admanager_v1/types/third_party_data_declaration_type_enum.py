@@ -29,7 +29,7 @@ __protobuf__ = proto.module(
 
 class ThirdPartyDataDeclarationTypeEnum(proto.Message):
     r"""Wrapper message for
-    [ThirdPartyDataDeclarationTypeEnum][google.ads.admanager.v1.ThirdPartyDataDeclarationTypeEnum]
+    [ThirdPartyDataDeclarationType][google.ads.admanager.v1.ThirdPartyDataDeclarationTypeEnum.ThirdPartyDataDeclarationType]
 
     """
 

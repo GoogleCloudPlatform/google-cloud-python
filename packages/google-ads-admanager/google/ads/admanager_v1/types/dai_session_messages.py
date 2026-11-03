@@ -426,7 +426,7 @@ class DaiSession(proto.Message):
                     requests when video playlist internal redirects are enabled.
                     For details, see `Internal redirect to Google Campaign
                     Manager
-                    360 <https://support.google.com/admanager/answer/9580500?hl=en&sjid=487826991051851731-NA>`__.
+                    360 <https://support.google.com/admanager/answer/9580500>`__.
 
                     This field is a member of `oneof`_ ``_effective_ad_request_url``.
             """

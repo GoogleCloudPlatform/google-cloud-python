@@ -128,6 +128,11 @@ __protobuf__ = proto.module(
         "AggregatedListVpnGatewaysRequest",
         "AggregatedListVpnTunnelsRequest",
         "AliasIpRange",
+        "AliasNetworkEndpoint",
+        "AliasNetworkEndpointAlias",
+        "AliasNetworkEndpointHost",
+        "AliasNetworkEndpointList",
+        "AliasNetworkEndpointStatus",
         "AllocationAggregateReservation",
         "AllocationAggregateReservationReservedResourceInfo",
         "AllocationAggregateReservationReservedResourceInfoAccelerator",
@@ -301,6 +306,7 @@ __protobuf__ = proto.module(
         "DeleteAcceleratorInterconnectRequest",
         "DeleteAccessConfigInstanceRequest",
         "DeleteAddressRequest",
+        "DeleteAliasNetworkEndpointRequest",
         "DeleteAutoscalerRequest",
         "DeleteBackendBucketRequest",
         "DeleteBackendServiceRequest",
@@ -513,6 +519,7 @@ __protobuf__ = proto.module(
         "GetAcceleratorInterconnectRequest",
         "GetAcceleratorTypeRequest",
         "GetAddressRequest",
+        "GetAliasNetworkEndpointRequest",
         "GetAssociationFirewallPolicyRequest",
         "GetAssociationNetworkFirewallPolicyRequest",
         "GetAssociationOrganizationSecurityPolicyRequest",
@@ -744,8 +751,10 @@ __protobuf__ = proto.module(
         "HTTPHealthCheck",
         "HTTPSHealthCheck",
         "HaController",
+        "HaControllerInstanceNetworkInterface",
         "HaControllerNetworkingAutoConfiguration",
         "HaControllerNetworkingAutoConfigurationInternal",
+        "HaControllerParams",
         "HaControllerStatus",
         "HaControllerStatusFailoverProgress",
         "HaControllerStatusFailoverProgressLastFailoverAttempt",
@@ -813,6 +822,7 @@ __protobuf__ = proto.module(
         "InitialStateConfig",
         "InsertAcceleratorInterconnectRequest",
         "InsertAddressRequest",
+        "InsertAliasNetworkEndpointRequest",
         "InsertAutoscalerRequest",
         "InsertBackendBucketRequest",
         "InsertBackendServiceRequest",
@@ -1103,6 +1113,7 @@ __protobuf__ = proto.module(
         "ListAcceleratorInterconnectsRequest",
         "ListAcceleratorTypesRequest",
         "ListAddressesRequest",
+        "ListAliasNetworkEndpointsRequest",
         "ListAssociationsFirewallPolicyRequest",
         "ListAssociationsOrganizationSecurityPolicyRequest",
         "ListAutoscalersRequest",
@@ -3278,6 +3289,29 @@ class AccessConfig(proto.Message):
             length of the external IPv6 range.
 
             This field is a member of `oneof`_ ``_external_ipv6_prefix_length``.
+        ip_collection (str):
+            Reference to the source of external IPv4
+            addresses, like a PublicDelegatedPrefix (PDP)
+            for BYOIP. The PDP must support enhanced IPv4
+            allocations.
+
+            Use one of the following formats to specify a
+            PDP when allocating an external IPv4 address
+            using BYOIP.
+
+               -
+               Full resource URL, as
+            inhttps://www.googleapis.com/compute/v1/projects/projectId/regions/region/publicDelegatedPrefixes/pdp-name
+            -
+               Partial URL, as in
+
+
+                      -
+              projects/projectId/regions/region/publicDelegatedPrefixes/pdp-name
+                      -
+              regions/region/publicDelegatedPrefixes/pdp-name
+
+            This field is a member of `oneof`_ ``_ip_collection``.
         kind (str):
             Output only. [Output Only] Type of the resource.
             Alwayscompute#accessConfig for access configs.
@@ -3417,6 +3451,11 @@ class AccessConfig(proto.Message):
     external_ipv6_prefix_length: int = proto.Field(
         proto.INT32,
         number=425672143,
+        optional=True,
+    )
+    ip_collection: str = proto.Field(
+        proto.STRING,
+        number=176818358,
         optional=True,
     )
     kind: str = proto.Field(
@@ -5103,6 +5142,12 @@ class Address(proto.Message):
             theVPC_PEERING purpose.
 
             This field is a member of `oneof`_ ``_network``.
+        network_attachment (str):
+            Optional. The URL of the network attachment that this
+            address comes from in the following format:
+            projects/{project}/regions/{region_name}/networkAttachments/{network_attachment_name}.
+
+            This field is a member of `oneof`_ ``_network_attachment``.
         network_tier (str):
             This signifies the networking tier used for
             configuring this address and can only take the
@@ -5171,6 +5216,13 @@ class Address(proto.Message):
             [Output Only] Server-defined URL for the resource.
 
             This field is a member of `oneof`_ ``_self_link``.
+        service_class_id (str):
+            Optional. Producer Service's Service class ID for the region
+            of this address. Can only be used with network_attachment.
+            It is not possible to use on its own; however,
+            network_attachment can be used without service_class_id.
+
+            This field is a member of `oneof`_ ``_service_class_id``.
         status (str):
             Output only. [Output Only] The status of the address, which
             can be one ofRESERVING, RESERVED, or IN_USE. An address that
@@ -5463,6 +5515,11 @@ class Address(proto.Message):
         number=232872494,
         optional=True,
     )
+    network_attachment: str = proto.Field(
+        proto.STRING,
+        number=224644052,
+        optional=True,
+    )
     network_tier: str = proto.Field(
         proto.STRING,
         number=517397843,
@@ -5486,6 +5543,11 @@ class Address(proto.Message):
     self_link: str = proto.Field(
         proto.STRING,
         number=456214797,
+        optional=True,
+    )
+    service_class_id: str = proto.Field(
+        proto.STRING,
+        number=422763404,
         optional=True,
     )
     status: str = proto.Field(
@@ -15126,6 +15188,418 @@ class AliasIpRange(proto.Message):
     subnetwork_range_name: str = proto.Field(
         proto.STRING,
         number=387995966,
+        optional=True,
+    )
+
+
+class AliasNetworkEndpoint(proto.Message):
+    r"""Represents an Alias Network Endpoint resource.
+    To be used for GKE pod-native endpoints in Andromeda.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        aliases (MutableMapping[str, google.cloud.compute_v1.types.AliasNetworkEndpointAlias]):
+            Required. The map of network aliases
+            allocated for the AliasNetworkEndpoint. This map
+            is keyed with user-provided alias names.
+        annotations (MutableMapping[str, str]):
+            Optional. The annotations map for the AliasNetworkEndpoint.
+            Keys and values must follow Kubernetes limits. Keys must be
+            a maximum of 253 characters. Keys should be dot-namespaced,
+            following the Kubernetes annotation key format:
+            ``([DNS subdomain]/)?[RFC 1123 name]``. Values must be a
+            maximum of 256 characters.
+        creation_timestamp (str):
+            Output only. [Output Only] Creation timestamp in RFC3339
+            text format.
+
+            This field is a member of `oneof`_ ``_creation_timestamp``.
+        description (str):
+            Optional. An optional description of this
+            resource. Provide this field when you create the
+            resource.
+
+            This field is a member of `oneof`_ ``_description``.
+        host (google.cloud.compute_v1.types.AliasNetworkEndpointHost):
+            Required. The host that the alias network
+            endpoint is bound to.
+
+            This field is a member of `oneof`_ ``_host``.
+        id (int):
+            Output only. [Output Only] The unique identifier for the
+            resource. This identifier is defined by the server.
+
+            This field is a member of `oneof`_ ``_id``.
+        labels (MutableMapping[str, str]):
+            Optional. The labels map for the
+            AliasNetworkEndpoint.
+        name (str):
+            Identifier. Name of the resource. Provided by
+            the client when the resource is created. The
+            name must be 1-63 characters long, and comply
+            with RFC1035.
+
+            This field is a member of `oneof`_ ``_name``.
+        security_tag_inheritance (str):
+            Optional. The security tag inheritance
+            setting for the AliasNetworkEndpoint. Check the
+            SecurityTagInheritance enum for the list of
+            possible values.
+
+            This field is a member of `oneof`_ ``_security_tag_inheritance``.
+        self_link (str):
+            Output only. [Output Only] Server-defined URL for the
+            resource.
+
+            This field is a member of `oneof`_ ``_self_link``.
+        status (google.cloud.compute_v1.types.AliasNetworkEndpointStatus):
+            Output only. [Output Only] Current status of the alias
+            network endpoint.
+
+            This field is a member of `oneof`_ ``_status``.
+        subnetwork (str):
+            Required. The URL of the subnetwork that this
+            alias network endpoint belongs to.
+
+            This field is a member of `oneof`_ ``_subnetwork``.
+        update_time (str):
+            Output only. [Output Only] Update timestamp in RFC3339 text
+            format.
+
+            This field is a member of `oneof`_ ``_update_time``.
+    """
+
+    class SecurityTagInheritance(proto.Enum):
+        r"""Optional. The security tag inheritance setting for the
+        AliasNetworkEndpoint.
+
+        Values:
+            UNDEFINED_SECURITY_TAG_INHERITANCE (0):
+                A value indicating that the enum field is not
+                set.
+            INHERITED (155474618):
+                Security tags are inherited directly from the
+                host instance.
+            NOT_INHERITED (390987822):
+                Security tags are not inherited from the host
+                instance. Firewall rules targeting the host
+                instance's tags will not apply to this resource.
+            SECURITY_TAG_INHERITANCE_UNSPECIFIED (444038334):
+                Unspecified inheritance.
+        """
+
+        UNDEFINED_SECURITY_TAG_INHERITANCE = 0
+        INHERITED = 155474618
+        NOT_INHERITED = 390987822
+        SECURITY_TAG_INHERITANCE_UNSPECIFIED = 444038334
+
+    aliases: MutableMapping[str, "AliasNetworkEndpointAlias"] = proto.MapField(
+        proto.STRING,
+        proto.MESSAGE,
+        number=159207166,
+        message="AliasNetworkEndpointAlias",
+    )
+    annotations: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=112032548,
+    )
+    creation_timestamp: str = proto.Field(
+        proto.STRING,
+        number=30525366,
+        optional=True,
+    )
+    description: str = proto.Field(
+        proto.STRING,
+        number=422937596,
+        optional=True,
+    )
+    host: "AliasNetworkEndpointHost" = proto.Field(
+        proto.MESSAGE,
+        number=3208616,
+        optional=True,
+        message="AliasNetworkEndpointHost",
+    )
+    id: int = proto.Field(
+        proto.UINT64,
+        number=3355,
+        optional=True,
+    )
+    labels: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=500195327,
+    )
+    name: str = proto.Field(
+        proto.STRING,
+        number=3373707,
+        optional=True,
+    )
+    security_tag_inheritance: str = proto.Field(
+        proto.STRING,
+        number=297414822,
+        optional=True,
+    )
+    self_link: str = proto.Field(
+        proto.STRING,
+        number=456214797,
+        optional=True,
+    )
+    status: "AliasNetworkEndpointStatus" = proto.Field(
+        proto.MESSAGE,
+        number=181260274,
+        optional=True,
+        message="AliasNetworkEndpointStatus",
+    )
+    subnetwork: str = proto.Field(
+        proto.STRING,
+        number=307827694,
+        optional=True,
+    )
+    update_time: str = proto.Field(
+        proto.STRING,
+        number=500295811,
+        optional=True,
+    )
+
+
+class AliasNetworkEndpointAlias(proto.Message):
+    r"""Configuration for an IP alias.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        effective_ip_address (str):
+            Output only. [Output Only] The actual IP address allocated
+            by the system.
+
+            This field is a member of `oneof`_ ``_effective_ip_address``.
+        effective_subnetwork_range_name (str):
+            Output only. [Output Only] The actual secondary range used
+            for allocation.
+
+            This field is a member of `oneof`_ ``_effective_subnetwork_range_name``.
+        ip_address (str):
+            Input only. The IP address of the network endpoint. If
+            specified, the server performs a validation check for
+            uniqueness. If the field is omitted, the system
+            automatically allocates an IP and populates the
+            effective_ip_address field.
+
+            This field is a member of `oneof`_ ``_ip_address``.
+        ip_version (str):
+            Required. The IP version of the IP. It is
+            IPv4 or IPv6. Check the IpVersion enum for the
+            list of possible values.
+
+            This field is a member of `oneof`_ ``_ip_version``.
+        subnetwork_range_names (MutableSequence[str]):
+            Input only. Defines candidate secondary ranges for
+            allocating the alias IPs. If it is empty, the IP would be
+            allocated from the primary range of the subnetwork. This
+            field is INPUT_ONLY and used only during resource creation,
+            hence a repeated field is acceptable as per AIP-2825. It is
+            not mutable.
+    """
+
+    class IpVersion(proto.Enum):
+        r"""Required. The IP version of the IP. It is IPv4 or IPv6.
+
+        Values:
+            UNDEFINED_IP_VERSION (0):
+                A value indicating that the enum field is not
+                set.
+            IPV4 (2254341):
+                IPv4 address.
+            IPV6 (2254343):
+                IPv6 address.
+            IP_VERSION_UNSPECIFIED (92360440):
+                Unspecified IP version.
+        """
+
+        UNDEFINED_IP_VERSION = 0
+        IPV4 = 2254341
+        IPV6 = 2254343
+        IP_VERSION_UNSPECIFIED = 92360440
+
+    effective_ip_address: str = proto.Field(
+        proto.STRING,
+        number=54437492,
+        optional=True,
+    )
+    effective_subnetwork_range_name: str = proto.Field(
+        proto.STRING,
+        number=110951590,
+        optional=True,
+    )
+    ip_address: str = proto.Field(
+        proto.STRING,
+        number=406272220,
+        optional=True,
+    )
+    ip_version: str = proto.Field(
+        proto.STRING,
+        number=294959552,
+        optional=True,
+    )
+    subnetwork_range_names: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=216714997,
+    )
+
+
+class AliasNetworkEndpointHost(proto.Message):
+    r"""Information about the host instance.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        instance (str):
+            Required. The URL to the instance that this
+            alias network endpoint is bound to.
+
+            This field is a member of `oneof`_ ``_instance``.
+    """
+
+    instance: str = proto.Field(
+        proto.STRING,
+        number=18257045,
+        optional=True,
+    )
+
+
+class AliasNetworkEndpointList(proto.Message):
+    r"""Response message for AliasNetworkEndpoints.List.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        etag (str):
+            ETag of the resource list.
+
+            This field is a member of `oneof`_ ``_etag``.
+        id (str):
+            [Output Only] Unique identifier for the resource; defined by
+            the server.
+
+            This field is a member of `oneof`_ ``_id``.
+        items (MutableSequence[google.cloud.compute_v1.types.AliasNetworkEndpoint]):
+            A list of AliasNetworkEndpoint resources.
+        next_page_token (str):
+            [Output Only] This token allows you to get the next page of
+            results for list requests. If the number of results is
+            larger thanmaxResults, use the nextPageToken as a value for
+            the query parameter pageToken in the next list request.
+            Subsequent list requests will have their own nextPageToken
+            to continue paging through the results.
+
+            This field is a member of `oneof`_ ``_next_page_token``.
+        self_link (str):
+            [Output Only] Server-defined URL for this resource.
+
+            This field is a member of `oneof`_ ``_self_link``.
+        unreachables (MutableSequence[str]):
+            Output only. [Output Only] Unreachable resources.
+        warning (google.cloud.compute_v1.types.Warning):
+            [Output Only] Informational warning message.
+
+            This field is a member of `oneof`_ ``_warning``.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    etag: str = proto.Field(
+        proto.STRING,
+        number=3123477,
+        optional=True,
+    )
+    id: str = proto.Field(
+        proto.STRING,
+        number=3355,
+        optional=True,
+    )
+    items: MutableSequence["AliasNetworkEndpoint"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=100526016,
+        message="AliasNetworkEndpoint",
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=79797525,
+        optional=True,
+    )
+    self_link: str = proto.Field(
+        proto.STRING,
+        number=456214797,
+        optional=True,
+    )
+    unreachables: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=243372063,
+    )
+    warning: "Warning" = proto.Field(
+        proto.MESSAGE,
+        number=50704284,
+        optional=True,
+        message="Warning",
+    )
+
+
+class AliasNetworkEndpointStatus(proto.Message):
+    r"""Represents the current status of the AliasNetworkEndpoint.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        network (str):
+            Output only. [Output Only] The URL of the network that this
+            alias network endpoint belongs to.
+
+            This field is a member of `oneof`_ ``_network``.
+        state (str):
+            Output only. [Output Only] The state of the alias network
+            endpoint. Check the State enum for the list of possible
+            values.
+
+            This field is a member of `oneof`_ ``_state``.
+    """
+
+    class State(proto.Enum):
+        r"""Output only. [Output Only] The state of the alias network endpoint.
+
+        Values:
+            UNDEFINED_STATE (0):
+                A value indicating that the enum field is not
+                set.
+            ACTIVE (314733318):
+                The endpoint is active and ready to process
+                traffic.
+            CREATING (455564985):
+                The endpoint is being created.
+            DELETING (528602024):
+                The endpoint is being deleted.
+            STATE_UNSPECIFIED (470755401):
+                Unspecified state.
+        """
+
+        UNDEFINED_STATE = 0
+        ACTIVE = 314733318
+        CREATING = 455564985
+        DELETING = 528602024
+        STATE_UNSPECIFIED = 470755401
+
+    network: str = proto.Field(
+        proto.STRING,
+        number=232872494,
+        optional=True,
+    )
+    state: str = proto.Field(
+        proto.STRING,
+        number=109757585,
         optional=True,
     )
 
@@ -27097,6 +27571,24 @@ class Commitment(proto.Message):
             MEMORY_OPTIMIZED_X4_960_16T (424752534):
                 CUD bucket for X4 machine with 960 vCPUs and
                 16TB of memory.
+            MEMORY_OPTIMIZED_X5_1376_24T (287823040):
+                CUD bucket for X5 machine with 1376 vCPUs and
+                24TB of memory.
+            MEMORY_OPTIMIZED_X5_1376_32T (287823939):
+                CUD bucket for X5 machine with 1376 vCPUs and
+                32TB of memory.
+            MEMORY_OPTIMIZED_X5_2064_48T (411390009):
+                CUD bucket for X5 machine with 2064 vCPUs and
+                48TB of memory.
+            MEMORY_OPTIMIZED_X5_2752_64T (150990437):
+                CUD bucket for X5 machine with 2752 vCPUs and
+                64TB of memory.
+            MEMORY_OPTIMIZED_X5_688_12T (314400670):
+                CUD bucket for X5 machine with 688 vCPUs and
+                12TB of memory.
+            MEMORY_OPTIMIZED_X5_688_16T (314400794):
+                CUD bucket for X5 machine with 688 vCPUs and
+                16TB of memory.
             NETWORK_OPTIMIZED_C4N (147027572):
                 CUD bucket for C4N (dual Diorite) machines.
             NETWORK_OPTIMIZED_U4C (147044859):
@@ -27162,6 +27654,12 @@ class Commitment(proto.Message):
         MEMORY_OPTIMIZED_X4_480_8T = 478547804
         MEMORY_OPTIMIZED_X4_960_12T = 424752410
         MEMORY_OPTIMIZED_X4_960_16T = 424752534
+        MEMORY_OPTIMIZED_X5_1376_24T = 287823040
+        MEMORY_OPTIMIZED_X5_1376_32T = 287823939
+        MEMORY_OPTIMIZED_X5_2064_48T = 411390009
+        MEMORY_OPTIMIZED_X5_2752_64T = 150990437
+        MEMORY_OPTIMIZED_X5_688_12T = 314400670
+        MEMORY_OPTIMIZED_X5_688_16T = 314400794
         NETWORK_OPTIMIZED_C4N = 147027572
         NETWORK_OPTIMIZED_U4C = 147044859
         NETWORK_OPTIMIZED_U4P = 147044872
@@ -29466,6 +29964,51 @@ class DeleteAddressRequest(proto.Message):
         proto.STRING,
         number=37109963,
         optional=True,
+    )
+
+
+class DeleteAliasNetworkEndpointRequest(proto.Message):
+    r"""A request message for AliasNetworkEndpoints.Delete. See the
+    method description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        alias_network_endpoint (str):
+            Required. Name of the AliasNetworkEndpoint
+            resource to delete.
+        project (str):
+            Required. Project ID for this request.
+        request_id (str):
+            An optional request ID to identify requests.
+            Specify a unique request ID so that if you must
+            retry your request, the server will know to
+            ignore the request if it has already been
+            completed.
+
+            This field is a member of `oneof`_ ``_request_id``.
+        zone (str):
+            Required. Name of the zone scoping this
+            request.
+    """
+
+    alias_network_endpoint: str = proto.Field(
+        proto.STRING,
+        number=404209301,
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=227560217,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=37109963,
+        optional=True,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
     )
 
 
@@ -44220,6 +44763,35 @@ class GetAddressRequest(proto.Message):
     )
 
 
+class GetAliasNetworkEndpointRequest(proto.Message):
+    r"""A request message for AliasNetworkEndpoints.Get. See the
+    method description for details.
+
+    Attributes:
+        alias_network_endpoint (str):
+            Required. Name of the AliasNetworkEndpoint
+            resource to return.
+        project (str):
+            Required. Project ID for this request.
+        zone (str):
+            Required. Name of the zone scoping this
+            request.
+    """
+
+    alias_network_endpoint: str = proto.Field(
+        proto.STRING,
+        number=404209301,
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=227560217,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
+    )
+
+
 class GetAssociationFirewallPolicyRequest(proto.Message):
     r"""A request message for FirewallPolicies.GetAssociation. See
     the method description for details.
@@ -52709,6 +53281,13 @@ class HaController(proto.Message):
             automatically created with default parameters.
 
             This field is a member of `oneof`_ ``_networking_auto_configuration``.
+        params (google.cloud.compute_v1.types.HaControllerParams):
+            Input only. Additional parameters passed with the request,
+            but not persisted as part of the resource. Both
+            ``params: null`` and ``params: {}`` are treated identically
+            as a no-op.
+
+            This field is a member of `oneof`_ ``_params``.
         region (str):
             Output only. [Output Only] URL of the region where the
             resource resides. You must specify this field as part of the
@@ -52865,6 +53444,12 @@ class HaController(proto.Message):
             message="HaControllerNetworkingAutoConfiguration",
         )
     )
+    params: "HaControllerParams" = proto.Field(
+        proto.MESSAGE,
+        number=78313862,
+        optional=True,
+        message="HaControllerParams",
+    )
     region: str = proto.Field(
         proto.STRING,
         number=138946292,
@@ -52898,6 +53483,40 @@ class HaController(proto.Message):
             number=296036144,
             message="HaControllerZoneConfiguration",
         )
+    )
+
+
+class HaControllerInstanceNetworkInterface(proto.Message):
+    r"""The network interface configuration of the VM instance.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        ipv6_address (str):
+            Optional. Optional IPv6 address to assign to
+            the instance's network interface. If omitted, an
+            ephemeral IP may be assigned depending on the
+            instance's network interface stack type.
+
+            This field is a member of `oneof`_ ``_ipv6_address``.
+        network_i_p (str):
+            Optional. Optional IPv4 address to assign to
+            the instance's network interface. If omitted, an
+            ephemeral IP may be assigned depending on the
+            instance's network interface stack type.
+
+            This field is a member of `oneof`_ ``_network_i_p``.
+    """
+
+    ipv6_address: str = proto.Field(
+        proto.STRING,
+        number=341563804,
+        optional=True,
+    )
+    network_i_p: str = proto.Field(
+        proto.STRING,
+        number=207181961,
+        optional=True,
     )
 
 
@@ -52987,6 +53606,27 @@ class HaControllerNetworkingAutoConfigurationInternal(proto.Message):
     stack_type: str = proto.Field(
         proto.STRING,
         number=425908881,
+        optional=True,
+    )
+
+
+class HaControllerParams(proto.Message):
+    r"""Additional HA Controller params.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        migrate_disks_to_regional (bool):
+            Specifies whether to automatically migrate
+            all disks of an instance from zonal to regional
+            before attempting to create the HaController.
+
+            This field is a member of `oneof`_ ``_migrate_disks_to_regional``.
+    """
+
+    migrate_disks_to_regional: bool = proto.Field(
+        proto.BOOL,
+        number=72307078,
         optional=True,
     )
 
@@ -53309,6 +53949,35 @@ class HaControllerZoneConfiguration(proto.Message):
     .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
     Attributes:
+        instance_network_interfaces (MutableMapping[str, google.cloud.compute_v1.types.HaControllerInstanceNetworkInterface]):
+            Optional. The network interface configuration
+            of a VM instance in this zone, keyed by the name
+            of the network interface. A VM network interface
+            uses the nicN naming format, where N is a
+            value between 0 and 7. The default interface
+            is nic0. Use this field to choose the internal
+            IP addresses of the VM instance in this zone
+            instead of letting Compute Engine assign them
+            automatically.
+
+
+                  - Each key must be a name of a network
+              interface that exists on       the VM
+              instance. Otherwise, the request fails.
+                  - Network interfaces that are omitted are
+              assigned an ephemeral       internal IP
+              address.
+                  - Every zone must configure the same
+              network interfaces and the       same IP
+              address families.
+                  - For the zone that currently holds the VM
+              instance, this field       is populated
+              automatically, and any addresses you specify
+              must       match the instance's current
+              addresses.
+                  - Only internal IP addresses are
+              supported, and this field can       only be
+              set when the HA Controller is created.
         node_affinities (MutableSequence[google.cloud.compute_v1.types.HaControllerZoneConfigurationNodeAffinity]):
             A set of node affinity configurations. Refer
             toConfiguring node affinity for more
@@ -53320,6 +53989,14 @@ class HaControllerZoneConfiguration(proto.Message):
             This field is a member of `oneof`_ ``_reservation_affinity``.
     """
 
+    instance_network_interfaces: MutableMapping[
+        str, "HaControllerInstanceNetworkInterface"
+    ] = proto.MapField(
+        proto.STRING,
+        proto.MESSAGE,
+        number=27895029,
+        message="HaControllerInstanceNetworkInterface",
+    )
     node_affinities: MutableSequence["HaControllerZoneConfigurationNodeAffinity"] = (
         proto.RepeatedField(
             proto.MESSAGE,
@@ -58461,6 +59138,51 @@ class InsertAddressRequest(proto.Message):
         proto.STRING,
         number=37109963,
         optional=True,
+    )
+
+
+class InsertAliasNetworkEndpointRequest(proto.Message):
+    r"""A request message for AliasNetworkEndpoints.Insert. See the
+    method description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        alias_network_endpoint_resource (google.cloud.compute_v1.types.AliasNetworkEndpoint):
+            The body resource for this request
+        project (str):
+            Required. Project ID for this request.
+        request_id (str):
+            An optional request ID to identify requests.
+            Specify a unique request ID so that if you must
+            retry your request, the server will know to
+            ignore the request if it has already been
+            completed.
+
+            This field is a member of `oneof`_ ``_request_id``.
+        zone (str):
+            Required. Name of the zone scoping this
+            request.
+    """
+
+    alias_network_endpoint_resource: "AliasNetworkEndpoint" = proto.Field(
+        proto.MESSAGE,
+        number=328060536,
+        message="AliasNetworkEndpoint",
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=227560217,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=37109963,
+        optional=True,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
     )
 
 
@@ -79345,6 +80067,153 @@ class ListAddressesRequest(proto.Message):
     region: str = proto.Field(
         proto.STRING,
         number=138946292,
+    )
+
+
+class ListAliasNetworkEndpointsRequest(proto.Message):
+    r"""A request message for AliasNetworkEndpoints.List. See the
+    method description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        filter (str):
+            A filter expression that filters resources listed in the
+            response. Most Compute resources support two types of filter
+            expressions: expressions that support regular expressions
+            and expressions that follow API improvement proposal
+            AIP-160. These two types of filter expressions cannot be
+            mixed in one request.
+
+            If you want to use AIP-160, your expression must specify the
+            field name, an operator, and the value that you want to use
+            for filtering. The value must be a string, a number, or a
+            boolean. The operator must be either ``=``, ``!=``, ``>``,
+            ``<``, ``<=``, ``>=`` or ``:``.
+
+            For example, if you are filtering Compute Engine instances,
+            you can exclude instances named ``example-instance`` by
+            specifying ``name != example-instance``.
+
+            The ``:*`` comparison can be used to test whether a key has
+            been defined. For example, to find all objects with
+            ``owner`` label use:
+
+            ::
+
+               labels.owner:*
+
+            You can also filter nested fields. For example, you could
+            specify ``scheduling.automaticRestart = false`` to include
+            instances only if they are not scheduled for automatic
+            restarts. You can use filtering on nested fields to filter
+            based onresource labels.
+
+            To filter on multiple expressions, provide each separate
+            expression within parentheses. For example:
+
+            ::
+
+               (scheduling.automaticRestart = true)
+               (cpuPlatform = "Intel Skylake")
+
+            By default, each expression is an ``AND`` expression.
+            However, you can include ``AND`` and ``OR`` expressions
+            explicitly. For example:
+
+            ::
+
+               (cpuPlatform = "Intel Skylake") OR
+               (cpuPlatform = "Intel Broadwell") AND
+               (scheduling.automaticRestart = true)
+
+            If you want to use a regular expression, use the ``eq``
+            (equal) or ``ne`` (not equal) operator against a single
+            un-parenthesized expression with or without quotes or
+            against multiple parenthesized expressions. Examples:
+
+            ``fieldname eq unquoted literal``
+            ``fieldname eq 'single quoted literal'``
+            ``fieldname eq "double quoted literal"``
+            ``(fieldname1 eq literal) (fieldname2 ne "literal")``
+
+            The literal value is interpreted as a regular expression
+            using GoogleRE2 library syntax. The literal value must match
+            the entire field.
+
+            For example, to filter for instances that do not end with
+            name "instance", you would use ``name ne .*instance``.
+
+            You cannot combine constraints on multiple fields using
+            regular expressions.
+
+            This field is a member of `oneof`_ ``_filter``.
+        max_results (int):
+            The maximum number of results per page that should be
+            returned. If the number of available results is larger than
+            ``maxResults``, Compute Engine returns a ``nextPageToken``
+            that can be used to get the next page of results in
+            subsequent list requests. Acceptable values are ``0`` to
+            ``500``, inclusive. (Default: ``500``)
+
+            This field is a member of `oneof`_ ``_max_results``.
+        order_by (str):
+            Sorts list results by a certain order. By default, results
+            are returned in alphanumerical order based on the resource
+            name.
+
+            You can also sort results in descending order based on the
+            creation timestamp using
+            ``orderBy="creationTimestamp desc"``. This sorts results
+            based on the ``creationTimestamp`` field in reverse
+            chronological order (newest result first). Use this to sort
+            resources like operations so that the newest operation is
+            returned first.
+
+            Currently, only sorting by ``name`` or
+            ``creationTimestamp desc`` is supported.
+
+            This field is a member of `oneof`_ ``_order_by``.
+        page_token (str):
+            Specifies a page token to use. Set ``pageToken`` to the
+            ``nextPageToken`` returned by a previous list request to get
+            the next page of results.
+
+            This field is a member of `oneof`_ ``_page_token``.
+        project (str):
+            Required. Project ID for this request.
+        zone (str):
+            Required. Name of the zone of this request.
+    """
+
+    filter: str = proto.Field(
+        proto.STRING,
+        number=336120696,
+        optional=True,
+    )
+    max_results: int = proto.Field(
+        proto.UINT32,
+        number=54715419,
+        optional=True,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=160562920,
+        optional=True,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=19994697,
+        optional=True,
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=227560217,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
     )
 
 
@@ -104862,6 +105731,12 @@ class NetworkEndpointGroup(proto.Message):
             network endpoint types, this field is required.
 
             This field is a member of `oneof`_ ``_network``.
+        network_attachment (str):
+            Optional. The URL of the network attachment that this
+            resource belongs
+            to.projects/{project}/regions/{region_name}/networkAttachments/{network_attachment_name}.
+
+            This field is a member of `oneof`_ ``_network_attachment``.
         network_endpoint_type (str):
             Type of network endpoints in this network endpoint group.
             Can be one ofGCE_VM_IP,
@@ -104897,6 +105772,13 @@ class NetworkEndpointGroup(proto.Message):
             resource.
 
             This field is a member of `oneof`_ ``_self_link``.
+        service_class_id (str):
+            Optional. The service class ID associated with this
+            resource. Can only be used with network_attachment. It is
+            not possible to use on its own; however, network_attachment
+            can be used without service_class_id.
+
+            This field is a member of `oneof`_ ``_service_class_id``.
         size (int):
             Output only. [Output only] Number of network endpoints in
             the network endpoint group.
@@ -105027,6 +105909,11 @@ class NetworkEndpointGroup(proto.Message):
         number=232872494,
         optional=True,
     )
+    network_attachment: str = proto.Field(
+        proto.STRING,
+        number=224644052,
+        optional=True,
+    )
     network_endpoint_type: str = proto.Field(
         proto.STRING,
         number=118301523,
@@ -105051,6 +105938,11 @@ class NetworkEndpointGroup(proto.Message):
     self_link: str = proto.Field(
         proto.STRING,
         number=456214797,
+        optional=True,
+    )
+    service_class_id: str = proto.Field(
+        proto.STRING,
+        number=422763404,
         optional=True,
     )
     size: int = proto.Field(
@@ -129204,12 +130096,54 @@ class ResourceStatusScheduling(proto.Message):
             process, in RFC3339 text format.
 
             This field is a member of `oneof`_ ``_graceful_shutdown_timestamp``.
+        protection_tier (str):
+            Output only. Protection tier for the workload
+            which specifies the workload expectations in the
+            event of infrastructure failures at data center
+            (e.g. power and/or cooling failures).
+            Check the ProtectionTier enum for the list of
+            possible values.
+
+            This field is a member of `oneof`_ ``_protection_tier``.
         termination_timestamp (str):
             Time in future when the instance will be
             terminated inRFC3339 text format.
 
             This field is a member of `oneof`_ ``_termination_timestamp``.
     """
+
+    class ProtectionTier(proto.Enum):
+        r"""Output only. Protection tier for the workload which specifies
+        the workload expectations in the event of infrastructure
+        failures at data center (e.g. power and/or cooling failures).
+
+        Values:
+            UNDEFINED_PROTECTION_TIER (0):
+                A value indicating that the enum field is not
+                set.
+            PROTECTION_TIER_CAPACITY_OPTIMIZED (59631065):
+                CAPACITY_OPTIMIZED capacity leverages redundancies (e.g.
+                power, cooling) at the data center during normal operating
+                conditions. In the event of infrastructure failures at data
+                center (e.g. power and/or cooling failures), this workload
+                may be disrupted. As a consequence, it has a weaker
+                availability SLO than STANDARD.
+            PROTECTION_TIER_STANDARD (312368532):
+                STANDARD protection for workload that should
+                be protected by redundancies (e.g. power,
+                cooling) at the data center level. In the event
+                of infrastructure failures at data center (e.g.
+                power and/or cooling failures), this workload is
+                expected to continue as normal using the
+                redundancies.
+            PROTECTION_TIER_UNSPECIFIED (262261984):
+                Unspecified protection tier.
+        """
+
+        UNDEFINED_PROTECTION_TIER = 0
+        PROTECTION_TIER_CAPACITY_OPTIMIZED = 59631065
+        PROTECTION_TIER_STANDARD = 312368532
+        PROTECTION_TIER_UNSPECIFIED = 262261984
 
     availability_domain: int = proto.Field(
         proto.INT32,
@@ -129219,6 +130153,11 @@ class ResourceStatusScheduling(proto.Message):
     graceful_shutdown_timestamp: str = proto.Field(
         proto.STRING,
         number=403022375,
+        optional=True,
+    )
+    protection_tier: str = proto.Field(
+        proto.STRING,
+        number=503959432,
         optional=True,
     )
     termination_timestamp: str = proto.Field(
@@ -135365,6 +136304,15 @@ class Scheduling(proto.Message):
             Soft Off signal is triggered.
 
             This field is a member of `oneof`_ ``_preemption_notice_duration``.
+        protection_tier (str):
+            Protection tier for the workload which
+            specifies the workload expectations in the event
+            of infrastructure failures at data center (e.g.
+            power and/or cooling failures).
+            Check the ProtectionTier enum for the list of
+            possible values.
+
+            This field is a member of `oneof`_ ``_protection_tier``.
         provisioning_model (str):
             Specifies the provisioning model of the
             instance. Check the ProvisioningModel enum for
@@ -135437,6 +136385,39 @@ class Scheduling(proto.Message):
         UNDEFINED_ON_HOST_MAINTENANCE = 0
         MIGRATE = 165699979
         TERMINATE = 527617601
+
+    class ProtectionTier(proto.Enum):
+        r"""Protection tier for the workload which specifies the workload
+        expectations in the event of infrastructure failures at data
+        center (e.g. power and/or cooling failures).
+
+        Values:
+            UNDEFINED_PROTECTION_TIER (0):
+                A value indicating that the enum field is not
+                set.
+            PROTECTION_TIER_CAPACITY_OPTIMIZED (59631065):
+                CAPACITY_OPTIMIZED capacity leverages redundancies (e.g.
+                power, cooling) at the data center during normal operating
+                conditions. In the event of infrastructure failures at data
+                center (e.g. power and/or cooling failures), this workload
+                may be disrupted. As a consequence, it has a weaker
+                availability SLO than STANDARD.
+            PROTECTION_TIER_STANDARD (312368532):
+                STANDARD protection for workload that should
+                be protected by redundancies (e.g. power,
+                cooling) at the data center level. In the event
+                of infrastructure failures at data center (e.g.
+                power and/or cooling failures), this workload is
+                expected to continue as normal using the
+                redundancies.
+            PROTECTION_TIER_UNSPECIFIED (262261984):
+                Unspecified protection tier.
+        """
+
+        UNDEFINED_PROTECTION_TIER = 0
+        PROTECTION_TIER_CAPACITY_OPTIMIZED = 59631065
+        PROTECTION_TIER_STANDARD = 312368532
+        PROTECTION_TIER_UNSPECIFIED = 262261984
 
     class ProvisioningModel(proto.Enum):
         r"""Specifies the provisioning model of the instance.
@@ -135543,6 +136524,11 @@ class Scheduling(proto.Message):
         number=486176437,
         optional=True,
         message="Duration",
+    )
+    protection_tier: str = proto.Field(
+        proto.STRING,
+        number=503959432,
+        optional=True,
     )
     provisioning_model: str = proto.Field(
         proto.STRING,
@@ -156935,6 +157921,9 @@ class UpcomingMaintenance(proto.Message):
             UNDEFINED_MAINTENANCE_REASONS (0):
                 A value indicating that the enum field is not
                 set.
+            FAILURE_CUSTOMER_REPORTED (42889343):
+                Maintenance due to a fault reported by the
+                customer via the R&R (Report-and-Replace) API.
             FAILURE_DISK (8573778):
                 Maintenance due to disk errors.
             FAILURE_GPU (467876919):
@@ -156976,6 +157965,7 @@ class UpcomingMaintenance(proto.Message):
         """
 
         UNDEFINED_MAINTENANCE_REASONS = 0
+        FAILURE_CUSTOMER_REPORTED = 42889343
         FAILURE_DISK = 8573778
         FAILURE_GPU = 467876919
         FAILURE_GPU_MULTIPLE_FAULTY_HOSTS_CUSTOMER_REPORTED = 223284959
@@ -164235,14 +165225,11 @@ class WireProperties(proto.Message):
                 The wire uses dynamic paths.
             FIXED_PATH (74947120):
                 The wire uses fixed paths.
-            FLOW_MANAGEMENT_UNSPECIFIED (122554188):
-                No description available.
         """
 
         UNDEFINED_FLOW_MANAGEMENT = 0
         DYNAMIC_PATH = 243852357
         FIXED_PATH = 74947120
-        FLOW_MANAGEMENT_UNSPECIFIED = 122554188
 
     bandwidth_allocation: str = proto.Field(
         proto.STRING,

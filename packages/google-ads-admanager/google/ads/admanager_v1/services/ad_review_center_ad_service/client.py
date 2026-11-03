@@ -116,7 +116,7 @@ class AdReviewCenterAdServiceClientMeta(type):
 
 
 class AdReviewCenterAdServiceClient(metaclass=AdReviewCenterAdServiceClientMeta):
-    """Provides methods for handling AdReviewCenterAd objects."""
+    """Provides methods for handling ``AdReviewCenterAd`` objects."""
 
     # Note: DEFAULT_ENDPOINT is deprecated. Use _DEFAULT_ENDPOINT_TEMPLATE instead.
     DEFAULT_ENDPOINT = "admanager.googleapis.com"
@@ -1059,6 +1059,283 @@ class AdReviewCenterAdServiceClient(metaclass=AdReviewCenterAdServiceClientMeta)
             self._transport.operations_client,
             ad_review_center_ad_service.BatchBlockAdReviewCenterAdsResponse,
             metadata_type=ad_review_center_ad_service.BatchAdReviewCenterAdsOperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def fetch_ad_review_center_custom_labels(
+        self,
+        request: Optional[
+            Union[
+                ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsRequest, dict
+            ]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsResponse:
+        r"""Fetches all custom labels for a publisher. Custom
+        labels can help you filter and find creatives with the
+        associated label. For more information, see
+        https://support.google.com/admanager/answer/13812863.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.ads import admanager_v1
+
+            def sample_fetch_ad_review_center_custom_labels():
+                # Create a client
+                client = admanager_v1.AdReviewCenterAdServiceClient()
+
+                # Initialize request argument(s)
+                request = admanager_v1.FetchAdReviewCenterCustomLabelsRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                response = client.fetch_ad_review_center_custom_labels(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.ads.admanager_v1.types.FetchAdReviewCenterCustomLabelsRequest, dict]):
+                The request object. Request object for ``FetchAdReviewCenterCustomLabels``
+                method.
+            parent (str):
+                Required. The parent, which owns this collection of
+                AdReviewCenterAds custom labels. Format:
+                networks/{network_code}/webProperties/{web_property_code}
+
+                Since a network can only have a single web property of
+                each ``ExchangeSyndicationProduct``, you can use the
+                ``ExchangeSyndicationProduct`` as an alias for the web
+                property code:
+
+                ``networks/{network_code}/webProperties/display``
+
+                ``networks/{network_code}/webProperties/videoAndAudio``
+
+                ``networks/{network_code}/webProperties/mobileApp``
+
+                ``networks/{network_code}/webProperties/games``
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.ads.admanager_v1.types.FetchAdReviewCenterCustomLabelsResponse:
+                Response object for FetchAdReviewCenterCustomLabels
+                method.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsRequest
+        ):
+            request = (
+                ad_review_center_ad_service.FetchAdReviewCenterCustomLabelsRequest(
+                    request
+                )
+            )
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.fetch_ad_review_center_custom_labels
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def batch_apply_ad_review_center_custom_labels(
+        self,
+        request: Optional[
+            Union[
+                ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsRequest,
+                dict,
+            ]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsResponse:
+        r"""Performs batch apply on custom labels associated with
+        Ad review center ads. Custom labels can help you filter
+        and find creatives with the associated label. For more
+        information, see
+        https://support.google.com/admanager/answer/13812863.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.ads import admanager_v1
+
+            def sample_batch_apply_ad_review_center_custom_labels():
+                # Create a client
+                client = admanager_v1.AdReviewCenterAdServiceClient()
+
+                # Initialize request argument(s)
+                request = admanager_v1.BatchApplyAdReviewCenterCustomLabelsRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                response = client.batch_apply_ad_review_center_custom_labels(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.ads.admanager_v1.types.BatchApplyAdReviewCenterCustomLabelsRequest, dict]):
+                The request object. Request object for
+                ``BatchApplyAdReviewCenterCustomLabels`` method.
+            parent (str):
+                Required. The parent, which owns this collection of
+                AdReviewCenterAds. Format:
+                networks/{network_code}/webProperties/{web_property_code}
+
+                Since a network can only have a single web property of
+                each ``ExchangeSyndicationProduct``, you can use the
+                ``ExchangeSyndicationProduct`` as an alias for the web
+                property code:
+
+                ``networks/{network_code}/webProperties/display``
+
+                ``networks/{network_code}/webProperties/videoAndAudio``
+
+                ``networks/{network_code}/webProperties/mobileApp``
+
+                ``networks/{network_code}/webProperties/games``
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.ads.admanager_v1.types.BatchApplyAdReviewCenterCustomLabelsResponse:
+                Response object for BatchApplyAdReviewCenterCustomLabels
+                method.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request,
+            ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsRequest,
+        ):
+            request = (
+                ad_review_center_ad_service.BatchApplyAdReviewCenterCustomLabelsRequest(
+                    request
+                )
+            )
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[
+            self._transport.batch_apply_ad_review_center_custom_labels
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
         )
 
         # Done; return the response.

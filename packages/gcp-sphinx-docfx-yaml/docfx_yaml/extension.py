@@ -29,8 +29,8 @@ import re
 import shutil
 from collections import defaultdict
 from collections.abc import Mapping, MutableSet, Sequence
-from functools import partial
-from itertools import zip_longest
+from functools import lru_cache, partial
+from itertools import chain, zip_longest
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -46,13 +46,21 @@ import ast
 import subprocess
 
 import sphinx.application
+import yaml
 from docuploader import shell
+from sphinx.builders.html import StandaloneHTMLBuilder
 from sphinx.errors import ExtensionError
 from sphinx.ext.napoleon import Config, GoogleDocstring, _process_docstring
 from sphinx.util import ensuredir
 from sphinx.util.console import bold, darkgreen
 from sphinx.util.nodes import make_refnode
-from yaml import safe_dump as dump
+
+try:
+    from yaml import CSafeDumper as SafeDumper
+except ImportError:
+    from yaml import SafeDumper
+
+dump = partial(yaml.dump, Dumper=SafeDumper)
 
 from docfx_yaml import markdown_utils
 
@@ -184,6 +192,32 @@ def _grab_repo_metadata() -> Mapping[str, str] | None:
         return None
 
 
+class DocFXHTMLBuilder(StandaloneHTMLBuilder):
+    """HTML builder subclass that skips rendering unused HTML pages during DocFX builds."""
+
+    def write(self, *args: Any, **kwargs: Any) -> None:
+        pass
+
+    def finish(self) -> None:
+        pass
+
+
+def _configure_docfx(app: sphinx.application.Sphinx, config: Any) -> None:
+    """Disables Sphinx extensions from shared conf.py files that DocFX does not need.
+
+    Package conf.py files are shared between HTML docs and DocFX builds and
+    enable `sphinx.ext.intersphinx` and `sphinx.ext.viewcode` by default.
+    Neither is used in DocFX YAML output, so we clear `intersphinx_mapping`
+    (avoiding remote inventory downloads) and disconnect `viewcode` listeners
+    (avoiding source file tokenization during `doctree-read`).
+    """
+    config.intersphinx_mapping = {}
+    for listeners in getattr(getattr(app, "events", None), "listeners", {}).values():
+        for listener in list(listeners):
+            if getattr(listener.handler, "__module__", "") == "sphinx.ext.viewcode":
+                app.disconnect(listener.id)
+
+
 def build_init(app: sphinx.application.Sphinx) -> None:
     """Initializes the build.
 
@@ -197,9 +231,6 @@ def build_init(app: sphinx.application.Sphinx) -> None:
     else:
         print("Successfully retrieved repository metadata.")
         app.env.library_shortname = repo_metadata["name"]
-    print("Running sphinx-build with Markdown first...")
-    markdown_utils.run_sphinx_markdown(app)
-    print("Completed running sphinx-build with Markdown files.")
 
     """
     Set up environment data
@@ -1025,6 +1056,35 @@ def _extract_type_name(annotation: Any) -> str:
     return type_name
 
 
+@lru_cache(maxsize=512)
+def _get_class_lines(full_path: str) -> dict[str, int]:
+    """Parses a file once and maps class qualnames to their starting line numbers."""
+    lines: dict[str, int] = {}
+
+    def _visit(node: ast.AST, prefix: str = "") -> None:
+        for child in ast.iter_child_nodes(node):
+            if isinstance(child, ast.ClassDef):
+                qual = f"{prefix}{child.name}"
+                lines.setdefault(
+                    qual,
+                    child.decorator_list[0].lineno
+                    if child.decorator_list
+                    else child.lineno,
+                )
+                _visit(child, f"{qual}.")
+            elif isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                _visit(child, f"{prefix}{child.name}.<locals>.")
+            else:
+                _visit(child, prefix)
+
+    try:
+        with open(full_path, "rb") as f:
+            _visit(ast.parse(f.read()))
+    except Exception:
+        pass
+    return lines
+
+
 def _create_datam(
     app: sphinx.application.Sphinx,
     cls: str | None,
@@ -1180,7 +1240,12 @@ def _create_datam(
 
         # Make relative
         path = path.replace(os.sep, "", 1)
-        start_line = inspect.getsourcelines(obj)[1]
+        unwrapped = inspect.unwrap(obj)
+        start_line = (
+            _get_class_lines(full_path).get(getattr(unwrapped, "__qualname__", ""), 0)
+            if inspect.isclass(unwrapped)
+            else 0
+        ) or inspect.getsourcelines(obj)[1]
 
         path = _update_friendly_package_name(path)
 
@@ -1475,6 +1540,7 @@ def _reformat_pattern(code: str, pattern: str) -> str:
     return code
 
 
+@lru_cache(maxsize=4096)
 def format_code(code: str) -> str:
     """Reformats code using black.format_str().
 
@@ -1937,7 +2003,11 @@ def find_uid_to_convert(
         None if current word does not contain any reference `uid`, or the `uid`
           that should be converted.
     """
-    for uid in known_uids:
+    # All Python UIDs are dotted paths (e.g. `pkg.module.Symbol`), so skip
+    # plain words and sentence-ending periods before scanning `known_uids`.
+    if "." not in current_word.strip("."):
+        return None
+    for uid in chain(known_uids, hard_coded_references or ()):
         # Do not convert references to itself or containing partial
         # references. This could result in `storage.types.ReadSession` being
         # prematurely converted to
@@ -1994,6 +2064,19 @@ def convert_cross_references(
     Returns:
         content that has been modified with proper cross references if found.
     """
+    # Every UID in `google-*` packages (and in `hard_coded_references`) starts
+    # with "google.", so if "google." isn't in `content`, no cross-reference can
+    # match. However, a few packages in the repo don't use the `google.*`
+    # namespace (e.g. `pandas_gbq.Context`), so we only take this shortcut when
+    # the package's `known_uids` actually start with "google.".
+    if (
+        known_uids
+        and known_uids[0].startswith("google.")
+        and known_uids[-1].startswith("google.")
+        and "google." not in content
+    ):
+        return content
+
     example_text = "Examples:"
     words = content.split(" ")
 
@@ -2014,7 +2097,6 @@ def convert_cross_references(
         "google.iam.v1.iam_policy_pb2.TestIamPermissionsResponse": iam_policy_link
         + "#L120-L131",
     }
-    known_uids.extend(hard_coded_references.keys())
 
     # Used to keep track of current position to avoid converting if needed.
     example_index = len(content)
@@ -2267,6 +2349,7 @@ def build_finished(app: sphinx.application.Sphinx, exception: Exception) -> None
     ensuredir(normalized_outdir)
 
     # Add markdown pages to the configured output directory.
+    markdown_utils.run_sphinx_markdown(app)
     markdown_utils.move_markdown_pages(app, normalized_outdir)
 
     pkg_toc_yaml = []
@@ -2276,6 +2359,8 @@ def build_finished(app: sphinx.application.Sphinx, exception: Exception) -> None
 
     # Used to disambiguate entry names
     yaml_map = {}
+
+    known_uids = sorted(app.env.docfx_uid_names.keys(), reverse=True)
 
     # Order matters here, we need modules before lower level classes,
     # so that we can make sure to inject the TOC properly
@@ -2433,7 +2518,6 @@ def build_finished(app: sphinx.application.Sphinx, exception: Exception) -> None
                 #   google.cloud.aiplatform.AutoMLForecastingTrainingJob
 
                 current_object_name = obj["fullName"]
-                known_uids = sorted(app.env.docfx_uid_names.keys(), reverse=True)
                 # Currently we only need to look in summary, syntax and
                 # attributes for cross references.
                 search_cross_references(obj, current_object_name, known_uids)
@@ -2643,6 +2727,8 @@ def missing_reference(
     Returns:
         Any: The new node.
     """
+    if getattr(app.builder, "name", None) == "markdown":
+        return None
     reftarget = ""
     refdoc = ""
     reftype = ""
@@ -2686,6 +2772,8 @@ def setup(app: sphinx.application.Sphinx) -> None:
     app.add_directive("remarks", RemarksDirective)
     app.add_directive("todo", TodoDirective)
 
+    app.add_builder(DocFXHTMLBuilder, override=True)
+    app.connect("config-inited", _configure_docfx)
     app.connect("builder-inited", build_init)
     app.connect("autodoc-process-docstring", process_docstring)
     app.connect("autodoc-process-signature", process_signature)

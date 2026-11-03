@@ -480,16 +480,14 @@ class {{ service.client_name }}(metaclass={{ service.client_name }}Meta):
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
         rpc = self._transport._wrapped_methods[self._transport.{{ method.transport_safe_name|snake_case}}]
-        {% if method.field_headers %}
+        {% if method.field_headers and not method.client_streaming %}
 
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
             gapic_v1.routing_header.to_grpc_metadata((
                 {% for field_header in method.field_headers %}
-                {% if not method.client_streaming %}
                 ("{{ field_header.raw }}", request.{{ field_header.disambiguated }}),
-                {% endif %}
                 {% endfor %}
             )),
         )

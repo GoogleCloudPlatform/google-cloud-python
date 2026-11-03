@@ -225,7 +225,23 @@ class LocationMetadata(proto.Message):
         has_ontap_proxy (bool):
             Output only. Indicates if the location has
             ONTAP Proxy support.
+        flex_performance_tier (google.cloud.netapp_v1.types.LocationMetadata.FlexPerformanceTier):
+            Output only. Indicates the flex performance
+            tier of this location.
     """
+
+    class FlexPerformanceTier(proto.Enum):
+        r"""The flex performance tier of this location.
+
+        Values:
+            FLEX_PERFORMANCE_TIER_UNSPECIFIED (0):
+                Unspecified flex performance tier.
+            LIMITED (1):
+                Flex performance tier is limited.
+        """
+
+        FLEX_PERFORMANCE_TIER_UNSPECIFIED = 0
+        LIMITED = 1
 
     supported_service_levels: MutableSequence["ServiceLevel"] = proto.RepeatedField(
         proto.ENUM,
@@ -246,6 +262,11 @@ class LocationMetadata(proto.Message):
     has_ontap_proxy: bool = proto.Field(
         proto.BOOL,
         number=4,
+    )
+    flex_performance_tier: FlexPerformanceTier = proto.Field(
+        proto.ENUM,
+        number=5,
+        enum=FlexPerformanceTier,
     )
 
 
