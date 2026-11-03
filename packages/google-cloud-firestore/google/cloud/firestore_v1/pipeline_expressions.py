@@ -2575,21 +2575,6 @@ class Expression(ABC):
             "is_type", [self, self._cast_to_expr_or_convert_to_constant(type_val)]
         )
 
-    @expose_as_static
-    def over(
-        self,
-        window: WindowSpec,
-    ) -> "WindowFunction":
-        """Configures a window over which this function is evaluated.
-
-        Args:
-            window: A `WindowSpec` specifying the window override for this function.
-
-        Returns:
-            A `WindowFunction` with the specified window override.
-        """
-        return WindowFunction("over", [self, window])  # type: ignore[list-item]
-
 
 class Constant(Expression, Generic[CONSTANT_TYPE]):
     """Represents a constant literal value in an expression."""
@@ -2698,14 +2683,26 @@ class FunctionExpression(Expression):
         )
 
 
-class AggregateFunction(FunctionExpression):
-    """A base class for aggregation functions that operate across multiple inputs."""
-
-    pass
-
-
 class WindowFunction(FunctionExpression):
     """A base class for window functions that operate over a window of documents."""
+
+    def over(
+        self,
+        window: WindowSpec,
+    ) -> "WindowFunction":
+        """Configures a window over which this function is evaluated.
+
+        Args:
+            window: A `WindowSpec` specifying the window override for this function.
+
+        Returns:
+            A `WindowFunction` with the specified window override.
+        """
+        return WindowFunction("over", [self, window])  # type: ignore[list-item]
+
+
+class AggregateFunction(WindowFunction):
+    """A base class for aggregation functions that operate across multiple inputs."""
 
     pass
 

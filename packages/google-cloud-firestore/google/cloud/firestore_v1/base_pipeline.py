@@ -179,7 +179,7 @@ class _BasePipeline:
 
     def add_window_fields(
         self,
-        *fields: AliasedExpression[AggregateFunction | WindowFunction],
+        *fields: AliasedExpression[WindowFunction],
         window: types.WindowSpec | None = None,
     ) -> "_BasePipeline":
         """

@@ -93,8 +93,8 @@ class AddWindowFields(Stage):
 
     def __init__(
         self,
-        *args: AliasedExpression[AggregateFunction | WindowFunction],
-        fields: Sequence[AliasedExpression[AggregateFunction | WindowFunction]] = (),
+        *args: AliasedExpression[WindowFunction],
+        fields: Sequence[AliasedExpression[WindowFunction]] = (),
         window: WindowSpec | None = None,
     ):
         super().__init__("add_window_fields")

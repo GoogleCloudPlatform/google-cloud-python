@@ -28,10 +28,9 @@ from google.protobuf.json_format import MessageToDict
 from test__helpers import FIRESTORE_EMULATOR, FIRESTORE_ENTERPRISE_DB, system_test_lock
 
 from google.cloud.firestore import AsyncClient, Client, GeoPoint
-from google.cloud.firestore_v1 import pipeline_expressions
+from google.cloud.firestore_v1 import pipeline_expressions, pipeline_types
 from google.cloud.firestore_v1 import pipeline_expressions as expr
 from google.cloud.firestore_v1 import pipeline_stages as stages
-from google.cloud.firestore_v1 import pipeline_types
 from google.cloud.firestore_v1.vector import Vector
 
 FIRESTORE_PROJECT = os.environ.get("GCLOUD_PROJECT")

@@ -22,6 +22,7 @@ import google.cloud.firestore_v1.pipeline_expressions as expr
 from google.cloud.firestore_v1 import _helpers
 from google.cloud.firestore_v1._helpers import GeoPoint
 from google.cloud.firestore_v1.pipeline_expressions import (
+    AggregateFunction,
     BooleanExpression,
     Constant,
     Expression,
@@ -2269,17 +2270,25 @@ class TestExpressionessionMethods:
 
 class TestWindowExpressions:
     def test_over_and_rank(self):
+        assert issubclass(AggregateFunction, WindowFunction)
+        assert not hasattr(Expression, "over")
+        assert not hasattr(Field.of("rating"), "over")
+
         agg = Field.of("rating").sum()
+        assert isinstance(agg, AggregateFunction)
+        assert isinstance(agg, WindowFunction)
         ws = WindowSpec(
             partition="genre",
             sort=Field.of("published").ascending(),
         )
         win_fn = agg.over(ws)
         assert isinstance(win_fn, WindowFunction)
+        assert not isinstance(win_fn, AggregateFunction)
         assert win_fn.name == "over"
         assert win_fn.params == [agg, ws]
         assert repr(win_fn) == f"Field.of('rating').sum().over({ws!r})"
-        assert win_fn == Expression.over(agg, ws)
+        assert win_fn == WindowFunction.over(agg, ws)
+        assert win_fn == AggregateFunction.over(agg, ws)
 
         pb = win_fn._to_pb()
         assert pb.function_value.name == "over"
