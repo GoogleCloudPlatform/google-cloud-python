@@ -1119,6 +1119,13 @@ class EvaluationResult(proto.Message):
         golden_run_method (google.cloud.ces_v1beta.types.GoldenRunMethod):
             Output only. The method used to run the
             golden evaluation.
+        root_span (google.cloud.ces_v1beta.types.Span):
+            Output only. The root span of the evaluation
+            execution, which includes information about each
+            step of the evaluation.
+        outcome_metadata (google.cloud.ces_v1beta.types.EvaluationResult.OutcomeMetadata):
+            Output only. The outcome metadata of the evaluation. Only
+            populated if execution_state is COMPLETE.
     """
 
     class Outcome(proto.Enum):
@@ -1170,6 +1177,20 @@ class EvaluationResult(proto.Message):
         COMPLETED = 2
         ERROR = 3
         CANCELLED = 4
+
+    class OutcomeMetadata(proto.Enum):
+        r"""Metadata about the outcome of the evaluation.
+
+        Values:
+            OUTCOME_METADATA_UNSPECIFIED (0):
+                Unspecified outcome metadata.
+            GRACEFUL_HANDOFF (1):
+                The evaluation resulted in a graceful handoff
+                to a human representative.
+        """
+
+        OUTCOME_METADATA_UNSPECIFIED = 0
+        GRACEFUL_HANDOFF = 1
 
     class GoldenExpectationOutcome(proto.Message):
         r"""Specifies the expectation and the result of that expectation.
@@ -1920,12 +1941,13 @@ class EvaluationResult(proto.Message):
         Attributes:
             score (int):
                 Output only. The user task satisfaction
-                score. Can be -1, 0, 1.
+                score. Can be -1, 0, 1, 2.
 
                 This field is a member of `oneof`_ ``_score``.
             label (str):
                 Output only. The label associated with each
-                score. Score 1: User Task Satisfied
+                score. Score 2: Graceful Handoff
+                Score 1: User Task Satisfied
                 Score 0: User Task Not Satisfied
                 Score -1: User Task Unspecified
             explanation (str):
@@ -2151,6 +2173,16 @@ class EvaluationResult(proto.Message):
         proto.ENUM,
         number=19,
         enum=golden_run.GoldenRunMethod,
+    )
+    root_span: common.Span = proto.Field(
+        proto.MESSAGE,
+        number=24,
+        message=common.Span,
+    )
+    outcome_metadata: OutcomeMetadata = proto.Field(
+        proto.ENUM,
+        number=25,
+        enum=OutcomeMetadata,
     )
 
 
@@ -2923,7 +2955,8 @@ class RunEvaluationRequest(proto.Message):
             Optional. The display name of the evaluation
             run.
         app_version (str):
-            Optional. The app version to evaluate. Format:
+            Optional. The app version to evaluate. At most one of
+            ``app_version`` or ``deployment`` can be set. Format:
             ``projects/{project}/locations/{location}/apps/{app}/versions/{version}``
         config (google.cloud.ces_v1beta.types.EvaluationConfig):
             Optional. The configuration to use for the

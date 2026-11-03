@@ -27,6 +27,7 @@ __protobuf__ = proto.module(
     manifest={
         "ExperimentConfig",
         "Deployment",
+        "AgentRegistryDeployment",
         "WhatsAppCredentials",
         "InstagramCredentials",
     },
@@ -166,7 +167,41 @@ class Deployment(proto.Message):
             Optional. Input only. Ephemeral Instagram
             credentials required when configuring a
             Instagram channel profile.
+        model_settings (google.cloud.ces_v1beta.types.ModelSettings):
+            Optional. Model settings for the deployment.
+            Overrides model settings configured at the
+            app/agent levels. Note: Deployment-level model
+            settings override is gated behind an allowlist.
+            Contact the CXAS team to enable this field.
+        modality (google.cloud.ces_v1beta.types.Deployment.Modality):
+            Optional. The modality of the deployment.
+            Note: Deployment-level modality override is
+            gated behind an allowlist. Contact the CXAS team
+            to enable this field.
+        agent_registry_deployment (google.cloud.ces_v1beta.types.AgentRegistryDeployment):
+            Optional. Configuration for deploying this
+            deployment to Agent Registry. If present, this
+            deployment will be published to Agent Registry.
     """
+
+    class Modality(proto.Enum):
+        r"""The modality of the deployment.
+
+        Values:
+            MODALITY_UNSPECIFIED (0):
+                Unknown modality.
+            MODALITY_TEXT (1):
+                Text modality.
+            MODALITY_VOICE (2):
+                Voice modality.
+            MODALITY_VIDEO (3):
+                Video modality.
+        """
+
+        MODALITY_UNSPECIFIED = 0
+        MODALITY_TEXT = 1
+        MODALITY_VOICE = 2
+        MODALITY_VIDEO = 3
 
     name: str = proto.Field(
         proto.STRING,
@@ -214,6 +249,37 @@ class Deployment(proto.Message):
         number=11,
         message="InstagramCredentials",
     )
+    model_settings: common.ModelSettings = proto.Field(
+        proto.MESSAGE,
+        number=12,
+        message=common.ModelSettings,
+    )
+    modality: Modality = proto.Field(
+        proto.ENUM,
+        number=13,
+        enum=Modality,
+    )
+    agent_registry_deployment: "AgentRegistryDeployment" = proto.Field(
+        proto.MESSAGE,
+        number=14,
+        message="AgentRegistryDeployment",
+    )
+
+
+class AgentRegistryDeployment(proto.Message):
+    r"""Configuration and status for Agent Registry deployment.
+
+    Attributes:
+        agent_registry_service_name (str):
+            Optional. Output only. The resource name of the deployed
+            Agent Registry service. Format:
+            ``projects/{project}/locations/{location}/services/{service}``
+    """
+
+    agent_registry_service_name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
 
 
 class WhatsAppCredentials(proto.Message):
@@ -235,7 +301,7 @@ class WhatsAppCredentials(proto.Message):
         waba_id (str):
             Required. The WhatsApp Business Account ID.
         conversation_profile_id (str):
-            Required. The Conversation Profile ID to use
+            Optional. The Conversation Profile ID to use
             for the deployment.
     """
 
@@ -273,7 +339,7 @@ class InstagramCredentials(proto.Message):
             Required. The Meta auth code provided by the
             embedded signup flow.
         conversation_profile_id (str):
-            Required. The Conversation Profile ID to use
+            Optional. The Conversation Profile ID to use
             for the deployment.
     """
 
