@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import asyncio
+import concurrent.futures
 from io import BytesIO
 from unittest import mock
 from unittest.mock import AsyncMock
@@ -27,6 +28,7 @@ from google.cloud.storage.asyncio import async_read_object_stream
 from google.cloud.storage.asyncio.async_multi_range_downloader import (
     AsyncMultiRangeDownloader,
 )
+from google.cloud.storage.asyncio.retry import reads_resumption_strategy
 from google.cloud.storage.exceptions import DataCorruption
 
 _TEST_BUCKET_NAME = "test-bucket"
@@ -328,10 +330,22 @@ class TestAsyncMultiRangeDownloader:
         )
 
     @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "test_data",
+        [
+            pytest.param(b"some-data", id="inline"),
+            pytest.param(
+                b"x" * reads_resumption_strategy._CRC32C_OFFLOAD_MIN_BYTES,
+                id="offloaded",
+            ),
+        ],
+    )
     @mock.patch(
         "google.cloud.storage.asyncio.retry.reads_resumption_strategy.google_crc32c.value"
     )
-    async def test_download_ranges_raises_on_checksum_mismatch(self, mock_crc32c_value):
+    async def test_download_ranges_raises_on_checksum_mismatch(
+        self, mock_crc32c_value, test_data
+    ):
         from google.cloud.storage.asyncio._stream_multiplexer import _StreamMultiplexer
         from google.cloud.storage.asyncio.async_multi_range_downloader import (
             AsyncMultiRangeDownloader,
@@ -342,7 +356,6 @@ class TestAsyncMultiRangeDownloader:
             spec=async_read_object_stream._AsyncReadObjectStream
         )
 
-        test_data = b"some-data"
         server_checksum = 12345
         mock_crc32c_value.return_value = 54321
 
@@ -367,15 +380,140 @@ class TestAsyncMultiRangeDownloader:
         mrd._is_stream_open = True
         mrd._multiplexer = _StreamMultiplexer(mock_stream)
 
+        buffer = BytesIO()
         with pytest.raises(DataCorruption) as exc_info:
             with mock.patch(
                 "google.cloud.storage.asyncio.async_multi_range_downloader.generate_random_56_bit_integer",
                 return_value=0,
             ):
-                await mrd.download_ranges([(0, len(test_data), BytesIO())])
+                await mrd.download_ranges([(0, len(test_data), buffer)])
 
         assert "Checksum mismatch" in str(exc_info.value)
         mock_crc32c_value.assert_called_once_with(test_data)
+        assert buffer.getvalue() == b""
+
+    def _mrd_with_held_chunk(self, content, recv_after_chunk):
+        """An MRD whose stream sends one offloaded chunk of ``content`` (whose
+        checksum future is returned) and then awaits ``recv_after_chunk()``."""
+        from google.cloud.storage.asyncio._stream_multiplexer import _StreamMultiplexer
+
+        future = concurrent.futures.Future()
+        submitted = asyncio.Event()
+
+        def submit(fn, data):
+            submitted.set()
+            return future
+
+        executor = mock.Mock()
+        executor.submit.side_effect = submit
+        patcher = mock.patch.object(
+            reads_resumption_strategy, "_crc32c_executor", executor
+        )
+        response = _storage_v2.BidiReadObjectResponse(
+            object_data_ranges=[
+                _storage_v2.ObjectRangeData(
+                    checksummed_data=_storage_v2.ChecksummedData(
+                        content=content, crc32c=google_crc32c.value(content)
+                    ),
+                    read_range=_storage_v2.ReadRange(
+                        read_id=0, read_offset=0, read_length=len(content)
+                    ),
+                )
+            ]
+        )
+        responses = iter([response])
+
+        async def recv():
+            item = next(responses, None)
+            if item is not None:
+                return item
+            return await recv_after_chunk(submitted, future)
+
+        mock_stream = mock.AsyncMock(
+            spec=async_read_object_stream._AsyncReadObjectStream
+        )
+        mock_stream.recv.side_effect = recv
+        mrd = AsyncMultiRangeDownloader(mock.MagicMock(), "bucket", "object")
+        mrd.read_obj_str = mock_stream
+        mrd._is_stream_open = True
+        mrd._multiplexer = _StreamMultiplexer(mock_stream)
+        return mrd, future, patcher
+
+    @pytest.mark.asyncio
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader.generate_random_56_bit_integer",
+        return_value=0,
+    )
+    async def test_download_ranges_reports_held_corrupt_chunk_before_other_errors(
+        self, _
+    ):
+        """A corrupt offloaded chunk is reported, and not written, even when a
+        non-retryable error arrives before its checksum is known."""
+        content = b"x" * reads_resumption_strategy._CRC32C_OFFLOAD_MIN_BYTES
+
+        async def fail_after_chunk(submitted, future):
+            await submitted.wait()  # the chunk is held, its check still running
+            future.set_result(0)  # ...and the worker finds a mismatch
+            raise exceptions.NotFound("object deleted")
+
+        mrd, _, patcher = self._mrd_with_held_chunk(content, fail_after_chunk)
+        buffer = BytesIO()
+        with patcher, pytest.raises(DataCorruption) as exc_info:
+            await mrd.download_ranges([(0, 2 * len(content), buffer)])
+
+        assert "Checksum mismatch" in str(exc_info.value)
+        assert isinstance(exc_info.value.__context__, exceptions.NotFound)
+        assert buffer.getvalue() == b""
+
+    @pytest.mark.asyncio
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader.generate_random_56_bit_integer",
+        return_value=0,
+    )
+    async def test_download_ranges_writes_held_chunks_before_other_errors(self, _):
+        """Chunks received before a non-retryable error are written, as they
+        are when checked inline, and the error is raised."""
+        content = b"x" * reads_resumption_strategy._CRC32C_OFFLOAD_MIN_BYTES
+
+        async def fail_after_chunk(submitted, future):
+            await submitted.wait()
+            future.set_result(google_crc32c.value(content))
+            raise exceptions.NotFound("object deleted")
+
+        mrd, _, patcher = self._mrd_with_held_chunk(content, fail_after_chunk)
+        buffer = BytesIO()
+        with patcher, pytest.raises(exceptions.NotFound):
+            await mrd.download_ranges([(0, 2 * len(content), buffer)])
+
+        assert buffer.getvalue() == content
+
+    @pytest.mark.asyncio
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader.generate_random_56_bit_integer",
+        return_value=0,
+    )
+    async def test_download_ranges_cancellation_discards_held_chunks(self, _):
+        content = b"x" * reads_resumption_strategy._CRC32C_OFFLOAD_MIN_BYTES
+
+        async def hang(submitted, future):
+            await asyncio.Event().wait()
+
+        mrd, future, patcher = self._mrd_with_held_chunk(content, hang)
+        buffer = BytesIO()
+        with patcher:
+            task = asyncio.create_task(
+                mrd.download_ranges([(0, 2 * len(content), buffer)])
+            )
+            while not reads_resumption_strategy._crc32c_executor.submit.called:
+                await asyncio.sleep(0)
+            await asyncio.sleep(0)
+            task.cancel()
+            with pytest.raises(asyncio.CancelledError):
+                await task
+
+        assert future.cancelled()
+        assert buffer.getvalue() == b""
+        await mrd.close()
 
     @mock.patch(
         "google.cloud.storage.asyncio.async_multi_range_downloader.AsyncMultiRangeDownloader.open",
@@ -688,6 +826,7 @@ class TestAsyncMultiRangeDownloader:
 
         mock_retry_manager = mock_retry_manager_cls.return_value
         mock_retry_manager.execute = AsyncMock()
+        mock_strategy_cls.return_value.verify_pending_checksums = AsyncMock()
 
         # Act
         # Implicit full read (0, 0) and explicit full read (0, persisted_size=100)
