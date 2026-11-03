@@ -653,6 +653,7 @@ def run_showcase_unit_tests(
         (False, "rest"),
         (True, "grpc+rest"),
     ],
+    ids=["grpc_rest_no_async", "rest_only", "grpc_rest_async"],
 )
 def showcase_unit(
     session,
