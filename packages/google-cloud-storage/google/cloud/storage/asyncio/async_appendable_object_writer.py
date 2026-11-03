@@ -580,7 +580,7 @@ class AsyncAppendableObjectWriter:
 
         async with self._trace_span(
             "Storage.AsyncAppendableObjectWriter.append",
-            attributes={"gcp.storage.append.bytes": len(data)},
+            attributes={"gcp.storage.payload.size_bytes": len(data)},
         ):
             if retry_policy is None:
                 retry_policy = AsyncRetry(predicate=_is_write_retryable)

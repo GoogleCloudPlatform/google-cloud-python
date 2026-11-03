@@ -325,7 +325,8 @@ async def test_async_appendable_object_writer_spans(exporter, mock_client):
 
     append_span = spans[1]
     assert append_span.attributes["rpc.system"] == "grpc"
-    assert append_span.attributes["gcp.storage.append.bytes"] == 11
+    assert append_span.attributes["gcp.storage.payload.size_bytes"] == 11
+    assert "gcp.storage.append.bytes" not in append_span.attributes
     assert "gcp.storage.chunk.size" not in append_span.attributes
     assert (
         append_span.attributes["gcp.resource.destination.id"]
