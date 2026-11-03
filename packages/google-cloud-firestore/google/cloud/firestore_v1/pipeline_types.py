@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass, fields
 from enum import Enum
 from typing import Optional, Sequence
 
@@ -336,7 +337,23 @@ class WindowBound(str, Enum):
     UNBOUNDED = "unbounded"
 
 
-class DocumentWindowFrame:
+@dataclass
+class _WindowFrame:
+    """Base class for window frame specifications."""
+
+    def _to_pb(self) -> Value:
+        pb_fields = {
+            f.name: pipeline_expressions.Expression._cast_to_expr_or_convert_to_constant(
+                getattr(self, f.name)
+            )._to_pb()
+            for f in fields(self)
+            if getattr(self, f.name) is not None
+        }
+        return Value(map_value={"fields": pb_fields})
+
+
+@dataclass
+class DocumentWindowFrame(_WindowFrame):
     """Defines a document-count based window frame relative to the current document.
 
     Args:
@@ -348,49 +365,16 @@ class DocumentWindowFrame:
             A negative integer indicates a boundary preceding the current document.
     """
 
-    def __init__(
-        self,
-        preceding: Optional[
-            WindowBound | str | int | pipeline_expressions.Expression
-        ] = None,
-        following: Optional[
-            WindowBound | str | int | pipeline_expressions.Expression
-        ] = None,
-    ):
-        self.preceding = preceding
-        self.following = following
-
-    def __eq__(self, other):
-        if not isinstance(other, type(self)):
-            return False
-        return self._to_pb() == other._to_pb()
-
-    def __repr__(self):
-        args = []
-        if self.preceding is not None:
-            args.append(f"preceding={self.preceding!r}")
-        if self.following is not None:
-            args.append(f"following={self.following!r}")
-        return f"{self.__class__.__name__}({', '.join(args)})"
-
-    def _to_pb(self) -> Value:
-        fields: dict[str, Value] = {}
-        if self.preceding is not None:
-            fields["preceding"] = (
-                pipeline_expressions.Expression._cast_to_expr_or_convert_to_constant(
-                    self.preceding
-                )._to_pb()
-            )
-        if self.following is not None:
-            fields["following"] = (
-                pipeline_expressions.Expression._cast_to_expr_or_convert_to_constant(
-                    self.following
-                )._to_pb()
-            )
-        return Value(map_value={"fields": fields})
+    preceding: Optional[WindowBound | str | int | pipeline_expressions.Expression] = (
+        None
+    )
+    following: Optional[WindowBound | str | int | pipeline_expressions.Expression] = (
+        None
+    )
 
 
-class RangeWindowFrame:
+@dataclass
+class RangeWindowFrame(_WindowFrame):
     """Defines a value-based or time-range window frame relative to the current document's sort value.
 
     Args:
@@ -400,58 +384,15 @@ class RangeWindowFrame:
             `"day"`, or an `Expression`).
     """
 
-    def __init__(
-        self,
-        preceding: Optional[
-            WindowBound | str | int | float | pipeline_expressions.Expression
-        ] = None,
-        following: Optional[
-            WindowBound | str | int | float | pipeline_expressions.Expression
-        ] = None,
-        unit: Optional[
-            TimeUnit | TimeGranularity | str | pipeline_expressions.Expression
-        ] = None,
-    ):
-        self.preceding = preceding
-        self.following = following
-        self.unit = unit
-
-    def __eq__(self, other):
-        if not isinstance(other, type(self)):
-            return False
-        return self._to_pb() == other._to_pb()
-
-    def __repr__(self):
-        args = []
-        if self.preceding is not None:
-            args.append(f"preceding={self.preceding!r}")
-        if self.following is not None:
-            args.append(f"following={self.following!r}")
-        if self.unit is not None:
-            args.append(f"unit={self.unit!r}")
-        return f"{self.__class__.__name__}({', '.join(args)})"
-
-    def _to_pb(self) -> Value:
-        fields: dict[str, Value] = {}
-        if self.preceding is not None:
-            fields["preceding"] = (
-                pipeline_expressions.Expression._cast_to_expr_or_convert_to_constant(
-                    self.preceding
-                )._to_pb()
-            )
-        if self.following is not None:
-            fields["following"] = (
-                pipeline_expressions.Expression._cast_to_expr_or_convert_to_constant(
-                    self.following
-                )._to_pb()
-            )
-        if self.unit is not None:
-            fields["unit"] = (
-                pipeline_expressions.Expression._cast_to_expr_or_convert_to_constant(
-                    self.unit
-                )._to_pb()
-            )
-        return Value(map_value={"fields": fields})
+    preceding: Optional[
+        WindowBound | str | int | float | pipeline_expressions.Expression
+    ] = None
+    following: Optional[
+        WindowBound | str | int | float | pipeline_expressions.Expression
+    ] = None
+    unit: Optional[
+        TimeUnit | TimeGranularity | str | pipeline_expressions.Expression
+    ] = None
 
 
 class WindowSpec:
