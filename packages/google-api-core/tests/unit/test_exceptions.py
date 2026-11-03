@@ -457,17 +457,21 @@ def test_from_grpc_error_misleading_404():
 )
 def test_retry_error_copy_and_pickle(operation, cause):
     original = exceptions.RetryError("Request timed out", cause)
+    original.custom_attr = "test_value"
+
     result = operation(original)
 
     assert isinstance(result, exceptions.RetryError)
     assert result.message == original.message
     assert str(result) == str(original)
+    assert result.custom_attr == "test_value"
+
     if cause is None:
         assert result.cause is None
-        assert result.cause == original.cause
     else:
         if operation is copy.copy:
-            assert result.cause == original.cause
+            assert result.cause is original.cause
+
         assert isinstance(result.cause, type(original.cause))
         assert result.cause.message == original.cause.message
         assert str(result.cause) == str(original.cause)
