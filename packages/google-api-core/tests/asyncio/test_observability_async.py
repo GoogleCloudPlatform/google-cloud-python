@@ -113,24 +113,30 @@ def test_apply_otel_async_channel_interceptors_sequence_prepending(
 def test_apply_otel_async_channel_interceptors_client_options_prepending(
     mock_async_channel, monkeypatch
 ):
-    """Proves that interceptors resolved from ClientOptions are prepended in order."""
+    """Proves that interceptors resolved from ClientOptions and default_host are prepended in order."""
     existing_interceptor = mock.Mock()
     mock_async_channel._unary_unary_interceptors = [existing_interceptor]
 
     interceptor1 = mock.Mock(spec=["intercept_unary_unary"])
     interceptor2 = mock.Mock(spec=["intercept_unary_unary"])
 
-    monkeypatch.setenv("GOOGLE_SDK_EXPERIMENTAL_PYTHON_TRACING_ENABLED", "true")
+    mock_get_interceptor = mock.create_autospec(
+        _observability.get_otel_async_interceptor,
+        spec_set=True,
+        return_value=[interceptor1, interceptor2],
+    )
     monkeypatch.setattr(
         _observability,
         "get_otel_async_interceptor",
-        lambda opts: [interceptor1, interceptor2],
+        mock_get_interceptor,
     )
 
+    options = _observability.ClientOptions()
     result = _observability.apply_otel_async_channel_interceptors(
-        mock_async_channel, _observability.ClientOptions()
+        mock_async_channel, options, default_host="localhost:7469"
     )
     assert result is mock_async_channel
+    mock_get_interceptor.assert_called_once_with(options, default_host="localhost:7469")
     assert mock_async_channel._unary_unary_interceptors == [
         interceptor1,
         interceptor2,

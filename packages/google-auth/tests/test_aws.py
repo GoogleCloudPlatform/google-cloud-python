@@ -606,6 +606,32 @@ TEST_FIXTURES = [
             "data": REQUEST_PARAMS,
         },
     ),
+    # POST request with session token credentials and FIPS STS endpoint.
+    (
+        "us-east-2",
+        "2020-08-11T06:55:22Z",
+        {
+            "access_key_id": ACCESS_KEY_ID,
+            "secret_access_key": SECRET_ACCESS_KEY,
+            "security_token": TOKEN,
+        },
+        {
+            "method": "POST",
+            "url": "https://sts-fips.us-east-2.amazonaws.com?Action=GetCallerIdentity&Version=2011-06-15",
+        },
+        {
+            "url": "https://sts-fips.us-east-2.amazonaws.com?Action=GetCallerIdentity&Version=2011-06-15",
+            "method": "POST",
+            "headers": {
+                "Authorization": "AWS4-HMAC-SHA256 Credential="
+                + ACCESS_KEY_ID
+                + "/20200811/us-east-2/sts/aws4_request, SignedHeaders=host;x-amz-date;x-amz-security-token, Signature=9b27e912850bcfdde94f29f05c992022ad6ed0d40b31381a33e0da6cdb4c5a8f",
+                "host": "sts-fips.us-east-2.amazonaws.com",
+                "x-amz-date": "20200811T065522Z",
+                "x-amz-security-token": TOKEN,
+            },
+        },
+    ),
 ]
 
 

@@ -39,7 +39,7 @@ def sample_stop_replay():
     client = sqladmin_v1beta4.SqlWorkloadCapturesServiceClient()
 
     # Initialize request argument(s)
-    request = sqladmin_v1beta4.SqlWorkloadCapturesStopReplayRequest(
+    request = sqladmin_v1beta4.WorkloadCapturesStopReplayRequest(
         project="project_value",
         instance="instance_value",
     )

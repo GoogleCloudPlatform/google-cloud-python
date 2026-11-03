@@ -25,6 +25,7 @@ from google.cloud.bigtable.data.exceptions import (
     RetryExceptionGroup,
 )
 from google.cloud.bigtable.data.mutations import RowMutationEntry
+from google.cloud.bigtable.row import DirectRow
 
 FLUSH_COUNT = 100  # after this many elements, send out the batch
 
@@ -181,9 +182,21 @@ class MutationsBatcher(object):
         :param row: :class:`~google.cloud.bigtable.row.DirectRow`.
 
         :raises: One of the following:
+            * :exc:`TypeError` if ``row`` is not a :class:`~google.cloud.bigtable.row.DirectRow`.
+            * :exc:`~.table.TableMismatchError` if ``row`` belongs to a different table.
             * :exc:`~.table._BigtableRetryableError` if any row returned a transient error.
             * :exc:`RuntimeError` if the number of responses doesn't match the number of rows that were retried
         """
+        if not isinstance(row, DirectRow):
+            raise TypeError(
+                "Bulk processing cannot be applied for conditional or append mutations."
+            )
+        if row.table is not None and row.table.name != self.table.name:
+            from google.cloud.bigtable.table import TableMismatchError
+
+            raise TableMismatchError(
+                f"Row {row.row_key} is a part of {row.table.name} table. Current table: {self.table.name}"
+            )
         self._batcher.append(RowMutationEntry(row.row_key, row._get_mutations()))
 
     def mutate_rows(self, rows):
@@ -201,6 +214,8 @@ class MutationsBatcher(object):
         :param rows: list:[`~google.cloud.bigtable.row.DirectRow`].
 
         :raises: One of the following:
+            * :exc:`TypeError` if any row in ``rows`` is not a :class:`~google.cloud.bigtable.row.DirectRow`.
+            * :exc:`~.table.TableMismatchError` if any row in ``rows`` belongs to a different table.
             * :exc:`~.table._BigtableRetryableError` if any row returned a transient error.
             * :exc:`RuntimeError` if the number of responses doesn't match the number of rows that were retried
         """

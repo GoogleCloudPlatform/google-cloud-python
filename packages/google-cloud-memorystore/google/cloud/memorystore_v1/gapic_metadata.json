@@ -25,9 +25,19 @@
                 "backup_instance"
               ]
             },
+            "CreateAclPolicy": {
+              "methods": [
+                "create_acl_policy"
+              ]
+            },
             "CreateInstance": {
               "methods": [
                 "create_instance"
+              ]
+            },
+            "DeleteAclPolicy": {
+              "methods": [
+                "delete_acl_policy"
               ]
             },
             "DeleteAuthToken": {
@@ -58,6 +68,16 @@
             "FinishMigration": {
               "methods": [
                 "finish_migration"
+              ]
+            },
+            "GetAclPolicy": {
+              "methods": [
+                "get_acl_policy"
+              ]
+            },
+            "GetAclPolicyRevision": {
+              "methods": [
+                "get_acl_policy_revision"
               ]
             },
             "GetAuthToken": {
@@ -95,6 +115,16 @@
                 "get_token_auth_user"
               ]
             },
+            "ListAclPolicies": {
+              "methods": [
+                "list_acl_policies"
+              ]
+            },
+            "ListAclPolicyRevisions": {
+              "methods": [
+                "list_acl_policy_revisions"
+              ]
+            },
             "ListAuthTokens": {
               "methods": [
                 "list_auth_tokens"
@@ -128,6 +158,11 @@
             "StartMigration": {
               "methods": [
                 "start_migration"
+              ]
+            },
+            "UpdateAclPolicy": {
+              "methods": [
+                "update_acl_policy"
               ]
             },
             "UpdateInstance": {
@@ -155,9 +190,19 @@
                 "backup_instance"
               ]
             },
+            "CreateAclPolicy": {
+              "methods": [
+                "create_acl_policy"
+              ]
+            },
             "CreateInstance": {
               "methods": [
                 "create_instance"
+              ]
+            },
+            "DeleteAclPolicy": {
+              "methods": [
+                "delete_acl_policy"
               ]
             },
             "DeleteAuthToken": {
@@ -188,6 +233,16 @@
             "FinishMigration": {
               "methods": [
                 "finish_migration"
+              ]
+            },
+            "GetAclPolicy": {
+              "methods": [
+                "get_acl_policy"
+              ]
+            },
+            "GetAclPolicyRevision": {
+              "methods": [
+                "get_acl_policy_revision"
               ]
             },
             "GetAuthToken": {
@@ -225,6 +280,16 @@
                 "get_token_auth_user"
               ]
             },
+            "ListAclPolicies": {
+              "methods": [
+                "list_acl_policies"
+              ]
+            },
+            "ListAclPolicyRevisions": {
+              "methods": [
+                "list_acl_policy_revisions"
+              ]
+            },
             "ListAuthTokens": {
               "methods": [
                 "list_auth_tokens"
@@ -258,6 +323,11 @@
             "StartMigration": {
               "methods": [
                 "start_migration"
+              ]
+            },
+            "UpdateAclPolicy": {
+              "methods": [
+                "update_acl_policy"
               ]
             },
             "UpdateInstance": {
@@ -285,9 +355,19 @@
                 "backup_instance"
               ]
             },
+            "CreateAclPolicy": {
+              "methods": [
+                "create_acl_policy"
+              ]
+            },
             "CreateInstance": {
               "methods": [
                 "create_instance"
+              ]
+            },
+            "DeleteAclPolicy": {
+              "methods": [
+                "delete_acl_policy"
               ]
             },
             "DeleteAuthToken": {
@@ -318,6 +398,16 @@
             "FinishMigration": {
               "methods": [
                 "finish_migration"
+              ]
+            },
+            "GetAclPolicy": {
+              "methods": [
+                "get_acl_policy"
+              ]
+            },
+            "GetAclPolicyRevision": {
+              "methods": [
+                "get_acl_policy_revision"
               ]
             },
             "GetAuthToken": {
@@ -355,6 +445,16 @@
                 "get_token_auth_user"
               ]
             },
+            "ListAclPolicies": {
+              "methods": [
+                "list_acl_policies"
+              ]
+            },
+            "ListAclPolicyRevisions": {
+              "methods": [
+                "list_acl_policy_revisions"
+              ]
+            },
             "ListAuthTokens": {
               "methods": [
                 "list_auth_tokens"
@@ -388,6 +488,11 @@
             "StartMigration": {
               "methods": [
                 "start_migration"
+              ]
+            },
+            "UpdateAclPolicy": {
+              "methods": [
+                "update_acl_policy"
               ]
             },
             "UpdateInstance": {

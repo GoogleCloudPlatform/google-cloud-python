@@ -511,6 +511,28 @@ def test_transaction_put_w_begin_later(database_id):
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])
+def test_transaction_commit_w_begin_later_w_retry_w_timeout(database_id):
+    """
+    If commit has to begin the transaction, it should use the same retry and timeout
+    """
+    project = "PROJECT"
+    id_ = 943243
+    retry = mock.Mock()
+    timeout = 100000
+    ds_api = _make_datastore_api(xact_id=id_)
+    client = _Client(project, datastore_api=ds_api, database=database_id)
+    xact = _make_transaction(client, begin_later=True)
+    xact._status = xact._INITIAL
+    xact.put(_Entity(database=database_id))
+
+    xact.commit(retry=retry, timeout=timeout)
+
+    ds_api.begin_transaction.assert_called_once_with(
+        request=mock.ANY, retry=retry, timeout=timeout
+    )
+
+
+@pytest.mark.parametrize("database_id", [None, "somedb"])
 def test_transaction_delete_w_begin_later(database_id):
     """
     If begin_later is set, should be able to call delete without begin first
@@ -562,9 +584,11 @@ def test_transaction_commit_no_begin(database_id):
         xact.put(entity)
         assert xact._status == xact._INITIAL
         with mock.patch.object(xact, "begin") as begin:
-            begin.side_effect = lambda: setattr(xact, "_status", xact._IN_PROGRESS)
+            begin.side_effect = lambda **kwargs: setattr(
+                xact, "_status", xact._IN_PROGRESS
+            )
             xact.commit()
-            begin.assert_called_once_with()
+            begin.assert_called_once_with(retry=None, timeout=None)
 
 
 @pytest.mark.parametrize("database_id", [None, "somedb"])

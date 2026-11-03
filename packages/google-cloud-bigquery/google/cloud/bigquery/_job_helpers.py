@@ -575,6 +575,10 @@ def query_and_wait(
         request_body["maxResults"] = page_size or max_results
     if client.default_job_creation_mode:
         request_body["jobCreationMode"] = client.default_job_creation_mode
+    elif query_results_format == enums.QueryResultsFormat.ARROW:
+        # ARROW callers want low latency, so let BigQuery skip creating a
+        # job when it can return every row in the first response.
+        request_body["jobCreationMode"] = enums.JobCreationMode.JOB_CREATION_OPTIONAL
 
     query_sent_factory = QuerySentEventFactory()
 
@@ -623,10 +627,12 @@ def query_and_wait(
         )
         page_token = query_results.page_token
         more_pages = page_token is not None
-        if (
-            arrow_serialization_options is not None
-            and _arrow_query.reached_max_results(response, max_results)
-        ):
+        if arrow_serialization_options is not None:
+            # ARROW rows never come from jobs.getQueryResults: the RowIterator
+            # follows pageToken to the job's ReadRows stream, so only wait
+            # while the query runs. QueryJob.result() would also treat a
+            # missing totalRows, which BigQuery leaves out for cached results
+            # too large to return inline, as a statement without rows.
             more_pages = False
 
         if more_pages or not query_results.complete:

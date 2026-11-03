@@ -4,6 +4,14 @@
 
 [1]: https://pypi.org/project/gapic-generator/#history
 
+## [1.44.1](https://github.com/googleapis/google-cloud-python/compare/gapic-generator-v1.44.0...gapic-generator-v1.44.1) (2026-10-29)
+
+
+### Bug Fixes
+
+* **google-api-core:** align HTTP T3 and T4 OpenTelemetry span status and attributes ([#18868](https://github.com/googleapis/google-cloud-python/issues/18868)) ([deb2194](https://github.com/googleapis/google-cloud-python/commit/deb2194d3fd615e2054b165a2493cc9ddb36ee9b))
+* **google-api-core:** align OpenTelemetry span names, kinds, and T3 endpoint attributes with spec ([#18866](https://github.com/googleapis/google-cloud-python/issues/18866)) ([2a10196](https://github.com/googleapis/google-cloud-python/commit/2a1019643da54baae33e1737ee1506de178aa857))
+
 ## [1.44.0](https://github.com/googleapis/google-cloud-python/compare/gapic-generator-v1.43.1...gapic-generator-v1.44.0) (2026-10-22)
 
 

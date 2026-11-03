@@ -4,6 +4,21 @@
 
 [1]: https://pypi.org/project/google-api-core/#history
 
+## [2.43.2](https://github.com/googleapis/google-cloud-python/compare/google-api-core-v2.43.1...google-api-core-v2.43.2) (2026-10-29)
+
+
+### Bug Fixes
+
+* **google-api-core:** align HTTP T3 and T4 OpenTelemetry span status and attributes ([#18868](https://github.com/googleapis/google-cloud-python/issues/18868)) ([deb2194](https://github.com/googleapis/google-cloud-python/commit/deb2194d3fd615e2054b165a2493cc9ddb36ee9b))
+* **google-api-core:** align OpenTelemetry span names, kinds, and T3 endpoint attributes with spec ([#18866](https://github.com/googleapis/google-cloud-python/issues/18866)) ([2a10196](https://github.com/googleapis/google-cloud-python/commit/2a1019643da54baae33e1737ee1506de178aa857))
+
+## [2.43.1](https://github.com/googleapis/google-cloud-python/compare/google-api-core-v2.43.0...google-api-core-v2.43.1) (2026-10-28)
+
+
+### Bug Fixes
+
+* **google-api-core:** remove packages_distributions scan and shorten EOL warning window ([#18872](https://github.com/googleapis/google-cloud-python/issues/18872)) ([fa77b42](https://github.com/googleapis/google-cloud-python/commit/fa77b42af42933373c8143ac25635e376fcf3722))
+
 ## [2.43.0](https://github.com/googleapis/google-cloud-python/compare/google-api-core-v2.42.0...google-api-core-v2.43.0) (2026-10-22)
 
 

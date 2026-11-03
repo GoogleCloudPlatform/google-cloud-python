@@ -22,9 +22,12 @@ import pytest
 
 # Code to be tested
 from google.api_core._python_version_support import (
+    DEPRECATION_WARNING_PERIOD,
     PYTHON_VERSION_INFO,
     PythonVersionStatus,
     _flatten_message,
+    _get_distribution_and_import_packages,
+    _get_pypi_package_name,
     check_python_version,
 )
 
@@ -74,7 +77,7 @@ def get_tracked_version_test_cases():
     for version_tuple, version_info in PYTHON_VERSION_INFO.items():
         py_version_str = f"{version_tuple[0]}.{version_tuple[1]}"
         gapic_dep = version_info.gapic_deprecation or (
-            version_info.python_eol - datetime.timedelta(days=365)
+            version_info.python_eol - DEPRECATION_WARNING_PERIOD
         )
         gapic_end = version_info.gapic_end or (
             version_info.python_eol + datetime.timedelta(weeks=1)
@@ -260,3 +263,38 @@ def test_untracked_newer_version_is_supported():
 
             assert result == PythonVersionStatus.PYTHON_VERSION_SUPPORTED
             assert len(w) == 0
+
+
+def test_get_pypi_package_name_is_noop():
+    """Test that _get_pypi_package_name returns None without scanning distributions."""
+    with patch("importlib.metadata.packages_distributions") as mock_pkg_dists:
+        assert _get_pypi_package_name("google.api_core") is None
+        assert _get_distribution_and_import_packages("google.api_core") == (
+            "google.api_core",
+            None,
+        )
+        # Verify check_python_version never calls packages_distributions() even when warning
+        mock_py_v = VersionInfoMock(major=3, minor=11)
+        with patch(
+            "google.api_core._python_version_support.sys.version_info", mock_py_v
+        ):
+            # Oct 26, 2026 (incident date): now SUPPORTED with 0 warnings (outside 90-day window)
+            with warnings.catch_warnings(record=True) as w:
+                warnings.simplefilter("always")
+                status = check_python_version(
+                    "google.cloud.datacatalog_lineage_v1",
+                    today=datetime.date(2026, 10, 26),
+                )
+                assert status == PythonVersionStatus.PYTHON_VERSION_SUPPORTED
+                assert len(w) == 0
+
+            # Inside 90-day window: warns, but still never calls packages_distributions()
+            with pytest.warns(FutureWarning):
+                status = check_python_version(
+                    "google.cloud.datacatalog_lineage_v1",
+                    today=datetime.date(2027, 8, 1),
+                )
+                assert status == PythonVersionStatus.PYTHON_VERSION_DEPRECATED
+
+        mock_pkg_dists.assert_not_called()
+    assert DEPRECATION_WARNING_PERIOD == datetime.timedelta(days=90)

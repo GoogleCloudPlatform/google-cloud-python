@@ -10062,6 +10062,18 @@ def test_create_data_agent_rest_call_success(request_type):
                                 "property_graph_id": "property_graph_id_value",
                             }
                         ],
+                        "search_scope": {
+                            "include_project_ids": [
+                                "include_project_ids_value1",
+                                "include_project_ids_value2",
+                            ],
+                            "include_dataset_references": [
+                                {
+                                    "project_id": "project_id_value",
+                                    "dataset_id": "dataset_id_value",
+                                }
+                            ],
+                        },
                         "agent_context_reference": {
                             "context_set_id": "context_set_id_value"
                         },
@@ -10116,6 +10128,7 @@ def test_create_data_agent_rest_call_success(request_type):
                             "database_table_references": {},
                             "priority": "priority_value",
                             "request_tag": "request_tag_value",
+                            "graph_ids": ["graph_ids_value1", "graph_ids_value2"],
                         },
                         "agent_context_reference": {},
                     },
@@ -10500,6 +10513,18 @@ def test_create_data_agent_sync_rest_call_success(request_type):
                                 "property_graph_id": "property_graph_id_value",
                             }
                         ],
+                        "search_scope": {
+                            "include_project_ids": [
+                                "include_project_ids_value1",
+                                "include_project_ids_value2",
+                            ],
+                            "include_dataset_references": [
+                                {
+                                    "project_id": "project_id_value",
+                                    "dataset_id": "dataset_id_value",
+                                }
+                            ],
+                        },
                         "agent_context_reference": {
                             "context_set_id": "context_set_id_value"
                         },
@@ -10554,6 +10579,7 @@ def test_create_data_agent_sync_rest_call_success(request_type):
                             "database_table_references": {},
                             "priority": "priority_value",
                             "request_tag": "request_tag_value",
+                            "graph_ids": ["graph_ids_value1", "graph_ids_value2"],
                         },
                         "agent_context_reference": {},
                     },
@@ -10955,6 +10981,18 @@ def test_update_data_agent_rest_call_success(request_type):
                                 "property_graph_id": "property_graph_id_value",
                             }
                         ],
+                        "search_scope": {
+                            "include_project_ids": [
+                                "include_project_ids_value1",
+                                "include_project_ids_value2",
+                            ],
+                            "include_dataset_references": [
+                                {
+                                    "project_id": "project_id_value",
+                                    "dataset_id": "dataset_id_value",
+                                }
+                            ],
+                        },
                         "agent_context_reference": {
                             "context_set_id": "context_set_id_value"
                         },
@@ -11009,6 +11047,7 @@ def test_update_data_agent_rest_call_success(request_type):
                             "database_table_references": {},
                             "priority": "priority_value",
                             "request_tag": "request_tag_value",
+                            "graph_ids": ["graph_ids_value1", "graph_ids_value2"],
                         },
                         "agent_context_reference": {},
                     },
@@ -11397,6 +11436,18 @@ def test_update_data_agent_sync_rest_call_success(request_type):
                                 "property_graph_id": "property_graph_id_value",
                             }
                         ],
+                        "search_scope": {
+                            "include_project_ids": [
+                                "include_project_ids_value1",
+                                "include_project_ids_value2",
+                            ],
+                            "include_dataset_references": [
+                                {
+                                    "project_id": "project_id_value",
+                                    "dataset_id": "dataset_id_value",
+                                }
+                            ],
+                        },
                         "agent_context_reference": {
                             "context_set_id": "context_set_id_value"
                         },
@@ -11451,6 +11502,7 @@ def test_update_data_agent_sync_rest_call_success(request_type):
                             "database_table_references": {},
                             "priority": "priority_value",
                             "request_tag": "request_tag_value",
+                            "graph_ids": ["graph_ids_value1", "graph_ids_value2"],
                         },
                         "agent_context_reference": {},
                     },

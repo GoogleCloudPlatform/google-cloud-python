@@ -34,6 +34,8 @@ __protobuf__ = proto.module(
         "StreamingMode",
         "Modality",
         "FilterVersionAlias",
+        "MatchingScope",
+        "RuleFilterType",
         "FilterVersionSelector",
         "Template",
         "FloorSetting",
@@ -72,6 +74,13 @@ __protobuf__ = proto.module(
         "SdpContentLocation",
         "SdpFinding",
         "SdpRedactResult",
+        "WordList",
+        "Dictionary",
+        "Regex",
+        "ExclusionRule",
+        "FilterRule",
+        "FilterRuleSet",
+        "FilterRuleSettings",
         "PiAndJailbreakFilterResult",
         "MaliciousUriFilterResult",
         "VirusScanFilterResult",
@@ -233,8 +242,9 @@ class StreamingMode(proto.Enum):
 
 
 class Modality(proto.Enum):
-    r"""This enum is used in the TemplateMetadata message to indicate
-    the modality supported for sanitize API calls.
+    r"""This enum is used in the TemplateMetadata and
+    FloorSettingMetadata messages to indicate the modality supported
+    for sanitize API calls.
 
     Values:
         MODALITY_UNSPECIFIED (0):
@@ -267,20 +277,20 @@ class FilterVersionAlias(proto.Enum):
             The default value. If used, it will resolve to the
             ``STABLE`` alias.
         FILTER_VERSION_ALIAS_STABLE (1):
-            The ``STABLE`` alias points to the most recent stable model
+            ``STABLE`` alias points to the most recent stable model
             version. Using this alias means no code changes are required
             when a new model becomes the stable version.
         FILTER_VERSION_ALIAS_LATEST (2):
-            The ``LATEST`` alias points to the newest model version
+            ``LATEST`` alias points to the newest model version
             available. This version is subject to frequent revisions and
             offers SLO guarantees but does not assure stability,
             providing the most current security protections.
         FILTER_VERSION_ALIAS_LEGACY (3):
-            The ``LEGACY`` alias could be used for sanitization
-            operations for a transition period. New templates cannot be
-            created with this version.
+            ``LEGACY`` alias could be used for sanitization operations
+            for a transition period. New templates cannot be created
+            with this version.
         FILTER_VERSION_ALIAS_RETIRED (4):
-            The ``RETIRED`` alias could be used for versions that are no
+            ``RETIRED`` alias could be used for versions that are no
             longer available to be used. While new templates cannot be
             created with this alias, any existing template or request
             using ``RETIRED`` version will fall back to the current
@@ -292,6 +302,52 @@ class FilterVersionAlias(proto.Enum):
     FILTER_VERSION_ALIAS_LATEST = 2
     FILTER_VERSION_ALIAS_LEGACY = 3
     FILTER_VERSION_ALIAS_RETIRED = 4
+
+
+class MatchingScope(proto.Enum):
+    r"""Defines the scope of the match for a rule.
+
+    Additional values may be added to this enum in the future.
+
+    Values:
+        MATCHING_SCOPE_UNSPECIFIED (0):
+            Unspecified matching scope.
+        MATCHING_SCOPE_FULL_MATCH (1):
+            Full match.
+
+            - Dictionary: the dictionary match covers the
+              entire input content
+            - Regular expression: the regular expression
+              pattern matches the entire input content
+        MATCHING_SCOPE_PARTIAL_MATCH (2):
+            Partial match.
+
+            - Dictionary: at least one of the tokens in the
+              input content matches
+            - Regular expression: substring of the input
+              content matches the regular expression pattern
+    """
+
+    MATCHING_SCOPE_UNSPECIFIED = 0
+    MATCHING_SCOPE_FULL_MATCH = 1
+    MATCHING_SCOPE_PARTIAL_MATCH = 2
+
+
+class RuleFilterType(proto.Enum):
+    r"""Model Armor Filter types supported for rules.
+
+    Values:
+        RULE_FILTER_TYPE_UNSPECIFIED (0):
+            Unspecified filter type.
+        PROMPT_INJECTION_AND_JAILBREAK (1):
+            Prompt injection and jailbreak filter.
+        RESPONSIBLE_AI (2):
+            Responsible AI filter.
+    """
+
+    RULE_FILTER_TYPE_UNSPECIFIED = 0
+    PROMPT_INJECTION_AND_JAILBREAK = 1
+    RESPONSIBLE_AI = 2
 
 
 class FilterVersionSelector(proto.Message):
@@ -405,7 +461,8 @@ class Template(proto.Message):
                 This field is a member of `oneof`_ ``_filter_version_selector``.
             modalities (MutableSequence[google.cloud.modelarmor_v1.types.Modality]):
                 Optional. Specifies the modalities to scan.
-                If empty, only text modality will be scanned.
+                If not specified or empty, only text modality
+                will be scanned.
             data_residency_compliant (bool):
                 Optional. Indicates whether the template is
                 subject to data residency compliance. If true
@@ -1040,6 +1097,10 @@ class FilterConfig(proto.Message):
             filter settings.
         malicious_uri_filter_settings (google.cloud.modelarmor_v1.types.MaliciousUriFilterSettings):
             Optional. Malicious URI filter settings.
+        filter_rule_settings (google.cloud.modelarmor_v1.types.FilterRuleSettings):
+            Optional. Settings for customizing filter
+            rules. Note: This field is not supported in
+            FloorSetting and Streaming Sanitization APIs.
     """
 
     rai_settings: "RaiFilterSettings" = proto.Field(
@@ -1061,6 +1122,11 @@ class FilterConfig(proto.Message):
         proto.MESSAGE,
         number=4,
         message="MaliciousUriFilterSettings",
+    )
+    filter_rule_settings: "FilterRuleSettings" = proto.Field(
+        proto.MESSAGE,
+        number=7,
+        message="FilterRuleSettings",
     )
 
 
@@ -1715,9 +1781,10 @@ class RaiFilterResult(proto.Message):
             equal to or higher than the confidence level defined in
             configuration.
         rai_filter_type_results (MutableMapping[str, google.cloud.modelarmor_v1.types.RaiFilterResult.RaiFilterTypeResult]):
-            The map of RAI filter results where key is RAI filter type -
-            either of "sexually_explicit", "hate_speech", "harassment",
-            "dangerous", "violence", "sexually_suggestive".
+            The map of RAI filter results where the key is the RAI
+            filter type and the value is the RAI filter's result.
+            Allowed keys are "sexually_explicit", "hate_speech",
+            "harassment", and "dangerous".
     """
 
     class RaiFilterTypeResult(proto.Message):
@@ -2252,6 +2319,189 @@ class SdpRedactResult(proto.Message):
     extracted_image_text: str = proto.Field(
         proto.STRING,
         number=6,
+    )
+
+
+class WordList(proto.Message):
+    r"""Message defining a list of words or phrases.
+
+    Attributes:
+        words (MutableSequence[str]):
+            Required. Words or phrases defining the
+            dictionary. The dictionary must contain at least
+            one phrase and every phrase must contain at
+            least two characters that are letters or digits.
+    """
+
+    words: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=1,
+    )
+
+
+class Dictionary(proto.Message):
+    r"""Message defining a custom dictionary of words or phrases for
+    syntactic match.
+
+    Dictionary words are case-insensitive and all characters other than
+    letters and digits in the unicode `Basic Multilingual
+    Plane <https://en.wikipedia.org/wiki/Plane_%28Unicode%29#Basic_Multilingual_Plane>`__
+    will be replaced with whitespace when scanning for matches. For
+    example, the dictionary phrase ``Sam Johnson`` will match all three
+    phrases ``sam johnson``, ``Sam, Johnson``, and ``Sam (Johnson)``.
+    Additionally, the characters surrounding any match must be of a
+    different type than the adjacent characters within the word, so
+    letters must be next to non-letters and digits must be next to
+    non-digits. For example, the dictionary word ``jen`` will match the
+    first three letters of the text ``jen123`` but will return no
+    matches for ``jennifer``.
+
+    Dictionary words containing a large number of characters that are
+    not letters or digits may result in unexpected matches because such
+    characters are treated as whitespace. For details about the size
+    limits of dictionaries, see `Quotas and
+    limits <https://docs.cloud.google.com/model-armor/quotas>`__.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        word_list (google.cloud.modelarmor_v1.types.WordList):
+            Message defining a list of words or phrases.
+
+            This field is a member of `oneof`_ ``source``.
+    """
+
+    word_list: "WordList" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        oneof="source",
+        message="WordList",
+    )
+
+
+class Regex(proto.Message):
+    r"""Message defining a custom regular expression.
+
+    Attributes:
+        pattern (str):
+            Required. The regular expression pattern.
+    """
+
+    pattern: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class ExclusionRule(proto.Message):
+    r"""The rule that specifies conditions when filter detections are
+    excluded from results.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        dictionary (google.cloud.modelarmor_v1.types.Dictionary):
+            Dictionary which defines the rule.
+
+            This field is a member of `oneof`_ ``type``.
+        regex (google.cloud.modelarmor_v1.types.Regex):
+            Regular expression which defines the rule.
+
+            This field is a member of `oneof`_ ``type``.
+        matching_scope (google.cloud.modelarmor_v1.types.MatchingScope):
+            Optional. Specifies the scope of the input that should be
+            matched against the exclusion rule. If unspecified, defaults
+            to MATCHING_SCOPE_PARTIAL_MATCH.
+
+            This field is a member of `oneof`_ ``_matching_scope``.
+    """
+
+    dictionary: "Dictionary" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        oneof="type",
+        message="Dictionary",
+    )
+    regex: "Regex" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        oneof="type",
+        message="Regex",
+    )
+    matching_scope: "MatchingScope" = proto.Field(
+        proto.ENUM,
+        number=3,
+        optional=True,
+        enum="MatchingScope",
+    )
+
+
+class FilterRule(proto.Message):
+    r"""A single rule to be applied to filters, specified in
+    ``FilterRuleSet``.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        exclusion_rule (google.cloud.modelarmor_v1.types.ExclusionRule):
+            Exclusion rule.
+
+            This field is a member of `oneof`_ ``type``.
+    """
+
+    exclusion_rule: "ExclusionRule" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        oneof="type",
+        message="ExclusionRule",
+    )
+
+
+class FilterRuleSet(proto.Message):
+    r"""A set of rules that modifies the behavior of specific filters
+    based on the rules defined within the set.
+
+    Attributes:
+        filter_types (MutableSequence[google.cloud.modelarmor_v1.types.RuleFilterType]):
+            Required. List of filters this rule set is
+            applied to.
+        rules (MutableSequence[google.cloud.modelarmor_v1.types.FilterRule]):
+            Required. Set of rules to be applied to
+            filterTypes.
+    """
+
+    filter_types: MutableSequence["RuleFilterType"] = proto.RepeatedField(
+        proto.ENUM,
+        number=1,
+        enum="RuleFilterType",
+    )
+    rules: MutableSequence["FilterRule"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message="FilterRule",
+    )
+
+
+class FilterRuleSettings(proto.Message):
+    r"""Settings for customizing filter rules.
+
+    Attributes:
+        rule_sets (MutableSequence[google.cloud.modelarmor_v1.types.FilterRuleSet]):
+            Optional. List of rule sets to be applied to
+            filters.
+    """
+
+    rule_sets: MutableSequence["FilterRuleSet"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="FilterRuleSet",
     )
 
 

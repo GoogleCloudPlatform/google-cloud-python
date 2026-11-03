@@ -19,6 +19,7 @@ import google.api_core.exceptions
 from google.api_core import retry as retries
 import pytest
 
+from google.cloud.bigquery import _arrow_query
 from google.cloud.bigquery import _job_helpers
 from google.cloud.bigquery import enums
 from google.cloud.bigquery import retry
@@ -535,6 +536,97 @@ def test_query_and_wait_sets_job_creation_mode():
         },
         timeout=None,
     )
+
+
+@pytest.mark.parametrize(
+    ("default_job_creation_mode", "query_results_format", "expected", "job_id"),
+    [
+        # ARROW skips creating a job by default.
+        (None, "ARROW", "JOB_CREATION_OPTIONAL", None),
+        # A mode set on the client still wins.
+        ("JOB_CREATION_REQUIRED", "ARROW", "JOB_CREATION_REQUIRED", "abc"),
+        # Other formats keep sending no mode.
+        (None, None, None, "abc"),
+    ],
+)
+def test_query_and_wait_job_creation_mode_for_arrow(
+    default_job_creation_mode, query_results_format, expected, job_id
+):
+    client = mock.create_autospec(Client)
+    client.default_job_creation_mode = default_job_creation_mode
+    response = {
+        "queryId": "qid-123",
+        "jobComplete": True,
+    }
+    if job_id is not None:
+        response["jobReference"] = {
+            "projectId": "response-project",
+            "jobId": job_id,
+            "location": "response-location",
+        }
+    client._call_api.return_value = response
+
+    # These tests check the request, not whether pyarrow and
+    # google-cloud-bigquery-storage are installed.
+    with mock.patch.object(_arrow_query, "_check_dependencies"):
+        rows = _job_helpers.query_and_wait(
+            client,
+            query="SELECT 1",
+            location="request-location",
+            project="request-project",
+            job_config=None,
+            retry=None,
+            job_retry=None,
+            page_size=None,
+            max_results=None,
+            query_results_format=query_results_format,
+        )
+
+    request_body = client._call_api.call_args.kwargs["data"]
+    assert request_body.get("jobCreationMode") == expected
+    assert rows.query_id == "qid-123"
+    assert rows.job_id == job_id
+
+
+def test_query_and_wait_arrow_with_jobs_insert_creates_a_job():
+    # jobs.query doesn't support destination, so this goes through jobs.insert,
+    # which always creates a job.
+    client = mock.create_autospec(Client)
+    client.default_job_creation_mode = None
+    client._call_api.return_value = {
+        "jobReference": {
+            "projectId": "response-project",
+            "jobId": "abc",
+            "location": "response-location",
+        },
+        "query": {
+            "query": "SELECT 1",
+        },
+        "status": {"state": "DONE"},
+        "jobComplete": True,
+    }
+    job_config = job_query.QueryJobConfig(
+        destination="dest-project.dest_dset.dest_table",
+    )
+    # This test checks the request, not whether pyarrow and
+    # google-cloud-bigquery-storage are installed.
+    with mock.patch.object(_arrow_query, "_check_dependencies"):
+        _job_helpers.query_and_wait(
+            client,
+            query="SELECT 1",
+            location="request-location",
+            project="request-project",
+            job_config=job_config,
+            retry=None,
+            job_retry=None,
+            page_size=None,
+            max_results=None,
+            query_results_format="ARROW",
+        )
+
+    first_call = client._call_api.call_args_list[0]
+    assert first_call.kwargs["path"] == "/projects/request-project/jobs"
+    assert "jobCreationMode" not in first_call.kwargs["data"]
 
 
 def test_query_and_wait_sets_location():

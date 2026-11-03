@@ -266,12 +266,12 @@ from .cloud_sql_users import (
 )
 from .cloud_sql_workload_captures import (
     SqlWorkloadCapturesListRequest,
-    SqlWorkloadCapturesStartReplayRequest,
-    SqlWorkloadCapturesStartRequest,
-    SqlWorkloadCapturesStopReplayRequest,
-    SqlWorkloadCapturesStopRequest,
     WorkloadCapture,
     WorkloadCapturesListResponse,
+    WorkloadCapturesStartReplayRequest,
+    WorkloadCapturesStartRequest,
+    WorkloadCapturesStopReplayRequest,
+    WorkloadCapturesStopRequest,
 )
 
 __all__ = (
@@ -513,10 +513,10 @@ __all__ = (
     "UserPasswordValidationPolicy",
     "UsersListResponse",
     "SqlWorkloadCapturesListRequest",
-    "SqlWorkloadCapturesStartReplayRequest",
-    "SqlWorkloadCapturesStartRequest",
-    "SqlWorkloadCapturesStopReplayRequest",
-    "SqlWorkloadCapturesStopRequest",
     "WorkloadCapture",
     "WorkloadCapturesListResponse",
+    "WorkloadCapturesStartReplayRequest",
+    "WorkloadCapturesStartRequest",
+    "WorkloadCapturesStopReplayRequest",
+    "WorkloadCapturesStopRequest",
 )

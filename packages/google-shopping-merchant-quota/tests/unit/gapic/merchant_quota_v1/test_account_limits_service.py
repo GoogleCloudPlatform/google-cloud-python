@@ -2144,8 +2144,7 @@ def test_get_account_limit_rest_flattened():
         assert len(req.mock_calls) == 1
         _, args, _ = req.mock_calls[0]
         assert path_template.validate(
-            "%s/accounts/v1/{name=accounts/*/limits/*}" % client.transport._host,
-            args[1],
+            "%s/quota/v1/{name=accounts/*/limits/*}" % client.transport._host, args[1]
         )
 
 
@@ -2338,8 +2337,7 @@ def test_list_account_limits_rest_flattened():
         assert len(req.mock_calls) == 1
         _, args, _ = req.mock_calls[0]
         assert path_template.validate(
-            "%s/accounts/v1/{parent=accounts/*}/limits" % client.transport._host,
-            args[1],
+            "%s/quota/v1/{parent=accounts/*}/limits" % client.transport._host, args[1]
         )
 
 

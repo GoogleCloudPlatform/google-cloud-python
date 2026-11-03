@@ -1,0 +1,16 @@
+{
+    "api_description": "Design and share deployable application architectures.",
+    "api_id": "designcenter.googleapis.com",
+    "api_shortname": "designcenter",
+    "client_documentation": "https://cloud.google.com/python/docs/reference/google-cloud-designcenter/latest",
+    "default_version": "v1",
+    "distribution_name": "google-cloud-designcenter",
+    "issue_tracker": "https://issuetracker.google.com/issues/new?component=1638064",
+    "language": "python",
+    "library_type": "GAPIC_AUTO",
+    "name": "google-cloud-designcenter",
+    "name_pretty": "Design Center",
+    "product_documentation": "https://cloud.google.com/application-design-center/docs",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-python"
+}

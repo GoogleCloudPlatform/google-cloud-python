@@ -162,6 +162,114 @@ class TestDatabase(_BaseTest):
         database._sessions_manager.close.assert_called_once()
 
     @CrossSync.pytest
+    async def test_req_id_prefix_and_caching(self):
+        from google.cloud.spanner_v1.request_id_header import (
+            REQ_ID_VERSION,
+            REQ_RAND_PROCESS_ID,
+        )
+
+        instance = _Instance(self.INSTANCE_NAME)
+        database = await self._make_one(self.DATABASE_ID, instance)
+        database._channel_id = 42
+        self.assertNotIn("_req_id_prefix", database.__dict__)
+
+        expected_prefix = (
+            f"{REQ_ID_VERSION}.{REQ_RAND_PROCESS_ID}.{database._nth_client_id}.42."
+        )
+        self.assertEqual(database._req_id_prefix, expected_prefix)
+        self.assertEqual(database.__dict__["_req_id_prefix"], expected_prefix)
+
+        # Invalidate when channel_id changes
+        database._channel_id = 43
+        self.assertNotIn("_req_id_prefix", database.__dict__)
+        expected_prefix_2 = (
+            f"{REQ_ID_VERSION}.{REQ_RAND_PROCESS_ID}.{database._nth_client_id}.43."
+        )
+        self.assertEqual(database._req_id_prefix, expected_prefix_2)
+        self.assertEqual(database.__dict__["_req_id_prefix"], expected_prefix_2)
+
+    @CrossSync.pytest
+    async def test_database_request_id_methods(self):
+        from unittest import mock
+
+        from google.api_core.exceptions import GoogleAPICallError
+
+        from google.cloud.spanner_v1.request_id_header import (
+            REQ_ID_HEADER_KEY,
+            X_GOOG_SPANNER_REQUEST_ID_SPAN_ATTR,
+        )
+
+        instance = _Instance(self.INSTANCE_NAME)
+        database = await self._make_one(self.DATABASE_ID, instance)
+        database._channel_id = 1
+
+        mock_rec_span = mock.Mock()
+        mock_rec_span.is_recording.return_value = True
+        mock_non_rec_span = mock.Mock()
+        mock_non_rec_span.is_recording.return_value = False
+
+        # Test metadata_with_request_id
+        meta = database.metadata_with_request_id(
+            5, 2, [("foo", "bar")], span=mock_rec_span
+        )
+        expected_id = f"{database._req_id_prefix}5.2"
+        self.assertEqual(meta, [("foo", "bar"), (REQ_ID_HEADER_KEY, expected_id)])
+        mock_rec_span.set_attribute.assert_called_once_with(
+            X_GOOG_SPANNER_REQUEST_ID_SPAN_ATTR, expected_id
+        )
+
+        meta_no_prior = database.metadata_with_request_id(
+            5, 3, prior_metadata=None, span=mock_non_rec_span
+        )
+        self.assertEqual(
+            meta_no_prior, [(REQ_ID_HEADER_KEY, f"{database._req_id_prefix}5.3")]
+        )
+        mock_non_rec_span.set_attribute.assert_not_called()
+
+        # Test metadata_and_request_id
+        mock_rec_span.reset_mock()
+        meta2, req_id = database.metadata_and_request_id(6, 1, span=mock_rec_span)
+        expected_id_2 = f"{database._req_id_prefix}6.1"
+        self.assertEqual(req_id, expected_id_2)
+        self.assertEqual(meta2, [(REQ_ID_HEADER_KEY, expected_id_2)])
+        mock_rec_span.set_attribute.assert_called_once_with(
+            X_GOOG_SPANNER_REQUEST_ID_SPAN_ATTR, expected_id_2
+        )
+
+        meta2_prior, _ = database.metadata_and_request_id(
+            6, 2, prior_metadata=[("k", "v")], span=mock_non_rec_span
+        )
+        self.assertEqual(
+            meta2_prior,
+            [("k", "v"), (REQ_ID_HEADER_KEY, f"{database._req_id_prefix}6.2")],
+        )
+        mock_non_rec_span.set_attribute.assert_not_called()
+
+        # Test with_error_augmentation
+        mock_rec_span.reset_mock()
+        meta3, error_aug = database.with_error_augmentation(
+            7, 1, prior_metadata=[("a", "b")], span=mock_rec_span
+        )
+        expected_id_3 = f"{database._req_id_prefix}7.1"
+        self.assertEqual(meta3, [("a", "b"), (REQ_ID_HEADER_KEY, expected_id_3)])
+        mock_rec_span.set_attribute.assert_called_once_with(
+            X_GOOG_SPANNER_REQUEST_ID_SPAN_ATTR, expected_id_3
+        )
+
+        err = GoogleAPICallError("mock error")
+        with self.assertRaises(GoogleAPICallError):
+            with error_aug:
+                raise err
+        self.assertEqual(err.request_id, expected_id_3)
+
+        meta3_no_prior, _ = database.with_error_augmentation(
+            7, 2, prior_metadata=None, span=mock_non_rec_span
+        )
+        self.assertEqual(
+            meta3_no_prior, [(REQ_ID_HEADER_KEY, f"{database._req_id_prefix}7.2")]
+        )
+
+    @CrossSync.pytest
     async def test_sessions_manager_close(self):
         from google.cloud.spanner_v1._async.database_sessions_manager import (
             DatabaseSessionsManager,

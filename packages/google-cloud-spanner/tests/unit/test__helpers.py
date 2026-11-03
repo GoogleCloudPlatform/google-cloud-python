@@ -3154,3 +3154,197 @@ class TestCreateSpannerOmniTransport(unittest.TestCase):
                 self.assertIsInstance(
                     mock_factory.call_args[1]["credentials"], AnonymousCredentials
                 )
+
+
+class TestRequestIdHelpers(unittest.TestCase):
+    def test_build_request_id(self):
+        from google.cloud.spanner_v1.request_id_header import (
+            REQ_ID_VERSION,
+            REQ_RAND_PROCESS_ID,
+            build_request_id,
+        )
+
+        req_id = build_request_id(1, 2, 3, 4)
+        expected = f"{REQ_ID_VERSION}.{REQ_RAND_PROCESS_ID}.1.2.3.4"
+        self.assertEqual(req_id, expected)
+
+    def test_with_request_id(self):
+        from google.cloud.spanner_v1.request_id_header import (
+            REQ_ID_HEADER_KEY,
+            REQ_ID_VERSION,
+            REQ_RAND_PROCESS_ID,
+            with_request_id,
+        )
+
+        expected_id = f"{REQ_ID_VERSION}.{REQ_RAND_PROCESS_ID}.10.20.30.1"
+        metadata, req_id = with_request_id(10, 20, 30, 1, [("prior", "val")])
+        self.assertEqual(req_id, expected_id)
+        self.assertEqual(metadata, [("prior", "val"), (REQ_ID_HEADER_KEY, expected_id)])
+
+    def test_with_request_id_metadata_only(self):
+        from google.cloud.spanner_v1.request_id_header import (
+            REQ_ID_HEADER_KEY,
+            REQ_ID_VERSION,
+            REQ_RAND_PROCESS_ID,
+            with_request_id_metadata_only,
+        )
+
+        expected_id = f"{REQ_ID_VERSION}.{REQ_RAND_PROCESS_ID}.10.20.30.1"
+        metadata = with_request_id_metadata_only(10, 20, 30, 1)
+        self.assertEqual(metadata, [(REQ_ID_HEADER_KEY, expected_id)])
+
+    def test_with_request_id_span_recording(self):
+        from unittest import mock
+
+        from google.cloud.spanner_v1.request_id_header import (
+            X_GOOG_SPANNER_REQUEST_ID_SPAN_ATTR,
+            with_request_id,
+        )
+
+        mock_span = mock.Mock()
+        mock_span.is_recording.return_value = True
+
+        _, req_id = with_request_id(1, 1, 1, 1, span=mock_span)
+        mock_span.set_attribute.assert_called_once_with(
+            X_GOOG_SPANNER_REQUEST_ID_SPAN_ATTR, req_id
+        )
+
+    def test_with_request_id_span_non_recording(self):
+        from unittest import mock
+
+        from google.cloud.spanner_v1.request_id_header import with_request_id
+
+        mock_span = mock.Mock()
+        mock_span.is_recording.return_value = False
+
+        with_request_id(1, 1, 1, 1, span=mock_span)
+        mock_span.set_attribute.assert_not_called()
+
+    def test_augment_errors_with_request_id_success(self):
+        from google.cloud.spanner_v1._helpers import _augment_errors_with_request_id
+
+        with _augment_errors_with_request_id("test-req-id"):
+            val = 42
+        self.assertEqual(val, 42)
+
+    def test_augment_errors_with_request_id_google_api_call_error(self):
+        from google.api_core.exceptions import GoogleAPICallError
+
+        from google.cloud.spanner_v1._helpers import _augment_errors_with_request_id
+
+        err = GoogleAPICallError("something went wrong")
+        with self.assertRaises(GoogleAPICallError) as ctx:
+            with _augment_errors_with_request_id("test-req-id"):
+                raise err
+
+        raised = ctx.exception
+        self.assertIs(raised, err)
+        self.assertEqual(getattr(raised, "request_id", None), "test-req-id")
+        self.assertIn("request_id = test-req-id", raised.message)
+
+    def test_augment_errors_with_request_id_non_api_error(self):
+        from google.cloud.spanner_v1._helpers import _augment_errors_with_request_id
+
+        err = ValueError("regular error")
+        with self.assertRaises(ValueError) as ctx:
+            with _augment_errors_with_request_id("test-req-id"):
+                raise err
+
+        raised = ctx.exception
+        self.assertIs(raised, err)
+        self.assertFalse(hasattr(raised, "request_id"))
+
+    def test_atomic_counter_slots(self):
+        from google.cloud.spanner_v1._helpers import AtomicCounter
+
+        counter = AtomicCounter()
+        self.assertFalse(hasattr(counter, "__dict__"))
+        self.assertEqual(counter.value, 0)
+        self.assertEqual(counter.increment(), 1)
+        self.assertEqual(counter.value, 1)
+        counter += 2
+        self.assertEqual(counter.value, 3)
+        counter.reset()
+        self.assertEqual(counter.value, 0)
+
+    def test_helpers_metadata_with_request_id_wrappers(self):
+        from google.cloud.spanner_v1._helpers import (
+            _metadata_with_request_id,
+            _metadata_with_request_id_and_req_id,
+        )
+        from google.cloud.spanner_v1.request_id_header import (
+            REQ_ID_HEADER_KEY,
+            REQ_ID_VERSION,
+            REQ_RAND_PROCESS_ID,
+        )
+
+        expected_id = f"{REQ_ID_VERSION}.{REQ_RAND_PROCESS_ID}.1.2.3.4"
+        meta = _metadata_with_request_id(1, 2, 3, 4, [("key", "val")])
+        self.assertEqual(meta, [("key", "val"), (REQ_ID_HEADER_KEY, expected_id)])
+
+        meta_tuple, req_id = _metadata_with_request_id_and_req_id(1, 2, 3, 4)
+        self.assertEqual(req_id, expected_id)
+        self.assertEqual(meta_tuple, [(REQ_ID_HEADER_KEY, expected_id)])
+
+    def test_parse_request_id(self):
+        from google.cloud.spanner_v1.request_id_header import parse_request_id
+
+        parsed = parse_request_id("1.12345.2.3.4.5")
+        self.assertEqual(parsed, (1, 12345, 2, 3, 4, 5))
+
+    def test_with_request_id_metadata_only_span_recording(self):
+        from unittest import mock
+
+        from google.cloud.spanner_v1.request_id_header import (
+            REQ_ID_HEADER_KEY,
+            REQ_ID_VERSION,
+            REQ_RAND_PROCESS_ID,
+            X_GOOG_SPANNER_REQUEST_ID_SPAN_ATTR,
+            with_request_id_metadata_only,
+        )
+
+        mock_span = mock.Mock()
+        mock_span.is_recording.return_value = True
+
+        expected_id = f"{REQ_ID_VERSION}.{REQ_RAND_PROCESS_ID}.1.2.3.4"
+        meta = with_request_id_metadata_only(
+            1, 2, 3, 4, other_metadata=[("k", "v")], span=mock_span
+        )
+        self.assertEqual(meta, [("k", "v"), (REQ_ID_HEADER_KEY, expected_id)])
+        mock_span.set_attribute.assert_called_once_with(
+            X_GOOG_SPANNER_REQUEST_ID_SPAN_ATTR, expected_id
+        )
+
+    def test_with_request_id_metadata_only_span_non_recording(self):
+        from unittest import mock
+
+        from google.cloud.spanner_v1.request_id_header import (
+            with_request_id_metadata_only,
+        )
+
+        mock_span = mock.Mock()
+        mock_span.is_recording.return_value = False
+
+        with_request_id_metadata_only(1, 2, 3, 4, span=mock_span)
+        mock_span.set_attribute.assert_not_called()
+
+    def test_cached_prefix_descriptor(self):
+        from google.cloud.spanner_v1.request_id_header import (
+            REQ_ID_VERSION,
+            REQ_RAND_PROCESS_ID,
+            _CachedPrefixDescriptor,
+        )
+
+        class DummyDB:
+            _nth_client_id = 5
+            _channel_id = 10
+            _req_id_prefix = _CachedPrefixDescriptor()
+
+        # Class access returns descriptor instance
+        self.assertIsInstance(DummyDB._req_id_prefix, _CachedPrefixDescriptor)
+
+        # Instance access computes and caches in __dict__
+        db = DummyDB()
+        expected = f"{REQ_ID_VERSION}.{REQ_RAND_PROCESS_ID}.5.10."
+        self.assertEqual(db._req_id_prefix, expected)
+        self.assertEqual(db.__dict__["_req_id_prefix"], expected)

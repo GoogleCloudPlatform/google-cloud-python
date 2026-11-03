@@ -25,10 +25,10 @@ from google.cloud.sqladmin_v1beta4.types import cloud_sql_resources
 __protobuf__ = proto.module(
     package="google.cloud.sql.v1beta4",
     manifest={
-        "SqlWorkloadCapturesStartRequest",
-        "SqlWorkloadCapturesStopRequest",
-        "SqlWorkloadCapturesStartReplayRequest",
-        "SqlWorkloadCapturesStopReplayRequest",
+        "WorkloadCapturesStartRequest",
+        "WorkloadCapturesStopRequest",
+        "WorkloadCapturesStartReplayRequest",
+        "WorkloadCapturesStopReplayRequest",
         "SqlWorkloadCapturesListRequest",
         "WorkloadCapturesListResponse",
         "WorkloadCapture",
@@ -36,7 +36,7 @@ __protobuf__ = proto.module(
 )
 
 
-class SqlWorkloadCapturesStartRequest(proto.Message):
+class WorkloadCapturesStartRequest(proto.Message):
     r"""Request to start recording traffic from the primary instance
     (captured workload).
 
@@ -69,7 +69,7 @@ class SqlWorkloadCapturesStartRequest(proto.Message):
     )
 
 
-class SqlWorkloadCapturesStopRequest(proto.Message):
+class WorkloadCapturesStopRequest(proto.Message):
     r"""Request to stop recording traffic from the primary instance.
 
     Attributes:
@@ -101,7 +101,7 @@ class SqlWorkloadCapturesStopRequest(proto.Message):
     )
 
 
-class SqlWorkloadCapturesStartReplayRequest(proto.Message):
+class WorkloadCapturesStartReplayRequest(proto.Message):
     r"""Request to start executing a captured workload on a replay
     instance (the Cloud SQL instance where the recorded SQL queries
     are executed).
@@ -141,7 +141,7 @@ class SqlWorkloadCapturesStartReplayRequest(proto.Message):
     )
 
 
-class SqlWorkloadCapturesStopReplayRequest(proto.Message):
+class WorkloadCapturesStopReplayRequest(proto.Message):
     r"""Request to stop an active workload replay on a target Cloud
     SQL replay instance.
 

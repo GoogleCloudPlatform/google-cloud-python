@@ -1086,13 +1086,9 @@ def _arrow_query_response(**fields):
 @pytest.mark.parametrize(
     "response",
     [
-        _arrow_query_response(pageRowCount="10", totalRows="25", pageToken="next"),
         _arrow_query_response(jobComplete=False),
-        # A cache hit too large to return inline has no pageRowCount and
-        # totalRows is 0, but it still has a pageToken.
-        _arrow_query_response(totalRows="0", pageToken="next"),
     ],
-    ids=["some_rows_inline", "no_rows_inline", "cache_hit_no_rows_inline"],
+    ids=["no_rows_inline"],
 )
 def test_query_and_wait_arrow_waits_without_fetching_rows(response):
     client = mock.MagicMock(spec=Client)
@@ -1109,6 +1105,31 @@ def test_query_and_wait_arrow_waits_without_fetching_rows(response):
     assert wait_or_cancel.call_args.kwargs["page_size"] == 0
     # page_size still sets the size of the first page from jobs.query.
     assert client._call_api.call_args.kwargs["data"]["maxResults"] == 10
+
+
+@pytest.mark.parametrize(
+    "response",
+    [
+        _arrow_query_response(pageRowCount="10", totalRows="25", pageToken="next"),
+        # A cache hit too large to return inline has no rows, but it still has
+        # a pageToken. Older BigQuery versions send totalRows "0" and newer
+        # ones leave it out.
+        _arrow_query_response(totalRows="0", pageToken="next"),
+        _arrow_query_response(pageToken="next"),
+    ],
+    ids=["some_rows_inline", "cache_hit_total_rows_0", "cache_hit_no_total_rows"],
+)
+def test_query_and_wait_arrow_complete_with_page_token_doesnt_wait(response):
+    client = mock.MagicMock(spec=Client)
+    client._call_api.return_value = response
+
+    with mock.patch.object(_job_helpers, "_wait_or_cancel") as wait_or_cancel:
+        rows = _query_and_wait(client, query_results_format="ARROW")
+
+    wait_or_cancel.assert_not_called()
+    # Not an _EmptyRowIterator: the RowIterator reads the rest of the rows
+    # from the job's ReadRows stream.
+    assert type(rows) is RowIterator
 
 
 def test_query_and_wait_arrow_all_rows_inline_doesnt_wait():

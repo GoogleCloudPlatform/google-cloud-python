@@ -26,7 +26,6 @@ import queue
 import threading
 import time
 import uuid
-from contextlib import contextmanager
 
 import proto
 from google.api_core import datetime_helpers
@@ -1115,6 +1114,8 @@ def _get_retry_delay(cause, attempts, default_retry_delay=None):
 
 
 class AtomicCounter:
+    __slots__ = ("__lock", "__value")
+
     def __init__(self, start_value=0):
         self.__lock = threading.Lock()
         self.__value = start_value
@@ -1156,35 +1157,51 @@ class AtomicCounter:
             self.__value = 0
 
 
-def _metadata_with_request_id(*args, **kwargs):
+def _metadata_with_request_id(
+    client_id, channel_id, nth_request, attempt, other_metadata=None, span=None
+):
     """Return metadata with request ID header.
 
     This function returns only the metadata list (not a tuple),
     maintaining backward compatibility with existing code.
 
     Args:
-        *args: Arguments to pass to with_request_id
-        **kwargs: Keyword arguments to pass to with_request_id
+        client_id: The client identifier.
+        channel_id: The channel identifier.
+        nth_request: The request sequence number.
+        attempt: The attempt sequence number.
+        other_metadata: Prior metadata list.
+        span: Optional trace span.
 
     Returns:
         list: gRPC metadata with request ID header
     """
-    return with_request_id_metadata_only(*args, **kwargs)
+    return with_request_id_metadata_only(
+        client_id, channel_id, nth_request, attempt, other_metadata, span
+    )
 
 
-def _metadata_with_request_id_and_req_id(*args, **kwargs):
+def _metadata_with_request_id_and_req_id(
+    client_id, channel_id, nth_request, attempt, other_metadata=None, span=None
+):
     """Return both metadata and request ID string.
 
     This is used when we need to augment errors with the request ID.
 
     Args:
-        *args: Arguments to pass to with_request_id
-        **kwargs: Keyword arguments to pass to with_request_id
+        client_id: The client identifier.
+        channel_id: The channel identifier.
+        nth_request: The request sequence number.
+        attempt: The attempt sequence number.
+        other_metadata: Prior metadata list.
+        span: Optional trace span.
 
     Returns:
         tuple: (metadata, request_id)
     """
-    return with_request_id(*args, **kwargs)
+    return with_request_id(
+        client_id, channel_id, nth_request, attempt, other_metadata, span
+    )
 
 
 def _augment_error_with_request_id(error, request_id=None):
@@ -1200,22 +1217,21 @@ def _augment_error_with_request_id(error, request_id=None):
     return wrap_with_request_id(error, request_id)
 
 
-@contextmanager
-def _augment_errors_with_request_id(request_id):
-    """Context manager to augment exceptions with request ID.
+class _augment_errors_with_request_id:
+    """Context manager to augment exceptions with request ID."""
 
-    Args:
-        request_id (str): The request ID to include in exceptions
+    __slots__ = ("_request_id",)
 
-    Yields:
-        None
-    """
-    try:
-        yield
-    except Exception as exc:
-        augmented = _augment_error_with_request_id(exc, request_id)
-        # Use exception chaining to preserve the original exception
-        raise augmented from exc
+    def __init__(self, request_id):
+        self._request_id = request_id
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_val is not None:
+            _augment_error_with_request_id(exc_val, self._request_id)
+        return False
 
 
 def _merge_Transaction_Options(

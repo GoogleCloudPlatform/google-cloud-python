@@ -55,7 +55,7 @@ def run_table_operations(project_id, instance_id, table_id):
     client = bigtable.Client(project=project_id, admin=True)
     instance = client.instance(instance_id)
     with create_table_cm(project_id, instance_id, table_id, verbose=False) as table:
-        # [START bigtable_list_tables]
+        # [START bigtable_list_tables_legacy]
         tables = instance.list_tables()
         print("Listing tables in current project...")
         if tables != []:
@@ -63,9 +63,9 @@ def run_table_operations(project_id, instance_id, table_id):
                 print(tbl.table_id)
         else:
             print("No table exists in current project...")
-        # [END bigtable_list_tables]
+        # [END bigtable_list_tables_legacy]
 
-        # [START bigtable_create_family_gc_max_age]
+        # [START bigtable_create_family_gc_max_age_legacy]
         print("Creating column family cf1 with with MaxAge GC Rule...")
         # Create a column family with GC policy : maximum age
         # where age = current time minus cell timestamp
@@ -76,9 +76,9 @@ def run_table_operations(project_id, instance_id, table_id):
         column_family1 = table.column_family("cf1", max_age_rule)
         column_family1.create()
         print("Created column family cf1 with MaxAge GC Rule.")
-        # [END bigtable_create_family_gc_max_age]
+        # [END bigtable_create_family_gc_max_age_legacy]
 
-        # [START bigtable_create_family_gc_max_versions]
+        # [START bigtable_create_family_gc_max_versions_legacy]
         print("Creating column family cf2 with max versions GC rule...")
         # Create a column family with GC policy : most recent N versions
         # where 1 = most recent version
@@ -89,9 +89,9 @@ def run_table_operations(project_id, instance_id, table_id):
         column_family2 = table.column_family("cf2", max_versions_rule)
         column_family2.create()
         print("Created column family cf2 with Max Versions GC Rule.")
-        # [END bigtable_create_family_gc_max_versions]
+        # [END bigtable_create_family_gc_max_versions_legacy]
 
-        # [START bigtable_create_family_gc_union]
+        # [START bigtable_create_family_gc_union_legacy]
         print("Creating column family cf3 with union GC rule...")
         # Create a column family with GC policy to drop data that matches
         # at least one condition.
@@ -107,9 +107,9 @@ def run_table_operations(project_id, instance_id, table_id):
         column_family3 = table.column_family("cf3", union_rule)
         column_family3.create()
         print("Created column family cf3 with Union GC rule")
-        # [END bigtable_create_family_gc_union]
+        # [END bigtable_create_family_gc_union_legacy]
 
-        # [START bigtable_create_family_gc_intersection]
+        # [START bigtable_create_family_gc_intersection_legacy]
         print("Creating column family cf4 with Intersection GC rule...")
         # Create a column family with GC policy to drop data that matches
         # all conditions
@@ -125,9 +125,9 @@ def run_table_operations(project_id, instance_id, table_id):
         column_family4 = table.column_family("cf4", intersection_rule)
         column_family4.create()
         print("Created column family cf4 with Intersection GC rule.")
-        # [END bigtable_create_family_gc_intersection]
+        # [END bigtable_create_family_gc_intersection_legacy]
 
-        # [START bigtable_create_family_gc_nested]
+        # [START bigtable_create_family_gc_nested_legacy]
         print("Creating column family cf5 with a Nested GC rule...")
         # Create a column family with nested GC policies.
         # Create a nested GC rule:
@@ -148,9 +148,9 @@ def run_table_operations(project_id, instance_id, table_id):
         column_family5 = table.column_family("cf5", nested_rule)
         column_family5.create()
         print("Created column family cf5 with a Nested GC rule.")
-        # [END bigtable_create_family_gc_nested]
+        # [END bigtable_create_family_gc_nested_legacy]
 
-        # [START bigtable_list_column_families]
+        # [START bigtable_list_column_families_legacy]
         print("Printing Column Family and GC Rule for all column families...")
         column_families = table.list_column_families()
         for column_family_name, gc_rule in sorted(column_families.items()):
@@ -172,30 +172,30 @@ def run_table_operations(project_id, instance_id, table_id):
             #             }
             #           }
             #         }
-        # [END bigtable_list_column_families]
+        # [END bigtable_list_column_families_legacy]
 
         print("Print column family cf1 GC rule before update...")
         print("Column Family: cf1")
         print(column_family1.to_pb())
 
-        # [START bigtable_update_gc_rule]
+        # [START bigtable_update_gc_rule_legacy]
         print("Updating column family cf1 GC rule...")
         # Update the column family cf1 to update the GC rule
         column_family1 = table.column_family("cf1", column_family.MaxVersionsGCRule(1))
         column_family1.update()
         print("Updated column family cf1 GC rule\n")
-        # [END bigtable_update_gc_rule]
+        # [END bigtable_update_gc_rule_legacy]
 
         print("Print column family cf1 GC rule after update...")
         print("Column Family: cf1")
         print(column_family1.to_pb())
 
-        # [START bigtable_delete_family]
+        # [START bigtable_delete_family_legacy]
         print("Delete a column family cf2...")
         # Delete a column family
         column_family2.delete()
         print("Column family cf2 deleted successfully.")
-        # [END bigtable_delete_family]
+        # [END bigtable_delete_family_legacy]
 
         print(
             'execute command "python tableadmin.py delete [project_id] \
@@ -220,7 +220,7 @@ def delete_table(project_id, instance_id, table_id):
     instance = client.instance(instance_id)
     table = instance.table(table_id)
 
-    # [START bigtable_delete_table]
+    # [START bigtable_delete_table_legacy]
     # Delete the entire table
 
     print("Checking if table {} exists...".format(table_id))
@@ -231,7 +231,7 @@ def delete_table(project_id, instance_id, table_id):
         print("Deleted {} table.".format(table_id))
     else:
         print("Table {} does not exists.".format(table_id))
-    # [END bigtable_delete_table]
+    # [END bigtable_delete_table_legacy]
 
 
 if __name__ == "__main__":

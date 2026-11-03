@@ -104,6 +104,7 @@ from google.cloud.oracledatabase_v1.types import (
     goldengate_deployment_type,
     goldengate_deployment_version,
     minor_version,
+    odb_dns_zone,
     odb_network,
     odb_subnet,
     oracledatabase,
@@ -129,6 +130,7 @@ from google.cloud.oracledatabase_v1.types import (
 from google.cloud.oracledatabase_v1.types import (
     goldengate_deployment as gco_goldengate_deployment,
 )
+from google.cloud.oracledatabase_v1.types import odb_dns_zone as gco_odb_dns_zone
 from google.cloud.oracledatabase_v1.types import odb_network as gco_odb_network
 from google.cloud.oracledatabase_v1.types import odb_subnet as gco_odb_subnet
 
@@ -850,6 +852,30 @@ class OracleDatabaseClient(metaclass=OracleDatabaseClientMeta):
         """Parses a network path into its component segments."""
         m = re.match(
             r"^projects/(?P<project>.+?)/global/networks/(?P<network>.+?)$", path
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def odb_dns_zone_path(
+        project: str,
+        location: str,
+        odb_network: str,
+        odb_dns_zone: str,
+    ) -> str:
+        """Returns a fully-qualified odb_dns_zone string."""
+        return "projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbDnsZones/{odb_dns_zone}".format(
+            project=project,
+            location=location,
+            odb_network=odb_network,
+            odb_dns_zone=odb_dns_zone,
+        )
+
+    @staticmethod
+    def parse_odb_dns_zone_path(path: str) -> Dict[str, str]:
+        """Parses a odb_dns_zone path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/odbNetworks/(?P<odb_network>.+?)/odbDnsZones/(?P<odb_dns_zone>.+?)$",
+            path,
         )
         return m.groupdict() if m else {}
 
@@ -6531,6 +6557,515 @@ class OracleDatabaseClient(metaclass=OracleDatabaseClientMeta):
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
         rpc = self._transport._wrapped_methods[self._transport.delete_odb_subnet]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            empty_pb2.Empty,
+            metadata_type=oracledatabase.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def list_odb_dns_zones(
+        self,
+        request: Optional[Union[odb_dns_zone.ListOdbDnsZonesRequest, dict]] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListOdbDnsZonesPager:
+        r"""Lists all the ODB DNS Zones in a given ODB Network.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            def sample_list_odb_dns_zones():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseClient()
+
+                # Initialize request argument(s)
+                request = oracledatabase_v1.ListOdbDnsZonesRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_odb_dns_zones(request=request)
+
+                # Handle the response
+                for response in page_result:
+                    print(response)
+
+        Args:
+            request (Union[google.cloud.oracledatabase_v1.types.ListOdbDnsZonesRequest, dict]):
+                The request object. The request for ``OdbDnsZone.List``.
+            parent (str):
+                Required. The parent value for the OdbDnsZone in the
+                following format:
+                projects/{project}/locations/{location}/odbNetworks/{odb_network}.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.oracledatabase_v1.services.oracle_database.pagers.ListOdbDnsZonesPager:
+                The response for OdbDnsZone.List.
+
+                Iterating over this object will yield results and
+                resolve additional pages automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, odb_dns_zone.ListOdbDnsZonesRequest):
+            request = odb_dns_zone.ListOdbDnsZonesRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.list_odb_dns_zones]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__iter__` convenience method.
+        response = pagers.ListOdbDnsZonesPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def get_odb_dns_zone(
+        self,
+        request: Optional[Union[odb_dns_zone.GetOdbDnsZoneRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> odb_dns_zone.OdbDnsZone:
+        r"""Gets details of a single ODB DNS Zone.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            def sample_get_odb_dns_zone():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseClient()
+
+                # Initialize request argument(s)
+                request = oracledatabase_v1.GetOdbDnsZoneRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.get_odb_dns_zone(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.oracledatabase_v1.types.GetOdbDnsZoneRequest, dict]):
+                The request object. The request for ``OdbDnsZone.Get``.
+            name (str):
+                Required. The name of the OdbDnsZone in the following
+                format:
+                projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbDnsZones/{odb_dns_zone}.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.oracledatabase_v1.types.OdbDnsZone:
+                Represents OdbDnsZone resource.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, odb_dns_zone.GetOdbDnsZoneRequest):
+            request = odb_dns_zone.GetOdbDnsZoneRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.get_odb_dns_zone]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def create_odb_dns_zone(
+        self,
+        request: Optional[Union[gco_odb_dns_zone.CreateOdbDnsZoneRequest, dict]] = None,
+        *,
+        parent: Optional[str] = None,
+        odb_dns_zone: Optional[gco_odb_dns_zone.OdbDnsZone] = None,
+        odb_dns_zone_id: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Creates a new ODB DNS Zone in a given ODB Network.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            def sample_create_odb_dns_zone():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseClient()
+
+                # Initialize request argument(s)
+                odb_dns_zone = oracledatabase_v1.OdbDnsZone()
+                odb_dns_zone.domain = "domain_value"
+
+                request = oracledatabase_v1.CreateOdbDnsZoneRequest(
+                    parent="parent_value",
+                    odb_dns_zone_id="odb_dns_zone_id_value",
+                    odb_dns_zone=odb_dns_zone,
+                )
+
+                # Make the request
+                operation = client.create_odb_dns_zone(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.oracledatabase_v1.types.CreateOdbDnsZoneRequest, dict]):
+                The request object. The request for ``OdbDnsZone.Create``.
+            parent (str):
+                Required. The parent value for the OdbDnsZone in the
+                following format:
+                projects/{project}/locations/{location}/odbNetworks/{odb_network}.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            odb_dns_zone (google.cloud.oracledatabase_v1.types.OdbDnsZone):
+                Required. Details of the OdbDnsZone
+                instance to create.
+
+                This corresponds to the ``odb_dns_zone`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            odb_dns_zone_id (str):
+                Required. The ID of the OdbDnsZone to create. This value
+                is restricted to
+                (^\ `a-z <[a-z0-9-]{0,61}[a-z0-9]>`__?$) and must be a
+                maximum of 63 characters in length. The value must start
+                with a letter and end with a letter or a number.
+
+                This corresponds to the ``odb_dns_zone_id`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.oracledatabase_v1.types.OdbDnsZone`
+                Represents OdbDnsZone resource.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent, odb_dns_zone, odb_dns_zone_id]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, gco_odb_dns_zone.CreateOdbDnsZoneRequest):
+            request = gco_odb_dns_zone.CreateOdbDnsZoneRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if parent is not None:
+                request.parent = parent
+            if odb_dns_zone is not None:
+                request.odb_dns_zone = odb_dns_zone
+            if odb_dns_zone_id is not None:
+                request.odb_dns_zone_id = odb_dns_zone_id
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.create_odb_dns_zone]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._validate_universe_domain()
+
+        # Send the request.
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation.from_gapic(
+            response,
+            self._transport.operations_client,
+            gco_odb_dns_zone.OdbDnsZone,
+            metadata_type=oracledatabase.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    def delete_odb_dns_zone(
+        self,
+        request: Optional[Union[odb_dns_zone.DeleteOdbDnsZoneRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation.Operation:
+        r"""Deletes a single ODB DNS Zone.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            def sample_delete_odb_dns_zone():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseClient()
+
+                # Initialize request argument(s)
+                request = oracledatabase_v1.DeleteOdbDnsZoneRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                operation = client.delete_odb_dns_zone(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.oracledatabase_v1.types.DeleteOdbDnsZoneRequest, dict]):
+                The request object. The request for ``OdbDnsZone.Delete``.
+            name (str):
+                Required. The name of the resource in the following
+                format:
+                projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbDnsZones/{odb_dns_zone}.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation.Operation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.protobuf.empty_pb2.Empty` A generic empty message that you can re-use to avoid defining duplicated
+                   empty messages in your APIs. A typical example is to
+                   use it as the request or the response type of an API
+                   method. For instance:
+
+                      service Foo {
+                         rpc Bar(google.protobuf.Empty) returns
+                         (google.protobuf.Empty);
+
+                      }
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, odb_dns_zone.DeleteOdbDnsZoneRequest):
+            request = odb_dns_zone.DeleteOdbDnsZoneRequest(request)
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
+            if name is not None:
+                request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._transport._wrapped_methods[self._transport.delete_odb_dns_zone]
 
         # Certain fields should be provided within the metadata header;
         # add these here.

@@ -1745,9 +1745,7 @@ class DataAgentServiceAsyncClient:
         metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
     ) -> operation_async.AsyncOperation:
         r"""Enables/Disables required GCP services and configures
-        AgentOps observability settings calling the Admin
-        Settings executable node to update the AgentOps
-        Observability feature.
+        AgentOps observability settings.
 
         .. code-block:: python
 
