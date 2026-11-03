@@ -93,6 +93,9 @@ class RetryError(GoogleAPIError):
     def __str__(self):
         return "{}, last exception: {}".format(self.message, self.cause)
 
+    def __reduce__(self):
+        return (type(self), (self.message, self.cause))
+
 
 class _GoogleAPICallErrorMeta(type):
     """Metaclass for registering GoogleAPICallError subclasses."""

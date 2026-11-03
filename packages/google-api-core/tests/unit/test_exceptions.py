@@ -12,8 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import copy
 import http.client
 import json
+import pickle
 from unittest import mock
 
 import pytest
@@ -434,3 +436,38 @@ def test_from_grpc_error_misleading_404():
     assert exception.grpc_status_code == grpc.StatusCode.UNIMPLEMENTED
     assert "Received http2 header with status: 404" in exception.message
     assert "api_endpoint" in exception.message
+
+
+@pytest.mark.parametrize(
+    "operation",
+    [
+        lambda err: pickle.loads(pickle.dumps(err)),
+        copy.copy,
+        copy.deepcopy,
+    ],
+    ids=["pickle", "copy", "deepcopy"],
+)
+@pytest.mark.parametrize(
+    "cause",
+    [
+        exceptions.ServiceUnavailable("503 backend unavailable"),
+        None,
+    ],
+    ids=["with_cause", "none_cause"],
+)
+def test_retry_error_copy_and_pickle(operation, cause):
+    original = exceptions.RetryError("Request timed out", cause)
+    result = operation(original)
+
+    assert isinstance(result, exceptions.RetryError)
+    assert result.message == original.message
+    assert str(result) == str(original)
+    if cause is None:
+        assert result.cause is None
+        assert result.cause == original.cause
+    else:
+        if operation is copy.copy:
+            assert result.cause == original.cause
+        assert isinstance(result.cause, type(original.cause))
+        assert result.cause.message == original.cause.message
+        assert str(result.cause) == str(original.cause)
