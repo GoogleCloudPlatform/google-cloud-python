@@ -1221,14 +1221,7 @@ def test_blob_update_storage_class_enterprise(
     bucket = storage_client.bucket(bucket_name)
     bucket.storage_class = constants.STANDARD_ENTERPRISE_STORAGE_CLASS
 
-    try:
-        _helpers.retry_429_503(bucket.create)(location="us-central1")
-    except exceptions.BadRequest as exc:
-        if "is not allowed for project" in str(
-            exc
-        ) or "may not create storageClass" in str(exc):
-            pytest.skip(f"Project not allowlisted for enterprise storage class: {exc}")
-        raise
+    _helpers.retry_429_503(bucket.create)(location="us-central1")
     buckets_to_delete.append(bucket)
 
     blob = bucket.blob("EnterpriseSmallFile")
