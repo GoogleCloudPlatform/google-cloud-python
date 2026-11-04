@@ -6,8 +6,6 @@ show_missing = True
 omit =
     google/cloud/_storage/__init__.py
     google/cloud/_storage/gapic_version.py
-    # Protobuf gencode (also excluded from flake8 via `*_pb2.py`).
-    google/cloud/storage/asyncio/_uds/gcscore_pb2.py
 exclude_lines =
     # Re-enable the standard pragma
     pragma: NO COVER

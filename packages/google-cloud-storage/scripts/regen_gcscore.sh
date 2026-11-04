@@ -64,8 +64,25 @@ generate() {
   # grpcio-tools stamps the gencode with its own (newer) protobuf version; lower the
   # runtime check to the setup.py floor. The builder APIs used by the gencode
   # (AddSerializedFile + BuildMessageAndEnumDescriptors) are stable across 5.x-7.x.
-  "${python}" - "${tmp}/gcscore_pb2.py" <<EOF
+  "${python}" - "${tmp}/gcscore_pb2.py" "${tmp}/gcscore_pb2.pyi" <<EOF
 import re, sys
+
+HEADER = """\
+# Copyright 2025 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+"""
+
 p = sys.argv[1]
 s = open(p).read()
 s = re.sub(
@@ -75,7 +92,18 @@ s = re.sub(
     count=1,
 )
 s = re.sub(r"# Protobuf Python Version: .*", "# Protobuf Python Version: ${PROTOBUF_FLOOR_MAJOR}.${PROTOBUF_FLOOR_MINOR}.${PROTOBUF_FLOOR_PATCH} (floor; see scripts/regen_gcscore.sh)", s, count=1)
+if "# Copyright " not in s:
+    if s.startswith("# -*- coding: utf-8 -*-\n"):
+        s = "# -*- coding: utf-8 -*-\n\n" + HEADER + "\n" + s[len("# -*- coding: utf-8 -*-\n"):]
+    else:
+        s = HEADER + "\n" + s
 open(p, "w").write(s)
+
+pi = sys.argv[2]
+si = open(pi).read()
+if "# Copyright " not in si:
+    si = HEADER + "\n" + si
+open(pi, "w").write(si)
 EOF
   # Match `nox -s lint` / `nox -s format` (ruff format, py310, line length 88) so the
   # checked-in gencode is lint-clean and `--check` compares like with like.
