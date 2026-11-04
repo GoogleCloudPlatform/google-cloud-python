@@ -431,7 +431,7 @@ class BigtableDataClientAsync(ClientWithProject):
         # Identify this client to the daemon so it can construct the full
         # "python-v{ver}-go-accelerator-v{ver}" User-Agent.
         self._accelerator_flags += [
-            "--caller-user-agent",
+            "--user-agent",
             f"python-v{google.cloud.bigtable.__version__}",
         ]
 
