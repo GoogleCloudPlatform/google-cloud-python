@@ -27,6 +27,7 @@ from google.api_core.exceptions import FailedPrecondition, NotFound, OutOfRange
 
 from google.cloud import kms
 from google.cloud.storage._helpers import _parse_bool_env
+from google.cloud.storage.asyncio import _zero_copy_bidi_read
 from google.cloud.storage.asyncio.async_appendable_object_writer import (
     _DEFAULT_FLUSH_INTERVAL_BYTES,
     AsyncAppendableObjectWriter,
@@ -1370,6 +1371,108 @@ def test_mrd_checksum_unfinalized_appendable_skipped(
         blobs_to_delete.append(
             storage_client.bucket(_BUCKET_UNDER_TEST).blob(object_name)
         )
+
+    event_loop.run_until_complete(_run())
+
+
+def test_mrd_zero_copy_bidi_read(
+    storage_client,
+    blobs_to_delete,
+    event_loop,
+    grpc_client_direct,
+    monkeypatch,
+):
+    """Tests zero-copy BidiReadObject reads across write() and buffer destinations."""
+    monkeypatch.setenv("GCS_PYTHON_CLIENT_ZERO_COPY_BIDI_READ", "1")
+    object_size = 5 * 1024 * 1024
+    object_name = f"test_mrd_zero_copy-{uuid.uuid4()}"
+
+    class _RecordingSink:
+        def __init__(self):
+            self.chunks = []
+
+        def write(self, chunk):
+            self.chunks.append(chunk)
+            return len(chunk)
+
+    async def _run():
+        object_data = os.urandom(object_size)
+
+        writer = AsyncAppendableObjectWriter(
+            grpc_client_direct,
+            _BUCKET_UNDER_TEST,
+            object_name,
+            storage_class="RAPID" if RCU_SYSTEM_TESTS else None,
+        )
+        await writer.open()
+        await writer.append(object_data)
+        await writer.close(finalize_on_close=True)
+        blobs_to_delete.append(
+            storage_client.bucket(_BUCKET_UNDER_TEST).blob(object_name)
+        )
+
+        async with AsyncMultiRangeDownloader(
+            grpc_client_direct, _BUCKET_UNDER_TEST, object_name
+        ) as mrd:
+            transport = grpc_client_direct.grpc_client._client._transport
+            assert mrd.read_obj_str.rpc is _zero_copy_bidi_read.wrapped_rpc(transport)
+
+            # Default write() destination receives bytes.
+            default_sink = _RecordingSink()
+            await mrd.download_ranges([(0, 0, default_sink)])
+            assert all(type(chunk) is bytes for chunk in default_sink.chunks)
+            assert b"".join(default_sink.chunks) == object_data
+
+            # accepts_memoryview=True receives memoryview when crc32c supports it.
+            sink = _RecordingSink()
+            await mrd.download_ranges([(1024 * 1024, 0, sink)], accepts_memoryview=True)
+            non_empty_chunks = [chunk for chunk in sink.chunks if chunk]
+            assert len(non_empty_chunks) >= 2
+            expected_type = memoryview if _zero_copy_bidi_read.is_supported() else bytes
+            assert all(isinstance(chunk, expected_type) for chunk in non_empty_chunks)
+            assert b"".join(sink.chunks) == object_data[1024 * 1024 :]
+
+            # Multi-chunk (> 2 MiB) writable buffer destinations.
+            range_len = 2 * 1024 * 1024 + 512 * 1024
+            raw_buf = bytearray(range_len)
+            sentinel = b"Z" * 16
+            backing = bytearray(sentinel + bytes(range_len) + sentinel)
+            slice_view = memoryview(backing)[16 : 16 + range_len]
+            try:
+                await mrd.download_ranges(
+                    [
+                        (256 * 1024, range_len, raw_buf),
+                        (2 * 1024 * 1024, range_len, slice_view),
+                    ]
+                )
+            finally:
+                slice_view.release()
+
+            assert bytes(raw_buf) == object_data[256 * 1024 : 256 * 1024 + range_len]
+            assert bytes(backing[:16]) == sentinel
+            assert (
+                bytes(backing[16 : 16 + range_len])
+                == object_data[2 * 1024 * 1024 : 2 * 1024 * 1024 + range_len]
+            )
+            assert bytes(backing[16 + range_len :]) == sentinel
+            raw_buf.clear()
+            backing.clear()
+
+            # Short read past EOF into a buffer raises BufferError without closing mrd.
+            short_buf = bytearray(4096)
+            with pytest.raises(BufferError) as exc_info:
+                await mrd.download_ranges([(object_size - 1024, 4096, short_buf)])
+
+            assert exc_info.tb is not None
+            assert mrd.is_stream_open
+            short_buf.clear()
+
+            tail_buf = bytearray(1024)
+            await mrd.download_ranges([(object_size - 1024, 1024, tail_buf)])
+            assert bytes(tail_buf) == object_data[-1024:]
+
+        del writer
+        gc.collect()
 
     event_loop.run_until_complete(_run())
 
