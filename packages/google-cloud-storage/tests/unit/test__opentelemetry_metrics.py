@@ -453,7 +453,11 @@ def test_classify_error_type_none_and_status_codes():
         _opentelemetry_metrics.classify_error_type(None, status_code=504)
         == "DEADLINE_EXCEEDED"
     )
-    assert _opentelemetry_metrics.classify_error_type(None, status_code=502) == "502"
+    assert (
+        _opentelemetry_metrics.classify_error_type(None, status_code=502)
+        == "UNAVAILABLE"
+    )
+    assert _opentelemetry_metrics.classify_error_type(None, status_code=418) == "418"
     assert _opentelemetry_metrics.classify_error_type(None, status_code=99999) == "OK"
 
 
@@ -540,7 +544,12 @@ def test_classify_error_type_exceptions():
     http_api_exc = api_exceptions.GoogleAPICallError("bad gateway")
     http_api_exc.code = 502
     http_api_exc.grpc_status_code = None
-    assert _opentelemetry_metrics.classify_error_type(http_api_exc) == "502"
+    assert _opentelemetry_metrics.classify_error_type(http_api_exc) == "UNAVAILABLE"
+
+    unmapped_http_exc = api_exceptions.GoogleAPICallError("teapot")
+    unmapped_http_exc.code = 418
+    unmapped_http_exc.grpc_status_code = None
+    assert _opentelemetry_metrics.classify_error_type(unmapped_http_exc) == "418"
 
     invalid_resp_with_code = storage_exceptions.InvalidResponse(
         mock.Mock(status_code=429), "rate limited"
@@ -900,7 +909,7 @@ def test_start_operation_disabled_and_nesting(monkeypatch):
     # Disabled recorder -> yields None and records nothing
     disabled_recorder = _opentelemetry_metrics._MetricsRecorder(enable_metrics=False)
     with _opentelemetry_metrics.start_operation(
-        disabled_recorder, "storage.Blob.reload", "storage.objects.get"
+        disabled_recorder, "storage.Blob.reload", "GetObject"
     ) as op:
         assert op is None
         assert _opentelemetry_metrics.get_current_operation() is None
@@ -910,17 +919,17 @@ def test_start_operation_disabled_and_nesting(monkeypatch):
     with _opentelemetry_metrics.start_operation(
         enabled_recorder,
         "storage.Blob.download_to_filename",
-        "storage.objects.get",
+        "ReadObject",
     ) as outer_op:
         assert outer_op is not None
         assert outer_op.client_method == "storage.Blob.download_to_filename"
-        assert outer_op.rpc_method == "storage.objects.get"
+        assert outer_op.rpc_method == "google.storage.v2.Storage/ReadObject"
         assert _opentelemetry_metrics.get_current_operation() == outer_op
 
         with _opentelemetry_metrics.start_operation(
             enabled_recorder,
             "storage.Blob.download_to_file",
-            "storage.objects.get",
+            "ReadObject",
         ) as inner_op:
             assert inner_op is outer_op
 
@@ -931,7 +940,7 @@ def test_start_operation_disabled_and_nesting(monkeypatch):
     assert (
         kwargs["attributes"]["gcp.client.method"] == "storage.Blob.download_to_filename"
     )
-    assert kwargs["attributes"]["gcp.storage.operation"] == "storage.objects.get"
+    assert kwargs["attributes"]["gcp.storage.operation"] == "ReadObject"
     assert kwargs["attributes"]["error.type"] == "OK"
 
 
@@ -948,7 +957,7 @@ def test_start_operation_exception_and_suppression(monkeypatch):
 
     with pytest.raises(api_exceptions.NotFound):
         with _opentelemetry_metrics.start_operation(
-            recorder, "storage.Bucket.get_blob", "storage.objects.get"
+            recorder, "storage.Bucket.get_blob", "GetObject"
         ):
             raise api_exceptions.NotFound("missing")
 
@@ -963,7 +972,7 @@ def test_start_operation_exception_and_suppression(monkeypatch):
     with _opentelemetry_metrics.start_operation(
         None,
         "storage.transfer_manager.download_many_to_path",
-        "storage.objects.get",
+        "ReadObject",
         suppress=True,
     ) as suppressed_op:
         assert suppressed_op is not None
@@ -971,7 +980,7 @@ def test_start_operation_exception_and_suppression(monkeypatch):
         with _opentelemetry_metrics.start_operation(
             recorder,
             "storage.Blob.download_to_filename",
-            "storage.objects.get",
+            "ReadObject",
         ):
             recorder.record_request_body_size(2048)
             recorder.record_response_body_size(4096)
@@ -986,13 +995,13 @@ def test_start_operation_exception_and_suppression(monkeypatch):
     with _opentelemetry_metrics.start_operation(
         recorder,
         "storage.Blob.open",
-        "storage.objects.get",
+        "ReadObject",
     ) as active_op:
         assert active_op is not None and active_op.suppressed is False
         with _opentelemetry_metrics.start_operation(
             recorder,
             "storage.Blob.download_as_bytes",
-            "storage.objects.get",
+            "ReadObject",
             suppress=True,
         ) as child_suppressed:
             assert child_suppressed is not None
@@ -1015,7 +1024,7 @@ def test_start_operation_exception_and_suppression(monkeypatch):
         recorder.ttfb.record.call_args[1],
     )
     assert ttfb_val == 0.05
-    assert ttfb_kw["attributes"]["gcp.storage.operation"] == "storage.objects.get"
+    assert ttfb_kw["attributes"]["gcp.storage.operation"] == "ReadObject"
     recorder.operations_counter.add.assert_called_once()
 
 
@@ -1161,6 +1170,10 @@ def test_metrics_recorder_recording_and_shutdown(monkeypatch):
             "{error}",
             "Number of physical network transport attempts terminating with a non-OK status.",
         ),
+        "gcp.storage.client.server.unreached": (
+            "{request}",
+            "Number of GCS requests that did not reach a Cloud Storage server.",
+        ),
     }
 
     # Record within a logical operation context
@@ -1189,6 +1202,13 @@ def test_metrics_recorder_recording_and_shutdown(monkeypatch):
         recorder.record_request_body_size(1024)
         recorder.record_response_body_size(512)
         recorder.record_ttfb(0.01, network_path="cloudpath")
+        recorder.record_server_unreached(
+            error_type="CONNECTION_ERROR", network_path="cloudpath"
+        )
+        for ambiguous in ("CANCELLED", "TIMEOUT", "DEADLINE_EXCEEDED"):
+            recorder.record_server_unreached(
+                error_type=ambiguous, network_path="cloudpath"
+            )
 
     # Logical operation metrics: duration has rpc.method; operations counter does not
     recorder.client_request_duration.record.assert_called_once()
@@ -1257,6 +1277,14 @@ def test_metrics_recorder_recording_and_shutdown(monkeypatch):
     assert ttfb_kwargs["attributes"]["gcp.storage.operation"] == "WriteObject"
     assert ttfb_kwargs["attributes"]["network.path"] == "cloudpath"
     assert "gcp.client.method" not in ttfb_kwargs["attributes"]
+
+    recorder.server_unreached_counter.add.assert_called_once()
+    _, unreached_kwargs = recorder.server_unreached_counter.add.call_args
+    assert unreached_kwargs["attributes"]["error.type"] == "CONNECTION_ERROR"
+    assert unreached_kwargs["attributes"]["gcp.storage.operation"] == "WriteObject"
+    assert unreached_kwargs["attributes"]["network.path"] == "cloudpath"
+    assert "gcp.client.method" not in unreached_kwargs["attributes"]
+    assert "rpc.method" not in unreached_kwargs["attributes"]
 
     # gRPC attempt recording (UNAVAILABLE -> OK retry sequence)
     recorder.errors_counter.add.reset_mock()
@@ -1413,6 +1441,7 @@ def test_metrics_recorder_disabled_no_ops(monkeypatch):
     recorder.record_request_body_size(100)
     recorder.record_response_body_size(100)
     recorder.record_ttfb(0.01)
+    recorder.record_server_unreached("CONNECTION_ERROR")
     recorder.shutdown()
 
 
@@ -1467,8 +1496,10 @@ def test_normalize_logical_operation_and_resolve_rpc_method():
         == "google.storage.v2.Storage/RestoreBucket"
     )
     assert (
-        _opentelemetry_metrics.resolve_rpc_method("storage.objects.get")
-        == "storage.objects.get"
+        _opentelemetry_metrics.resolve_rpc_method(
+            "/google.storage.v2.Storage/GetObject"
+        )
+        == "google.storage.v2.Storage/GetObject"
     )
 
 
@@ -1524,6 +1555,28 @@ def test_operation_state_and_retry_helpers(monkeypatch):
     _, ttfb_no_op_kw = recorder.ttfb.record.call_args
     assert "gcp.storage.operation" not in ttfb_no_op_kw["attributes"]
     assert "network.path" not in ttfb_no_op_kw["attributes"]
+
+    recorder.record_server_unreached(
+        error_type="DNS_FAILURE", operation=None, network_path=None
+    )
+    _, unreached_no_op_kw = recorder.server_unreached_counter.add.call_args
+    assert unreached_no_op_kw["attributes"]["error.type"] == "DNS_FAILURE"
+    assert "gcp.storage.operation" not in unreached_no_op_kw["attributes"]
+    assert "network.path" not in unreached_no_op_kw["attributes"]
+
+    explicit_state = _opentelemetry_metrics._OperationState(
+        client_method="storage.AsyncGrpcClient.get_object",
+        operation="GetObject",
+        rpc_method="google.storage.v2.Storage/GetObject",
+    )
+    recorder.record_server_unreached(
+        error_type="TLS_FAILURE",
+        network_path="directpath",
+        op_state=explicit_state,
+    )
+    _, unreached_explicit_kw = recorder.server_unreached_counter.add.call_args
+    assert unreached_explicit_kw["attributes"]["gcp.storage.operation"] == "GetObject"
+    assert unreached_explicit_kw["attributes"]["network.path"] == "directpath"
 
     recorder.retries_counter.add.reset_mock()
     with _opentelemetry_metrics.start_operation(

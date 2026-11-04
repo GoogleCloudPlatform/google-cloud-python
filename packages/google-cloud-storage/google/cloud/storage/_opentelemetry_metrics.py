@@ -74,6 +74,9 @@ METRIC_STORAGE_REQUEST_BODY_SIZE = "gcp.storage.client.request.body.size"
 METRIC_STORAGE_RESPONSE_BODY_SIZE = "gcp.storage.client.response.body.size"
 METRIC_STORAGE_CLIENT_TTFB = "gcp.storage.client.ttfb"
 METRIC_STORAGE_CLIENT_ERRORS = "gcp.storage.client.errors"
+METRIC_STORAGE_SERVER_UNREACHED = "gcp.storage.client.server.unreached"
+
+_AMBIGUOUS_CLIENT_ABORT_ERRORS = {"CANCELLED", "TIMEOUT", "DEADLINE_EXCEEDED"}
 
 _LATENCY_METRIC_NAMES = (
     METRIC_RPC_CLIENT_CALL_DURATION,
@@ -345,6 +348,7 @@ _HTTP_STATUS_TO_ERROR_TYPE: Dict[int, str] = {
     499: "CANCELLED",
     500: "INTERNAL",
     501: "UNIMPLEMENTED",
+    502: "UNAVAILABLE",
     503: "UNAVAILABLE",
     504: "DEADLINE_EXCEEDED",
 }
@@ -769,7 +773,7 @@ def resolve_rpc_method(
     cleaned = raw.strip().strip("/")
     if not cleaned or cleaned == "UNKNOWN":
         return "UNKNOWN"
-    if "/" in cleaned or "." in cleaned:
+    if "/" in cleaned:
         return cleaned
     return f"google.storage.v2.Storage/{cleaned}"
 
@@ -1065,11 +1069,15 @@ class _MetricsRecorder:
                 unit="s",
                 description="Time elapsed from attempt initiation to receipt of the first response byte.",
             )
-            self.operation_ttfb = self.ttfb
             self.errors_counter = self.meter.create_counter(
                 METRIC_STORAGE_CLIENT_ERRORS,
                 unit="{error}",
                 description="Number of physical network transport attempts terminating with a non-OK status.",
+            )
+            self.server_unreached_counter = self.meter.create_counter(
+                METRIC_STORAGE_SERVER_UNREACHED,
+                unit="{request}",
+                description="Number of GCS requests that did not reach a Cloud Storage server.",
             )
         else:
             self.rpc_call_duration = None
@@ -1081,8 +1089,8 @@ class _MetricsRecorder:
             self.request_body_size = None
             self.response_body_size = None
             self.ttfb = None
-            self.operation_ttfb = None
             self.errors_counter = None
+            self.server_unreached_counter = None
 
     def get_base_attributes(self) -> Dict[str, Any]:
         """Returns a copy of the base attributes for this recorder instance."""
@@ -1360,6 +1368,30 @@ class _MetricsRecorder:
         if network_path is not None:
             attrs["network.path"] = network_path
         self.ttfb.record(max(0.0, duration), attributes=attrs)
+
+    def record_server_unreached(
+        self,
+        error_type: str = "UNKNOWN",
+        operation: Optional[str] = None,
+        network_path: Optional[str] = None,
+        op_state: Optional[_OperationState] = None,
+    ) -> None:
+        """Records a request attempt that failed before reaching a GCS server."""
+        if not self.standard_enabled or self.meter is None:
+            return
+        if error_type in _AMBIGUOUS_CLIENT_ABORT_ERRORS:
+            return
+        active_op = op_state if op_state is not None else get_current_operation()
+        raw_op = operation or (active_op.operation if active_op else None)
+        attrs: Dict[str, Any] = {
+            **self._base_attributes,
+            "error.type": error_type,
+        }
+        if raw_op is not None:
+            attrs["gcp.storage.operation"] = normalize_logical_operation(raw_op)
+        if network_path is not None:
+            attrs["network.path"] = network_path
+        self.server_unreached_counter.add(1, attributes=attrs)
 
     def shutdown(self) -> None:
         """Flushes pending metrics on a custom MeterProvider if configured."""
