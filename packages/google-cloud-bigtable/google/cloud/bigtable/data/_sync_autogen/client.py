@@ -322,7 +322,7 @@ class BigtableDataClient(ClientWithProject):
         if self._accelerator_blocked_reason:
             return
         self._accelerator_flags += [
-            "--caller-user-agent",
+            "--user-agent",
             f"python-v{google.cloud.bigtable.__version__}",
         ]
         scopes = getattr(client_options, "scopes", None) if client_options else None
