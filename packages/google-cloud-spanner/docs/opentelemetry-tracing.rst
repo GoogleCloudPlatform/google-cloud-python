@@ -20,7 +20,7 @@ We also need to tell OpenTelemetry which exporter to use. To export Spanner trac
     from opentelemetry.sdk.trace.sampling import TraceIdRatioBased
     from opentelemetry.exporter.cloud_trace import CloudTraceSpanExporter
     # BatchSpanProcessor exports spans to Cloud Trace
-    # in a seperate thread to not block on the main thread
+    # in a separate thread to not block on the main thread
     from opentelemetry.sdk.trace.export import BatchSpanProcessor
 
     # Create and export one trace every 1000 requests
