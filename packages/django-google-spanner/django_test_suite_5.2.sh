@@ -75,15 +75,32 @@ INSTALLED_APPS = [
 }
 
 cd $TESTS_DIR/django/tests
-create_settings
+
+export RUNNING_SPANNER_BACKEND_TESTS="${RUNNING_SPANNER_BACKEND_TESTS:-1}"
 
 EXIT_STATUS=0
+PIDS=""
 for DJANGO_TEST_APP in $DJANGO_TEST_APPS
 do
    if [ "$DJANGO_TEST_APP" = "order_with_respect_to" ] || [ "$DJANGO_TEST_APP" = "contenttypes_tests" ] || [ "$DJANGO_TEST_APP" = "inspectdb" ]; then
        echo "Skipping $DJANGO_TEST_APP as it is incompatible with Spanner"
        continue
    fi
-   python3 runtests.py $DJANGO_TEST_APP --verbosity=3 --noinput --settings $SETTINGS_FILE || EXIT_STATUS=$?
+   APP_PREFIX=$(echo "$DJANGO_TEST_APP" | tr -cd 'a-z0-9' | cut -c1-6)
+   RUN_ID=$(python3 -c 'import os; print(os.urandom(6).hex())')
+   TEST_DBNAME="${SPANNER_TEST_DB:-${APP_PREFIX}_${RUN_ID}}"
+   TEST_DBNAME_OTHER="${TEST_DBNAME}-ot"
+   SETTINGS_FILE="${TEST_DBNAME}_settings"
+   create_settings
+   if [ -z "$SPANNER_EMULATOR_HOST" ]; then
+       python3 runtests.py "$DJANGO_TEST_APP" --verbosity=3 --noinput --settings "$SETTINGS_FILE" &
+       PIDS="$PIDS $!"
+   else
+       python3 runtests.py "$DJANGO_TEST_APP" --verbosity=3 --noinput --settings "$SETTINGS_FILE" || EXIT_STATUS=$?
+   fi
+done
+for PID in $PIDS
+do
+   wait "$PID" || EXIT_STATUS=$?
 done
 exit $EXIT_STATUS
