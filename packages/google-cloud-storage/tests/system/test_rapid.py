@@ -169,6 +169,21 @@ def grpc_client_direct(grpc_clients):
     return grpc_clients[True]
 
 
+@pytest.fixture(params=[False, True], ids=["zero_copy_off", "zero_copy_on"])
+def zero_copy_bidi_read(request, monkeypatch):
+    """Turns the zero-copy BidiReadObject parser off or on for the test."""
+    monkeypatch.setenv(
+        "GCS_PYTHON_CLIENT_ZERO_COPY_BIDI_READ", "1" if request.param else "0"
+    )
+    return request.param
+
+
+@pytest.fixture(params=[False, True], ids=["accepts_mv_false", "accepts_mv_true"])
+def accepts_memoryview(request):
+    """The ``accepts_memoryview`` argument passed to ``download_ranges``."""
+    return request.param
+
+
 def _get_equal_dist(a: int, b: int) -> tuple[int, int]:
     step = (b - a) // 3
     return a + step, a + 2 * step
@@ -191,6 +206,8 @@ def test_basic_wrd_x_region(
     object_size,
     event_loop,
     grpc_client,
+    zero_copy_bidi_read,
+    accepts_memoryview,
 ):
     object_name = f"test_basic_wrd-{str(uuid.uuid4())}"
 
@@ -212,7 +229,9 @@ def test_basic_wrd_x_region(
         async with mrd:
             assert mrd._open_retries == 1
             # (0, 0) means read the whole object
-            await mrd.download_ranges([(0, 0, buffer)])
+            await mrd.download_ranges(
+                [(0, 0, buffer)], accepts_memoryview=accepts_memoryview
+            )
             assert mrd.persisted_size == object_size
 
         assert buffer.getvalue() == object_data
@@ -246,6 +265,8 @@ def test_basic_wrd(
     object_size,
     event_loop,
     grpc_clients,
+    zero_copy_bidi_read,
+    accepts_memoryview,
 ):
     object_name = f"test_basic_wrd-{str(uuid.uuid4())}"
 
@@ -270,7 +291,9 @@ def test_basic_wrd(
             grpc_client, _BUCKET_UNDER_TEST, object_name
         ) as mrd:
             # (0, 0) means read the whole object
-            await mrd.download_ranges([(0, 0, buffer)])
+            await mrd.download_ranges(
+                [(0, 0, buffer)], accepts_memoryview=accepts_memoryview
+            )
             assert mrd.persisted_size == object_size
 
         assert buffer.getvalue() == object_data
@@ -294,7 +317,13 @@ def test_basic_wrd(
     ],
 )
 def test_basic_wrd_in_slices(
-    storage_client, blobs_to_delete, object_size, event_loop, grpc_client
+    storage_client,
+    blobs_to_delete,
+    object_size,
+    event_loop,
+    grpc_client,
+    zero_copy_bidi_read,
+    accepts_memoryview,
 ):
     object_name = f"test_basic_wrd-{str(uuid.uuid4())}"
 
@@ -321,7 +350,9 @@ def test_basic_wrd_in_slices(
         buffer = BytesIO()
         await mrd.open()
         # (0, 0) means read the whole object
-        await mrd.download_ranges([(0, 0, buffer)])
+        await mrd.download_ranges(
+            [(0, 0, buffer)], accepts_memoryview=accepts_memoryview
+        )
         await mrd.close()
         assert buffer.getvalue() == object_data
         assert mrd.persisted_size == object_size
@@ -352,6 +383,8 @@ def test_wrd_with_non_default_flush_interval(
     flush_interval,
     event_loop,
     grpc_client,
+    zero_copy_bidi_read,
+    accepts_memoryview,
 ):
     object_name = f"test_basic_wrd-{str(uuid.uuid4())}"
     object_size = 9 * 1024 * 1024
@@ -380,7 +413,9 @@ def test_wrd_with_non_default_flush_interval(
         buffer = BytesIO()
         await mrd.open()
         # (0, 0) means read the whole object
-        await mrd.download_ranges([(0, 0, buffer)])
+        await mrd.download_ranges(
+            [(0, 0, buffer)], accepts_memoryview=accepts_memoryview
+        )
         await mrd.close()
         assert buffer.getvalue() == object_data
         assert mrd.persisted_size == object_size
@@ -539,7 +574,12 @@ def test_write_blob_with_contexts(
 
 
 def test_read_unfinalized_appendable_object(
-    storage_client, blobs_to_delete, event_loop, grpc_client_direct
+    storage_client,
+    blobs_to_delete,
+    event_loop,
+    grpc_client_direct,
+    zero_copy_bidi_read,
+    accepts_memoryview,
 ):
     object_name = f"read_unfinalized_appendable_object-{str(uuid.uuid4())[:4]}"
 
@@ -560,7 +600,9 @@ def test_read_unfinalized_appendable_object(
         await mrd.open()
         assert mrd.persisted_size == len(_BYTES_TO_UPLOAD)
         # (0, 0) means read the whole object
-        await mrd.download_ranges([(0, 0, buffer)])
+        await mrd.download_ranges(
+            [(0, 0, buffer)], accepts_memoryview=accepts_memoryview
+        )
         await mrd.close()
         assert buffer.getvalue() == _BYTES_TO_UPLOAD
 
@@ -576,7 +618,9 @@ def test_read_unfinalized_appendable_object(
 
 
 @pytest.mark.skip(reason="Flaky test b/478129078")
-def test_mrd_open_with_read_handle(event_loop, grpc_client_direct):
+def test_mrd_open_with_read_handle(
+    event_loop, grpc_client_direct, zero_copy_bidi_read, accepts_memoryview
+):
     object_name = f"test_read_handl-{str(uuid.uuid4())[:4]}"
 
     async def _run():
@@ -605,7 +649,9 @@ def test_mrd_open_with_read_handle(event_loop, grpc_client_direct):
         # persisted_size not set when opened with read_handle
         assert new_mrd.persisted_size is None
         buffer = BytesIO()
-        await new_mrd.download_ranges([(0, 0, buffer)])
+        await new_mrd.download_ranges(
+            [(0, 0, buffer)], accepts_memoryview=accepts_memoryview
+        )
         await new_mrd.close()
         assert buffer.getvalue() == _BYTES_TO_UPLOAD
         del mrd
@@ -615,7 +661,9 @@ def test_mrd_open_with_read_handle(event_loop, grpc_client_direct):
     event_loop.run_until_complete(_run())
 
 
-def test_mrd_open_with_read_handle_over_cloud_path(event_loop, grpc_client):
+def test_mrd_open_with_read_handle_over_cloud_path(
+    event_loop, grpc_client, zero_copy_bidi_read, accepts_memoryview
+):
     object_name = f"test_read_handl-{str(uuid.uuid4())[:4]}"
 
     async def _run():
@@ -643,7 +691,9 @@ def test_mrd_open_with_read_handle_over_cloud_path(event_loop, grpc_client):
         # because read_handle won't work in CLOUD_PATH.
         assert new_mrd.persisted_size == len(_BYTES_TO_UPLOAD)
         buffer = BytesIO()
-        await new_mrd.download_ranges([(0, 0, buffer)])
+        await new_mrd.download_ranges(
+            [(0, 0, buffer)], accepts_memoryview=accepts_memoryview
+        )
         await new_mrd.close()
         assert buffer.getvalue() == _BYTES_TO_UPLOAD
         del mrd
@@ -654,7 +704,12 @@ def test_mrd_open_with_read_handle_over_cloud_path(event_loop, grpc_client):
 
 
 def test_wrd_open_with_write_handle(
-    event_loop, grpc_client_direct, storage_client, blobs_to_delete
+    event_loop,
+    grpc_client_direct,
+    storage_client,
+    blobs_to_delete,
+    zero_copy_bidi_read,
+    accepts_memoryview,
 ):
     object_name = f"test_write_handl-{str(uuid.uuid4())[:4]}"
 
@@ -695,7 +750,9 @@ def test_wrd_open_with_write_handle(
         )
         buffer = BytesIO()
         await mrd.open()
-        await mrd.download_ranges([(0, 0, buffer)])
+        await mrd.download_ranges(
+            [(0, 0, buffer)], accepts_memoryview=accepts_memoryview
+        )
         await mrd.close()
         assert buffer.getvalue() == test_data
 
@@ -712,7 +769,12 @@ def test_wrd_open_with_write_handle(
 
 
 def test_read_unfinalized_appendable_object_with_generation(
-    storage_client, blobs_to_delete, event_loop, grpc_client_direct
+    storage_client,
+    blobs_to_delete,
+    event_loop,
+    grpc_client_direct,
+    zero_copy_bidi_read,
+    accepts_memoryview,
 ):
     object_name = f"read_unfinalized_appendable_object-{str(uuid.uuid4())[:4]}"
     grpc_client = grpc_client_direct
@@ -727,7 +789,9 @@ def test_read_unfinalized_appendable_object_with_generation(
             await mrd.open()
             try:
                 assert mrd.persisted_size == len(expected_content)
-                await mrd.download_ranges([(0, 0, buffer)])
+                await mrd.download_ranges(
+                    [(0, 0, buffer)], accepts_memoryview=accepts_memoryview
+                )
                 assert buffer.getvalue() == expected_content
             finally:
                 await mrd.close()
@@ -1094,6 +1158,8 @@ def test_mrd_concurrent_download(
     grpc_client_direct,
     ranges_desc,
     chunk_ranges,
+    zero_copy_bidi_read,
+    accepts_memoryview,
 ):
     """
     Test that mrd can handle concurrent `download_ranges` calls correctly.
@@ -1137,7 +1203,10 @@ def test_mrd_concurrent_download(
             for idx, (start, length) in enumerate(ranges_to_fetch):
                 tasks.append(
                     asyncio.create_task(
-                        mrd.download_ranges([(start, length, buffers[idx])])
+                        mrd.download_ranges(
+                            [(start, length, buffers[idx])],
+                            accepts_memoryview=accepts_memoryview,
+                        )
                     )
                 )
 
@@ -1161,7 +1230,12 @@ def test_mrd_concurrent_download(
 
 
 def test_mrd_concurrent_download_cancellation(
-    storage_client, blobs_to_delete, event_loop, grpc_client_direct
+    storage_client,
+    blobs_to_delete,
+    event_loop,
+    grpc_client_direct,
+    zero_copy_bidi_read,
+    accepts_memoryview,
 ):
     """
     Test task cancellation / abort mid-stream.
@@ -1196,7 +1270,10 @@ def test_mrd_concurrent_download_cancellation(
                 start = i * chunk_size
                 tasks.append(
                     asyncio.create_task(
-                        mrd.download_ranges([(start, chunk_size, buffers[i])])
+                        mrd.download_ranges(
+                            [(start, chunk_size, buffers[i])],
+                            accepts_memoryview=accepts_memoryview,
+                        )
                     )
                 )
 
@@ -1227,7 +1304,12 @@ def test_mrd_concurrent_download_cancellation(
 
 
 def test_mrd_concurrent_download_out_of_bounds(
-    storage_client, blobs_to_delete, event_loop, grpc_client_direct
+    storage_client,
+    blobs_to_delete,
+    event_loop,
+    grpc_client_direct,
+    zero_copy_bidi_read,
+    accepts_memoryview,
 ):
     """
     Test out-of-bounds & edge ranges concurrent with valid requests.
@@ -1255,12 +1337,17 @@ def test_mrd_concurrent_download_out_of_bounds(
         ) as mrd:
             valid_buffer = BytesIO()
             valid_task = asyncio.create_task(
-                mrd.download_ranges([(0, 100, valid_buffer)])
+                mrd.download_ranges(
+                    [(0, 100, valid_buffer)], accepts_memoryview=accepts_memoryview
+                )
             )
 
             oob_buffer = BytesIO()
             oob_task = asyncio.create_task(
-                mrd.download_ranges([(object_size + 1000, 100, oob_buffer)])
+                mrd.download_ranges(
+                    [(object_size + 1000, 100, oob_buffer)],
+                    accepts_memoryview=accepts_memoryview,
+                )
             )
 
             results = await asyncio.gather(valid_task, oob_task, return_exceptions=True)
@@ -1296,6 +1383,8 @@ def test_mrd_checksum_validation(
     read_start,
     read_length,
     enable_checksum,
+    zero_copy_bidi_read,
+    accepts_memoryview,
 ):
     """
     Tests full downloads with specified offset, length, and enable_checksum toggle on finalized objects.
@@ -1321,7 +1410,9 @@ def test_mrd_checksum_validation(
         ) as mrd:
             buffer = BytesIO()
             await mrd.download_ranges(
-                [(read_start, read_length, buffer)], enable_checksum=enable_checksum
+                [(read_start, read_length, buffer)],
+                enable_checksum=enable_checksum,
+                accepts_memoryview=accepts_memoryview,
             )
             assert buffer.getvalue() == object_data
 
@@ -1336,7 +1427,12 @@ def test_mrd_checksum_validation(
 
 
 def test_mrd_checksum_unfinalized_appendable_skipped(
-    storage_client, blobs_to_delete, event_loop, grpc_client_direct
+    storage_client,
+    blobs_to_delete,
+    event_loop,
+    grpc_client_direct,
+    zero_copy_bidi_read,
+    accepts_memoryview,
 ):
     """
     Verifies that live, unfinalized appendable objects skip the full-object checksum check
@@ -1361,7 +1457,11 @@ def test_mrd_checksum_unfinalized_appendable_skipped(
         ) as mrd:
             buffer = BytesIO()
             # Since it's unfinalized, it should skip the checksum check without raising
-            await mrd.download_ranges([(0, 0, buffer)], enable_checksum=True)
+            await mrd.download_ranges(
+                [(0, 0, buffer)],
+                enable_checksum=True,
+                accepts_memoryview=accepts_memoryview,
+            )
             assert buffer.getvalue() == _BYTES_TO_UPLOAD
 
         # cleanup
