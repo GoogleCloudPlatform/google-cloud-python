@@ -35,17 +35,4 @@ for VER in $(awk -F': ' '/^versions:/ {print $2}' "${REPO_ROOT}/scripts/python_v
 done
 
 "${PYTHON_EXE}" -m twine check "${REPO_ROOT}/wheels/"*
-
-if [[ "${PUBLISH_WHEELS}" == "true" ]]; then
-    # Start the releasetool reporter
-    "${PYTHON_EXE}" -m pip install --upgrade gcp-releasetool
-    "${PYTHON_EXE}" -m releasetool publish-reporter-script > /tmp/publisher-script
-    source /tmp/publisher-script
-
-    # Disable logging
-    set +x
-    TWINE_PASSWORD=$(cat "${KOKORO_KEYSTORE_DIR}/73713_google-cloud-pypi-token-keystore-3")
-    "${PYTHON_EXE}" -m twine upload --skip-existing --username __token__ --password "${TWINE_PASSWORD}" "${REPO_ROOT}/wheels/"*
-else
-    echo "PUBLISH_WHEELS is not set to 'true'. Skipping releasetool and twine upload (dry-run validation passed)."
-fi
+echo "macOS wheels are ready for Kokoro / OSS Exit Gate aggregation."
