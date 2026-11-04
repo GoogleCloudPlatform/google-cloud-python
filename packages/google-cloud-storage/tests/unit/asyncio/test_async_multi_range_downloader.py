@@ -1950,7 +1950,6 @@ class TestAsyncMultiRangeDownloader:
         custom_retry = AsyncRetry(initial=0.01, on_error=on_err_mock)
         config = MultiStreamConfig(min_streams=2, max_streams=4)
         mrd = await AsyncMultiRangeDownloader.create_mrd(
-            mock_client, "b", "o", multi_stream_config=config
             mock_client,
             "b",
             "o",
@@ -1958,7 +1957,6 @@ class TestAsyncMultiRangeDownloader:
             multi_stream_config=config,
         )
 
-        # Verify s1_ok received routing_token=token-abc on retry
         # Verify custom on_error was invoked for both primary and pooled stream redirects
         assert on_err_mock.call_count == 2
 
@@ -1966,11 +1964,6 @@ class TestAsyncMultiRangeDownloader:
         assert ("x-goog-request-params", "routing_token=token-abc") in (
             s1_ok.open.call_args.kwargs["metadata"]
         )
-        # Verify s2_failed inherited routing_token=token-abc preserved from primary open
-        assert ("x-goog-request-params", "routing_token=token-abc") in (
-            s2_failed.open.call_args.kwargs["metadata"]
-        )
-        # Verify s2_ok retried with the updated routing_token=token-xyz
         assert mrd._routing_token is None
 
         # Verify s2_failed started without a stale routing_token, then s2_ok retried with routing_token=token-xyz
@@ -1978,7 +1971,6 @@ class TestAsyncMultiRangeDownloader:
         assert ("x-goog-request-params", "routing_token=token-xyz") in (
             s2_ok.open.call_args.kwargs["metadata"]
         )
-        assert mrd._routing_token == "token-xyz"
         assert mrd.read_handle == b"h2"
         assert mrd._routing_token is None
 
