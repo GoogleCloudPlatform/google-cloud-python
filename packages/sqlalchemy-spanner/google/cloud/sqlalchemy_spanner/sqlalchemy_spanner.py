@@ -116,7 +116,7 @@ def _escape_json_path_key(key):
     trailing or quote-adjacent backslash from unescaping a `"` delimiter.
     """
     s = str(key)
-    s = re.sub(r'(\\+)(?="|$)', r"\1\1", s)
+    s = re.sub(r'(\\+)(?="|\Z)', r"\g<1>\g<1>", s)
     return s.replace('"', '\\"')
 
 
@@ -142,18 +142,11 @@ def _format_json_path_step(elem):
     return '."%s"' % _escape_json_path_key(elem)
 
 
-def _json_type_for_binary(binary, value):
-    """Return SpannerJSONPathType or SpannerJSONIndexType for a binary JSON op."""
-    if getattr(binary, "operator", None) is json_path_getitem_op or (
-        _is_json_path_sequence(value)
-    ):
-        return SpannerJSONPathType()
-    return SpannerJSONIndexType()
-
-
 class _FormatTypeMixin:
     def _format_value(self, value):
-        raise NotImplementedError()
+        if _is_json_path_sequence(value):
+            return "$%s" % "".join(_format_json_path_step(elem) for elem in value)
+        return "$%s" % _format_json_path_step(value)
 
     def bind_processor(self, dialect):
         super_proc = self.string_bind_processor(dialect)
@@ -179,15 +172,11 @@ class _FormatTypeMixin:
 
 
 class SpannerJSONIndexType(_FormatTypeMixin, types.JSON.JSONIndexType):
-    def _format_value(self, value):
-        if _is_json_path_sequence(value):
-            return "$%s" % "".join(_format_json_path_step(elem) for elem in value)
-        return "$%s" % _format_json_path_step(value)
+    """Format a JSON index for Spanner JSON_VALUE path."""
 
 
 class SpannerJSONPathType(_FormatTypeMixin, types.JSON.JSONPathType):
-    def _format_value(self, value):
-        return "$%s" % "".join(_format_json_path_step(elem) for elem in value)
+    """Format a JSON path sequence for Spanner JSON_VALUE path."""
 
 
 # PickleType that can be used with Spanner.
@@ -449,55 +438,33 @@ class SpannerSQLCompiler(SQLCompiler):
         right = binary.right
 
         if isinstance(right, elements.BindParameter):
-            val = right.effective_value
-            if getattr(
-                binary, "operator", None
-            ) is json_path_getitem_op or _is_json_path_sequence(val):
-                if not isinstance(right.type, types.JSON.JSONPathType):
-                    right = right._clone(maintain_key=True)
-                    right.type = SpannerJSONPathType()
-            elif not isinstance(
+            if not isinstance(
                 right.type, (types.JSON.JSONIndexType, types.JSON.JSONPathType)
             ):
                 right = right._clone(maintain_key=True)
-                if isinstance(right.type, type) and issubclass(
-                    right.type, (types.JSON.JSONIndexType, types.JSON.JSONPathType)
-                ):
-                    right.type = right.type()
-                else:
-                    right.type = _json_type_for_binary(binary, val)
+                right.type = (
+                    SpannerJSONPathType()
+                    if getattr(binary, "operator", None) is json_path_getitem_op
+                    else SpannerJSONIndexType()
+                )
             right_text = self.process(right, eager_grouping=eager_grouping, **kw)
         elif isinstance(right, elements.ClauseElement):
             right_text = self.process(right, eager_grouping=eager_grouping, **kw)
         else:
             raw_value = getattr(right, "value", right)
-            json_type = _json_type_for_binary(binary, raw_value)
-            right_text = json_type.literal_processor(self.dialect)(raw_value)
+            right_text = SpannerJSONIndexType().literal_processor(self.dialect)(
+                raw_value
+            )
 
         return "JSON_VALUE(%s, %s)" % (left_text, right_text)
 
     def _generate_generic_binary(self, binary, opstring, eager_grouping=False, **kw):
         """The method is overriden to process JSON data type cases."""
-        _in_binary = kw.get("_in_binary", False)
-
-        kw["_in_binary"] = True
-
         if isinstance(opstring, str):
-            text = (
-                binary.left._compiler_dispatch(
-                    self, eager_grouping=eager_grouping, **kw
-                )
-                + opstring
-                + binary.right._compiler_dispatch(
-                    self, eager_grouping=eager_grouping, **kw
-                )
+            return super()._generate_generic_binary(
+                binary, opstring, eager_grouping=eager_grouping, **kw
             )
-            if _in_binary and eager_grouping:
-                text = "(%s)" % text
-        else:
-            text = self._json_value_binary(binary, eager_grouping=eager_grouping, **kw)
-
-        return text
+        return self._json_value_binary(binary, eager_grouping=eager_grouping, **kw)
 
     def visit_json_getitem_op_binary(self, binary, operator, **kw):
         """Build a JSON_VALUE() function call for single-key JSON indexing."""

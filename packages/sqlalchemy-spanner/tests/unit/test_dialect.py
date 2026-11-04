@@ -170,6 +170,7 @@ class TestSpannerDialect(fixtures.TestBase):
             ("a'b", '$."a\'b"', '"$.\\"a\\\'b\\""'),
             ("a\\b", '$."a\\b"', '"$.\\"a\\\\b\\""'),
             ("a\\", '$."a\\\\"', '"$.\\"a\\\\\\\\\\""'),
+            ("foo\\\n", '$."foo\\\n"', '"$.\\"foo\\\\\\n\\""'),
             ('a\\"b', '$."a\\\\\\"b"', '"$.\\"a\\\\\\\\\\\\\\"b\\""'),
             ('"""', '$."\\"\\"\\""', '"$.\\"\\\\\\"\\\\\\"\\\\\\"\\""'),
             (
@@ -301,18 +302,28 @@ class TestSpannerDialect(fixtures.TestBase):
             name_val = c_name._bind_processors["k"](name_val)
         eq_(name_val, "shared_key")
 
-        # Explicit bindparam with tuple path (compile-time and runtime)
-        bp_path = sa.bindparam("p", value=("a", 0, "b"))
-        c_path = sa.select(records.c.data[bp_path].as_string()).compile(dialect=dialect)
+        # Explicit bindparam with tuple path (compile-time, cache hit, and runtime)
+        path_cache = {}
+        stmt_path = sa.select(
+            records.c.data[sa.bindparam("p", value=("a", 0, "b"))].as_string()
+        )
+        stmt_untyped = sa.select(records.c.data[sa.bindparam("p")].as_string())
+        c_path, p_path, *_ = stmt_path._compile_w_cache(
+            dialect, compiled_cache=path_cache, column_keys=[]
+        )
+        c_untyped, _, *_ = stmt_untyped._compile_w_cache(
+            dialect, compiled_cache=path_cache, column_keys=[]
+        )
+        eq_(len(path_cache), 1)
         eq_(
-            c_path._bind_processors["p"](c_path.construct_params()["p"]),
+            c_path._bind_processors["p"](
+                c_path.construct_params(extracted_parameters=p_path)["p"]
+            ),
             '$."a"[0]."b"',
         )
-        bp_untyped = sa.bindparam("p_dyn")
-        c_dyn = sa.select(records.c.data[bp_untyped].as_string()).compile(
-            dialect=dialect
-        )
-        eq_(c_dyn._bind_processors["p_dyn"](("x", 1, "y")), '$."x"[1]."y"')
+        eq_(c_untyped._bind_processors["p"]("my_key"), '$."my_key"')
+        eq_(c_untyped._bind_processors["p"](0), "$[0]")
+        eq_(c_untyped._bind_processors["p"](("x", 1, "y")), '$."x"[1]."y"')
 
     def test_render_literal_value_triple_quote_and_trailing_escape(self):
         """Test render_literal_value escapes strings breaking raw triple quotes."""
