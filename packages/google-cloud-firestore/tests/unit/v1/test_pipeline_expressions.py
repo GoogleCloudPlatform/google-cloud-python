@@ -2285,10 +2285,13 @@ class TestWindowExpressions:
         assert isinstance(win_fn, WindowFunction)
         assert not isinstance(win_fn, AggregateFunction)
         assert win_fn.name == "over"
-        assert win_fn.params == [agg, ws]
+        assert win_fn.params == [agg]
+        assert win_fn._window == ws
         assert repr(win_fn) == f"Field.of('rating').sum().over({ws!r})"
         assert win_fn == WindowFunction.over(agg, ws)
         assert win_fn == AggregateFunction.over(agg, ws)
+        assert win_fn != agg.over(WindowSpec())
+        assert win_fn != agg
 
         pb = win_fn._to_pb()
         assert pb.function_value.name == "over"

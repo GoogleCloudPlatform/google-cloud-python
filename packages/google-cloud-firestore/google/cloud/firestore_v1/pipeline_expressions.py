@@ -2395,7 +2395,7 @@ class Expression(ABC):
         """
         return Ordering(self, Ordering.Direction.DESCENDING)
 
-    def as_(self, alias: str) -> "AliasedExpression":
+    def as_(self: T, alias: str) -> "AliasedExpression[T]":
         """Assigns an alias to this expression.
 
         Aliases are useful for renaming fields in the output of a stage or for giving meaningful
@@ -2698,7 +2698,32 @@ class WindowFunction(FunctionExpression):
         Returns:
             A `WindowFunction` with the specified window override.
         """
-        return WindowFunction("over", [self, window])  # type: ignore[list-item]
+        return _OverExpression(self, window)
+
+
+class _OverExpression(WindowFunction):
+    """Internal expression binding a WindowFunction to a WindowSpec."""
+
+    def __init__(self, func: WindowFunction, window: WindowSpec):
+        super().__init__(
+            "over",
+            [func],
+            repr_function=lambda expr: f"{expr.params[0]!r}.over({self._window!r})",
+        )
+        self._window = window
+
+    def __eq__(self, other):
+        if not isinstance(other, _OverExpression):
+            return False
+        return super().__eq__(other) and self._window == other._window
+
+    def _to_pb(self) -> Value:
+        return Value(
+            function_value={
+                "name": self.name,
+                "args": [self.params[0]._to_pb(), self._window._to_pb()],
+            }
+        )
 
 
 class AggregateFunction(WindowFunction):
@@ -2743,7 +2768,7 @@ class Selectable(Expression):
         )
 
 
-T = TypeVar("T", bound=Expression)
+T = TypeVar("T", bound=Expression, covariant=True)
 
 
 class AliasedExpression(Selectable, Generic[T]):
