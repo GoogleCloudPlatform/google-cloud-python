@@ -68,8 +68,8 @@ _EXPECTED_PUBLIC_API = {
         "get_object": "async (self, bucket_name, object_name, generation=None, if_generation_match=None, if_generation_not_match=None, if_metageneration_match=None, if_metageneration_not_match=None, soft_deleted=None, metadata=(), timeout=None, retry=None, **kwargs)",
     },
     AsyncMultiRangeDownloader: {
-        "create_mrd": "classmethod (cls, client: 'AsyncGrpcClient', bucket_name: 'str', object_name: 'str', generation: 'Optional[int]' = None, read_handle: 'Optional[_storage_v2.BidiReadHandle]' = None, retry_policy: 'Optional[AsyncRetry]' = None, metadata: 'Optional[List[Tuple[str, str]]]' = None, **kwargs) -> 'AsyncMultiRangeDownloader'",
-        "__init__": "(self, client: 'AsyncGrpcClient', bucket_name: 'str', object_name: 'str', generation: 'Optional[int]' = None, read_handle: 'Optional[_storage_v2.BidiReadHandle]' = None, **kwargs) -> 'None'",
+        "create_mrd": "classmethod (cls, client: 'AsyncGrpcClient', bucket_name: 'str', object_name: 'str', generation: 'Optional[int]' = None, read_handle: 'Optional[_storage_v2.BidiReadHandle]' = None, retry_policy: 'Optional[AsyncRetry]' = None, metadata: 'Optional[List[Tuple[str, str]]]' = None, multi_stream_config: 'Optional[MultiStreamConfig]' = None, **kwargs) -> 'AsyncMultiRangeDownloader'",
+        "__init__": "(self, client: 'AsyncGrpcClient', bucket_name: 'str', object_name: 'str', generation: 'Optional[int]' = None, read_handle: 'Optional[_storage_v2.BidiReadHandle]' = None, multi_stream_config: 'Optional[MultiStreamConfig]' = None, **kwargs) -> 'None'",
         "__aenter__": "async (self)",
         "__aexit__": "async (self, exc_type, exc_val, exc_tb)",
         "open": "async (self, retry_policy: 'Optional[AsyncRetry]' = None, metadata: 'Optional[List[Tuple[str, str]]]' = None) -> 'None'",

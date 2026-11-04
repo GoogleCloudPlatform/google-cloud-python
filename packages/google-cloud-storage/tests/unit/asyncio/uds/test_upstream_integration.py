@@ -13,13 +13,15 @@
 # limitations under the License.
 """UDS-mode parity with the bidi features merged from ``main``.
 
-Covers OpenTelemetry spans (#18397), ``Preconditions`` (#18641) and the
-buffer-destination contract of ``download_ranges`` (#18627) when the
-``AsyncMultiRangeDownloader`` / ``AsyncAppendableObjectWriter`` are served by the
-Rust Core SDK (gRPC-over-UDS) backend.
+Covers OpenTelemetry spans (#18397), ``Preconditions`` (#18641), the
+buffer-destination contract of ``download_ranges`` (#18627), and
+``MultiStreamConfig`` (#18537) when ``AsyncMultiRangeDownloader`` /
+``AsyncAppendableObjectWriter`` are served by the Rust Core SDK
+(gRPC-over-UDS) backend.
 """
 
 import array
+import asyncio
 import datetime
 import inspect
 import io
@@ -31,6 +33,7 @@ from google.api_core import exceptions
 
 from google.cloud import _storage_v2
 from google.cloud.storage.asyncio import _utils, async_grpc_client
+from google.cloud.storage.asyncio._stream_pool import MultiStreamConfig
 from google.cloud.storage.asyncio._uds import gcscore_pb2 as pb
 from google.cloud.storage.asyncio._uds.errors import CoreSdkUnavailableError
 from google.cloud.storage.asyncio.async_appendable_object_writer import (
@@ -660,3 +663,88 @@ def test_prewarm_uds_ensures_server_on_background_thread():
     client_config.assert_called_once_with(client)
     manager_cls.assert_called_once_with(endpoint="https://storage.example.com")
     manager_cls.return_value.ensure_server.assert_called_once_with()
+
+
+# -------------------------------------------- MultiStreamConfig (#18537) parity
+
+
+@pytest.mark.asyncio
+async def test_uds_mrd_accepts_multi_stream_config_and_multiplexes_downloads(
+    client, uds_selected
+):
+    read_stream_cls, _ = uds_selected
+    payload = b"0123456789abcdef"
+    session = _read_session(size=len(payload), data=payload)
+    cfg = MultiStreamConfig(
+        min_streams=2,
+        max_streams=4,
+        target_io_depth=2,
+        target_bytes=8,
+    )
+    with mock.patch(_READ_SESSION, return_value=session):
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            client,
+            _BUCKET,
+            "o",
+            multi_stream_config=cfg,
+        )
+        assert mrd.multi_stream_config is cfg
+        assert mrd._pool is None
+        assert mrd._uds is session
+
+        buf_a = bytearray(8)
+        buf_b = bytearray(8)
+        await asyncio.gather(
+            mrd.download_ranges([(0, 8, buf_a)]),
+            mrd.download_ranges([(8, 8, buf_b)]),
+        )
+        await mrd.close()
+
+    assert bytes(buf_a) == b"01234567"
+    assert bytes(buf_b) == b"89abcdef"
+    read_stream_cls.assert_not_called()
+    session.close.assert_awaited_once()
+
+
+@pytest.mark.asyncio
+async def test_uds_auto_fallback_preserves_multi_stream_pool_on_gapic_path(
+    client, monkeypatch
+):
+    monkeypatch.setenv("GOOGLE_CLOUD_STORAGE_UDS", "auto")
+    cfg = MultiStreamConfig(min_streams=2, max_streams=4)
+
+    def _make_gapic_stream(*args, **kwargs):
+        s = mock.MagicMock()
+        s.open = AsyncMock()
+        s.close = AsyncMock()
+        s.recv = AsyncMock(return_value=None)
+        s.is_stream_open = True
+        s.generation_number = 7
+        s.persisted_size = 64
+        s.read_handle = b"rh"
+        s.is_finalized = True
+        s.full_obj_server_crc32c = None
+        s.object_metadata = mock.Mock()
+        return s
+
+    with (
+        mock.patch(
+            _RUNTIME_GET,
+            AsyncMock(side_effect=CoreSdkUnavailableError("no sidecar")),
+        ),
+        mock.patch(
+            f"{_MRD_MOD}._AsyncReadObjectStream", side_effect=_make_gapic_stream
+        ) as read_stream_cls,
+    ):
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            client,
+            _BUCKET,
+            "o",
+            multi_stream_config=cfg,
+        )
+        assert mrd._uds is None
+        assert mrd._pool is not None
+        assert len(mrd._pool.streams) == 2
+        assert read_stream_cls.call_count == 2
+        await mrd.close()
+        assert mrd._pool is None
