@@ -21,22 +21,16 @@ Rust Core SDK (gRPC-over-UDS) backend.
 
 import array
 import datetime
-import importlib
+import inspect
 import io
 from unittest import mock
 from unittest.mock import AsyncMock
 
 import pytest
 from google.api_core import exceptions
-from opentelemetry import trace as trace_api
-from opentelemetry.sdk.trace import TracerProvider, export
-from opentelemetry.sdk.trace.export.in_memory_span_exporter import (
-    InMemorySpanExporter,
-)
 
 from google.cloud import _storage_v2
-from google.cloud.storage import _opentelemetry_tracing
-from google.cloud.storage.asyncio import async_grpc_client
+from google.cloud.storage.asyncio import _utils, async_grpc_client
 from google.cloud.storage.asyncio._uds import gcscore_pb2 as pb
 from google.cloud.storage.asyncio._uds.errors import CoreSdkUnavailableError
 from google.cloud.storage.asyncio.async_appendable_object_writer import (
@@ -56,38 +50,76 @@ _RUNTIME_GET = "google.cloud.storage.asyncio._uds.runtime.get_runtime"
 _READ_SESSION = "google.cloud.storage.asyncio._uds.read_session.UdsReadSession"
 _WRITE_SESSION = "google.cloud.storage.asyncio._uds.write_session.UdsWriteSession"
 _BUCKET = "my-rapid-bucket"
-_BUCKET_ID = f"//storage.googleapis.com/projects/123456789/buckets/{_BUCKET}"
 _MiB = 1024 * 1024
 
 
 # ------------------------------------------------------------------- fixtures
 
 
+class _SpanRecorder:
+    """Stands in for ``create_trace_span_helper`` and records span boundaries.
+
+    It does not need the OpenTelemetry SDK (``opentelemetry-api==1.1.0`` from
+    ``constraints-3.10.txt`` cannot be imported without ``pkg_resources``), and it
+    proves that each UDS call runs *inside* its top-level span.
+    """
+
+    def __init__(self):
+        self.events = []
+        self.attributes = {}
+
+    def __call__(self, client, bucket_name, name, attributes=None, **kwargs):
+        recorder = self
+        self.attributes.setdefault(name, []).append(
+            dict(attributes or {}, bucket=bucket_name, **kwargs)
+        )
+
+        class _Span:
+            async def __aenter__(self):
+                recorder.events.append(("enter", name))
+
+            async def __aexit__(self, exc_type, exc, tb):
+                recorder.events.append(("exit", name, exc_type))
+                return False
+
+        return _Span()
+
+    def record(self, session, *methods):
+        """Records each awaited ``session.<method>`` call in ``events``."""
+        for method_name in methods:
+            method = getattr(session, method_name)
+
+            async def _wrapped(
+                *args,
+                _name=method_name,
+                _effect=method.side_effect,
+                _value=method.return_value,
+                **kwargs,
+            ):
+                self.events.append(("call", _name))
+                if isinstance(_effect, BaseException):
+                    raise _effect
+                if _effect is None:
+                    return _value
+                result = _effect(*args, **kwargs)
+                return await result if inspect.isawaitable(result) else result
+
+            method.side_effect = _wrapped
+
+
 @pytest.fixture
-def exporter(monkeypatch):
-    """In-memory OpenTelemetry exporter with GCS client tracing enabled."""
-    monkeypatch.setenv("ENABLE_GCS_PYTHON_CLIENT_OTEL_TRACES", "true")
-    monkeypatch.delenv("DISABLE_GCS_PYTHON_CLIENT_OTEL_BUCKET_METADATA", raising=False)
-    tracer_provider = TracerProvider()
-    memory_exporter = InMemorySpanExporter()
-    tracer_provider.add_span_processor(export.SimpleSpanProcessor(memory_exporter))
-    with mock.patch.object(
-        trace_api, "get_tracer", side_effect=tracer_provider.get_tracer
-    ):
-        importlib.reload(_opentelemetry_tracing)
-        yield memory_exporter
-        memory_exporter.clear()
-    monkeypatch.setenv("ENABLE_GCS_PYTHON_CLIENT_OTEL_TRACES", "false")
-    importlib.reload(_opentelemetry_tracing)
+def spans():
+    recorder = _SpanRecorder()
+    with mock.patch.object(_utils, "create_trace_span_helper", recorder):
+        yield recorder
 
 
 @pytest.fixture
 def client():
-    """An ``AsyncGrpcClient`` with a mocked GAPIC client and a warm ACO cache."""
+    """An ``AsyncGrpcClient`` with a mocked GAPIC client."""
     with mock.patch("google.cloud._storage_v2.StorageAsyncClient"):
         grpc_client = async_grpc_client.AsyncGrpcClient(credentials=mock.Mock())
     grpc_client._grpc_client = AsyncMock()
-    grpc_client._bucket_metadata_cache.update_cache(_BUCKET, _BUCKET_ID, "us-east1-a")
     return grpc_client
 
 
@@ -161,10 +193,19 @@ async def _open_writer(client, session, **kwargs):
 # ---------------------------------------------------- #18397 OTel in UDS mode
 
 
+def _span(name, *calls, error=None):
+    return [("enter", name), *[("call", c) for c in calls], ("exit", name, error)]
+
+
+_MRD = "Storage.AsyncMultiRangeDownloader."
+_AAOW = "Storage.AsyncAppendableObjectWriter."
+
+
 @pytest.mark.asyncio
-async def test_mrd_uds_emits_same_spans_as_gapic(exporter, client, uds_selected):
+async def test_mrd_uds_calls_run_inside_the_gapic_spans(spans, client, uds_selected):
     read_stream_cls, _ = uds_selected
     session = _read_session(data=b"x" * 400)
+    spans.record(session, "open", "download_ranges", "close")
     mrd = await _open_mrd(client, session)
     past_eof = io.BytesIO()
     await mrd.download_ranges(
@@ -175,41 +216,35 @@ async def test_mrd_uds_emits_same_spans_as_gapic(exporter, client, uds_selected)
     await mrd.close()
 
     read_stream_cls.assert_not_called()
-    session.close.assert_awaited_once()
-    spans = exporter.get_finished_spans()
-    assert [s.name for s in spans] == [
-        "Storage.AsyncMultiRangeDownloader.open",
-        "Storage.AsyncMultiRangeDownloader.downloadRanges",
-        "Storage.AsyncMultiRangeDownloader.close",
-    ]
-    download_span = spans[1]
-    assert download_span.attributes["rpc.system"] == "grpc"
-    assert download_span.attributes["gcp.storage.range.count"] == 3
-    assert download_span.attributes["gcp.resource.destination.id"] == _BUCKET_ID
-    assert download_span.attributes["gcp.resource.destination.location"] == (
-        "us-east1-a"
+    assert spans.events == (
+        _span(_MRD + "open", "open")
+        + _span(_MRD + "downloadRanges", "download_ranges")
+        + _span(_MRD + "close", "close")
     )
+    (download,) = spans.attributes[_MRD + "downloadRanges"]
+    assert download == {
+        "gcp.storage.range.count": 3,
+        "bucket": _BUCKET,
+        "rpc_system": "grpc",
+    }
 
 
 @pytest.mark.asyncio
-async def test_mrd_uds_data_corruption_marks_span_error_and_closes(
-    exporter, client, uds_selected
+async def test_mrd_uds_data_corruption_closes_inside_the_download_span(
+    spans, client, uds_selected
 ):
     session = _read_session()
     session.download_ranges.side_effect = DataCorruption(mock.Mock(), "crc mismatch")
+    spans.record(session, "open", "download_ranges", "close")
     mrd = await _open_mrd(client, session)
     with pytest.raises(DataCorruption):
         await mrd.download_ranges([(0, 10, io.BytesIO())], enable_checksum=False)
 
     assert not mrd.is_stream_open and mrd._uds is None
-    session.close.assert_awaited_once()
-    spans = exporter.get_finished_spans()
-    # The nested close() is not a top-level call, so it emits no span of its own.
-    assert [s.name for s in spans] == [
-        "Storage.AsyncMultiRangeDownloader.open",
-        "Storage.AsyncMultiRangeDownloader.downloadRanges",
-    ]
-    assert spans[1].status.status_code == trace_api.StatusCode.ERROR
+    # The nested close() is not a top-level call, so it opens no span of its own.
+    assert spans.events == _span(_MRD + "open", "open") + _span(
+        _MRD + "downloadRanges", "download_ranges", "close", error=DataCorruption
+    )
 
 
 @pytest.mark.asyncio
@@ -228,9 +263,10 @@ async def test_mrd_uds_data_corruption_after_stream_closed(client, uds_selected)
 
 
 @pytest.mark.asyncio
-async def test_writer_uds_emits_same_spans_as_gapic(exporter, client, uds_selected):
+async def test_writer_uds_calls_run_inside_the_gapic_spans(spans, client, uds_selected):
     _, write_stream_cls = uds_selected
     session = _write_session()
+    spans.record(session, "open", "append", "flush", "close")
     writer = await _open_writer(client, session)
     await writer.append(b"hello world")
     await writer.simple_flush()
@@ -239,35 +275,40 @@ async def test_writer_uds_emits_same_spans_as_gapic(exporter, client, uds_select
     await writer.close()
 
     write_stream_cls.assert_not_called()
-    spans = exporter.get_finished_spans()
-    assert [s.name for s in spans] == [
-        "Storage.AsyncAppendableObjectWriter.open",
-        "Storage.AsyncAppendableObjectWriter.append",
-        "Storage.AsyncAppendableObjectWriter.simpleFlush",
-        "Storage.AsyncAppendableObjectWriter.flush",
-        "Storage.AsyncAppendableObjectWriter.stateLookup",
-        "Storage.AsyncAppendableObjectWriter.close",
-    ]
-    append_span = spans[1]
-    assert append_span.attributes["rpc.system"] == "grpc"
-    assert append_span.attributes["gcp.storage.payload.size_bytes"] == 11
-    assert append_span.attributes["gcp.resource.destination.id"] == _BUCKET_ID
+    assert spans.events == (
+        _span(_AAOW + "open", "open")
+        + _span(_AAOW + "append", "append")
+        + _span(_AAOW + "simpleFlush", "flush")
+        + _span(_AAOW + "flush", "flush")
+        + _span(_AAOW + "stateLookup")
+        + _span(_AAOW + "close", "close")
+    )
+    (append,) = spans.attributes[_AAOW + "append"]
+    assert append == {
+        "gcp.storage.payload.size_bytes": 11,
+        "bucket": _BUCKET,
+        "rpc_system": "grpc",
+    }
 
 
 @pytest.mark.asyncio
-async def test_writer_uds_finalize_spans_match_gapic(exporter, client, uds_selected):
-    first = await _open_writer(client, _write_session())
+async def test_writer_uds_finalize_spans_match_gapic(spans, client, uds_selected):
+    first_session, second_session = _write_session(), _write_session()
+    spans.record(first_session, "open", "finalize")
+    spans.record(second_session, "open", "finalize")
+    first = await _open_writer(client, first_session)
     await first.finalize(full_object_checksum=7)
-    second = await _open_writer(client, _write_session())
+    second = await _open_writer(client, second_session)
     await second.close(finalize_on_close=True)
 
-    assert [s.name for s in exporter.get_finished_spans()] == [
-        "Storage.AsyncAppendableObjectWriter.open",
-        "Storage.AsyncAppendableObjectWriter.finalize",
-        "Storage.AsyncAppendableObjectWriter.open",
-        # close(finalize_on_close=True) does not emit a nested finalize span.
-        "Storage.AsyncAppendableObjectWriter.close",
-    ]
+    assert spans.events == (
+        _span(_AAOW + "open", "open")
+        + _span(_AAOW + "finalize", "finalize")
+        + _span(_AAOW + "open", "open")
+        # close(finalize_on_close=True) does not open a nested finalize span.
+        + _span(_AAOW + "close", "finalize")
+    )
+    first_session.finalize.assert_awaited_once_with(7)
 
 
 # --------------------------------------- #18627 download_ranges destinations
