@@ -1416,6 +1416,7 @@ def test_mrd_zero_copy_bidi_read(
         ) as mrd:
             transport = grpc_client_direct.grpc_client._client._transport
             assert mrd.read_obj_str.rpc is _zero_copy_bidi_read.wrapped_rpc(transport)
+            assert mrd.persisted_size == object_size
 
             # Default write() destination receives bytes.
             default_sink = _RecordingSink()
@@ -1460,6 +1461,8 @@ def test_mrd_zero_copy_bidi_read(
 
             # Short read past EOF into a buffer raises BufferError without closing mrd.
             short_buf = bytearray(4096)
+            # exc_info keeps download_ranges' frame alive, so short_buf.clear() only
+            # succeeds if the SDK released its view of the buffer itself.
             with pytest.raises(BufferError) as exc_info:
                 await mrd.download_ranges([(object_size - 1024, 4096, short_buf)])
 
