@@ -17,6 +17,7 @@ import pytest
 
 from google.cloud.firestore_v1 import pipeline_stages as stages
 from google.cloud.firestore_v1.pipeline_expressions import Field
+from google.cloud.firestore_v1.pipeline_types import WindowSpec
 from tests.unit.v1._test_helpers import make_client
 
 
@@ -448,7 +449,7 @@ def test_pipeline_aggregate_with_groups():
 
 def test_pipeline_add_window_fields_with_window():
     start_ppl = _make_pipeline()
-    window = stages.WindowSpec(partition="genre", sort=Field.of("rating").descending())
+    window = WindowSpec(partition="genre", sort=Field.of("rating").descending())
     expr = Field.of("rating").sum().as_("sum_rating")
     result_ppl = start_ppl.add_window_fields(expr, window=window)
     assert len(start_ppl.stages) == 0

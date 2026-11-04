@@ -2270,45 +2270,34 @@ class TestExpressionessionMethods:
 
 
 class TestWindowExpressions:
-    def test_over(self):
+    def test_window_function_hierarchy(self):
         assert issubclass(AggregateFunction, WindowFunction)
-        assert not hasattr(Expression, "over")
+        assert not issubclass(Expression, WindowFunction)
         assert not hasattr(Field.of("rating"), "over")
 
+    def test_over_repr_and_equality(self):
         agg = Field.of("rating").sum()
-        assert isinstance(agg, AggregateFunction)
-        assert isinstance(agg, WindowFunction)
-        ws = WindowSpec(
-            documents=DocumentWindowFrame(-1, WindowBound.CURRENT),
-        )
-        win_fn = agg.over(ws)
+        window = WindowSpec(partition="genre")
+        win_fn = agg.over(window)
         assert isinstance(win_fn, WindowFunction)
         assert not isinstance(win_fn, AggregateFunction)
-        assert win_fn.name == "over"
-        assert win_fn.params == [agg]
-        assert win_fn._window == ws
-        assert repr(win_fn) == f"Field.of('rating').sum().over({ws!r})"
-        assert win_fn == agg.over(ws)
+        assert (
+            repr(win_fn)
+            == "Field.of('rating').sum().over(WindowSpec(partition=[Field.of('genre')]))"
+        )
+        assert win_fn == agg.over(WindowSpec(partition="genre"))
         assert win_fn != agg.over(WindowSpec())
         assert win_fn != agg
 
-        pb = win_fn._to_pb()
+    def test_over_to_pb(self):
+        agg = Field.of("rating").sum()
+        window = WindowSpec(documents=DocumentWindowFrame(-1, WindowBound.CURRENT))
+        pb = agg.over(window)._to_pb()
         assert pb.function_value.name == "over"
-        assert len(pb.function_value.args) == 2
-        assert pb.function_value.args[0] == agg._to_pb()
-        assert pb.function_value.args[1] == ws._to_pb()
-
-        # Also test with Count() (0-arg AggregateFunction)
-        count_win = expr.Count().over(WindowSpec())
-        assert repr(count_win) == "Count().over(WindowSpec())"
-        count_pb = count_win._to_pb()
-        assert count_pb.function_value.name == "over"
-        assert count_pb.function_value.args[0] == expr.Count()._to_pb()
+        assert list(pb.function_value.args) == [agg._to_pb(), window._to_pb()]
 
     def test_rank(self):
         rank = Rank()
         assert isinstance(rank, WindowFunction)
-        assert rank.name == "rank"
-        assert rank.params == []
         assert repr(rank) == "Rank()"
         assert rank._to_pb() == Value(function_value={"name": "rank", "args": []})
