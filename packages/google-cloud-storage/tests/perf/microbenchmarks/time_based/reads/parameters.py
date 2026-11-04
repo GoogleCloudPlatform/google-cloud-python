@@ -22,3 +22,5 @@ class TimeBasedReadParameters(IOBenchmarkParameters):
     duration: int
     warmup_duration: int
     num_ranges: int
+    zero_copy: bool = False
+    accepts_memoryview: bool = False

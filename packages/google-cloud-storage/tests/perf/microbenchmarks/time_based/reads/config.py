@@ -25,6 +25,15 @@ except ModuleNotFoundError:
     from reads.parameters import TimeBasedReadParameters
 
 
+def _parse_bool(value: str, var_name: str = "ZERO_COPY") -> bool:
+    lowered = value.strip().lower()
+    if lowered in ("1", "true", "yes", "on"):
+        return True
+    if lowered in ("0", "false", "no", "off"):
+        return False
+    raise ValueError(f"Invalid boolean value for {var_name}: {value!r}")
+
+
 def _get_params() -> Dict[str, List[TimeBasedReadParameters]]:
     """Generates a dictionary of benchmark parameters for time based read operations."""
     params: Dict[str, List[TimeBasedReadParameters]] = {}
@@ -37,6 +46,24 @@ def _get_params() -> Dict[str, List[TimeBasedReadParameters]]:
         [b.strip() for b in os.environ["BUCKET_TYPE"].split(",") if b.strip()]
         if "BUCKET_TYPE" in os.environ
         else common_params["bucket_types"]
+    )
+    zero_copy_options = (
+        [
+            _parse_bool(z, "ZERO_COPY")
+            for z in os.environ["ZERO_COPY"].split(",")
+            if z.strip()
+        ]
+        if os.environ.get("ZERO_COPY", "").strip()
+        else common_params.get("zero_copy", [False])
+    )
+    accepts_memoryview_options = (
+        [
+            _parse_bool(v, "ACCEPTS_MEMORYVIEW")
+            for v in os.environ["ACCEPTS_MEMORYVIEW"].split(",")
+            if v.strip()
+        ]
+        if os.environ.get("ACCEPTS_MEMORYVIEW", "").strip()
+        else common_params.get("accepts_memoryview", [False])
     )
     file_sizes_mib = (
         [int(s.strip()) for s in os.environ["FILE_SIZE_MIB"].split(",") if s.strip()]
@@ -105,6 +132,8 @@ def _get_params() -> Dict[str, List[TimeBasedReadParameters]]:
             num_ranges,
             processes,
             coros,
+            zero_copy_options,
+            accepts_memoryview_options,
         )
 
         for (
@@ -114,7 +143,14 @@ def _get_params() -> Dict[str, List[TimeBasedReadParameters]]:
             num_ranges_val,
             num_processes,
             num_coros,
+            zero_copy,
+            accepts_memoryview,
         ) in product:
+            if (zero_copy or accepts_memoryview) and bucket_type != "rapid":
+                continue
+            if accepts_memoryview and not zero_copy:
+                continue
+
             file_size_bytes = file_size_mib * 1024 * 1024
             chunk_size_bytes = chunk_size_kib * 1024
             bucket_name = bucket_map[bucket_type]
@@ -122,7 +158,13 @@ def _get_params() -> Dict[str, List[TimeBasedReadParameters]]:
             num_files = num_processes
 
             # Create a descriptive name for the parameter set
-            name = f"{pattern}_{bucket_type}_{num_processes}p_{num_coros}c_{file_size_mib}MiB_{chunk_size_kib}KiB_{num_ranges_val}ranges"
+            if zero_copy and accepts_memoryview:
+                suffix = "_zero_copy_memoryview"
+            elif zero_copy:
+                suffix = "_zero_copy"
+            else:
+                suffix = ""
+            name = f"{pattern}_{bucket_type}_{num_processes}p_{num_coros}c_{file_size_mib}MiB_{chunk_size_kib}KiB_{num_ranges_val}ranges{suffix}"
 
             params[workload_name].append(
                 TimeBasedReadParameters(
@@ -140,6 +182,8 @@ def _get_params() -> Dict[str, List[TimeBasedReadParameters]]:
                     duration=duration,
                     warmup_duration=warmup_duration,
                     num_ranges=num_ranges_val,
+                    zero_copy=zero_copy,
+                    accepts_memoryview=accepts_memoryview,
                 )
             )
     return params

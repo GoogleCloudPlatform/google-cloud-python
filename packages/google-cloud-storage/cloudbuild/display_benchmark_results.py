@@ -41,12 +41,7 @@ def display_results(result_path: str) -> None:
         print("No benchmarks found in result file.")
         sys.exit(0)
 
-    print("\n" + "=" * 88)
-    print("                 GCS DIRECTPATH READ BENCHMARK PERFORMANCE RESULTS")
-    print("=" * 88)
-    header = f"| {'Workload Pattern':<36} | {'Avg Throughput':<17} | {'Network Bandwidth':<22} | {'CPU Usage':<9} |"
-    print(header)
-    print("|" + "-" * 38 + "|" + "-" * 19 + "|" + "-" * 24 + "|" + "-" * 11 + "|")
+    rows = []
     for b in benchmarks:
         if not isinstance(b, dict):
             continue
@@ -70,10 +65,47 @@ def display_results(result_path: str) -> None:
         else:
             net_str = "N/A"
         cpu = extra.get("cpu_max_global", "N/A")
+        rows.append((name, f"{avg_mib} MiB/s", net_str, str(cpu)))
+
+    if not rows:
+        print("No benchmarks found in result file.")
+        sys.exit(0)
+
+    name_width = max([36] + [len(row[0]) for row in rows])
+    avg_width = max([17] + [len(row[1]) for row in rows])
+    net_width = max([22] + [len(row[2]) for row in rows])
+    cpu_width = max([9] + [len(row[3]) for row in rows])
+    table_width = name_width + avg_width + net_width + cpu_width + 13
+
+    print("\n" + "=" * table_width)
+    print("GCS DIRECTPATH READ BENCHMARK PERFORMANCE RESULTS".center(table_width))
+    print("=" * table_width)
+    header = (
+        f"| {'Workload Pattern':<{name_width}} "
+        f"| {'Avg Throughput':<{avg_width}} "
+        f"| {'Network Bandwidth':<{net_width}} "
+        f"| {'CPU Usage':<{cpu_width}} |"
+    )
+    print(header)
+    print(
+        "|"
+        + "-" * (name_width + 2)
+        + "|"
+        + "-" * (avg_width + 2)
+        + "|"
+        + "-" * (net_width + 2)
+        + "|"
+        + "-" * (cpu_width + 2)
+        + "|"
+    )
+    for name, avg_str, net_str, cpu_str in rows:
         print(
-            f"| {name:<36} | {str(avg_mib) + ' MiB/s':<17} | {net_str:<22} | {str(cpu):<9} |"
+            f"| {name:<{name_width}} "
+            f"| {avg_str:<{avg_width}} "
+            f"| {net_str:<{net_width}} "
+            f"| {cpu_str:<{cpu_width}} |"
         )
-    print("=" * 88 + "\n")
+    print("=" * table_width + "\n")
 
 
 if __name__ == "__main__":

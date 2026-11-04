@@ -25,6 +25,7 @@ All other functions in this module are helper methods for these three tests.
 import asyncio
 import logging
 import multiprocessing
+import os
 import random
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -37,7 +38,11 @@ from google.cloud.storage.asyncio.async_grpc_client import AsyncGrpcClient
 from google.cloud.storage.asyncio.async_multi_range_downloader import (
     AsyncMultiRangeDownloader,
 )
-from tests.perf.microbenchmarks._utils import publish_benchmark_extra_info
+from tests.perf.microbenchmarks._utils import (
+    _ZERO_COPY_ENV_VAR,
+    publish_benchmark_extra_info,
+    zero_copy_env,
+)
 from tests.perf.microbenchmarks.conftest import (
     publish_resource_metrics,
 )
@@ -57,11 +62,16 @@ async def download_chunks_using_mrd_async(client, filename, other_params, chunks
     total_bytes_downloaded = 0
     mrd = AsyncMultiRangeDownloader(client, other_params.bucket_name, filename)
     await mrd.open()
-    for offset, size in chunks:
-        buffer = BytesIO()
-        await mrd.download_ranges([(offset, size, buffer)])
-        total_bytes_downloaded += buffer.tell()
-    await mrd.close()
+    try:
+        for offset, size in chunks:
+            buffer = BytesIO()
+            await mrd.download_ranges(
+                [(offset, size, buffer)],
+                accepts_memoryview=other_params.accepts_memoryview,
+            )
+            total_bytes_downloaded += buffer.tell()
+    finally:
+        await mrd.close()
 
     assert total_bytes_downloaded == other_params.file_size_bytes
 
@@ -114,46 +124,47 @@ def test_downloads_single_proc_single_coro(
         logging.info("randomizing chunks")
         random.shuffle(chunks)
 
-    if params.bucket_type == "rapid":
-        logging.info("bucket type rapid")
-        target_func = download_chunks_using_mrd
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        client = loop.run_until_complete(create_client())
-    else:
-        logging.info("bucket type regional")
-        target_func = download_chunks_using_json
-        loop = None
-        client = storage_client
+    with zero_copy_env(params.zero_copy):
+        if params.bucket_type == "rapid":
+            logging.info("bucket type rapid")
+            target_func = download_chunks_using_mrd
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            client = loop.run_until_complete(create_client())
+        else:
+            logging.info("bucket type regional")
+            target_func = download_chunks_using_json
+            loop = None
+            client = storage_client
 
-    output_times = []
+        output_times = []
 
-    def target_wrapper(*args, **kwargs):
-        result = target_func(*args, **kwargs)
-        output_times.append(result)
-        return output_times
+        def target_wrapper(*args, **kwargs):
+            result = target_func(*args, **kwargs)
+            output_times.append(result)
+            return output_times
 
-    try:
-        with monitor() as m:
-            output_times = benchmark.pedantic(
-                target=target_wrapper,
-                iterations=1,
-                rounds=params.rounds,
-                args=(
-                    loop,
-                    client,
-                    files_names[0],
-                    params,
-                    chunks,
-                ),
-            )
-    finally:
-        if loop is not None:
-            tasks = asyncio.all_tasks(loop=loop)
-            for task in tasks:
-                task.cancel()
-            loop.run_until_complete(asyncio.gather(*tasks, return_exceptions=True))
-            loop.close()
+        try:
+            with monitor() as m:
+                output_times = benchmark.pedantic(
+                    target=target_wrapper,
+                    iterations=1,
+                    rounds=params.rounds,
+                    args=(
+                        loop,
+                        client,
+                        files_names[0],
+                        params,
+                        chunks,
+                    ),
+                )
+        finally:
+            if loop is not None:
+                tasks = asyncio.all_tasks(loop=loop)
+                for task in tasks:
+                    task.cancel()
+                loop.run_until_complete(asyncio.gather(*tasks, return_exceptions=True))
+                loop.close()
     publish_benchmark_extra_info(benchmark, params, true_times=output_times)
     publish_resource_metrics(benchmark, m)
 
@@ -252,46 +263,47 @@ def test_downloads_single_proc_multi_coro(
         logging.info("randomizing chunks")
         random.shuffle(chunks)
 
-    if params.bucket_type == "rapid":
-        logging.info("bucket type rapid")
-        target_func = download_files_using_mrd_multi_coro
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        client = loop.run_until_complete(create_client())
-    else:
-        logging.info("bucket type regional")
-        target_func = download_files_using_json_multi_threaded
-        loop = None
-        client = storage_client
+    with zero_copy_env(params.zero_copy):
+        if params.bucket_type == "rapid":
+            logging.info("bucket type rapid")
+            target_func = download_files_using_mrd_multi_coro
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            client = loop.run_until_complete(create_client())
+        else:
+            logging.info("bucket type regional")
+            target_func = download_files_using_json_multi_threaded
+            loop = None
+            client = storage_client
 
-    output_times = []
+        output_times = []
 
-    def target_wrapper(*args, **kwargs):
-        result = target_func(*args, **kwargs)
-        output_times.append(result)
-        return output_times
+        def target_wrapper(*args, **kwargs):
+            result = target_func(*args, **kwargs)
+            output_times.append(result)
+            return output_times
 
-    try:
-        with monitor() as m:
-            output_times = benchmark.pedantic(
-                target=target_wrapper,
-                iterations=1,
-                rounds=params.rounds,
-                args=(
-                    loop,
-                    client,
-                    files_names,
-                    params,
-                    chunks,
-                ),
-            )
-    finally:
-        if loop is not None:
-            tasks = asyncio.all_tasks(loop=loop)
-            for task in tasks:
-                task.cancel()
-            loop.run_until_complete(asyncio.gather(*tasks, return_exceptions=True))
-            loop.close()
+        try:
+            with monitor() as m:
+                output_times = benchmark.pedantic(
+                    target=target_wrapper,
+                    iterations=1,
+                    rounds=params.rounds,
+                    args=(
+                        loop,
+                        client,
+                        files_names,
+                        params,
+                        chunks,
+                    ),
+                )
+        finally:
+            if loop is not None:
+                tasks = asyncio.all_tasks(loop=loop)
+                for task in tasks:
+                    task.cancel()
+                loop.run_until_complete(asyncio.gather(*tasks, return_exceptions=True))
+                loop.close()
     publish_benchmark_extra_info(benchmark, params, true_times=output_times)
     publish_resource_metrics(benchmark, m)
 
@@ -306,10 +318,11 @@ worker_client = None
 worker_json_client = None
 
 
-def _worker_init(bucket_type):
+def _worker_init(bucket_type, zero_copy=False):
     """Initializes a persistent event loop and client for each worker process."""
     global worker_loop, worker_client, worker_json_client
     if bucket_type == "rapid":
+        os.environ[_ZERO_COPY_ENV_VAR] = "1" if zero_copy else "0"
         worker_loop = asyncio.new_event_loop()
         asyncio.set_event_loop(worker_loop)
         worker_client = worker_loop.run_until_complete(create_client())
@@ -386,36 +399,37 @@ def test_downloads_multi_proc_multi_coro(
         random.shuffle(chunks)
 
     ctx = multiprocessing.get_context("spawn")
-    pool = ctx.Pool(
-        processes=params.num_processes,
-        initializer=_worker_init,
-        initargs=(params.bucket_type,),
-    )
-    output_times = []
+    with zero_copy_env(params.zero_copy):
+        pool = ctx.Pool(
+            processes=params.num_processes,
+            initializer=_worker_init,
+            initargs=(params.bucket_type, params.zero_copy),
+        )
+        output_times = []
 
-    def target_wrapper(*args, **kwargs):
-        result = download_files_mp_mc_wrapper(pool, *args, **kwargs)
-        output_times.append(result)
-        return output_times
+        def target_wrapper(*args, **kwargs):
+            result = download_files_mp_mc_wrapper(pool, *args, **kwargs)
+            output_times.append(result)
+            return output_times
 
-    try:
-        with monitor() as m:
-            output_times = benchmark.pedantic(
-                target=target_wrapper,
-                iterations=1,
-                rounds=params.rounds,
-                args=(
-                    files_names,
-                    params,
-                    chunks,
-                    params.bucket_type,
-                ),
-            )
-    finally:
-        pool.close()
-        pool.join()
-        publish_benchmark_extra_info(benchmark, params, true_times=output_times)
-        publish_resource_metrics(benchmark, m)
+        try:
+            with monitor() as m:
+                output_times = benchmark.pedantic(
+                    target=target_wrapper,
+                    iterations=1,
+                    rounds=params.rounds,
+                    args=(
+                        files_names,
+                        params,
+                        chunks,
+                        params.bucket_type,
+                    ),
+                )
+        finally:
+            pool.close()
+            pool.join()
+            publish_benchmark_extra_info(benchmark, params, true_times=output_times)
+            publish_resource_metrics(benchmark, m)
 
     blobs_to_delete.extend(
         storage_client.bucket(params.bucket_name).blob(f) for f in files_names

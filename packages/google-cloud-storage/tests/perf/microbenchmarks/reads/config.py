@@ -49,6 +49,8 @@ def _get_params() -> Dict[str, List[ReadParameters]]:
 
     common_params = config["common"]
     bucket_types = common_params["bucket_types"]
+    zero_copy_options = common_params.get("zero_copy", [False])
+    accepts_memoryview_options = common_params.get("accepts_memoryview", [False])
     file_sizes_mib = common_params["file_sizes_mib"]
     chunk_sizes_mib = common_params["chunk_sizes_mib"]
     rounds = common_params["rounds"]
@@ -77,6 +79,8 @@ def _get_params() -> Dict[str, List[ReadParameters]]:
             chunk_sizes_mib,
             processes,
             coros,
+            zero_copy_options,
+            accepts_memoryview_options,
         )
 
         for (
@@ -85,7 +89,14 @@ def _get_params() -> Dict[str, List[ReadParameters]]:
             chunk_size_mib,
             num_processes,
             num_coros,
+            zero_copy,
+            accepts_memoryview,
         ) in product:
+            if (zero_copy or accepts_memoryview) and bucket_type != "rapid":
+                continue
+            if accepts_memoryview and not zero_copy:
+                continue
+
             file_size_bytes = file_size_mib * 1024 * 1024
             chunk_size_bytes = chunk_size_mib * 1024 * 1024
             bucket_name = bucket_map[bucket_type]
@@ -93,7 +104,13 @@ def _get_params() -> Dict[str, List[ReadParameters]]:
             num_files = num_processes * num_coros
 
             # Create a descriptive name for the parameter set
-            name = f"{pattern}_{bucket_type}_{num_processes}p_{num_coros}c"
+            if zero_copy and accepts_memoryview:
+                suffix = "_zero_copy_memoryview"
+            elif zero_copy:
+                suffix = "_zero_copy"
+            else:
+                suffix = ""
+            name = f"{pattern}_{bucket_type}_{num_processes}p_{num_coros}c{suffix}"
 
             params[workload_name].append(
                 ReadParameters(
@@ -108,6 +125,8 @@ def _get_params() -> Dict[str, List[ReadParameters]]:
                     rounds=rounds,
                     chunk_size_bytes=chunk_size_bytes,
                     file_size_bytes=file_size_bytes,
+                    zero_copy=zero_copy,
+                    accepts_memoryview=accepts_memoryview,
                 )
             )
     return params
