@@ -20,6 +20,8 @@ from .models import Author, Number
 
 
 class TestDecimal(TransactionTestCase):
+    available_apps = []
+
     @classmethod
     def setUpClass(cls):
         setup_instance()
