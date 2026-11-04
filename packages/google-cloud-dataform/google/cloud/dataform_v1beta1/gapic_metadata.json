@@ -40,6 +40,11 @@
                 "create_compilation_result"
               ]
             },
+            "CreateCompilationResultLongRunning": {
+              "methods": [
+                "create_compilation_result_long_running"
+              ]
+            },
             "CreateFolder": {
               "methods": [
                 "create_folder"
@@ -163,6 +168,11 @@
             "FetchWorkspaceBranches": {
               "methods": [
                 "fetch_workspace_branches"
+              ]
+            },
+            "FetchWorkspaceHistory": {
+              "methods": [
+                "fetch_workspace_history"
               ]
             },
             "GetCompilationResult": {
@@ -440,6 +450,11 @@
                 "create_compilation_result"
               ]
             },
+            "CreateCompilationResultLongRunning": {
+              "methods": [
+                "create_compilation_result_long_running"
+              ]
+            },
             "CreateFolder": {
               "methods": [
                 "create_folder"
@@ -563,6 +578,11 @@
             "FetchWorkspaceBranches": {
               "methods": [
                 "fetch_workspace_branches"
+              ]
+            },
+            "FetchWorkspaceHistory": {
+              "methods": [
+                "fetch_workspace_history"
               ]
             },
             "GetCompilationResult": {
@@ -840,6 +860,11 @@
                 "create_compilation_result"
               ]
             },
+            "CreateCompilationResultLongRunning": {
+              "methods": [
+                "create_compilation_result_long_running"
+              ]
+            },
             "CreateFolder": {
               "methods": [
                 "create_folder"
@@ -963,6 +988,11 @@
             "FetchWorkspaceBranches": {
               "methods": [
                 "fetch_workspace_branches"
+              ]
+            },
+            "FetchWorkspaceHistory": {
+              "methods": [
+                "fetch_workspace_history"
               ]
             },
             "GetCompilationResult": {

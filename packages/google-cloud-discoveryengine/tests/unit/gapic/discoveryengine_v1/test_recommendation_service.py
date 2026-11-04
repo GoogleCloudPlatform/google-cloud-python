@@ -42,6 +42,7 @@ import google.auth
 import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
 import google.protobuf.struct_pb2 as struct_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
+import google.type.latlng_pb2 as latlng_pb2  # type: ignore
 from google.api_core import (
     client_options,
     gapic_v1,
@@ -64,7 +65,9 @@ from google.cloud.discoveryengine_v1.services.recommendation_service import (
 )
 from google.cloud.discoveryengine_v1.types import (
     common,
+    feedback,
     recommendation_service,
+    session,
     user_event,
 )
 
@@ -1102,7 +1105,11 @@ def test_recommendation_service_client_create_channel_credentials_file(
             credentials=file_creds,
             credentials_file=None,
             quota_project_id=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             scopes=None,
             default_host="discoveryengine.googleapis.com",
             ssl_credentials=None,
@@ -2080,7 +2087,11 @@ def test_recommendation_service_base_transport_with_credentials_file():
         load_creds.assert_called_once_with(
             "credentials.json",
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             quota_project_id="octopus",
         )
 
@@ -2106,7 +2117,11 @@ def test_recommendation_service_auth_adc():
         RecommendationServiceClient()
         adc.assert_called_once_with(
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             quota_project_id=None,
         )
 
@@ -2126,7 +2141,11 @@ def test_recommendation_service_transport_auth_adc(transport_class):
         transport_class(quota_project_id="octopus", scopes=["1", "2"])
         adc.assert_called_once_with(
             scopes=["1", "2"],
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             quota_project_id="octopus",
         )
 
@@ -2179,7 +2198,11 @@ def test_recommendation_service_transport_create_channel(transport_class, grpc_h
             credentials=creds,
             credentials_file=None,
             quota_project_id="octopus",
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             scopes=["1", "2"],
             default_host="discoveryengine.googleapis.com",
             ssl_credentials=None,

@@ -3811,6 +3811,7 @@ def test_insert_rest_call_success(request_type):
         "name": "name_value",
         "nat_policy": "nat_policy_value",
         "network": "network_value",
+        "params": {"resource_manager_tags": {}},
         "security_policy": "security_policy_value",
         "self_link": "self_link_value",
         "zone": "zone_value",

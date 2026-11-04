@@ -362,6 +362,11 @@ class DataformTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.fetch_workspace_history: gapic_v1.method.wrap_method(
+                self.fetch_workspace_history,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.commit_workspace_changes: gapic_v1.method.wrap_method(
                 self.commit_workspace_changes,
                 default_timeout=None,
@@ -459,6 +464,11 @@ class DataformTransport(abc.ABC):
             ),
             self.create_compilation_result: gapic_v1.method.wrap_method(
                 self.create_compilation_result,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.create_compilation_result_long_running: gapic_v1.method.wrap_method(
+                self.create_compilation_result_long_running,
                 default_timeout=None,
                 client_info=client_info,
             ),
@@ -1028,6 +1038,18 @@ class DataformTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def fetch_workspace_history(
+        self,
+    ) -> Callable[
+        [dataform.FetchWorkspaceHistoryRequest],
+        Union[
+            dataform.FetchWorkspaceHistoryResponse,
+            Awaitable[dataform.FetchWorkspaceHistoryResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def commit_workspace_changes(
         self,
     ) -> Callable[
@@ -1228,6 +1250,15 @@ class DataformTransport(abc.ABC):
     ) -> Callable[
         [dataform.CreateCompilationResultRequest],
         Union[dataform.CompilationResult, Awaitable[dataform.CompilationResult]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_compilation_result_long_running(
+        self,
+    ) -> Callable[
+        [dataform.CreateCompilationResultRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
     ]:
         raise NotImplementedError()
 

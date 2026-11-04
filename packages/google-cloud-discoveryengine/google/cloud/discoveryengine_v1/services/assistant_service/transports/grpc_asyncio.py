@@ -20,6 +20,7 @@ import pickle
 import warnings
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
 
+import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
@@ -33,7 +34,8 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
-from google.cloud.discoveryengine_v1.types import assistant_service
+from google.cloud.discoveryengine_v1.types import assistant, assistant_service
+from google.cloud.discoveryengine_v1.types import assistant as gcd_assistant
 
 from .base import DEFAULT_CLIENT_INFO, AssistantServiceTransport
 from .grpc import AssistantServiceGrpcTransport
@@ -365,6 +367,152 @@ class AssistantServiceGrpcAsyncIOTransport(AssistantServiceTransport):
             )
         return self._stubs["stream_assist"]
 
+    @property
+    def create_assistant(
+        self,
+    ) -> Callable[
+        [assistant_service.CreateAssistantRequest], Awaitable[assistant.Assistant]
+    ]:
+        r"""Return a callable for the create assistant method over gRPC.
+
+        Creates an
+        [Assistant][google.cloud.discoveryengine.v1.Assistant].
+
+        Returns:
+            Callable[[~.CreateAssistantRequest],
+                    Awaitable[~.Assistant]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_assistant" not in self._stubs:
+            self._stubs["create_assistant"] = self._logged_channel.unary_unary(
+                "/google.cloud.discoveryengine.v1.AssistantService/CreateAssistant",
+                request_serializer=assistant_service.CreateAssistantRequest.serialize,
+                response_deserializer=assistant.Assistant.deserialize,
+            )
+        return self._stubs["create_assistant"]
+
+    @property
+    def delete_assistant(
+        self,
+    ) -> Callable[
+        [assistant_service.DeleteAssistantRequest], Awaitable[empty_pb2.Empty]
+    ]:
+        r"""Return a callable for the delete assistant method over gRPC.
+
+        Deletes an
+        [Assistant][google.cloud.discoveryengine.v1.Assistant].
+
+        Returns:
+            Callable[[~.DeleteAssistantRequest],
+                    Awaitable[~.Empty]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_assistant" not in self._stubs:
+            self._stubs["delete_assistant"] = self._logged_channel.unary_unary(
+                "/google.cloud.discoveryengine.v1.AssistantService/DeleteAssistant",
+                request_serializer=assistant_service.DeleteAssistantRequest.serialize,
+                response_deserializer=empty_pb2.Empty.FromString,
+            )
+        return self._stubs["delete_assistant"]
+
+    @property
+    def update_assistant(
+        self,
+    ) -> Callable[
+        [assistant_service.UpdateAssistantRequest], Awaitable[gcd_assistant.Assistant]
+    ]:
+        r"""Return a callable for the update assistant method over gRPC.
+
+        Updates an
+        [Assistant][google.cloud.discoveryengine.v1.Assistant]
+
+        Returns:
+            Callable[[~.UpdateAssistantRequest],
+                    Awaitable[~.Assistant]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_assistant" not in self._stubs:
+            self._stubs["update_assistant"] = self._logged_channel.unary_unary(
+                "/google.cloud.discoveryengine.v1.AssistantService/UpdateAssistant",
+                request_serializer=assistant_service.UpdateAssistantRequest.serialize,
+                response_deserializer=gcd_assistant.Assistant.deserialize,
+            )
+        return self._stubs["update_assistant"]
+
+    @property
+    def get_assistant(
+        self,
+    ) -> Callable[
+        [assistant_service.GetAssistantRequest], Awaitable[assistant.Assistant]
+    ]:
+        r"""Return a callable for the get assistant method over gRPC.
+
+        Gets an [Assistant][google.cloud.discoveryengine.v1.Assistant].
+
+        Returns:
+            Callable[[~.GetAssistantRequest],
+                    Awaitable[~.Assistant]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_assistant" not in self._stubs:
+            self._stubs["get_assistant"] = self._logged_channel.unary_unary(
+                "/google.cloud.discoveryengine.v1.AssistantService/GetAssistant",
+                request_serializer=assistant_service.GetAssistantRequest.serialize,
+                response_deserializer=assistant.Assistant.deserialize,
+            )
+        return self._stubs["get_assistant"]
+
+    @property
+    def list_assistants(
+        self,
+    ) -> Callable[
+        [assistant_service.ListAssistantsRequest],
+        Awaitable[assistant_service.ListAssistantsResponse],
+    ]:
+        r"""Return a callable for the list assistants method over gRPC.
+
+        Lists all
+        [Assistant][google.cloud.discoveryengine.v1.Assistant]s under an
+        [Engine][google.cloud.discoveryengine.v1.Engine].
+
+        Returns:
+            Callable[[~.ListAssistantsRequest],
+                    Awaitable[~.ListAssistantsResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_assistants" not in self._stubs:
+            self._stubs["list_assistants"] = self._logged_channel.unary_unary(
+                "/google.cloud.discoveryengine.v1.AssistantService/ListAssistants",
+                request_serializer=assistant_service.ListAssistantsRequest.serialize,
+                response_deserializer=assistant_service.ListAssistantsResponse.deserialize,
+            )
+        return self._stubs["list_assistants"]
+
     def _prep_wrapped_messages(self, client_info):
         """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
         self._wrapped_methods = {
@@ -380,6 +528,31 @@ class AssistantServiceGrpcAsyncIOTransport(AssistantServiceTransport):
                     deadline=300.0,
                 ),
                 default_timeout=300.0,
+                client_info=client_info,
+            ),
+            self.create_assistant: self._wrap_method(
+                self.create_assistant,
+                default_timeout=30.0,
+                client_info=client_info,
+            ),
+            self.delete_assistant: self._wrap_method(
+                self.delete_assistant,
+                default_timeout=30.0,
+                client_info=client_info,
+            ),
+            self.update_assistant: self._wrap_method(
+                self.update_assistant,
+                default_timeout=30.0,
+                client_info=client_info,
+            ),
+            self.get_assistant: self._wrap_method(
+                self.get_assistant,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_assistants: self._wrap_method(
+                self.list_assistants,
+                default_timeout=None,
                 client_info=client_info,
             ),
             self.cancel_operation: self._wrap_method(

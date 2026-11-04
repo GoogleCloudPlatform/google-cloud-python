@@ -24,6 +24,7 @@ import proto  # type: ignore
 __protobuf__ = proto.module(
     package="google.cloud.developerconnect.v1",
     manifest={
+        "CommitView",
         "SystemProvider",
         "ListUsersRequest",
         "ListUsersResponse",
@@ -60,6 +61,9 @@ __protobuf__ = proto.module(
         "DeleteSelfRequest",
         "FetchAccessTokenRequest",
         "FetchAccessTokenResponse",
+        "DiffGitRepositoryLinkCommitRequest",
+        "DiffGitRepositoryLinkCommitResponse",
+        "FileDiff",
         "StartOAuthRequest",
         "StartOAuthResponse",
         "FinishOAuthRequest",
@@ -75,6 +79,7 @@ __protobuf__ = proto.module(
         "FetchReadTokenRequest",
         "FetchReadTokenResponse",
         "FetchReadWriteTokenResponse",
+        "OpenGitRepositoryLinkPullRequestRequest",
         "FetchLinkableGitRepositoriesRequest",
         "FetchLinkableGitRepositoriesResponse",
         "LinkableGitRepository",
@@ -82,11 +87,47 @@ __protobuf__ = proto.module(
         "FetchGitHubInstallationsResponse",
         "FetchGitRefsRequest",
         "FetchGitRefsResponse",
+        "FetchGitRepositoryLinkCommitRequest",
+        "FetchGitRepositoryLinkCommitResponse",
+        "FetchGitRepositoryLinkCommitListRequest",
+        "FetchGitRepositoryLinkCommitListResponse",
+        "SCMCommit",
+        "FetchGitRepositoryLinkFileBlameRequest",
+        "BlameRange",
+        "FetchGitRepositoryLinkFileBlameResponse",
+        "FetchGitRepositoryLinkPullRequestRequest",
+        "PullRequest",
+        "PullRequestComment",
+        "AddGitRepositoryLinkPullRequestCommentRequest",
+        "PullRequestReviewComment",
+        "AddGitRepositoryLinkPullRequestReviewCommentRequest",
+        "ModifyGitRepositoryLinkPullRequestRequest",
+        "FetchGitRepositoryLinkPullRequestListRequest",
+        "FetchGitRepositoryLinkPullRequestListResponse",
         "AccountConnector",
         "User",
         "ProviderOAuthConfig",
     },
 )
+
+
+class CommitView(proto.Enum):
+    r"""The level of commit details to return in the response.
+
+    Values:
+        COMMIT_VIEW_UNSPECIFIED (0):
+            Unspecified, defaults to BASIC.
+        BASIC (1):
+            Basic view, returns commit metadata but no
+            file diffs.
+        FULL (2):
+            Full view, returns commit metadata and file
+            diffs.
+    """
+
+    COMMIT_VIEW_UNSPECIFIED = 0
+    BASIC = 1
+    FULL = 2
 
 
 class SystemProvider(proto.Enum):
@@ -1873,6 +1914,90 @@ class FetchAccessTokenResponse(proto.Message):
     )
 
 
+class DiffGitRepositoryLinkCommitRequest(proto.Message):
+    r"""Request message for DiffGitRepositoryLinkCommit.
+
+    Attributes:
+        name (str):
+            Required. The resource name of the
+            GitRepositoryLink.
+        base_sha (str):
+            Required. The base commit SHA or ref.
+        head_sha (str):
+            Required. The head commit SHA or ref.
+        path_filters (MutableSequence[str]):
+            Optional. Path patterns or exact paths to filter returned
+            files. When ``path_filters`` is specified,
+            ``FileDiff.patch`` is populated for all matching files (use
+            ``["**"]`` to include patches for all changed files). When
+            ``path_filters`` is omitted or empty, the full list of
+            ``FileDiff`` is returned without patch diffs
+            (``FileDiff.patch`` is empty).
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    base_sha: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    head_sha: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    path_filters: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=4,
+    )
+
+
+class DiffGitRepositoryLinkCommitResponse(proto.Message):
+    r"""Response message for DiffGitRepositoryLinkCommit.
+
+    Attributes:
+        files (MutableSequence[google.cloud.developerconnect_v1.types.FileDiff]):
+            The file diff extracted from the unified
+            diff.
+    """
+
+    files: MutableSequence["FileDiff"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message="FileDiff",
+    )
+
+
+class FileDiff(proto.Message):
+    r"""Message for a file diff.
+
+    Attributes:
+        path (str):
+            Relative path to the file in the repository.
+        status (str):
+            Status of change: "ADDED", "MODIFIED",
+            "REMOVED", "RENAMED".
+        patch (str):
+            Standard unified diff patch hunk for the file. Only
+            populated when ``path_filters`` is specified in the request;
+            otherwise empty.
+    """
+
+    path: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    status: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    patch: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
 class StartOAuthRequest(proto.Message):
     r"""Message for starting an OAuth flow.
 
@@ -2476,6 +2601,29 @@ class FetchReadWriteTokenResponse(proto.Message):
     )
 
 
+class OpenGitRepositoryLinkPullRequestRequest(proto.Message):
+    r"""Message for opening SCM Pull Request.
+
+    Attributes:
+        name (str):
+            Required. The GitRepositoryLink resource name in the format
+            ``projects/*/locations/*/connections/*/gitRepositoryLinks/*``.
+        pull_request (google.cloud.developerconnect_v1.types.PullRequest):
+            Required. The Pull Request details to open. Input fields
+            used: title, body, head_ref, base_ref.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    pull_request: "PullRequest" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="PullRequest",
+    )
+
+
 class FetchLinkableGitRepositoriesRequest(proto.Message):
     r"""Request message for FetchLinkableGitRepositoriesRequest.
 
@@ -2676,6 +2824,813 @@ class FetchGitRefsResponse(proto.Message):
     ref_names: MutableSequence[str] = proto.RepeatedField(
         proto.STRING,
         number=1,
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class FetchGitRepositoryLinkCommitRequest(proto.Message):
+    r"""Request message for FetchGitRepositoryLinkCommit.
+
+    Attributes:
+        name (str):
+            Required. The resource name of the GitRepositoryLink in the
+            format
+            ``projects/*/locations/*/connections/*/gitRepositoryLinks/*``.
+        commit_sha (str):
+            Required. The commit SHA, or symbolic
+            revision (e.g., branch name, tag, or Git
+            reference).
+        view (google.cloud.developerconnect_v1.types.CommitView):
+            Optional. The level of commit details to return in the
+            response. Defaults to ``FULL`` if unspecified. In ``FULL``
+            view, ``files`` metadata (paths and statuses) are returned;
+            ``path_filters`` must also be specified to populate line
+            patch hunks.
+        path_filters (MutableSequence[str]):
+            Optional. Path patterns or exact paths to filter returned
+            files (only applicable in ``FULL`` view). When
+            ``path_filters`` is specified, ``FileDiff.patch`` is
+            populated for all matching files (use ``["**"]`` to include
+            patches for all changed files). When ``path_filters`` is
+            omitted or empty, the full list of ``FileDiff`` is returned
+            without patch diffs (``FileDiff.patch`` is empty).
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    commit_sha: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    view: "CommitView" = proto.Field(
+        proto.ENUM,
+        number=3,
+        enum="CommitView",
+    )
+    path_filters: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=4,
+    )
+
+
+class FetchGitRepositoryLinkCommitResponse(proto.Message):
+    r"""Response message for FetchGitRepositoryLinkCommit.
+
+    Attributes:
+        commit (google.cloud.developerconnect_v1.types.SCMCommit):
+            The commit metadata.
+        files (MutableSequence[google.cloud.developerconnect_v1.types.FileDiff]):
+            List of file changes and patch diffs. Omitted when view is
+            ``BASIC``. Patch diffs (``FileDiff.patch``) are only
+            populated when ``path_filters`` is specified in the request.
+    """
+
+    commit: "SCMCommit" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="SCMCommit",
+    )
+    files: MutableSequence["FileDiff"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message="FileDiff",
+    )
+
+
+class FetchGitRepositoryLinkCommitListRequest(proto.Message):
+    r"""Request message for FetchGitRepositoryLinkCommitList.
+
+    Attributes:
+        name (str):
+            Required. The resource name of the GitRepositoryLink in the
+            format
+            ``projects/*/locations/*/connections/*/gitRepositoryLinks/*``.
+        ref (str):
+            Optional. The commit SHA, or symbolic
+            revision (e.g., branch name, tag, or Git
+            reference) from which to start listing commits.
+        page_size (int):
+            Optional. Number of results to return in the
+            list. Default is 50. Max is 100.
+        page_token (str):
+            Optional. A page token, received from a previous
+            ``FetchGitRepositoryLinkCommitList`` call. Provide this to
+            retrieve the subsequent page.
+
+            When paginating, all other parameters provided to
+            ``FetchGitRepositoryLinkCommitList`` must match the call
+            that provided the page token.
+        view (google.cloud.developerconnect_v1.types.CommitView):
+            Optional. The level of commit details to return in the
+            response. Only ``BASIC`` is supported; ``FULL`` returns
+            ``INVALID_ARGUMENT``. Defaults to ``BASIC`` if unspecified.
+            Use ``FetchGitRepositoryLinkCommit`` to get file diffs for a
+            single commit.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    ref: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=3,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    view: "CommitView" = proto.Field(
+        proto.ENUM,
+        number=5,
+        enum="CommitView",
+    )
+
+
+class FetchGitRepositoryLinkCommitListResponse(proto.Message):
+    r"""Response message for FetchGitRepositoryLinkCommitList.
+
+    Attributes:
+        commits (MutableSequence[google.cloud.developerconnect_v1.types.SCMCommit]):
+            The list of commit metadata.
+        next_page_token (str):
+            A token, which can be sent as ``page_token`` to retrieve the
+            next page. If this field is omitted, there are no subsequent
+            pages.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    commits: MutableSequence["SCMCommit"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="SCMCommit",
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class SCMCommit(proto.Message):
+    r"""SCMCommit represents commit metadata.
+
+    Attributes:
+        sha (str):
+            Full 40-character SCM commit SHA.
+        message (str):
+            Commit message text.
+        author (str):
+            The author's display name.
+        author_email (str):
+            The author's email address.
+        commit_time (google.protobuf.timestamp_pb2.Timestamp):
+            Timestamp when the commit was authored.
+        url (str):
+            The SCM provider's HTML URL link for this
+            commit.
+    """
+
+    sha: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    message: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    author: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    author_email: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    commit_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=5,
+        message=timestamp_pb2.Timestamp,
+    )
+    url: str = proto.Field(
+        proto.STRING,
+        number=6,
+    )
+
+
+class FetchGitRepositoryLinkFileBlameRequest(proto.Message):
+    r"""Request message for FetchGitRepositoryLinkFileBlame.
+
+    Attributes:
+        name (str):
+            Required. The resource name of the GitRepositoryLink in the
+            format
+            ``projects/*/locations/*/connections/*/gitRepositoryLinks/*``.
+        ref (str):
+            Required. The SCM commit SHA, or symbolic
+            revision (e.g., branch name, tag) from which to
+            fetch the blame.
+        path (str):
+            Required. The file path within the
+            repository.
+        first_line (int):
+            Optional. The 1-indexed starting line number
+            of the range to blame (inclusive). If not
+            specified, blame begins at line 1.
+        last_line (int):
+            Optional. The 1-indexed ending line number of
+            the range to blame (inclusive). If not
+            specified, blame extends to the end of the file.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    ref: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    path: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    first_line: int = proto.Field(
+        proto.INT32,
+        number=4,
+    )
+    last_line: int = proto.Field(
+        proto.INT32,
+        number=5,
+    )
+
+
+class BlameRange(proto.Message):
+    r"""BlameRange represents blame information for a range of lines.
+
+    Attributes:
+        first_line (int):
+            The 1-indexed starting line number of the
+            range (inclusive).
+        last_line (int):
+            The 1-indexed ending line number of the range
+            (inclusive).
+        commit (google.cloud.developerconnect_v1.types.SCMCommit):
+            The commit metadata for this line range.
+    """
+
+    first_line: int = proto.Field(
+        proto.INT32,
+        number=1,
+    )
+    last_line: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    commit: "SCMCommit" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message="SCMCommit",
+    )
+
+
+class FetchGitRepositoryLinkFileBlameResponse(proto.Message):
+    r"""Response message for FetchGitRepositoryLinkFileBlame.
+
+    Attributes:
+        ranges (MutableSequence[google.cloud.developerconnect_v1.types.BlameRange]):
+            The list of blame ranges for the file.
+    """
+
+    ranges: MutableSequence["BlameRange"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="BlameRange",
+    )
+
+
+class FetchGitRepositoryLinkPullRequestRequest(proto.Message):
+    r"""Request message for FetchGitRepositoryLinkPullRequest.
+
+    Attributes:
+        name (str):
+            Required. The resource name of the GitRepositoryLink in the
+            format
+            ``projects/*/locations/*/connections/*/gitRepositoryLinks/*``.
+        pull_request_id (str):
+            Required. The ID of the Pull Request.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    pull_request_id: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class PullRequest(proto.Message):
+    r"""Message representing a SCM Pull Request.
+
+    Attributes:
+        id (str):
+            Required. The ID of the PR.
+        title (str):
+            Required. The title of the PR.
+        body (str):
+            Optional. The body description of the PR.
+        head_ref (str):
+            Required. The source commit SHA of the head
+            branch.
+        base_ref (str):
+            Required. The target commit SHA of the base
+            branch.
+        author (str):
+            Output only. The username of the author.
+        create_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. When the PR was created.
+        update_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. When the PR was updated.
+        merge_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. When the PR was merged.
+        close_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. When the PR was closed.
+        decline_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. When the PR was declined. Only set for SCM
+            providers that support declining pull requests. Never set
+            for GitHub, GitHub Enterprise, GitLab, or GitLab Enterprise,
+            where a pull request closed without being merged is
+            ``CLOSED``.
+        state (google.cloud.developerconnect_v1.types.PullRequest.State):
+            Output only. The current state of the PR.
+        mergeability (google.cloud.developerconnect_v1.types.PullRequest.Mergeability):
+            Output only. The mergeability state of the
+            pull request.
+        html_url (str):
+            Output only. The HTML URL of the pull request
+            on the SCM provider.
+    """
+
+    class State(proto.Enum):
+        r"""The state of the PR.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                Default value.
+            OPEN (1):
+                The PR is open.
+            CLOSED (2):
+                The PR is closed.
+            MERGED (3):
+                The PR is merged.
+            DECLINED (4):
+                The PR is declined. Only used by SCM providers that support
+                declining pull requests. Never used for GitHub, GitHub
+                Enterprise, GitLab, or GitLab Enterprise, where a pull
+                request closed without being merged is ``CLOSED``.
+        """
+
+        STATE_UNSPECIFIED = 0
+        OPEN = 1
+        CLOSED = 2
+        MERGED = 3
+        DECLINED = 4
+
+    class Mergeability(proto.Enum):
+        r"""The mergeability state of a pull request.
+
+        Values:
+            MERGEABILITY_UNSPECIFIED (0):
+                Mergeability state is unspecified.
+            MERGEABLE (1):
+                The pull request can be merged cleanly
+                without Git conflicts.
+            CONFLICTING (2):
+                The pull request has merge conflicts and
+                cannot be merged cleanly.
+            COMPUTING (3):
+                The mergeability state is currently being
+                computed asynchronously by the upstream SCM
+                provider.
+        """
+
+        MERGEABILITY_UNSPECIFIED = 0
+        MERGEABLE = 1
+        CONFLICTING = 2
+        COMPUTING = 3
+
+    id: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    title: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    body: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    head_ref: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    base_ref: str = proto.Field(
+        proto.STRING,
+        number=5,
+    )
+    author: str = proto.Field(
+        proto.STRING,
+        number=6,
+    )
+    create_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=7,
+        message=timestamp_pb2.Timestamp,
+    )
+    update_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=8,
+        message=timestamp_pb2.Timestamp,
+    )
+    merge_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=9,
+        message=timestamp_pb2.Timestamp,
+    )
+    close_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=10,
+        message=timestamp_pb2.Timestamp,
+    )
+    decline_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=11,
+        message=timestamp_pb2.Timestamp,
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=12,
+        enum=State,
+    )
+    mergeability: Mergeability = proto.Field(
+        proto.ENUM,
+        number=13,
+        enum=Mergeability,
+    )
+    html_url: str = proto.Field(
+        proto.STRING,
+        number=14,
+    )
+
+
+class PullRequestComment(proto.Message):
+    r"""Message representing a SCM Pull Request Comment.
+
+    Attributes:
+        id (str):
+            Output only. The ID of the comment.
+        body (str):
+            Required. The body of the comment.
+        author (str):
+            Output only. The username of the author.
+        create_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. When the comment was created.
+        update_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. When the comment was updated.
+    """
+
+    id: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    body: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    author: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    create_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message=timestamp_pb2.Timestamp,
+    )
+    update_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=5,
+        message=timestamp_pb2.Timestamp,
+    )
+
+
+class AddGitRepositoryLinkPullRequestCommentRequest(proto.Message):
+    r"""Request message for AddGitRepositoryLinkPullRequestComment.
+
+    Attributes:
+        name (str):
+            Required. The resource name of the GitRepositoryLink in the
+            format
+            ``projects/*/locations/*/connections/*/gitRepositoryLinks/*``.
+        pull_request_id (str):
+            Required. The ID of the Pull Request.
+        comment (google.cloud.developerconnect_v1.types.PullRequestComment):
+            Required. The comment to add.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    pull_request_id: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    comment: "PullRequestComment" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message="PullRequestComment",
+    )
+
+
+class PullRequestReviewComment(proto.Message):
+    r"""Message representing a SCM Pull Request Review Comment
+    (inline on diff).
+
+    Attributes:
+        id (str):
+            Output only. The ID of the comment.
+        body (str):
+            Required. The body of the comment.
+        path (str):
+            Required. The file path to comment on.
+        first_line (int):
+            Optional. The first line of the comment range (inclusive).
+            If not specified, the comment applies only to the
+            ``last_line``.
+        last_line (int):
+            Required. The last line of the comment range (inclusive). If
+            ``first_line`` is not specified, the comment applies only to
+            this line.
+        side (google.cloud.developerconnect_v1.types.PullRequestReviewComment.DiffSide):
+            Optional. The side of the diff to comment on.
+            Defaults to HEAD.
+        author (str):
+            Output only. The username of the author.
+        create_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. When the comment was created.
+        update_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. When the comment was updated.
+        commit_id (str):
+            Output only. The commit SHA the comment was
+            actually applied to.
+    """
+
+    class DiffSide(proto.Enum):
+        r"""DiffSide represents which side of the diff the comment is on.
+
+        Values:
+            DIFF_SIDE_UNSPECIFIED (0):
+                Default value. This value is unused.
+            BASE (1):
+                The side of the diff before changes (deleted
+                or modified lines).
+            HEAD (2):
+                The side of the diff after changes (added or
+                modified lines).
+        """
+
+        DIFF_SIDE_UNSPECIFIED = 0
+        BASE = 1
+        HEAD = 2
+
+    id: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    body: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    path: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    first_line: int = proto.Field(
+        proto.INT32,
+        number=4,
+    )
+    last_line: int = proto.Field(
+        proto.INT32,
+        number=5,
+    )
+    side: DiffSide = proto.Field(
+        proto.ENUM,
+        number=6,
+        enum=DiffSide,
+    )
+    author: str = proto.Field(
+        proto.STRING,
+        number=7,
+    )
+    create_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=8,
+        message=timestamp_pb2.Timestamp,
+    )
+    update_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=9,
+        message=timestamp_pb2.Timestamp,
+    )
+    commit_id: str = proto.Field(
+        proto.STRING,
+        number=10,
+    )
+
+
+class AddGitRepositoryLinkPullRequestReviewCommentRequest(proto.Message):
+    r"""Request message for
+    AddGitRepositoryLinkPullRequestReviewComment.
+
+    Attributes:
+        name (str):
+            Required. The resource name of the GitRepositoryLink in the
+            format
+            ``projects/*/locations/*/connections/*/gitRepositoryLinks/*``.
+        pull_request_id (str):
+            Required. The ID of the Pull Request.
+        comment (google.cloud.developerconnect_v1.types.PullRequestReviewComment):
+            Required. The review comment to add.
+        commit_id (str):
+            Optional. The commit SHA to comment on. If
+            not specified, defaults to the HEAD commit of
+            the Pull Request.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    pull_request_id: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    comment: "PullRequestReviewComment" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message="PullRequestReviewComment",
+    )
+    commit_id: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+
+
+class ModifyGitRepositoryLinkPullRequestRequest(proto.Message):
+    r"""Message for modifying SCM Pull Request.
+
+    Attributes:
+        name (str):
+            Required. The GitRepositoryLink resource name in the format
+            ``projects/*/locations/*/connections/*/gitRepositoryLinks/*``.
+        pull_request_id (str):
+            Required. The SCM-specific Pull Request
+            identifier (e.g., "45").
+        title (str):
+            Optional. The title of the Pull Request.
+        body (str):
+            Optional. The body description of the Pull
+            Request.
+        base_ref (str):
+            Optional. The target branch to merge into.
+        state (google.cloud.developerconnect_v1.types.ModifyGitRepositoryLinkPullRequestRequest.State):
+            Optional. The state of the Pull Request.
+    """
+
+    class State(proto.Enum):
+        r"""State represents the state of the pull request.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                Default value. This value is unused.
+            OPEN (1):
+                The pull request is open.
+            CLOSED (2):
+                The pull request is closed.
+        """
+
+        STATE_UNSPECIFIED = 0
+        OPEN = 1
+        CLOSED = 2
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    pull_request_id: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    title: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    body: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    base_ref: str = proto.Field(
+        proto.STRING,
+        number=5,
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=6,
+        enum=State,
+    )
+
+
+class FetchGitRepositoryLinkPullRequestListRequest(proto.Message):
+    r"""Request message for FetchGitRepositoryLinkPullRequestList.
+
+    Attributes:
+        name (str):
+            Required. The GitRepositoryLink resource name in the format
+            ``projects/*/locations/*/connections/*/gitRepositoryLinks/*``.
+        filter (str):
+            Optional. A filter expression that filters the pull requests
+            returned in the response. Only a single equality comparison
+            on ``state`` is supported, for example ``state = "OPEN"``.
+            Supported values are ``OPEN``, ``CLOSED``, and ``MERGED``.
+            ``DECLINED`` is only supported for SCM providers that
+            support declining pull requests, and returns
+            ``INVALID_ARGUMENT`` for GitHub, GitHub Enterprise, GitLab,
+            and GitLab Enterprise. Other values or expressions return
+            ``INVALID_ARGUMENT``. Defaults to ``state = "OPEN"`` if
+            unspecified.
+        page_size (int):
+            Optional. Number of results to return in the list. Default
+            is 20. Max is 100. A page may contain fewer than
+            ``page_size`` results even when more results are available;
+            use ``next_page_token`` to check for more pages.
+        page_token (str):
+            Optional. A page token, received from a previous
+            ``FetchGitRepositoryLinkPullRequestList`` call. Provide this
+            to retrieve the subsequent page.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    filter: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=3,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+
+
+class FetchGitRepositoryLinkPullRequestListResponse(proto.Message):
+    r"""Response message for FetchGitRepositoryLinkPullRequestList.
+
+    Attributes:
+        pull_requests (MutableSequence[google.cloud.developerconnect_v1.types.PullRequest]):
+            The list of Pull Requests.
+        next_page_token (str):
+            A token, which can be sent as ``page_token`` to retrieve the
+            next page. If this field is omitted, there are no subsequent
+            pages.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    pull_requests: MutableSequence["PullRequest"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="PullRequest",
     )
     next_page_token: str = proto.Field(
         proto.STRING,

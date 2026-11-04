@@ -44,6 +44,7 @@ import google.protobuf.any_pb2 as any_pb2  # type: ignore
 import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
+import google.protobuf.struct_pb2 as struct_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import google.protobuf.wrappers_pb2 as wrappers_pb2  # type: ignore
 import google.rpc.status_pb2 as status_pb2  # type: ignore
@@ -93,6 +94,18 @@ from google.cloud.backupdr_v1beta.types import (
     backupvault_gce,
     bindingmatchingresource,
     datasourcereference,
+    restore_template,
+    restore_template_common,
+    restore_template_execution,
+    restore_verification_plan,
+    restore_verification_plan_association,
+)
+from google.cloud.backupdr_v1beta.types import restore_template as gcb_restore_template
+from google.cloud.backupdr_v1beta.types import (
+    restore_verification_plan as gcb_restore_verification_plan,
+)
+from google.cloud.backupdr_v1beta.types import (
+    restore_verification_plan_association as gcb_restore_verification_plan_association,
 )
 
 CRED_INFO_JSON = {
@@ -2716,6 +2729,7383 @@ async def test_delete_management_server_flattened_error_async():
     with pytest.raises(ValueError):
         await client.delete_management_server(
             backupdr.DeleteManagementServerRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        gcb_restore_template.CreateRestoreTemplateRequest(),
+        {},
+    ],
+)
+def test_create_restore_template(request_type, transport: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/spam")
+        response = client.create_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = gcb_restore_template.CreateRestoreTemplateRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_create_restore_template_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = gcb_restore_template.CreateRestoreTemplateRequest(
+        parent="parent_value",
+        restore_template_id="restore_template_id_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_template), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.create_restore_template(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = gcb_restore_template.CreateRestoreTemplateRequest(
+            parent="parent_value",
+            restore_template_id="restore_template_id_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_create_restore_template_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.create_restore_template
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.create_restore_template
+        ] = mock_rpc
+        request = {}
+        client.create_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.create_restore_template(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_create_restore_template_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = BackupDRAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.create_restore_template
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.create_restore_template
+        ] = mock_rpc
+
+        request = {}
+        await client.create_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        await client.create_restore_template(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        gcb_restore_template.CreateRestoreTemplateRequest(),
+        {},
+    ],
+)
+async def test_create_restore_template_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        response = await client.create_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = gcb_restore_template.CreateRestoreTemplateRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_create_restore_template_field_headers():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = gcb_restore_template.CreateRestoreTemplateRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_template), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.create_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_create_restore_template_field_headers_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = gcb_restore_template.CreateRestoreTemplateRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_template), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/op")
+        )
+        await client.create_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+def test_create_restore_template_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.create_restore_template(
+            parent="parent_value",
+            restore_template=gcb_restore_template.RestoreTemplate(name="name_value"),
+            restore_template_id="restore_template_id_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+        arg = args[0].restore_template
+        mock_val = gcb_restore_template.RestoreTemplate(name="name_value")
+        assert arg == mock_val
+        arg = args[0].restore_template_id
+        mock_val = "restore_template_id_value"
+        assert arg == mock_val
+
+
+def test_create_restore_template_flattened_error():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.create_restore_template(
+            gcb_restore_template.CreateRestoreTemplateRequest(),
+            parent="parent_value",
+            restore_template=gcb_restore_template.RestoreTemplate(name="name_value"),
+            restore_template_id="restore_template_id_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_create_restore_template_flattened_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.create_restore_template(
+            parent="parent_value",
+            restore_template=gcb_restore_template.RestoreTemplate(name="name_value"),
+            restore_template_id="restore_template_id_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+        arg = args[0].restore_template
+        mock_val = gcb_restore_template.RestoreTemplate(name="name_value")
+        assert arg == mock_val
+        arg = args[0].restore_template_id
+        mock_val = "restore_template_id_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_create_restore_template_flattened_error_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.create_restore_template(
+            gcb_restore_template.CreateRestoreTemplateRequest(),
+            parent="parent_value",
+            restore_template=gcb_restore_template.RestoreTemplate(name="name_value"),
+            restore_template_id="restore_template_id_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template.GetRestoreTemplateRequest(),
+        {},
+    ],
+)
+def test_get_restore_template(request_type, transport: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = restore_template.RestoreTemplate(
+            name="name_value",
+            description="description_value",
+            resource_type="resource_type_value",
+            state=restore_template.RestoreTemplate.State.CREATING,
+            etag="etag_value",
+        )
+        response = client.get_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = restore_template.GetRestoreTemplateRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, restore_template.RestoreTemplate)
+    assert response.name == "name_value"
+    assert response.description == "description_value"
+    assert response.resource_type == "resource_type_value"
+    assert response.state == restore_template.RestoreTemplate.State.CREATING
+    assert response.etag == "etag_value"
+
+
+def test_get_restore_template_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = restore_template.GetRestoreTemplateRequest(
+        name="name_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.get_restore_template(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template.GetRestoreTemplateRequest(
+            name="name_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_get_restore_template_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.get_restore_template in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.get_restore_template] = (
+            mock_rpc
+        )
+        request = {}
+        client.get_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.get_restore_template(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_get_restore_template_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = BackupDRAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.get_restore_template
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.get_restore_template
+        ] = mock_rpc
+
+        request = {}
+        await client.get_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.get_restore_template(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template.GetRestoreTemplateRequest(),
+        {},
+    ],
+)
+async def test_get_restore_template_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_template.RestoreTemplate(
+                name="name_value",
+                description="description_value",
+                resource_type="resource_type_value",
+                state=restore_template.RestoreTemplate.State.CREATING,
+                etag="etag_value",
+            )
+        )
+        response = await client.get_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = restore_template.GetRestoreTemplateRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, restore_template.RestoreTemplate)
+    assert response.name == "name_value"
+    assert response.description == "description_value"
+    assert response.resource_type == "resource_type_value"
+    assert response.state == restore_template.RestoreTemplate.State.CREATING
+    assert response.etag == "etag_value"
+
+
+def test_get_restore_template_field_headers():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_template.GetRestoreTemplateRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template), "__call__"
+    ) as call:
+        call.return_value = restore_template.RestoreTemplate()
+        client.get_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_get_restore_template_field_headers_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_template.GetRestoreTemplateRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_template.RestoreTemplate()
+        )
+        await client.get_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_get_restore_template_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = restore_template.RestoreTemplate()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.get_restore_template(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+def test_get_restore_template_flattened_error():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.get_restore_template(
+            restore_template.GetRestoreTemplateRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_get_restore_template_flattened_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = restore_template.RestoreTemplate()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_template.RestoreTemplate()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.get_restore_template(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_get_restore_template_flattened_error_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.get_restore_template(
+            restore_template.GetRestoreTemplateRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template.ListRestoreTemplatesRequest(),
+        {},
+    ],
+)
+def test_list_restore_templates(request_type, transport: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_templates), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = restore_template.ListRestoreTemplatesResponse(
+            next_page_token="next_page_token_value",
+            unreachable=["unreachable_value"],
+        )
+        response = client.list_restore_templates(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = restore_template.ListRestoreTemplatesRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.ListRestoreTemplatesPager)
+    assert response.next_page_token == "next_page_token_value"
+    assert response.unreachable == ["unreachable_value"]
+
+
+def test_list_restore_templates_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = restore_template.ListRestoreTemplatesRequest(
+        parent="parent_value",
+        page_token="page_token_value",
+        filter="filter_value",
+        order_by="order_by_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_templates), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.list_restore_templates(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template.ListRestoreTemplatesRequest(
+            parent="parent_value",
+            page_token="page_token_value",
+            filter="filter_value",
+            order_by="order_by_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_list_restore_templates_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.list_restore_templates
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.list_restore_templates] = (
+            mock_rpc
+        )
+        request = {}
+        client.list_restore_templates(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.list_restore_templates(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_list_restore_templates_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = BackupDRAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.list_restore_templates
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.list_restore_templates
+        ] = mock_rpc
+
+        request = {}
+        await client.list_restore_templates(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.list_restore_templates(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template.ListRestoreTemplatesRequest(),
+        {},
+    ],
+)
+async def test_list_restore_templates_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_templates), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_template.ListRestoreTemplatesResponse(
+                next_page_token="next_page_token_value",
+                unreachable=["unreachable_value"],
+            )
+        )
+        response = await client.list_restore_templates(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = restore_template.ListRestoreTemplatesRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.ListRestoreTemplatesAsyncPager)
+    assert response.next_page_token == "next_page_token_value"
+    assert response.unreachable == ["unreachable_value"]
+
+
+def test_list_restore_templates_field_headers():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_template.ListRestoreTemplatesRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_templates), "__call__"
+    ) as call:
+        call.return_value = restore_template.ListRestoreTemplatesResponse()
+        client.list_restore_templates(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_list_restore_templates_field_headers_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_template.ListRestoreTemplatesRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_templates), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_template.ListRestoreTemplatesResponse()
+        )
+        await client.list_restore_templates(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+def test_list_restore_templates_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_templates), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = restore_template.ListRestoreTemplatesResponse()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.list_restore_templates(
+            parent="parent_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+
+
+def test_list_restore_templates_flattened_error():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.list_restore_templates(
+            restore_template.ListRestoreTemplatesRequest(),
+            parent="parent_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_list_restore_templates_flattened_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_templates), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = restore_template.ListRestoreTemplatesResponse()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_template.ListRestoreTemplatesResponse()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.list_restore_templates(
+            parent="parent_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_list_restore_templates_flattened_error_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.list_restore_templates(
+            restore_template.ListRestoreTemplatesRequest(),
+            parent="parent_value",
+        )
+
+
+def test_list_restore_templates_pager(transport_name: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_templates), "__call__"
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[
+                    restore_template.RestoreTemplate(),
+                    restore_template.RestoreTemplate(),
+                    restore_template.RestoreTemplate(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[],
+                next_page_token="def",
+            ),
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[
+                    restore_template.RestoreTemplate(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[
+                    restore_template.RestoreTemplate(),
+                    restore_template.RestoreTemplate(),
+                ],
+            ),
+            RuntimeError,
+        )
+
+        expected_metadata = ()
+        retry = retries.Retry()
+        timeout = 5
+        expected_metadata = tuple(expected_metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", ""),)),
+        )
+        pager = client.list_restore_templates(request={}, retry=retry, timeout=timeout)
+
+        assert pager._metadata == expected_metadata
+        assert pager._retry == retry
+        assert pager._timeout == timeout
+
+        assert pager.next_page_token == "abc"
+        assert str(pager).startswith(f"{pager.__class__.__name__}<")
+
+        results = list(pager)
+        assert len(results) == 6
+        assert all(isinstance(i, restore_template.RestoreTemplate) for i in results)
+
+
+def test_list_restore_templates_pages(transport_name: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_templates), "__call__"
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[
+                    restore_template.RestoreTemplate(),
+                    restore_template.RestoreTemplate(),
+                    restore_template.RestoreTemplate(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[],
+                next_page_token="def",
+            ),
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[
+                    restore_template.RestoreTemplate(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[
+                    restore_template.RestoreTemplate(),
+                    restore_template.RestoreTemplate(),
+                ],
+            ),
+            RuntimeError,
+        )
+        pages = list(client.list_restore_templates(request={}).pages)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+@pytest.mark.asyncio
+async def test_list_restore_templates_async_pager():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_templates),
+        "__call__",
+        new_callable=mock.AsyncMock,
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[
+                    restore_template.RestoreTemplate(),
+                    restore_template.RestoreTemplate(),
+                    restore_template.RestoreTemplate(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[],
+                next_page_token="def",
+            ),
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[
+                    restore_template.RestoreTemplate(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[
+                    restore_template.RestoreTemplate(),
+                    restore_template.RestoreTemplate(),
+                ],
+            ),
+            RuntimeError,
+        )
+        async_pager = await client.list_restore_templates(
+            request={},
+        )
+        assert async_pager.next_page_token == "abc"
+        assert str(async_pager).startswith(f"{async_pager.__class__.__name__}<")
+
+        responses = []
+        async for response in async_pager:  # pragma: no branch
+            responses.append(response)
+
+        assert len(responses) == 6
+        assert all(isinstance(i, restore_template.RestoreTemplate) for i in responses)
+
+
+@pytest.mark.asyncio
+async def test_list_restore_templates_async_pages():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_templates),
+        "__call__",
+        new_callable=mock.AsyncMock,
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[
+                    restore_template.RestoreTemplate(),
+                    restore_template.RestoreTemplate(),
+                    restore_template.RestoreTemplate(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[],
+                next_page_token="def",
+            ),
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[
+                    restore_template.RestoreTemplate(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[
+                    restore_template.RestoreTemplate(),
+                    restore_template.RestoreTemplate(),
+                ],
+            ),
+            RuntimeError,
+        )
+        pages = []
+        async for page_ in (await client.list_restore_templates(request={})).pages:
+            pages.append(page_)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        gcb_restore_template.UpdateRestoreTemplateRequest(),
+        {},
+    ],
+)
+def test_update_restore_template(request_type, transport: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/spam")
+        response = client.update_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = gcb_restore_template.UpdateRestoreTemplateRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_update_restore_template_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = gcb_restore_template.UpdateRestoreTemplateRequest()
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_restore_template), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.update_restore_template(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = gcb_restore_template.UpdateRestoreTemplateRequest()
+        assert args[0] == request_msg
+
+
+def test_update_restore_template_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.update_restore_template
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.update_restore_template
+        ] = mock_rpc
+        request = {}
+        client.update_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.update_restore_template(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_update_restore_template_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = BackupDRAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.update_restore_template
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.update_restore_template
+        ] = mock_rpc
+
+        request = {}
+        await client.update_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        await client.update_restore_template(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        gcb_restore_template.UpdateRestoreTemplateRequest(),
+        {},
+    ],
+)
+async def test_update_restore_template_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        response = await client.update_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = gcb_restore_template.UpdateRestoreTemplateRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_update_restore_template_field_headers():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = gcb_restore_template.UpdateRestoreTemplateRequest()
+
+    request.restore_template.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_restore_template), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.update_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "restore_template.name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_update_restore_template_field_headers_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = gcb_restore_template.UpdateRestoreTemplateRequest()
+
+    request.restore_template.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_restore_template), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/op")
+        )
+        await client.update_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "restore_template.name=name_value",
+    ) in kw["metadata"]
+
+
+def test_update_restore_template_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.update_restore_template(
+            restore_template=gcb_restore_template.RestoreTemplate(name="name_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].restore_template
+        mock_val = gcb_restore_template.RestoreTemplate(name="name_value")
+        assert arg == mock_val
+        arg = args[0].update_mask
+        mock_val = field_mask_pb2.FieldMask(paths=["paths_value"])
+        assert arg == mock_val
+
+
+def test_update_restore_template_flattened_error():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.update_restore_template(
+            gcb_restore_template.UpdateRestoreTemplateRequest(),
+            restore_template=gcb_restore_template.RestoreTemplate(name="name_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+
+
+@pytest.mark.asyncio
+async def test_update_restore_template_flattened_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.update_restore_template(
+            restore_template=gcb_restore_template.RestoreTemplate(name="name_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].restore_template
+        mock_val = gcb_restore_template.RestoreTemplate(name="name_value")
+        assert arg == mock_val
+        arg = args[0].update_mask
+        mock_val = field_mask_pb2.FieldMask(paths=["paths_value"])
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_update_restore_template_flattened_error_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.update_restore_template(
+            gcb_restore_template.UpdateRestoreTemplateRequest(),
+            restore_template=gcb_restore_template.RestoreTemplate(name="name_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template.DeleteRestoreTemplateRequest(),
+        {},
+    ],
+)
+def test_delete_restore_template(request_type, transport: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/spam")
+        response = client.delete_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = restore_template.DeleteRestoreTemplateRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_delete_restore_template_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = restore_template.DeleteRestoreTemplateRequest(
+        name="name_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_template), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.delete_restore_template(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template.DeleteRestoreTemplateRequest(
+            name="name_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_delete_restore_template_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.delete_restore_template
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.delete_restore_template
+        ] = mock_rpc
+        request = {}
+        client.delete_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.delete_restore_template(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_delete_restore_template_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = BackupDRAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.delete_restore_template
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.delete_restore_template
+        ] = mock_rpc
+
+        request = {}
+        await client.delete_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        await client.delete_restore_template(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template.DeleteRestoreTemplateRequest(),
+        {},
+    ],
+)
+async def test_delete_restore_template_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        response = await client.delete_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = restore_template.DeleteRestoreTemplateRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_delete_restore_template_field_headers():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_template.DeleteRestoreTemplateRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_template), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.delete_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_delete_restore_template_field_headers_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_template.DeleteRestoreTemplateRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_template), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/op")
+        )
+        await client.delete_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_delete_restore_template_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.delete_restore_template(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+def test_delete_restore_template_flattened_error():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.delete_restore_template(
+            restore_template.DeleteRestoreTemplateRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_delete_restore_template_flattened_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.delete_restore_template(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_delete_restore_template_flattened_error_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.delete_restore_template(
+            restore_template.DeleteRestoreTemplateRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template.RunRestoreTemplateRequest(),
+        {},
+    ],
+)
+def test_run_restore_template(request_type, transport: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.run_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/spam")
+        response = client.run_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = restore_template.RunRestoreTemplateRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_run_restore_template_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = restore_template.RunRestoreTemplateRequest(
+        name="name_value",
+        backup="backup_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.run_restore_template), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.run_restore_template(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template.RunRestoreTemplateRequest(
+            name="name_value",
+            backup="backup_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_run_restore_template_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.run_restore_template in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.run_restore_template] = (
+            mock_rpc
+        )
+        request = {}
+        client.run_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.run_restore_template(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_run_restore_template_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = BackupDRAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.run_restore_template
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.run_restore_template
+        ] = mock_rpc
+
+        request = {}
+        await client.run_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        await client.run_restore_template(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template.RunRestoreTemplateRequest(),
+        {},
+    ],
+)
+async def test_run_restore_template_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.run_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        response = await client.run_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = restore_template.RunRestoreTemplateRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_run_restore_template_field_headers():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_template.RunRestoreTemplateRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.run_restore_template), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.run_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_run_restore_template_field_headers_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_template.RunRestoreTemplateRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.run_restore_template), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/op")
+        )
+        await client.run_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_run_restore_template_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.run_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.run_restore_template(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+def test_run_restore_template_flattened_error():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.run_restore_template(
+            restore_template.RunRestoreTemplateRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_run_restore_template_flattened_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.run_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.run_restore_template(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_run_restore_template_flattened_error_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.run_restore_template(
+            restore_template.RunRestoreTemplateRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template_execution.GetRestoreTemplateExecutionRequest(),
+        {},
+    ],
+)
+def test_get_restore_template_execution(request_type, transport: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template_execution), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = restore_template_execution.RestoreTemplateExecution(
+            name="name_value",
+            resource_type="resource_type_value",
+            type_=restore_template_execution.RestoreTemplateExecution.ExecutionType.SCHEDULED,
+            phase=restore_template_execution.RestoreTemplateExecution.ExecutionPhase.PREPARING,
+            state=restore_template_execution.RestoreTemplateExecution.ExecutionState.RUNNING,
+        )
+        response = client.get_restore_template_execution(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = restore_template_execution.GetRestoreTemplateExecutionRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, restore_template_execution.RestoreTemplateExecution)
+    assert response.name == "name_value"
+    assert response.resource_type == "resource_type_value"
+    assert (
+        response.type_
+        == restore_template_execution.RestoreTemplateExecution.ExecutionType.SCHEDULED
+    )
+    assert (
+        response.phase
+        == restore_template_execution.RestoreTemplateExecution.ExecutionPhase.PREPARING
+    )
+    assert (
+        response.state
+        == restore_template_execution.RestoreTemplateExecution.ExecutionState.RUNNING
+    )
+
+
+def test_get_restore_template_execution_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = restore_template_execution.GetRestoreTemplateExecutionRequest(
+        name="name_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template_execution), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.get_restore_template_execution(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template_execution.GetRestoreTemplateExecutionRequest(
+            name="name_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_get_restore_template_execution_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.get_restore_template_execution
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.get_restore_template_execution
+        ] = mock_rpc
+        request = {}
+        client.get_restore_template_execution(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.get_restore_template_execution(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_get_restore_template_execution_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = BackupDRAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.get_restore_template_execution
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.get_restore_template_execution
+        ] = mock_rpc
+
+        request = {}
+        await client.get_restore_template_execution(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.get_restore_template_execution(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template_execution.GetRestoreTemplateExecutionRequest(),
+        {},
+    ],
+)
+async def test_get_restore_template_execution_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template_execution), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_template_execution.RestoreTemplateExecution(
+                name="name_value",
+                resource_type="resource_type_value",
+                type_=restore_template_execution.RestoreTemplateExecution.ExecutionType.SCHEDULED,
+                phase=restore_template_execution.RestoreTemplateExecution.ExecutionPhase.PREPARING,
+                state=restore_template_execution.RestoreTemplateExecution.ExecutionState.RUNNING,
+            )
+        )
+        response = await client.get_restore_template_execution(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = restore_template_execution.GetRestoreTemplateExecutionRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, restore_template_execution.RestoreTemplateExecution)
+    assert response.name == "name_value"
+    assert response.resource_type == "resource_type_value"
+    assert (
+        response.type_
+        == restore_template_execution.RestoreTemplateExecution.ExecutionType.SCHEDULED
+    )
+    assert (
+        response.phase
+        == restore_template_execution.RestoreTemplateExecution.ExecutionPhase.PREPARING
+    )
+    assert (
+        response.state
+        == restore_template_execution.RestoreTemplateExecution.ExecutionState.RUNNING
+    )
+
+
+def test_get_restore_template_execution_field_headers():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_template_execution.GetRestoreTemplateExecutionRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template_execution), "__call__"
+    ) as call:
+        call.return_value = restore_template_execution.RestoreTemplateExecution()
+        client.get_restore_template_execution(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_get_restore_template_execution_field_headers_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_template_execution.GetRestoreTemplateExecutionRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template_execution), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_template_execution.RestoreTemplateExecution()
+        )
+        await client.get_restore_template_execution(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_get_restore_template_execution_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template_execution), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = restore_template_execution.RestoreTemplateExecution()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.get_restore_template_execution(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+def test_get_restore_template_execution_flattened_error():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.get_restore_template_execution(
+            restore_template_execution.GetRestoreTemplateExecutionRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_get_restore_template_execution_flattened_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template_execution), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = restore_template_execution.RestoreTemplateExecution()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_template_execution.RestoreTemplateExecution()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.get_restore_template_execution(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_get_restore_template_execution_flattened_error_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.get_restore_template_execution(
+            restore_template_execution.GetRestoreTemplateExecutionRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template_execution.ListRestoreTemplateExecutionsRequest(),
+        {},
+    ],
+)
+def test_list_restore_template_executions(request_type, transport: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_template_executions), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = (
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                next_page_token="next_page_token_value",
+                unreachable=["unreachable_value"],
+            )
+        )
+        response = client.list_restore_template_executions(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = restore_template_execution.ListRestoreTemplateExecutionsRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.ListRestoreTemplateExecutionsPager)
+    assert response.next_page_token == "next_page_token_value"
+    assert response.unreachable == ["unreachable_value"]
+
+
+def test_list_restore_template_executions_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = restore_template_execution.ListRestoreTemplateExecutionsRequest(
+        parent="parent_value",
+        page_token="page_token_value",
+        filter="filter_value",
+        order_by="order_by_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_template_executions), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.list_restore_template_executions(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template_execution.ListRestoreTemplateExecutionsRequest(
+            parent="parent_value",
+            page_token="page_token_value",
+            filter="filter_value",
+            order_by="order_by_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_list_restore_template_executions_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.list_restore_template_executions
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.list_restore_template_executions
+        ] = mock_rpc
+        request = {}
+        client.list_restore_template_executions(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.list_restore_template_executions(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_list_restore_template_executions_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = BackupDRAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.list_restore_template_executions
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.list_restore_template_executions
+        ] = mock_rpc
+
+        request = {}
+        await client.list_restore_template_executions(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.list_restore_template_executions(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template_execution.ListRestoreTemplateExecutionsRequest(),
+        {},
+    ],
+)
+async def test_list_restore_template_executions_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_template_executions), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                next_page_token="next_page_token_value",
+                unreachable=["unreachable_value"],
+            )
+        )
+        response = await client.list_restore_template_executions(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = restore_template_execution.ListRestoreTemplateExecutionsRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.ListRestoreTemplateExecutionsAsyncPager)
+    assert response.next_page_token == "next_page_token_value"
+    assert response.unreachable == ["unreachable_value"]
+
+
+def test_list_restore_template_executions_field_headers():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_template_execution.ListRestoreTemplateExecutionsRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_template_executions), "__call__"
+    ) as call:
+        call.return_value = (
+            restore_template_execution.ListRestoreTemplateExecutionsResponse()
+        )
+        client.list_restore_template_executions(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_list_restore_template_executions_field_headers_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_template_execution.ListRestoreTemplateExecutionsRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_template_executions), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_template_execution.ListRestoreTemplateExecutionsResponse()
+        )
+        await client.list_restore_template_executions(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+def test_list_restore_template_executions_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_template_executions), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = (
+            restore_template_execution.ListRestoreTemplateExecutionsResponse()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.list_restore_template_executions(
+            parent="parent_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+
+
+def test_list_restore_template_executions_flattened_error():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.list_restore_template_executions(
+            restore_template_execution.ListRestoreTemplateExecutionsRequest(),
+            parent="parent_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_list_restore_template_executions_flattened_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_template_executions), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = (
+            restore_template_execution.ListRestoreTemplateExecutionsResponse()
+        )
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_template_execution.ListRestoreTemplateExecutionsResponse()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.list_restore_template_executions(
+            parent="parent_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_list_restore_template_executions_flattened_error_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.list_restore_template_executions(
+            restore_template_execution.ListRestoreTemplateExecutionsRequest(),
+            parent="parent_value",
+        )
+
+
+def test_list_restore_template_executions_pager(transport_name: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_template_executions), "__call__"
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[
+                    restore_template_execution.RestoreTemplateExecution(),
+                    restore_template_execution.RestoreTemplateExecution(),
+                    restore_template_execution.RestoreTemplateExecution(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[],
+                next_page_token="def",
+            ),
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[
+                    restore_template_execution.RestoreTemplateExecution(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[
+                    restore_template_execution.RestoreTemplateExecution(),
+                    restore_template_execution.RestoreTemplateExecution(),
+                ],
+            ),
+            RuntimeError,
+        )
+
+        expected_metadata = ()
+        retry = retries.Retry()
+        timeout = 5
+        expected_metadata = tuple(expected_metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", ""),)),
+        )
+        pager = client.list_restore_template_executions(
+            request={}, retry=retry, timeout=timeout
+        )
+
+        assert pager._metadata == expected_metadata
+        assert pager._retry == retry
+        assert pager._timeout == timeout
+
+        assert pager.next_page_token == "abc"
+        assert str(pager).startswith(f"{pager.__class__.__name__}<")
+
+        results = list(pager)
+        assert len(results) == 6
+        assert all(
+            isinstance(i, restore_template_execution.RestoreTemplateExecution)
+            for i in results
+        )
+
+
+def test_list_restore_template_executions_pages(transport_name: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_template_executions), "__call__"
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[
+                    restore_template_execution.RestoreTemplateExecution(),
+                    restore_template_execution.RestoreTemplateExecution(),
+                    restore_template_execution.RestoreTemplateExecution(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[],
+                next_page_token="def",
+            ),
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[
+                    restore_template_execution.RestoreTemplateExecution(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[
+                    restore_template_execution.RestoreTemplateExecution(),
+                    restore_template_execution.RestoreTemplateExecution(),
+                ],
+            ),
+            RuntimeError,
+        )
+        pages = list(client.list_restore_template_executions(request={}).pages)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+@pytest.mark.asyncio
+async def test_list_restore_template_executions_async_pager():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_template_executions),
+        "__call__",
+        new_callable=mock.AsyncMock,
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[
+                    restore_template_execution.RestoreTemplateExecution(),
+                    restore_template_execution.RestoreTemplateExecution(),
+                    restore_template_execution.RestoreTemplateExecution(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[],
+                next_page_token="def",
+            ),
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[
+                    restore_template_execution.RestoreTemplateExecution(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[
+                    restore_template_execution.RestoreTemplateExecution(),
+                    restore_template_execution.RestoreTemplateExecution(),
+                ],
+            ),
+            RuntimeError,
+        )
+        async_pager = await client.list_restore_template_executions(
+            request={},
+        )
+        assert async_pager.next_page_token == "abc"
+        assert str(async_pager).startswith(f"{async_pager.__class__.__name__}<")
+
+        responses = []
+        async for response in async_pager:  # pragma: no branch
+            responses.append(response)
+
+        assert len(responses) == 6
+        assert all(
+            isinstance(i, restore_template_execution.RestoreTemplateExecution)
+            for i in responses
+        )
+
+
+@pytest.mark.asyncio
+async def test_list_restore_template_executions_async_pages():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_template_executions),
+        "__call__",
+        new_callable=mock.AsyncMock,
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[
+                    restore_template_execution.RestoreTemplateExecution(),
+                    restore_template_execution.RestoreTemplateExecution(),
+                    restore_template_execution.RestoreTemplateExecution(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[],
+                next_page_token="def",
+            ),
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[
+                    restore_template_execution.RestoreTemplateExecution(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[
+                    restore_template_execution.RestoreTemplateExecution(),
+                    restore_template_execution.RestoreTemplateExecution(),
+                ],
+            ),
+            RuntimeError,
+        )
+        pages = []
+        async for page_ in (
+            await client.list_restore_template_executions(request={})
+        ).pages:
+            pages.append(page_)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template_execution.TriggerRestoreCleanupRequest(),
+        {},
+    ],
+)
+def test_trigger_restore_cleanup(request_type, transport: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_cleanup), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/spam")
+        response = client.trigger_restore_cleanup(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = restore_template_execution.TriggerRestoreCleanupRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_trigger_restore_cleanup_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = restore_template_execution.TriggerRestoreCleanupRequest(
+        name="name_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_cleanup), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.trigger_restore_cleanup(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template_execution.TriggerRestoreCleanupRequest(
+            name="name_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_trigger_restore_cleanup_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.trigger_restore_cleanup
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.trigger_restore_cleanup
+        ] = mock_rpc
+        request = {}
+        client.trigger_restore_cleanup(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.trigger_restore_cleanup(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_trigger_restore_cleanup_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = BackupDRAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.trigger_restore_cleanup
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.trigger_restore_cleanup
+        ] = mock_rpc
+
+        request = {}
+        await client.trigger_restore_cleanup(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        await client.trigger_restore_cleanup(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template_execution.TriggerRestoreCleanupRequest(),
+        {},
+    ],
+)
+async def test_trigger_restore_cleanup_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_cleanup), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        response = await client.trigger_restore_cleanup(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = restore_template_execution.TriggerRestoreCleanupRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_trigger_restore_cleanup_field_headers():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_template_execution.TriggerRestoreCleanupRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_cleanup), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.trigger_restore_cleanup(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_trigger_restore_cleanup_field_headers_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_template_execution.TriggerRestoreCleanupRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_cleanup), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/op")
+        )
+        await client.trigger_restore_cleanup(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_trigger_restore_cleanup_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_cleanup), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.trigger_restore_cleanup(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+def test_trigger_restore_cleanup_flattened_error():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.trigger_restore_cleanup(
+            restore_template_execution.TriggerRestoreCleanupRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_trigger_restore_cleanup_flattened_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_cleanup), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.trigger_restore_cleanup(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_trigger_restore_cleanup_flattened_error_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.trigger_restore_cleanup(
+            restore_template_execution.TriggerRestoreCleanupRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest(),
+        {},
+    ],
+)
+def test_create_restore_verification_plan(request_type, transport: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/spam")
+        response = client.create_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_create_restore_verification_plan_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest(
+        parent="parent_value",
+        restore_verification_plan_id="restore_verification_plan_id_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.create_restore_verification_plan(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = (
+            gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest(
+                parent="parent_value",
+                restore_verification_plan_id="restore_verification_plan_id_value",
+            )
+        )
+        assert args[0] == request_msg
+
+
+def test_create_restore_verification_plan_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.create_restore_verification_plan
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.create_restore_verification_plan
+        ] = mock_rpc
+        request = {}
+        client.create_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.create_restore_verification_plan(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_create_restore_verification_plan_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = BackupDRAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.create_restore_verification_plan
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.create_restore_verification_plan
+        ] = mock_rpc
+
+        request = {}
+        await client.create_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        await client.create_restore_verification_plan(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest(),
+        {},
+    ],
+)
+async def test_create_restore_verification_plan_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        response = await client.create_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_create_restore_verification_plan_field_headers():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.create_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_create_restore_verification_plan_field_headers_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/op")
+        )
+        await client.create_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+def test_create_restore_verification_plan_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.create_restore_verification_plan(
+            parent="parent_value",
+            restore_verification_plan=gcb_restore_verification_plan.RestoreVerificationPlan(
+                name="name_value"
+            ),
+            restore_verification_plan_id="restore_verification_plan_id_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+        arg = args[0].restore_verification_plan
+        mock_val = gcb_restore_verification_plan.RestoreVerificationPlan(
+            name="name_value"
+        )
+        assert arg == mock_val
+        arg = args[0].restore_verification_plan_id
+        mock_val = "restore_verification_plan_id_value"
+        assert arg == mock_val
+
+
+def test_create_restore_verification_plan_flattened_error():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.create_restore_verification_plan(
+            gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest(),
+            parent="parent_value",
+            restore_verification_plan=gcb_restore_verification_plan.RestoreVerificationPlan(
+                name="name_value"
+            ),
+            restore_verification_plan_id="restore_verification_plan_id_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_create_restore_verification_plan_flattened_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.create_restore_verification_plan(
+            parent="parent_value",
+            restore_verification_plan=gcb_restore_verification_plan.RestoreVerificationPlan(
+                name="name_value"
+            ),
+            restore_verification_plan_id="restore_verification_plan_id_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+        arg = args[0].restore_verification_plan
+        mock_val = gcb_restore_verification_plan.RestoreVerificationPlan(
+            name="name_value"
+        )
+        assert arg == mock_val
+        arg = args[0].restore_verification_plan_id
+        mock_val = "restore_verification_plan_id_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_create_restore_verification_plan_flattened_error_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.create_restore_verification_plan(
+            gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest(),
+            parent="parent_value",
+            restore_verification_plan=gcb_restore_verification_plan.RestoreVerificationPlan(
+                name="name_value"
+            ),
+            restore_verification_plan_id="restore_verification_plan_id_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest(),
+        {},
+    ],
+)
+def test_create_restore_verification_plan_association(
+    request_type, transport: str = "grpc"
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan_association), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/spam")
+        response = client.create_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_create_restore_verification_plan_association_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest(
+        parent="parent_value",
+        restore_verification_plan_association_id="restore_verification_plan_association_id_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan_association), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.create_restore_verification_plan_association(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest(
+            parent="parent_value",
+            restore_verification_plan_association_id="restore_verification_plan_association_id_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_create_restore_verification_plan_association_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.create_restore_verification_plan_association
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.create_restore_verification_plan_association
+        ] = mock_rpc
+        request = {}
+        client.create_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.create_restore_verification_plan_association(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_create_restore_verification_plan_association_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = BackupDRAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.create_restore_verification_plan_association
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.create_restore_verification_plan_association
+        ] = mock_rpc
+
+        request = {}
+        await client.create_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        await client.create_restore_verification_plan_association(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest(),
+        {},
+    ],
+)
+async def test_create_restore_verification_plan_association_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan_association), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        response = await client.create_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_create_restore_verification_plan_association_field_headers():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan_association), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.create_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_create_restore_verification_plan_association_field_headers_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan_association), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/op")
+        )
+        await client.create_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+def test_create_restore_verification_plan_association_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan_association), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.create_restore_verification_plan_association(
+            parent="parent_value",
+            restore_verification_plan_association=gcb_restore_verification_plan_association.RestoreVerificationPlanAssociation(
+                restore_template="restore_template_value"
+            ),
+            restore_verification_plan_association_id="restore_verification_plan_association_id_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+        arg = args[0].restore_verification_plan_association
+        mock_val = gcb_restore_verification_plan_association.RestoreVerificationPlanAssociation(
+            restore_template="restore_template_value"
+        )
+        assert arg == mock_val
+        arg = args[0].restore_verification_plan_association_id
+        mock_val = "restore_verification_plan_association_id_value"
+        assert arg == mock_val
+
+
+def test_create_restore_verification_plan_association_flattened_error():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.create_restore_verification_plan_association(
+            gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest(),
+            parent="parent_value",
+            restore_verification_plan_association=gcb_restore_verification_plan_association.RestoreVerificationPlanAssociation(
+                restore_template="restore_template_value"
+            ),
+            restore_verification_plan_association_id="restore_verification_plan_association_id_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_create_restore_verification_plan_association_flattened_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan_association), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.create_restore_verification_plan_association(
+            parent="parent_value",
+            restore_verification_plan_association=gcb_restore_verification_plan_association.RestoreVerificationPlanAssociation(
+                restore_template="restore_template_value"
+            ),
+            restore_verification_plan_association_id="restore_verification_plan_association_id_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+        arg = args[0].restore_verification_plan_association
+        mock_val = gcb_restore_verification_plan_association.RestoreVerificationPlanAssociation(
+            restore_template="restore_template_value"
+        )
+        assert arg == mock_val
+        arg = args[0].restore_verification_plan_association_id
+        mock_val = "restore_verification_plan_association_id_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_create_restore_verification_plan_association_flattened_error_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.create_restore_verification_plan_association(
+            gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest(),
+            parent="parent_value",
+            restore_verification_plan_association=gcb_restore_verification_plan_association.RestoreVerificationPlanAssociation(
+                restore_template="restore_template_value"
+            ),
+            restore_verification_plan_association_id="restore_verification_plan_association_id_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest(),
+        {},
+    ],
+)
+def test_get_restore_verification_plan_association(
+    request_type, transport: str = "grpc"
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan_association), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = restore_verification_plan_association.RestoreVerificationPlanAssociation(
+            name="name_value",
+            description="description_value",
+            state=restore_verification_plan_association.RestoreVerificationPlanAssociation.State.CREATING,
+            resource_type="resource_type_value",
+            restore_template="restore_template_value",
+        )
+        response = client.get_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response,
+        restore_verification_plan_association.RestoreVerificationPlanAssociation,
+    )
+    assert response.name == "name_value"
+    assert response.description == "description_value"
+    assert (
+        response.state
+        == restore_verification_plan_association.RestoreVerificationPlanAssociation.State.CREATING
+    )
+    assert response.resource_type == "resource_type_value"
+
+
+def test_get_restore_verification_plan_association_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest(
+        name="name_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan_association), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.get_restore_verification_plan_association(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest(
+            name="name_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_get_restore_verification_plan_association_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.get_restore_verification_plan_association
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.get_restore_verification_plan_association
+        ] = mock_rpc
+        request = {}
+        client.get_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.get_restore_verification_plan_association(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_get_restore_verification_plan_association_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = BackupDRAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.get_restore_verification_plan_association
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.get_restore_verification_plan_association
+        ] = mock_rpc
+
+        request = {}
+        await client.get_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.get_restore_verification_plan_association(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest(),
+        {},
+    ],
+)
+async def test_get_restore_verification_plan_association_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan_association), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_verification_plan_association.RestoreVerificationPlanAssociation(
+                name="name_value",
+                description="description_value",
+                state=restore_verification_plan_association.RestoreVerificationPlanAssociation.State.CREATING,
+                resource_type="resource_type_value",
+            )
+        )
+        response = await client.get_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response,
+        restore_verification_plan_association.RestoreVerificationPlanAssociation,
+    )
+    assert response.name == "name_value"
+    assert response.description == "description_value"
+    assert (
+        response.state
+        == restore_verification_plan_association.RestoreVerificationPlanAssociation.State.CREATING
+    )
+    assert response.resource_type == "resource_type_value"
+
+
+def test_get_restore_verification_plan_association_field_headers():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan_association), "__call__"
+    ) as call:
+        call.return_value = (
+            restore_verification_plan_association.RestoreVerificationPlanAssociation()
+        )
+        client.get_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_get_restore_verification_plan_association_field_headers_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan_association), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_verification_plan_association.RestoreVerificationPlanAssociation()
+        )
+        await client.get_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_get_restore_verification_plan_association_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan_association), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = (
+            restore_verification_plan_association.RestoreVerificationPlanAssociation()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.get_restore_verification_plan_association(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+def test_get_restore_verification_plan_association_flattened_error():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.get_restore_verification_plan_association(
+            restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_get_restore_verification_plan_association_flattened_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan_association), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = (
+            restore_verification_plan_association.RestoreVerificationPlanAssociation()
+        )
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_verification_plan_association.RestoreVerificationPlanAssociation()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.get_restore_verification_plan_association(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_get_restore_verification_plan_association_flattened_error_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.get_restore_verification_plan_association(
+            restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest(),
+        {},
+    ],
+)
+def test_list_restore_verification_plan_associations(
+    request_type, transport: str = "grpc"
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plan_associations), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+            next_page_token="next_page_token_value",
+            unreachable=["unreachable_value"],
+        )
+        response = client.list_restore_verification_plan_associations(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.ListRestoreVerificationPlanAssociationsPager)
+    assert response.next_page_token == "next_page_token_value"
+    assert response.unreachable == ["unreachable_value"]
+
+
+def test_list_restore_verification_plan_associations_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest(
+        parent="parent_value",
+        page_token="page_token_value",
+        filter="filter_value",
+        order_by="order_by_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plan_associations), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.list_restore_verification_plan_associations(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest(
+            parent="parent_value",
+            page_token="page_token_value",
+            filter="filter_value",
+            order_by="order_by_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_list_restore_verification_plan_associations_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.list_restore_verification_plan_associations
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.list_restore_verification_plan_associations
+        ] = mock_rpc
+        request = {}
+        client.list_restore_verification_plan_associations(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.list_restore_verification_plan_associations(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_list_restore_verification_plan_associations_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = BackupDRAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.list_restore_verification_plan_associations
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.list_restore_verification_plan_associations
+        ] = mock_rpc
+
+        request = {}
+        await client.list_restore_verification_plan_associations(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.list_restore_verification_plan_associations(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest(),
+        {},
+    ],
+)
+async def test_list_restore_verification_plan_associations_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plan_associations), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                next_page_token="next_page_token_value",
+                unreachable=["unreachable_value"],
+            )
+        )
+        response = await client.list_restore_verification_plan_associations(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response, pagers.ListRestoreVerificationPlanAssociationsAsyncPager
+    )
+    assert response.next_page_token == "next_page_token_value"
+    assert response.unreachable == ["unreachable_value"]
+
+
+def test_list_restore_verification_plan_associations_field_headers():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plan_associations), "__call__"
+    ) as call:
+        call.return_value = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse()
+        client.list_restore_verification_plan_associations(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_list_restore_verification_plan_associations_field_headers_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plan_associations), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse()
+        )
+        await client.list_restore_verification_plan_associations(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+def test_list_restore_verification_plan_associations_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plan_associations), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.list_restore_verification_plan_associations(
+            parent="parent_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+
+
+def test_list_restore_verification_plan_associations_flattened_error():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.list_restore_verification_plan_associations(
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest(),
+            parent="parent_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_list_restore_verification_plan_associations_flattened_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plan_associations), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.list_restore_verification_plan_associations(
+            parent="parent_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_list_restore_verification_plan_associations_flattened_error_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.list_restore_verification_plan_associations(
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest(),
+            parent="parent_value",
+        )
+
+
+def test_list_restore_verification_plan_associations_pager(
+    transport_name: str = "grpc",
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plan_associations), "__call__"
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[],
+                next_page_token="def",
+            ),
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                ],
+            ),
+            RuntimeError,
+        )
+
+        expected_metadata = ()
+        retry = retries.Retry()
+        timeout = 5
+        expected_metadata = tuple(expected_metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", ""),)),
+        )
+        pager = client.list_restore_verification_plan_associations(
+            request={}, retry=retry, timeout=timeout
+        )
+
+        assert pager._metadata == expected_metadata
+        assert pager._retry == retry
+        assert pager._timeout == timeout
+
+        assert pager.next_page_token == "abc"
+        assert str(pager).startswith(f"{pager.__class__.__name__}<")
+
+        results = list(pager)
+        assert len(results) == 6
+        assert all(
+            isinstance(
+                i,
+                restore_verification_plan_association.RestoreVerificationPlanAssociation,
+            )
+            for i in results
+        )
+
+
+def test_list_restore_verification_plan_associations_pages(
+    transport_name: str = "grpc",
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plan_associations), "__call__"
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[],
+                next_page_token="def",
+            ),
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                ],
+            ),
+            RuntimeError,
+        )
+        pages = list(
+            client.list_restore_verification_plan_associations(request={}).pages
+        )
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+@pytest.mark.asyncio
+async def test_list_restore_verification_plan_associations_async_pager():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plan_associations),
+        "__call__",
+        new_callable=mock.AsyncMock,
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[],
+                next_page_token="def",
+            ),
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                ],
+            ),
+            RuntimeError,
+        )
+        async_pager = await client.list_restore_verification_plan_associations(
+            request={},
+        )
+        assert async_pager.next_page_token == "abc"
+        assert str(async_pager).startswith(f"{async_pager.__class__.__name__}<")
+
+        responses = []
+        async for response in async_pager:  # pragma: no branch
+            responses.append(response)
+
+        assert len(responses) == 6
+        assert all(
+            isinstance(
+                i,
+                restore_verification_plan_association.RestoreVerificationPlanAssociation,
+            )
+            for i in responses
+        )
+
+
+@pytest.mark.asyncio
+async def test_list_restore_verification_plan_associations_async_pages():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plan_associations),
+        "__call__",
+        new_callable=mock.AsyncMock,
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[],
+                next_page_token="def",
+            ),
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                ],
+            ),
+            RuntimeError,
+        )
+        pages = []
+        async for page_ in (
+            await client.list_restore_verification_plan_associations(request={})
+        ).pages:
+            pages.append(page_)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest(),
+        {},
+    ],
+)
+def test_delete_restore_verification_plan_association(
+    request_type, transport: str = "grpc"
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan_association), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/spam")
+        response = client.delete_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_delete_restore_verification_plan_association_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest(
+        name="name_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan_association), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.delete_restore_verification_plan_association(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest(
+            name="name_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_delete_restore_verification_plan_association_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.delete_restore_verification_plan_association
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.delete_restore_verification_plan_association
+        ] = mock_rpc
+        request = {}
+        client.delete_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.delete_restore_verification_plan_association(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_delete_restore_verification_plan_association_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = BackupDRAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.delete_restore_verification_plan_association
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.delete_restore_verification_plan_association
+        ] = mock_rpc
+
+        request = {}
+        await client.delete_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        await client.delete_restore_verification_plan_association(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest(),
+        {},
+    ],
+)
+async def test_delete_restore_verification_plan_association_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan_association), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        response = await client.delete_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_delete_restore_verification_plan_association_field_headers():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan_association), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.delete_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_delete_restore_verification_plan_association_field_headers_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan_association), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/op")
+        )
+        await client.delete_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_delete_restore_verification_plan_association_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan_association), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.delete_restore_verification_plan_association(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+def test_delete_restore_verification_plan_association_flattened_error():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.delete_restore_verification_plan_association(
+            restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_delete_restore_verification_plan_association_flattened_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan_association), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.delete_restore_verification_plan_association(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_delete_restore_verification_plan_association_flattened_error_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.delete_restore_verification_plan_association(
+            restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan_association.TriggerRestoreVerificationRequest(),
+        {},
+    ],
+)
+def test_trigger_restore_verification(request_type, transport: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_verification), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/spam")
+        response = client.trigger_restore_verification(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = (
+            restore_verification_plan_association.TriggerRestoreVerificationRequest()
+        )
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_trigger_restore_verification_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = restore_verification_plan_association.TriggerRestoreVerificationRequest(
+        name="name_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_verification), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.trigger_restore_verification(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = (
+            restore_verification_plan_association.TriggerRestoreVerificationRequest(
+                name="name_value",
+            )
+        )
+        assert args[0] == request_msg
+
+
+def test_trigger_restore_verification_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.trigger_restore_verification
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.trigger_restore_verification
+        ] = mock_rpc
+        request = {}
+        client.trigger_restore_verification(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.trigger_restore_verification(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_trigger_restore_verification_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = BackupDRAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.trigger_restore_verification
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.trigger_restore_verification
+        ] = mock_rpc
+
+        request = {}
+        await client.trigger_restore_verification(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        await client.trigger_restore_verification(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan_association.TriggerRestoreVerificationRequest(),
+        {},
+    ],
+)
+async def test_trigger_restore_verification_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_verification), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        response = await client.trigger_restore_verification(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = (
+            restore_verification_plan_association.TriggerRestoreVerificationRequest()
+        )
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_trigger_restore_verification_field_headers():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_verification_plan_association.TriggerRestoreVerificationRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_verification), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.trigger_restore_verification(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_trigger_restore_verification_field_headers_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_verification_plan_association.TriggerRestoreVerificationRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_verification), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/op")
+        )
+        await client.trigger_restore_verification(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_trigger_restore_verification_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_verification), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.trigger_restore_verification(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+def test_trigger_restore_verification_flattened_error():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.trigger_restore_verification(
+            restore_verification_plan_association.TriggerRestoreVerificationRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_trigger_restore_verification_flattened_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_verification), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.trigger_restore_verification(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_trigger_restore_verification_flattened_error_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.trigger_restore_verification(
+            restore_verification_plan_association.TriggerRestoreVerificationRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan.GetRestoreVerificationPlanRequest(),
+        {},
+    ],
+)
+def test_get_restore_verification_plan(request_type, transport: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = restore_verification_plan.RestoreVerificationPlan(
+            name="name_value",
+            description="description_value",
+            state=restore_verification_plan.RestoreVerificationPlan.State.CREATING,
+            schedule="schedule_value",
+            time_zone="time_zone_value",
+        )
+        response = client.get_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = restore_verification_plan.GetRestoreVerificationPlanRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, restore_verification_plan.RestoreVerificationPlan)
+    assert response.name == "name_value"
+    assert response.description == "description_value"
+    assert (
+        response.state
+        == restore_verification_plan.RestoreVerificationPlan.State.CREATING
+    )
+    assert response.schedule == "schedule_value"
+    assert response.time_zone == "time_zone_value"
+
+
+def test_get_restore_verification_plan_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = restore_verification_plan.GetRestoreVerificationPlanRequest(
+        name="name_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.get_restore_verification_plan(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan.GetRestoreVerificationPlanRequest(
+            name="name_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_get_restore_verification_plan_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.get_restore_verification_plan
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.get_restore_verification_plan
+        ] = mock_rpc
+        request = {}
+        client.get_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.get_restore_verification_plan(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_get_restore_verification_plan_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = BackupDRAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.get_restore_verification_plan
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.get_restore_verification_plan
+        ] = mock_rpc
+
+        request = {}
+        await client.get_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.get_restore_verification_plan(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan.GetRestoreVerificationPlanRequest(),
+        {},
+    ],
+)
+async def test_get_restore_verification_plan_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_verification_plan.RestoreVerificationPlan(
+                name="name_value",
+                description="description_value",
+                state=restore_verification_plan.RestoreVerificationPlan.State.CREATING,
+                schedule="schedule_value",
+                time_zone="time_zone_value",
+            )
+        )
+        response = await client.get_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = restore_verification_plan.GetRestoreVerificationPlanRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, restore_verification_plan.RestoreVerificationPlan)
+    assert response.name == "name_value"
+    assert response.description == "description_value"
+    assert (
+        response.state
+        == restore_verification_plan.RestoreVerificationPlan.State.CREATING
+    )
+    assert response.schedule == "schedule_value"
+    assert response.time_zone == "time_zone_value"
+
+
+def test_get_restore_verification_plan_field_headers():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_verification_plan.GetRestoreVerificationPlanRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan), "__call__"
+    ) as call:
+        call.return_value = restore_verification_plan.RestoreVerificationPlan()
+        client.get_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_get_restore_verification_plan_field_headers_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_verification_plan.GetRestoreVerificationPlanRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_verification_plan.RestoreVerificationPlan()
+        )
+        await client.get_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_get_restore_verification_plan_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = restore_verification_plan.RestoreVerificationPlan()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.get_restore_verification_plan(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+def test_get_restore_verification_plan_flattened_error():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.get_restore_verification_plan(
+            restore_verification_plan.GetRestoreVerificationPlanRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_get_restore_verification_plan_flattened_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = restore_verification_plan.RestoreVerificationPlan()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_verification_plan.RestoreVerificationPlan()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.get_restore_verification_plan(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_get_restore_verification_plan_flattened_error_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.get_restore_verification_plan(
+            restore_verification_plan.GetRestoreVerificationPlanRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan.ListRestoreVerificationPlansRequest(),
+        {},
+    ],
+)
+def test_list_restore_verification_plans(request_type, transport: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plans), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = (
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                next_page_token="next_page_token_value",
+                unreachable=["unreachable_value"],
+            )
+        )
+        response = client.list_restore_verification_plans(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = restore_verification_plan.ListRestoreVerificationPlansRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.ListRestoreVerificationPlansPager)
+    assert response.next_page_token == "next_page_token_value"
+    assert response.unreachable == ["unreachable_value"]
+
+
+def test_list_restore_verification_plans_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = restore_verification_plan.ListRestoreVerificationPlansRequest(
+        parent="parent_value",
+        page_token="page_token_value",
+        filter="filter_value",
+        order_by="order_by_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plans), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.list_restore_verification_plans(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan.ListRestoreVerificationPlansRequest(
+            parent="parent_value",
+            page_token="page_token_value",
+            filter="filter_value",
+            order_by="order_by_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_list_restore_verification_plans_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.list_restore_verification_plans
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.list_restore_verification_plans
+        ] = mock_rpc
+        request = {}
+        client.list_restore_verification_plans(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.list_restore_verification_plans(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_list_restore_verification_plans_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = BackupDRAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.list_restore_verification_plans
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.list_restore_verification_plans
+        ] = mock_rpc
+
+        request = {}
+        await client.list_restore_verification_plans(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.list_restore_verification_plans(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan.ListRestoreVerificationPlansRequest(),
+        {},
+    ],
+)
+async def test_list_restore_verification_plans_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plans), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                next_page_token="next_page_token_value",
+                unreachable=["unreachable_value"],
+            )
+        )
+        response = await client.list_restore_verification_plans(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = restore_verification_plan.ListRestoreVerificationPlansRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.ListRestoreVerificationPlansAsyncPager)
+    assert response.next_page_token == "next_page_token_value"
+    assert response.unreachable == ["unreachable_value"]
+
+
+def test_list_restore_verification_plans_field_headers():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_verification_plan.ListRestoreVerificationPlansRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plans), "__call__"
+    ) as call:
+        call.return_value = (
+            restore_verification_plan.ListRestoreVerificationPlansResponse()
+        )
+        client.list_restore_verification_plans(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_list_restore_verification_plans_field_headers_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_verification_plan.ListRestoreVerificationPlansRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plans), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_verification_plan.ListRestoreVerificationPlansResponse()
+        )
+        await client.list_restore_verification_plans(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+def test_list_restore_verification_plans_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plans), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = (
+            restore_verification_plan.ListRestoreVerificationPlansResponse()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.list_restore_verification_plans(
+            parent="parent_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+
+
+def test_list_restore_verification_plans_flattened_error():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.list_restore_verification_plans(
+            restore_verification_plan.ListRestoreVerificationPlansRequest(),
+            parent="parent_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_list_restore_verification_plans_flattened_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plans), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = (
+            restore_verification_plan.ListRestoreVerificationPlansResponse()
+        )
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_verification_plan.ListRestoreVerificationPlansResponse()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.list_restore_verification_plans(
+            parent="parent_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_list_restore_verification_plans_flattened_error_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.list_restore_verification_plans(
+            restore_verification_plan.ListRestoreVerificationPlansRequest(),
+            parent="parent_value",
+        )
+
+
+def test_list_restore_verification_plans_pager(transport_name: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plans), "__call__"
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[
+                    restore_verification_plan.RestoreVerificationPlan(),
+                    restore_verification_plan.RestoreVerificationPlan(),
+                    restore_verification_plan.RestoreVerificationPlan(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[],
+                next_page_token="def",
+            ),
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[
+                    restore_verification_plan.RestoreVerificationPlan(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[
+                    restore_verification_plan.RestoreVerificationPlan(),
+                    restore_verification_plan.RestoreVerificationPlan(),
+                ],
+            ),
+            RuntimeError,
+        )
+
+        expected_metadata = ()
+        retry = retries.Retry()
+        timeout = 5
+        expected_metadata = tuple(expected_metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", ""),)),
+        )
+        pager = client.list_restore_verification_plans(
+            request={}, retry=retry, timeout=timeout
+        )
+
+        assert pager._metadata == expected_metadata
+        assert pager._retry == retry
+        assert pager._timeout == timeout
+
+        assert pager.next_page_token == "abc"
+        assert str(pager).startswith(f"{pager.__class__.__name__}<")
+
+        results = list(pager)
+        assert len(results) == 6
+        assert all(
+            isinstance(i, restore_verification_plan.RestoreVerificationPlan)
+            for i in results
+        )
+
+
+def test_list_restore_verification_plans_pages(transport_name: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plans), "__call__"
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[
+                    restore_verification_plan.RestoreVerificationPlan(),
+                    restore_verification_plan.RestoreVerificationPlan(),
+                    restore_verification_plan.RestoreVerificationPlan(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[],
+                next_page_token="def",
+            ),
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[
+                    restore_verification_plan.RestoreVerificationPlan(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[
+                    restore_verification_plan.RestoreVerificationPlan(),
+                    restore_verification_plan.RestoreVerificationPlan(),
+                ],
+            ),
+            RuntimeError,
+        )
+        pages = list(client.list_restore_verification_plans(request={}).pages)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+@pytest.mark.asyncio
+async def test_list_restore_verification_plans_async_pager():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plans),
+        "__call__",
+        new_callable=mock.AsyncMock,
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[
+                    restore_verification_plan.RestoreVerificationPlan(),
+                    restore_verification_plan.RestoreVerificationPlan(),
+                    restore_verification_plan.RestoreVerificationPlan(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[],
+                next_page_token="def",
+            ),
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[
+                    restore_verification_plan.RestoreVerificationPlan(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[
+                    restore_verification_plan.RestoreVerificationPlan(),
+                    restore_verification_plan.RestoreVerificationPlan(),
+                ],
+            ),
+            RuntimeError,
+        )
+        async_pager = await client.list_restore_verification_plans(
+            request={},
+        )
+        assert async_pager.next_page_token == "abc"
+        assert str(async_pager).startswith(f"{async_pager.__class__.__name__}<")
+
+        responses = []
+        async for response in async_pager:  # pragma: no branch
+            responses.append(response)
+
+        assert len(responses) == 6
+        assert all(
+            isinstance(i, restore_verification_plan.RestoreVerificationPlan)
+            for i in responses
+        )
+
+
+@pytest.mark.asyncio
+async def test_list_restore_verification_plans_async_pages():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plans),
+        "__call__",
+        new_callable=mock.AsyncMock,
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[
+                    restore_verification_plan.RestoreVerificationPlan(),
+                    restore_verification_plan.RestoreVerificationPlan(),
+                    restore_verification_plan.RestoreVerificationPlan(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[],
+                next_page_token="def",
+            ),
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[
+                    restore_verification_plan.RestoreVerificationPlan(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[
+                    restore_verification_plan.RestoreVerificationPlan(),
+                    restore_verification_plan.RestoreVerificationPlan(),
+                ],
+            ),
+            RuntimeError,
+        )
+        pages = []
+        async for page_ in (
+            await client.list_restore_verification_plans(request={})
+        ).pages:
+            pages.append(page_)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan.DeleteRestoreVerificationPlanRequest(),
+        {},
+    ],
+)
+def test_delete_restore_verification_plan(request_type, transport: str = "grpc"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/spam")
+        response = client.delete_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = restore_verification_plan.DeleteRestoreVerificationPlanRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_delete_restore_verification_plan_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = restore_verification_plan.DeleteRestoreVerificationPlanRequest(
+        name="name_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.delete_restore_verification_plan(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan.DeleteRestoreVerificationPlanRequest(
+            name="name_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_delete_restore_verification_plan_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.delete_restore_verification_plan
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.delete_restore_verification_plan
+        ] = mock_rpc
+        request = {}
+        client.delete_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.delete_restore_verification_plan(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_delete_restore_verification_plan_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = BackupDRAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.delete_restore_verification_plan
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.delete_restore_verification_plan
+        ] = mock_rpc
+
+        request = {}
+        await client.delete_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods call wrapper_fn to build a cached
+        # client._transport.operations_client instance on first rpc call.
+        # Subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        await client.delete_restore_verification_plan(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan.DeleteRestoreVerificationPlanRequest(),
+        {},
+    ],
+)
+async def test_delete_restore_verification_plan_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        response = await client.delete_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = restore_verification_plan.DeleteRestoreVerificationPlanRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, future.Future)
+
+
+def test_delete_restore_verification_plan_field_headers():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_verification_plan.DeleteRestoreVerificationPlanRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.delete_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_delete_restore_verification_plan_field_headers_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = restore_verification_plan.DeleteRestoreVerificationPlanRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/op")
+        )
+        await client.delete_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_delete_restore_verification_plan_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.delete_restore_verification_plan(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+def test_delete_restore_verification_plan_flattened_error():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.delete_restore_verification_plan(
+            restore_verification_plan.DeleteRestoreVerificationPlanRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_delete_restore_verification_plan_flattened_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = operations_pb2.Operation(name="operations/op")
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.delete_restore_verification_plan(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_delete_restore_verification_plan_flattened_error_async():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.delete_restore_verification_plan(
+            restore_verification_plan.DeleteRestoreVerificationPlanRequest(),
             name="name_value",
         )
 
@@ -20780,6 +28170,7 @@ def test_initiate_delete_auto_protection_policy_binding_non_empty_request_with_a
     request = (
         autoprotectionpolicybinding.InitiateDeleteAutoProtectionPolicyBindingRequest(
             name="name_value",
+            etag="etag_value",
         )
     )
 
@@ -20796,6 +28187,7 @@ def test_initiate_delete_auto_protection_policy_binding_non_empty_request_with_a
         _, args, _ = call.mock_calls[0]
         request_msg = autoprotectionpolicybinding.InitiateDeleteAutoProtectionPolicyBindingRequest(
             name="name_value",
+            etag="etag_value",
         )
         assert args[0] == request_msg
 
@@ -22814,6 +30206,3674 @@ def test_delete_management_server_rest_flattened_error(transport: str = "rest"):
     with pytest.raises(ValueError):
         client.delete_management_server(
             backupdr.DeleteManagementServerRequest(),
+            name="name_value",
+        )
+
+
+def test_create_restore_template_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.create_restore_template
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.create_restore_template
+        ] = mock_rpc
+
+        request = {}
+        client.create_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods build a cached wrapper on first rpc call
+        # subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.create_restore_template(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_create_restore_template_rest_required_fields(
+    request_type=gcb_restore_template.CreateRestoreTemplateRequest,
+):
+    transport_class = transports.BackupDRRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request_init["restore_template_id"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+    assert "restoreTemplateId" not in jsonified_request
+
+    default_values = getattr(
+        transport_class._BaseCreateRestoreTemplate,
+        "_BaseCreateRestoreTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+    assert "restoreTemplateId" in jsonified_request
+    assert jsonified_request["restoreTemplateId"] == request_init["restore_template_id"]
+
+    jsonified_request["parent"] = "parent_value"
+    jsonified_request["restoreTemplateId"] = "restore_template_id_value"
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(
+        (
+            "requestId",
+            "restoreTemplateId",
+        )
+    )
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+    assert "restoreTemplateId" in jsonified_request
+    assert jsonified_request["restoreTemplateId"] == "restore_template_id_value"
+
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = operations_pb2.Operation(name="operations/spam")
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.create_restore_template(request)
+
+            expected_params = [
+                (
+                    "restoreTemplateId",
+                    "",
+                ),
+                ("$alt", "json;enum-encoding=int"),
+            ]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_create_restore_template_rest_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "projects/sample1/locations/sample2"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            restore_template=gcb_restore_template.RestoreTemplate(name="name_value"),
+            restore_template_id="restore_template_id_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.create_restore_template(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1beta/{parent=projects/*/locations/*}/restoreTemplates"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_create_restore_template_rest_flattened_error(transport: str = "rest"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.create_restore_template(
+            gcb_restore_template.CreateRestoreTemplateRequest(),
+            parent="parent_value",
+            restore_template=gcb_restore_template.RestoreTemplate(name="name_value"),
+            restore_template_id="restore_template_id_value",
+        )
+
+
+def test_get_restore_template_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.get_restore_template in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.get_restore_template] = (
+            mock_rpc
+        )
+
+        request = {}
+        client.get_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.get_restore_template(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_get_restore_template_rest_required_fields(
+    request_type=restore_template.GetRestoreTemplateRequest,
+):
+    transport_class = transports.BackupDRRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseGetRestoreTemplate,
+        "_BaseGetRestoreTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["name"] = "name_value"
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = restore_template.RestoreTemplate()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = restore_template.RestoreTemplate.pb(return_value)
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.get_restore_template(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_get_restore_template_rest_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = restore_template.RestoreTemplate()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/restoreTemplates/sample3"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = restore_template.RestoreTemplate.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.get_restore_template(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1beta/{name=projects/*/locations/*/restoreTemplates/*}"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_get_restore_template_rest_flattened_error(transport: str = "rest"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.get_restore_template(
+            restore_template.GetRestoreTemplateRequest(),
+            name="name_value",
+        )
+
+
+def test_list_restore_templates_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.list_restore_templates
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.list_restore_templates] = (
+            mock_rpc
+        )
+
+        request = {}
+        client.list_restore_templates(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.list_restore_templates(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_list_restore_templates_rest_required_fields(
+    request_type=restore_template.ListRestoreTemplatesRequest,
+):
+    transport_class = transports.BackupDRRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseListRestoreTemplates,
+        "_BaseListRestoreTemplates__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(
+        (
+            "filter",
+            "orderBy",
+            "pageSize",
+            "pageToken",
+        )
+    )
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = restore_template.ListRestoreTemplatesResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = restore_template.ListRestoreTemplatesResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.list_restore_templates(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_list_restore_templates_rest_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = restore_template.ListRestoreTemplatesResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "projects/sample1/locations/sample2"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = restore_template.ListRestoreTemplatesResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.list_restore_templates(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1beta/{parent=projects/*/locations/*}/restoreTemplates"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_list_restore_templates_rest_flattened_error(transport: str = "rest"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.list_restore_templates(
+            restore_template.ListRestoreTemplatesRequest(),
+            parent="parent_value",
+        )
+
+
+def test_list_restore_templates_rest_pager(transport: str = "rest"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # TODO(kbandes): remove this mock unless there's a good reason for it.
+        # with mock.patch.object(path_template, 'transcode') as transcode:
+        # Set the response as a series of pages
+        response = (
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[
+                    restore_template.RestoreTemplate(),
+                    restore_template.RestoreTemplate(),
+                    restore_template.RestoreTemplate(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[],
+                next_page_token="def",
+            ),
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[
+                    restore_template.RestoreTemplate(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_template.ListRestoreTemplatesResponse(
+                restore_templates=[
+                    restore_template.RestoreTemplate(),
+                    restore_template.RestoreTemplate(),
+                ],
+            ),
+        )
+        # Two responses for two calls
+        response = response + response
+
+        # Wrap the values into proper Response objs
+        response = tuple(
+            restore_template.ListRestoreTemplatesResponse.to_json(x) for x in response
+        )
+        return_values = tuple(Response() for i in response)
+        for return_val, response_val in zip(return_values, response):
+            return_val._content = response_val.encode("UTF-8")
+            return_val.status_code = 200
+        req.side_effect = return_values
+
+        sample_request = {"parent": "projects/sample1/locations/sample2"}
+
+        pager = client.list_restore_templates(request=sample_request)
+
+        assert pager.next_page_token == "abc"
+        assert str(pager).startswith(f"{pager.__class__.__name__}<")
+
+        results = list(pager)
+        assert len(results) == 6
+        assert all(isinstance(i, restore_template.RestoreTemplate) for i in results)
+
+        pages = list(client.list_restore_templates(request=sample_request).pages)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+def test_update_restore_template_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.update_restore_template
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.update_restore_template
+        ] = mock_rpc
+
+        request = {}
+        client.update_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods build a cached wrapper on first rpc call
+        # subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.update_restore_template(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_update_restore_template_rest_required_fields(
+    request_type=gcb_restore_template.UpdateRestoreTemplateRequest,
+):
+    transport_class = transports.BackupDRRestTransport
+
+    request_init = {}
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseUpdateRestoreTemplate,
+        "_BaseUpdateRestoreTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(
+        (
+            "requestId",
+            "updateMask",
+            "validateOnly",
+        )
+    )
+
+    # verify required fields with non-default values are left alone
+
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = operations_pb2.Operation(name="operations/spam")
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "patch",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.update_restore_template(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_update_restore_template_rest_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "restore_template": {
+                "name": "projects/sample1/locations/sample2/restoreTemplates/sample3"
+            }
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            restore_template=gcb_restore_template.RestoreTemplate(name="name_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.update_restore_template(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1beta/{restore_template.name=projects/*/locations/*/restoreTemplates/*}"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_update_restore_template_rest_flattened_error(transport: str = "rest"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.update_restore_template(
+            gcb_restore_template.UpdateRestoreTemplateRequest(),
+            restore_template=gcb_restore_template.RestoreTemplate(name="name_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+
+
+def test_delete_restore_template_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.delete_restore_template
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.delete_restore_template
+        ] = mock_rpc
+
+        request = {}
+        client.delete_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods build a cached wrapper on first rpc call
+        # subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.delete_restore_template(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_delete_restore_template_rest_required_fields(
+    request_type=restore_template.DeleteRestoreTemplateRequest,
+):
+    transport_class = transports.BackupDRRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseDeleteRestoreTemplate,
+        "_BaseDeleteRestoreTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["name"] = "name_value"
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(
+        (
+            "force",
+            "requestId",
+        )
+    )
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = operations_pb2.Operation(name="operations/spam")
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "delete",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.delete_restore_template(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_delete_restore_template_rest_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/restoreTemplates/sample3"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.delete_restore_template(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1beta/{name=projects/*/locations/*/restoreTemplates/*}"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_delete_restore_template_rest_flattened_error(transport: str = "rest"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.delete_restore_template(
+            restore_template.DeleteRestoreTemplateRequest(),
+            name="name_value",
+        )
+
+
+def test_run_restore_template_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.run_restore_template in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.run_restore_template] = (
+            mock_rpc
+        )
+
+        request = {}
+        client.run_restore_template(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods build a cached wrapper on first rpc call
+        # subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.run_restore_template(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_run_restore_template_rest_required_fields(
+    request_type=restore_template.RunRestoreTemplateRequest,
+):
+    transport_class = transports.BackupDRRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseRunRestoreTemplate,
+        "_BaseRunRestoreTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["name"] = "name_value"
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = operations_pb2.Operation(name="operations/spam")
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.run_restore_template(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_run_restore_template_rest_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/restoreTemplates/sample3"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.run_restore_template(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1beta/{name=projects/*/locations/*/restoreTemplates/*}:run"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_run_restore_template_rest_flattened_error(transport: str = "rest"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.run_restore_template(
+            restore_template.RunRestoreTemplateRequest(),
+            name="name_value",
+        )
+
+
+def test_get_restore_template_execution_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.get_restore_template_execution
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.get_restore_template_execution
+        ] = mock_rpc
+
+        request = {}
+        client.get_restore_template_execution(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.get_restore_template_execution(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_get_restore_template_execution_rest_required_fields(
+    request_type=restore_template_execution.GetRestoreTemplateExecutionRequest,
+):
+    transport_class = transports.BackupDRRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseGetRestoreTemplateExecution,
+        "_BaseGetRestoreTemplateExecution__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["name"] = "name_value"
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = restore_template_execution.RestoreTemplateExecution()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = restore_template_execution.RestoreTemplateExecution.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.get_restore_template_execution(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_get_restore_template_execution_rest_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = restore_template_execution.RestoreTemplateExecution()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/restoreTemplates/sample3/executions/sample4"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = restore_template_execution.RestoreTemplateExecution.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.get_restore_template_execution(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1beta/{name=projects/*/locations/*/restoreTemplates/*/executions/*}"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_get_restore_template_execution_rest_flattened_error(transport: str = "rest"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.get_restore_template_execution(
+            restore_template_execution.GetRestoreTemplateExecutionRequest(),
+            name="name_value",
+        )
+
+
+def test_list_restore_template_executions_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.list_restore_template_executions
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.list_restore_template_executions
+        ] = mock_rpc
+
+        request = {}
+        client.list_restore_template_executions(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.list_restore_template_executions(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_list_restore_template_executions_rest_required_fields(
+    request_type=restore_template_execution.ListRestoreTemplateExecutionsRequest,
+):
+    transport_class = transports.BackupDRRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseListRestoreTemplateExecutions,
+        "_BaseListRestoreTemplateExecutions__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(
+        (
+            "filter",
+            "orderBy",
+            "pageSize",
+            "pageToken",
+        )
+    )
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = restore_template_execution.ListRestoreTemplateExecutionsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = (
+                restore_template_execution.ListRestoreTemplateExecutionsResponse.pb(
+                    return_value
+                )
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.list_restore_template_executions(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_list_restore_template_executions_rest_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = (
+            restore_template_execution.ListRestoreTemplateExecutionsResponse()
+        )
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "parent": "projects/sample1/locations/sample2/restoreTemplates/sample3"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = (
+            restore_template_execution.ListRestoreTemplateExecutionsResponse.pb(
+                return_value
+            )
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.list_restore_template_executions(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1beta/{parent=projects/*/locations/*/restoreTemplates/*}/executions"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_list_restore_template_executions_rest_flattened_error(transport: str = "rest"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.list_restore_template_executions(
+            restore_template_execution.ListRestoreTemplateExecutionsRequest(),
+            parent="parent_value",
+        )
+
+
+def test_list_restore_template_executions_rest_pager(transport: str = "rest"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # TODO(kbandes): remove this mock unless there's a good reason for it.
+        # with mock.patch.object(path_template, 'transcode') as transcode:
+        # Set the response as a series of pages
+        response = (
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[
+                    restore_template_execution.RestoreTemplateExecution(),
+                    restore_template_execution.RestoreTemplateExecution(),
+                    restore_template_execution.RestoreTemplateExecution(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[],
+                next_page_token="def",
+            ),
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[
+                    restore_template_execution.RestoreTemplateExecution(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                restore_template_executions=[
+                    restore_template_execution.RestoreTemplateExecution(),
+                    restore_template_execution.RestoreTemplateExecution(),
+                ],
+            ),
+        )
+        # Two responses for two calls
+        response = response + response
+
+        # Wrap the values into proper Response objs
+        response = tuple(
+            restore_template_execution.ListRestoreTemplateExecutionsResponse.to_json(x)
+            for x in response
+        )
+        return_values = tuple(Response() for i in response)
+        for return_val, response_val in zip(return_values, response):
+            return_val._content = response_val.encode("UTF-8")
+            return_val.status_code = 200
+        req.side_effect = return_values
+
+        sample_request = {
+            "parent": "projects/sample1/locations/sample2/restoreTemplates/sample3"
+        }
+
+        pager = client.list_restore_template_executions(request=sample_request)
+
+        assert pager.next_page_token == "abc"
+        assert str(pager).startswith(f"{pager.__class__.__name__}<")
+
+        results = list(pager)
+        assert len(results) == 6
+        assert all(
+            isinstance(i, restore_template_execution.RestoreTemplateExecution)
+            for i in results
+        )
+
+        pages = list(
+            client.list_restore_template_executions(request=sample_request).pages
+        )
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+def test_trigger_restore_cleanup_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.trigger_restore_cleanup
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.trigger_restore_cleanup
+        ] = mock_rpc
+
+        request = {}
+        client.trigger_restore_cleanup(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods build a cached wrapper on first rpc call
+        # subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.trigger_restore_cleanup(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_trigger_restore_cleanup_rest_required_fields(
+    request_type=restore_template_execution.TriggerRestoreCleanupRequest,
+):
+    transport_class = transports.BackupDRRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseTriggerRestoreCleanup,
+        "_BaseTriggerRestoreCleanup__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["name"] = "name_value"
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = operations_pb2.Operation(name="operations/spam")
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.trigger_restore_cleanup(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_trigger_restore_cleanup_rest_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/restoreTemplates/sample3/executions/sample4"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.trigger_restore_cleanup(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1beta/{name=projects/*/locations/*/restoreTemplates/*/executions/*}:triggerRestoreCleanup"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_trigger_restore_cleanup_rest_flattened_error(transport: str = "rest"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.trigger_restore_cleanup(
+            restore_template_execution.TriggerRestoreCleanupRequest(),
+            name="name_value",
+        )
+
+
+def test_create_restore_verification_plan_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.create_restore_verification_plan
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.create_restore_verification_plan
+        ] = mock_rpc
+
+        request = {}
+        client.create_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods build a cached wrapper on first rpc call
+        # subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.create_restore_verification_plan(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_create_restore_verification_plan_rest_required_fields(
+    request_type=gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest,
+):
+    transport_class = transports.BackupDRRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request_init["restore_verification_plan_id"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+    assert "restoreVerificationPlanId" not in jsonified_request
+
+    default_values = getattr(
+        transport_class._BaseCreateRestoreVerificationPlan,
+        "_BaseCreateRestoreVerificationPlan__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+    assert "restoreVerificationPlanId" in jsonified_request
+    assert (
+        jsonified_request["restoreVerificationPlanId"]
+        == request_init["restore_verification_plan_id"]
+    )
+
+    jsonified_request["parent"] = "parent_value"
+    jsonified_request["restoreVerificationPlanId"] = (
+        "restore_verification_plan_id_value"
+    )
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(
+        (
+            "requestId",
+            "restoreVerificationPlanId",
+        )
+    )
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+    assert "restoreVerificationPlanId" in jsonified_request
+    assert (
+        jsonified_request["restoreVerificationPlanId"]
+        == "restore_verification_plan_id_value"
+    )
+
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = operations_pb2.Operation(name="operations/spam")
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.create_restore_verification_plan(request)
+
+            expected_params = [
+                (
+                    "restoreVerificationPlanId",
+                    "",
+                ),
+                ("$alt", "json;enum-encoding=int"),
+            ]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_create_restore_verification_plan_rest_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "projects/sample1/locations/sample2"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            restore_verification_plan=gcb_restore_verification_plan.RestoreVerificationPlan(
+                name="name_value"
+            ),
+            restore_verification_plan_id="restore_verification_plan_id_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.create_restore_verification_plan(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1beta/{parent=projects/*/locations/*}/restoreVerificationPlans"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_create_restore_verification_plan_rest_flattened_error(transport: str = "rest"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.create_restore_verification_plan(
+            gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest(),
+            parent="parent_value",
+            restore_verification_plan=gcb_restore_verification_plan.RestoreVerificationPlan(
+                name="name_value"
+            ),
+            restore_verification_plan_id="restore_verification_plan_id_value",
+        )
+
+
+def test_create_restore_verification_plan_association_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.create_restore_verification_plan_association
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.create_restore_verification_plan_association
+        ] = mock_rpc
+
+        request = {}
+        client.create_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods build a cached wrapper on first rpc call
+        # subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.create_restore_verification_plan_association(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_create_restore_verification_plan_association_rest_required_fields(
+    request_type=gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest,
+):
+    transport_class = transports.BackupDRRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request_init["restore_verification_plan_association_id"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+    assert "restoreVerificationPlanAssociationId" not in jsonified_request
+
+    default_values = getattr(
+        transport_class._BaseCreateRestoreVerificationPlanAssociation,
+        "_BaseCreateRestoreVerificationPlanAssociation__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+    assert "restoreVerificationPlanAssociationId" in jsonified_request
+    assert (
+        jsonified_request["restoreVerificationPlanAssociationId"]
+        == request_init["restore_verification_plan_association_id"]
+    )
+
+    jsonified_request["parent"] = "parent_value"
+    jsonified_request["restoreVerificationPlanAssociationId"] = (
+        "restore_verification_plan_association_id_value"
+    )
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(
+        (
+            "requestId",
+            "restoreVerificationPlanAssociationId",
+        )
+    )
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+    assert "restoreVerificationPlanAssociationId" in jsonified_request
+    assert (
+        jsonified_request["restoreVerificationPlanAssociationId"]
+        == "restore_verification_plan_association_id_value"
+    )
+
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = operations_pb2.Operation(name="operations/spam")
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.create_restore_verification_plan_association(request)
+
+            expected_params = [
+                (
+                    "restoreVerificationPlanAssociationId",
+                    "",
+                ),
+                ("$alt", "json;enum-encoding=int"),
+            ]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_create_restore_verification_plan_association_rest_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "parent": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            restore_verification_plan_association=gcb_restore_verification_plan_association.RestoreVerificationPlanAssociation(
+                restore_template="restore_template_value"
+            ),
+            restore_verification_plan_association_id="restore_verification_plan_association_id_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.create_restore_verification_plan_association(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1beta/{parent=projects/*/locations/*/restoreVerificationPlans/*}/associations"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_create_restore_verification_plan_association_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.create_restore_verification_plan_association(
+            gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest(),
+            parent="parent_value",
+            restore_verification_plan_association=gcb_restore_verification_plan_association.RestoreVerificationPlanAssociation(
+                restore_template="restore_template_value"
+            ),
+            restore_verification_plan_association_id="restore_verification_plan_association_id_value",
+        )
+
+
+def test_get_restore_verification_plan_association_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.get_restore_verification_plan_association
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.get_restore_verification_plan_association
+        ] = mock_rpc
+
+        request = {}
+        client.get_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.get_restore_verification_plan_association(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_get_restore_verification_plan_association_rest_required_fields(
+    request_type=restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest,
+):
+    transport_class = transports.BackupDRRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseGetRestoreVerificationPlanAssociation,
+        "_BaseGetRestoreVerificationPlanAssociation__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["name"] = "name_value"
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = (
+        restore_verification_plan_association.RestoreVerificationPlanAssociation()
+    )
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = restore_verification_plan_association.RestoreVerificationPlanAssociation.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.get_restore_verification_plan_association(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_get_restore_verification_plan_association_rest_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = (
+            restore_verification_plan_association.RestoreVerificationPlanAssociation()
+        )
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3/associations/sample4"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = (
+            restore_verification_plan_association.RestoreVerificationPlanAssociation.pb(
+                return_value
+            )
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.get_restore_verification_plan_association(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1beta/{name=projects/*/locations/*/restoreVerificationPlans/*/associations/*}"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_get_restore_verification_plan_association_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.get_restore_verification_plan_association(
+            restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest(),
+            name="name_value",
+        )
+
+
+def test_list_restore_verification_plan_associations_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.list_restore_verification_plan_associations
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.list_restore_verification_plan_associations
+        ] = mock_rpc
+
+        request = {}
+        client.list_restore_verification_plan_associations(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.list_restore_verification_plan_associations(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_list_restore_verification_plan_associations_rest_required_fields(
+    request_type=restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest,
+):
+    transport_class = transports.BackupDRRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseListRestoreVerificationPlanAssociations,
+        "_BaseListRestoreVerificationPlanAssociations__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(
+        (
+            "filter",
+            "orderBy",
+            "pageSize",
+            "pageToken",
+        )
+    )
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.list_restore_verification_plan_associations(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_list_restore_verification_plan_associations_rest_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "parent": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.list_restore_verification_plan_associations(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1beta/{parent=projects/*/locations/*/restoreVerificationPlans/*}/associations"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_list_restore_verification_plan_associations_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.list_restore_verification_plan_associations(
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest(),
+            parent="parent_value",
+        )
+
+
+def test_list_restore_verification_plan_associations_rest_pager(
+    transport: str = "rest",
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # TODO(kbandes): remove this mock unless there's a good reason for it.
+        # with mock.patch.object(path_template, 'transcode') as transcode:
+        # Set the response as a series of pages
+        response = (
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[],
+                next_page_token="def",
+            ),
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                restore_verification_plan_associations=[
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                    restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+                ],
+            ),
+        )
+        # Two responses for two calls
+        response = response + response
+
+        # Wrap the values into proper Response objs
+        response = tuple(
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse.to_json(
+                x
+            )
+            for x in response
+        )
+        return_values = tuple(Response() for i in response)
+        for return_val, response_val in zip(return_values, response):
+            return_val._content = response_val.encode("UTF-8")
+            return_val.status_code = 200
+        req.side_effect = return_values
+
+        sample_request = {
+            "parent": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3"
+        }
+
+        pager = client.list_restore_verification_plan_associations(
+            request=sample_request
+        )
+
+        assert pager.next_page_token == "abc"
+        assert str(pager).startswith(f"{pager.__class__.__name__}<")
+
+        results = list(pager)
+        assert len(results) == 6
+        assert all(
+            isinstance(
+                i,
+                restore_verification_plan_association.RestoreVerificationPlanAssociation,
+            )
+            for i in results
+        )
+
+        pages = list(
+            client.list_restore_verification_plan_associations(
+                request=sample_request
+            ).pages
+        )
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+def test_delete_restore_verification_plan_association_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.delete_restore_verification_plan_association
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.delete_restore_verification_plan_association
+        ] = mock_rpc
+
+        request = {}
+        client.delete_restore_verification_plan_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods build a cached wrapper on first rpc call
+        # subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.delete_restore_verification_plan_association(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_delete_restore_verification_plan_association_rest_required_fields(
+    request_type=restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest,
+):
+    transport_class = transports.BackupDRRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseDeleteRestoreVerificationPlanAssociation,
+        "_BaseDeleteRestoreVerificationPlanAssociation__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["name"] = "name_value"
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(("requestId",))
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = operations_pb2.Operation(name="operations/spam")
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "delete",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.delete_restore_verification_plan_association(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_delete_restore_verification_plan_association_rest_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3/associations/sample4"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.delete_restore_verification_plan_association(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1beta/{name=projects/*/locations/*/restoreVerificationPlans/*/associations/*}"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_delete_restore_verification_plan_association_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.delete_restore_verification_plan_association(
+            restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest(),
+            name="name_value",
+        )
+
+
+def test_trigger_restore_verification_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.trigger_restore_verification
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.trigger_restore_verification
+        ] = mock_rpc
+
+        request = {}
+        client.trigger_restore_verification(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods build a cached wrapper on first rpc call
+        # subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.trigger_restore_verification(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_trigger_restore_verification_rest_required_fields(
+    request_type=restore_verification_plan_association.TriggerRestoreVerificationRequest,
+):
+    transport_class = transports.BackupDRRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseTriggerRestoreVerification,
+        "_BaseTriggerRestoreVerification__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["name"] = "name_value"
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = operations_pb2.Operation(name="operations/spam")
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.trigger_restore_verification(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_trigger_restore_verification_rest_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3/associations/sample4"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.trigger_restore_verification(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1beta/{name=projects/*/locations/*/restoreVerificationPlans/*/associations/*}:triggerRestoreVerification"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_trigger_restore_verification_rest_flattened_error(transport: str = "rest"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.trigger_restore_verification(
+            restore_verification_plan_association.TriggerRestoreVerificationRequest(),
+            name="name_value",
+        )
+
+
+def test_get_restore_verification_plan_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.get_restore_verification_plan
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.get_restore_verification_plan
+        ] = mock_rpc
+
+        request = {}
+        client.get_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.get_restore_verification_plan(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_get_restore_verification_plan_rest_required_fields(
+    request_type=restore_verification_plan.GetRestoreVerificationPlanRequest,
+):
+    transport_class = transports.BackupDRRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseGetRestoreVerificationPlan,
+        "_BaseGetRestoreVerificationPlan__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["name"] = "name_value"
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = restore_verification_plan.RestoreVerificationPlan()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = restore_verification_plan.RestoreVerificationPlan.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.get_restore_verification_plan(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_get_restore_verification_plan_rest_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = restore_verification_plan.RestoreVerificationPlan()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = restore_verification_plan.RestoreVerificationPlan.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.get_restore_verification_plan(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1beta/{name=projects/*/locations/*/restoreVerificationPlans/*}"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_get_restore_verification_plan_rest_flattened_error(transport: str = "rest"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.get_restore_verification_plan(
+            restore_verification_plan.GetRestoreVerificationPlanRequest(),
+            name="name_value",
+        )
+
+
+def test_list_restore_verification_plans_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.list_restore_verification_plans
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.list_restore_verification_plans
+        ] = mock_rpc
+
+        request = {}
+        client.list_restore_verification_plans(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.list_restore_verification_plans(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_list_restore_verification_plans_rest_required_fields(
+    request_type=restore_verification_plan.ListRestoreVerificationPlansRequest,
+):
+    transport_class = transports.BackupDRRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseListRestoreVerificationPlans,
+        "_BaseListRestoreVerificationPlans__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(
+        (
+            "filter",
+            "orderBy",
+            "pageSize",
+            "pageToken",
+        )
+    )
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = restore_verification_plan.ListRestoreVerificationPlansResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = (
+                restore_verification_plan.ListRestoreVerificationPlansResponse.pb(
+                    return_value
+                )
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.list_restore_verification_plans(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_list_restore_verification_plans_rest_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = restore_verification_plan.ListRestoreVerificationPlansResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "projects/sample1/locations/sample2"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = (
+            restore_verification_plan.ListRestoreVerificationPlansResponse.pb(
+                return_value
+            )
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.list_restore_verification_plans(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1beta/{parent=projects/*/locations/*}/restoreVerificationPlans"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_list_restore_verification_plans_rest_flattened_error(transport: str = "rest"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.list_restore_verification_plans(
+            restore_verification_plan.ListRestoreVerificationPlansRequest(),
+            parent="parent_value",
+        )
+
+
+def test_list_restore_verification_plans_rest_pager(transport: str = "rest"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # TODO(kbandes): remove this mock unless there's a good reason for it.
+        # with mock.patch.object(path_template, 'transcode') as transcode:
+        # Set the response as a series of pages
+        response = (
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[
+                    restore_verification_plan.RestoreVerificationPlan(),
+                    restore_verification_plan.RestoreVerificationPlan(),
+                    restore_verification_plan.RestoreVerificationPlan(),
+                ],
+                next_page_token="abc",
+            ),
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[],
+                next_page_token="def",
+            ),
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[
+                    restore_verification_plan.RestoreVerificationPlan(),
+                ],
+                next_page_token="ghi",
+            ),
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                restore_verification_plans=[
+                    restore_verification_plan.RestoreVerificationPlan(),
+                    restore_verification_plan.RestoreVerificationPlan(),
+                ],
+            ),
+        )
+        # Two responses for two calls
+        response = response + response
+
+        # Wrap the values into proper Response objs
+        response = tuple(
+            restore_verification_plan.ListRestoreVerificationPlansResponse.to_json(x)
+            for x in response
+        )
+        return_values = tuple(Response() for i in response)
+        for return_val, response_val in zip(return_values, response):
+            return_val._content = response_val.encode("UTF-8")
+            return_val.status_code = 200
+        req.side_effect = return_values
+
+        sample_request = {"parent": "projects/sample1/locations/sample2"}
+
+        pager = client.list_restore_verification_plans(request=sample_request)
+
+        assert pager.next_page_token == "abc"
+        assert str(pager).startswith(f"{pager.__class__.__name__}<")
+
+        results = list(pager)
+        assert len(results) == 6
+        assert all(
+            isinstance(i, restore_verification_plan.RestoreVerificationPlan)
+            for i in results
+        )
+
+        pages = list(
+            client.list_restore_verification_plans(request=sample_request).pages
+        )
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+def test_delete_restore_verification_plan_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = BackupDRClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.delete_restore_verification_plan
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.delete_restore_verification_plan
+        ] = mock_rpc
+
+        request = {}
+        client.delete_restore_verification_plan(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        # Operation methods build a cached wrapper on first rpc call
+        # subsequent calls should use the cached wrapper
+        wrapper_fn.reset_mock()
+
+        client.delete_restore_verification_plan(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_delete_restore_verification_plan_rest_required_fields(
+    request_type=restore_verification_plan.DeleteRestoreVerificationPlanRequest,
+):
+    transport_class = transports.BackupDRRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseDeleteRestoreVerificationPlan,
+        "_BaseDeleteRestoreVerificationPlan__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["name"] = "name_value"
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(
+        (
+            "force",
+            "requestId",
+        )
+    )
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = operations_pb2.Operation(name="operations/spam")
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "delete",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.delete_restore_verification_plan(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_delete_restore_verification_plan_rest_flattened():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.delete_restore_verification_plan(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1beta/{name=projects/*/locations/*/restoreVerificationPlans/*}"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_delete_restore_verification_plan_rest_flattened_error(transport: str = "rest"):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.delete_restore_verification_plan(
+            restore_verification_plan.DeleteRestoreVerificationPlanRequest(),
             name="name_value",
         )
 
@@ -29736,7 +40796,12 @@ def test_create_auto_protection_policy_rest_required_fields(
     jsonified_request["autoProtectionPolicyId"] = "auto_protection_policy_id_value"
 
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("autoProtectionPolicyId",))
+    assert not set(unset_fields) - set(
+        (
+            "autoProtectionPolicyId",
+            "requestId",
+        )
+    )
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -30361,7 +41426,12 @@ def test_update_auto_protection_policy_rest_required_fields(
     # verify required fields with default values are now present
 
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("updateMask",))
+    assert not set(unset_fields) - set(
+        (
+            "requestId",
+            "updateMask",
+        )
+    )
 
     # verify required fields with non-default values are left alone
 
@@ -30546,7 +41616,12 @@ def test_delete_auto_protection_policy_rest_required_fields(
     jsonified_request["name"] = "name_value"
 
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("etag",))
+    assert not set(unset_fields) - set(
+        (
+            "etag",
+            "requestId",
+        )
+    )
 
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
@@ -30734,7 +41809,12 @@ def test_create_auto_protection_policy_binding_rest_required_fields(
     )
 
     # Check that path parameters and body parameters are not mixing in.
-    assert not set(unset_fields) - set(("autoProtectionPolicyBindingId",))
+    assert not set(unset_fields) - set(
+        (
+            "autoProtectionPolicyBindingId",
+            "requestId",
+        )
+    )
 
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
@@ -32405,6 +43485,412 @@ def test_delete_management_server_empty_call_grpc():
 
 # This test is a coverage failsafe to make sure that totally empty calls,
 # i.e. request == None and no flattened fields passed, work.
+def test_create_restore_template_empty_call_grpc():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_template), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.create_restore_template(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = gcb_restore_template.CreateRestoreTemplateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_get_restore_template_empty_call_grpc():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template), "__call__"
+    ) as call:
+        call.return_value = restore_template.RestoreTemplate()
+        client.get_restore_template(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template.GetRestoreTemplateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_list_restore_templates_empty_call_grpc():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_templates), "__call__"
+    ) as call:
+        call.return_value = restore_template.ListRestoreTemplatesResponse()
+        client.list_restore_templates(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template.ListRestoreTemplatesRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_update_restore_template_empty_call_grpc():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_restore_template), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.update_restore_template(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = gcb_restore_template.UpdateRestoreTemplateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_delete_restore_template_empty_call_grpc():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_template), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.delete_restore_template(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template.DeleteRestoreTemplateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_run_restore_template_empty_call_grpc():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.run_restore_template), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.run_restore_template(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template.RunRestoreTemplateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_get_restore_template_execution_empty_call_grpc():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template_execution), "__call__"
+    ) as call:
+        call.return_value = restore_template_execution.RestoreTemplateExecution()
+        client.get_restore_template_execution(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template_execution.GetRestoreTemplateExecutionRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_list_restore_template_executions_empty_call_grpc():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_template_executions), "__call__"
+    ) as call:
+        call.return_value = (
+            restore_template_execution.ListRestoreTemplateExecutionsResponse()
+        )
+        client.list_restore_template_executions(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template_execution.ListRestoreTemplateExecutionsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_trigger_restore_cleanup_empty_call_grpc():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_cleanup), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.trigger_restore_cleanup(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template_execution.TriggerRestoreCleanupRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_create_restore_verification_plan_empty_call_grpc():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.create_restore_verification_plan(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = (
+            gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest()
+        )
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_create_restore_verification_plan_association_empty_call_grpc():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan_association), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.create_restore_verification_plan_association(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_get_restore_verification_plan_association_empty_call_grpc():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan_association), "__call__"
+    ) as call:
+        call.return_value = (
+            restore_verification_plan_association.RestoreVerificationPlanAssociation()
+        )
+        client.get_restore_verification_plan_association(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_list_restore_verification_plan_associations_empty_call_grpc():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plan_associations), "__call__"
+    ) as call:
+        call.return_value = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse()
+        client.list_restore_verification_plan_associations(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_delete_restore_verification_plan_association_empty_call_grpc():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan_association), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.delete_restore_verification_plan_association(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_trigger_restore_verification_empty_call_grpc():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_verification), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.trigger_restore_verification(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = (
+            restore_verification_plan_association.TriggerRestoreVerificationRequest()
+        )
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_get_restore_verification_plan_empty_call_grpc():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan), "__call__"
+    ) as call:
+        call.return_value = restore_verification_plan.RestoreVerificationPlan()
+        client.get_restore_verification_plan(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan.GetRestoreVerificationPlanRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_list_restore_verification_plans_empty_call_grpc():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plans), "__call__"
+    ) as call:
+        call.return_value = (
+            restore_verification_plan.ListRestoreVerificationPlansResponse()
+        )
+        client.list_restore_verification_plans(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan.ListRestoreVerificationPlansRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_delete_restore_verification_plan_empty_call_grpc():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan), "__call__"
+    ) as call:
+        call.return_value = operations_pb2.Operation(name="operations/op")
+        client.delete_restore_verification_plan(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan.DeleteRestoreVerificationPlanRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
 def test_create_backup_vault_empty_call_grpc():
     client = BackupDRClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -33527,6 +45013,513 @@ async def test_delete_management_server_empty_call_grpc_asyncio():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = backupdr.DeleteManagementServerRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_create_restore_template_empty_call_grpc_asyncio():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        await client.create_restore_template(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = gcb_restore_template.CreateRestoreTemplateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_get_restore_template_empty_call_grpc_asyncio():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_template.RestoreTemplate(
+                name="name_value",
+                description="description_value",
+                resource_type="resource_type_value",
+                state=restore_template.RestoreTemplate.State.CREATING,
+                etag="etag_value",
+            )
+        )
+        await client.get_restore_template(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template.GetRestoreTemplateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_list_restore_templates_empty_call_grpc_asyncio():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_templates), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_template.ListRestoreTemplatesResponse(
+                next_page_token="next_page_token_value",
+                unreachable=["unreachable_value"],
+            )
+        )
+        await client.list_restore_templates(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template.ListRestoreTemplatesRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_update_restore_template_empty_call_grpc_asyncio():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        await client.update_restore_template(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = gcb_restore_template.UpdateRestoreTemplateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_delete_restore_template_empty_call_grpc_asyncio():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        await client.delete_restore_template(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template.DeleteRestoreTemplateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_run_restore_template_empty_call_grpc_asyncio():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.run_restore_template), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        await client.run_restore_template(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template.RunRestoreTemplateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_get_restore_template_execution_empty_call_grpc_asyncio():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template_execution), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_template_execution.RestoreTemplateExecution(
+                name="name_value",
+                resource_type="resource_type_value",
+                type_=restore_template_execution.RestoreTemplateExecution.ExecutionType.SCHEDULED,
+                phase=restore_template_execution.RestoreTemplateExecution.ExecutionPhase.PREPARING,
+                state=restore_template_execution.RestoreTemplateExecution.ExecutionState.RUNNING,
+            )
+        )
+        await client.get_restore_template_execution(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template_execution.GetRestoreTemplateExecutionRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_list_restore_template_executions_empty_call_grpc_asyncio():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_template_executions), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(
+                next_page_token="next_page_token_value",
+                unreachable=["unreachable_value"],
+            )
+        )
+        await client.list_restore_template_executions(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template_execution.ListRestoreTemplateExecutionsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_trigger_restore_cleanup_empty_call_grpc_asyncio():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_cleanup), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        await client.trigger_restore_cleanup(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template_execution.TriggerRestoreCleanupRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_create_restore_verification_plan_empty_call_grpc_asyncio():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        await client.create_restore_verification_plan(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = (
+            gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest()
+        )
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_create_restore_verification_plan_association_empty_call_grpc_asyncio():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan_association), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        await client.create_restore_verification_plan_association(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_get_restore_verification_plan_association_empty_call_grpc_asyncio():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan_association), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_verification_plan_association.RestoreVerificationPlanAssociation(
+                name="name_value",
+                description="description_value",
+                state=restore_verification_plan_association.RestoreVerificationPlanAssociation.State.CREATING,
+                resource_type="resource_type_value",
+            )
+        )
+        await client.get_restore_verification_plan_association(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_list_restore_verification_plan_associations_empty_call_grpc_asyncio():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plan_associations), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+                next_page_token="next_page_token_value",
+                unreachable=["unreachable_value"],
+            )
+        )
+        await client.list_restore_verification_plan_associations(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_delete_restore_verification_plan_association_empty_call_grpc_asyncio():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan_association), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        await client.delete_restore_verification_plan_association(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_trigger_restore_verification_empty_call_grpc_asyncio():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_verification), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        await client.trigger_restore_verification(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = (
+            restore_verification_plan_association.TriggerRestoreVerificationRequest()
+        )
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_get_restore_verification_plan_empty_call_grpc_asyncio():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_verification_plan.RestoreVerificationPlan(
+                name="name_value",
+                description="description_value",
+                state=restore_verification_plan.RestoreVerificationPlan.State.CREATING,
+                schedule="schedule_value",
+                time_zone="time_zone_value",
+            )
+        )
+        await client.get_restore_verification_plan(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan.GetRestoreVerificationPlanRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_list_restore_verification_plans_empty_call_grpc_asyncio():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plans), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            restore_verification_plan.ListRestoreVerificationPlansResponse(
+                next_page_token="next_page_token_value",
+                unreachable=["unreachable_value"],
+            )
+        )
+        await client.list_restore_verification_plans(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan.ListRestoreVerificationPlansRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_delete_restore_verification_plan_empty_call_grpc_asyncio():
+    client = BackupDRAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            operations_pb2.Operation(name="operations/spam")
+        )
+        await client.delete_restore_verification_plan(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan.DeleteRestoreVerificationPlanRequest()
         assert args[0] == request_msg
 
 
@@ -35437,6 +47430,2852 @@ def test_delete_management_server_rest_interceptors(null_interceptor):
         post_with_metadata.return_value = operations_pb2.Operation(), metadata
 
         client.delete_management_server(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_create_restore_template_rest_bad_request(
+    request_type=gcb_restore_template.CreateRestoreTemplateRequest,
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "projects/sample1/locations/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.create_restore_template(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        gcb_restore_template.CreateRestoreTemplateRequest,
+        dict,
+    ],
+)
+def test_create_restore_template_rest_call_success(request_type):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "projects/sample1/locations/sample2"}
+    request_init["restore_template"] = {
+        "name": "name_value",
+        "description": "description_value",
+        "create_time": {"seconds": 751, "nanos": 543},
+        "update_time": {},
+        "resource_type": "resource_type_value",
+        "labels": {},
+        "backup_selection_config": {"data_source": "data_source_value"},
+        "pre_restore_config": {
+            "cloud_run_job": "cloud_run_job_value",
+            "timeout": {"seconds": 751, "nanos": 543},
+        },
+        "post_restore_config": {"cloud_run_job": "cloud_run_job_value", "timeout": {}},
+        "verification_config": {"cloud_run_job": "cloud_run_job_value", "timeout": {}},
+        "restore_properties": {"fields": {}},
+        "state": 1,
+        "execution_summary": {
+            "last_execution": "last_execution_value",
+            "last_execution_state": 1,
+        },
+        "etag": "etag_value",
+    }
+    # The version of a generated dependency at test runtime may differ from the version used during generation.
+    # Delete any fields which are not present in the current runtime dependency
+    # See https://github.com/googleapis/gapic-generator-python/issues/1748
+
+    # Determine if the message type is proto-plus or protobuf
+    test_field = gcb_restore_template.CreateRestoreTemplateRequest.meta.fields[
+        "restore_template"
+    ]
+
+    def get_message_fields(field):
+        # Given a field which is a message (composite type), return a list with
+        # all the fields of the message.
+        # If the field is not a composite type, return an empty list.
+        message_fields = []
+
+        if hasattr(field, "message") and field.message:
+            is_field_type_proto_plus_type = not hasattr(field.message, "DESCRIPTOR")
+
+            if is_field_type_proto_plus_type:
+                message_fields = field.message.meta.fields.values()
+            # Add `# pragma: NO COVER` because there may not be any `*_pb2` field types
+            else:  # pragma: NO COVER
+                message_fields = field.message.DESCRIPTOR.fields
+        return message_fields
+
+    runtime_nested_fields = [
+        (field.name, nested_field.name)
+        for field in get_message_fields(test_field)
+        for nested_field in get_message_fields(field)
+    ]
+
+    subfields_not_in_runtime = []
+
+    # For each item in the sample request, create a list of sub fields which are not present at runtime
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for field, value in request_init["restore_template"].items():  # pragma: NO COVER
+        result = None
+        is_repeated = False
+        # For repeated fields
+        if isinstance(value, list) and len(value):
+            is_repeated = True
+            result = value[0]
+        # For fields where the type is another message
+        if isinstance(value, dict):
+            result = value
+
+        if result and hasattr(result, "keys"):
+            for subfield in result.keys():
+                if (field, subfield) not in runtime_nested_fields:
+                    subfields_not_in_runtime.append(
+                        {
+                            "field": field,
+                            "subfield": subfield,
+                            "is_repeated": is_repeated,
+                        }
+                    )
+
+    # Remove fields from the sample request which are not present in the runtime version of the dependency
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for subfield_to_delete in subfields_not_in_runtime:  # pragma: NO COVER
+        field = subfield_to_delete.get("field")
+        field_repeated = subfield_to_delete.get("is_repeated")
+        subfield = subfield_to_delete.get("subfield")
+        if subfield:
+            if field_repeated:
+                for i in range(0, len(request_init["restore_template"][field])):
+                    del request_init["restore_template"][field][i][subfield]
+            else:
+                del request_init["restore_template"][field][subfield]
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.create_restore_template(request)
+
+    # Establish that the response is the type that we expect.
+    json_return_value = json_format.MessageToJson(return_value)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_create_restore_template_rest_interceptors(null_interceptor):
+    transport = transports.BackupDRRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.BackupDRRestInterceptor(),
+    )
+    client = BackupDRClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(operation.Operation, "_set_result_from_operation"),
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "post_create_restore_template"
+        ) as post,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_create_restore_template_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "pre_create_restore_template"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = gcb_restore_template.CreateRestoreTemplateRequest.pb(
+            gcb_restore_template.CreateRestoreTemplateRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = json_format.MessageToJson(operations_pb2.Operation())
+        req.return_value.content = return_value
+
+        request = gcb_restore_template.CreateRestoreTemplateRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = operations_pb2.Operation()
+        post_with_metadata.return_value = operations_pb2.Operation(), metadata
+
+        client.create_restore_template(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_get_restore_template_rest_bad_request(
+    request_type=restore_template.GetRestoreTemplateRequest,
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreTemplates/sample3"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.get_restore_template(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template.GetRestoreTemplateRequest,
+        dict,
+    ],
+)
+def test_get_restore_template_rest_call_success(request_type):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreTemplates/sample3"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = restore_template.RestoreTemplate(
+            name="name_value",
+            description="description_value",
+            resource_type="resource_type_value",
+            state=restore_template.RestoreTemplate.State.CREATING,
+            etag="etag_value",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = restore_template.RestoreTemplate.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.get_restore_template(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, restore_template.RestoreTemplate)
+    assert response.name == "name_value"
+    assert response.description == "description_value"
+    assert response.resource_type == "resource_type_value"
+    assert response.state == restore_template.RestoreTemplate.State.CREATING
+    assert response.etag == "etag_value"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_get_restore_template_rest_interceptors(null_interceptor):
+    transport = transports.BackupDRRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.BackupDRRestInterceptor(),
+    )
+    client = BackupDRClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "post_get_restore_template"
+        ) as post,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_get_restore_template_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "pre_get_restore_template"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = restore_template.GetRestoreTemplateRequest.pb(
+            restore_template.GetRestoreTemplateRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = restore_template.RestoreTemplate.to_json(
+            restore_template.RestoreTemplate()
+        )
+        req.return_value.content = return_value
+
+        request = restore_template.GetRestoreTemplateRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = restore_template.RestoreTemplate()
+        post_with_metadata.return_value = restore_template.RestoreTemplate(), metadata
+
+        client.get_restore_template(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_list_restore_templates_rest_bad_request(
+    request_type=restore_template.ListRestoreTemplatesRequest,
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "projects/sample1/locations/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.list_restore_templates(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template.ListRestoreTemplatesRequest,
+        dict,
+    ],
+)
+def test_list_restore_templates_rest_call_success(request_type):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "projects/sample1/locations/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = restore_template.ListRestoreTemplatesResponse(
+            next_page_token="next_page_token_value",
+            unreachable=["unreachable_value"],
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = restore_template.ListRestoreTemplatesResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.list_restore_templates(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.ListRestoreTemplatesPager)
+    assert response.next_page_token == "next_page_token_value"
+    assert response.unreachable == ["unreachable_value"]
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_list_restore_templates_rest_interceptors(null_interceptor):
+    transport = transports.BackupDRRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.BackupDRRestInterceptor(),
+    )
+    client = BackupDRClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "post_list_restore_templates"
+        ) as post,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_list_restore_templates_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "pre_list_restore_templates"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = restore_template.ListRestoreTemplatesRequest.pb(
+            restore_template.ListRestoreTemplatesRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = restore_template.ListRestoreTemplatesResponse.to_json(
+            restore_template.ListRestoreTemplatesResponse()
+        )
+        req.return_value.content = return_value
+
+        request = restore_template.ListRestoreTemplatesRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = restore_template.ListRestoreTemplatesResponse()
+        post_with_metadata.return_value = (
+            restore_template.ListRestoreTemplatesResponse(),
+            metadata,
+        )
+
+        client.list_restore_templates(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_update_restore_template_rest_bad_request(
+    request_type=gcb_restore_template.UpdateRestoreTemplateRequest,
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "restore_template": {
+            "name": "projects/sample1/locations/sample2/restoreTemplates/sample3"
+        }
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.update_restore_template(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        gcb_restore_template.UpdateRestoreTemplateRequest,
+        dict,
+    ],
+)
+def test_update_restore_template_rest_call_success(request_type):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "restore_template": {
+            "name": "projects/sample1/locations/sample2/restoreTemplates/sample3"
+        }
+    }
+    request_init["restore_template"] = {
+        "name": "projects/sample1/locations/sample2/restoreTemplates/sample3",
+        "description": "description_value",
+        "create_time": {"seconds": 751, "nanos": 543},
+        "update_time": {},
+        "resource_type": "resource_type_value",
+        "labels": {},
+        "backup_selection_config": {"data_source": "data_source_value"},
+        "pre_restore_config": {
+            "cloud_run_job": "cloud_run_job_value",
+            "timeout": {"seconds": 751, "nanos": 543},
+        },
+        "post_restore_config": {"cloud_run_job": "cloud_run_job_value", "timeout": {}},
+        "verification_config": {"cloud_run_job": "cloud_run_job_value", "timeout": {}},
+        "restore_properties": {"fields": {}},
+        "state": 1,
+        "execution_summary": {
+            "last_execution": "last_execution_value",
+            "last_execution_state": 1,
+        },
+        "etag": "etag_value",
+    }
+    # The version of a generated dependency at test runtime may differ from the version used during generation.
+    # Delete any fields which are not present in the current runtime dependency
+    # See https://github.com/googleapis/gapic-generator-python/issues/1748
+
+    # Determine if the message type is proto-plus or protobuf
+    test_field = gcb_restore_template.UpdateRestoreTemplateRequest.meta.fields[
+        "restore_template"
+    ]
+
+    def get_message_fields(field):
+        # Given a field which is a message (composite type), return a list with
+        # all the fields of the message.
+        # If the field is not a composite type, return an empty list.
+        message_fields = []
+
+        if hasattr(field, "message") and field.message:
+            is_field_type_proto_plus_type = not hasattr(field.message, "DESCRIPTOR")
+
+            if is_field_type_proto_plus_type:
+                message_fields = field.message.meta.fields.values()
+            # Add `# pragma: NO COVER` because there may not be any `*_pb2` field types
+            else:  # pragma: NO COVER
+                message_fields = field.message.DESCRIPTOR.fields
+        return message_fields
+
+    runtime_nested_fields = [
+        (field.name, nested_field.name)
+        for field in get_message_fields(test_field)
+        for nested_field in get_message_fields(field)
+    ]
+
+    subfields_not_in_runtime = []
+
+    # For each item in the sample request, create a list of sub fields which are not present at runtime
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for field, value in request_init["restore_template"].items():  # pragma: NO COVER
+        result = None
+        is_repeated = False
+        # For repeated fields
+        if isinstance(value, list) and len(value):
+            is_repeated = True
+            result = value[0]
+        # For fields where the type is another message
+        if isinstance(value, dict):
+            result = value
+
+        if result and hasattr(result, "keys"):
+            for subfield in result.keys():
+                if (field, subfield) not in runtime_nested_fields:
+                    subfields_not_in_runtime.append(
+                        {
+                            "field": field,
+                            "subfield": subfield,
+                            "is_repeated": is_repeated,
+                        }
+                    )
+
+    # Remove fields from the sample request which are not present in the runtime version of the dependency
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for subfield_to_delete in subfields_not_in_runtime:  # pragma: NO COVER
+        field = subfield_to_delete.get("field")
+        field_repeated = subfield_to_delete.get("is_repeated")
+        subfield = subfield_to_delete.get("subfield")
+        if subfield:
+            if field_repeated:
+                for i in range(0, len(request_init["restore_template"][field])):
+                    del request_init["restore_template"][field][i][subfield]
+            else:
+                del request_init["restore_template"][field][subfield]
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.update_restore_template(request)
+
+    # Establish that the response is the type that we expect.
+    json_return_value = json_format.MessageToJson(return_value)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_update_restore_template_rest_interceptors(null_interceptor):
+    transport = transports.BackupDRRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.BackupDRRestInterceptor(),
+    )
+    client = BackupDRClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(operation.Operation, "_set_result_from_operation"),
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "post_update_restore_template"
+        ) as post,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_update_restore_template_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "pre_update_restore_template"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = gcb_restore_template.UpdateRestoreTemplateRequest.pb(
+            gcb_restore_template.UpdateRestoreTemplateRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = json_format.MessageToJson(operations_pb2.Operation())
+        req.return_value.content = return_value
+
+        request = gcb_restore_template.UpdateRestoreTemplateRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = operations_pb2.Operation()
+        post_with_metadata.return_value = operations_pb2.Operation(), metadata
+
+        client.update_restore_template(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_delete_restore_template_rest_bad_request(
+    request_type=restore_template.DeleteRestoreTemplateRequest,
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreTemplates/sample3"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.delete_restore_template(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template.DeleteRestoreTemplateRequest,
+        dict,
+    ],
+)
+def test_delete_restore_template_rest_call_success(request_type):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreTemplates/sample3"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.delete_restore_template(request)
+
+    # Establish that the response is the type that we expect.
+    json_return_value = json_format.MessageToJson(return_value)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_delete_restore_template_rest_interceptors(null_interceptor):
+    transport = transports.BackupDRRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.BackupDRRestInterceptor(),
+    )
+    client = BackupDRClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(operation.Operation, "_set_result_from_operation"),
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "post_delete_restore_template"
+        ) as post,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_delete_restore_template_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "pre_delete_restore_template"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = restore_template.DeleteRestoreTemplateRequest.pb(
+            restore_template.DeleteRestoreTemplateRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = json_format.MessageToJson(operations_pb2.Operation())
+        req.return_value.content = return_value
+
+        request = restore_template.DeleteRestoreTemplateRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = operations_pb2.Operation()
+        post_with_metadata.return_value = operations_pb2.Operation(), metadata
+
+        client.delete_restore_template(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_run_restore_template_rest_bad_request(
+    request_type=restore_template.RunRestoreTemplateRequest,
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreTemplates/sample3"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.run_restore_template(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template.RunRestoreTemplateRequest,
+        dict,
+    ],
+)
+def test_run_restore_template_rest_call_success(request_type):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreTemplates/sample3"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.run_restore_template(request)
+
+    # Establish that the response is the type that we expect.
+    json_return_value = json_format.MessageToJson(return_value)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_run_restore_template_rest_interceptors(null_interceptor):
+    transport = transports.BackupDRRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.BackupDRRestInterceptor(),
+    )
+    client = BackupDRClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(operation.Operation, "_set_result_from_operation"),
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "post_run_restore_template"
+        ) as post,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_run_restore_template_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "pre_run_restore_template"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = restore_template.RunRestoreTemplateRequest.pb(
+            restore_template.RunRestoreTemplateRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = json_format.MessageToJson(operations_pb2.Operation())
+        req.return_value.content = return_value
+
+        request = restore_template.RunRestoreTemplateRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = operations_pb2.Operation()
+        post_with_metadata.return_value = operations_pb2.Operation(), metadata
+
+        client.run_restore_template(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_get_restore_template_execution_rest_bad_request(
+    request_type=restore_template_execution.GetRestoreTemplateExecutionRequest,
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreTemplates/sample3/executions/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.get_restore_template_execution(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template_execution.GetRestoreTemplateExecutionRequest,
+        dict,
+    ],
+)
+def test_get_restore_template_execution_rest_call_success(request_type):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreTemplates/sample3/executions/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = restore_template_execution.RestoreTemplateExecution(
+            name="name_value",
+            resource_type="resource_type_value",
+            type_=restore_template_execution.RestoreTemplateExecution.ExecutionType.SCHEDULED,
+            phase=restore_template_execution.RestoreTemplateExecution.ExecutionPhase.PREPARING,
+            state=restore_template_execution.RestoreTemplateExecution.ExecutionState.RUNNING,
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = restore_template_execution.RestoreTemplateExecution.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.get_restore_template_execution(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, restore_template_execution.RestoreTemplateExecution)
+    assert response.name == "name_value"
+    assert response.resource_type == "resource_type_value"
+    assert (
+        response.type_
+        == restore_template_execution.RestoreTemplateExecution.ExecutionType.SCHEDULED
+    )
+    assert (
+        response.phase
+        == restore_template_execution.RestoreTemplateExecution.ExecutionPhase.PREPARING
+    )
+    assert (
+        response.state
+        == restore_template_execution.RestoreTemplateExecution.ExecutionState.RUNNING
+    )
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_get_restore_template_execution_rest_interceptors(null_interceptor):
+    transport = transports.BackupDRRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.BackupDRRestInterceptor(),
+    )
+    client = BackupDRClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "post_get_restore_template_execution"
+        ) as post,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_get_restore_template_execution_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "pre_get_restore_template_execution"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = restore_template_execution.GetRestoreTemplateExecutionRequest.pb(
+            restore_template_execution.GetRestoreTemplateExecutionRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = restore_template_execution.RestoreTemplateExecution.to_json(
+            restore_template_execution.RestoreTemplateExecution()
+        )
+        req.return_value.content = return_value
+
+        request = restore_template_execution.GetRestoreTemplateExecutionRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = restore_template_execution.RestoreTemplateExecution()
+        post_with_metadata.return_value = (
+            restore_template_execution.RestoreTemplateExecution(),
+            metadata,
+        )
+
+        client.get_restore_template_execution(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_list_restore_template_executions_rest_bad_request(
+    request_type=restore_template_execution.ListRestoreTemplateExecutionsRequest,
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "parent": "projects/sample1/locations/sample2/restoreTemplates/sample3"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.list_restore_template_executions(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template_execution.ListRestoreTemplateExecutionsRequest,
+        dict,
+    ],
+)
+def test_list_restore_template_executions_rest_call_success(request_type):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "parent": "projects/sample1/locations/sample2/restoreTemplates/sample3"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = restore_template_execution.ListRestoreTemplateExecutionsResponse(
+            next_page_token="next_page_token_value",
+            unreachable=["unreachable_value"],
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = (
+            restore_template_execution.ListRestoreTemplateExecutionsResponse.pb(
+                return_value
+            )
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.list_restore_template_executions(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.ListRestoreTemplateExecutionsPager)
+    assert response.next_page_token == "next_page_token_value"
+    assert response.unreachable == ["unreachable_value"]
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_list_restore_template_executions_rest_interceptors(null_interceptor):
+    transport = transports.BackupDRRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.BackupDRRestInterceptor(),
+    )
+    client = BackupDRClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "post_list_restore_template_executions"
+        ) as post,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_list_restore_template_executions_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "pre_list_restore_template_executions"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = restore_template_execution.ListRestoreTemplateExecutionsRequest.pb(
+            restore_template_execution.ListRestoreTemplateExecutionsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = (
+            restore_template_execution.ListRestoreTemplateExecutionsResponse.to_json(
+                restore_template_execution.ListRestoreTemplateExecutionsResponse()
+            )
+        )
+        req.return_value.content = return_value
+
+        request = restore_template_execution.ListRestoreTemplateExecutionsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = (
+            restore_template_execution.ListRestoreTemplateExecutionsResponse()
+        )
+        post_with_metadata.return_value = (
+            restore_template_execution.ListRestoreTemplateExecutionsResponse(),
+            metadata,
+        )
+
+        client.list_restore_template_executions(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_trigger_restore_cleanup_rest_bad_request(
+    request_type=restore_template_execution.TriggerRestoreCleanupRequest,
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreTemplates/sample3/executions/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.trigger_restore_cleanup(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_template_execution.TriggerRestoreCleanupRequest,
+        dict,
+    ],
+)
+def test_trigger_restore_cleanup_rest_call_success(request_type):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreTemplates/sample3/executions/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.trigger_restore_cleanup(request)
+
+    # Establish that the response is the type that we expect.
+    json_return_value = json_format.MessageToJson(return_value)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_trigger_restore_cleanup_rest_interceptors(null_interceptor):
+    transport = transports.BackupDRRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.BackupDRRestInterceptor(),
+    )
+    client = BackupDRClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(operation.Operation, "_set_result_from_operation"),
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "post_trigger_restore_cleanup"
+        ) as post,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_trigger_restore_cleanup_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "pre_trigger_restore_cleanup"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = restore_template_execution.TriggerRestoreCleanupRequest.pb(
+            restore_template_execution.TriggerRestoreCleanupRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = json_format.MessageToJson(operations_pb2.Operation())
+        req.return_value.content = return_value
+
+        request = restore_template_execution.TriggerRestoreCleanupRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = operations_pb2.Operation()
+        post_with_metadata.return_value = operations_pb2.Operation(), metadata
+
+        client.trigger_restore_cleanup(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_create_restore_verification_plan_rest_bad_request(
+    request_type=gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest,
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "projects/sample1/locations/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.create_restore_verification_plan(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest,
+        dict,
+    ],
+)
+def test_create_restore_verification_plan_rest_call_success(request_type):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "projects/sample1/locations/sample2"}
+    request_init["restore_verification_plan"] = {
+        "name": "name_value",
+        "description": "description_value",
+        "create_time": {"seconds": 751, "nanos": 543},
+        "update_time": {},
+        "labels": {},
+        "state": 1,
+        "schedule": "schedule_value",
+        "time_zone": "time_zone_value",
+        "success_cleanup_rule": {
+            "cleanup_delay": {"seconds": 751, "nanos": 543},
+            "skip_cleanup": True,
+        },
+        "failure_cleanup_rule": {},
+    }
+    # The version of a generated dependency at test runtime may differ from the version used during generation.
+    # Delete any fields which are not present in the current runtime dependency
+    # See https://github.com/googleapis/gapic-generator-python/issues/1748
+
+    # Determine if the message type is proto-plus or protobuf
+    test_field = (
+        gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest.meta.fields[
+            "restore_verification_plan"
+        ]
+    )
+
+    def get_message_fields(field):
+        # Given a field which is a message (composite type), return a list with
+        # all the fields of the message.
+        # If the field is not a composite type, return an empty list.
+        message_fields = []
+
+        if hasattr(field, "message") and field.message:
+            is_field_type_proto_plus_type = not hasattr(field.message, "DESCRIPTOR")
+
+            if is_field_type_proto_plus_type:
+                message_fields = field.message.meta.fields.values()
+            # Add `# pragma: NO COVER` because there may not be any `*_pb2` field types
+            else:  # pragma: NO COVER
+                message_fields = field.message.DESCRIPTOR.fields
+        return message_fields
+
+    runtime_nested_fields = [
+        (field.name, nested_field.name)
+        for field in get_message_fields(test_field)
+        for nested_field in get_message_fields(field)
+    ]
+
+    subfields_not_in_runtime = []
+
+    # For each item in the sample request, create a list of sub fields which are not present at runtime
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for field, value in request_init[
+        "restore_verification_plan"
+    ].items():  # pragma: NO COVER
+        result = None
+        is_repeated = False
+        # For repeated fields
+        if isinstance(value, list) and len(value):
+            is_repeated = True
+            result = value[0]
+        # For fields where the type is another message
+        if isinstance(value, dict):
+            result = value
+
+        if result and hasattr(result, "keys"):
+            for subfield in result.keys():
+                if (field, subfield) not in runtime_nested_fields:
+                    subfields_not_in_runtime.append(
+                        {
+                            "field": field,
+                            "subfield": subfield,
+                            "is_repeated": is_repeated,
+                        }
+                    )
+
+    # Remove fields from the sample request which are not present in the runtime version of the dependency
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for subfield_to_delete in subfields_not_in_runtime:  # pragma: NO COVER
+        field = subfield_to_delete.get("field")
+        field_repeated = subfield_to_delete.get("is_repeated")
+        subfield = subfield_to_delete.get("subfield")
+        if subfield:
+            if field_repeated:
+                for i in range(
+                    0, len(request_init["restore_verification_plan"][field])
+                ):
+                    del request_init["restore_verification_plan"][field][i][subfield]
+            else:
+                del request_init["restore_verification_plan"][field][subfield]
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.create_restore_verification_plan(request)
+
+    # Establish that the response is the type that we expect.
+    json_return_value = json_format.MessageToJson(return_value)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_create_restore_verification_plan_rest_interceptors(null_interceptor):
+    transport = transports.BackupDRRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.BackupDRRestInterceptor(),
+    )
+    client = BackupDRClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(operation.Operation, "_set_result_from_operation"),
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "post_create_restore_verification_plan"
+        ) as post,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_create_restore_verification_plan_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "pre_create_restore_verification_plan"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = (
+            gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest.pb(
+                gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest()
+            )
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = json_format.MessageToJson(operations_pb2.Operation())
+        req.return_value.content = return_value
+
+        request = gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = operations_pb2.Operation()
+        post_with_metadata.return_value = operations_pb2.Operation(), metadata
+
+        client.create_restore_verification_plan(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_create_restore_verification_plan_association_rest_bad_request(
+    request_type=gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest,
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "parent": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.create_restore_verification_plan_association(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest,
+        dict,
+    ],
+)
+def test_create_restore_verification_plan_association_rest_call_success(request_type):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "parent": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3"
+    }
+    request_init["restore_verification_plan_association"] = {
+        "restore_template": "restore_template_value",
+        "name": "name_value",
+        "description": "description_value",
+        "create_time": {"seconds": 751, "nanos": 543},
+        "update_time": {},
+        "state": 1,
+        "trigger_summary": {
+            "last_trigger_time": {},
+            "next_trigger_time": {},
+            "last_trigger_error": {
+                "code": 411,
+                "message": "message_value",
+                "details": [
+                    {
+                        "type_url": "type.googleapis.com/google.protobuf.Duration",
+                        "value": b"\x08\x0c\x10\xdb\x07",
+                    }
+                ],
+            },
+            "last_verification_execution": "last_verification_execution_value",
+        },
+        "resource_type": "resource_type_value",
+        "labels": {},
+    }
+    # The version of a generated dependency at test runtime may differ from the version used during generation.
+    # Delete any fields which are not present in the current runtime dependency
+    # See https://github.com/googleapis/gapic-generator-python/issues/1748
+
+    # Determine if the message type is proto-plus or protobuf
+    test_field = gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest.meta.fields[
+        "restore_verification_plan_association"
+    ]
+
+    def get_message_fields(field):
+        # Given a field which is a message (composite type), return a list with
+        # all the fields of the message.
+        # If the field is not a composite type, return an empty list.
+        message_fields = []
+
+        if hasattr(field, "message") and field.message:
+            is_field_type_proto_plus_type = not hasattr(field.message, "DESCRIPTOR")
+
+            if is_field_type_proto_plus_type:
+                message_fields = field.message.meta.fields.values()
+            # Add `# pragma: NO COVER` because there may not be any `*_pb2` field types
+            else:  # pragma: NO COVER
+                message_fields = field.message.DESCRIPTOR.fields
+        return message_fields
+
+    runtime_nested_fields = [
+        (field.name, nested_field.name)
+        for field in get_message_fields(test_field)
+        for nested_field in get_message_fields(field)
+    ]
+
+    subfields_not_in_runtime = []
+
+    # For each item in the sample request, create a list of sub fields which are not present at runtime
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for field, value in request_init[
+        "restore_verification_plan_association"
+    ].items():  # pragma: NO COVER
+        result = None
+        is_repeated = False
+        # For repeated fields
+        if isinstance(value, list) and len(value):
+            is_repeated = True
+            result = value[0]
+        # For fields where the type is another message
+        if isinstance(value, dict):
+            result = value
+
+        if result and hasattr(result, "keys"):
+            for subfield in result.keys():
+                if (field, subfield) not in runtime_nested_fields:
+                    subfields_not_in_runtime.append(
+                        {
+                            "field": field,
+                            "subfield": subfield,
+                            "is_repeated": is_repeated,
+                        }
+                    )
+
+    # Remove fields from the sample request which are not present in the runtime version of the dependency
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for subfield_to_delete in subfields_not_in_runtime:  # pragma: NO COVER
+        field = subfield_to_delete.get("field")
+        field_repeated = subfield_to_delete.get("is_repeated")
+        subfield = subfield_to_delete.get("subfield")
+        if subfield:
+            if field_repeated:
+                for i in range(
+                    0, len(request_init["restore_verification_plan_association"][field])
+                ):
+                    del request_init["restore_verification_plan_association"][field][i][
+                        subfield
+                    ]
+            else:
+                del request_init["restore_verification_plan_association"][field][
+                    subfield
+                ]
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.create_restore_verification_plan_association(request)
+
+    # Establish that the response is the type that we expect.
+    json_return_value = json_format.MessageToJson(return_value)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_create_restore_verification_plan_association_rest_interceptors(
+    null_interceptor,
+):
+    transport = transports.BackupDRRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.BackupDRRestInterceptor(),
+    )
+    client = BackupDRClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(operation.Operation, "_set_result_from_operation"),
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_create_restore_verification_plan_association",
+        ) as post,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_create_restore_verification_plan_association_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "pre_create_restore_verification_plan_association",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest.pb(
+            gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = json_format.MessageToJson(operations_pb2.Operation())
+        req.return_value.content = return_value
+
+        request = gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = operations_pb2.Operation()
+        post_with_metadata.return_value = operations_pb2.Operation(), metadata
+
+        client.create_restore_verification_plan_association(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_get_restore_verification_plan_association_rest_bad_request(
+    request_type=restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest,
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3/associations/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.get_restore_verification_plan_association(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest,
+        dict,
+    ],
+)
+def test_get_restore_verification_plan_association_rest_call_success(request_type):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3/associations/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = restore_verification_plan_association.RestoreVerificationPlanAssociation(
+            name="name_value",
+            description="description_value",
+            state=restore_verification_plan_association.RestoreVerificationPlanAssociation.State.CREATING,
+            resource_type="resource_type_value",
+            restore_template="restore_template_value",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = (
+            restore_verification_plan_association.RestoreVerificationPlanAssociation.pb(
+                return_value
+            )
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.get_restore_verification_plan_association(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response,
+        restore_verification_plan_association.RestoreVerificationPlanAssociation,
+    )
+    assert response.name == "name_value"
+    assert response.description == "description_value"
+    assert (
+        response.state
+        == restore_verification_plan_association.RestoreVerificationPlanAssociation.State.CREATING
+    )
+    assert response.resource_type == "resource_type_value"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_get_restore_verification_plan_association_rest_interceptors(null_interceptor):
+    transport = transports.BackupDRRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.BackupDRRestInterceptor(),
+    )
+    client = BackupDRClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_get_restore_verification_plan_association",
+        ) as post,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_get_restore_verification_plan_association_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "pre_get_restore_verification_plan_association",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest.pb(
+            restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = restore_verification_plan_association.RestoreVerificationPlanAssociation.to_json(
+            restore_verification_plan_association.RestoreVerificationPlanAssociation()
+        )
+        req.return_value.content = return_value
+
+        request = restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = (
+            restore_verification_plan_association.RestoreVerificationPlanAssociation()
+        )
+        post_with_metadata.return_value = (
+            restore_verification_plan_association.RestoreVerificationPlanAssociation(),
+            metadata,
+        )
+
+        client.get_restore_verification_plan_association(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_list_restore_verification_plan_associations_rest_bad_request(
+    request_type=restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest,
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "parent": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.list_restore_verification_plan_associations(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest,
+        dict,
+    ],
+)
+def test_list_restore_verification_plan_associations_rest_call_success(request_type):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "parent": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(
+            next_page_token="next_page_token_value",
+            unreachable=["unreachable_value"],
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.list_restore_verification_plan_associations(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.ListRestoreVerificationPlanAssociationsPager)
+    assert response.next_page_token == "next_page_token_value"
+    assert response.unreachable == ["unreachable_value"]
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_list_restore_verification_plan_associations_rest_interceptors(
+    null_interceptor,
+):
+    transport = transports.BackupDRRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.BackupDRRestInterceptor(),
+    )
+    client = BackupDRClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_list_restore_verification_plan_associations",
+        ) as post,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_list_restore_verification_plan_associations_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "pre_list_restore_verification_plan_associations",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest.pb(
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse.to_json(
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse()
+        )
+        req.return_value.content = return_value
+
+        request = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse()
+        post_with_metadata.return_value = (
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse(),
+            metadata,
+        )
+
+        client.list_restore_verification_plan_associations(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_delete_restore_verification_plan_association_rest_bad_request(
+    request_type=restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest,
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3/associations/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.delete_restore_verification_plan_association(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest,
+        dict,
+    ],
+)
+def test_delete_restore_verification_plan_association_rest_call_success(request_type):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3/associations/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.delete_restore_verification_plan_association(request)
+
+    # Establish that the response is the type that we expect.
+    json_return_value = json_format.MessageToJson(return_value)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_delete_restore_verification_plan_association_rest_interceptors(
+    null_interceptor,
+):
+    transport = transports.BackupDRRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.BackupDRRestInterceptor(),
+    )
+    client = BackupDRClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(operation.Operation, "_set_result_from_operation"),
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_delete_restore_verification_plan_association",
+        ) as post,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_delete_restore_verification_plan_association_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "pre_delete_restore_verification_plan_association",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest.pb(
+            restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = json_format.MessageToJson(operations_pb2.Operation())
+        req.return_value.content = return_value
+
+        request = restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = operations_pb2.Operation()
+        post_with_metadata.return_value = operations_pb2.Operation(), metadata
+
+        client.delete_restore_verification_plan_association(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_trigger_restore_verification_rest_bad_request(
+    request_type=restore_verification_plan_association.TriggerRestoreVerificationRequest,
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3/associations/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.trigger_restore_verification(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan_association.TriggerRestoreVerificationRequest,
+        dict,
+    ],
+)
+def test_trigger_restore_verification_rest_call_success(request_type):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3/associations/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.trigger_restore_verification(request)
+
+    # Establish that the response is the type that we expect.
+    json_return_value = json_format.MessageToJson(return_value)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_trigger_restore_verification_rest_interceptors(null_interceptor):
+    transport = transports.BackupDRRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.BackupDRRestInterceptor(),
+    )
+    client = BackupDRClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(operation.Operation, "_set_result_from_operation"),
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "post_trigger_restore_verification"
+        ) as post,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_trigger_restore_verification_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "pre_trigger_restore_verification"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = restore_verification_plan_association.TriggerRestoreVerificationRequest.pb(
+            restore_verification_plan_association.TriggerRestoreVerificationRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = json_format.MessageToJson(operations_pb2.Operation())
+        req.return_value.content = return_value
+
+        request = (
+            restore_verification_plan_association.TriggerRestoreVerificationRequest()
+        )
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = operations_pb2.Operation()
+        post_with_metadata.return_value = operations_pb2.Operation(), metadata
+
+        client.trigger_restore_verification(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_get_restore_verification_plan_rest_bad_request(
+    request_type=restore_verification_plan.GetRestoreVerificationPlanRequest,
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.get_restore_verification_plan(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan.GetRestoreVerificationPlanRequest,
+        dict,
+    ],
+)
+def test_get_restore_verification_plan_rest_call_success(request_type):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = restore_verification_plan.RestoreVerificationPlan(
+            name="name_value",
+            description="description_value",
+            state=restore_verification_plan.RestoreVerificationPlan.State.CREATING,
+            schedule="schedule_value",
+            time_zone="time_zone_value",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = restore_verification_plan.RestoreVerificationPlan.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.get_restore_verification_plan(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, restore_verification_plan.RestoreVerificationPlan)
+    assert response.name == "name_value"
+    assert response.description == "description_value"
+    assert (
+        response.state
+        == restore_verification_plan.RestoreVerificationPlan.State.CREATING
+    )
+    assert response.schedule == "schedule_value"
+    assert response.time_zone == "time_zone_value"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_get_restore_verification_plan_rest_interceptors(null_interceptor):
+    transport = transports.BackupDRRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.BackupDRRestInterceptor(),
+    )
+    client = BackupDRClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "post_get_restore_verification_plan"
+        ) as post,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_get_restore_verification_plan_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "pre_get_restore_verification_plan"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = restore_verification_plan.GetRestoreVerificationPlanRequest.pb(
+            restore_verification_plan.GetRestoreVerificationPlanRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = restore_verification_plan.RestoreVerificationPlan.to_json(
+            restore_verification_plan.RestoreVerificationPlan()
+        )
+        req.return_value.content = return_value
+
+        request = restore_verification_plan.GetRestoreVerificationPlanRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = restore_verification_plan.RestoreVerificationPlan()
+        post_with_metadata.return_value = (
+            restore_verification_plan.RestoreVerificationPlan(),
+            metadata,
+        )
+
+        client.get_restore_verification_plan(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_list_restore_verification_plans_rest_bad_request(
+    request_type=restore_verification_plan.ListRestoreVerificationPlansRequest,
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "projects/sample1/locations/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.list_restore_verification_plans(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan.ListRestoreVerificationPlansRequest,
+        dict,
+    ],
+)
+def test_list_restore_verification_plans_rest_call_success(request_type):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "projects/sample1/locations/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = restore_verification_plan.ListRestoreVerificationPlansResponse(
+            next_page_token="next_page_token_value",
+            unreachable=["unreachable_value"],
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = (
+            restore_verification_plan.ListRestoreVerificationPlansResponse.pb(
+                return_value
+            )
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.list_restore_verification_plans(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.ListRestoreVerificationPlansPager)
+    assert response.next_page_token == "next_page_token_value"
+    assert response.unreachable == ["unreachable_value"]
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_list_restore_verification_plans_rest_interceptors(null_interceptor):
+    transport = transports.BackupDRRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.BackupDRRestInterceptor(),
+    )
+    client = BackupDRClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "post_list_restore_verification_plans"
+        ) as post,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_list_restore_verification_plans_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "pre_list_restore_verification_plans"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = restore_verification_plan.ListRestoreVerificationPlansRequest.pb(
+            restore_verification_plan.ListRestoreVerificationPlansRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = (
+            restore_verification_plan.ListRestoreVerificationPlansResponse.to_json(
+                restore_verification_plan.ListRestoreVerificationPlansResponse()
+            )
+        )
+        req.return_value.content = return_value
+
+        request = restore_verification_plan.ListRestoreVerificationPlansRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = (
+            restore_verification_plan.ListRestoreVerificationPlansResponse()
+        )
+        post_with_metadata.return_value = (
+            restore_verification_plan.ListRestoreVerificationPlansResponse(),
+            metadata,
+        )
+
+        client.list_restore_verification_plans(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_delete_restore_verification_plan_rest_bad_request(
+    request_type=restore_verification_plan.DeleteRestoreVerificationPlanRequest,
+):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.delete_restore_verification_plan(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        restore_verification_plan.DeleteRestoreVerificationPlanRequest,
+        dict,
+    ],
+)
+def test_delete_restore_verification_plan_rest_call_success(request_type):
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/restoreVerificationPlans/sample3"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = operations_pb2.Operation(name="operations/spam")
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.delete_restore_verification_plan(request)
+
+    # Establish that the response is the type that we expect.
+    json_return_value = json_format.MessageToJson(return_value)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_delete_restore_verification_plan_rest_interceptors(null_interceptor):
+    transport = transports.BackupDRRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None if null_interceptor else transports.BackupDRRestInterceptor(),
+    )
+    client = BackupDRClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(operation.Operation, "_set_result_from_operation"),
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "post_delete_restore_verification_plan"
+        ) as post,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor,
+            "post_delete_restore_verification_plan_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.BackupDRRestInterceptor, "pre_delete_restore_verification_plan"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = restore_verification_plan.DeleteRestoreVerificationPlanRequest.pb(
+            restore_verification_plan.DeleteRestoreVerificationPlanRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = json_format.MessageToJson(operations_pb2.Operation())
+        req.return_value.content = return_value
+
+        request = restore_verification_plan.DeleteRestoreVerificationPlanRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = operations_pb2.Operation()
+        post_with_metadata.return_value = operations_pb2.Operation(), metadata
+
+        client.delete_restore_verification_plan(
             request,
             metadata=[
                 ("key", "val"),
@@ -37638,6 +52477,11 @@ def test_update_backup_rest_call_success(request_type):
         "satisfies_pzs": True,
         "satisfies_pzi": True,
         "kms_key_versions": ["kms_key_versions_value1", "kms_key_versions_value2"],
+        "verification_summary": {
+            "last_verification_time": {},
+            "last_verification_state": 1,
+            "last_verification_execution": "last_verification_execution_value",
+        },
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -43532,6 +58376,388 @@ def test_delete_management_server_empty_call_rest():
 
 # This test is a coverage failsafe to make sure that totally empty calls,
 # i.e. request == None and no flattened fields passed, work.
+def test_create_restore_template_empty_call_rest():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_template), "__call__"
+    ) as call:
+        client.create_restore_template(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = gcb_restore_template.CreateRestoreTemplateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_get_restore_template_empty_call_rest():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template), "__call__"
+    ) as call:
+        client.get_restore_template(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template.GetRestoreTemplateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_list_restore_templates_empty_call_rest():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_templates), "__call__"
+    ) as call:
+        client.list_restore_templates(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template.ListRestoreTemplatesRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_update_restore_template_empty_call_rest():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_restore_template), "__call__"
+    ) as call:
+        client.update_restore_template(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = gcb_restore_template.UpdateRestoreTemplateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_delete_restore_template_empty_call_rest():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_template), "__call__"
+    ) as call:
+        client.delete_restore_template(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template.DeleteRestoreTemplateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_run_restore_template_empty_call_rest():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.run_restore_template), "__call__"
+    ) as call:
+        client.run_restore_template(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template.RunRestoreTemplateRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_get_restore_template_execution_empty_call_rest():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_template_execution), "__call__"
+    ) as call:
+        client.get_restore_template_execution(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template_execution.GetRestoreTemplateExecutionRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_list_restore_template_executions_empty_call_rest():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_template_executions), "__call__"
+    ) as call:
+        client.list_restore_template_executions(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template_execution.ListRestoreTemplateExecutionsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_trigger_restore_cleanup_empty_call_rest():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_cleanup), "__call__"
+    ) as call:
+        client.trigger_restore_cleanup(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_template_execution.TriggerRestoreCleanupRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_create_restore_verification_plan_empty_call_rest():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan), "__call__"
+    ) as call:
+        client.create_restore_verification_plan(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = (
+            gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest()
+        )
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_create_restore_verification_plan_association_empty_call_rest():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_restore_verification_plan_association), "__call__"
+    ) as call:
+        client.create_restore_verification_plan_association(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_get_restore_verification_plan_association_empty_call_rest():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan_association), "__call__"
+    ) as call:
+        client.get_restore_verification_plan_association(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_list_restore_verification_plan_associations_empty_call_rest():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plan_associations), "__call__"
+    ) as call:
+        client.list_restore_verification_plan_associations(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_delete_restore_verification_plan_association_empty_call_rest():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan_association), "__call__"
+    ) as call:
+        client.delete_restore_verification_plan_association(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_trigger_restore_verification_empty_call_rest():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.trigger_restore_verification), "__call__"
+    ) as call:
+        client.trigger_restore_verification(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = (
+            restore_verification_plan_association.TriggerRestoreVerificationRequest()
+        )
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_get_restore_verification_plan_empty_call_rest():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_restore_verification_plan), "__call__"
+    ) as call:
+        client.get_restore_verification_plan(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan.GetRestoreVerificationPlanRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_list_restore_verification_plans_empty_call_rest():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_restore_verification_plans), "__call__"
+    ) as call:
+        client.list_restore_verification_plans(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan.ListRestoreVerificationPlansRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_delete_restore_verification_plan_empty_call_rest():
+    client = BackupDRClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_restore_verification_plan), "__call__"
+    ) as call:
+        client.delete_restore_verification_plan(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = restore_verification_plan.DeleteRestoreVerificationPlanRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
 def test_create_backup_vault_empty_call_rest():
     client = BackupDRClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -44526,6 +59752,24 @@ def test_backup_dr_base_transport():
         "get_management_server",
         "create_management_server",
         "delete_management_server",
+        "create_restore_template",
+        "get_restore_template",
+        "list_restore_templates",
+        "update_restore_template",
+        "delete_restore_template",
+        "run_restore_template",
+        "get_restore_template_execution",
+        "list_restore_template_executions",
+        "trigger_restore_cleanup",
+        "create_restore_verification_plan",
+        "create_restore_verification_plan_association",
+        "get_restore_verification_plan_association",
+        "list_restore_verification_plan_associations",
+        "delete_restore_verification_plan_association",
+        "trigger_restore_verification",
+        "get_restore_verification_plan",
+        "list_restore_verification_plans",
+        "delete_restore_verification_plan",
         "create_backup_vault",
         "list_backup_vaults",
         "fetch_usable_backup_vaults",
@@ -44870,6 +60114,60 @@ def test_backup_dr_client_transport_session_collision(transport_name):
     assert session1 != session2
     session1 = client1.transport.delete_management_server._session
     session2 = client2.transport.delete_management_server._session
+    assert session1 != session2
+    session1 = client1.transport.create_restore_template._session
+    session2 = client2.transport.create_restore_template._session
+    assert session1 != session2
+    session1 = client1.transport.get_restore_template._session
+    session2 = client2.transport.get_restore_template._session
+    assert session1 != session2
+    session1 = client1.transport.list_restore_templates._session
+    session2 = client2.transport.list_restore_templates._session
+    assert session1 != session2
+    session1 = client1.transport.update_restore_template._session
+    session2 = client2.transport.update_restore_template._session
+    assert session1 != session2
+    session1 = client1.transport.delete_restore_template._session
+    session2 = client2.transport.delete_restore_template._session
+    assert session1 != session2
+    session1 = client1.transport.run_restore_template._session
+    session2 = client2.transport.run_restore_template._session
+    assert session1 != session2
+    session1 = client1.transport.get_restore_template_execution._session
+    session2 = client2.transport.get_restore_template_execution._session
+    assert session1 != session2
+    session1 = client1.transport.list_restore_template_executions._session
+    session2 = client2.transport.list_restore_template_executions._session
+    assert session1 != session2
+    session1 = client1.transport.trigger_restore_cleanup._session
+    session2 = client2.transport.trigger_restore_cleanup._session
+    assert session1 != session2
+    session1 = client1.transport.create_restore_verification_plan._session
+    session2 = client2.transport.create_restore_verification_plan._session
+    assert session1 != session2
+    session1 = client1.transport.create_restore_verification_plan_association._session
+    session2 = client2.transport.create_restore_verification_plan_association._session
+    assert session1 != session2
+    session1 = client1.transport.get_restore_verification_plan_association._session
+    session2 = client2.transport.get_restore_verification_plan_association._session
+    assert session1 != session2
+    session1 = client1.transport.list_restore_verification_plan_associations._session
+    session2 = client2.transport.list_restore_verification_plan_associations._session
+    assert session1 != session2
+    session1 = client1.transport.delete_restore_verification_plan_association._session
+    session2 = client2.transport.delete_restore_verification_plan_association._session
+    assert session1 != session2
+    session1 = client1.transport.trigger_restore_verification._session
+    session2 = client2.transport.trigger_restore_verification._session
+    assert session1 != session2
+    session1 = client1.transport.get_restore_verification_plan._session
+    session2 = client2.transport.get_restore_verification_plan._session
+    assert session1 != session2
+    session1 = client1.transport.list_restore_verification_plans._session
+    session2 = client2.transport.list_restore_verification_plans._session
+    assert session1 != session2
+    session1 = client1.transport.delete_restore_verification_plan._session
+    session2 = client2.transport.delete_restore_verification_plan._session
     assert session1 != session2
     session1 = client1.transport.create_backup_vault._session
     session2 = client2.transport.create_backup_vault._session
@@ -45581,9 +60879,38 @@ def test_parse_data_source_reference_path():
     assert expected == actual
 
 
-def test_instance_path():
+def test_execution_path():
     project = "winkle"
-    instance = "nautilus"
+    location = "nautilus"
+    job = "scallop"
+    execution = "abalone"
+    expected = "projects/{project}/locations/{location}/jobs/{job}/executions/{execution}".format(
+        project=project,
+        location=location,
+        job=job,
+        execution=execution,
+    )
+    actual = BackupDRClient.execution_path(project, location, job, execution)
+    assert expected == actual
+
+
+def test_parse_execution_path():
+    expected = {
+        "project": "squid",
+        "location": "clam",
+        "job": "whelk",
+        "execution": "octopus",
+    }
+    path = BackupDRClient.execution_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = BackupDRClient.parse_execution_path(path)
+    assert expected == actual
+
+
+def test_instance_path():
+    project = "oyster"
+    instance = "nudibranch"
     expected = "projects/{project}/instances/{instance}".format(
         project=project,
         instance=instance,
@@ -45594,8 +60921,8 @@ def test_instance_path():
 
 def test_parse_instance_path():
     expected = {
-        "project": "scallop",
-        "instance": "abalone",
+        "project": "cuttlefish",
+        "instance": "mussel",
     }
     path = BackupDRClient.instance_path(**expected)
 
@@ -45604,10 +60931,36 @@ def test_parse_instance_path():
     assert expected == actual
 
 
+def test_job_path():
+    project = "winkle"
+    location = "nautilus"
+    job = "scallop"
+    expected = "projects/{project}/locations/{location}/jobs/{job}".format(
+        project=project,
+        location=location,
+        job=job,
+    )
+    actual = BackupDRClient.job_path(project, location, job)
+    assert expected == actual
+
+
+def test_parse_job_path():
+    expected = {
+        "project": "abalone",
+        "location": "squid",
+        "job": "clam",
+    }
+    path = BackupDRClient.job_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = BackupDRClient.parse_job_path(path)
+    assert expected == actual
+
+
 def test_management_server_path():
-    project = "squid"
-    location = "clam"
-    managementserver = "whelk"
+    project = "whelk"
+    location = "octopus"
+    managementserver = "oyster"
     expected = "projects/{project}/locations/{location}/managementServers/{managementserver}".format(
         project=project,
         location=location,
@@ -45619,9 +60972,9 @@ def test_management_server_path():
 
 def test_parse_management_server_path():
     expected = {
-        "project": "octopus",
-        "location": "oyster",
-        "managementserver": "nudibranch",
+        "project": "nudibranch",
+        "location": "cuttlefish",
+        "managementserver": "mussel",
     }
     path = BackupDRClient.management_server_path(**expected)
 
@@ -45630,10 +60983,126 @@ def test_parse_management_server_path():
     assert expected == actual
 
 
+def test_restore_template_path():
+    project = "winkle"
+    location = "nautilus"
+    restore_template = "scallop"
+    expected = "projects/{project}/locations/{location}/restoreTemplates/{restore_template}".format(
+        project=project,
+        location=location,
+        restore_template=restore_template,
+    )
+    actual = BackupDRClient.restore_template_path(project, location, restore_template)
+    assert expected == actual
+
+
+def test_parse_restore_template_path():
+    expected = {
+        "project": "abalone",
+        "location": "squid",
+        "restore_template": "clam",
+    }
+    path = BackupDRClient.restore_template_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = BackupDRClient.parse_restore_template_path(path)
+    assert expected == actual
+
+
+def test_restore_template_execution_path():
+    project = "whelk"
+    location = "octopus"
+    restore_template = "oyster"
+    execution = "nudibranch"
+    expected = "projects/{project}/locations/{location}/restoreTemplates/{restore_template}/executions/{execution}".format(
+        project=project,
+        location=location,
+        restore_template=restore_template,
+        execution=execution,
+    )
+    actual = BackupDRClient.restore_template_execution_path(
+        project, location, restore_template, execution
+    )
+    assert expected == actual
+
+
+def test_parse_restore_template_execution_path():
+    expected = {
+        "project": "cuttlefish",
+        "location": "mussel",
+        "restore_template": "winkle",
+        "execution": "nautilus",
+    }
+    path = BackupDRClient.restore_template_execution_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = BackupDRClient.parse_restore_template_execution_path(path)
+    assert expected == actual
+
+
+def test_restore_verification_plan_path():
+    project = "scallop"
+    location = "abalone"
+    restoreVerificationPlan = "squid"
+    expected = "projects/{project}/locations/{location}/restoreVerificationPlans/{restoreVerificationPlan}".format(
+        project=project,
+        location=location,
+        restoreVerificationPlan=restoreVerificationPlan,
+    )
+    actual = BackupDRClient.restore_verification_plan_path(
+        project, location, restoreVerificationPlan
+    )
+    assert expected == actual
+
+
+def test_parse_restore_verification_plan_path():
+    expected = {
+        "project": "clam",
+        "location": "whelk",
+        "restoreVerificationPlan": "octopus",
+    }
+    path = BackupDRClient.restore_verification_plan_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = BackupDRClient.parse_restore_verification_plan_path(path)
+    assert expected == actual
+
+
+def test_restore_verification_plan_association_path():
+    project = "oyster"
+    location = "nudibranch"
+    restore_verification_plan = "cuttlefish"
+    association = "mussel"
+    expected = "projects/{project}/locations/{location}/restoreVerificationPlans/{restore_verification_plan}/associations/{association}".format(
+        project=project,
+        location=location,
+        restore_verification_plan=restore_verification_plan,
+        association=association,
+    )
+    actual = BackupDRClient.restore_verification_plan_association_path(
+        project, location, restore_verification_plan, association
+    )
+    assert expected == actual
+
+
+def test_parse_restore_verification_plan_association_path():
+    expected = {
+        "project": "winkle",
+        "location": "nautilus",
+        "restore_verification_plan": "scallop",
+        "association": "abalone",
+    }
+    path = BackupDRClient.restore_verification_plan_association_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = BackupDRClient.parse_restore_verification_plan_association_path(path)
+    assert expected == actual
+
+
 def test_storage_pool_path():
-    project = "cuttlefish"
-    zone = "mussel"
-    storage_pool = "winkle"
+    project = "squid"
+    zone = "clam"
+    storage_pool = "whelk"
     expected = "projects/{project}/zones/{zone}/storagePools/{storage_pool}".format(
         project=project,
         zone=zone,
@@ -45645,9 +61114,9 @@ def test_storage_pool_path():
 
 def test_parse_storage_pool_path():
     expected = {
-        "project": "nautilus",
-        "zone": "scallop",
-        "storage_pool": "abalone",
+        "project": "octopus",
+        "zone": "oyster",
+        "storage_pool": "nudibranch",
     }
     path = BackupDRClient.storage_pool_path(**expected)
 
@@ -45657,7 +61126,7 @@ def test_parse_storage_pool_path():
 
 
 def test_common_billing_account_path():
-    billing_account = "squid"
+    billing_account = "cuttlefish"
     expected = "billingAccounts/{billing_account}".format(
         billing_account=billing_account,
     )
@@ -45667,7 +61136,7 @@ def test_common_billing_account_path():
 
 def test_parse_common_billing_account_path():
     expected = {
-        "billing_account": "clam",
+        "billing_account": "mussel",
     }
     path = BackupDRClient.common_billing_account_path(**expected)
 
@@ -45677,7 +61146,7 @@ def test_parse_common_billing_account_path():
 
 
 def test_common_folder_path():
-    folder = "whelk"
+    folder = "winkle"
     expected = "folders/{folder}".format(
         folder=folder,
     )
@@ -45687,7 +61156,7 @@ def test_common_folder_path():
 
 def test_parse_common_folder_path():
     expected = {
-        "folder": "octopus",
+        "folder": "nautilus",
     }
     path = BackupDRClient.common_folder_path(**expected)
 
@@ -45697,7 +61166,7 @@ def test_parse_common_folder_path():
 
 
 def test_common_organization_path():
-    organization = "oyster"
+    organization = "scallop"
     expected = "organizations/{organization}".format(
         organization=organization,
     )
@@ -45707,7 +61176,7 @@ def test_common_organization_path():
 
 def test_parse_common_organization_path():
     expected = {
-        "organization": "nudibranch",
+        "organization": "abalone",
     }
     path = BackupDRClient.common_organization_path(**expected)
 
@@ -45717,7 +61186,7 @@ def test_parse_common_organization_path():
 
 
 def test_common_project_path():
-    project = "cuttlefish"
+    project = "squid"
     expected = "projects/{project}".format(
         project=project,
     )
@@ -45727,7 +61196,7 @@ def test_common_project_path():
 
 def test_parse_common_project_path():
     expected = {
-        "project": "mussel",
+        "project": "clam",
     }
     path = BackupDRClient.common_project_path(**expected)
 
@@ -45737,8 +61206,8 @@ def test_parse_common_project_path():
 
 
 def test_common_location_path():
-    project = "winkle"
-    location = "nautilus"
+    project = "whelk"
+    location = "octopus"
     expected = "projects/{project}/locations/{location}".format(
         project=project,
         location=location,
@@ -45749,8 +61218,8 @@ def test_common_location_path():
 
 def test_parse_common_location_path():
     expected = {
-        "project": "scallop",
-        "location": "abalone",
+        "project": "oyster",
+        "location": "nudibranch",
     }
     path = BackupDRClient.common_location_path(**expected)
 

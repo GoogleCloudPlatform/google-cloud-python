@@ -101,6 +101,8 @@ class IdentityMappingEntry(proto.Message):
             Required. Identity outside the customer
             identity provider. The length limit of external
             identity will be of 100 characters.
+        external_identity_name (str):
+            Optional. The name of the external identity.
     """
 
     user_id: str = proto.Field(
@@ -116,6 +118,10 @@ class IdentityMappingEntry(proto.Message):
     external_identity: str = proto.Field(
         proto.STRING,
         number=1,
+    )
+    external_identity_name: str = proto.Field(
+        proto.STRING,
+        number=4,
     )
 
 

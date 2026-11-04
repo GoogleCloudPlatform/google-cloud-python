@@ -52,6 +52,7 @@ from .memorystore import (
     GetTokenAuthUserRequest,
     Instance,
     InstanceAclPolicyAttachment,
+    IpVersion,
     ListAclPoliciesRequest,
     ListAclPoliciesResponse,
     ListAclPolicyRevisionsRequest,
@@ -158,5 +159,6 @@ __all__ = (
     "WeeklyMaintenanceWindow",
     "ZoneDistributionConfig",
     "ConnectionType",
+    "IpVersion",
     "PscConnectionStatus",
 )

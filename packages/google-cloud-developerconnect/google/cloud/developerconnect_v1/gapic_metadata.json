@@ -10,6 +10,16 @@
         "grpc": {
           "libraryClient": "DeveloperConnectClient",
           "rpcs": {
+            "AddGitRepositoryLinkPullRequestComment": {
+              "methods": [
+                "add_git_repository_link_pull_request_comment"
+              ]
+            },
+            "AddGitRepositoryLinkPullRequestReviewComment": {
+              "methods": [
+                "add_git_repository_link_pull_request_review_comment"
+              ]
+            },
             "CreateAccountConnector": {
               "methods": [
                 "create_account_connector"
@@ -50,6 +60,11 @@
                 "delete_user"
               ]
             },
+            "DiffGitRepositoryLinkCommit": {
+              "methods": [
+                "diff_git_repository_link_commit"
+              ]
+            },
             "FetchAccessToken": {
               "methods": [
                 "fetch_access_token"
@@ -63,6 +78,31 @@
             "FetchGitRefs": {
               "methods": [
                 "fetch_git_refs"
+              ]
+            },
+            "FetchGitRepositoryLinkCommit": {
+              "methods": [
+                "fetch_git_repository_link_commit"
+              ]
+            },
+            "FetchGitRepositoryLinkCommitList": {
+              "methods": [
+                "fetch_git_repository_link_commit_list"
+              ]
+            },
+            "FetchGitRepositoryLinkFileBlame": {
+              "methods": [
+                "fetch_git_repository_link_file_blame"
+              ]
+            },
+            "FetchGitRepositoryLinkPullRequest": {
+              "methods": [
+                "fetch_git_repository_link_pull_request"
+              ]
+            },
+            "FetchGitRepositoryLinkPullRequestList": {
+              "methods": [
+                "fetch_git_repository_link_pull_request_list"
               ]
             },
             "FetchLinkableGitRepositories": {
@@ -123,6 +163,16 @@
             "ListUsers": {
               "methods": [
                 "list_users"
+              ]
+            },
+            "ModifyGitRepositoryLinkPullRequest": {
+              "methods": [
+                "modify_git_repository_link_pull_request"
+              ]
+            },
+            "OpenGitRepositoryLinkPullRequest": {
+              "methods": [
+                "open_git_repository_link_pull_request"
               ]
             },
             "StartOAuth": {
@@ -145,6 +195,16 @@
         "grpc-async": {
           "libraryClient": "DeveloperConnectAsyncClient",
           "rpcs": {
+            "AddGitRepositoryLinkPullRequestComment": {
+              "methods": [
+                "add_git_repository_link_pull_request_comment"
+              ]
+            },
+            "AddGitRepositoryLinkPullRequestReviewComment": {
+              "methods": [
+                "add_git_repository_link_pull_request_review_comment"
+              ]
+            },
             "CreateAccountConnector": {
               "methods": [
                 "create_account_connector"
@@ -185,6 +245,11 @@
                 "delete_user"
               ]
             },
+            "DiffGitRepositoryLinkCommit": {
+              "methods": [
+                "diff_git_repository_link_commit"
+              ]
+            },
             "FetchAccessToken": {
               "methods": [
                 "fetch_access_token"
@@ -198,6 +263,31 @@
             "FetchGitRefs": {
               "methods": [
                 "fetch_git_refs"
+              ]
+            },
+            "FetchGitRepositoryLinkCommit": {
+              "methods": [
+                "fetch_git_repository_link_commit"
+              ]
+            },
+            "FetchGitRepositoryLinkCommitList": {
+              "methods": [
+                "fetch_git_repository_link_commit_list"
+              ]
+            },
+            "FetchGitRepositoryLinkFileBlame": {
+              "methods": [
+                "fetch_git_repository_link_file_blame"
+              ]
+            },
+            "FetchGitRepositoryLinkPullRequest": {
+              "methods": [
+                "fetch_git_repository_link_pull_request"
+              ]
+            },
+            "FetchGitRepositoryLinkPullRequestList": {
+              "methods": [
+                "fetch_git_repository_link_pull_request_list"
               ]
             },
             "FetchLinkableGitRepositories": {
@@ -258,6 +348,16 @@
             "ListUsers": {
               "methods": [
                 "list_users"
+              ]
+            },
+            "ModifyGitRepositoryLinkPullRequest": {
+              "methods": [
+                "modify_git_repository_link_pull_request"
+              ]
+            },
+            "OpenGitRepositoryLinkPullRequest": {
+              "methods": [
+                "open_git_repository_link_pull_request"
               ]
             },
             "StartOAuth": {
@@ -280,6 +380,16 @@
         "rest": {
           "libraryClient": "DeveloperConnectClient",
           "rpcs": {
+            "AddGitRepositoryLinkPullRequestComment": {
+              "methods": [
+                "add_git_repository_link_pull_request_comment"
+              ]
+            },
+            "AddGitRepositoryLinkPullRequestReviewComment": {
+              "methods": [
+                "add_git_repository_link_pull_request_review_comment"
+              ]
+            },
             "CreateAccountConnector": {
               "methods": [
                 "create_account_connector"
@@ -320,6 +430,11 @@
                 "delete_user"
               ]
             },
+            "DiffGitRepositoryLinkCommit": {
+              "methods": [
+                "diff_git_repository_link_commit"
+              ]
+            },
             "FetchAccessToken": {
               "methods": [
                 "fetch_access_token"
@@ -333,6 +448,31 @@
             "FetchGitRefs": {
               "methods": [
                 "fetch_git_refs"
+              ]
+            },
+            "FetchGitRepositoryLinkCommit": {
+              "methods": [
+                "fetch_git_repository_link_commit"
+              ]
+            },
+            "FetchGitRepositoryLinkCommitList": {
+              "methods": [
+                "fetch_git_repository_link_commit_list"
+              ]
+            },
+            "FetchGitRepositoryLinkFileBlame": {
+              "methods": [
+                "fetch_git_repository_link_file_blame"
+              ]
+            },
+            "FetchGitRepositoryLinkPullRequest": {
+              "methods": [
+                "fetch_git_repository_link_pull_request"
+              ]
+            },
+            "FetchGitRepositoryLinkPullRequestList": {
+              "methods": [
+                "fetch_git_repository_link_pull_request_list"
               ]
             },
             "FetchLinkableGitRepositories": {
@@ -393,6 +533,16 @@
             "ListUsers": {
               "methods": [
                 "list_users"
+              ]
+            },
+            "ModifyGitRepositoryLinkPullRequest": {
+              "methods": [
+                "modify_git_repository_link_pull_request"
+              ]
+            },
+            "OpenGitRepositoryLinkPullRequest": {
+              "methods": [
+                "open_git_repository_link_pull_request"
               ]
             },
             "StartOAuth": {

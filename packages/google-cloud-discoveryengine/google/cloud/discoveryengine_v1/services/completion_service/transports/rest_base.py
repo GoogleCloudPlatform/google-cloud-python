@@ -93,6 +93,33 @@ class _BaseCompletionServiceRestTransport(CompletionServiceTransport):
             api_audience=api_audience,
         )
 
+    class _BaseAdvancedCompleteQuery:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{completion_config=projects/*/locations/*/dataStores/*/completionConfig}:completeQuery",
+                    "body": "*",
+                },
+                {
+                    "method": "post",
+                    "uri": "/v1/{completion_config=projects/*/locations/*/collections/*/dataStores/*/completionConfig}:completeQuery",
+                    "body": "*",
+                },
+                {
+                    "method": "post",
+                    "uri": "/v1/{completion_config=projects/*/locations/*/collections/*/engines/*/completionConfig}:completeQuery",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
     class _BaseCompleteQuery:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -271,6 +298,10 @@ class _BaseCompletionServiceRestTransport(CompletionServiceTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{name=projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine/targetSites/operations/*}",
+                },
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/collections/*/engines/*/assistants/*/agents/*/operations/*}",
                 },
                 {
                     "method": "get",

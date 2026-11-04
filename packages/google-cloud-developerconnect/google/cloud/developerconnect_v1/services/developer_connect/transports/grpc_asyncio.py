@@ -683,6 +683,39 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
         return self._stubs["fetch_read_token"]
 
     @property
+    def open_git_repository_link_pull_request(
+        self,
+    ) -> Callable[
+        [developer_connect.OpenGitRepositoryLinkPullRequestRequest],
+        Awaitable[developer_connect.PullRequest],
+    ]:
+        r"""Return a callable for the open git repository link pull
+        request method over gRPC.
+
+        Opens a Pull Request in the remote SCM repository
+        associated with a GitRepositoryLink.
+
+        Returns:
+            Callable[[~.OpenGitRepositoryLinkPullRequestRequest],
+                    Awaitable[~.PullRequest]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "open_git_repository_link_pull_request" not in self._stubs:
+            self._stubs["open_git_repository_link_pull_request"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.developerconnect.v1.DeveloperConnect/OpenGitRepositoryLinkPullRequest",
+                    request_serializer=developer_connect.OpenGitRepositoryLinkPullRequestRequest.serialize,
+                    response_deserializer=developer_connect.PullRequest.deserialize,
+                )
+            )
+        return self._stubs["open_git_repository_link_pull_request"]
+
+    @property
     def fetch_linkable_git_repositories(
         self,
     ) -> Callable[
@@ -780,6 +813,299 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
                 response_deserializer=developer_connect.FetchGitRefsResponse.deserialize,
             )
         return self._stubs["fetch_git_refs"]
+
+    @property
+    def diff_git_repository_link_commit(
+        self,
+    ) -> Callable[
+        [developer_connect.DiffGitRepositoryLinkCommitRequest],
+        Awaitable[developer_connect.DiffGitRepositoryLinkCommitResponse],
+    ]:
+        r"""Return a callable for the diff git repository link
+        commit method over gRPC.
+
+        Diff commits for a GitRepositoryLink.
+
+        Returns:
+            Callable[[~.DiffGitRepositoryLinkCommitRequest],
+                    Awaitable[~.DiffGitRepositoryLinkCommitResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "diff_git_repository_link_commit" not in self._stubs:
+            self._stubs["diff_git_repository_link_commit"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.developerconnect.v1.DeveloperConnect/DiffGitRepositoryLinkCommit",
+                    request_serializer=developer_connect.DiffGitRepositoryLinkCommitRequest.serialize,
+                    response_deserializer=developer_connect.DiffGitRepositoryLinkCommitResponse.deserialize,
+                )
+            )
+        return self._stubs["diff_git_repository_link_commit"]
+
+    @property
+    def fetch_git_repository_link_commit(
+        self,
+    ) -> Callable[
+        [developer_connect.FetchGitRepositoryLinkCommitRequest],
+        Awaitable[developer_connect.FetchGitRepositoryLinkCommitResponse],
+    ]:
+        r"""Return a callable for the fetch git repository link
+        commit method over gRPC.
+
+        Fetch Commit details from a Git repository link.
+
+        Returns:
+            Callable[[~.FetchGitRepositoryLinkCommitRequest],
+                    Awaitable[~.FetchGitRepositoryLinkCommitResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "fetch_git_repository_link_commit" not in self._stubs:
+            self._stubs["fetch_git_repository_link_commit"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.developerconnect.v1.DeveloperConnect/FetchGitRepositoryLinkCommit",
+                    request_serializer=developer_connect.FetchGitRepositoryLinkCommitRequest.serialize,
+                    response_deserializer=developer_connect.FetchGitRepositoryLinkCommitResponse.deserialize,
+                )
+            )
+        return self._stubs["fetch_git_repository_link_commit"]
+
+    @property
+    def fetch_git_repository_link_commit_list(
+        self,
+    ) -> Callable[
+        [developer_connect.FetchGitRepositoryLinkCommitListRequest],
+        Awaitable[developer_connect.FetchGitRepositoryLinkCommitListResponse],
+    ]:
+        r"""Return a callable for the fetch git repository link
+        commit list method over gRPC.
+
+        Fetch a list of Commits from a Git repository link.
+
+        Returns:
+            Callable[[~.FetchGitRepositoryLinkCommitListRequest],
+                    Awaitable[~.FetchGitRepositoryLinkCommitListResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "fetch_git_repository_link_commit_list" not in self._stubs:
+            self._stubs["fetch_git_repository_link_commit_list"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.developerconnect.v1.DeveloperConnect/FetchGitRepositoryLinkCommitList",
+                    request_serializer=developer_connect.FetchGitRepositoryLinkCommitListRequest.serialize,
+                    response_deserializer=developer_connect.FetchGitRepositoryLinkCommitListResponse.deserialize,
+                )
+            )
+        return self._stubs["fetch_git_repository_link_commit_list"]
+
+    @property
+    def fetch_git_repository_link_file_blame(
+        self,
+    ) -> Callable[
+        [developer_connect.FetchGitRepositoryLinkFileBlameRequest],
+        Awaitable[developer_connect.FetchGitRepositoryLinkFileBlameResponse],
+    ]:
+        r"""Return a callable for the fetch git repository link file
+        blame method over gRPC.
+
+        Fetches blame information for a file or line range in
+        a file.
+
+        Returns:
+            Callable[[~.FetchGitRepositoryLinkFileBlameRequest],
+                    Awaitable[~.FetchGitRepositoryLinkFileBlameResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "fetch_git_repository_link_file_blame" not in self._stubs:
+            self._stubs["fetch_git_repository_link_file_blame"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.developerconnect.v1.DeveloperConnect/FetchGitRepositoryLinkFileBlame",
+                    request_serializer=developer_connect.FetchGitRepositoryLinkFileBlameRequest.serialize,
+                    response_deserializer=developer_connect.FetchGitRepositoryLinkFileBlameResponse.deserialize,
+                )
+            )
+        return self._stubs["fetch_git_repository_link_file_blame"]
+
+    @property
+    def fetch_git_repository_link_pull_request(
+        self,
+    ) -> Callable[
+        [developer_connect.FetchGitRepositoryLinkPullRequestRequest],
+        Awaitable[developer_connect.PullRequest],
+    ]:
+        r"""Return a callable for the fetch git repository link pull
+        request method over gRPC.
+
+        Fetch Pull Request details from a Git repository
+        link.
+
+        Returns:
+            Callable[[~.FetchGitRepositoryLinkPullRequestRequest],
+                    Awaitable[~.PullRequest]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "fetch_git_repository_link_pull_request" not in self._stubs:
+            self._stubs["fetch_git_repository_link_pull_request"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.developerconnect.v1.DeveloperConnect/FetchGitRepositoryLinkPullRequest",
+                    request_serializer=developer_connect.FetchGitRepositoryLinkPullRequestRequest.serialize,
+                    response_deserializer=developer_connect.PullRequest.deserialize,
+                )
+            )
+        return self._stubs["fetch_git_repository_link_pull_request"]
+
+    @property
+    def add_git_repository_link_pull_request_comment(
+        self,
+    ) -> Callable[
+        [developer_connect.AddGitRepositoryLinkPullRequestCommentRequest],
+        Awaitable[developer_connect.PullRequestComment],
+    ]:
+        r"""Return a callable for the add git repository link pull
+        request comment method over gRPC.
+
+        Add a comment to a Pull Request.
+
+        Returns:
+            Callable[[~.AddGitRepositoryLinkPullRequestCommentRequest],
+                    Awaitable[~.PullRequestComment]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "add_git_repository_link_pull_request_comment" not in self._stubs:
+            self._stubs["add_git_repository_link_pull_request_comment"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.developerconnect.v1.DeveloperConnect/AddGitRepositoryLinkPullRequestComment",
+                    request_serializer=developer_connect.AddGitRepositoryLinkPullRequestCommentRequest.serialize,
+                    response_deserializer=developer_connect.PullRequestComment.deserialize,
+                )
+            )
+        return self._stubs["add_git_repository_link_pull_request_comment"]
+
+    @property
+    def add_git_repository_link_pull_request_review_comment(
+        self,
+    ) -> Callable[
+        [developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest],
+        Awaitable[developer_connect.PullRequestReviewComment],
+    ]:
+        r"""Return a callable for the add git repository link pull
+        request review comment method over gRPC.
+
+        Add a review comment (inline on diff) to a Pull
+        Request.
+
+        Returns:
+            Callable[[~.AddGitRepositoryLinkPullRequestReviewCommentRequest],
+                    Awaitable[~.PullRequestReviewComment]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "add_git_repository_link_pull_request_review_comment" not in self._stubs:
+            self._stubs["add_git_repository_link_pull_request_review_comment"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.developerconnect.v1.DeveloperConnect/AddGitRepositoryLinkPullRequestReviewComment",
+                    request_serializer=developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest.serialize,
+                    response_deserializer=developer_connect.PullRequestReviewComment.deserialize,
+                )
+            )
+        return self._stubs["add_git_repository_link_pull_request_review_comment"]
+
+    @property
+    def modify_git_repository_link_pull_request(
+        self,
+    ) -> Callable[
+        [developer_connect.ModifyGitRepositoryLinkPullRequestRequest],
+        Awaitable[developer_connect.PullRequest],
+    ]:
+        r"""Return a callable for the modify git repository link
+        pull request method over gRPC.
+
+        Modifies a Pull Request in the remote SCM repository
+        associated with a GitRepositoryLink.
+
+        Returns:
+            Callable[[~.ModifyGitRepositoryLinkPullRequestRequest],
+                    Awaitable[~.PullRequest]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "modify_git_repository_link_pull_request" not in self._stubs:
+            self._stubs["modify_git_repository_link_pull_request"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.developerconnect.v1.DeveloperConnect/ModifyGitRepositoryLinkPullRequest",
+                    request_serializer=developer_connect.ModifyGitRepositoryLinkPullRequestRequest.serialize,
+                    response_deserializer=developer_connect.PullRequest.deserialize,
+                )
+            )
+        return self._stubs["modify_git_repository_link_pull_request"]
+
+    @property
+    def fetch_git_repository_link_pull_request_list(
+        self,
+    ) -> Callable[
+        [developer_connect.FetchGitRepositoryLinkPullRequestListRequest],
+        Awaitable[developer_connect.FetchGitRepositoryLinkPullRequestListResponse],
+    ]:
+        r"""Return a callable for the fetch git repository link pull
+        request list method over gRPC.
+
+        Fetches a list of Pull Requests from the remote
+        repository.
+
+        Returns:
+            Callable[[~.FetchGitRepositoryLinkPullRequestListRequest],
+                    Awaitable[~.FetchGitRepositoryLinkPullRequestListResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "fetch_git_repository_link_pull_request_list" not in self._stubs:
+            self._stubs["fetch_git_repository_link_pull_request_list"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.developerconnect.v1.DeveloperConnect/FetchGitRepositoryLinkPullRequestList",
+                    request_serializer=developer_connect.FetchGitRepositoryLinkPullRequestListRequest.serialize,
+                    response_deserializer=developer_connect.FetchGitRepositoryLinkPullRequestListResponse.deserialize,
+                )
+            )
+        return self._stubs["fetch_git_repository_link_pull_request_list"]
 
     @property
     def list_account_connectors(
@@ -1277,6 +1603,11 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
                 default_timeout=60.0,
                 client_info=client_info,
             ),
+            self.open_git_repository_link_pull_request: self._wrap_method(
+                self.open_git_repository_link_pull_request,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.fetch_linkable_git_repositories: self._wrap_method(
                 self.fetch_linkable_git_repositories,
                 default_retry=retries.AsyncRetry(
@@ -1307,6 +1638,51 @@ class DeveloperConnectGrpcAsyncIOTransport(DeveloperConnectTransport):
             ),
             self.fetch_git_refs: self._wrap_method(
                 self.fetch_git_refs,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.diff_git_repository_link_commit: self._wrap_method(
+                self.diff_git_repository_link_commit,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.fetch_git_repository_link_commit: self._wrap_method(
+                self.fetch_git_repository_link_commit,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.fetch_git_repository_link_commit_list: self._wrap_method(
+                self.fetch_git_repository_link_commit_list,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.fetch_git_repository_link_file_blame: self._wrap_method(
+                self.fetch_git_repository_link_file_blame,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.fetch_git_repository_link_pull_request: self._wrap_method(
+                self.fetch_git_repository_link_pull_request,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.add_git_repository_link_pull_request_comment: self._wrap_method(
+                self.add_git_repository_link_pull_request_comment,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.add_git_repository_link_pull_request_review_comment: self._wrap_method(
+                self.add_git_repository_link_pull_request_review_comment,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.modify_git_repository_link_pull_request: self._wrap_method(
+                self.modify_git_repository_link_pull_request,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.fetch_git_repository_link_pull_request_list: self._wrap_method(
+                self.fetch_git_repository_link_pull_request_list,
                 default_timeout=None,
                 client_info=client_info,
             ),

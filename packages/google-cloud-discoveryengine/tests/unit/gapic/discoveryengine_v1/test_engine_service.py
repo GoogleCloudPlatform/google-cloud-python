@@ -40,9 +40,13 @@ except ImportError:  # pragma: NO COVER
 
 import google.api_core.operation_async as operation_async  # type: ignore
 import google.auth
+import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
+import google.iam.v1.options_pb2 as options_pb2  # type: ignore
+import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
+import google.type.expr_pb2 as expr_pb2  # type: ignore
 from google.api_core import (
     client_options,
     future,
@@ -67,7 +71,14 @@ from google.cloud.discoveryengine_v1.services.engine_service import (
     pagers,
     transports,
 )
-from google.cloud.discoveryengine_v1.types import common, engine, engine_service
+from google.cloud.discoveryengine_v1.types import (
+    agent_gateway_setting,
+    cmek_config_service,
+    common,
+    engine,
+    engine_service,
+    logging,
+)
 from google.cloud.discoveryengine_v1.types import engine as gcd_engine
 
 CRED_INFO_JSON = {
@@ -1055,7 +1066,11 @@ def test_engine_service_client_create_channel_credentials_file(
             credentials=file_creds,
             credentials_file=None,
             quota_project_id=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             scopes=None,
             default_host="discoveryengine.googleapis.com",
             ssl_credentials=None,
@@ -1806,7 +1821,12 @@ def test_update_engine(request_type, transport: str = "grpc"):
             data_store_ids=["data_store_ids_value"],
             solution_type=common.SolutionType.SOLUTION_TYPE_RECOMMENDATION,
             industry_vertical=common.IndustryVertical.GENERIC,
+            app_type=gcd_engine.Engine.AppType.APP_TYPE_INTRANET,
             disable_analytics=True,
+            configurable_billing_approach=gcd_engine.Engine.ConfigurableBillingApproach.CONFIGURABLE_BILLING_APPROACH_ENABLED,
+            marketplace_agent_visibility=gcd_engine.Engine.MarketplaceAgentVisibility.SHOW_AVAILABLE_AGENTS_ONLY,
+            procurement_contact_emails=["procurement_contact_emails_value"],
+            associated_agent_registry="associated_agent_registry_value",
         )
         response = client.update_engine(request)
 
@@ -1823,7 +1843,18 @@ def test_update_engine(request_type, transport: str = "grpc"):
     assert response.data_store_ids == ["data_store_ids_value"]
     assert response.solution_type == common.SolutionType.SOLUTION_TYPE_RECOMMENDATION
     assert response.industry_vertical == common.IndustryVertical.GENERIC
+    assert response.app_type == gcd_engine.Engine.AppType.APP_TYPE_INTRANET
     assert response.disable_analytics is True
+    assert (
+        response.configurable_billing_approach
+        == gcd_engine.Engine.ConfigurableBillingApproach.CONFIGURABLE_BILLING_APPROACH_ENABLED
+    )
+    assert (
+        response.marketplace_agent_visibility
+        == gcd_engine.Engine.MarketplaceAgentVisibility.SHOW_AVAILABLE_AGENTS_ONLY
+    )
+    assert response.procurement_contact_emails == ["procurement_contact_emails_value"]
+    assert response.associated_agent_registry == "associated_agent_registry_value"
 
 
 def test_update_engine_non_empty_request_with_auto_populated_field():
@@ -1956,7 +1987,12 @@ async def test_update_engine_async(request_type, transport: str = "grpc_asyncio"
                 data_store_ids=["data_store_ids_value"],
                 solution_type=common.SolutionType.SOLUTION_TYPE_RECOMMENDATION,
                 industry_vertical=common.IndustryVertical.GENERIC,
+                app_type=gcd_engine.Engine.AppType.APP_TYPE_INTRANET,
                 disable_analytics=True,
+                configurable_billing_approach=gcd_engine.Engine.ConfigurableBillingApproach.CONFIGURABLE_BILLING_APPROACH_ENABLED,
+                marketplace_agent_visibility=gcd_engine.Engine.MarketplaceAgentVisibility.SHOW_AVAILABLE_AGENTS_ONLY,
+                procurement_contact_emails=["procurement_contact_emails_value"],
+                associated_agent_registry="associated_agent_registry_value",
             )
         )
         response = await client.update_engine(request)
@@ -1974,7 +2010,18 @@ async def test_update_engine_async(request_type, transport: str = "grpc_asyncio"
     assert response.data_store_ids == ["data_store_ids_value"]
     assert response.solution_type == common.SolutionType.SOLUTION_TYPE_RECOMMENDATION
     assert response.industry_vertical == common.IndustryVertical.GENERIC
+    assert response.app_type == gcd_engine.Engine.AppType.APP_TYPE_INTRANET
     assert response.disable_analytics is True
+    assert (
+        response.configurable_billing_approach
+        == gcd_engine.Engine.ConfigurableBillingApproach.CONFIGURABLE_BILLING_APPROACH_ENABLED
+    )
+    assert (
+        response.marketplace_agent_visibility
+        == gcd_engine.Engine.MarketplaceAgentVisibility.SHOW_AVAILABLE_AGENTS_ONLY
+    )
+    assert response.procurement_contact_emails == ["procurement_contact_emails_value"]
+    assert response.associated_agent_registry == "associated_agent_registry_value"
 
 
 def test_update_engine_field_headers():
@@ -2188,7 +2235,12 @@ def test_get_engine(request_type, transport: str = "grpc"):
             data_store_ids=["data_store_ids_value"],
             solution_type=common.SolutionType.SOLUTION_TYPE_RECOMMENDATION,
             industry_vertical=common.IndustryVertical.GENERIC,
+            app_type=engine.Engine.AppType.APP_TYPE_INTRANET,
             disable_analytics=True,
+            configurable_billing_approach=engine.Engine.ConfigurableBillingApproach.CONFIGURABLE_BILLING_APPROACH_ENABLED,
+            marketplace_agent_visibility=engine.Engine.MarketplaceAgentVisibility.SHOW_AVAILABLE_AGENTS_ONLY,
+            procurement_contact_emails=["procurement_contact_emails_value"],
+            associated_agent_registry="associated_agent_registry_value",
         )
         response = client.get_engine(request)
 
@@ -2205,7 +2257,18 @@ def test_get_engine(request_type, transport: str = "grpc"):
     assert response.data_store_ids == ["data_store_ids_value"]
     assert response.solution_type == common.SolutionType.SOLUTION_TYPE_RECOMMENDATION
     assert response.industry_vertical == common.IndustryVertical.GENERIC
+    assert response.app_type == engine.Engine.AppType.APP_TYPE_INTRANET
     assert response.disable_analytics is True
+    assert (
+        response.configurable_billing_approach
+        == engine.Engine.ConfigurableBillingApproach.CONFIGURABLE_BILLING_APPROACH_ENABLED
+    )
+    assert (
+        response.marketplace_agent_visibility
+        == engine.Engine.MarketplaceAgentVisibility.SHOW_AVAILABLE_AGENTS_ONLY
+    )
+    assert response.procurement_contact_emails == ["procurement_contact_emails_value"]
+    assert response.associated_agent_registry == "associated_agent_registry_value"
 
 
 def test_get_engine_non_empty_request_with_auto_populated_field():
@@ -2340,7 +2403,12 @@ async def test_get_engine_async(request_type, transport: str = "grpc_asyncio"):
                 data_store_ids=["data_store_ids_value"],
                 solution_type=common.SolutionType.SOLUTION_TYPE_RECOMMENDATION,
                 industry_vertical=common.IndustryVertical.GENERIC,
+                app_type=engine.Engine.AppType.APP_TYPE_INTRANET,
                 disable_analytics=True,
+                configurable_billing_approach=engine.Engine.ConfigurableBillingApproach.CONFIGURABLE_BILLING_APPROACH_ENABLED,
+                marketplace_agent_visibility=engine.Engine.MarketplaceAgentVisibility.SHOW_AVAILABLE_AGENTS_ONLY,
+                procurement_contact_emails=["procurement_contact_emails_value"],
+                associated_agent_registry="associated_agent_registry_value",
             )
         )
         response = await client.get_engine(request)
@@ -2358,7 +2426,18 @@ async def test_get_engine_async(request_type, transport: str = "grpc_asyncio"):
     assert response.data_store_ids == ["data_store_ids_value"]
     assert response.solution_type == common.SolutionType.SOLUTION_TYPE_RECOMMENDATION
     assert response.industry_vertical == common.IndustryVertical.GENERIC
+    assert response.app_type == engine.Engine.AppType.APP_TYPE_INTRANET
     assert response.disable_analytics is True
+    assert (
+        response.configurable_billing_approach
+        == engine.Engine.ConfigurableBillingApproach.CONFIGURABLE_BILLING_APPROACH_ENABLED
+    )
+    assert (
+        response.marketplace_agent_visibility
+        == engine.Engine.MarketplaceAgentVisibility.SHOW_AVAILABLE_AGENTS_ONLY
+    )
+    assert response.procurement_contact_emails == ["procurement_contact_emails_value"]
+    assert response.associated_agent_registry == "associated_agent_registry_value"
 
 
 def test_get_engine_field_headers():
@@ -3021,6 +3100,689 @@ async def test_list_engines_async_pages():
             pages.append(page_)
         for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
             assert page_.raw_page.next_page_token == token
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        iam_policy_pb2.GetIamPolicyRequest(),
+        {},
+    ],
+)
+def test_get_iam_policy(request_type, transport: str = "grpc"):
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = policy_pb2.Policy(
+            version=774,
+            etag=b"etag_blob",
+        )
+        response = client.get_iam_policy(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = iam_policy_pb2.GetIamPolicyRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, policy_pb2.Policy)
+    assert response.version == 774
+    assert response.etag == b"etag_blob"
+
+
+def test_get_iam_policy_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = iam_policy_pb2.GetIamPolicyRequest(
+        resource="resource_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.get_iam_policy(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = iam_policy_pb2.GetIamPolicyRequest(
+            resource="resource_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_get_iam_policy_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = EngineServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._transport.get_iam_policy in client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.get_iam_policy] = mock_rpc
+        request = {}
+        client.get_iam_policy(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.get_iam_policy(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_get_iam_policy_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = EngineServiceAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.get_iam_policy
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.get_iam_policy
+        ] = mock_rpc
+
+        request = {}
+        await client.get_iam_policy(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.get_iam_policy(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        iam_policy_pb2.GetIamPolicyRequest(),
+        {},
+    ],
+)
+async def test_get_iam_policy_async(request_type, transport: str = "grpc_asyncio"):
+    client = EngineServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            policy_pb2.Policy(
+                version=774,
+                etag=b"etag_blob",
+            )
+        )
+        response = await client.get_iam_policy(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = iam_policy_pb2.GetIamPolicyRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, policy_pb2.Policy)
+    assert response.version == 774
+    assert response.etag == b"etag_blob"
+
+
+def test_get_iam_policy_field_headers():
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = iam_policy_pb2.GetIamPolicyRequest()
+
+    request.resource = "resource_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
+        call.return_value = policy_pb2.Policy()
+        client.get_iam_policy(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "resource=resource_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_get_iam_policy_field_headers_async():
+    client = EngineServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = iam_policy_pb2.GetIamPolicyRequest()
+
+    request.resource = "resource_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(policy_pb2.Policy())
+        await client.get_iam_policy(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "resource=resource_value",
+    ) in kw["metadata"]
+
+
+def test_get_iam_policy_from_dict_foreign():
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = policy_pb2.Policy()
+        response = client.get_iam_policy(
+            request={
+                "resource": "resource_value",
+                "options": options_pb2.GetPolicyOptions(requested_policy_version=2598),
+            }
+        )
+        call.assert_called()
+
+
+def test_get_iam_policy_flattened():
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = policy_pb2.Policy()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.get_iam_policy(
+            resource="resource_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].resource
+        mock_val = "resource_value"
+        assert arg == mock_val
+
+
+def test_get_iam_policy_flattened_error():
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.get_iam_policy(
+            iam_policy_pb2.GetIamPolicyRequest(),
+            resource="resource_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_get_iam_policy_flattened_async():
+    client = EngineServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = policy_pb2.Policy()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(policy_pb2.Policy())
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.get_iam_policy(
+            resource="resource_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].resource
+        mock_val = "resource_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_get_iam_policy_flattened_error_async():
+    client = EngineServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.get_iam_policy(
+            iam_policy_pb2.GetIamPolicyRequest(),
+            resource="resource_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        iam_policy_pb2.SetIamPolicyRequest(),
+        {},
+    ],
+)
+def test_set_iam_policy(request_type, transport: str = "grpc"):
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = policy_pb2.Policy(
+            version=774,
+            etag=b"etag_blob",
+        )
+        response = client.set_iam_policy(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = iam_policy_pb2.SetIamPolicyRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, policy_pb2.Policy)
+    assert response.version == 774
+    assert response.etag == b"etag_blob"
+
+
+def test_set_iam_policy_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = iam_policy_pb2.SetIamPolicyRequest(
+        resource="resource_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.set_iam_policy(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = iam_policy_pb2.SetIamPolicyRequest(
+            resource="resource_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_set_iam_policy_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = EngineServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._transport.set_iam_policy in client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.set_iam_policy] = mock_rpc
+        request = {}
+        client.set_iam_policy(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.set_iam_policy(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_set_iam_policy_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = EngineServiceAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.set_iam_policy
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.set_iam_policy
+        ] = mock_rpc
+
+        request = {}
+        await client.set_iam_policy(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.set_iam_policy(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        iam_policy_pb2.SetIamPolicyRequest(),
+        {},
+    ],
+)
+async def test_set_iam_policy_async(request_type, transport: str = "grpc_asyncio"):
+    client = EngineServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            policy_pb2.Policy(
+                version=774,
+                etag=b"etag_blob",
+            )
+        )
+        response = await client.set_iam_policy(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = iam_policy_pb2.SetIamPolicyRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, policy_pb2.Policy)
+    assert response.version == 774
+    assert response.etag == b"etag_blob"
+
+
+def test_set_iam_policy_field_headers():
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = iam_policy_pb2.SetIamPolicyRequest()
+
+    request.resource = "resource_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
+        call.return_value = policy_pb2.Policy()
+        client.set_iam_policy(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "resource=resource_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_set_iam_policy_field_headers_async():
+    client = EngineServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = iam_policy_pb2.SetIamPolicyRequest()
+
+    request.resource = "resource_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(policy_pb2.Policy())
+        await client.set_iam_policy(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "resource=resource_value",
+    ) in kw["metadata"]
+
+
+def test_set_iam_policy_from_dict_foreign():
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = policy_pb2.Policy()
+        response = client.set_iam_policy(
+            request={
+                "resource": "resource_value",
+                "policy": policy_pb2.Policy(version=774),
+                "update_mask": field_mask_pb2.FieldMask(paths=["paths_value"]),
+            }
+        )
+        call.assert_called()
+
+
+def test_set_iam_policy_flattened():
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = policy_pb2.Policy()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.set_iam_policy(
+            resource="resource_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].resource
+        mock_val = "resource_value"
+        assert arg == mock_val
+
+
+def test_set_iam_policy_flattened_error():
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.set_iam_policy(
+            iam_policy_pb2.SetIamPolicyRequest(),
+            resource="resource_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_set_iam_policy_flattened_async():
+    client = EngineServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = policy_pb2.Policy()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(policy_pb2.Policy())
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.set_iam_policy(
+            resource="resource_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].resource
+        mock_val = "resource_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_set_iam_policy_flattened_error_async():
+    client = EngineServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.set_iam_policy(
+            iam_policy_pb2.SetIamPolicyRequest(),
+            resource="resource_value",
+        )
 
 
 def test_create_engine_rest_use_cached_wrapped_rpc():
@@ -3999,6 +4761,344 @@ def test_list_engines_rest_pager(transport: str = "rest"):
             assert page_.raw_page.next_page_token == token
 
 
+def test_get_iam_policy_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = EngineServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._transport.get_iam_policy in client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.get_iam_policy] = mock_rpc
+
+        request = {}
+        client.get_iam_policy(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.get_iam_policy(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_get_iam_policy_rest_required_fields(
+    request_type=iam_policy_pb2.GetIamPolicyRequest,
+):
+    transport_class = transports.EngineServiceRestTransport
+
+    request_init = {}
+    request_init["resource"] = ""
+    request = request_type(**request_init)
+    pb_request = request
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseGetIamPolicy,
+        "_BaseGetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["resource"] = "resource_value"
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(("options",))
+
+    # verify required fields with non-default values are left alone
+    assert "resource" in jsonified_request
+    assert jsonified_request["resource"] == "resource_value"
+
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = policy_pb2.Policy()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.get_iam_policy(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_get_iam_policy_rest_flattened():
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = policy_pb2.Policy()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "resource": "projects/sample1/locations/sample2/collections/sample3/engines/sample4"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            resource="resource_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.get_iam_policy(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{resource=projects/*/locations/*/collections/*/engines/*}:getIamPolicy"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_get_iam_policy_rest_flattened_error(transport: str = "rest"):
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.get_iam_policy(
+            iam_policy_pb2.GetIamPolicyRequest(),
+            resource="resource_value",
+        )
+
+
+def test_set_iam_policy_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = EngineServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._transport.set_iam_policy in client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.set_iam_policy] = mock_rpc
+
+        request = {}
+        client.set_iam_policy(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.set_iam_policy(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_set_iam_policy_rest_required_fields(
+    request_type=iam_policy_pb2.SetIamPolicyRequest,
+):
+    transport_class = transports.EngineServiceRestTransport
+
+    request_init = {}
+    request_init["resource"] = ""
+    request = request_type(**request_init)
+    pb_request = request
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseSetIamPolicy,
+        "_BaseSetIamPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["resource"] = "resource_value"
+
+    # verify required fields with non-default values are left alone
+    assert "resource" in jsonified_request
+    assert jsonified_request["resource"] == "resource_value"
+
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = policy_pb2.Policy()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.set_iam_policy(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_set_iam_policy_rest_flattened():
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = policy_pb2.Policy()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "resource": "projects/sample1/locations/sample2/collections/sample3/engines/sample4"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            resource="resource_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.set_iam_policy(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{resource=projects/*/locations/*/collections/*/engines/*}:setIamPolicy"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_set_iam_policy_rest_flattened_error(transport: str = "rest"):
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.set_iam_policy(
+            iam_policy_pb2.SetIamPolicyRequest(),
+            resource="resource_value",
+        )
+
+
 def test_credentials_transport_error():
     # It is an error to provide credentials and a transport instance.
     transport = transports.EngineServiceGrpcTransport(
@@ -4205,6 +5305,46 @@ def test_list_engines_empty_call_grpc():
         assert args[0] == request_msg
 
 
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_get_iam_policy_empty_call_grpc():
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
+        call.return_value = policy_pb2.Policy()
+        client.get_iam_policy(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = iam_policy_pb2.GetIamPolicyRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_set_iam_policy_empty_call_grpc():
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
+        call.return_value = policy_pb2.Policy()
+        client.set_iam_policy(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = iam_policy_pb2.SetIamPolicyRequest()
+        assert args[0] == request_msg
+
+
 def test_transport_kind_grpc_asyncio():
     transport = EngineServiceAsyncClient.get_transport_class("grpc_asyncio")(
         credentials=async_anonymous_credentials()
@@ -4286,7 +5426,12 @@ async def test_update_engine_empty_call_grpc_asyncio():
                 data_store_ids=["data_store_ids_value"],
                 solution_type=common.SolutionType.SOLUTION_TYPE_RECOMMENDATION,
                 industry_vertical=common.IndustryVertical.GENERIC,
+                app_type=gcd_engine.Engine.AppType.APP_TYPE_INTRANET,
                 disable_analytics=True,
+                configurable_billing_approach=gcd_engine.Engine.ConfigurableBillingApproach.CONFIGURABLE_BILLING_APPROACH_ENABLED,
+                marketplace_agent_visibility=gcd_engine.Engine.MarketplaceAgentVisibility.SHOW_AVAILABLE_AGENTS_ONLY,
+                procurement_contact_emails=["procurement_contact_emails_value"],
+                associated_agent_registry="associated_agent_registry_value",
             )
         )
         await client.update_engine(request=None)
@@ -4317,7 +5462,12 @@ async def test_get_engine_empty_call_grpc_asyncio():
                 data_store_ids=["data_store_ids_value"],
                 solution_type=common.SolutionType.SOLUTION_TYPE_RECOMMENDATION,
                 industry_vertical=common.IndustryVertical.GENERIC,
+                app_type=engine.Engine.AppType.APP_TYPE_INTRANET,
                 disable_analytics=True,
+                configurable_billing_approach=engine.Engine.ConfigurableBillingApproach.CONFIGURABLE_BILLING_APPROACH_ENABLED,
+                marketplace_agent_visibility=engine.Engine.MarketplaceAgentVisibility.SHOW_AVAILABLE_AGENTS_ONLY,
+                procurement_contact_emails=["procurement_contact_emails_value"],
+                associated_agent_registry="associated_agent_registry_value",
             )
         )
         await client.get_engine(request=None)
@@ -4352,6 +5502,60 @@ async def test_list_engines_empty_call_grpc_asyncio():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = engine_service.ListEnginesRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_get_iam_policy_empty_call_grpc_asyncio():
+    client = EngineServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            policy_pb2.Policy(
+                version=774,
+                etag=b"etag_blob",
+            )
+        )
+        await client.get_iam_policy(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = iam_policy_pb2.GetIamPolicyRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_set_iam_policy_empty_call_grpc_asyncio():
+    client = EngineServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            policy_pb2.Policy(
+                version=774,
+                etag=b"etag_blob",
+            )
+        )
+        await client.set_iam_policy(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = iam_policy_pb2.SetIamPolicyRequest()
         assert args[0] == request_msg
 
 
@@ -4413,7 +5617,11 @@ def test_create_engine_rest_call_success(request_type):
             "dialogflow_agent_to_link": "dialogflow_agent_to_link_value",
             "allow_cross_region": True,
         },
-        "search_engine_config": {"search_tier": 1, "search_add_ons": [1]},
+        "search_engine_config": {
+            "search_tier": 1,
+            "required_subscription_tier": 1,
+            "search_add_ons": [1],
+        },
         "media_recommendation_engine_config": {
             "type_": "type__value",
             "optimization_objective": "optimization_objective_value",
@@ -4438,7 +5646,57 @@ def test_create_engine_rest_call_success(request_type):
         "solution_type": 1,
         "industry_vertical": 1,
         "common_config": {"company_name": "company_name_value"},
+        "knowledge_graph_config": {
+            "enable_cloud_knowledge_graph": True,
+            "cloud_knowledge_graph_types": [
+                "cloud_knowledge_graph_types_value1",
+                "cloud_knowledge_graph_types_value2",
+            ],
+            "enable_private_knowledge_graph": True,
+            "private_knowledge_graph_types": [
+                "private_knowledge_graph_types_value1",
+                "private_knowledge_graph_types_value2",
+            ],
+            "feature_config": {
+                "disable_private_kg_query_understanding": True,
+                "disable_private_kg_enrichment": True,
+                "disable_private_kg_auto_complete": True,
+                "disable_private_kg_query_ui_chips": True,
+            },
+        },
+        "app_type": 1,
         "disable_analytics": True,
+        "session_config": {
+            "session_management_policy": 1,
+            "session_ttl": {"days": 433},
+        },
+        "features": {},
+        "cmek_config": {
+            "name": "name_value",
+            "kms_key": "kms_key_value",
+            "kms_key_version": "kms_key_version_value",
+            "state": 1,
+            "is_default": True,
+            "last_rotation_timestamp_micros": 3234,
+            "single_region_keys": [{"kms_key": "kms_key_value"}],
+            "notebooklm_state": 1,
+        },
+        "configurable_billing_approach": 1,
+        "model_configs": {},
+        "observability_config": {
+            "observability_enabled": True,
+            "sensitive_logging_enabled": True,
+        },
+        "connector_tenant_info": {},
+        "agent_gateway_setting": {
+            "default_egress_agent_gateway": {"name": "name_value"}
+        },
+        "marketplace_agent_visibility": 1,
+        "procurement_contact_emails": [
+            "procurement_contact_emails_value1",
+            "procurement_contact_emails_value2",
+        ],
+        "associated_agent_registry": "associated_agent_registry_value",
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -4780,7 +6038,11 @@ def test_update_engine_rest_call_success(request_type):
             "dialogflow_agent_to_link": "dialogflow_agent_to_link_value",
             "allow_cross_region": True,
         },
-        "search_engine_config": {"search_tier": 1, "search_add_ons": [1]},
+        "search_engine_config": {
+            "search_tier": 1,
+            "required_subscription_tier": 1,
+            "search_add_ons": [1],
+        },
         "media_recommendation_engine_config": {
             "type_": "type__value",
             "optimization_objective": "optimization_objective_value",
@@ -4805,7 +6067,57 @@ def test_update_engine_rest_call_success(request_type):
         "solution_type": 1,
         "industry_vertical": 1,
         "common_config": {"company_name": "company_name_value"},
+        "knowledge_graph_config": {
+            "enable_cloud_knowledge_graph": True,
+            "cloud_knowledge_graph_types": [
+                "cloud_knowledge_graph_types_value1",
+                "cloud_knowledge_graph_types_value2",
+            ],
+            "enable_private_knowledge_graph": True,
+            "private_knowledge_graph_types": [
+                "private_knowledge_graph_types_value1",
+                "private_knowledge_graph_types_value2",
+            ],
+            "feature_config": {
+                "disable_private_kg_query_understanding": True,
+                "disable_private_kg_enrichment": True,
+                "disable_private_kg_auto_complete": True,
+                "disable_private_kg_query_ui_chips": True,
+            },
+        },
+        "app_type": 1,
         "disable_analytics": True,
+        "session_config": {
+            "session_management_policy": 1,
+            "session_ttl": {"days": 433},
+        },
+        "features": {},
+        "cmek_config": {
+            "name": "name_value",
+            "kms_key": "kms_key_value",
+            "kms_key_version": "kms_key_version_value",
+            "state": 1,
+            "is_default": True,
+            "last_rotation_timestamp_micros": 3234,
+            "single_region_keys": [{"kms_key": "kms_key_value"}],
+            "notebooklm_state": 1,
+        },
+        "configurable_billing_approach": 1,
+        "model_configs": {},
+        "observability_config": {
+            "observability_enabled": True,
+            "sensitive_logging_enabled": True,
+        },
+        "connector_tenant_info": {},
+        "agent_gateway_setting": {
+            "default_egress_agent_gateway": {"name": "name_value"}
+        },
+        "marketplace_agent_visibility": 1,
+        "procurement_contact_emails": [
+            "procurement_contact_emails_value1",
+            "procurement_contact_emails_value2",
+        ],
+        "associated_agent_registry": "associated_agent_registry_value",
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -4885,7 +6197,12 @@ def test_update_engine_rest_call_success(request_type):
             data_store_ids=["data_store_ids_value"],
             solution_type=common.SolutionType.SOLUTION_TYPE_RECOMMENDATION,
             industry_vertical=common.IndustryVertical.GENERIC,
+            app_type=gcd_engine.Engine.AppType.APP_TYPE_INTRANET,
             disable_analytics=True,
+            configurable_billing_approach=gcd_engine.Engine.ConfigurableBillingApproach.CONFIGURABLE_BILLING_APPROACH_ENABLED,
+            marketplace_agent_visibility=gcd_engine.Engine.MarketplaceAgentVisibility.SHOW_AVAILABLE_AGENTS_ONLY,
+            procurement_contact_emails=["procurement_contact_emails_value"],
+            associated_agent_registry="associated_agent_registry_value",
         )
 
         # Wrap the value into a proper Response obj
@@ -4907,7 +6224,18 @@ def test_update_engine_rest_call_success(request_type):
     assert response.data_store_ids == ["data_store_ids_value"]
     assert response.solution_type == common.SolutionType.SOLUTION_TYPE_RECOMMENDATION
     assert response.industry_vertical == common.IndustryVertical.GENERIC
+    assert response.app_type == gcd_engine.Engine.AppType.APP_TYPE_INTRANET
     assert response.disable_analytics is True
+    assert (
+        response.configurable_billing_approach
+        == gcd_engine.Engine.ConfigurableBillingApproach.CONFIGURABLE_BILLING_APPROACH_ENABLED
+    )
+    assert (
+        response.marketplace_agent_visibility
+        == gcd_engine.Engine.MarketplaceAgentVisibility.SHOW_AVAILABLE_AGENTS_ONLY
+    )
+    assert response.procurement_contact_emails == ["procurement_contact_emails_value"]
+    assert response.associated_agent_registry == "associated_agent_registry_value"
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -5027,7 +6355,12 @@ def test_get_engine_rest_call_success(request_type):
             data_store_ids=["data_store_ids_value"],
             solution_type=common.SolutionType.SOLUTION_TYPE_RECOMMENDATION,
             industry_vertical=common.IndustryVertical.GENERIC,
+            app_type=engine.Engine.AppType.APP_TYPE_INTRANET,
             disable_analytics=True,
+            configurable_billing_approach=engine.Engine.ConfigurableBillingApproach.CONFIGURABLE_BILLING_APPROACH_ENABLED,
+            marketplace_agent_visibility=engine.Engine.MarketplaceAgentVisibility.SHOW_AVAILABLE_AGENTS_ONLY,
+            procurement_contact_emails=["procurement_contact_emails_value"],
+            associated_agent_registry="associated_agent_registry_value",
         )
 
         # Wrap the value into a proper Response obj
@@ -5049,7 +6382,18 @@ def test_get_engine_rest_call_success(request_type):
     assert response.data_store_ids == ["data_store_ids_value"]
     assert response.solution_type == common.SolutionType.SOLUTION_TYPE_RECOMMENDATION
     assert response.industry_vertical == common.IndustryVertical.GENERIC
+    assert response.app_type == engine.Engine.AppType.APP_TYPE_INTRANET
     assert response.disable_analytics is True
+    assert (
+        response.configurable_billing_approach
+        == engine.Engine.ConfigurableBillingApproach.CONFIGURABLE_BILLING_APPROACH_ENABLED
+    )
+    assert (
+        response.marketplace_agent_visibility
+        == engine.Engine.MarketplaceAgentVisibility.SHOW_AVAILABLE_AGENTS_ONLY
+    )
+    assert response.procurement_contact_emails == ["procurement_contact_emails_value"]
+    assert response.associated_agent_registry == "associated_agent_registry_value"
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -5234,6 +6578,268 @@ def test_list_engines_rest_interceptors(null_interceptor):
         post_with_metadata.return_value = engine_service.ListEnginesResponse(), metadata
 
         client.list_engines(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_get_iam_policy_rest_bad_request(
+    request_type=iam_policy_pb2.GetIamPolicyRequest,
+):
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "resource": "projects/sample1/locations/sample2/collections/sample3/engines/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.get_iam_policy(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        iam_policy_pb2.GetIamPolicyRequest,
+        dict,
+    ],
+)
+def test_get_iam_policy_rest_call_success(request_type):
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "resource": "projects/sample1/locations/sample2/collections/sample3/engines/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = policy_pb2.Policy(
+            version=774,
+            etag=b"etag_blob",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.get_iam_policy(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, policy_pb2.Policy)
+    assert response.version == 774
+    assert response.etag == b"etag_blob"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_get_iam_policy_rest_interceptors(null_interceptor):
+    transport = transports.EngineServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.EngineServiceRestInterceptor(),
+    )
+    client = EngineServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.EngineServiceRestInterceptor, "post_get_iam_policy"
+        ) as post,
+        mock.patch.object(
+            transports.EngineServiceRestInterceptor, "post_get_iam_policy_with_metadata"
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.EngineServiceRestInterceptor, "pre_get_iam_policy"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = iam_policy_pb2.GetIamPolicyRequest()
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = json_format.MessageToJson(policy_pb2.Policy())
+        req.return_value.content = return_value
+
+        request = iam_policy_pb2.GetIamPolicyRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = policy_pb2.Policy()
+        post_with_metadata.return_value = policy_pb2.Policy(), metadata
+
+        client.get_iam_policy(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_set_iam_policy_rest_bad_request(
+    request_type=iam_policy_pb2.SetIamPolicyRequest,
+):
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "resource": "projects/sample1/locations/sample2/collections/sample3/engines/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.set_iam_policy(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        iam_policy_pb2.SetIamPolicyRequest,
+        dict,
+    ],
+)
+def test_set_iam_policy_rest_call_success(request_type):
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "resource": "projects/sample1/locations/sample2/collections/sample3/engines/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = policy_pb2.Policy(
+            version=774,
+            etag=b"etag_blob",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.set_iam_policy(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, policy_pb2.Policy)
+    assert response.version == 774
+    assert response.etag == b"etag_blob"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_set_iam_policy_rest_interceptors(null_interceptor):
+    transport = transports.EngineServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.EngineServiceRestInterceptor(),
+    )
+    client = EngineServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.EngineServiceRestInterceptor, "post_set_iam_policy"
+        ) as post,
+        mock.patch.object(
+            transports.EngineServiceRestInterceptor, "post_set_iam_policy_with_metadata"
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.EngineServiceRestInterceptor, "pre_set_iam_policy"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = iam_policy_pb2.SetIamPolicyRequest()
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = json_format.MessageToJson(policy_pb2.Policy())
+        req.return_value.content = return_value
+
+        request = iam_policy_pb2.SetIamPolicyRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = policy_pb2.Policy()
+        post_with_metadata.return_value = policy_pb2.Policy(), metadata
+
+        client.set_iam_policy(
             request,
             metadata=[
                 ("key", "val"),
@@ -5535,6 +7141,44 @@ def test_list_engines_empty_call_rest():
         assert args[0] == request_msg
 
 
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_get_iam_policy_empty_call_rest():
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
+        client.get_iam_policy(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = iam_policy_pb2.GetIamPolicyRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_set_iam_policy_empty_call_rest():
+    client = EngineServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
+        client.set_iam_policy(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = iam_policy_pb2.SetIamPolicyRequest()
+        assert args[0] == request_msg
+
+
 def test_engine_service_rest_lro_client():
     client = EngineServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -5590,6 +7234,8 @@ def test_engine_service_base_transport():
         "update_engine",
         "get_engine",
         "list_engines",
+        "get_iam_policy",
+        "set_iam_policy",
         "get_operation",
         "cancel_operation",
         "list_operations",
@@ -5634,7 +7280,11 @@ def test_engine_service_base_transport_with_credentials_file():
         load_creds.assert_called_once_with(
             "credentials.json",
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             quota_project_id="octopus",
         )
 
@@ -5660,7 +7310,11 @@ def test_engine_service_auth_adc():
         EngineServiceClient()
         adc.assert_called_once_with(
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             quota_project_id=None,
         )
 
@@ -5680,7 +7334,11 @@ def test_engine_service_transport_auth_adc(transport_class):
         transport_class(quota_project_id="octopus", scopes=["1", "2"])
         adc.assert_called_once_with(
             scopes=["1", "2"],
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             quota_project_id="octopus",
         )
 
@@ -5733,7 +7391,11 @@ def test_engine_service_transport_create_channel(transport_class, grpc_helpers):
             credentials=creds,
             credentials_file=None,
             quota_project_id="octopus",
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             scopes=["1", "2"],
             default_host="discoveryengine.googleapis.com",
             ssl_credentials=None,
@@ -5877,6 +7539,12 @@ def test_engine_service_client_transport_session_collision(transport_name):
     assert session1 != session2
     session1 = client1.transport.list_engines._session
     session2 = client2.transport.list_engines._session
+    assert session1 != session2
+    session1 = client1.transport.get_iam_policy._session
+    session2 = client2.transport.get_iam_policy._session
+    assert session1 != session2
+    session1 = client1.transport.set_iam_policy._session
+    session2 = client2.transport.set_iam_policy._session
     assert session1 != session2
 
 
@@ -6039,10 +7707,61 @@ def test_engine_service_grpc_lro_async_client():
     assert transport.operations_client is transport.operations_client
 
 
-def test_collection_path():
+def test_agent_gateway_path():
     project = "squid"
     location = "clam"
-    collection = "whelk"
+    agent_gateway = "whelk"
+    expected = (
+        "projects/{project}/locations/{location}/agentGateways/{agent_gateway}".format(
+            project=project,
+            location=location,
+            agent_gateway=agent_gateway,
+        )
+    )
+    actual = EngineServiceClient.agent_gateway_path(project, location, agent_gateway)
+    assert expected == actual
+
+
+def test_parse_agent_gateway_path():
+    expected = {
+        "project": "octopus",
+        "location": "oyster",
+        "agent_gateway": "nudibranch",
+    }
+    path = EngineServiceClient.agent_gateway_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = EngineServiceClient.parse_agent_gateway_path(path)
+    assert expected == actual
+
+
+def test_cmek_config_path():
+    project = "cuttlefish"
+    location = "mussel"
+    expected = "projects/{project}/locations/{location}/cmekConfig".format(
+        project=project,
+        location=location,
+    )
+    actual = EngineServiceClient.cmek_config_path(project, location)
+    assert expected == actual
+
+
+def test_parse_cmek_config_path():
+    expected = {
+        "project": "winkle",
+        "location": "nautilus",
+    }
+    path = EngineServiceClient.cmek_config_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = EngineServiceClient.parse_cmek_config_path(path)
+    assert expected == actual
+
+
+def test_collection_path():
+    project = "scallop"
+    location = "abalone"
+    collection = "squid"
     expected = (
         "projects/{project}/locations/{location}/collections/{collection}".format(
             project=project,
@@ -6056,9 +7775,9 @@ def test_collection_path():
 
 def test_parse_collection_path():
     expected = {
-        "project": "octopus",
-        "location": "oyster",
-        "collection": "nudibranch",
+        "project": "clam",
+        "location": "whelk",
+        "collection": "octopus",
     }
     path = EngineServiceClient.collection_path(**expected)
 
@@ -6067,11 +7786,76 @@ def test_parse_collection_path():
     assert expected == actual
 
 
+def test_crypto_keys_path():
+    project = "oyster"
+    location = "nudibranch"
+    key_ring = "cuttlefish"
+    crypto_key = "mussel"
+    expected = "projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}".format(
+        project=project,
+        location=location,
+        key_ring=key_ring,
+        crypto_key=crypto_key,
+    )
+    actual = EngineServiceClient.crypto_keys_path(
+        project, location, key_ring, crypto_key
+    )
+    assert expected == actual
+
+
+def test_parse_crypto_keys_path():
+    expected = {
+        "project": "winkle",
+        "location": "nautilus",
+        "key_ring": "scallop",
+        "crypto_key": "abalone",
+    }
+    path = EngineServiceClient.crypto_keys_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = EngineServiceClient.parse_crypto_keys_path(path)
+    assert expected == actual
+
+
+def test_crypto_key_versions_path():
+    project = "squid"
+    location = "clam"
+    key_ring = "whelk"
+    crypto_key = "octopus"
+    crypto_key_version = "oyster"
+    expected = "projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}/cryptoKeyVersions/{crypto_key_version}".format(
+        project=project,
+        location=location,
+        key_ring=key_ring,
+        crypto_key=crypto_key,
+        crypto_key_version=crypto_key_version,
+    )
+    actual = EngineServiceClient.crypto_key_versions_path(
+        project, location, key_ring, crypto_key, crypto_key_version
+    )
+    assert expected == actual
+
+
+def test_parse_crypto_key_versions_path():
+    expected = {
+        "project": "nudibranch",
+        "location": "cuttlefish",
+        "key_ring": "mussel",
+        "crypto_key": "winkle",
+        "crypto_key_version": "nautilus",
+    }
+    path = EngineServiceClient.crypto_key_versions_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = EngineServiceClient.parse_crypto_key_versions_path(path)
+    assert expected == actual
+
+
 def test_engine_path():
-    project = "cuttlefish"
-    location = "mussel"
-    collection = "winkle"
-    engine = "nautilus"
+    project = "scallop"
+    location = "abalone"
+    collection = "squid"
+    engine = "clam"
     expected = "projects/{project}/locations/{location}/collections/{collection}/engines/{engine}".format(
         project=project,
         location=location,
@@ -6084,10 +7868,10 @@ def test_engine_path():
 
 def test_parse_engine_path():
     expected = {
-        "project": "scallop",
-        "location": "abalone",
-        "collection": "squid",
-        "engine": "clam",
+        "project": "whelk",
+        "location": "octopus",
+        "collection": "oyster",
+        "engine": "nudibranch",
     }
     path = EngineServiceClient.engine_path(**expected)
 
@@ -6097,7 +7881,7 @@ def test_parse_engine_path():
 
 
 def test_common_billing_account_path():
-    billing_account = "whelk"
+    billing_account = "cuttlefish"
     expected = "billingAccounts/{billing_account}".format(
         billing_account=billing_account,
     )
@@ -6107,7 +7891,7 @@ def test_common_billing_account_path():
 
 def test_parse_common_billing_account_path():
     expected = {
-        "billing_account": "octopus",
+        "billing_account": "mussel",
     }
     path = EngineServiceClient.common_billing_account_path(**expected)
 
@@ -6117,7 +7901,7 @@ def test_parse_common_billing_account_path():
 
 
 def test_common_folder_path():
-    folder = "oyster"
+    folder = "winkle"
     expected = "folders/{folder}".format(
         folder=folder,
     )
@@ -6127,7 +7911,7 @@ def test_common_folder_path():
 
 def test_parse_common_folder_path():
     expected = {
-        "folder": "nudibranch",
+        "folder": "nautilus",
     }
     path = EngineServiceClient.common_folder_path(**expected)
 
@@ -6137,7 +7921,7 @@ def test_parse_common_folder_path():
 
 
 def test_common_organization_path():
-    organization = "cuttlefish"
+    organization = "scallop"
     expected = "organizations/{organization}".format(
         organization=organization,
     )
@@ -6147,7 +7931,7 @@ def test_common_organization_path():
 
 def test_parse_common_organization_path():
     expected = {
-        "organization": "mussel",
+        "organization": "abalone",
     }
     path = EngineServiceClient.common_organization_path(**expected)
 
@@ -6157,7 +7941,7 @@ def test_parse_common_organization_path():
 
 
 def test_common_project_path():
-    project = "winkle"
+    project = "squid"
     expected = "projects/{project}".format(
         project=project,
     )
@@ -6167,7 +7951,7 @@ def test_common_project_path():
 
 def test_parse_common_project_path():
     expected = {
-        "project": "nautilus",
+        "project": "clam",
     }
     path = EngineServiceClient.common_project_path(**expected)
 
@@ -6177,8 +7961,8 @@ def test_parse_common_project_path():
 
 
 def test_common_location_path():
-    project = "scallop"
-    location = "abalone"
+    project = "whelk"
+    location = "octopus"
     expected = "projects/{project}/locations/{location}".format(
         project=project,
         location=location,
@@ -6189,8 +7973,8 @@ def test_common_location_path():
 
 def test_parse_common_location_path():
     expected = {
-        "project": "squid",
-        "location": "clam",
+        "project": "oyster",
+        "location": "nudibranch",
     }
     path = EngineServiceClient.common_location_path(**expected)
 

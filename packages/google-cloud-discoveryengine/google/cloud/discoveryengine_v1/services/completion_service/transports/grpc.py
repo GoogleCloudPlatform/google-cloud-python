@@ -379,6 +379,36 @@ class CompletionServiceGrpcTransport(CompletionServiceTransport):
         return self._stubs["complete_query"]
 
     @property
+    def advanced_complete_query(
+        self,
+    ) -> Callable[
+        [completion_service.AdvancedCompleteQueryRequest],
+        completion_service.AdvancedCompleteQueryResponse,
+    ]:
+        r"""Return a callable for the advanced complete query method over gRPC.
+
+        Completes the user input with advanced keyword
+        suggestions.
+
+        Returns:
+            Callable[[~.AdvancedCompleteQueryRequest],
+                    ~.AdvancedCompleteQueryResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "advanced_complete_query" not in self._stubs:
+            self._stubs["advanced_complete_query"] = self._logged_channel.unary_unary(
+                "/google.cloud.discoveryengine.v1.CompletionService/AdvancedCompleteQuery",
+                request_serializer=completion_service.AdvancedCompleteQueryRequest.serialize,
+                response_deserializer=completion_service.AdvancedCompleteQueryResponse.deserialize,
+            )
+        return self._stubs["advanced_complete_query"]
+
+    @property
     def import_suggestion_deny_list_entries(
         self,
     ) -> Callable[

@@ -824,8 +824,9 @@ class ImportUserEventsMetadata(proto.Message):
         create_time (google.protobuf.timestamp_pb2.Timestamp):
             Operation create time.
         update_time (google.protobuf.timestamp_pb2.Timestamp):
-            Operation last update time. If the operation
-            is done, this is also the finish time.
+            Output only. Operation last update time. If
+            the operation is done, this is also the finish
+            time.
         success_count (int):
             Count of entries that were processed
             successfully.
@@ -1031,7 +1032,6 @@ class ImportDocumentsRequest(proto.Message):
               INVALID_ARGUMENT error is thrown.
             - [SpannerSource][google.cloud.discoveryengine.v1.SpannerSource].
             - [CloudSqlSource][google.cloud.discoveryengine.v1.CloudSqlSource].
-            - [FirestoreSource][google.cloud.discoveryengine.v1.FirestoreSource].
             - [BigtableSource][google.cloud.discoveryengine.v1.BigtableSource].
         force_refresh_content (bool):
             Optional. Whether to force refresh the unstructured content
@@ -1056,7 +1056,11 @@ class ImportDocumentsRequest(proto.Message):
                 Calculates diff and replaces the entire
                 document dataset. Existing documents may be
                 deleted if they are not present in the source
-                location.
+                location. When using this mode, there won't be
+                any downtime on the dataset targeted. Any
+                document that should remain unchanged or that
+                should be updated will continue serving while
+                the operation is running.
         """
 
         RECONCILIATION_MODE_UNSPECIFIED = 0

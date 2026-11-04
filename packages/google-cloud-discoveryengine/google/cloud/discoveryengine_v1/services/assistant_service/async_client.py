@@ -46,10 +46,18 @@ try:
 except AttributeError:  # pragma: NO COVER
     OptionalRetry = Union[retries.AsyncRetry, object, None]  # type: ignore
 
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
+import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 
-from google.cloud.discoveryengine_v1.types import assist_answer, assistant_service
+from google.cloud.discoveryengine_v1.services.assistant_service import pagers
+from google.cloud.discoveryengine_v1.types import (
+    assist_answer,
+    assistant,
+    assistant_service,
+)
+from google.cloud.discoveryengine_v1.types import assistant as gcd_assistant
 
 from .client import AssistantServiceClient
 from .transports.base import DEFAULT_CLIENT_INFO, AssistantServiceTransport
@@ -85,12 +93,20 @@ class AssistantServiceAsyncClient:
     )
     assistant_path = staticmethod(AssistantServiceClient.assistant_path)
     parse_assistant_path = staticmethod(AssistantServiceClient.parse_assistant_path)
+    content_policy_path = staticmethod(AssistantServiceClient.content_policy_path)
+    parse_content_policy_path = staticmethod(
+        AssistantServiceClient.parse_content_policy_path
+    )
     data_store_path = staticmethod(AssistantServiceClient.data_store_path)
     parse_data_store_path = staticmethod(AssistantServiceClient.parse_data_store_path)
     document_path = staticmethod(AssistantServiceClient.document_path)
     parse_document_path = staticmethod(AssistantServiceClient.parse_document_path)
+    engine_path = staticmethod(AssistantServiceClient.engine_path)
+    parse_engine_path = staticmethod(AssistantServiceClient.parse_engine_path)
     session_path = staticmethod(AssistantServiceClient.session_path)
     parse_session_path = staticmethod(AssistantServiceClient.parse_session_path)
+    template_path = staticmethod(AssistantServiceClient.template_path)
+    parse_template_path = staticmethod(AssistantServiceClient.parse_template_path)
     common_billing_account_path = staticmethod(
         AssistantServiceClient.common_billing_account_path
     )
@@ -392,6 +408,592 @@ class AssistantServiceAsyncClient:
         # Send the request.
         response = rpc(
             request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def create_assistant(
+        self,
+        request: Optional[Union[assistant_service.CreateAssistantRequest, dict]] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> assistant.Assistant:
+        r"""Creates an
+        [Assistant][google.cloud.discoveryengine.v1.Assistant].
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import discoveryengine_v1
+
+            async def sample_create_assistant():
+                # Create a client
+                client = discoveryengine_v1.AssistantServiceAsyncClient()
+
+                # Initialize request argument(s)
+                assistant = discoveryengine_v1.Assistant()
+                assistant.display_name = "display_name_value"
+
+                request = discoveryengine_v1.CreateAssistantRequest(
+                    parent="parent_value",
+                    assistant=assistant,
+                    assistant_id="assistant_id_value",
+                )
+
+                # Make the request
+                response = await client.create_assistant(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.discoveryengine_v1.types.CreateAssistantRequest, dict]]):
+                The request object. Request for the
+                [AssistantService.CreateAssistant][google.cloud.discoveryengine.v1.AssistantService.CreateAssistant]
+                method.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.discoveryengine_v1.types.Assistant:
+                Discovery Engine Assistant resource.
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, assistant_service.CreateAssistantRequest):
+            request = assistant_service.CreateAssistantRequest(request)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.create_assistant
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def delete_assistant(
+        self,
+        request: Optional[Union[assistant_service.DeleteAssistantRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> None:
+        r"""Deletes an
+        [Assistant][google.cloud.discoveryengine.v1.Assistant].
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import discoveryengine_v1
+
+            async def sample_delete_assistant():
+                # Create a client
+                client = discoveryengine_v1.AssistantServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = discoveryengine_v1.DeleteAssistantRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                await client.delete_assistant(request=request)
+
+        Args:
+            request (Optional[Union[google.cloud.discoveryengine_v1.types.DeleteAssistantRequest, dict]]):
+                The request object. Request message for the
+                [AssistantService.DeleteAssistant][google.cloud.discoveryengine.v1.AssistantService.DeleteAssistant]
+                method.
+            name (:class:`str`):
+                Required. Resource name of
+                [Assistant][google.cloud.discoveryengine.v1.Assistant].
+                Format:
+                ``projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}``
+
+                If the caller does not have permission to delete the
+                [Assistant][google.cloud.discoveryengine.v1.Assistant],
+                regardless of whether or not it exists, a
+                PERMISSION_DENIED error is returned.
+
+                If the
+                [Assistant][google.cloud.discoveryengine.v1.Assistant]
+                to delete does not exist, a NOT_FOUND error is returned.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, assistant_service.DeleteAssistantRequest):
+            request = assistant_service.DeleteAssistantRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.delete_assistant
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+    async def update_assistant(
+        self,
+        request: Optional[Union[assistant_service.UpdateAssistantRequest, dict]] = None,
+        *,
+        assistant: Optional[gcd_assistant.Assistant] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> gcd_assistant.Assistant:
+        r"""Updates an
+        [Assistant][google.cloud.discoveryengine.v1.Assistant]
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import discoveryengine_v1
+
+            async def sample_update_assistant():
+                # Create a client
+                client = discoveryengine_v1.AssistantServiceAsyncClient()
+
+                # Initialize request argument(s)
+                assistant = discoveryengine_v1.Assistant()
+                assistant.display_name = "display_name_value"
+
+                request = discoveryengine_v1.UpdateAssistantRequest(
+                    assistant=assistant,
+                )
+
+                # Make the request
+                response = await client.update_assistant(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.discoveryengine_v1.types.UpdateAssistantRequest, dict]]):
+                The request object. Request message for the
+                [AssistantService.UpdateAssistant][google.cloud.discoveryengine.v1.AssistantService.UpdateAssistant]
+                method.
+            assistant (:class:`google.cloud.discoveryengine_v1.types.Assistant`):
+                Required. The
+                [Assistant][google.cloud.discoveryengine.v1.Assistant]
+                to update.
+
+                The
+                [Assistant][google.cloud.discoveryengine.v1.Assistant]'s
+                ``name`` field is used to identify the
+                [Assistant][google.cloud.discoveryengine.v1.Assistant]
+                to update. Format:
+                ``projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}``
+
+                If the caller does not have permission to update the
+                [Assistant][google.cloud.discoveryengine.v1.Assistant],
+                regardless of whether or not it exists, a
+                PERMISSION_DENIED error is returned.
+
+                If the
+                [Assistant][google.cloud.discoveryengine.v1.Assistant]
+                to update does not exist, a NOT_FOUND error is returned.
+
+                This corresponds to the ``assistant`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                The list of fields to update.
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.discoveryengine_v1.types.Assistant:
+                Discovery Engine Assistant resource.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [assistant, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, assistant_service.UpdateAssistantRequest):
+            request = assistant_service.UpdateAssistantRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if assistant is not None:
+            request.assistant = assistant
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_assistant
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("assistant.name", request.assistant.name),)
+            ),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def get_assistant(
+        self,
+        request: Optional[Union[assistant_service.GetAssistantRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> assistant.Assistant:
+        r"""Gets an [Assistant][google.cloud.discoveryengine.v1.Assistant].
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import discoveryengine_v1
+
+            async def sample_get_assistant():
+                # Create a client
+                client = discoveryengine_v1.AssistantServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = discoveryengine_v1.GetAssistantRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = await client.get_assistant(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.discoveryengine_v1.types.GetAssistantRequest, dict]]):
+                The request object. Request message for the
+                [AssistantService.GetAssistant][google.cloud.discoveryengine.v1.AssistantService.GetAssistant]
+                method.
+            name (:class:`str`):
+                Required. Resource name of
+                [Assistant][google.cloud.discoveryengine.v1.Assistant].
+                Format:
+                ``projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}``
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.discoveryengine_v1.types.Assistant:
+                Discovery Engine Assistant resource.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, assistant_service.GetAssistantRequest):
+            request = assistant_service.GetAssistantRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.get_assistant
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def list_assistants(
+        self,
+        request: Optional[Union[assistant_service.ListAssistantsRequest, dict]] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListAssistantsAsyncPager:
+        r"""Lists all
+        [Assistant][google.cloud.discoveryengine.v1.Assistant]s under an
+        [Engine][google.cloud.discoveryengine.v1.Engine].
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import discoveryengine_v1
+
+            async def sample_list_assistants():
+                # Create a client
+                client = discoveryengine_v1.AssistantServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = discoveryengine_v1.ListAssistantsRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_assistants(request=request)
+
+                # Handle the response
+                async for response in page_result:
+                    print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.discoveryengine_v1.types.ListAssistantsRequest, dict]]):
+                The request object. Request message for the
+                [AssistantService.ListAssistants][google.cloud.discoveryengine.v1.AssistantService.ListAssistants]
+                method.
+            parent (:class:`str`):
+                Required. The parent resource name. Format:
+                ``projects/{project}/locations/{location}/collections/{collection}/engines/{engine}``
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.discoveryengine_v1.services.assistant_service.pagers.ListAssistantsAsyncPager:
+                Response message for the
+                   [AssistantService.ListAssistants][google.cloud.discoveryengine.v1.AssistantService.ListAssistants]
+                   method.
+
+                Iterating over this object will yield results and
+                resolve additional pages automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, assistant_service.ListAssistantsRequest):
+            request = assistant_service.ListAssistantsRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.list_assistants
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__aiter__` convenience method.
+        response = pagers.ListAssistantsAsyncPager(
+            method=rpc,
+            request=request,
+            response=response,
             retry=retry,
             timeout=timeout,
             metadata=metadata,

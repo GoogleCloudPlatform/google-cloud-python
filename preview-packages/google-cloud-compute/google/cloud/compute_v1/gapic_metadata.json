@@ -765,6 +765,101 @@
         }
       }
     },
+    "FolderGlobalVmExtensionPolicies": {
+      "apiVersion": "2026-10-01-preview",
+      "clients": {
+        "rest": {
+          "libraryClient": "FolderGlobalVmExtensionPoliciesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetVmExtension": {
+              "methods": [
+                "get_vm_extension"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListVmExtensions": {
+              "methods": [
+                "list_vm_extensions"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "FolderZoneVmExtensionPolicies": {
+      "apiVersion": "2026-10-01-preview",
+      "clients": {
+        "rest": {
+          "libraryClient": "FolderZoneVmExtensionPoliciesClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetVmExtension": {
+              "methods": [
+                "get_vm_extension"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListVmExtensions": {
+              "methods": [
+                "list_vm_extensions"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
     "ForwardingRules": {
       "apiVersion": "2026-10-01-preview",
       "clients": {
@@ -899,6 +994,26 @@
             "TestIamPermissions": {
               "methods": [
                 "test_iam_permissions"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "GlobalFolderOperations": {
+      "apiVersion": "2026-10-01-preview",
+      "clients": {
+        "rest": {
+          "libraryClient": "GlobalFolderOperationsClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
               ]
             }
           }
@@ -1131,6 +1246,11 @@
                 "get"
               ]
             },
+            "GetVmExtension": {
+              "methods": [
+                "get_vm_extension"
+              ]
+            },
             "Insert": {
               "methods": [
                 "insert"
@@ -1139,6 +1259,11 @@
             "List": {
               "methods": [
                 "list"
+              ]
+            },
+            "ListVmExtensions": {
+              "methods": [
+                "list_vm_extensions"
               ]
             },
             "Update": {
@@ -2806,6 +2931,11 @@
                 "switch_to_custom_mode"
               ]
             },
+            "UpdateNetworkProfile": {
+              "methods": [
+                "update_network_profile"
+              ]
+            },
             "UpdatePeering": {
               "methods": [
                 "update_peering"
@@ -2975,6 +3105,56 @@
         }
       }
     },
+    "OrganizationGlobalVmExtensionPolicies": {
+      "apiVersion": "2026-10-01-preview",
+      "clients": {
+        "rest": {
+          "libraryClient": "OrganizationGlobalVmExtensionPoliciesClient",
+          "rpcs": {
+            "AggregatedList": {
+              "methods": [
+                "aggregated_list"
+              ]
+            },
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetVmExtension": {
+              "methods": [
+                "get_vm_extension"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListVmExtensions": {
+              "methods": [
+                "list_vm_extensions"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
+              ]
+            }
+          }
+        }
+      }
+    },
     "OrganizationSecurityPolicies": {
       "apiVersion": "2026-10-01-preview",
       "clients": {
@@ -3059,6 +3239,51 @@
             "RemoveRule": {
               "methods": [
                 "remove_rule"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "OrganizationZoneVmExtensionPolicies": {
+      "apiVersion": "2026-10-01-preview",
+      "clients": {
+        "rest": {
+          "libraryClient": "OrganizationZoneVmExtensionPoliciesClient",
+          "rpcs": {
+            "Delete": {
+              "methods": [
+                "delete"
+              ]
+            },
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "GetVmExtension": {
+              "methods": [
+                "get_vm_extension"
+              ]
+            },
+            "Insert": {
+              "methods": [
+                "insert"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            },
+            "ListVmExtensions": {
+              "methods": [
+                "list_vm_extensions"
+              ]
+            },
+            "Update": {
+              "methods": [
+                "update"
               ]
             }
           }
@@ -4581,6 +4806,11 @@
                 "delete"
               ]
             },
+            "FetchEncryptionKey": {
+              "methods": [
+                "fetch_encryption_key"
+              ]
+            },
             "Get": {
               "methods": [
                 "get"
@@ -5541,6 +5771,11 @@
                 "delete"
               ]
             },
+            "FetchEncryptionKey": {
+              "methods": [
+                "fetch_encryption_key"
+              ]
+            },
             "Get": {
               "methods": [
                 "get"
@@ -6360,6 +6595,26 @@
         }
       }
     },
+    "ZoneFolderOperations": {
+      "apiVersion": "2026-10-01-preview",
+      "clients": {
+        "rest": {
+          "libraryClient": "ZoneFolderOperationsClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
     "ZoneOperations": {
       "apiVersion": "2026-10-01-preview",
       "clients": {
@@ -6390,6 +6645,26 @@
         }
       }
     },
+    "ZoneOrganizationOperations": {
+      "apiVersion": "2026-10-01-preview",
+      "clients": {
+        "rest": {
+          "libraryClient": "ZoneOrganizationOperationsClient",
+          "rpcs": {
+            "Get": {
+              "methods": [
+                "get"
+              ]
+            },
+            "List": {
+              "methods": [
+                "list"
+              ]
+            }
+          }
+        }
+      }
+    },
     "ZoneVmExtensionPolicies": {
       "apiVersion": "2026-10-01-preview",
       "clients": {
@@ -6406,6 +6681,11 @@
                 "get"
               ]
             },
+            "GetVmExtension": {
+              "methods": [
+                "get_vm_extension"
+              ]
+            },
             "Insert": {
               "methods": [
                 "insert"
@@ -6414,6 +6694,11 @@
             "List": {
               "methods": [
                 "list"
+              ]
+            },
+            "ListVmExtensions": {
+              "methods": [
+                "list_vm_extensions"
               ]
             },
             "Update": {

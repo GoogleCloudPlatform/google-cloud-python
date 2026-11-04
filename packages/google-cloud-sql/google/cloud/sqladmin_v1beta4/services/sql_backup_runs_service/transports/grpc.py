@@ -112,6 +112,8 @@ class _LoggingClientInterceptor(grpc.UnaryUnaryClientInterceptor):  # pragma: NO
 class SqlBackupRunsServiceGrpcTransport(SqlBackupRunsServiceTransport):
     """gRPC backend transport for SqlBackupRunsService.
 
+    Service for managing database backups.
+
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
     and call it.

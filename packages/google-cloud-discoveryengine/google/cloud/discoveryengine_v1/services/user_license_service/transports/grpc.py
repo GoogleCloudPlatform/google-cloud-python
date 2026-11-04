@@ -374,6 +374,40 @@ class UserLicenseServiceGrpcTransport(UserLicenseServiceTransport):
         return self._stubs["list_user_licenses"]
 
     @property
+    def list_license_configs_usage_stats(
+        self,
+    ) -> Callable[
+        [user_license_service.ListLicenseConfigsUsageStatsRequest],
+        user_license_service.ListLicenseConfigsUsageStatsResponse,
+    ]:
+        r"""Return a callable for the list license configs usage
+        stats method over gRPC.
+
+        Lists all the
+        [LicenseConfigUsageStats][google.cloud.discoveryengine.v1.LicenseConfigUsageStats]s
+        associated with the project.
+
+        Returns:
+            Callable[[~.ListLicenseConfigsUsageStatsRequest],
+                    ~.ListLicenseConfigsUsageStatsResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_license_configs_usage_stats" not in self._stubs:
+            self._stubs["list_license_configs_usage_stats"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.discoveryengine.v1.UserLicenseService/ListLicenseConfigsUsageStats",
+                    request_serializer=user_license_service.ListLicenseConfigsUsageStatsRequest.serialize,
+                    response_deserializer=user_license_service.ListLicenseConfigsUsageStatsResponse.deserialize,
+                )
+            )
+        return self._stubs["list_license_configs_usage_stats"]
+
+    @property
     def batch_update_user_licenses(
         self,
     ) -> Callable[

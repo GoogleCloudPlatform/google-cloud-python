@@ -123,7 +123,9 @@ class SqlBackupsServiceClientMeta(type):
 
 
 class SqlBackupsServiceClient(metaclass=SqlBackupsServiceClientMeta):
-    """"""
+    """Service for managing database backups for Cloud SQL
+    instances.
+    """
 
     # Note: DEFAULT_ENDPOINT is deprecated. Use _DEFAULT_ENDPOINT_TEMPLATE instead.
     DEFAULT_ENDPOINT = "sqladmin.googleapis.com"

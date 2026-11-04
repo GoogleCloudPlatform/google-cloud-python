@@ -17,6 +17,7 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.protobuf.struct_pb2 as struct_pb2  # type: ignore
 import google.type.date_pb2 as date_pb2  # type: ignore
 import google.type.latlng_pb2 as latlng_pb2  # type: ignore
 import google.type.money_pb2 as money_pb2  # type: ignore
@@ -317,6 +318,9 @@ class BuildingInsights(proto.Message):
             detection_status (google.maps.solar_v1.types.BuildingInsights.DetectedArrays.DetectionStatus):
                 Indicates the detection status of solar
                 arrays for this building.
+            arrays (MutableSequence[google.maps.solar_v1.types.BuildingInsights.DetectedArrays.SolarArray]):
+                A list of solar arrays detected on the
+                building.
             latest_capture_date (google.type.date_pb2.Date):
                 The date indicating when the latest solar
                 array data was captured.
@@ -344,11 +348,44 @@ class BuildingInsights(proto.Message):
             DETECTION_STATUS_ARRAYS_DETECTED = 2
             DETECTION_STATUS_NO_ARRAYS_DETECTED = 3
 
+        class SolarArray(proto.Message):
+            r"""Details of a single detected solar array.
+
+            Attributes:
+                polygon_geojson (google.protobuf.struct_pb2.Struct):
+                    A GeoJSON representation of the building area where solar
+                    panels were detected.
+
+                    The GeoJSON data must be in RFC 7946 format and represent a
+                    Polygon for a single contiguous area.
+
+                    The Polygon will be represented by several loops when it
+                    contains holes.
+
+                    Example:
+
+                    { "type": "Polygon", "coordinates": [ [ [-1, -1], [-1, 0],
+                    [0, 0], [-1, -1] ] ] }
+            """
+
+            polygon_geojson: struct_pb2.Struct = proto.Field(
+                proto.MESSAGE,
+                number=3,
+                message=struct_pb2.Struct,
+            )
+
         detection_status: "BuildingInsights.DetectedArrays.DetectionStatus" = (
             proto.Field(
                 proto.ENUM,
                 number=1,
                 enum="BuildingInsights.DetectedArrays.DetectionStatus",
+            )
+        )
+        arrays: MutableSequence["BuildingInsights.DetectedArrays.SolarArray"] = (
+            proto.RepeatedField(
+                proto.MESSAGE,
+                number=2,
+                message="BuildingInsights.DetectedArrays.SolarArray",
             )
         )
         latest_capture_date: date_pb2.Date = proto.Field(

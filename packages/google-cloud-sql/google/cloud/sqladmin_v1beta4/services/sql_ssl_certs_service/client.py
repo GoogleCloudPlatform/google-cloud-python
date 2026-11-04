@@ -116,7 +116,7 @@ class SqlSslCertsServiceClientMeta(type):
 
 
 class SqlSslCertsServiceClient(metaclass=SqlSslCertsServiceClientMeta):
-    """"""
+    """Service to manage SSL certs for Cloud SQL instances."""
 
     # Note: DEFAULT_ENDPOINT is deprecated. Use _DEFAULT_ENDPOINT_TEMPLATE instead.
     DEFAULT_ENDPOINT = "sqladmin.googleapis.com"

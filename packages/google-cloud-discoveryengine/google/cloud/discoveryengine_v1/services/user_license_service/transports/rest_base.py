@@ -106,6 +106,22 @@ class _BaseUserLicenseServiceRestTransport(UserLicenseServiceTransport):
             ]
             return http_options
 
+    class _BaseListLicenseConfigsUsageStats:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{parent=projects/*/locations/*/userStores/*}/licenseConfigsUsageStats",
+                },
+            ]
+            return http_options
+
     class _BaseListUserLicenses:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -190,6 +206,10 @@ class _BaseUserLicenseServiceRestTransport(UserLicenseServiceTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{name=projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine/targetSites/operations/*}",
+                },
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/collections/*/engines/*/assistants/*/agents/*/operations/*}",
                 },
                 {
                     "method": "get",

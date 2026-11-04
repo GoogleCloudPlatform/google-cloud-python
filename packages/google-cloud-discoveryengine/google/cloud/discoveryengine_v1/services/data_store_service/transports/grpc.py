@@ -20,6 +20,8 @@ import warnings
 from typing import Callable, Dict, Optional, Sequence, Tuple, Union
 
 import google.auth  # type: ignore
+import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
+import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
@@ -495,6 +497,74 @@ class DataStoreServiceGrpcTransport(DataStoreServiceTransport):
                 response_deserializer=gcd_data_store.DataStore.deserialize,
             )
         return self._stubs["update_data_store"]
+
+    @property
+    def get_iam_policy(
+        self,
+    ) -> Callable[[iam_policy_pb2.GetIamPolicyRequest], policy_pb2.Policy]:
+        r"""Return a callable for the get iam policy method over gRPC.
+
+        Gets the IAM access control policy for a
+        [DataStore][google.cloud.discoveryengine.v1.DataStore]. A
+        ``NOT_FOUND`` error is returned if the resource does not exist.
+        An empty policy is returned if the resource exists but does not
+        have a policy set on it.
+
+        Returns:
+            Callable[[~.GetIamPolicyRequest],
+                    ~.Policy]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_iam_policy" not in self._stubs:
+            self._stubs["get_iam_policy"] = self._logged_channel.unary_unary(
+                "/google.cloud.discoveryengine.v1.DataStoreService/GetIamPolicy",
+                request_serializer=iam_policy_pb2.GetIamPolicyRequest.SerializeToString,
+                response_deserializer=policy_pb2.Policy.FromString,
+            )
+        return self._stubs["get_iam_policy"]
+
+    @property
+    def set_iam_policy(
+        self,
+    ) -> Callable[[iam_policy_pb2.SetIamPolicyRequest], policy_pb2.Policy]:
+        r"""Return a callable for the set iam policy method over gRPC.
+
+        Sets the IAM access control policy for a
+        [DataStore][google.cloud.discoveryengine.v1.DataStore]. A
+        ``NOT_FOUND`` error is returned if the resource does not exist.
+
+        **Important:** When setting a policy directly on a DataStore
+        resource, the only recommended roles in the bindings are:
+        ``roles/discoveryengine.admin``
+        ``roles/discoveryengine.agentspaceAdmin``
+        ``roles/discoveryengine.viewer``
+        ``roles/discoveryengine.agentspaceViewer``
+        ``roles/discoveryengine.user``
+        ``roles/discoveryengine.agentspaceUser`` Attempting to grant any
+        other role will result in a warning in logging.
+
+        Returns:
+            Callable[[~.SetIamPolicyRequest],
+                    ~.Policy]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "set_iam_policy" not in self._stubs:
+            self._stubs["set_iam_policy"] = self._logged_channel.unary_unary(
+                "/google.cloud.discoveryengine.v1.DataStoreService/SetIamPolicy",
+                request_serializer=iam_policy_pb2.SetIamPolicyRequest.SerializeToString,
+                response_deserializer=policy_pb2.Policy.FromString,
+            )
+        return self._stubs["set_iam_policy"]
 
     def close(self):
         self._logged_channel.close()

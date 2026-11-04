@@ -54,6 +54,7 @@ from google.apps.chat_v1.types import (
     availability,
     contextual_addon,
     deletion_metadata,
+    elements,
     event_payload,
     group,
     history_state,

@@ -52,11 +52,23 @@ from .availability import (
     MarkAsDoNotDisturbRequest,
     UpdateAvailabilityRequest,
 )
+from .citation import (
+    Citation,
+)
+from .cited_source import (
+    CitedSource,
+)
 from .contextual_addon import (
     ContextualAddOnMarkup,
 )
 from .deletion_metadata import (
     DeletionMetadata,
+)
+from .elements import (
+    Elements,
+)
+from .elements_common import (
+    ElementsImage,
 )
 from .event_payload import (
     MembershipBatchCreatedEventData,
@@ -239,8 +251,12 @@ __all__ = (
     "MarkAsAwayRequest",
     "MarkAsDoNotDisturbRequest",
     "UpdateAvailabilityRequest",
+    "Citation",
+    "CitedSource",
     "ContextualAddOnMarkup",
     "DeletionMetadata",
+    "Elements",
+    "ElementsImage",
     "MembershipBatchCreatedEventData",
     "MembershipBatchDeletedEventData",
     "MembershipBatchUpdatedEventData",

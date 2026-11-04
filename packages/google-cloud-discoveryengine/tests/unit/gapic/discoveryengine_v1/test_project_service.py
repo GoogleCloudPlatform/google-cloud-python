@@ -1050,7 +1050,11 @@ def test_project_service_client_create_channel_credentials_file(
             credentials=file_creds,
             credentials_file=None,
             quota_project_id=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             scopes=None,
             default_host="discoveryengine.googleapis.com",
             ssl_credentials=None,
@@ -2195,7 +2199,11 @@ def test_project_service_base_transport_with_credentials_file():
         load_creds.assert_called_once_with(
             "credentials.json",
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             quota_project_id="octopus",
         )
 
@@ -2221,7 +2229,11 @@ def test_project_service_auth_adc():
         ProjectServiceClient()
         adc.assert_called_once_with(
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             quota_project_id=None,
         )
 
@@ -2241,7 +2253,11 @@ def test_project_service_transport_auth_adc(transport_class):
         transport_class(quota_project_id="octopus", scopes=["1", "2"])
         adc.assert_called_once_with(
             scopes=["1", "2"],
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             quota_project_id="octopus",
         )
 
@@ -2294,7 +2310,11 @@ def test_project_service_transport_create_channel(transport_class, grpc_helpers)
             credentials=creds,
             credentials_file=None,
             quota_project_id="octopus",
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             scopes=["1", "2"],
             default_host="discoveryengine.googleapis.com",
             ssl_credentials=None,
@@ -2590,8 +2610,36 @@ def test_project_service_grpc_lro_async_client():
     assert transport.operations_client is transport.operations_client
 
 
+def test_content_policy_path():
+    organization = "squid"
+    location = "clam"
+    content_policy = "whelk"
+    expected = "organizations/{organization}/locations/{location}/contentPolicies/{content_policy}".format(
+        organization=organization,
+        location=location,
+        content_policy=content_policy,
+    )
+    actual = ProjectServiceClient.content_policy_path(
+        organization, location, content_policy
+    )
+    assert expected == actual
+
+
+def test_parse_content_policy_path():
+    expected = {
+        "organization": "octopus",
+        "location": "oyster",
+        "content_policy": "nudibranch",
+    }
+    path = ProjectServiceClient.content_policy_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = ProjectServiceClient.parse_content_policy_path(path)
+    assert expected == actual
+
+
 def test_project_path():
-    project = "squid"
+    project = "cuttlefish"
     expected = "projects/{project}".format(
         project=project,
     )
@@ -2601,12 +2649,38 @@ def test_project_path():
 
 def test_parse_project_path():
     expected = {
-        "project": "clam",
+        "project": "mussel",
     }
     path = ProjectServiceClient.project_path(**expected)
 
     # Check that the path construction is reversible.
     actual = ProjectServiceClient.parse_project_path(path)
+    assert expected == actual
+
+
+def test_template_path():
+    project = "winkle"
+    location = "nautilus"
+    template = "scallop"
+    expected = "projects/{project}/locations/{location}/templates/{template}".format(
+        project=project,
+        location=location,
+        template=template,
+    )
+    actual = ProjectServiceClient.template_path(project, location, template)
+    assert expected == actual
+
+
+def test_parse_template_path():
+    expected = {
+        "project": "abalone",
+        "location": "squid",
+        "template": "clam",
+    }
+    path = ProjectServiceClient.template_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = ProjectServiceClient.parse_template_path(path)
     assert expected == actual
 
 

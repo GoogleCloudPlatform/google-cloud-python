@@ -4521,7 +4521,11 @@ def test_report_faulty_rest_call_success(request_type):
         "disruption_schedule": "disruption_schedule_value",
         "failure_component": "failure_component_value",
         "fault_reasons": [
-            {"behavior": "behavior_value", "description": "description_value"}
+            {
+                "behavior": "behavior_value",
+                "component_id": "component_id_value",
+                "description": "description_value",
+            }
         ],
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.

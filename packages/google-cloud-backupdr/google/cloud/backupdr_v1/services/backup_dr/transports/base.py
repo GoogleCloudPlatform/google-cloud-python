@@ -33,11 +33,26 @@ from google.oauth2 import service_account  # type: ignore
 
 from google.cloud.backupdr_v1 import gapic_version as package_version
 from google.cloud.backupdr_v1.types import (
+    appliedautoprotectionpolicy,
+    autoprotectionpolicy,
+    autoprotectionpolicybinding,
     backupdr,
     backupplan,
     backupplanassociation,
     backupvault,
+    bindingmatchingresource,
     datasourcereference,
+    restore_template,
+    restore_template_execution,
+    restore_verification_plan,
+    restore_verification_plan_association,
+)
+from google.cloud.backupdr_v1.types import restore_template as gcb_restore_template
+from google.cloud.backupdr_v1.types import (
+    restore_verification_plan as gcb_restore_verification_plan,
+)
+from google.cloud.backupdr_v1.types import (
+    restore_verification_plan_association as gcb_restore_verification_plan_association,
 )
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
@@ -442,6 +457,277 @@ class BackupDRTransport(abc.ABC):
                     ),
                     deadline=60.0,
                 ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.create_auto_protection_policy: gapic_v1.method.wrap_method(
+                self.create_auto_protection_policy,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_auto_protection_policies: gapic_v1.method.wrap_method(
+                self.list_auto_protection_policies,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_auto_protection_policy: gapic_v1.method.wrap_method(
+                self.get_auto_protection_policy,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.update_auto_protection_policy: gapic_v1.method.wrap_method(
+                self.update_auto_protection_policy,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.delete_auto_protection_policy: gapic_v1.method.wrap_method(
+                self.delete_auto_protection_policy,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.create_auto_protection_policy_binding: gapic_v1.method.wrap_method(
+                self.create_auto_protection_policy_binding,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_auto_protection_policy_binding: gapic_v1.method.wrap_method(
+                self.get_auto_protection_policy_binding,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_auto_protection_policy_bindings: gapic_v1.method.wrap_method(
+                self.list_auto_protection_policy_bindings,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_applied_auto_protection_policies: gapic_v1.method.wrap_method(
+                self.list_applied_auto_protection_policies,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.initiate_delete_auto_protection_policy_binding: gapic_v1.method.wrap_method(
+                self.initiate_delete_auto_protection_policy_binding,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_binding_matching_resources: gapic_v1.method.wrap_method(
+                self.list_binding_matching_resources,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.create_restore_template: gapic_v1.method.wrap_method(
+                self.create_restore_template,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_restore_template: gapic_v1.method.wrap_method(
+                self.get_restore_template,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_restore_templates: gapic_v1.method.wrap_method(
+                self.list_restore_templates,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.update_restore_template: gapic_v1.method.wrap_method(
+                self.update_restore_template,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.delete_restore_template: gapic_v1.method.wrap_method(
+                self.delete_restore_template,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.run_restore_template: gapic_v1.method.wrap_method(
+                self.run_restore_template,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_restore_template_execution: gapic_v1.method.wrap_method(
+                self.get_restore_template_execution,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_restore_template_executions: gapic_v1.method.wrap_method(
+                self.list_restore_template_executions,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.trigger_restore_cleanup: gapic_v1.method.wrap_method(
+                self.trigger_restore_cleanup,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.create_restore_verification_plan: gapic_v1.method.wrap_method(
+                self.create_restore_verification_plan,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.create_restore_verification_plan_association: gapic_v1.method.wrap_method(
+                self.create_restore_verification_plan_association,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_restore_verification_plan_association: gapic_v1.method.wrap_method(
+                self.get_restore_verification_plan_association,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_restore_verification_plan_associations: gapic_v1.method.wrap_method(
+                self.list_restore_verification_plan_associations,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.delete_restore_verification_plan_association: gapic_v1.method.wrap_method(
+                self.delete_restore_verification_plan_association,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.trigger_restore_verification: gapic_v1.method.wrap_method(
+                self.trigger_restore_verification,
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.get_restore_verification_plan: gapic_v1.method.wrap_method(
+                self.get_restore_verification_plan,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.list_restore_verification_plans: gapic_v1.method.wrap_method(
+                self.list_restore_verification_plans,
+                default_retry=retries.Retry(
+                    initial=1.0,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
+                client_info=client_info,
+            ),
+            self.delete_restore_verification_plan: gapic_v1.method.wrap_method(
+                self.delete_restore_verification_plan,
                 default_timeout=60.0,
                 client_info=client_info,
             ),
@@ -880,6 +1166,325 @@ class BackupDRTransport(abc.ABC):
         self,
     ) -> Callable[
         [backupdr.InitializeServiceRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_auto_protection_policy(
+        self,
+    ) -> Callable[
+        [autoprotectionpolicy.CreateAutoProtectionPolicyRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_auto_protection_policies(
+        self,
+    ) -> Callable[
+        [autoprotectionpolicy.ListAutoProtectionPoliciesRequest],
+        Union[
+            autoprotectionpolicy.ListAutoProtectionPoliciesResponse,
+            Awaitable[autoprotectionpolicy.ListAutoProtectionPoliciesResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_auto_protection_policy(
+        self,
+    ) -> Callable[
+        [autoprotectionpolicy.GetAutoProtectionPolicyRequest],
+        Union[
+            autoprotectionpolicy.AutoProtectionPolicy,
+            Awaitable[autoprotectionpolicy.AutoProtectionPolicy],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_auto_protection_policy(
+        self,
+    ) -> Callable[
+        [autoprotectionpolicy.UpdateAutoProtectionPolicyRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_auto_protection_policy(
+        self,
+    ) -> Callable[
+        [autoprotectionpolicy.DeleteAutoProtectionPolicyRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_auto_protection_policy_binding(
+        self,
+    ) -> Callable[
+        [autoprotectionpolicybinding.CreateAutoProtectionPolicyBindingRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_auto_protection_policy_binding(
+        self,
+    ) -> Callable[
+        [autoprotectionpolicybinding.GetAutoProtectionPolicyBindingRequest],
+        Union[
+            autoprotectionpolicybinding.AutoProtectionPolicyBinding,
+            Awaitable[autoprotectionpolicybinding.AutoProtectionPolicyBinding],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_auto_protection_policy_bindings(
+        self,
+    ) -> Callable[
+        [autoprotectionpolicybinding.ListAutoProtectionPolicyBindingsRequest],
+        Union[
+            autoprotectionpolicybinding.ListAutoProtectionPolicyBindingsResponse,
+            Awaitable[
+                autoprotectionpolicybinding.ListAutoProtectionPolicyBindingsResponse
+            ],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_applied_auto_protection_policies(
+        self,
+    ) -> Callable[
+        [appliedautoprotectionpolicy.ListAppliedAutoProtectionPoliciesRequest],
+        Union[
+            appliedautoprotectionpolicy.ListAppliedAutoProtectionPoliciesResponse,
+            Awaitable[
+                appliedautoprotectionpolicy.ListAppliedAutoProtectionPoliciesResponse
+            ],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def initiate_delete_auto_protection_policy_binding(
+        self,
+    ) -> Callable[
+        [autoprotectionpolicybinding.InitiateDeleteAutoProtectionPolicyBindingRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_binding_matching_resources(
+        self,
+    ) -> Callable[
+        [bindingmatchingresource.ListBindingMatchingResourcesRequest],
+        Union[
+            bindingmatchingresource.ListBindingMatchingResourcesResponse,
+            Awaitable[bindingmatchingresource.ListBindingMatchingResourcesResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_restore_template(
+        self,
+    ) -> Callable[
+        [gcb_restore_template.CreateRestoreTemplateRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_restore_template(
+        self,
+    ) -> Callable[
+        [restore_template.GetRestoreTemplateRequest],
+        Union[
+            restore_template.RestoreTemplate,
+            Awaitable[restore_template.RestoreTemplate],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_restore_templates(
+        self,
+    ) -> Callable[
+        [restore_template.ListRestoreTemplatesRequest],
+        Union[
+            restore_template.ListRestoreTemplatesResponse,
+            Awaitable[restore_template.ListRestoreTemplatesResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_restore_template(
+        self,
+    ) -> Callable[
+        [gcb_restore_template.UpdateRestoreTemplateRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_restore_template(
+        self,
+    ) -> Callable[
+        [restore_template.DeleteRestoreTemplateRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def run_restore_template(
+        self,
+    ) -> Callable[
+        [restore_template.RunRestoreTemplateRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_restore_template_execution(
+        self,
+    ) -> Callable[
+        [restore_template_execution.GetRestoreTemplateExecutionRequest],
+        Union[
+            restore_template_execution.RestoreTemplateExecution,
+            Awaitable[restore_template_execution.RestoreTemplateExecution],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_restore_template_executions(
+        self,
+    ) -> Callable[
+        [restore_template_execution.ListRestoreTemplateExecutionsRequest],
+        Union[
+            restore_template_execution.ListRestoreTemplateExecutionsResponse,
+            Awaitable[restore_template_execution.ListRestoreTemplateExecutionsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def trigger_restore_cleanup(
+        self,
+    ) -> Callable[
+        [restore_template_execution.TriggerRestoreCleanupRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_restore_verification_plan(
+        self,
+    ) -> Callable[
+        [gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_restore_verification_plan_association(
+        self,
+    ) -> Callable[
+        [
+            gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest
+        ],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_restore_verification_plan_association(
+        self,
+    ) -> Callable[
+        [
+            restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest
+        ],
+        Union[
+            restore_verification_plan_association.RestoreVerificationPlanAssociation,
+            Awaitable[
+                restore_verification_plan_association.RestoreVerificationPlanAssociation
+            ],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_restore_verification_plan_associations(
+        self,
+    ) -> Callable[
+        [
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest
+        ],
+        Union[
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse,
+            Awaitable[
+                restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse
+            ],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_restore_verification_plan_association(
+        self,
+    ) -> Callable[
+        [
+            restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest
+        ],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def trigger_restore_verification(
+        self,
+    ) -> Callable[
+        [restore_verification_plan_association.TriggerRestoreVerificationRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_restore_verification_plan(
+        self,
+    ) -> Callable[
+        [restore_verification_plan.GetRestoreVerificationPlanRequest],
+        Union[
+            restore_verification_plan.RestoreVerificationPlan,
+            Awaitable[restore_verification_plan.RestoreVerificationPlan],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_restore_verification_plans(
+        self,
+    ) -> Callable[
+        [restore_verification_plan.ListRestoreVerificationPlansRequest],
+        Union[
+            restore_verification_plan.ListRestoreVerificationPlansResponse,
+            Awaitable[restore_verification_plan.ListRestoreVerificationPlansResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_restore_verification_plan(
+        self,
+    ) -> Callable[
+        [restore_verification_plan.DeleteRestoreVerificationPlanRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
     ]:
         raise NotImplementedError()

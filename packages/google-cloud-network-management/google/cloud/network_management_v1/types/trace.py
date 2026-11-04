@@ -377,6 +377,11 @@ class Step(proto.Message):
             Connection.
 
             This field is a member of `oneof`_ ``step_info``.
+        datastream_private_connection (google.cloud.network_management_v1.types.PrivateConnectionInfo):
+            Display information of a Datastream Private
+            Connection.
+
+            This field is a member of `oneof`_ ``step_info``.
     """
 
     class State(proto.Enum):
@@ -454,6 +459,9 @@ class Step(proto.Message):
             START_FROM_DMS_PRIVATE_CONNECTION (48):
                 Initial state: packet originating from a DMS
                 Private Connection.
+            START_FROM_DATASTREAM_PRIVATE_CONNECTION (49):
+                Initial state: packet originating from a
+                Datastream Private Connection.
             APPLY_INGRESS_FIREWALL_RULE (4):
                 Config checking state: verify ingress
                 firewall rule.
@@ -567,6 +575,7 @@ class Step(proto.Message):
         START_FROM_PSC_PUBLISHED_SERVICE = 30
         START_FROM_SERVERLESS_NEG = 31
         START_FROM_DMS_PRIVATE_CONNECTION = 48
+        START_FROM_DATASTREAM_PRIVATE_CONNECTION = 49
         APPLY_INGRESS_FIREWALL_RULE = 4
         APPLY_EGRESS_FIREWALL_RULE = 5
         APPLY_ROUTE = 6
@@ -840,6 +849,12 @@ class Step(proto.Message):
     dms_private_connection: "PrivateConnectionInfo" = proto.Field(
         proto.MESSAGE,
         number=43,
+        oneof="step_info",
+        message="PrivateConnectionInfo",
+    )
+    datastream_private_connection: "PrivateConnectionInfo" = proto.Field(
+        proto.MESSAGE,
+        number=44,
         oneof="step_info",
         message="PrivateConnectionInfo",
     )
@@ -2198,6 +2213,9 @@ class DeliverInfo(proto.Message):
             DMS_PRIVATE_CONNECTION (21):
                 Target is a DMS Private Connection. Used only
                 for return traces.
+            DATASTREAM_PRIVATE_CONNECTION (22):
+                Target is a Datastream Private Connection.
+                Used only for return traces.
         """
 
         TARGET_UNSPECIFIED = 0
@@ -2221,6 +2239,7 @@ class DeliverInfo(proto.Message):
         GKE_POD = 19
         CLOUD_RUN_JOB = 20
         DMS_PRIVATE_CONNECTION = 21
+        DATASTREAM_PRIVATE_CONNECTION = 22
 
     class GoogleServiceType(proto.Enum):
         r"""Recognized type of a Google Service.
@@ -2783,6 +2802,9 @@ class DropInfo(proto.Message):
             DROPPED_INSIDE_DMS_PRIVATE_CONNECTION (114):
                 Packet was dropped inside DMS Private
                 Connection.
+            DROPPED_INSIDE_DATASTREAM_PRIVATE_CONNECTION (115):
+                Packet was dropped inside Datastream Private
+                Connection.
             GOOGLE_MANAGED_SERVICE_NO_PEERING (20):
                 Packet was dropped because there is no
                 peering between the originating network and the
@@ -3089,6 +3111,7 @@ class DropInfo(proto.Message):
         DROPPED_INSIDE_GKE_SERVICE = 18
         DROPPED_INSIDE_CLOUD_SQL_SERVICE = 19
         DROPPED_INSIDE_DMS_PRIVATE_CONNECTION = 114
+        DROPPED_INSIDE_DATASTREAM_PRIVATE_CONNECTION = 115
         GOOGLE_MANAGED_SERVICE_NO_PEERING = 20
         GOOGLE_MANAGED_SERVICE_NO_PSC_ENDPOINT = 38
         GKE_PSC_ENDPOINT_MISSING = 36

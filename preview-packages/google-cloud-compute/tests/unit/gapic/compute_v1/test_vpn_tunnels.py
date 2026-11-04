@@ -3570,6 +3570,19 @@ def test_insert_rest_call_success(request_type):
         "peer_external_gateway_interface": 3279,
         "peer_gcp_gateway": "peer_gcp_gateway_value",
         "peer_ip": "peer_ip_value",
+        "pqc_phase1": {
+            "keys": {
+                "ke1s": ["ke1s_value1", "ke1s_value2"],
+                "ke2s": ["ke2s_value1", "ke2s_value2"],
+                "ke3s": ["ke3s_value1", "ke3s_value2"],
+                "ke4s": ["ke4s_value1", "ke4s_value2"],
+                "ke5s": ["ke5s_value1", "ke5s_value2"],
+                "ke6s": ["ke6s_value1", "ke6s_value2"],
+                "ke7s": ["ke7s_value1", "ke7s_value2"],
+            },
+            "mode": "mode_value",
+        },
+        "pqc_phase2": {},
         "region": "region_value",
         "remote_traffic_selector": [
             "remote_traffic_selector_value1",

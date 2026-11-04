@@ -103,6 +103,11 @@ class _BaseProjectServiceRestTransport(ProjectServiceTransport):
                     "uri": "/v1/{name=projects/*}:provision",
                     "body": "*",
                 },
+                {
+                    "method": "post",
+                    "uri": "/v1/{name=projects/*/locations/*}:provision",
+                    "body": "*",
+                },
             ]
             return http_options
 
@@ -174,6 +179,10 @@ class _BaseProjectServiceRestTransport(ProjectServiceTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{name=projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine/targetSites/operations/*}",
+                },
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/collections/*/engines/*/assistants/*/agents/*/operations/*}",
                 },
                 {
                     "method": "get",

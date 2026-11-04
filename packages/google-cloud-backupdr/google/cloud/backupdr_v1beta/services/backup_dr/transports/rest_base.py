@@ -36,6 +36,17 @@ from google.cloud.backupdr_v1beta.types import (
     backupvault,
     bindingmatchingresource,
     datasourcereference,
+    restore_template,
+    restore_template_execution,
+    restore_verification_plan,
+    restore_verification_plan_association,
+)
+from google.cloud.backupdr_v1beta.types import restore_template as gcb_restore_template
+from google.cloud.backupdr_v1beta.types import (
+    restore_verification_plan as gcb_restore_verification_plan,
+)
+from google.cloud.backupdr_v1beta.types import (
+    restore_verification_plan_association as gcb_restore_verification_plan_association,
 )
 
 from .base import DEFAULT_CLIENT_INFO, BackupDRTransport
@@ -217,6 +228,63 @@ class _BaseBackupDRRestTransport(BackupDRTransport):
             ]
             return http_options
 
+    class _BaseCreateRestoreTemplate:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
+            "restoreTemplateId": "",
+        }
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1beta/{parent=projects/*/locations/*}/restoreTemplates",
+                    "body": "restore_template",
+                },
+            ]
+            return http_options
+
+    class _BaseCreateRestoreVerificationPlan:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
+            "restoreVerificationPlanId": "",
+        }
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1beta/{parent=projects/*/locations/*}/restoreVerificationPlans",
+                    "body": "restore_verification_plan",
+                },
+            ]
+            return http_options
+
+    class _BaseCreateRestoreVerificationPlanAssociation:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
+            "restoreVerificationPlanAssociationId": "",
+        }
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1beta/{parent=projects/*/locations/*/restoreVerificationPlans/*}/associations",
+                    "body": "restore_verification_plan_association",
+                },
+            ]
+            return http_options
+
     class _BaseDeleteAutoProtectionPolicy:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -309,6 +377,54 @@ class _BaseBackupDRRestTransport(BackupDRTransport):
                 {
                     "method": "delete",
                     "uri": "/v1beta/{name=projects/*/locations/*/managementServers/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseDeleteRestoreTemplate:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "delete",
+                    "uri": "/v1beta/{name=projects/*/locations/*/restoreTemplates/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseDeleteRestoreVerificationPlan:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "delete",
+                    "uri": "/v1beta/{name=projects/*/locations/*/restoreVerificationPlans/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseDeleteRestoreVerificationPlanAssociation:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "delete",
+                    "uri": "/v1beta/{name=projects/*/locations/*/restoreVerificationPlans/*/associations/*}",
                 },
             ]
             return http_options
@@ -559,6 +675,70 @@ class _BaseBackupDRRestTransport(BackupDRTransport):
             ]
             return http_options
 
+    class _BaseGetRestoreTemplate:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1beta/{name=projects/*/locations/*/restoreTemplates/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseGetRestoreTemplateExecution:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1beta/{name=projects/*/locations/*/restoreTemplates/*/executions/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseGetRestoreVerificationPlan:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1beta/{name=projects/*/locations/*/restoreVerificationPlans/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseGetRestoreVerificationPlanAssociation:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1beta/{name=projects/*/locations/*/restoreVerificationPlans/*/associations/*}",
+                },
+            ]
+            return http_options
+
     class _BaseInitializeService:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -785,6 +965,70 @@ class _BaseBackupDRRestTransport(BackupDRTransport):
             ]
             return http_options
 
+    class _BaseListRestoreTemplateExecutions:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1beta/{parent=projects/*/locations/*/restoreTemplates/*}/executions",
+                },
+            ]
+            return http_options
+
+    class _BaseListRestoreTemplates:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1beta/{parent=projects/*/locations/*}/restoreTemplates",
+                },
+            ]
+            return http_options
+
+    class _BaseListRestoreVerificationPlanAssociations:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1beta/{parent=projects/*/locations/*/restoreVerificationPlans/*}/associations",
+                },
+            ]
+            return http_options
+
+    class _BaseListRestoreVerificationPlans:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1beta/{parent=projects/*/locations/*}/restoreVerificationPlans",
+                },
+            ]
+            return http_options
+
     class _BaseRestoreBackup:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -797,6 +1041,23 @@ class _BaseBackupDRRestTransport(BackupDRTransport):
                 {
                     "method": "post",
                     "uri": "/v1beta/{name=projects/*/locations/*/backupVaults/*/dataSources/*/backups/*}:restore",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseRunRestoreTemplate:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1beta/{name=projects/*/locations/*/restoreTemplates/*}:run",
                     "body": "*",
                 },
             ]
@@ -819,13 +1080,45 @@ class _BaseBackupDRRestTransport(BackupDRTransport):
             ]
             return http_options
 
+    class _BaseTriggerRestoreCleanup:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1beta/{name=projects/*/locations/*/restoreTemplates/*/executions/*}:triggerRestoreCleanup",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseTriggerRestoreVerification:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1beta/{name=projects/*/locations/*/restoreVerificationPlans/*/associations/*}:triggerRestoreVerification",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
     class _BaseUpdateAutoProtectionPolicy:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
-            "updateMask": {},
-        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
 
         @staticmethod
         def _get_http_options():
@@ -929,6 +1222,23 @@ class _BaseBackupDRRestTransport(BackupDRTransport):
                     "method": "patch",
                     "uri": "/v1beta/{data_source.name=projects/*/locations/*/backupVaults/*/dataSources/*}",
                     "body": "data_source",
+                },
+            ]
+            return http_options
+
+    class _BaseUpdateRestoreTemplate:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1beta/{restore_template.name=projects/*/locations/*/restoreTemplates/*}",
+                    "body": "restore_template",
                 },
             ]
             return http_options

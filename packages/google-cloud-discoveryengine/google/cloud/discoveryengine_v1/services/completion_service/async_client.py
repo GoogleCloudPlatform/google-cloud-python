@@ -81,8 +81,16 @@ class CompletionServiceAsyncClient:
     _DEFAULT_ENDPOINT_TEMPLATE = CompletionServiceClient._DEFAULT_ENDPOINT_TEMPLATE
     _DEFAULT_UNIVERSE = CompletionServiceClient._DEFAULT_UNIVERSE
 
+    completion_config_path = staticmethod(
+        CompletionServiceClient.completion_config_path
+    )
+    parse_completion_config_path = staticmethod(
+        CompletionServiceClient.parse_completion_config_path
+    )
     data_store_path = staticmethod(CompletionServiceClient.data_store_path)
     parse_data_store_path = staticmethod(CompletionServiceClient.parse_data_store_path)
+    document_path = staticmethod(CompletionServiceClient.document_path)
+    parse_document_path = staticmethod(CompletionServiceClient.parse_document_path)
     common_billing_account_path = staticmethod(
         CompletionServiceClient.common_billing_account_path
     )
@@ -380,6 +388,100 @@ class CompletionServiceAsyncClient:
         metadata = tuple(metadata) + (
             gapic_v1.routing_header.to_grpc_metadata(
                 (("data_store", request.data_store),)
+            ),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def advanced_complete_query(
+        self,
+        request: Optional[
+            Union[completion_service.AdvancedCompleteQueryRequest, dict]
+        ] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> completion_service.AdvancedCompleteQueryResponse:
+        r"""Completes the user input with advanced keyword
+        suggestions.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import discoveryengine_v1
+
+            async def sample_advanced_complete_query():
+                # Create a client
+                client = discoveryengine_v1.CompletionServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = discoveryengine_v1.AdvancedCompleteQueryRequest(
+                    completion_config="completion_config_value",
+                    query="query_value",
+                )
+
+                # Make the request
+                response = await client.advanced_complete_query(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.discoveryengine_v1.types.AdvancedCompleteQueryRequest, dict]]):
+                The request object. Request message for
+                [CompletionService.AdvancedCompleteQuery][google.cloud.discoveryengine.v1.CompletionService.AdvancedCompleteQuery]
+                method. .
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.discoveryengine_v1.types.AdvancedCompleteQueryResponse:
+                Response message for
+                   [CompletionService.AdvancedCompleteQuery][google.cloud.discoveryengine.v1.CompletionService.AdvancedCompleteQuery]
+                   method.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, completion_service.AdvancedCompleteQueryRequest):
+            request = completion_service.AdvancedCompleteQueryRequest(request)
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.advanced_complete_query
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("completion_config", request.completion_config),)
             ),
         )
 
@@ -793,7 +895,9 @@ class CompletionServiceAsyncClient:
 
                 The result type for the operation will be :class:`google.cloud.discoveryengine_v1.types.PurgeCompletionSuggestionsResponse` Response message for
                    [CompletionService.PurgeCompletionSuggestions][google.cloud.discoveryengine.v1.CompletionService.PurgeCompletionSuggestions]
-                   method.
+                   method. If the long running operation is successfully
+                   done, then this message is returned by the
+                   google.longrunning.Operations.response field.
 
         """
         # Create or coerce a protobuf request object.

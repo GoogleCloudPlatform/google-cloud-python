@@ -39,7 +39,11 @@ DEFAULT_CLIENT_INFO.protobuf_runtime_version = google.protobuf.__version__
 class UserLicenseServiceTransport(abc.ABC):
     """Abstract transport class for UserLicenseService."""
 
-    AUTH_SCOPES = ("https://www.googleapis.com/auth/cloud-platform",)
+    AUTH_SCOPES = (
+        "https://www.googleapis.com/auth/cloud-platform",
+        "https://www.googleapis.com/auth/discoveryengine.readwrite",
+        "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+    )
 
     DEFAULT_HOST: str = "discoveryengine.googleapis.com"
 
@@ -147,6 +151,11 @@ class UserLicenseServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.list_license_configs_usage_stats: gapic_v1.method.wrap_method(
+                self.list_license_configs_usage_stats,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.batch_update_user_licenses: gapic_v1.method.wrap_method(
                 self.batch_update_user_licenses,
                 default_timeout=None,
@@ -191,6 +200,18 @@ class UserLicenseServiceTransport(abc.ABC):
         Union[
             user_license_service.ListUserLicensesResponse,
             Awaitable[user_license_service.ListUserLicensesResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_license_configs_usage_stats(
+        self,
+    ) -> Callable[
+        [user_license_service.ListLicenseConfigsUsageStatsRequest],
+        Union[
+            user_license_service.ListLicenseConfigsUsageStatsResponse,
+            Awaitable[user_license_service.ListLicenseConfigsUsageStatsResponse],
         ],
     ]:
         raise NotImplementedError()

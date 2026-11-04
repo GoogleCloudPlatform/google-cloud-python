@@ -1086,7 +1086,11 @@ def test_user_license_service_client_create_channel_credentials_file(
             credentials=file_creds,
             credentials_file=None,
             quota_project_id=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             scopes=None,
             default_host="discoveryengine.googleapis.com",
             ssl_credentials=None,
@@ -1150,6 +1154,7 @@ def test_list_user_licenses_non_empty_request_with_auto_populated_field():
         parent="parent_value",
         page_token="page_token_value",
         filter="filter_value",
+        order_by="order_by_value",
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
@@ -1166,6 +1171,7 @@ def test_list_user_licenses_non_empty_request_with_auto_populated_field():
             parent="parent_value",
             page_token="page_token_value",
             filter="filter_value",
+            order_by="order_by_value",
         )
         assert args[0] == request_msg
 
@@ -1649,6 +1655,349 @@ async def test_list_user_licenses_async_pages():
 @pytest.mark.parametrize(
     "request_type",
     [
+        user_license_service.ListLicenseConfigsUsageStatsRequest(),
+        {},
+    ],
+)
+def test_list_license_configs_usage_stats(request_type, transport: str = "grpc"):
+    client = UserLicenseServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_license_configs_usage_stats), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = user_license_service.ListLicenseConfigsUsageStatsResponse()
+        response = client.list_license_configs_usage_stats(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = user_license_service.ListLicenseConfigsUsageStatsRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response, user_license_service.ListLicenseConfigsUsageStatsResponse
+    )
+
+
+def test_list_license_configs_usage_stats_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = UserLicenseServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = user_license_service.ListLicenseConfigsUsageStatsRequest(
+        parent="parent_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_license_configs_usage_stats), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.list_license_configs_usage_stats(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = user_license_service.ListLicenseConfigsUsageStatsRequest(
+            parent="parent_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_list_license_configs_usage_stats_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = UserLicenseServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.list_license_configs_usage_stats
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.list_license_configs_usage_stats
+        ] = mock_rpc
+        request = {}
+        client.list_license_configs_usage_stats(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.list_license_configs_usage_stats(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_list_license_configs_usage_stats_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = UserLicenseServiceAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.list_license_configs_usage_stats
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.list_license_configs_usage_stats
+        ] = mock_rpc
+
+        request = {}
+        await client.list_license_configs_usage_stats(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.list_license_configs_usage_stats(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        user_license_service.ListLicenseConfigsUsageStatsRequest(),
+        {},
+    ],
+)
+async def test_list_license_configs_usage_stats_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = UserLicenseServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_license_configs_usage_stats), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            user_license_service.ListLicenseConfigsUsageStatsResponse()
+        )
+        response = await client.list_license_configs_usage_stats(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = user_license_service.ListLicenseConfigsUsageStatsRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response, user_license_service.ListLicenseConfigsUsageStatsResponse
+    )
+
+
+def test_list_license_configs_usage_stats_field_headers():
+    client = UserLicenseServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = user_license_service.ListLicenseConfigsUsageStatsRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_license_configs_usage_stats), "__call__"
+    ) as call:
+        call.return_value = user_license_service.ListLicenseConfigsUsageStatsResponse()
+        client.list_license_configs_usage_stats(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_list_license_configs_usage_stats_field_headers_async():
+    client = UserLicenseServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = user_license_service.ListLicenseConfigsUsageStatsRequest()
+
+    request.parent = "parent_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_license_configs_usage_stats), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            user_license_service.ListLicenseConfigsUsageStatsResponse()
+        )
+        await client.list_license_configs_usage_stats(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "parent=parent_value",
+    ) in kw["metadata"]
+
+
+def test_list_license_configs_usage_stats_flattened():
+    client = UserLicenseServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_license_configs_usage_stats), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = user_license_service.ListLicenseConfigsUsageStatsResponse()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.list_license_configs_usage_stats(
+            parent="parent_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+
+
+def test_list_license_configs_usage_stats_flattened_error():
+    client = UserLicenseServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.list_license_configs_usage_stats(
+            user_license_service.ListLicenseConfigsUsageStatsRequest(),
+            parent="parent_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_list_license_configs_usage_stats_flattened_async():
+    client = UserLicenseServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_license_configs_usage_stats), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = user_license_service.ListLicenseConfigsUsageStatsResponse()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            user_license_service.ListLicenseConfigsUsageStatsResponse()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.list_license_configs_usage_stats(
+            parent="parent_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].parent
+        mock_val = "parent_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_list_license_configs_usage_stats_flattened_error_async():
+    client = UserLicenseServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.list_license_configs_usage_stats(
+            user_license_service.ListLicenseConfigsUsageStatsRequest(),
+            parent="parent_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
         user_license_service.BatchUpdateUserLicensesRequest(),
         {},
     ],
@@ -1982,6 +2331,7 @@ def test_list_user_licenses_rest_required_fields(
     assert not set(unset_fields) - set(
         (
             "filter",
+            "orderBy",
             "pageSize",
             "pageToken",
         )
@@ -2161,6 +2511,186 @@ def test_list_user_licenses_rest_pager(transport: str = "rest"):
         pages = list(client.list_user_licenses(request=sample_request).pages)
         for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
             assert page_.raw_page.next_page_token == token
+
+
+def test_list_license_configs_usage_stats_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = UserLicenseServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.list_license_configs_usage_stats
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.list_license_configs_usage_stats
+        ] = mock_rpc
+
+        request = {}
+        client.list_license_configs_usage_stats(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.list_license_configs_usage_stats(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_list_license_configs_usage_stats_rest_required_fields(
+    request_type=user_license_service.ListLicenseConfigsUsageStatsRequest,
+):
+    transport_class = transports.UserLicenseServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseListLicenseConfigsUsageStats,
+        "_BaseListLicenseConfigsUsageStats__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+
+    client = UserLicenseServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = user_license_service.ListLicenseConfigsUsageStatsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = user_license_service.ListLicenseConfigsUsageStatsResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.list_license_configs_usage_stats(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_list_license_configs_usage_stats_rest_flattened():
+    client = UserLicenseServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = user_license_service.ListLicenseConfigsUsageStatsResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "parent": "projects/sample1/locations/sample2/userStores/sample3"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = user_license_service.ListLicenseConfigsUsageStatsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.list_license_configs_usage_stats(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=projects/*/locations/*/userStores/*}/licenseConfigsUsageStats"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_list_license_configs_usage_stats_rest_flattened_error(transport: str = "rest"):
+    client = UserLicenseServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.list_license_configs_usage_stats(
+            user_license_service.ListLicenseConfigsUsageStatsRequest(),
+            parent="parent_value",
+        )
 
 
 def test_batch_update_user_licenses_rest_use_cached_wrapped_rpc():
@@ -2411,6 +2941,28 @@ def test_list_user_licenses_empty_call_grpc():
 
 # This test is a coverage failsafe to make sure that totally empty calls,
 # i.e. request == None and no flattened fields passed, work.
+def test_list_license_configs_usage_stats_empty_call_grpc():
+    client = UserLicenseServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_license_configs_usage_stats), "__call__"
+    ) as call:
+        call.return_value = user_license_service.ListLicenseConfigsUsageStatsResponse()
+        client.list_license_configs_usage_stats(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = user_license_service.ListLicenseConfigsUsageStatsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
 def test_batch_update_user_licenses_empty_call_grpc():
     client = UserLicenseServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -2470,6 +3022,32 @@ async def test_list_user_licenses_empty_call_grpc_asyncio():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = user_license_service.ListUserLicensesRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_list_license_configs_usage_stats_empty_call_grpc_asyncio():
+    client = UserLicenseServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_license_configs_usage_stats), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            user_license_service.ListLicenseConfigsUsageStatsResponse()
+        )
+        await client.list_license_configs_usage_stats(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = user_license_service.ListLicenseConfigsUsageStatsRequest()
         assert args[0] == request_msg
 
 
@@ -2630,6 +3208,147 @@ def test_list_user_licenses_rest_interceptors(null_interceptor):
         )
 
         client.list_user_licenses(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_list_license_configs_usage_stats_rest_bad_request(
+    request_type=user_license_service.ListLicenseConfigsUsageStatsRequest,
+):
+    client = UserLicenseServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "projects/sample1/locations/sample2/userStores/sample3"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.list_license_configs_usage_stats(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        user_license_service.ListLicenseConfigsUsageStatsRequest,
+        dict,
+    ],
+)
+def test_list_license_configs_usage_stats_rest_call_success(request_type):
+    client = UserLicenseServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "projects/sample1/locations/sample2/userStores/sample3"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = user_license_service.ListLicenseConfigsUsageStatsResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = user_license_service.ListLicenseConfigsUsageStatsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.list_license_configs_usage_stats(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response, user_license_service.ListLicenseConfigsUsageStatsResponse
+    )
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_list_license_configs_usage_stats_rest_interceptors(null_interceptor):
+    transport = transports.UserLicenseServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.UserLicenseServiceRestInterceptor(),
+    )
+    client = UserLicenseServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.UserLicenseServiceRestInterceptor,
+            "post_list_license_configs_usage_stats",
+        ) as post,
+        mock.patch.object(
+            transports.UserLicenseServiceRestInterceptor,
+            "post_list_license_configs_usage_stats_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.UserLicenseServiceRestInterceptor,
+            "pre_list_license_configs_usage_stats",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = user_license_service.ListLicenseConfigsUsageStatsRequest.pb(
+            user_license_service.ListLicenseConfigsUsageStatsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = (
+            user_license_service.ListLicenseConfigsUsageStatsResponse.to_json(
+                user_license_service.ListLicenseConfigsUsageStatsResponse()
+            )
+        )
+        req.return_value.content = return_value
+
+        request = user_license_service.ListLicenseConfigsUsageStatsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = user_license_service.ListLicenseConfigsUsageStatsResponse()
+        post_with_metadata.return_value = (
+            user_license_service.ListLicenseConfigsUsageStatsResponse(),
+            metadata,
+        )
+
+        client.list_license_configs_usage_stats(
             request,
             metadata=[
                 ("key", "val"),
@@ -2987,6 +3706,27 @@ def test_list_user_licenses_empty_call_rest():
 
 # This test is a coverage failsafe to make sure that totally empty calls,
 # i.e. request == None and no flattened fields passed, work.
+def test_list_license_configs_usage_stats_empty_call_rest():
+    client = UserLicenseServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_license_configs_usage_stats), "__call__"
+    ) as call:
+        client.list_license_configs_usage_stats(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = user_license_service.ListLicenseConfigsUsageStatsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
 def test_batch_update_user_licenses_empty_call_rest():
     client = UserLicenseServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -3057,6 +3797,7 @@ def test_user_license_service_base_transport():
     # raise NotImplementedError.
     methods = (
         "list_user_licenses",
+        "list_license_configs_usage_stats",
         "batch_update_user_licenses",
         "get_operation",
         "cancel_operation",
@@ -3102,7 +3843,11 @@ def test_user_license_service_base_transport_with_credentials_file():
         load_creds.assert_called_once_with(
             "credentials.json",
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             quota_project_id="octopus",
         )
 
@@ -3128,7 +3873,11 @@ def test_user_license_service_auth_adc():
         UserLicenseServiceClient()
         adc.assert_called_once_with(
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             quota_project_id=None,
         )
 
@@ -3148,7 +3897,11 @@ def test_user_license_service_transport_auth_adc(transport_class):
         transport_class(quota_project_id="octopus", scopes=["1", "2"])
         adc.assert_called_once_with(
             scopes=["1", "2"],
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             quota_project_id="octopus",
         )
 
@@ -3201,7 +3954,11 @@ def test_user_license_service_transport_create_channel(transport_class, grpc_hel
             credentials=creds,
             credentials_file=None,
             quota_project_id="octopus",
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+            ),
             scopes=["1", "2"],
             default_host="discoveryengine.googleapis.com",
             ssl_credentials=None,
@@ -3335,6 +4092,9 @@ def test_user_license_service_client_transport_session_collision(transport_name)
     )
     session1 = client1.transport.list_user_licenses._session
     session2 = client2.transport.list_user_licenses._session
+    assert session1 != session2
+    session1 = client1.transport.list_license_configs_usage_stats._session
+    session2 = client2.transport.list_license_configs_usage_stats._session
     assert session1 != session2
     session1 = client1.transport.batch_update_user_licenses._session
     session2 = client2.transport.batch_update_user_licenses._session

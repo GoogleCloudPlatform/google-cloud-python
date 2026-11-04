@@ -6896,6 +6896,7 @@ def test_insert_rest_call_success(request_type):
         "instances": ["instances_value1", "instances_value2"],
         "kind": "kind_value",
         "name": "name_value",
+        "params": {"resource_manager_tags": {}},
         "region": "region_value",
         "security_policy": "security_policy_value",
         "self_link": "self_link_value",

@@ -20,6 +20,7 @@ import warnings
 from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
 import google.protobuf
+import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, rest_helpers, rest_streaming
 from google.api_core import retry as retries
@@ -31,7 +32,8 @@ from google.protobuf import json_format
 from requests import __version__ as requests_version
 
 from google.cloud.discoveryengine_v1._compat import transcode_request
-from google.cloud.discoveryengine_v1.types import assistant_service
+from google.cloud.discoveryengine_v1.types import assistant, assistant_service
+from google.cloud.discoveryengine_v1.types import assistant as gcd_assistant
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
 from .rest_base import _BaseAssistantServiceRestTransport
@@ -74,6 +76,34 @@ class AssistantServiceRestInterceptor:
 
     .. code-block:: python
         class MyCustomAssistantServiceInterceptor(AssistantServiceRestInterceptor):
+            def pre_create_assistant(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_create_assistant(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_delete_assistant(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def pre_get_assistant(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_get_assistant(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_list_assistants(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_assistants(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_stream_assist(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -82,11 +112,180 @@ class AssistantServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_update_assistant(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_assistant(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
         transport = AssistantServiceRestTransport(interceptor=MyCustomAssistantServiceInterceptor())
         client = AssistantServiceClient(transport=transport)
 
 
     """
+
+    def pre_create_assistant(
+        self,
+        request: assistant_service.CreateAssistantRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        assistant_service.CreateAssistantRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for create_assistant
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AssistantService server.
+        """
+        return request, metadata
+
+    def post_create_assistant(
+        self, response: assistant.Assistant
+    ) -> assistant.Assistant:
+        """Post-rpc interceptor for create_assistant
+
+        DEPRECATED. Please use the `post_create_assistant_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AssistantService server but before
+        it is returned to user code. This `post_create_assistant` interceptor runs
+        before the `post_create_assistant_with_metadata` interceptor.
+        """
+        return response
+
+    def post_create_assistant_with_metadata(
+        self,
+        response: assistant.Assistant,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[assistant.Assistant, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for create_assistant
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AssistantService server but before it is returned to user code.
+
+        We recommend only using this `post_create_assistant_with_metadata`
+        interceptor in new development instead of the `post_create_assistant` interceptor.
+        When both interceptors are used, this `post_create_assistant_with_metadata` interceptor runs after the
+        `post_create_assistant` interceptor. The (possibly modified) response returned by
+        `post_create_assistant` will be passed to
+        `post_create_assistant_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_delete_assistant(
+        self,
+        request: assistant_service.DeleteAssistantRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        assistant_service.DeleteAssistantRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for delete_assistant
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AssistantService server.
+        """
+        return request, metadata
+
+    def pre_get_assistant(
+        self,
+        request: assistant_service.GetAssistantRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        assistant_service.GetAssistantRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for get_assistant
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AssistantService server.
+        """
+        return request, metadata
+
+    def post_get_assistant(self, response: assistant.Assistant) -> assistant.Assistant:
+        """Post-rpc interceptor for get_assistant
+
+        DEPRECATED. Please use the `post_get_assistant_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AssistantService server but before
+        it is returned to user code. This `post_get_assistant` interceptor runs
+        before the `post_get_assistant_with_metadata` interceptor.
+        """
+        return response
+
+    def post_get_assistant_with_metadata(
+        self,
+        response: assistant.Assistant,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[assistant.Assistant, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for get_assistant
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AssistantService server but before it is returned to user code.
+
+        We recommend only using this `post_get_assistant_with_metadata`
+        interceptor in new development instead of the `post_get_assistant` interceptor.
+        When both interceptors are used, this `post_get_assistant_with_metadata` interceptor runs after the
+        `post_get_assistant` interceptor. The (possibly modified) response returned by
+        `post_get_assistant` will be passed to
+        `post_get_assistant_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_list_assistants(
+        self,
+        request: assistant_service.ListAssistantsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        assistant_service.ListAssistantsRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for list_assistants
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AssistantService server.
+        """
+        return request, metadata
+
+    def post_list_assistants(
+        self, response: assistant_service.ListAssistantsResponse
+    ) -> assistant_service.ListAssistantsResponse:
+        """Post-rpc interceptor for list_assistants
+
+        DEPRECATED. Please use the `post_list_assistants_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AssistantService server but before
+        it is returned to user code. This `post_list_assistants` interceptor runs
+        before the `post_list_assistants_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_assistants_with_metadata(
+        self,
+        response: assistant_service.ListAssistantsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        assistant_service.ListAssistantsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for list_assistants
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AssistantService server but before it is returned to user code.
+
+        We recommend only using this `post_list_assistants_with_metadata`
+        interceptor in new development instead of the `post_list_assistants` interceptor.
+        When both interceptors are used, this `post_list_assistants_with_metadata` interceptor runs after the
+        `post_list_assistants` interceptor. The (possibly modified) response returned by
+        `post_list_assistants` will be passed to
+        `post_list_assistants_with_metadata`.
+        """
+        return response, metadata
 
     def pre_stream_assist(
         self,
@@ -135,6 +334,55 @@ class AssistantServiceRestInterceptor:
         `post_stream_assist` interceptor. The (possibly modified) response returned by
         `post_stream_assist` will be passed to
         `post_stream_assist_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_assistant(
+        self,
+        request: assistant_service.UpdateAssistantRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        assistant_service.UpdateAssistantRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for update_assistant
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AssistantService server.
+        """
+        return request, metadata
+
+    def post_update_assistant(
+        self, response: gcd_assistant.Assistant
+    ) -> gcd_assistant.Assistant:
+        """Post-rpc interceptor for update_assistant
+
+        DEPRECATED. Please use the `post_update_assistant_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AssistantService server but before
+        it is returned to user code. This `post_update_assistant` interceptor runs
+        before the `post_update_assistant_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_assistant_with_metadata(
+        self,
+        response: gcd_assistant.Assistant,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[gcd_assistant.Assistant, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_assistant
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AssistantService server but before it is returned to user code.
+
+        We recommend only using this `post_update_assistant_with_metadata`
+        interceptor in new development instead of the `post_update_assistant` interceptor.
+        When both interceptors are used, this `post_update_assistant_with_metadata` interceptor runs after the
+        `post_update_assistant` interceptor. The (possibly modified) response returned by
+        `post_update_assistant` will be passed to
+        `post_update_assistant_with_metadata`.
         """
         return response, metadata
 
@@ -306,6 +554,563 @@ class AssistantServiceRestTransport(_BaseAssistantServiceRestTransport):
         self._interceptor = interceptor or AssistantServiceRestInterceptor()
         self._prep_wrapped_messages(client_info)
 
+    class _CreateAssistant(
+        _BaseAssistantServiceRestTransport._BaseCreateAssistant,
+        AssistantServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("AssistantServiceRestTransport.CreateAssistant")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: assistant_service.CreateAssistantRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> assistant.Assistant:
+            r"""Call the create assistant method over HTTP.
+
+            Args:
+                request (~.assistant_service.CreateAssistantRequest):
+                    The request object. Request for the
+                [AssistantService.CreateAssistant][google.cloud.discoveryengine.v1.AssistantService.CreateAssistant]
+                method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.assistant.Assistant:
+                    Discovery Engine Assistant resource.
+            """
+
+            http_options = _BaseAssistantServiceRestTransport._BaseCreateAssistant._get_http_options()
+            request, metadata = self._interceptor.pre_create_assistant(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAssistantServiceRestTransport._BaseCreateAssistant,
+                    "_BaseCreateAssistant__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.discoveryengine_v1.AssistantServiceClient.CreateAssistant",
+                    extra={
+                        "serviceName": "google.cloud.discoveryengine.v1.AssistantService",
+                        "rpcName": "CreateAssistant",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AssistantServiceRestTransport._CreateAssistant._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = assistant.Assistant()
+            pb_resp = assistant.Assistant.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_create_assistant(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_create_assistant_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = assistant.Assistant.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.discoveryengine_v1.AssistantServiceClient.create_assistant",
+                    extra={
+                        "serviceName": "google.cloud.discoveryengine.v1.AssistantService",
+                        "rpcName": "CreateAssistant",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _DeleteAssistant(
+        _BaseAssistantServiceRestTransport._BaseDeleteAssistant,
+        AssistantServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("AssistantServiceRestTransport.DeleteAssistant")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: assistant_service.DeleteAssistantRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ):
+            r"""Call the delete assistant method over HTTP.
+
+            Args:
+                request (~.assistant_service.DeleteAssistantRequest):
+                    The request object. Request message for the
+                [AssistantService.DeleteAssistant][google.cloud.discoveryengine.v1.AssistantService.DeleteAssistant]
+                method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+            """
+
+            http_options = _BaseAssistantServiceRestTransport._BaseDeleteAssistant._get_http_options()
+            request, metadata = self._interceptor.pre_delete_assistant(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAssistantServiceRestTransport._BaseDeleteAssistant,
+                    "_BaseDeleteAssistant__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.discoveryengine_v1.AssistantServiceClient.DeleteAssistant",
+                    extra={
+                        "serviceName": "google.cloud.discoveryengine.v1.AssistantService",
+                        "rpcName": "DeleteAssistant",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AssistantServiceRestTransport._DeleteAssistant._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+    class _GetAssistant(
+        _BaseAssistantServiceRestTransport._BaseGetAssistant, AssistantServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("AssistantServiceRestTransport.GetAssistant")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: assistant_service.GetAssistantRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> assistant.Assistant:
+            r"""Call the get assistant method over HTTP.
+
+            Args:
+                request (~.assistant_service.GetAssistantRequest):
+                    The request object. Request message for the
+                [AssistantService.GetAssistant][google.cloud.discoveryengine.v1.AssistantService.GetAssistant]
+                method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.assistant.Assistant:
+                    Discovery Engine Assistant resource.
+            """
+
+            http_options = (
+                _BaseAssistantServiceRestTransport._BaseGetAssistant._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_get_assistant(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAssistantServiceRestTransport._BaseGetAssistant,
+                    "_BaseGetAssistant__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.discoveryengine_v1.AssistantServiceClient.GetAssistant",
+                    extra={
+                        "serviceName": "google.cloud.discoveryengine.v1.AssistantService",
+                        "rpcName": "GetAssistant",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AssistantServiceRestTransport._GetAssistant._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = assistant.Assistant()
+            pb_resp = assistant.Assistant.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_get_assistant(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_get_assistant_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = assistant.Assistant.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.discoveryengine_v1.AssistantServiceClient.get_assistant",
+                    extra={
+                        "serviceName": "google.cloud.discoveryengine.v1.AssistantService",
+                        "rpcName": "GetAssistant",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _ListAssistants(
+        _BaseAssistantServiceRestTransport._BaseListAssistants, AssistantServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("AssistantServiceRestTransport.ListAssistants")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: assistant_service.ListAssistantsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> assistant_service.ListAssistantsResponse:
+            r"""Call the list assistants method over HTTP.
+
+            Args:
+                request (~.assistant_service.ListAssistantsRequest):
+                    The request object. Request message for the
+                [AssistantService.ListAssistants][google.cloud.discoveryengine.v1.AssistantService.ListAssistants]
+                method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.assistant_service.ListAssistantsResponse:
+                    Response message for the
+                [AssistantService.ListAssistants][google.cloud.discoveryengine.v1.AssistantService.ListAssistants]
+                method.
+
+            """
+
+            http_options = _BaseAssistantServiceRestTransport._BaseListAssistants._get_http_options()
+            request, metadata = self._interceptor.pre_list_assistants(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAssistantServiceRestTransport._BaseListAssistants,
+                    "_BaseListAssistants__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.discoveryengine_v1.AssistantServiceClient.ListAssistants",
+                    extra={
+                        "serviceName": "google.cloud.discoveryengine.v1.AssistantService",
+                        "rpcName": "ListAssistants",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AssistantServiceRestTransport._ListAssistants._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = assistant_service.ListAssistantsResponse()
+            pb_resp = assistant_service.ListAssistantsResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_assistants(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_list_assistants_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = assistant_service.ListAssistantsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.discoveryengine_v1.AssistantServiceClient.list_assistants",
+                    extra={
+                        "serviceName": "google.cloud.discoveryengine.v1.AssistantService",
+                        "rpcName": "ListAssistants",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _StreamAssist(
         _BaseAssistantServiceRestTransport._BaseStreamAssist, AssistantServiceRestStub
     ):
@@ -453,6 +1258,191 @@ class AssistantServiceRestTransport(_BaseAssistantServiceRestTransport):
                 )
             return resp
 
+    class _UpdateAssistant(
+        _BaseAssistantServiceRestTransport._BaseUpdateAssistant,
+        AssistantServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("AssistantServiceRestTransport.UpdateAssistant")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: assistant_service.UpdateAssistantRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> gcd_assistant.Assistant:
+            r"""Call the update assistant method over HTTP.
+
+            Args:
+                request (~.assistant_service.UpdateAssistantRequest):
+                    The request object. Request message for the
+                [AssistantService.UpdateAssistant][google.cloud.discoveryengine.v1.AssistantService.UpdateAssistant]
+                method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.gcd_assistant.Assistant:
+                    Discovery Engine Assistant resource.
+            """
+
+            http_options = _BaseAssistantServiceRestTransport._BaseUpdateAssistant._get_http_options()
+            request, metadata = self._interceptor.pre_update_assistant(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAssistantServiceRestTransport._BaseUpdateAssistant,
+                    "_BaseUpdateAssistant__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.discoveryengine_v1.AssistantServiceClient.UpdateAssistant",
+                    extra={
+                        "serviceName": "google.cloud.discoveryengine.v1.AssistantService",
+                        "rpcName": "UpdateAssistant",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AssistantServiceRestTransport._UpdateAssistant._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = gcd_assistant.Assistant()
+            pb_resp = gcd_assistant.Assistant.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_assistant(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_assistant_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = gcd_assistant.Assistant.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.discoveryengine_v1.AssistantServiceClient.update_assistant",
+                    extra={
+                        "serviceName": "google.cloud.discoveryengine.v1.AssistantService",
+                        "rpcName": "UpdateAssistant",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    @property
+    def create_assistant(
+        self,
+    ) -> Callable[[assistant_service.CreateAssistantRequest], assistant.Assistant]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._CreateAssistant(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def delete_assistant(
+        self,
+    ) -> Callable[[assistant_service.DeleteAssistantRequest], empty_pb2.Empty]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._DeleteAssistant(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def get_assistant(
+        self,
+    ) -> Callable[[assistant_service.GetAssistantRequest], assistant.Assistant]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GetAssistant(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def list_assistants(
+        self,
+    ) -> Callable[
+        [assistant_service.ListAssistantsRequest],
+        assistant_service.ListAssistantsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListAssistants(self._session, self._host, self._interceptor)  # type: ignore
+
     @property
     def stream_assist(
         self,
@@ -462,6 +1452,14 @@ class AssistantServiceRestTransport(_BaseAssistantServiceRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._StreamAssist(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def update_assistant(
+        self,
+    ) -> Callable[[assistant_service.UpdateAssistantRequest], gcd_assistant.Assistant]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateAssistant(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def cancel_operation(self):

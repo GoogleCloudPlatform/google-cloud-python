@@ -74,6 +74,22 @@ class DeveloperConnectRestInterceptor:
 
     .. code-block:: python
         class MyCustomDeveloperConnectInterceptor(DeveloperConnectRestInterceptor):
+            def pre_add_git_repository_link_pull_request_comment(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_add_git_repository_link_pull_request_comment(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_add_git_repository_link_pull_request_review_comment(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_add_git_repository_link_pull_request_review_comment(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_create_account_connector(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -138,6 +154,14 @@ class DeveloperConnectRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_diff_git_repository_link_commit(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_diff_git_repository_link_commit(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_fetch_access_token(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -159,6 +183,46 @@ class DeveloperConnectRestInterceptor:
                 return request, metadata
 
             def post_fetch_git_refs(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_fetch_git_repository_link_commit(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_fetch_git_repository_link_commit(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_fetch_git_repository_link_commit_list(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_fetch_git_repository_link_commit_list(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_fetch_git_repository_link_file_blame(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_fetch_git_repository_link_file_blame(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_fetch_git_repository_link_pull_request(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_fetch_git_repository_link_pull_request(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_fetch_git_repository_link_pull_request_list(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_fetch_git_repository_link_pull_request_list(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -258,6 +322,22 @@ class DeveloperConnectRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_modify_git_repository_link_pull_request(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_modify_git_repository_link_pull_request(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_open_git_repository_link_pull_request(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_open_git_repository_link_pull_request(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_start_o_auth(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -287,6 +367,109 @@ class DeveloperConnectRestInterceptor:
 
 
     """
+
+    def pre_add_git_repository_link_pull_request_comment(
+        self,
+        request: developer_connect.AddGitRepositoryLinkPullRequestCommentRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        developer_connect.AddGitRepositoryLinkPullRequestCommentRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for add_git_repository_link_pull_request_comment
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the DeveloperConnect server.
+        """
+        return request, metadata
+
+    def post_add_git_repository_link_pull_request_comment(
+        self, response: developer_connect.PullRequestComment
+    ) -> developer_connect.PullRequestComment:
+        """Post-rpc interceptor for add_git_repository_link_pull_request_comment
+
+        DEPRECATED. Please use the `post_add_git_repository_link_pull_request_comment_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the DeveloperConnect server but before
+        it is returned to user code. This `post_add_git_repository_link_pull_request_comment` interceptor runs
+        before the `post_add_git_repository_link_pull_request_comment_with_metadata` interceptor.
+        """
+        return response
+
+    def post_add_git_repository_link_pull_request_comment_with_metadata(
+        self,
+        response: developer_connect.PullRequestComment,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        developer_connect.PullRequestComment, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for add_git_repository_link_pull_request_comment
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the DeveloperConnect server but before it is returned to user code.
+
+        We recommend only using this `post_add_git_repository_link_pull_request_comment_with_metadata`
+        interceptor in new development instead of the `post_add_git_repository_link_pull_request_comment` interceptor.
+        When both interceptors are used, this `post_add_git_repository_link_pull_request_comment_with_metadata` interceptor runs after the
+        `post_add_git_repository_link_pull_request_comment` interceptor. The (possibly modified) response returned by
+        `post_add_git_repository_link_pull_request_comment` will be passed to
+        `post_add_git_repository_link_pull_request_comment_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_add_git_repository_link_pull_request_review_comment(
+        self,
+        request: developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for add_git_repository_link_pull_request_review_comment
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the DeveloperConnect server.
+        """
+        return request, metadata
+
+    def post_add_git_repository_link_pull_request_review_comment(
+        self, response: developer_connect.PullRequestReviewComment
+    ) -> developer_connect.PullRequestReviewComment:
+        """Post-rpc interceptor for add_git_repository_link_pull_request_review_comment
+
+        DEPRECATED. Please use the `post_add_git_repository_link_pull_request_review_comment_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the DeveloperConnect server but before
+        it is returned to user code. This `post_add_git_repository_link_pull_request_review_comment` interceptor runs
+        before the `post_add_git_repository_link_pull_request_review_comment_with_metadata` interceptor.
+        """
+        return response
+
+    def post_add_git_repository_link_pull_request_review_comment_with_metadata(
+        self,
+        response: developer_connect.PullRequestReviewComment,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        developer_connect.PullRequestReviewComment,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for add_git_repository_link_pull_request_review_comment
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the DeveloperConnect server but before it is returned to user code.
+
+        We recommend only using this `post_add_git_repository_link_pull_request_review_comment_with_metadata`
+        interceptor in new development instead of the `post_add_git_repository_link_pull_request_review_comment` interceptor.
+        When both interceptors are used, this `post_add_git_repository_link_pull_request_review_comment_with_metadata` interceptor runs after the
+        `post_add_git_repository_link_pull_request_review_comment` interceptor. The (possibly modified) response returned by
+        `post_add_git_repository_link_pull_request_review_comment` will be passed to
+        `post_add_git_repository_link_pull_request_review_comment_with_metadata`.
+        """
+        return response, metadata
 
     def pre_create_account_connector(
         self,
@@ -678,6 +861,58 @@ class DeveloperConnectRestInterceptor:
         """
         return response, metadata
 
+    def pre_diff_git_repository_link_commit(
+        self,
+        request: developer_connect.DiffGitRepositoryLinkCommitRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        developer_connect.DiffGitRepositoryLinkCommitRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for diff_git_repository_link_commit
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the DeveloperConnect server.
+        """
+        return request, metadata
+
+    def post_diff_git_repository_link_commit(
+        self, response: developer_connect.DiffGitRepositoryLinkCommitResponse
+    ) -> developer_connect.DiffGitRepositoryLinkCommitResponse:
+        """Post-rpc interceptor for diff_git_repository_link_commit
+
+        DEPRECATED. Please use the `post_diff_git_repository_link_commit_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the DeveloperConnect server but before
+        it is returned to user code. This `post_diff_git_repository_link_commit` interceptor runs
+        before the `post_diff_git_repository_link_commit_with_metadata` interceptor.
+        """
+        return response
+
+    def post_diff_git_repository_link_commit_with_metadata(
+        self,
+        response: developer_connect.DiffGitRepositoryLinkCommitResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        developer_connect.DiffGitRepositoryLinkCommitResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for diff_git_repository_link_commit
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the DeveloperConnect server but before it is returned to user code.
+
+        We recommend only using this `post_diff_git_repository_link_commit_with_metadata`
+        interceptor in new development instead of the `post_diff_git_repository_link_commit` interceptor.
+        When both interceptors are used, this `post_diff_git_repository_link_commit_with_metadata` interceptor runs after the
+        `post_diff_git_repository_link_commit` interceptor. The (possibly modified) response returned by
+        `post_diff_git_repository_link_commit` will be passed to
+        `post_diff_git_repository_link_commit_with_metadata`.
+        """
+        return response, metadata
+
     def pre_fetch_access_token(
         self,
         request: developer_connect.FetchAccessTokenRequest,
@@ -829,6 +1064,263 @@ class DeveloperConnectRestInterceptor:
         `post_fetch_git_refs` interceptor. The (possibly modified) response returned by
         `post_fetch_git_refs` will be passed to
         `post_fetch_git_refs_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_fetch_git_repository_link_commit(
+        self,
+        request: developer_connect.FetchGitRepositoryLinkCommitRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        developer_connect.FetchGitRepositoryLinkCommitRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for fetch_git_repository_link_commit
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the DeveloperConnect server.
+        """
+        return request, metadata
+
+    def post_fetch_git_repository_link_commit(
+        self, response: developer_connect.FetchGitRepositoryLinkCommitResponse
+    ) -> developer_connect.FetchGitRepositoryLinkCommitResponse:
+        """Post-rpc interceptor for fetch_git_repository_link_commit
+
+        DEPRECATED. Please use the `post_fetch_git_repository_link_commit_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the DeveloperConnect server but before
+        it is returned to user code. This `post_fetch_git_repository_link_commit` interceptor runs
+        before the `post_fetch_git_repository_link_commit_with_metadata` interceptor.
+        """
+        return response
+
+    def post_fetch_git_repository_link_commit_with_metadata(
+        self,
+        response: developer_connect.FetchGitRepositoryLinkCommitResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        developer_connect.FetchGitRepositoryLinkCommitResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for fetch_git_repository_link_commit
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the DeveloperConnect server but before it is returned to user code.
+
+        We recommend only using this `post_fetch_git_repository_link_commit_with_metadata`
+        interceptor in new development instead of the `post_fetch_git_repository_link_commit` interceptor.
+        When both interceptors are used, this `post_fetch_git_repository_link_commit_with_metadata` interceptor runs after the
+        `post_fetch_git_repository_link_commit` interceptor. The (possibly modified) response returned by
+        `post_fetch_git_repository_link_commit` will be passed to
+        `post_fetch_git_repository_link_commit_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_fetch_git_repository_link_commit_list(
+        self,
+        request: developer_connect.FetchGitRepositoryLinkCommitListRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        developer_connect.FetchGitRepositoryLinkCommitListRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for fetch_git_repository_link_commit_list
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the DeveloperConnect server.
+        """
+        return request, metadata
+
+    def post_fetch_git_repository_link_commit_list(
+        self, response: developer_connect.FetchGitRepositoryLinkCommitListResponse
+    ) -> developer_connect.FetchGitRepositoryLinkCommitListResponse:
+        """Post-rpc interceptor for fetch_git_repository_link_commit_list
+
+        DEPRECATED. Please use the `post_fetch_git_repository_link_commit_list_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the DeveloperConnect server but before
+        it is returned to user code. This `post_fetch_git_repository_link_commit_list` interceptor runs
+        before the `post_fetch_git_repository_link_commit_list_with_metadata` interceptor.
+        """
+        return response
+
+    def post_fetch_git_repository_link_commit_list_with_metadata(
+        self,
+        response: developer_connect.FetchGitRepositoryLinkCommitListResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        developer_connect.FetchGitRepositoryLinkCommitListResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for fetch_git_repository_link_commit_list
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the DeveloperConnect server but before it is returned to user code.
+
+        We recommend only using this `post_fetch_git_repository_link_commit_list_with_metadata`
+        interceptor in new development instead of the `post_fetch_git_repository_link_commit_list` interceptor.
+        When both interceptors are used, this `post_fetch_git_repository_link_commit_list_with_metadata` interceptor runs after the
+        `post_fetch_git_repository_link_commit_list` interceptor. The (possibly modified) response returned by
+        `post_fetch_git_repository_link_commit_list` will be passed to
+        `post_fetch_git_repository_link_commit_list_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_fetch_git_repository_link_file_blame(
+        self,
+        request: developer_connect.FetchGitRepositoryLinkFileBlameRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        developer_connect.FetchGitRepositoryLinkFileBlameRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for fetch_git_repository_link_file_blame
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the DeveloperConnect server.
+        """
+        return request, metadata
+
+    def post_fetch_git_repository_link_file_blame(
+        self, response: developer_connect.FetchGitRepositoryLinkFileBlameResponse
+    ) -> developer_connect.FetchGitRepositoryLinkFileBlameResponse:
+        """Post-rpc interceptor for fetch_git_repository_link_file_blame
+
+        DEPRECATED. Please use the `post_fetch_git_repository_link_file_blame_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the DeveloperConnect server but before
+        it is returned to user code. This `post_fetch_git_repository_link_file_blame` interceptor runs
+        before the `post_fetch_git_repository_link_file_blame_with_metadata` interceptor.
+        """
+        return response
+
+    def post_fetch_git_repository_link_file_blame_with_metadata(
+        self,
+        response: developer_connect.FetchGitRepositoryLinkFileBlameResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        developer_connect.FetchGitRepositoryLinkFileBlameResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for fetch_git_repository_link_file_blame
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the DeveloperConnect server but before it is returned to user code.
+
+        We recommend only using this `post_fetch_git_repository_link_file_blame_with_metadata`
+        interceptor in new development instead of the `post_fetch_git_repository_link_file_blame` interceptor.
+        When both interceptors are used, this `post_fetch_git_repository_link_file_blame_with_metadata` interceptor runs after the
+        `post_fetch_git_repository_link_file_blame` interceptor. The (possibly modified) response returned by
+        `post_fetch_git_repository_link_file_blame` will be passed to
+        `post_fetch_git_repository_link_file_blame_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_fetch_git_repository_link_pull_request(
+        self,
+        request: developer_connect.FetchGitRepositoryLinkPullRequestRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        developer_connect.FetchGitRepositoryLinkPullRequestRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for fetch_git_repository_link_pull_request
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the DeveloperConnect server.
+        """
+        return request, metadata
+
+    def post_fetch_git_repository_link_pull_request(
+        self, response: developer_connect.PullRequest
+    ) -> developer_connect.PullRequest:
+        """Post-rpc interceptor for fetch_git_repository_link_pull_request
+
+        DEPRECATED. Please use the `post_fetch_git_repository_link_pull_request_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the DeveloperConnect server but before
+        it is returned to user code. This `post_fetch_git_repository_link_pull_request` interceptor runs
+        before the `post_fetch_git_repository_link_pull_request_with_metadata` interceptor.
+        """
+        return response
+
+    def post_fetch_git_repository_link_pull_request_with_metadata(
+        self,
+        response: developer_connect.PullRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[developer_connect.PullRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for fetch_git_repository_link_pull_request
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the DeveloperConnect server but before it is returned to user code.
+
+        We recommend only using this `post_fetch_git_repository_link_pull_request_with_metadata`
+        interceptor in new development instead of the `post_fetch_git_repository_link_pull_request` interceptor.
+        When both interceptors are used, this `post_fetch_git_repository_link_pull_request_with_metadata` interceptor runs after the
+        `post_fetch_git_repository_link_pull_request` interceptor. The (possibly modified) response returned by
+        `post_fetch_git_repository_link_pull_request` will be passed to
+        `post_fetch_git_repository_link_pull_request_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_fetch_git_repository_link_pull_request_list(
+        self,
+        request: developer_connect.FetchGitRepositoryLinkPullRequestListRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        developer_connect.FetchGitRepositoryLinkPullRequestListRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for fetch_git_repository_link_pull_request_list
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the DeveloperConnect server.
+        """
+        return request, metadata
+
+    def post_fetch_git_repository_link_pull_request_list(
+        self, response: developer_connect.FetchGitRepositoryLinkPullRequestListResponse
+    ) -> developer_connect.FetchGitRepositoryLinkPullRequestListResponse:
+        """Post-rpc interceptor for fetch_git_repository_link_pull_request_list
+
+        DEPRECATED. Please use the `post_fetch_git_repository_link_pull_request_list_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the DeveloperConnect server but before
+        it is returned to user code. This `post_fetch_git_repository_link_pull_request_list` interceptor runs
+        before the `post_fetch_git_repository_link_pull_request_list_with_metadata` interceptor.
+        """
+        return response
+
+    def post_fetch_git_repository_link_pull_request_list_with_metadata(
+        self,
+        response: developer_connect.FetchGitRepositoryLinkPullRequestListResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        developer_connect.FetchGitRepositoryLinkPullRequestListResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for fetch_git_repository_link_pull_request_list
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the DeveloperConnect server but before it is returned to user code.
+
+        We recommend only using this `post_fetch_git_repository_link_pull_request_list_with_metadata`
+        interceptor in new development instead of the `post_fetch_git_repository_link_pull_request_list` interceptor.
+        When both interceptors are used, this `post_fetch_git_repository_link_pull_request_list_with_metadata` interceptor runs after the
+        `post_fetch_git_repository_link_pull_request_list` interceptor. The (possibly modified) response returned by
+        `post_fetch_git_repository_link_pull_request_list` will be passed to
+        `post_fetch_git_repository_link_pull_request_list_with_metadata`.
         """
         return response, metadata
 
@@ -1441,6 +1933,104 @@ class DeveloperConnectRestInterceptor:
         """
         return response, metadata
 
+    def pre_modify_git_repository_link_pull_request(
+        self,
+        request: developer_connect.ModifyGitRepositoryLinkPullRequestRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        developer_connect.ModifyGitRepositoryLinkPullRequestRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for modify_git_repository_link_pull_request
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the DeveloperConnect server.
+        """
+        return request, metadata
+
+    def post_modify_git_repository_link_pull_request(
+        self, response: developer_connect.PullRequest
+    ) -> developer_connect.PullRequest:
+        """Post-rpc interceptor for modify_git_repository_link_pull_request
+
+        DEPRECATED. Please use the `post_modify_git_repository_link_pull_request_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the DeveloperConnect server but before
+        it is returned to user code. This `post_modify_git_repository_link_pull_request` interceptor runs
+        before the `post_modify_git_repository_link_pull_request_with_metadata` interceptor.
+        """
+        return response
+
+    def post_modify_git_repository_link_pull_request_with_metadata(
+        self,
+        response: developer_connect.PullRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[developer_connect.PullRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for modify_git_repository_link_pull_request
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the DeveloperConnect server but before it is returned to user code.
+
+        We recommend only using this `post_modify_git_repository_link_pull_request_with_metadata`
+        interceptor in new development instead of the `post_modify_git_repository_link_pull_request` interceptor.
+        When both interceptors are used, this `post_modify_git_repository_link_pull_request_with_metadata` interceptor runs after the
+        `post_modify_git_repository_link_pull_request` interceptor. The (possibly modified) response returned by
+        `post_modify_git_repository_link_pull_request` will be passed to
+        `post_modify_git_repository_link_pull_request_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_open_git_repository_link_pull_request(
+        self,
+        request: developer_connect.OpenGitRepositoryLinkPullRequestRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        developer_connect.OpenGitRepositoryLinkPullRequestRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for open_git_repository_link_pull_request
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the DeveloperConnect server.
+        """
+        return request, metadata
+
+    def post_open_git_repository_link_pull_request(
+        self, response: developer_connect.PullRequest
+    ) -> developer_connect.PullRequest:
+        """Post-rpc interceptor for open_git_repository_link_pull_request
+
+        DEPRECATED. Please use the `post_open_git_repository_link_pull_request_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the DeveloperConnect server but before
+        it is returned to user code. This `post_open_git_repository_link_pull_request` interceptor runs
+        before the `post_open_git_repository_link_pull_request_with_metadata` interceptor.
+        """
+        return response
+
+    def post_open_git_repository_link_pull_request_with_metadata(
+        self,
+        response: developer_connect.PullRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[developer_connect.PullRequest, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for open_git_repository_link_pull_request
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the DeveloperConnect server but before it is returned to user code.
+
+        We recommend only using this `post_open_git_repository_link_pull_request_with_metadata`
+        interceptor in new development instead of the `post_open_git_repository_link_pull_request` interceptor.
+        When both interceptors are used, this `post_open_git_repository_link_pull_request_with_metadata` interceptor runs after the
+        `post_open_git_repository_link_pull_request` interceptor. The (possibly modified) response returned by
+        `post_open_git_repository_link_pull_request` will be passed to
+        `post_open_git_repository_link_pull_request_with_metadata`.
+        """
+        return response, metadata
+
     def pre_start_o_auth(
         self,
         request: developer_connect.StartOAuthRequest,
@@ -1882,6 +2472,330 @@ class DeveloperConnectRestTransport(_BaseDeveloperConnectRestTransport):
 
         # Return the client from cache.
         return self._operations_client
+
+    class _AddGitRepositoryLinkPullRequestComment(
+        _BaseDeveloperConnectRestTransport._BaseAddGitRepositoryLinkPullRequestComment,
+        DeveloperConnectRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "DeveloperConnectRestTransport.AddGitRepositoryLinkPullRequestComment"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: developer_connect.AddGitRepositoryLinkPullRequestCommentRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> developer_connect.PullRequestComment:
+            r"""Call the add git repository link
+            pull request comment method over HTTP.
+
+                Args:
+                    request (~.developer_connect.AddGitRepositoryLinkPullRequestCommentRequest):
+                        The request object. Request message for
+                    AddGitRepositoryLinkPullRequestComment.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.developer_connect.PullRequestComment:
+                        Message representing a SCM Pull
+                    Request Comment.
+
+            """
+
+            http_options = _BaseDeveloperConnectRestTransport._BaseAddGitRepositoryLinkPullRequestComment._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_add_git_repository_link_pull_request_comment(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeveloperConnectRestTransport._BaseAddGitRepositoryLinkPullRequestComment,
+                    "_BaseAddGitRepositoryLinkPullRequestComment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.developerconnect_v1.DeveloperConnectClient.AddGitRepositoryLinkPullRequestComment",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "AddGitRepositoryLinkPullRequestComment",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = DeveloperConnectRestTransport._AddGitRepositoryLinkPullRequestComment._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = developer_connect.PullRequestComment()
+            pb_resp = developer_connect.PullRequestComment.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_add_git_repository_link_pull_request_comment(
+                resp
+            )
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_add_git_repository_link_pull_request_comment_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = developer_connect.PullRequestComment.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.developerconnect_v1.DeveloperConnectClient.add_git_repository_link_pull_request_comment",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "AddGitRepositoryLinkPullRequestComment",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _AddGitRepositoryLinkPullRequestReviewComment(
+        _BaseDeveloperConnectRestTransport._BaseAddGitRepositoryLinkPullRequestReviewComment,
+        DeveloperConnectRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "DeveloperConnectRestTransport.AddGitRepositoryLinkPullRequestReviewComment"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> developer_connect.PullRequestReviewComment:
+            r"""Call the add git repository link
+            pull request review comment method over HTTP.
+
+                Args:
+                    request (~.developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest):
+                        The request object. Request message for
+                    AddGitRepositoryLinkPullRequestReviewComment.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.developer_connect.PullRequestReviewComment:
+                        Message representing a SCM Pull
+                    Request Review Comment (inline on diff).
+
+            """
+
+            http_options = _BaseDeveloperConnectRestTransport._BaseAddGitRepositoryLinkPullRequestReviewComment._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_add_git_repository_link_pull_request_review_comment(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeveloperConnectRestTransport._BaseAddGitRepositoryLinkPullRequestReviewComment,
+                    "_BaseAddGitRepositoryLinkPullRequestReviewComment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.developerconnect_v1.DeveloperConnectClient.AddGitRepositoryLinkPullRequestReviewComment",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "AddGitRepositoryLinkPullRequestReviewComment",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = DeveloperConnectRestTransport._AddGitRepositoryLinkPullRequestReviewComment._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = developer_connect.PullRequestReviewComment()
+            pb_resp = developer_connect.PullRequestReviewComment.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_add_git_repository_link_pull_request_review_comment(
+                resp
+            )
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_add_git_repository_link_pull_request_review_comment_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        developer_connect.PullRequestReviewComment.to_json(response)
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.developerconnect_v1.DeveloperConnectClient.add_git_repository_link_pull_request_review_comment",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "AddGitRepositoryLinkPullRequestReviewComment",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
 
     class _CreateAccountConnector(
         _BaseDeveloperConnectRestTransport._BaseCreateAccountConnector,
@@ -3077,6 +3991,162 @@ class DeveloperConnectRestTransport(_BaseDeveloperConnectRestTransport):
                 )
             return resp
 
+    class _DiffGitRepositoryLinkCommit(
+        _BaseDeveloperConnectRestTransport._BaseDiffGitRepositoryLinkCommit,
+        DeveloperConnectRestStub,
+    ):
+        def __hash__(self):
+            return hash("DeveloperConnectRestTransport.DiffGitRepositoryLinkCommit")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: developer_connect.DiffGitRepositoryLinkCommitRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> developer_connect.DiffGitRepositoryLinkCommitResponse:
+            r"""Call the diff git repository link
+            commit method over HTTP.
+
+                Args:
+                    request (~.developer_connect.DiffGitRepositoryLinkCommitRequest):
+                        The request object. Request message for
+                    DiffGitRepositoryLinkCommit.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.developer_connect.DiffGitRepositoryLinkCommitResponse:
+                        Response message for
+                    DiffGitRepositoryLinkCommit.
+
+            """
+
+            http_options = _BaseDeveloperConnectRestTransport._BaseDiffGitRepositoryLinkCommit._get_http_options()
+            request, metadata = self._interceptor.pre_diff_git_repository_link_commit(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeveloperConnectRestTransport._BaseDiffGitRepositoryLinkCommit,
+                    "_BaseDiffGitRepositoryLinkCommit__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.developerconnect_v1.DeveloperConnectClient.DiffGitRepositoryLinkCommit",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "DiffGitRepositoryLinkCommit",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = DeveloperConnectRestTransport._DiffGitRepositoryLinkCommit._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = developer_connect.DiffGitRepositoryLinkCommitResponse()
+            pb_resp = developer_connect.DiffGitRepositoryLinkCommitResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_diff_git_repository_link_commit(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_diff_git_repository_link_commit_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        developer_connect.DiffGitRepositoryLinkCommitResponse.to_json(
+                            response
+                        )
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.developerconnect_v1.DeveloperConnectClient.diff_git_repository_link_commit",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "DiffGitRepositoryLinkCommit",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _FetchAccessToken(
         _BaseDeveloperConnectRestTransport._BaseFetchAccessToken,
         DeveloperConnectRestStub,
@@ -3527,6 +4597,796 @@ class DeveloperConnectRestTransport(_BaseDeveloperConnectRestTransport):
                     extra={
                         "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
                         "rpcName": "FetchGitRefs",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _FetchGitRepositoryLinkCommit(
+        _BaseDeveloperConnectRestTransport._BaseFetchGitRepositoryLinkCommit,
+        DeveloperConnectRestStub,
+    ):
+        def __hash__(self):
+            return hash("DeveloperConnectRestTransport.FetchGitRepositoryLinkCommit")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: developer_connect.FetchGitRepositoryLinkCommitRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> developer_connect.FetchGitRepositoryLinkCommitResponse:
+            r"""Call the fetch git repository link
+            commit method over HTTP.
+
+                Args:
+                    request (~.developer_connect.FetchGitRepositoryLinkCommitRequest):
+                        The request object. Request message for
+                    FetchGitRepositoryLinkCommit.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.developer_connect.FetchGitRepositoryLinkCommitResponse:
+                        Response message for
+                    FetchGitRepositoryLinkCommit.
+
+            """
+
+            http_options = _BaseDeveloperConnectRestTransport._BaseFetchGitRepositoryLinkCommit._get_http_options()
+            request, metadata = self._interceptor.pre_fetch_git_repository_link_commit(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeveloperConnectRestTransport._BaseFetchGitRepositoryLinkCommit,
+                    "_BaseFetchGitRepositoryLinkCommit__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.developerconnect_v1.DeveloperConnectClient.FetchGitRepositoryLinkCommit",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "FetchGitRepositoryLinkCommit",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = DeveloperConnectRestTransport._FetchGitRepositoryLinkCommit._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = developer_connect.FetchGitRepositoryLinkCommitResponse()
+            pb_resp = developer_connect.FetchGitRepositoryLinkCommitResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_fetch_git_repository_link_commit(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_fetch_git_repository_link_commit_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        developer_connect.FetchGitRepositoryLinkCommitResponse.to_json(
+                            response
+                        )
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.developerconnect_v1.DeveloperConnectClient.fetch_git_repository_link_commit",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "FetchGitRepositoryLinkCommit",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _FetchGitRepositoryLinkCommitList(
+        _BaseDeveloperConnectRestTransport._BaseFetchGitRepositoryLinkCommitList,
+        DeveloperConnectRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "DeveloperConnectRestTransport.FetchGitRepositoryLinkCommitList"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: developer_connect.FetchGitRepositoryLinkCommitListRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> developer_connect.FetchGitRepositoryLinkCommitListResponse:
+            r"""Call the fetch git repository link
+            commit list method over HTTP.
+
+                Args:
+                    request (~.developer_connect.FetchGitRepositoryLinkCommitListRequest):
+                        The request object. Request message for
+                    FetchGitRepositoryLinkCommitList.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.developer_connect.FetchGitRepositoryLinkCommitListResponse:
+                        Response message for
+                    FetchGitRepositoryLinkCommitList.
+
+            """
+
+            http_options = _BaseDeveloperConnectRestTransport._BaseFetchGitRepositoryLinkCommitList._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_fetch_git_repository_link_commit_list(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeveloperConnectRestTransport._BaseFetchGitRepositoryLinkCommitList,
+                    "_BaseFetchGitRepositoryLinkCommitList__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.developerconnect_v1.DeveloperConnectClient.FetchGitRepositoryLinkCommitList",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "FetchGitRepositoryLinkCommitList",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = DeveloperConnectRestTransport._FetchGitRepositoryLinkCommitList._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = developer_connect.FetchGitRepositoryLinkCommitListResponse()
+            pb_resp = developer_connect.FetchGitRepositoryLinkCommitListResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_fetch_git_repository_link_commit_list(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_fetch_git_repository_link_commit_list_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = developer_connect.FetchGitRepositoryLinkCommitListResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.developerconnect_v1.DeveloperConnectClient.fetch_git_repository_link_commit_list",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "FetchGitRepositoryLinkCommitList",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _FetchGitRepositoryLinkFileBlame(
+        _BaseDeveloperConnectRestTransport._BaseFetchGitRepositoryLinkFileBlame,
+        DeveloperConnectRestStub,
+    ):
+        def __hash__(self):
+            return hash("DeveloperConnectRestTransport.FetchGitRepositoryLinkFileBlame")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: developer_connect.FetchGitRepositoryLinkFileBlameRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> developer_connect.FetchGitRepositoryLinkFileBlameResponse:
+            r"""Call the fetch git repository link
+            file blame method over HTTP.
+
+                Args:
+                    request (~.developer_connect.FetchGitRepositoryLinkFileBlameRequest):
+                        The request object. Request message for
+                    FetchGitRepositoryLinkFileBlame.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.developer_connect.FetchGitRepositoryLinkFileBlameResponse:
+                        Response message for
+                    FetchGitRepositoryLinkFileBlame.
+
+            """
+
+            http_options = _BaseDeveloperConnectRestTransport._BaseFetchGitRepositoryLinkFileBlame._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_fetch_git_repository_link_file_blame(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeveloperConnectRestTransport._BaseFetchGitRepositoryLinkFileBlame,
+                    "_BaseFetchGitRepositoryLinkFileBlame__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.developerconnect_v1.DeveloperConnectClient.FetchGitRepositoryLinkFileBlame",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "FetchGitRepositoryLinkFileBlame",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = DeveloperConnectRestTransport._FetchGitRepositoryLinkFileBlame._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = developer_connect.FetchGitRepositoryLinkFileBlameResponse()
+            pb_resp = developer_connect.FetchGitRepositoryLinkFileBlameResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_fetch_git_repository_link_file_blame(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_fetch_git_repository_link_file_blame_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = developer_connect.FetchGitRepositoryLinkFileBlameResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.developerconnect_v1.DeveloperConnectClient.fetch_git_repository_link_file_blame",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "FetchGitRepositoryLinkFileBlame",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _FetchGitRepositoryLinkPullRequest(
+        _BaseDeveloperConnectRestTransport._BaseFetchGitRepositoryLinkPullRequest,
+        DeveloperConnectRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "DeveloperConnectRestTransport.FetchGitRepositoryLinkPullRequest"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: developer_connect.FetchGitRepositoryLinkPullRequestRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> developer_connect.PullRequest:
+            r"""Call the fetch git repository link
+            pull request method over HTTP.
+
+                Args:
+                    request (~.developer_connect.FetchGitRepositoryLinkPullRequestRequest):
+                        The request object. Request message for
+                    FetchGitRepositoryLinkPullRequest.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.developer_connect.PullRequest:
+                        Message representing a SCM Pull
+                    Request.
+
+            """
+
+            http_options = _BaseDeveloperConnectRestTransport._BaseFetchGitRepositoryLinkPullRequest._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_fetch_git_repository_link_pull_request(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeveloperConnectRestTransport._BaseFetchGitRepositoryLinkPullRequest,
+                    "_BaseFetchGitRepositoryLinkPullRequest__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.developerconnect_v1.DeveloperConnectClient.FetchGitRepositoryLinkPullRequest",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "FetchGitRepositoryLinkPullRequest",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = DeveloperConnectRestTransport._FetchGitRepositoryLinkPullRequest._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = developer_connect.PullRequest()
+            pb_resp = developer_connect.PullRequest.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_fetch_git_repository_link_pull_request(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_fetch_git_repository_link_pull_request_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = developer_connect.PullRequest.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.developerconnect_v1.DeveloperConnectClient.fetch_git_repository_link_pull_request",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "FetchGitRepositoryLinkPullRequest",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _FetchGitRepositoryLinkPullRequestList(
+        _BaseDeveloperConnectRestTransport._BaseFetchGitRepositoryLinkPullRequestList,
+        DeveloperConnectRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "DeveloperConnectRestTransport.FetchGitRepositoryLinkPullRequestList"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: developer_connect.FetchGitRepositoryLinkPullRequestListRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> developer_connect.FetchGitRepositoryLinkPullRequestListResponse:
+            r"""Call the fetch git repository link
+            pull request list method over HTTP.
+
+                Args:
+                    request (~.developer_connect.FetchGitRepositoryLinkPullRequestListRequest):
+                        The request object. Request message for
+                    FetchGitRepositoryLinkPullRequestList.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.developer_connect.FetchGitRepositoryLinkPullRequestListResponse:
+                        Response message for
+                    FetchGitRepositoryLinkPullRequestList.
+
+            """
+
+            http_options = _BaseDeveloperConnectRestTransport._BaseFetchGitRepositoryLinkPullRequestList._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_fetch_git_repository_link_pull_request_list(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeveloperConnectRestTransport._BaseFetchGitRepositoryLinkPullRequestList,
+                    "_BaseFetchGitRepositoryLinkPullRequestList__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.developerconnect_v1.DeveloperConnectClient.FetchGitRepositoryLinkPullRequestList",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "FetchGitRepositoryLinkPullRequestList",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = DeveloperConnectRestTransport._FetchGitRepositoryLinkPullRequestList._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = developer_connect.FetchGitRepositoryLinkPullRequestListResponse()
+            pb_resp = (
+                developer_connect.FetchGitRepositoryLinkPullRequestListResponse.pb(resp)
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_fetch_git_repository_link_pull_request_list(
+                resp
+            )
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_fetch_git_repository_link_pull_request_list_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = developer_connect.FetchGitRepositoryLinkPullRequestListResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.developerconnect_v1.DeveloperConnectClient.fetch_git_repository_link_pull_request_list",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "FetchGitRepositoryLinkPullRequestList",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -5352,6 +7212,321 @@ class DeveloperConnectRestTransport(_BaseDeveloperConnectRestTransport):
                 )
             return resp
 
+    class _ModifyGitRepositoryLinkPullRequest(
+        _BaseDeveloperConnectRestTransport._BaseModifyGitRepositoryLinkPullRequest,
+        DeveloperConnectRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "DeveloperConnectRestTransport.ModifyGitRepositoryLinkPullRequest"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: developer_connect.ModifyGitRepositoryLinkPullRequestRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> developer_connect.PullRequest:
+            r"""Call the modify git repository
+            link pull request method over HTTP.
+
+                Args:
+                    request (~.developer_connect.ModifyGitRepositoryLinkPullRequestRequest):
+                        The request object. Message for modifying SCM Pull
+                    Request.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.developer_connect.PullRequest:
+                        Message representing a SCM Pull
+                    Request.
+
+            """
+
+            http_options = _BaseDeveloperConnectRestTransport._BaseModifyGitRepositoryLinkPullRequest._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_modify_git_repository_link_pull_request(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeveloperConnectRestTransport._BaseModifyGitRepositoryLinkPullRequest,
+                    "_BaseModifyGitRepositoryLinkPullRequest__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.developerconnect_v1.DeveloperConnectClient.ModifyGitRepositoryLinkPullRequest",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "ModifyGitRepositoryLinkPullRequest",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = DeveloperConnectRestTransport._ModifyGitRepositoryLinkPullRequest._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = developer_connect.PullRequest()
+            pb_resp = developer_connect.PullRequest.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_modify_git_repository_link_pull_request(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_modify_git_repository_link_pull_request_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = developer_connect.PullRequest.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.developerconnect_v1.DeveloperConnectClient.modify_git_repository_link_pull_request",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "ModifyGitRepositoryLinkPullRequest",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _OpenGitRepositoryLinkPullRequest(
+        _BaseDeveloperConnectRestTransport._BaseOpenGitRepositoryLinkPullRequest,
+        DeveloperConnectRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "DeveloperConnectRestTransport.OpenGitRepositoryLinkPullRequest"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: developer_connect.OpenGitRepositoryLinkPullRequestRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> developer_connect.PullRequest:
+            r"""Call the open git repository link
+            pull request method over HTTP.
+
+                Args:
+                    request (~.developer_connect.OpenGitRepositoryLinkPullRequestRequest):
+                        The request object. Message for opening SCM Pull Request.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.developer_connect.PullRequest:
+                        Message representing a SCM Pull
+                    Request.
+
+            """
+
+            http_options = _BaseDeveloperConnectRestTransport._BaseOpenGitRepositoryLinkPullRequest._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_open_git_repository_link_pull_request(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDeveloperConnectRestTransport._BaseOpenGitRepositoryLinkPullRequest,
+                    "_BaseOpenGitRepositoryLinkPullRequest__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.developerconnect_v1.DeveloperConnectClient.OpenGitRepositoryLinkPullRequest",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "OpenGitRepositoryLinkPullRequest",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = DeveloperConnectRestTransport._OpenGitRepositoryLinkPullRequest._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = developer_connect.PullRequest()
+            pb_resp = developer_connect.PullRequest.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_open_git_repository_link_pull_request(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_open_git_repository_link_pull_request_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = developer_connect.PullRequest.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.developerconnect_v1.DeveloperConnectClient.open_git_repository_link_pull_request",
+                    extra={
+                        "serviceName": "google.cloud.developerconnect.v1.DeveloperConnect",
+                        "rpcName": "OpenGitRepositoryLinkPullRequest",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _StartOAuth(
         _BaseDeveloperConnectRestTransport._BaseStartOAuth, DeveloperConnectRestStub
     ):
@@ -5803,6 +7978,32 @@ class DeveloperConnectRestTransport(_BaseDeveloperConnectRestTransport):
             return resp
 
     @property
+    def add_git_repository_link_pull_request_comment(
+        self,
+    ) -> Callable[
+        [developer_connect.AddGitRepositoryLinkPullRequestCommentRequest],
+        developer_connect.PullRequestComment,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._AddGitRepositoryLinkPullRequestComment(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def add_git_repository_link_pull_request_review_comment(
+        self,
+    ) -> Callable[
+        [developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest],
+        developer_connect.PullRequestReviewComment,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._AddGitRepositoryLinkPullRequestReviewComment(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
     def create_account_connector(
         self,
     ) -> Callable[
@@ -5887,6 +8088,19 @@ class DeveloperConnectRestTransport(_BaseDeveloperConnectRestTransport):
         return self._DeleteUser(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def diff_git_repository_link_commit(
+        self,
+    ) -> Callable[
+        [developer_connect.DiffGitRepositoryLinkCommitRequest],
+        developer_connect.DiffGitRepositoryLinkCommitResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._DiffGitRepositoryLinkCommit(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
     def fetch_access_token(
         self,
     ) -> Callable[
@@ -5919,6 +8133,71 @@ class DeveloperConnectRestTransport(_BaseDeveloperConnectRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._FetchGitRefs(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def fetch_git_repository_link_commit(
+        self,
+    ) -> Callable[
+        [developer_connect.FetchGitRepositoryLinkCommitRequest],
+        developer_connect.FetchGitRepositoryLinkCommitResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._FetchGitRepositoryLinkCommit(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def fetch_git_repository_link_commit_list(
+        self,
+    ) -> Callable[
+        [developer_connect.FetchGitRepositoryLinkCommitListRequest],
+        developer_connect.FetchGitRepositoryLinkCommitListResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._FetchGitRepositoryLinkCommitList(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def fetch_git_repository_link_file_blame(
+        self,
+    ) -> Callable[
+        [developer_connect.FetchGitRepositoryLinkFileBlameRequest],
+        developer_connect.FetchGitRepositoryLinkFileBlameResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._FetchGitRepositoryLinkFileBlame(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def fetch_git_repository_link_pull_request(
+        self,
+    ) -> Callable[
+        [developer_connect.FetchGitRepositoryLinkPullRequestRequest],
+        developer_connect.PullRequest,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._FetchGitRepositoryLinkPullRequest(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def fetch_git_repository_link_pull_request_list(
+        self,
+    ) -> Callable[
+        [developer_connect.FetchGitRepositoryLinkPullRequestListRequest],
+        developer_connect.FetchGitRepositoryLinkPullRequestListResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._FetchGitRepositoryLinkPullRequestList(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
 
     @property
     def fetch_linkable_git_repositories(
@@ -6049,6 +8328,32 @@ class DeveloperConnectRestTransport(_BaseDeveloperConnectRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._ListUsers(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def modify_git_repository_link_pull_request(
+        self,
+    ) -> Callable[
+        [developer_connect.ModifyGitRepositoryLinkPullRequestRequest],
+        developer_connect.PullRequest,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ModifyGitRepositoryLinkPullRequest(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def open_git_repository_link_pull_request(
+        self,
+    ) -> Callable[
+        [developer_connect.OpenGitRepositoryLinkPullRequestRequest],
+        developer_connect.PullRequest,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._OpenGitRepositoryLinkPullRequest(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
 
     @property
     def start_o_auth(

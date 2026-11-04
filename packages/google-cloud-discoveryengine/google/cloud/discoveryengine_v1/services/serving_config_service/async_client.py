@@ -49,7 +49,12 @@ import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 
-from google.cloud.discoveryengine_v1.types import common, serving_config_service
+from google.cloud.discoveryengine_v1.services.serving_config_service import pagers
+from google.cloud.discoveryengine_v1.types import (
+    common,
+    serving_config,
+    serving_config_service,
+)
 from google.cloud.discoveryengine_v1.types import serving_config as gcd_serving_config
 
 from .client import ServingConfigServiceClient
@@ -308,6 +313,268 @@ class ServingConfigServiceAsyncClient:
                 },
             )
 
+    async def create_serving_config(
+        self,
+        request: Optional[
+            Union[serving_config_service.CreateServingConfigRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        serving_config: Optional[gcd_serving_config.ServingConfig] = None,
+        serving_config_id: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> gcd_serving_config.ServingConfig:
+        r"""Creates a ServingConfig.
+
+        Note: The Google Cloud console works only with the default
+        serving config. Additional ServingConfigs can be created and
+        managed only via the API.
+
+        A maximum of 100
+        [ServingConfig][google.cloud.discoveryengine.v1.ServingConfig]s
+        are allowed in an
+        [Engine][google.cloud.discoveryengine.v1.Engine], otherwise a
+        RESOURCE_EXHAUSTED error is returned.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import discoveryengine_v1
+
+            async def sample_create_serving_config():
+                # Create a client
+                client = discoveryengine_v1.ServingConfigServiceAsyncClient()
+
+                # Initialize request argument(s)
+                serving_config = discoveryengine_v1.ServingConfig()
+                serving_config.media_config.content_watched_percentage_threshold = 0.3811
+                serving_config.display_name = "display_name_value"
+                serving_config.solution_type = "SOLUTION_TYPE_AI_MODE"
+
+                request = discoveryengine_v1.CreateServingConfigRequest(
+                    parent="parent_value",
+                    serving_config=serving_config,
+                    serving_config_id="serving_config_id_value",
+                )
+
+                # Make the request
+                response = await client.create_serving_config(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.discoveryengine_v1.types.CreateServingConfigRequest, dict]]):
+                The request object. Request for CreateServingConfig
+                method.
+            parent (:class:`str`):
+                Required. Full resource name of parent. Format:
+                ``projects/{project}/locations/{location}/collections/{collection}/engines/{engine}``
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            serving_config (:class:`google.cloud.discoveryengine_v1.types.ServingConfig`):
+                Required. The ServingConfig to
+                create.
+
+                This corresponds to the ``serving_config`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            serving_config_id (:class:`str`):
+                Required. The ID to use for the ServingConfig, which
+                will become the final component of the ServingConfig's
+                resource name.
+
+                This value should be 4-63 characters, and valid
+                characters are /[a-zA-Z0-9][a-zA-Z0-9\_-]+/.
+
+                This corresponds to the ``serving_config_id`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.discoveryengine_v1.types.ServingConfig:
+                Configures metadata that is used to
+                generate serving time results (e.g.
+                search results or recommendation
+                predictions). The ServingConfig is
+                passed in the search and predict request
+                and generates results.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent, serving_config, serving_config_id]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, serving_config_service.CreateServingConfigRequest):
+            request = serving_config_service.CreateServingConfigRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+        if serving_config is not None:
+            request.serving_config = serving_config
+        if serving_config_id is not None:
+            request.serving_config_id = serving_config_id
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.create_serving_config
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def delete_serving_config(
+        self,
+        request: Optional[
+            Union[serving_config_service.DeleteServingConfigRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> None:
+        r"""Deletes a ServingConfig.
+
+        Returns a NOT_FOUND error if the ServingConfig does not exist.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import discoveryengine_v1
+
+            async def sample_delete_serving_config():
+                # Create a client
+                client = discoveryengine_v1.ServingConfigServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = discoveryengine_v1.DeleteServingConfigRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                await client.delete_serving_config(request=request)
+
+        Args:
+            request (Optional[Union[google.cloud.discoveryengine_v1.types.DeleteServingConfigRequest, dict]]):
+                The request object. Request for DeleteServingConfig
+                method.
+            name (:class:`str`):
+                Required. The resource name of the ServingConfig to
+                delete. Format:
+                ``projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/servingConfigs/{serving_config_id}``
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, serving_config_service.DeleteServingConfigRequest):
+            request = serving_config_service.DeleteServingConfigRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.delete_serving_config
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
     async def update_serving_config(
         self,
         request: Optional[
@@ -343,7 +610,7 @@ class ServingConfigServiceAsyncClient:
                 serving_config = discoveryengine_v1.ServingConfig()
                 serving_config.media_config.content_watched_percentage_threshold = 0.3811
                 serving_config.display_name = "display_name_value"
-                serving_config.solution_type = "SOLUTION_TYPE_GENERATIVE_CHAT"
+                serving_config.solution_type = "SOLUTION_TYPE_AI_MODE"
 
                 request = discoveryengine_v1.UpdateServingConfigRequest(
                     serving_config=serving_config,
@@ -441,6 +708,255 @@ class ServingConfigServiceAsyncClient:
         # Send the request.
         response = await rpc(
             request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def get_serving_config(
+        self,
+        request: Optional[
+            Union[serving_config_service.GetServingConfigRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> serving_config.ServingConfig:
+        r"""Gets a ServingConfig.
+
+        Returns a NotFound error if the ServingConfig does not
+        exist.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import discoveryengine_v1
+
+            async def sample_get_serving_config():
+                # Create a client
+                client = discoveryengine_v1.ServingConfigServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = discoveryengine_v1.GetServingConfigRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = await client.get_serving_config(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.discoveryengine_v1.types.GetServingConfigRequest, dict]]):
+                The request object. Request for GetServingConfig method.
+            name (:class:`str`):
+                Required. The resource name of the ServingConfig to get.
+                Format:
+                ``projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/servingConfigs/{serving_config_id}``
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.discoveryengine_v1.types.ServingConfig:
+                Configures metadata that is used to
+                generate serving time results (e.g.
+                search results or recommendation
+                predictions). The ServingConfig is
+                passed in the search and predict request
+                and generates results.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, serving_config_service.GetServingConfigRequest):
+            request = serving_config_service.GetServingConfigRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.get_serving_config
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def list_serving_configs(
+        self,
+        request: Optional[
+            Union[serving_config_service.ListServingConfigsRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListServingConfigsAsyncPager:
+        r"""Lists all ServingConfigs linked to this dataStore.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import discoveryengine_v1
+
+            async def sample_list_serving_configs():
+                # Create a client
+                client = discoveryengine_v1.ServingConfigServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = discoveryengine_v1.ListServingConfigsRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_serving_configs(request=request)
+
+                # Handle the response
+                async for response in page_result:
+                    print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.discoveryengine_v1.types.ListServingConfigsRequest, dict]]):
+                The request object. Request for ListServingConfigs
+                method.
+            parent (:class:`str`):
+                Required. Full resource name of the parent resource.
+                Format:
+                ``projects/{project}/locations/{location}/collections/{collection}/engines/{engine}``
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.discoveryengine_v1.services.serving_config_service.pagers.ListServingConfigsAsyncPager:
+                Response for ListServingConfigs
+                method.
+                Iterating over this object will yield
+                results and resolve additional pages
+                automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, serving_config_service.ListServingConfigsRequest):
+            request = serving_config_service.ListServingConfigsRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.list_serving_configs
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__aiter__` convenience method.
+        response = pagers.ListServingConfigsAsyncPager(
+            method=rpc,
+            request=request,
+            response=response,
             retry=retry,
             timeout=timeout,
             metadata=metadata,

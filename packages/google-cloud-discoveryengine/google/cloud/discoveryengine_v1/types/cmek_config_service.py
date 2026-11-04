@@ -112,8 +112,9 @@ class CmekConfig(proto.Message):
             resources
             ``projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{keyId}``.
         kms_key_version (str):
-            KMS key version resource name which will be used to encrypt
-            resources ``<kms_key>/cryptoKeyVersions/{keyVersion}``.
+            Output only. KMS key version resource name which will be
+            used to encrypt resources
+            ``<kms_key>/cryptoKeyVersions/{keyVersion}``.
         state (google.cloud.discoveryengine_v1.types.CmekConfig.State):
             Output only. The states of the CmekConfig.
         is_default (bool):
@@ -155,6 +156,11 @@ class CmekConfig(proto.Message):
             DELETED (8):
                 The KMS key is soft deleted. Some cleanup
                 policy will eventually be applied.
+            EXPIRED (9):
+                The KMS key is expired, meaning the key has
+                been disabled for 30+ days. The customer can
+                call DeleteCmekConfig to change the state to
+                DELETED.
         """
 
         STATE_UNSPECIFIED = 0
@@ -166,6 +172,7 @@ class CmekConfig(proto.Message):
         UNUSABLE = 5
         ACTIVE_ROTATING = 6
         DELETED = 8
+        EXPIRED = 9
 
     class NotebookLMState(proto.Enum):
         r"""States of NotebookLM.
