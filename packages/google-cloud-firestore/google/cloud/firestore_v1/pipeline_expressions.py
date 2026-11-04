@@ -2729,8 +2729,6 @@ class _OverExpression(WindowFunction):
 class AggregateFunction(WindowFunction):
     """A base class for aggregation functions that operate across multiple inputs."""
 
-    pass
-
 
 class Selectable(Expression):
     """Base class for expressions that can be selected or aliased in projection stages."""
