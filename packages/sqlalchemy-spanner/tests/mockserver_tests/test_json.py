@@ -30,6 +30,7 @@ from sqlalchemy.testing import eq_, is_instance_of, is_not_none
 from tests.mockserver_tests.mock_server_test_base import (
     MockServerTestBase,
     add_result,
+    add_single_result,
     add_update_count,
 )
 
@@ -142,6 +143,57 @@ LIMIT 1
         with Session(engine.execution_options(read_only=True)) as session:
             venue = session.execute(select(Venue)).first()[0]
             eq_(venue.description, expected)
+
+    def _test_select_json_value(self, expr_fn, expected_param, expected_result):
+        from tests.mockserver_tests.json_model import Venue
+
+        sql = "SELECT JSON_VALUE(venues.description, @a0) AS anon_1 \nFROM venues"
+        add_single_result(sql, "anon_1", TypeCode.STRING, [(expected_result,)])
+        engine = self.create_engine()
+
+        with Session(engine.execution_options(read_only=True)) as session:
+            val = session.scalar(select(expr_fn(Venue.description)))
+            eq_(val, expected_result)
+
+        requests = [
+            r for r in self.spanner_service.requests if isinstance(r, ExecuteSqlRequest)
+        ]
+        eq_(1, len(requests))
+        eq_(sql, requests[0].sql)
+        eq_(expected_param, requests[0].params["a0"])
+        eq_(TypeCode.STRING, requests[0].param_types["a0"].code)
+        return requests[0]
+
+    def test_select_json_key(self):
+        self._test_select_json_value(
+            lambda col: col["type"].as_string(), '$."type"', "Stadium"
+        )
+
+    def test_select_json_int_index_zero(self):
+        self._test_select_json_value(
+            lambda col: col[0].as_string(), "$[0]", "first_item"
+        )
+
+    def test_select_json_path(self):
+        self._test_select_json_value(
+            lambda col: col[("info", 0, "size")].as_string(),
+            '$."info"[0]."size"',
+            "Great",
+        )
+
+    def test_select_json_key_sql_injection_prevented(self):
+        malicious_key = (
+            'display") FROM venues WHERE FALSE UNION ALL '
+            "SELECT (SELECT secret FROM secrets) -- injected"
+        )
+        req = self._test_select_json_value(
+            lambda col: col[malicious_key].as_string(),
+            '$."display\\") FROM venues WHERE FALSE UNION ALL '
+            'SELECT (SELECT secret FROM secrets) -- injected"',
+            None,
+        )
+        assert "UNION ALL" not in req.sql
+        assert "secrets" not in req.sql
 
 
 def add_venue_query_result(sql: str, description: str):

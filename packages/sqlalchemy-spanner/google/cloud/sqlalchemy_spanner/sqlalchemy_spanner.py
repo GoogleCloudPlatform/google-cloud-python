@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import base64
+import collections.abc
 import re
 
 import sqlalchemy
@@ -37,7 +38,7 @@ from sqlalchemy.sql.compiler import (
     selectable,
 )
 from sqlalchemy.sql.default_comparator import operator_lookup
-from sqlalchemy.sql.operators import json_getitem_op
+from sqlalchemy.sql.operators import json_getitem_op, json_path_getitem_op
 
 from google.cloud import spanner_dbapi
 from google.cloud.sqlalchemy_spanner import version as sqlalchemy_spanner_version
@@ -86,6 +87,107 @@ def reset_connection(dbapi_conn, connection_record, reset_state=None):
 
 # register a method to get a single value of a JSON object
 OPERATORS[json_getitem_op] = operator_lookup["json_getitem_op"]
+
+
+_SPANNER_STRING_ESCAPE_TABLE = str.maketrans(
+    {
+        "\\": "\\\\",
+        '"': '\\"',
+        "'": "\\'",
+        "\n": "\\n",
+        "\r": "\\r",
+        "\t": "\\t",
+        **{
+            chr(c): f"\\u{c:04x}"
+            for c in (*range(0x00, 0x20), 0x7F)
+            if chr(c) not in ("\n", "\r", "\t")
+        },
+    }
+)
+
+
+def _escape_json_path_key(key):
+    """Escape a JSON member key for use inside double-quoted GoogleSQL JSONPath.
+
+    GoogleSQL's JSONPath lexer (`kEscKeyLexerStandard`) consumes `\\[^"]` as a
+    two-character pair during tokenization, while `RemoveBackSlashFollowedByChar`
+    only unescapes `\\"`. Doubling backslashes only when immediately preceding
+    `"` or end-of-string preserves interior backslashes while preventing any
+    trailing or quote-adjacent backslash from unescaping a `"` delimiter.
+    """
+    s = str(key)
+    s = re.sub(r'(\\+)(?="|$)', r"\1\1", s)
+    return s.replace('"', '\\"')
+
+
+def _escape_spanner_string_literal(value, dialect=None):
+    """Escape a string value as a double-quoted GoogleSQL string literal."""
+    escaped = str(value).translate(_SPANNER_STRING_ESCAPE_TABLE)
+    if dialect is not None and dialect.identifier_preparer._double_percents:
+        escaped = escaped.replace("%", "%%")
+    return f'"{escaped}"'
+
+
+def _is_json_path_sequence(value):
+    """Return True if value is a sequence of JSON path steps (not str/bytes)."""
+    return not isinstance(value, (str, bytes, bytearray)) and isinstance(
+        value, collections.abc.Sequence
+    )
+
+
+def _format_json_path_step(elem):
+    """Format a single JSONPath member key or integer array index step."""
+    if isinstance(elem, int) and not isinstance(elem, bool):
+        return "[%s]" % elem
+    return '."%s"' % _escape_json_path_key(elem)
+
+
+def _json_type_for_binary(binary, value):
+    """Return SpannerJSONPathType or SpannerJSONIndexType for a binary JSON op."""
+    if getattr(binary, "operator", None) is json_path_getitem_op or (
+        _is_json_path_sequence(value)
+    ):
+        return SpannerJSONPathType()
+    return SpannerJSONIndexType()
+
+
+class _FormatTypeMixin:
+    def _format_value(self, value):
+        raise NotImplementedError()
+
+    def bind_processor(self, dialect):
+        super_proc = self.string_bind_processor(dialect)
+
+        def process(value):
+            if value is None:
+                return None
+            formatted = self._format_value(value)
+            if super_proc:
+                formatted = super_proc(formatted)
+            return formatted
+
+        return process
+
+    def literal_processor(self, dialect):
+        def process(value):
+            if value is None:
+                return "NULL"
+            formatted = self._format_value(value)
+            return _escape_spanner_string_literal(formatted, dialect)
+
+        return process
+
+
+class SpannerJSONIndexType(_FormatTypeMixin, types.JSON.JSONIndexType):
+    def _format_value(self, value):
+        if _is_json_path_sequence(value):
+            return "$%s" % "".join(_format_json_path_step(elem) for elem in value)
+        return "$%s" % _format_json_path_step(value)
+
+
+class SpannerJSONPathType(_FormatTypeMixin, types.JSON.JSONPathType):
+    def _format_value(self, value):
+        return "$%s" % "".join(_format_json_path_step(elem) for elem in value)
 
 
 # PickleType that can be used with Spanner.
@@ -341,6 +443,39 @@ class SpannerSQLCompiler(SQLCompiler):
             binary.right._compiler_dispatch(self, **kw),
         )
 
+    def _json_value_binary(self, binary, eager_grouping=False, **kw):
+        """Build a parameterized or safely escaped JSON_VALUE() function call."""
+        left_text = self.process(binary.left, eager_grouping=eager_grouping, **kw)
+        right = binary.right
+
+        if isinstance(right, elements.BindParameter):
+            val = right.effective_value
+            if getattr(
+                binary, "operator", None
+            ) is json_path_getitem_op or _is_json_path_sequence(val):
+                if not isinstance(right.type, types.JSON.JSONPathType):
+                    right = right._clone(maintain_key=True)
+                    right.type = SpannerJSONPathType()
+            elif not isinstance(
+                right.type, (types.JSON.JSONIndexType, types.JSON.JSONPathType)
+            ):
+                right = right._clone(maintain_key=True)
+                if isinstance(right.type, type) and issubclass(
+                    right.type, (types.JSON.JSONIndexType, types.JSON.JSONPathType)
+                ):
+                    right.type = right.type()
+                else:
+                    right.type = _json_type_for_binary(binary, val)
+            right_text = self.process(right, eager_grouping=eager_grouping, **kw)
+        elif isinstance(right, elements.ClauseElement):
+            right_text = self.process(right, eager_grouping=eager_grouping, **kw)
+        else:
+            raw_value = getattr(right, "value", right)
+            json_type = _json_type_for_binary(binary, raw_value)
+            right_text = json_type.literal_processor(self.dialect)(raw_value)
+
+        return "JSON_VALUE(%s, %s)" % (left_text, right_text)
+
     def _generate_generic_binary(self, binary, opstring, eager_grouping=False, **kw):
         """The method is overriden to process JSON data type cases."""
         _in_binary = kw.get("_in_binary", False)
@@ -360,33 +495,17 @@ class SpannerSQLCompiler(SQLCompiler):
             if _in_binary and eager_grouping:
                 text = "(%s)" % text
         else:
-            # got JSON data
-            right_value = getattr(
-                binary.right, "value", None
-            ) or binary.right._compiler_dispatch(
-                self, eager_grouping=eager_grouping, **kw
-            )
-
-            text = (
-                binary.left._compiler_dispatch(
-                    self, eager_grouping=eager_grouping, **kw
-                )
-                + """, "$."""
-                + str(right_value)
-                + '"'
-            )
-            text = "JSON_VALUE(%s)" % text
+            text = self._json_value_binary(binary, eager_grouping=eager_grouping, **kw)
 
         return text
 
+    def visit_json_getitem_op_binary(self, binary, operator, **kw):
+        """Build a JSON_VALUE() function call for single-key JSON indexing."""
+        return self._json_value_binary(binary, **kw)
+
     def visit_json_path_getitem_op_binary(self, binary, operator, **kw):
         """Build a JSON_VALUE() function call."""
-        expr = """JSON_VALUE(%s, "$.%s")"""
-
-        return expr % (
-            self.process(binary.left, **kw),
-            self.process(binary.right, **kw),
-        )
+        return self._json_value_binary(binary, **kw)
 
     def render_literal_value(self, value, type_):
         """Render the value of a bind parameter as a quoted literal.
@@ -407,8 +526,28 @@ class SpannerSQLCompiler(SQLCompiler):
             # (e.g. JSON)
             return self.process(elements.Null._instance())
 
-        raw = ["\\", "'", '"', "\n", "\t", "\r"]
-        if isinstance(value, str) and any(single in value for single in raw):
+        if isinstance(type_, (types.JSON.JSONIndexType, types.JSON.JSONPathType)):
+            processor = type_._cached_literal_processor(self.dialect)
+            if processor:
+                return processor(value)
+
+        raw = ("\\", "'", '"', "\n", "\t", "\r")
+        has_ctrl = isinstance(value, str) and any(
+            (ord(ch) < 0x20 and ch not in ("\n", "\t")) or ord(ch) == 0x7F
+            for ch in value
+        )
+        if isinstance(value, str) and (
+            has_ctrl or any(single in value for single in raw)
+        ):
+            if (
+                has_ctrl
+                or '"""' in value
+                or value.endswith('"')
+                or value.endswith("\\")
+            ):
+                return _escape_spanner_string_literal(value, self.dialect)
+            if self.dialect.identifier_preparer._double_percents:
+                value = value.replace("%", "%%")
             value = 'r"""{}"""'.format(value)
             return value
         else:
@@ -905,6 +1044,10 @@ class SpannerDialect(DefaultDialect):
     execution_ctx_cls = SpannerExecutionContext
     _json_serializer = JsonObject
     _json_deserializer = JsonObject
+    colspecs = {
+        types.JSON.JSONIndexType: SpannerJSONIndexType,
+        types.JSON.JSONPathType: SpannerJSONPathType,
+    }
 
     @classmethod
     def dbapi(cls):
