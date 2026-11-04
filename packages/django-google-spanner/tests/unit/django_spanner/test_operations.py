@@ -371,18 +371,12 @@ class TestOperations(SpannerSimpleTestClass):
         u = uuid.UUID("12345678-1234-5678-1234-567812345678")
         adapted_uuid = self.db_operations.adapt_json_value({"u": u}, DjangoJSONEncoder)
         self.assertIsInstance(adapted_uuid, JsonObject)
-        self.assertEqual(
-            adapted_uuid, {"u": "12345678-1234-5678-1234-567812345678"}
-        )
+        self.assertEqual(adapted_uuid, {"u": "12345678-1234-5678-1234-567812345678"})
 
         field = JSONField()
         self.assertEqual(field.from_db_value(obj, None, None), {"a": 1})
-        self.assertEqual(
-            field.from_db_value(JsonObject([1, 2]), None, None), [1, 2]
-        )
-        self.assertEqual(
-            field.from_db_value(JsonObject("str"), None, None), "str"
-        )
+        self.assertEqual(field.from_db_value(JsonObject([1, 2]), None, None), [1, 2])
+        self.assertEqual(field.from_db_value(JsonObject("str"), None, None), "str")
         self.assertIsNone(field.from_db_value(JsonObject(), None, None))
         self.assertEqual(field.from_db_value({"a": 1}, None, None), {"a": 1})
         self.assertEqual(field.from_db_value('{"a": 1}', None, None), {"a": 1})
