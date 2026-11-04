@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import asyncio
 import inspect
+import io
 import logging
 from typing import IO, Any, Dict, List, Optional, Tuple, Union
 
@@ -62,6 +63,13 @@ _COMMON_READ_RETRYABLE_EXCEPTIONS = (
 )
 
 logger = logging.getLogger(__name__)
+
+
+def _uds_selected(client) -> bool:
+    """Whether the opt-in Rust Core SDK (gRPC-over-UDS) backend handles ``client``."""
+    from google.cloud.storage.asyncio._uds import _config
+
+    return _config.should_use_uds(client)
 
 
 def _is_open_retryable(exc):
@@ -137,6 +145,18 @@ def _wrap_user_buffer(user_buffer, length: int, accepts_memoryview: bool = False
     if hasattr(user_buffer, "write"):
         return user_buffer if accepts_memoryview else _BytesWriter(user_buffer)
     return _BufferWriter(user_buffer, length)
+
+
+def _wrap_uds_user_buffer(user_buffer, length: int):
+    """Wraps a destination for the Rust Core SDK (shared-memory) read path.
+
+    Shared-memory views are only valid during ``write()``, so custom ``write()``
+    destinations always receive ``bytes`` (regardless of ``accepts_memoryview``);
+    stdlib :class:`io.IOBase` streams copy synchronously and get the view as is.
+    """
+    if hasattr(user_buffer, "write") and isinstance(user_buffer, io.IOBase):
+        return user_buffer
+    return _wrap_user_buffer(user_buffer, length)
 
 
 class AsyncMultiRangeDownloader:
@@ -289,6 +309,8 @@ class AsyncMultiRangeDownloader:
         self._open_retries: int = 0
         self.is_finalized: bool = False
         self.full_obj_server_crc32c: Optional[int] = None
+        # Private Rust Core SDK (gRPC-over-UDS) session; None on the default GAPIC path.
+        self._uds = None
 
         self.multi_stream_config = multi_stream_config
         self._pool: Optional[_StreamPool] = None
@@ -340,6 +362,10 @@ class AsyncMultiRangeDownloader:
             raise ValueError("Underlying bidi-gRPC stream is already open")
 
         async with self._trace_span("Storage.AsyncMultiRangeDownloader.open"):
+            if _uds_selected(self.client):
+                if await self._open_uds(retry_policy, metadata):
+                    return
+
             self._user_open_on_error = (
                 retry_policy._on_error if retry_policy is not None else None
             )
@@ -461,6 +487,91 @@ class AsyncMultiRangeDownloader:
                         await self._pool.add_stream(stream)
             else:
                 self._pool = None
+
+    async def _open_uds(self, retry_policy, metadata) -> bool:
+        """Opens the object through the Rust Core SDK ``gcs-core-server``.
+
+        Returns ``False`` only in ``auto`` mode when the backend is unavailable (the
+        caller then uses the GAPIC path); raises ``CoreSdkUnavailableError`` in
+        ``force`` mode. GCS errors (``NotFound``, ...) propagate unchanged. GCS-level
+        retries and redirects (``routing_token``) are handled inside the Rust SDK;
+        ``retry_policy`` only governs re-opening the local UDS session.
+        """
+        from google.cloud.storage.asyncio._uds import _config
+        from google.cloud.storage.asyncio._uds.errors import CoreSdkUnavailableError
+        from google.cloud.storage.asyncio._uds.read_session import UdsReadSession
+        from google.cloud.storage.asyncio._uds.runtime import get_runtime
+
+        try:
+            runtime = await get_runtime(self.client)
+        except CoreSdkUnavailableError as exc:
+            if _config.uds_mode() == "force":
+                raise
+            _config.log_fallback(str(exc))
+            return False
+
+        session = UdsReadSession(
+            runtime,
+            self.bucket_name,
+            self.object_name,
+            generation=self.generation,
+            metadata=metadata,
+        )
+
+        async def _do_open():
+            return await session.open()
+
+        policy = retry_policy or AsyncRetry(
+            predicate=lambda exc: isinstance(exc, exceptions.ServiceUnavailable)
+            and not isinstance(exc, CoreSdkUnavailableError)
+        )
+        resource = await policy(_do_open)()
+        self._uds = session
+        if resource.generation:
+            self.generation = resource.generation
+        self.persisted_size = resource.size
+        self.is_finalized = bool(resource.finalized)
+        self.full_obj_server_crc32c = (
+            resource.crc32c
+            if self.is_finalized and resource.HasField("crc32c")
+            else None
+        )
+        # `read_handle` stays as provided: the unmodified Rust SDK does not expose it.
+        self._is_stream_open = True
+        return True
+
+    async def _download_ranges_uds(self, read_ranges) -> None:
+        """Downloads ``read_ranges`` through the Rust Core SDK read session.
+
+        Destinations follow the GAPIC path contract: buffer-protocol
+        destinations are filled in place (straight from shared memory) and
+        raise :exc:`BufferError` on short reads, ``write()`` destinations
+        receive ``bytes`` (stdlib :class:`io.IOBase` streams, which copy
+        synchronously, receive the shared-memory view directly). Rust validates
+        per-chunk and full-object CRC32C before data reaches the destination.
+        """
+        writers = []
+        try:
+            for offset, length, user_buffer in read_ranges:
+                writers.append(
+                    (offset, length, _wrap_uds_user_buffer(user_buffer, length))
+                )
+            try:
+                await self._uds.download_ranges(writers)
+            except DataCorruption:
+                if self.is_stream_open:
+                    await self.close()
+                raise
+            for offset, length, writer in writers:
+                if isinstance(writer, _BufferWriter) and writer._pos != length:
+                    raise BufferError(
+                        f"Buffer destination expected {length} bytes at offset "
+                        f"{offset}, got {writer._pos}"
+                    )
+        finally:
+            for _offset, _length, writer in writers:
+                if isinstance(writer, _BufferWriter):
+                    writer.close()
 
     async def _create_pooled_stream(self) -> _PooledStream:
         """Opens an additional pooled stream using current read_handle."""
@@ -870,7 +981,9 @@ class AsyncMultiRangeDownloader:
         if not self._is_stream_open:
             raise ValueError("Underlying bidi-gRPC stream is not open")
 
-        if self.read_obj_str is None or self._multiplexer is None:
+        if self._uds is None and (
+            self.read_obj_str is None or self._multiplexer is None
+        ):
             raise ValueError(
                 "Underlying bidi-gRPC stream or multiplexer is not initialized"
             )
@@ -879,6 +992,10 @@ class AsyncMultiRangeDownloader:
             "Storage.AsyncMultiRangeDownloader.downloadRanges",
             attributes={"gcp.storage.range.count": len(read_ranges)},
         ):
+            if self._uds is not None:
+                await self._download_ranges_uds(read_ranges)
+                return
+
             if retry_policy is None:
                 retry_policy = AsyncRetry(predicate=_is_read_retryable)
 
@@ -999,6 +1116,14 @@ class AsyncMultiRangeDownloader:
             raise ValueError("Underlying bidi-gRPC stream is not open")
 
         async with self._trace_span("Storage.AsyncMultiRangeDownloader.close"):
+            if self._uds is not None:
+                session, self._uds = self._uds, None
+                try:
+                    await session.close()
+                finally:
+                    self._is_stream_open = False
+                return
+
             if self._pool:
                 await self._pool.close()
                 self._pool = None
@@ -1030,4 +1155,6 @@ class AsyncMultiRangeDownloader:
     @property
     def object_metadata(self) -> Optional[_storage_v2.Object]:
         """The metadata of the object being downloaded."""
+        if self._uds is not None:
+            return self._uds.object_metadata
         return self.read_obj_str.object_metadata if self.read_obj_str else None

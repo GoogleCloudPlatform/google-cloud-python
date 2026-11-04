@@ -1,0 +1,91 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# [DO NOT MERGE] PoC-only standalone mirror of google-cloud-rust
+# `src/storage/grpc-uds` (branch feat/storage-grpc-uds-bidi-shm, stacked on
+# googleapis/google-cloud-rust#7350). The `.workspace = true` fields of the upstream
+# manifest are resolved to the concrete versions of google-cloud-rust's workspace, and
+# the server depends on the UNMODIFIED crates.io `google-cloud-storage` 1.21.0. At
+# graduation this directory is deleted: the crate lives only in google-cloud-rust.
+
+[package]
+name         = "storage-grpc-uds"
+description  = "Google Cloud Storage Rust core exposed as a gRPC server over a Unix Domain Socket (UDS)"
+version      = "0.0.0"
+build        = "build.rs"
+publish      = false
+edition      = "2024"
+authors      = ["Google LLC"]
+license      = "Apache-2.0"
+repository   = "https://github.com/googleapis/google-cloud-rust/tree/main"
+keywords     = ["gcp", "google-cloud", "google-cloud-rust", "sdk"]
+categories   = ["network-programming"]
+rust-version = "1.91.0"
+
+# Standalone: never join an enclosing Cargo workspace.
+[workspace]
+
+[lib]
+name       = "storage_grpc_uds"
+path       = "src/lib.rs"
+crate-type = ["rlib", "staticlib", "cdylib"]
+
+[[bin]]
+name = "gcs-core-server"
+path = "src/main.rs"
+
+[lints.rust]
+unexpected_cfgs = { level = "deny", check-cfg = [
+  'cfg(google_cloud_unstable_storage_bidi)',
+  'cfg(google_cloud_generate_protos)',
+] }
+
+[dependencies]
+bytes                = { version = "1.10", default-features = false, features = ["serde"] }
+clap                 = { version = "4", default-features = false, features = ["derive", "help", "std", "usage"] }
+crc32c               = { version = "0.6.8", default-features = false }
+google-cloud-auth    = { version = "1.18.0", default-features = false }
+google-cloud-gax     = { version = "1.15.0", default-features = false }
+google-cloud-storage = { version = "1.21.0", features = ["default-rustls-provider"] }
+google-cloud-wkt     = { version = "1.10.0", default-features = false }
+http                 = { version = "1.1", default-features = false, features = ["std"] }
+libc                 = { version = "0.2.183", default-features = true }
+prost                = { version = "0.14", default-features = true, features = ["std"] }
+serde_json           = { version = "1.0.150", default-features = false, features = ["std"] }
+tokio                = { version = "1.52.3", default-features = false, features = ["io-util", "macros", "net", "rt-multi-thread", "signal", "sync", "time"] }
+tokio-stream         = { version = "0.1.16", default-features = false, features = ["net"] }
+tonic                = { version = "0.14.5", default-features = false, features = ["codegen", "router", "server", "transport", "tls-native-roots"] }
+tonic-prost          = { version = "0.14.5", default-features = false }
+tracing              = { version = "0.1.44", default-features = false, features = ["attributes"] }
+tracing-subscriber   = { version = "0.3.23", default-features = false, features = ["env-filter", "fmt", "std"] }
+
+[build-dependencies]
+tonic-prost-build = { version = "0.14.5", default-features = false }
+
+[dev-dependencies]
+anyhow      = { version = "1.0.102", default-features = false, features = ["std"] }
+httptest    = { version = "0.16.4", default-features = false }
+hyper-util  = { version = "0.1.20", default-features = false, features = ["tokio"] }
+prost-types = { version = "0.14", default-features = true }
+serde_json  = { version = "1.0.150", default-features = false, features = ["std"] }
+tempfile    = { version = "3.26", default-features = false }
+tokio       = { version = "1.52.3", default-features = false, features = ["test-util"] }
+tower       = { version = "0.5.2", default-features = false, features = ["util"] }
+# `storage-grpc-mock` is an unpublished google-cloud-rust workspace crate (mockall-based
+# fake `google.storage.v2.Storage` server); pinned to google-cloud-rust main.
+storage-grpc-mock = { git = "https://github.com/googleapis/google-cloud-rust", rev = "95ea4818c9aa8d370af3807517295b6842fc05bb" }
+
+[profile.release]
+lto           = "thin"
+codegen-units = 4

@@ -1,0 +1,52 @@
+# Benchmark matrix for the gRPC-over-UDS (Rust core) PoC workloads:
+#   W4 = test_w4_bidi_read.py  (AsyncMultiRangeDownloader random ranges)
+#   W5 = test_w5_bidi_write.py (AsyncAppendableObjectWriter open->append->finalize)
+#
+# Kept intentionally FLAT (top-level `key: value` / `key: [a, b]` only) so the
+# benchmarks can parse it without PyYAML installed.
+#
+# Precedence (lowest -> highest): this file < UDS_BENCH_* env vars < CLI args
+# (CLI args only apply when a benchmark is run as a `__main__` script).
+# Sizes accept plain bytes or units: KiB/MiB/GiB (binary), KB/MB/GB (decimal).
+#
+# Modes (always gRPC CloudPath, attempt_direct_path=False):
+#   gapic      - stock GAPIC bidi gRPC path (baseline, UDS disabled)
+#   uds-inline - Rust core over UDS, payload inline in protobuf
+#                (GOOGLE_CLOUD_STORAGE_FORCE_USE_CORE_SDK=1, GOOGLE_CLOUD_STORAGE_UDS_SHM=off)
+#   uds-shm    - Rust core over UDS, zero-copy shared-memory payload
+#                (GOOGLE_CLOUD_STORAGE_FORCE_USE_CORE_SDK=1)
+# Topologies (uds-* modes only; GOOGLE_CLOUD_STORAGE_UDS_MODE):
+#   shared     - N worker processes : 1 gcs-core-server daemon
+#   child      - 1 worker process   : 1 gcs-core-server daemon
+
+# --- Environment (env: UDS_BENCH_PROJECT, UDS_BENCH_BUCKET, ...) -------------
+project: vaibhavpratap-sdk-test
+bucket: chandrasiri-gcsfs-zb            # Rapid (zonal) bucket
+bucket_zone: us-west4-a
+runner_vm: chandrasiri-rcu-us-central1-a
+runner_zone: us-central1-a
+
+# --- Common workload shape ----------------------------------------------------
+object_size: 200MB                      # UDS_BENCH_OBJECT_SIZE / --object-size
+workers: 48                             # UDS_BENCH_WORKERS / --workers (processes)
+concurrency: 1                          # UDS_BENCH_CONCURRENCY / --concurrency (coroutines per worker)
+duration_s: 300                         # UDS_BENCH_DURATION_S / --duration
+warmup_s: 30                            # UDS_BENCH_WARMUP_S / --warmup
+rounds: 3                               # UDS_BENCH_ROUNDS / --rounds
+modes: [gapic, uds-inline, uds-shm]     # UDS_BENCH_MODES / --modes
+topologies: [shared, child]             # UDS_BENCH_TOPOLOGIES / --topologies
+
+# --- W4: BidiReads (AsyncMultiRangeDownloader) --------------------------------
+range_size: 16MiB                       # UDS_BENCH_RANGE_SIZE / --range-size
+ranges_per_op: 1                        # UDS_BENCH_RANGES_PER_OP / --ranges-per-op
+num_objects: 0                          # UDS_BENCH_NUM_OBJECTS / --num-objects (0 => one object per worker)
+read_buffer: prealloc                   # UDS_BENCH_READ_BUFFER / --read-buffer: prealloc | bytesio | discard
+
+# --- W5: BidiWrites (AsyncAppendableObjectWriter) -----------------------------
+append_size: 16MiB                      # UDS_BENCH_APPEND_SIZE / --append-size
+flush_interval_bytes: [16MiB, 128MiB]   # UDS_BENCH_FLUSH_INTERVAL_BYTES / --flush-interval-bytes
+
+# --- Harness ------------------------------------------------------------------
+output_dir: ""                          # UDS_BENCH_OUTPUT_DIR / --output-dir ("" => $TMPDIR/uds-bench-results)
+setup_timeout_s: 600                    # UDS_BENCH_SETUP_TIMEOUT_S / --setup-timeout
+kill_spawned_daemons: true              # UDS_BENCH_KILL_SPAWNED_DAEMONS / --kill-spawned-daemons

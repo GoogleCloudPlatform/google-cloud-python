@@ -98,6 +98,16 @@ extras = {
         "black",
     ],
 }
+# PoC (opt-in): Rust Core SDK backend for AsyncMultiRangeDownloader /
+# AsyncAppendableObjectWriter. `google-cloud-storage-core` is a companion platform
+# wheel (built in googleapis/google-cloud-rust) shipping the `gcs-core-server`
+# executable; pip selects the matching CPU/libc wheel (or builds the sdist). The OS
+# marker skips it cleanly on Windows, where the SDK keeps using the GAPIC path.
+# `[grpc]` is intentionally untouched in the PoC.
+extras["uds"] = [
+    *extras["grpc"],
+    "google-cloud-storage-core >= 0.1.0, < 1.0.0; sys_platform == 'linux' or sys_platform == 'darwin'",
+]
 url = "https://github.com/googleapis/google-cloud-python/tree/main/packages/google-cloud-storage"
 
 package_root = os.path.abspath(os.path.dirname(__file__))

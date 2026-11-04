@@ -1,0 +1,7 @@
+# Build outputs of the PoC Rust server and its companion wheel: never commit them.
+/target/
+/dist/
+/python/dist/
+*.whl
+*.tar.gz
+__pycache__/

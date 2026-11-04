@@ -423,6 +423,45 @@ def system(session, test_type):
 
 
 @nox.session(python=SYSTEM_TEST_PYTHON_VERSIONS)
+def system_uds(session):
+    """Run the Rapid bucket system tests and the hermetic UDS E2E tests through the
+    Rust Core SDK (`gcs-core-server` over a Unix domain socket), gRPC CloudPath only.
+
+    Uses `GOOGLE_CLOUD_STORAGE_UDS_BINARY` for a locally built binary, otherwise the
+    `google-cloud-storage-core` wheel from the `uds` extra. `--force-use-core-sdk`
+    makes any inability to use the Rust Core SDK fail instead of falling back to GAPIC.
+    """
+    constraints_path = str(
+        CURRENT_DIRECTORY / "testing" / f"constraints-{session.python}.txt"
+    )
+    session.install(
+        "mock",
+        "pytest",
+        "pytest-asyncio",
+        "google-crc32c",
+        "google-cloud-testutils",
+        "google-cloud-kms",
+        "-c",
+        constraints_path,
+    )
+    extras = (
+        "grpc,protobuf"
+        if os.environ.get("GOOGLE_CLOUD_STORAGE_UDS_BINARY")
+        else "grpc,uds"
+    )
+    session.install("-e", f".[{extras}]", "-c", constraints_path)
+    session.run(
+        "py.test",
+        "--quiet",
+        f"--junitxml=system_uds_{session.python}_sponge_log.xml",
+        os.path.join("tests", "e2e", "uds"),
+        os.path.join("tests", "system", "test_rapid.py"),
+        "--force-use-core-sdk",
+        *session.posargs,
+    )
+
+
+@nox.session(python=SYSTEM_TEST_PYTHON_VERSIONS)
 def conftest_retry(session):
     """Run the retry conformance test suite."""
     json_conformance_tests = "tests/conformance/test_conformance.py"
