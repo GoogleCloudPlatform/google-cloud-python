@@ -258,10 +258,10 @@ class TestSpannerDialect(fixtures.TestBase):
         stmt1 = sa.select(records.c.data["key1"].as_string())
         stmt2 = sa.select(records.c.data["key2"].as_string())
 
-        c1, params1, _, _ = stmt1._compile_w_cache(
+        c1, params1, *_ = stmt1._compile_w_cache(
             dialect, compiled_cache=cache, column_keys=[]
         )
-        c2, params2, _, _ = stmt2._compile_w_cache(
+        c2, params2, *_ = stmt2._compile_w_cache(
             dialect, compiled_cache=cache, column_keys=[]
         )
         eq_(len(cache), 1)
@@ -279,10 +279,10 @@ class TestSpannerDialect(fixtures.TestBase):
         bp_cache = {}
         stmt_bp1 = sa.select(records.c.data[bp].as_string())
         stmt_bp2 = sa.select(records.c.data[bp].as_string())
-        c_bp1, p_bp1, _, _ = stmt_bp1._compile_w_cache(
+        c_bp1, p_bp1, *_ = stmt_bp1._compile_w_cache(
             dialect, compiled_cache=bp_cache, column_keys=[]
         )
-        c_bp2, p_bp2, _, _ = stmt_bp2._compile_w_cache(
+        c_bp2, p_bp2, *_ = stmt_bp2._compile_w_cache(
             dialect, compiled_cache=bp_cache, column_keys=[]
         )
         eq_(len(bp_cache), 1)
