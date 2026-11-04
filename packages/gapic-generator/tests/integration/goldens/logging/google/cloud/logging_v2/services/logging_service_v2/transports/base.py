@@ -19,6 +19,7 @@ from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 from google.cloud.logging_v2 import gapic_version as package_version
 from google.cloud.logging_v2._compat import (
     ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+    SUPPORTS_DEFAULT_HOST as _SUPPORTS_DEFAULT_HOST,
     WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
 )
 _ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
@@ -105,6 +106,8 @@ class LoggingServiceV2Transport(abc.ABC):
         self._scopes = scopes
         if not hasattr(self, "_ignore_credentials"):
             self._ignore_credentials: bool = False
+        if not hasattr(self, "_user_provided_channel"):
+            self._user_provided_channel: bool = False
 
         # If no credentials are provided, then determine the appropriate
         # defaults.
@@ -137,6 +140,12 @@ class LoggingServiceV2Transport(abc.ABC):
         self._host = host
 
         self._client_options = client_options
+        # If a pre-constructed gRPC channel was provided to the subclass before
+        # super().__init__, self._host is not used to create the channel and
+        # cannot be trusted as the default span endpoint.
+        self._default_host: Optional[str] = (
+            None if self._user_provided_channel else self._host
+        )
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
@@ -155,6 +164,8 @@ class LoggingServiceV2Transport(abc.ABC):
         """
         if _WRAP_METHOD_SUPPORTS_TRACING:
             kwargs["client_options"] = self._client_options
+            if _SUPPORTS_DEFAULT_HOST:
+                kwargs["default_host"] = self._default_host
             try:
                 kind = self.kind
             except NotImplementedError:
@@ -167,7 +178,7 @@ class LoggingServiceV2Transport(abc.ABC):
         # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
         #   falling back to gRPC wrapping), but tracing args are not.
         # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
-        for k in ["client_options", "method_name", "is_streaming"]:
+        for k in ["client_options", "method_name", "is_streaming", "default_host"]:
             kwargs.pop(k, None)
 
         try:
@@ -194,6 +205,8 @@ class LoggingServiceV2Transport(abc.ABC):
         """
         if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
             kwargs["client_options"] = self._client_options
+            if _SUPPORTS_DEFAULT_HOST:
+                kwargs["default_host"] = self._default_host
             try:
                 kind = self.kind
             except NotImplementedError:
@@ -206,7 +219,7 @@ class LoggingServiceV2Transport(abc.ABC):
         # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
         #   falling back to gRPC wrapping), but tracing args are not.
         # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
-        for k in ["client_options", "method_name", "is_streaming"]:
+        for k in ["client_options", "method_name", "is_streaming", "default_host"]:
             kwargs.pop(k, None)
 
         try:

@@ -93,6 +93,40 @@ class _BaseSessionServiceRestTransport(SessionServiceTransport):
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
 
+    class _BaseCancelAssistantTurn:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1beta/{name=projects/*/locations/*/apps/*/assistantSessions/*}:cancelAssistantTurn",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseGenerateOnboardingSuggestions:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1beta/{name=projects/*/locations/*/apps/*}:generateOnboardingSuggestions",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
     class _BaseRunSession:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -105,6 +139,23 @@ class _BaseSessionServiceRestTransport(SessionServiceTransport):
                 {
                     "method": "post",
                     "uri": "/v1beta/{config.session=projects/*/locations/*/apps/*/sessions/*}:runSession",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseStreamChatAiAssistant:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1beta/{name=projects/*/locations/*/apps/*/assistantSessions/*}:streamChatAiAssistant",
                     "body": "*",
                 },
             ]

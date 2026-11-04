@@ -22,6 +22,7 @@ import datetime
 import inspect
 import json
 import os
+import re
 import subprocess
 import sys
 import textwrap
@@ -72,14 +73,14 @@ _EXPECTED_PUBLIC_API = {
         "__aenter__": "async (self)",
         "__aexit__": "async (self, exc_type, exc_val, exc_tb)",
         "open": "async (self, retry_policy: 'Optional[AsyncRetry]' = None, metadata: 'Optional[List[Tuple[str, str]]]' = None) -> 'None'",
-        "download_ranges": "async (self, read_ranges: 'List[Tuple[int, int, BytesIO]]', lock: 'asyncio.Lock' = None, retry_policy: 'Optional[AsyncRetry]' = None, metadata: 'Optional[List[Tuple[str, str]]]' = None, enable_checksum: 'bool' = True) -> 'None'",
+        "download_ranges": "async (self, read_ranges: 'List[Tuple[int, int, Union[IO[bytes], bytearray, memoryview]]]', lock: 'Optional[asyncio.Lock]' = None, retry_policy: 'Optional[AsyncRetry]' = None, metadata: 'Optional[List[Tuple[str, str]]]' = None, enable_checksum: 'bool' = True, accepts_memoryview: 'bool' = False) -> 'None'",
         "close": "async (self)",
         "is_stream_open": "property",
         "object_metadata": "property",
     },
     AsyncAppendableObjectWriter: {
-        "__init__": "(self, client: google.cloud.storage.asyncio.async_grpc_client.AsyncGrpcClient, bucket_name: str, object_name: str, generation: Optional[int] = None, write_handle: Optional[google.cloud._storage_v2.types.storage.BidiWriteHandle] = None, writer_options: Optional[dict] = None, storage_class: Optional[str] = None)",
-        "from_blob": "classmethod (cls, client: google.cloud.storage.asyncio.async_grpc_client.AsyncGrpcClient, blob: google.cloud.storage.blob.Blob, write_handle: Optional[google.cloud._storage_v2.types.storage.BidiWriteHandle] = None, writer_options: Optional[dict] = None) -> 'AsyncAppendableObjectWriter'",
+        "__init__": "(self, client: google.cloud.storage.asyncio.async_grpc_client.AsyncGrpcClient, bucket_name: str, object_name: str, generation: Optional[int] = None, write_handle: Optional[google.cloud._storage_v2.types.storage.BidiWriteHandle] = None, writer_options: Optional[dict] = None, storage_class: Optional[str] = None, preconditions: Optional[google.cloud.storage.asyncio.async_appendable_object_writer.Preconditions] = None)",
+        "from_blob": "classmethod (cls, client: google.cloud.storage.asyncio.async_grpc_client.AsyncGrpcClient, blob: google.cloud.storage.blob.Blob, write_handle: Optional[google.cloud._storage_v2.types.storage.BidiWriteHandle] = None, writer_options: Optional[dict] = None, preconditions: Optional[google.cloud.storage.asyncio.async_appendable_object_writer.Preconditions] = None, generation=<object object>) -> 'AsyncAppendableObjectWriter'",
         "state_lookup": "async (self) -> int",
         "open": "async (self, retry_policy: Optional[google.api_core.retry.retry_unary_async.AsyncRetry] = None, metadata: Optional[List[Tuple[str, str]]] = None) -> None",
         "append": "async (self, data: bytes, retry_policy: Optional[google.api_core.retry.retry_unary_async.AsyncRetry] = None, metadata: Optional[List[Tuple[str, str]]] = None, enable_checksum: bool = True) -> None",
@@ -116,7 +117,11 @@ def _public_members(cls):
         elif callable(value):
             prefix = "async " if inspect.iscoroutinefunction(value) else ""
             out[name] = prefix + str(inspect.signature(value))
-    return out
+    # Sentinel defaults (e.g. ``from_blob(generation=_marker)``) repr with an address.
+    return {
+        name: re.sub(r"<object object at 0x[0-9a-f]+>", "<object object>", sig)
+        for name, sig in out.items()
+    }
 
 
 # ------------------------------------------------------------------- fixtures

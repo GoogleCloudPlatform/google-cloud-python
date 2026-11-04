@@ -627,10 +627,12 @@ def query_and_wait(
         )
         page_token = query_results.page_token
         more_pages = page_token is not None
-        if (
-            arrow_serialization_options is not None
-            and _arrow_query.reached_max_results(response, max_results)
-        ):
+        if arrow_serialization_options is not None:
+            # ARROW rows never come from jobs.getQueryResults: the RowIterator
+            # follows pageToken to the job's ReadRows stream, so only wait
+            # while the query runs. QueryJob.result() would also treat a
+            # missing totalRows, which BigQuery leaves out for cached results
+            # too large to return inline, as a statement without rows.
             more_pages = False
 
         if more_pages or not query_results.complete:

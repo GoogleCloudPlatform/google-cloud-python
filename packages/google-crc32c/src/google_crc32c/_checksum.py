@@ -21,7 +21,7 @@ class CommonChecksum(object):
     This class should not be used directly and requires an update implementation.
 
     Args:
-        initial_value (Optional[bytes]): the initial chunk of data from
+        initial_value (Optional[bytes-like]): the initial chunk of data from
             which the CRC32C checksum is computed.  Defaults to b''.
     """
 
@@ -36,7 +36,7 @@ class CommonChecksum(object):
         """Update the checksum with a new chunk of data.
 
         Args:
-            chunk (Optional[bytes]): a chunk of data used to extend
+            chunk (Optional[bytes-like]): a chunk of data used to extend
                 the CRC32C checksum.
         """
         raise NotImplementedError

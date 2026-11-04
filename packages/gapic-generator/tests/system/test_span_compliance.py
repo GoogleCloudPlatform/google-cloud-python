@@ -64,6 +64,7 @@ from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import Any
 
+import grpc
 import pytest
 
 try:
@@ -201,6 +202,18 @@ def span_exporter(monkeypatch):
 # ---------------------------------------------------------------------------
 
 
+def _insecure_channel_factory(host: str, **kwargs: Any) -> Any:
+    """Callable channel factory for local Showcase gRPC daemon testing.
+
+    Passing a callable factory instead of a pre-constructed ``grpc.Channel``
+    instance ensures ``EchoGrpcTransport`` resolves ``self._host`` from its
+    ``DEFAULT_HOST`` ("localhost:7469") through the standard host-managed path
+    (``self._grpc_channel`` created from ``self._host``) while still creating an
+    insecure channel to the local Showcase server.
+    """
+    return grpc.insecure_channel(host)
+
+
 def construct_observability_client(
     client_class,
     transport: str,
@@ -214,9 +227,9 @@ def construct_observability_client(
     transport configuration and OpenTelemetry client_options.
 
     Design Note:
-        Rather than modifying the shared system test fixture helper (`conftest.construct_client`),
-        wrapping it locally insulates this compliance suite with zero blast radius on existing
-        Showcase tests.
+        Wrapping the shared system test fixture helper (`conftest.construct_client`)
+        supplies observability test defaults (`use_mtls=False` and `_insecure_channel_factory`
+        for host-managed gRPC channels) without altering defaults for other Showcase tests.
 
     Args:
         client_class: The GAPIC client class to instantiate (e.g. EchoClient).
@@ -227,11 +240,15 @@ def construct_observability_client(
     Returns:
         An instantiated, ready-to-call Showcase client instance.
     """
+    channel = (
+        _insecure_channel_factory if (transport == "grpc" and not use_mtls) else None
+    )
     return conftest.construct_client(
         client_class,
         use_mtls=use_mtls,
         transport_name=transport,
         client_options=client_options,
+        channel=channel,
     )
 
 

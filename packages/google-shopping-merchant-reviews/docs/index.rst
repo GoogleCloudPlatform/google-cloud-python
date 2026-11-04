@@ -2,7 +2,7 @@
 
 .. include:: multiprocessing.rst
 
-This package includes clients for multiple versions of Merchant.
+This package includes clients for multiple versions of Shopping Merchant Reviews.
 By default, you will get version ``merchant_reviews_v1beta``.
 
 

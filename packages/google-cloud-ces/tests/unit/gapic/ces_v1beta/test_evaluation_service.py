@@ -5954,6 +5954,7 @@ def test_get_evaluation_result(request_type, transport: str = "grpc"):
             changelog="changelog_value",
             execution_state=evaluation.EvaluationResult.ExecutionState.QUEUED,
             golden_run_method=golden_run.GoldenRunMethod.STABLE,
+            outcome_metadata=evaluation.EvaluationResult.OutcomeMetadata.GRACEFUL_HANDOFF,
         )
         response = client.get_evaluation_result(request)
 
@@ -5975,6 +5976,10 @@ def test_get_evaluation_result(request_type, transport: str = "grpc"):
     assert response.changelog == "changelog_value"
     assert response.execution_state == evaluation.EvaluationResult.ExecutionState.QUEUED
     assert response.golden_run_method == golden_run.GoldenRunMethod.STABLE
+    assert (
+        response.outcome_metadata
+        == evaluation.EvaluationResult.OutcomeMetadata.GRACEFUL_HANDOFF
+    )
 
 
 def test_get_evaluation_result_non_empty_request_with_auto_populated_field():
@@ -6127,6 +6132,7 @@ async def test_get_evaluation_result_async(
                 changelog="changelog_value",
                 execution_state=evaluation.EvaluationResult.ExecutionState.QUEUED,
                 golden_run_method=golden_run.GoldenRunMethod.STABLE,
+                outcome_metadata=evaluation.EvaluationResult.OutcomeMetadata.GRACEFUL_HANDOFF,
             )
         )
         response = await client.get_evaluation_result(request)
@@ -6149,6 +6155,10 @@ async def test_get_evaluation_result_async(
     assert response.changelog == "changelog_value"
     assert response.execution_state == evaluation.EvaluationResult.ExecutionState.QUEUED
     assert response.golden_run_method == golden_run.GoldenRunMethod.STABLE
+    assert (
+        response.outcome_metadata
+        == evaluation.EvaluationResult.OutcomeMetadata.GRACEFUL_HANDOFF
+    )
 
 
 def test_get_evaluation_result_field_headers():
@@ -23150,6 +23160,7 @@ async def test_get_evaluation_result_empty_call_grpc_asyncio():
                 changelog="changelog_value",
                 execution_state=evaluation.EvaluationResult.ExecutionState.QUEUED,
                 golden_run_method=golden_run.GoldenRunMethod.STABLE,
+                outcome_metadata=evaluation.EvaluationResult.OutcomeMetadata.GRACEFUL_HANDOFF,
             )
         )
         await client.get_evaluation_result(request=None)
@@ -24117,20 +24128,24 @@ def test_create_evaluation_rest_call_success(request_type):
                                             "id": "id_value",
                                             "display_name": "display_name_value",
                                             "response": {"fields": {}},
+                                            "parent_tool_call_id": "parent_tool_call_id_value",
+                                            "agent_name": "agent_name_value",
                                         }
                                     ]
                                 },
                                 "image": {
                                     "mime_type": "mime_type_value",
                                     "data": b"data_blob",
+                                    "alt_text": "alt_text_value",
                                 },
                                 "blob": {
                                     "mime_type": "mime_type_value",
                                     "data": b"data_blob",
                                 },
                                 "variables": {},
-                                "event": {"event": "event_value"},
+                                "event": {"event": "event_value", "variables": {}},
                                 "will_continue": True,
+                                "recording_control": 1,
                             },
                             "agent_transfer": {
                                 "target_agent": "target_agent_value",
@@ -24143,6 +24158,8 @@ def test_create_evaluation_rest_call_success(request_type):
                                     "id": "id_value",
                                     "display_name": "display_name_value",
                                     "args": {},
+                                    "parent_tool_call_id": "parent_tool_call_id_value",
+                                    "agent_name": "agent_name_value",
                                 },
                                 "tool_response": {},
                                 "agent_response": {
@@ -24437,6 +24454,8 @@ def test_create_evaluation_rest_call_success(request_type):
                 "tool_call_behaviour": 1,
             },
             "golden_run_method": 1,
+            "root_span": {},
+            "outcome_metadata": 1,
         },
         "invalid": True,
         "last_ten_results": {},
@@ -25212,20 +25231,24 @@ def test_update_evaluation_rest_call_success(request_type):
                                             "id": "id_value",
                                             "display_name": "display_name_value",
                                             "response": {"fields": {}},
+                                            "parent_tool_call_id": "parent_tool_call_id_value",
+                                            "agent_name": "agent_name_value",
                                         }
                                     ]
                                 },
                                 "image": {
                                     "mime_type": "mime_type_value",
                                     "data": b"data_blob",
+                                    "alt_text": "alt_text_value",
                                 },
                                 "blob": {
                                     "mime_type": "mime_type_value",
                                     "data": b"data_blob",
                                 },
                                 "variables": {},
-                                "event": {"event": "event_value"},
+                                "event": {"event": "event_value", "variables": {}},
                                 "will_continue": True,
+                                "recording_control": 1,
                             },
                             "agent_transfer": {
                                 "target_agent": "target_agent_value",
@@ -25238,6 +25261,8 @@ def test_update_evaluation_rest_call_success(request_type):
                                     "id": "id_value",
                                     "display_name": "display_name_value",
                                     "args": {},
+                                    "parent_tool_call_id": "parent_tool_call_id_value",
+                                    "agent_name": "agent_name_value",
                                 },
                                 "tool_response": {},
                                 "agent_response": {
@@ -25532,6 +25557,8 @@ def test_update_evaluation_rest_call_success(request_type):
                 "tool_call_behaviour": 1,
             },
             "golden_run_method": 1,
+            "root_span": {},
+            "outcome_metadata": 1,
         },
         "invalid": True,
         "last_ten_results": {},
@@ -26675,6 +26702,7 @@ def test_get_evaluation_result_rest_call_success(request_type):
             changelog="changelog_value",
             execution_state=evaluation.EvaluationResult.ExecutionState.QUEUED,
             golden_run_method=golden_run.GoldenRunMethod.STABLE,
+            outcome_metadata=evaluation.EvaluationResult.OutcomeMetadata.GRACEFUL_HANDOFF,
         )
 
         # Wrap the value into a proper Response obj
@@ -26701,6 +26729,10 @@ def test_get_evaluation_result_rest_call_success(request_type):
     assert response.changelog == "changelog_value"
     assert response.execution_state == evaluation.EvaluationResult.ExecutionState.QUEUED
     assert response.golden_run_method == golden_run.GoldenRunMethod.STABLE
+    assert (
+        response.outcome_metadata
+        == evaluation.EvaluationResult.OutcomeMetadata.GRACEFUL_HANDOFF
+    )
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
