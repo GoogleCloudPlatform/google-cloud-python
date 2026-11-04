@@ -13,12 +13,6 @@ USE_TZ = True
 
 INSTALLED_APPS = [
     "django_spanner",  # Must be the first entry
-    "django.contrib.contenttypes",
-    "django.contrib.auth",
-    "django.contrib.sites",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
     "tests",
 ]
 

@@ -12,17 +12,13 @@ from django.conf import settings
 from django.db import connections
 from google.api_core import exceptions
 from google.cloud.spanner_v1 import Client
-from google.cloud.spanner_v1.instance import Backup, Instance
-from test_utils.retry import RetryErrors
+from google.cloud.spanner_v1.database import Database
 
 from django_spanner import USE_EMULATOR
-
-CREATE_INSTANCE = os.getenv("GOOGLE_CLOUD_TESTS_CREATE_SPANNER_INSTANCE") is not None
 
 SPANNER_OPERATION_TIMEOUT_IN_SECONDS = int(
     os.getenv("SPANNER_OPERATION_TIMEOUT_IN_SECONDS", 240)
 )
-EXISTING_INSTANCES = []
 INSTANCE_ID = os.environ.get(
     "GOOGLE_CLOUD_TESTS_SPANNER_INSTANCE",
     settings.DATABASES["default"]["INSTANCE"],
@@ -30,10 +26,6 @@ INSTANCE_ID = os.environ.get(
 PROJECT_ID = os.getenv(
     "GOOGLE_CLOUD_PROJECT",
     settings.DATABASES["default"]["PROJECT"],
-)
-DATABASE_NAME = os.getenv(
-    "DJANGO_SPANNER_DB",
-    settings.DATABASES["default"]["NAME"],
 )
 
 
@@ -45,13 +37,29 @@ class Config(object):
     """
 
     CLIENT = None
-    INSTANCE_CONFIG = None
     INSTANCE = None
     DATABASE = None
 
 
-def _list_instances():
-    return list(Config.CLIENT.list_instances())
+def _cleanup_stale_databases(instance):
+    """Drop stale dj_sys_<timestamp>_* databases older than 1 hour."""
+    cutoff = int(time.time()) - 1 * 60 * 60
+    try:
+        for db_pb in instance.list_databases():
+            db = Database.from_pb(db_pb, instance)
+            parts = db.database_id.split("_")
+            if len(parts) >= 3 and parts[0] == "dj" and parts[1] == "sys":
+                try:
+                    created_ts = int(parts[2])
+                except ValueError:
+                    continue
+                if created_ts < cutoff:
+                    try:
+                        db.drop()
+                    except Exception:
+                        pass
+    except Exception:
+        pass
 
 
 def setup_instance():
@@ -62,60 +70,20 @@ def setup_instance():
         from google.auth.credentials import AnonymousCredentials
 
         Config.CLIENT = Client(project=PROJECT_ID, credentials=AnonymousCredentials())
-    else:
-        Config.CLIENT = Client(project=PROJECT_ID)
-
-    retry = RetryErrors(exceptions.ServiceUnavailable)
-
-    configs = list(retry(Config.CLIENT.list_instance_configs)())
-
-    instances = retry(_list_instances)()
-    EXISTING_INSTANCES[:] = instances
-
-    # Delete test instances that are older than an hour.
-    cutoff = int(time.time()) - 1 * 60 * 60
-    instance_pbs = Config.CLIENT.list_instances("labels.python-spanner-systests:true")
-    for instance_pb in instance_pbs:
-        instance = Instance.from_pb(instance_pb, Config.CLIENT)
-        if "created" not in instance.labels:
-            continue
-        create_time = int(instance.labels["created"])
-        if create_time > cutoff:
-            continue
-        if not USE_EMULATOR:
-            # Instance cannot be deleted while backups exist.
-            for backup_pb in instance.list_backups():
-                backup = Backup.from_pb(backup_pb, instance)
-                backup.delete()
-        instance.delete()
-
-    Config.INSTANCE = Config.CLIENT.instance(INSTANCE_ID)
-    if not Config.INSTANCE.exists():
-        if not USE_EMULATOR:
-            # Defend against back-end returning configs for regions we aren't
-            # actually allowed to use.
-            configs = [config for config in configs if "-us-" in config.name]
-
+        configs = list(Config.CLIENT.list_instance_configs())
         if not configs:
             raise ValueError("List instance configs failed in module set up.")
-
-        Config.INSTANCE_CONFIG = configs[0]
-        config_name = configs[0].name
-        create_time = str(int(time.time()))
-        labels = {"django-spanner-systests": "true", "created": create_time}
-
-        Config.INSTANCE = Config.CLIENT.instance(
-            INSTANCE_ID, config_name, labels=labels
-        )
-        try:
+        Config.INSTANCE = Config.CLIENT.instance(INSTANCE_ID, configs[0].name)
+        if not Config.INSTANCE.exists():
             created_op = Config.INSTANCE.create()
-            created_op.result(
-                SPANNER_OPERATION_TIMEOUT_IN_SECONDS
-            )  # block until completion
-        except exceptions.AlreadyExists:
+            created_op.result(SPANNER_OPERATION_TIMEOUT_IN_SECONDS)
+        else:
             Config.INSTANCE.reload()
     else:
+        Config.CLIENT = Client(project=PROJECT_ID)
+        Config.INSTANCE = Config.CLIENT.instance(INSTANCE_ID)
         Config.INSTANCE.reload()
+        _cleanup_stale_databases(Config.INSTANCE)
 
 
 def teardown_instance():
@@ -126,7 +94,8 @@ def setup_database():
     if Config.DATABASE is not None:
         return
 
-    Config.DATABASE = Config.INSTANCE.database(DATABASE_NAME)
+    active_db_name = connections["default"].settings_dict["NAME"]
+    Config.DATABASE = Config.INSTANCE.database(active_db_name)
     if not Config.DATABASE.exists():
         try:
             created_op = Config.DATABASE.create()
@@ -148,13 +117,6 @@ def _cleanup_test_resources():
         except Exception:
             pass
         Config.DATABASE = None
-    if CREATE_INSTANCE and Config.INSTANCE is not None:
-        try:
-            if Config.INSTANCE.exists():
-                Config.INSTANCE.delete()
-        except Exception:
-            pass
-        Config.INSTANCE = None
 
 
 atexit.register(_cleanup_test_resources)
