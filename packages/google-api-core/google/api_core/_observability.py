@@ -76,27 +76,32 @@ def is_otel_capabilities_enabled(
 
 def _extract_endpoint_attributes(
     client_options: ClientOptions | dict[str, Any] | None = None,
+    default_host: str | None = None,
 ) -> dict[str, Any]:
     """Extracts server.address, server.port (if non-default), and url.domain from client options if present.
 
     Args:
         client_options (Optional[Union[ClientOptions, dict[str, Any]]]): The client options
             object or dictionary.
+        default_host (Optional[str]): Fallback transport host when ``api_endpoint`` is not
+            set on ``client_options``.
 
     Returns:
-        dict[str, Any]: A dictionary containing url.domain and, if an api_endpoint is configured,
-            server.address and non-default server.port.
+        dict[str, Any]: A dictionary containing url.domain and, if an api_endpoint or default_host
+            is configured, server.address and non-default server.port.
     """
     attrs: dict[str, Any] = {}
     endpoint = None
     universe_domain = None
 
     if isinstance(client_options, dict):
-        endpoint = client_options.get("api_endpoint")
+        endpoint = client_options.get("api_endpoint") or default_host
         universe_domain = client_options.get("universe_domain")
     elif client_options is not None:
-        endpoint = getattr(client_options, "api_endpoint", None)
+        endpoint = getattr(client_options, "api_endpoint", None) or default_host
         universe_domain = getattr(client_options, "universe_domain", None)
+    else:
+        endpoint = default_host
 
     attrs["url.domain"] = universe_domain or "googleapis.com"
 
@@ -367,12 +372,15 @@ class _AsyncSuppressingClientInterceptor(
 
 def get_otel_interceptor(
     client_options: ClientOptions | dict[str, Any] | None = None,
+    default_host: str | None = None,
 ) -> Callable[[grpc.Channel], grpc.Channel] | None:
     """Returns an interceptor callable that wraps a sync gRPC channel with OpenTelemetry tracing.
 
     Args:
         client_options (Optional[Union[ClientOptions, dict[str, Any]]]): The client options
             object or dictionary used for feature gating and extracting the tracer provider.
+        default_host (Optional[str]): Fallback transport host when ``api_endpoint`` is not
+            set on ``client_options``.
 
     Returns:
         Callable[[grpc.Channel], grpc.Channel] | None: An interceptor callable if OpenTelemetry
@@ -383,7 +391,9 @@ def get_otel_interceptor(
 
     import opentelemetry.instrumentation.grpc as otel_grpc  # type: ignore[import-not-found]
 
-    endpoint_attrs = _extract_endpoint_attributes(client_options)
+    endpoint_attrs = _extract_endpoint_attributes(
+        client_options, default_host=default_host
+    )
     request_hook = _make_grpc_client_request_hook(endpoint_attrs)
 
     interceptor: ClientInterceptor = otel_grpc.client_interceptor(
@@ -408,12 +418,15 @@ def get_otel_interceptor(
 
 def get_otel_async_interceptor(
     client_options: ClientOptions | dict[str, Any] | None = None,
+    default_host: str | None = None,
 ) -> Sequence[grpc.aio.ClientInterceptor] | None:
     """Returns async gRPC client interceptors for OpenTelemetry tracing.
 
     Args:
         client_options (Optional[Union[ClientOptions, dict[str, Any]]]): The client options
             object or dictionary used for feature gating and extracting the tracer provider.
+        default_host (Optional[str]): Fallback transport host when ``api_endpoint`` is not
+            set on ``client_options``.
 
     Returns:
         Sequence[grpc.aio.ClientInterceptor] | None: Instantiated OpenTelemetry async
@@ -425,7 +438,9 @@ def get_otel_async_interceptor(
     # Ignored by mypy: Optional dependency only loaded if early-return is skipped
     import opentelemetry.instrumentation.grpc as otel_grpc  # type: ignore[import-not-found]
 
-    endpoint_attrs = _extract_endpoint_attributes(client_options)
+    endpoint_attrs = _extract_endpoint_attributes(
+        client_options, default_host=default_host
+    )
     request_hook = _make_grpc_client_request_hook(endpoint_attrs)
 
     raw_interceptors = otel_grpc.aio_client_interceptors(
@@ -454,6 +469,7 @@ _CHANNEL_INTERCEPTOR_MAPPING = (
 def apply_otel_async_channel_interceptors(
     channel: Any,
     client_options: ClientOptions | dict[str, Any] | Sequence[Any] | None = None,
+    default_host: str | None = None,
 ) -> Any:
     """Creates and attaches OpenTelemetry client interceptors to the front of an async gRPC channel.
 
@@ -467,6 +483,8 @@ def apply_otel_async_channel_interceptors(
         client_options (Optional[Union[ClientOptions, dict[str, Any], Sequence[Any]]]): The client
             options used to resolve feature flags and tracer provider, or a sequence of
             pre-resolved interceptors.
+        default_host (Optional[str]): Fallback transport host when ``api_endpoint`` is not
+            set on ``client_options``.
 
     Returns:
         The channel with interceptors prepended to its internal lists,
@@ -474,7 +492,9 @@ def apply_otel_async_channel_interceptors(
     """
     otel_interceptors: Sequence[Any] | None
     if isinstance(client_options, (ClientOptions, dict)) or client_options is None:
-        otel_interceptors = get_otel_async_interceptor(client_options)
+        otel_interceptors = get_otel_async_interceptor(
+            client_options, default_host=default_host
+        )
     elif isinstance(client_options, Sequence):
         otel_interceptors = client_options
     else:

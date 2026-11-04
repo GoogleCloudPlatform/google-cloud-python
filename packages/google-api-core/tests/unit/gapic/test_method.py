@@ -753,6 +753,33 @@ def test_wrap_method_otel_tracing_endpoint_attributes_from_client_options(
     )
 
 
+def test_wrap_method_otel_tracing_endpoint_attributes_from_default_host(
+    mock_otel,
+):
+    """Proves that T3 spans fall back to default_host when client_options.api_endpoint is unset."""
+    mock_target = mock.Mock(return_value="ok")
+    options = client_options_lib.ClientOptions()
+    wrapped = google.api_core.gapic_v1.method.wrap_method(
+        mock_target,
+        client_options=options,
+        method_name="/google.showcase.v1beta1.Echo/Echo",
+        kind="grpc",
+        default_host="localhost:7469",
+    )
+    assert wrapped() == "ok"
+    mock_otel.tracer.start_as_current_span.assert_called_once_with(
+        "google.showcase.v1beta1.Echo/Echo",
+        kind="INTERNAL",
+        attributes={
+            "rpc.system.name": "grpc",
+            "rpc.method": "google.showcase.v1beta1.Echo/Echo",
+            "url.domain": "googleapis.com",
+            "server.address": "localhost",
+            "server.port": 7469,
+        },
+    )
+
+
 def test_extract_error_attributes_standard_exception():
     """Proves that _extract_error_attributes returns fallback error.type for exceptions without ErrorInfo."""
     assert google.api_core.gapic_v1.method._extract_error_attributes(

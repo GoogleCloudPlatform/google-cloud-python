@@ -301,6 +301,8 @@ class Image(proto.Message):
             - image/webp
         data (bytes):
             Required. Raw bytes of the image.
+        alt_text (str):
+            Optional. The alternative text for the image.
     """
 
     mime_type: str = proto.Field(
@@ -310,6 +312,10 @@ class Image(proto.Message):
     data: bytes = proto.Field(
         proto.BYTES,
         number=2,
+    )
+    alt_text: str = proto.Field(
+        proto.STRING,
+        number=4,
     )
 
 
@@ -344,6 +350,17 @@ class ToolCall(proto.Message):
         args (google.protobuf.struct_pb2.Struct):
             Optional. The input parameters and values for
             the tool in JSON object format.
+        parent_tool_call_id (str):
+            Output only. The id of the tool call that
+            caused this one, when it was issued by a
+            sub-agent working on behalf of a parent call.
+            Empty for top-level calls. Lets a client group a
+            sub-agent's work under the call that started it
+            instead of rendering every step as a sibling.
+        agent_name (str):
+            Output only. Human-readable name of the agent
+            that issued this call, e.g. "Contract
+            Architect". Empty when the root agent issued it.
     """
 
     tool: str = proto.Field(
@@ -369,6 +386,14 @@ class ToolCall(proto.Message):
         proto.MESSAGE,
         number=3,
         message=struct_pb2.Struct,
+    )
+    parent_tool_call_id: str = proto.Field(
+        proto.STRING,
+        number=6,
+    )
+    agent_name: str = proto.Field(
+        proto.STRING,
+        number=7,
     )
 
 
@@ -405,6 +430,17 @@ class ToolResponse(proto.Message):
             details (if any). If "output" and "error" keys
             are not specified, then whole "response" is
             treated as tool execution result.
+        parent_tool_call_id (str):
+            Output only. The id of the tool call that
+            caused this one, when it was issued by a
+            sub-agent working on behalf of a parent call.
+            Empty for top-level calls. Lets a client group a
+            sub-agent's work under the call that started it
+            instead of rendering every step as a sibling.
+        agent_name (str):
+            Output only. Human-readable name of the agent
+            that issued this call, e.g. "Contract
+            Architect". Empty when the root agent issued it.
     """
 
     tool: str = proto.Field(
@@ -430,6 +466,14 @@ class ToolResponse(proto.Message):
         proto.MESSAGE,
         number=3,
         message=struct_pb2.Struct,
+    )
+    parent_tool_call_id: str = proto.Field(
+        proto.STRING,
+        number=6,
+    )
+    agent_name: str = proto.Field(
+        proto.STRING,
+        number=7,
     )
 
 

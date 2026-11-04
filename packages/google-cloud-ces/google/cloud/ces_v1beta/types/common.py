@@ -34,6 +34,8 @@ __protobuf__ = proto.module(
         "ChannelProfile",
         "Span",
         "EvaluationRunCachingSettings",
+        "UiEvent",
+        "SessionCheckpoint",
     },
 )
 
@@ -128,7 +130,31 @@ class ModelSettings(proto.Message):
             responses that are more creative.
 
             This field is a member of `oneof`_ ``_temperature``.
+        thinking_level (google.cloud.ces_v1beta.types.ModelSettings.ThinkingLevel):
+            Optional. The thinking level of the model.
     """
+
+    class ThinkingLevel(proto.Enum):
+        r"""Thinking level configuration for the model.
+
+        Values:
+            THINKING_LEVEL_UNSPECIFIED (0):
+                Thinking level is unspecified.
+            DEFAULT (1):
+                Default thinking level.
+            LOW (2):
+                Low thinking level.
+            MEDIUM (3):
+                Medium thinking level.
+            HIGH (4):
+                High thinking level.
+        """
+
+        THINKING_LEVEL_UNSPECIFIED = 0
+        DEFAULT = 1
+        LOW = 2
+        MEDIUM = 3
+        HIGH = 4
 
     model: str = proto.Field(
         proto.STRING,
@@ -138,6 +164,11 @@ class ModelSettings(proto.Message):
         proto.DOUBLE,
         number=2,
         optional=True,
+    )
+    thinking_level: ThinkingLevel = proto.Field(
+        proto.ENUM,
+        number=5,
+        enum=ThinkingLevel,
     )
 
 
@@ -765,6 +796,45 @@ class EvaluationRunCachingSettings(proto.Message):
         proto.ENUM,
         number=1,
         enum=EvaluationRunCachingMode,
+    )
+
+
+class UiEvent(proto.Message):
+    r"""Represents a UI event payload.
+
+    Attributes:
+        mime_type (str):
+            The media type (MIME type) indicating the
+            format of the UI event payload (e.g.,
+            "application/json+a2ui").
+        json_payload (str):
+            The JSON payload representing the A2UI
+            surface.
+    """
+
+    mime_type: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    json_payload: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class SessionCheckpoint(proto.Message):
+    r"""Session checkpoint containing inferred user intent for
+    session title and UI.
+
+    Attributes:
+        user_intent (str):
+            Inferred user goal or topic for the session
+            (e.g. "Building E-Commerce Support Agent").
+    """
+
+    user_intent: str = proto.Field(
+        proto.STRING,
+        number=1,
     )
 
 

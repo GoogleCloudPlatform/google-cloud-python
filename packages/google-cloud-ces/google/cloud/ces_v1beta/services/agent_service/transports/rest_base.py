@@ -847,6 +847,23 @@ class _BaseAgentServiceRestTransport(AgentServiceTransport):
             ]
             return http_options
 
+    class _BaseUpdateAppVersion:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1beta/{app_version.name=projects/*/locations/*/apps/*/versions/*}",
+                    "body": "app_version",
+                },
+            ]
+            return http_options
+
     class _BaseUpdateDeployment:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
