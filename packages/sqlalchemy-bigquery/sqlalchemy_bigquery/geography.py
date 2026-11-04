@@ -180,6 +180,17 @@ def _fixup_st_arguments(element, compiler, **kw):
 
     This is not a user-facing function.
     """
+    # GeoAlchemy2 >= 0.21.0 wraps raw string arguments in an _UntypedString(NullType)
+    # bindparam for PostgreSQL compatibility. Restore String() for string bindparams
+    # so BigQueryCompiler.visit_bindparam emits typed %(...:STRING)s placeholders.
+    for argument in element.clauses.clauses:
+        if (
+            isinstance(argument, BindParameter)
+            and isinstance(argument.type, sqlalchemy.types.NullType)
+            and isinstance(argument.value, str)
+        ):
+            argument.type = sqlalchemy.types.String()
+
     argument_types = _argument_types.get(element.name.lower())
     if argument_types:
         for argument_type, argument in zip(argument_types, element.clauses.clauses):
@@ -189,6 +200,22 @@ def _fixup_st_arguments(element, compiler, **kw):
                 argument.type = argument_type()
 
     return compiler.visit_function(element, **kw)
+
+
+def _get_all_subclasses(cls):
+    subclasses = set(cls.__subclasses__())
+    for sub in list(subclasses):
+        subclasses.update(_get_all_subclasses(sub))
+    return subclasses
+
+
+# GeoAlchemy2 registers dialect-specific @compiles handlers (e.g. for "mssql")
+# on several GenericFunction subclasses such as ST_GeogFromText, which gives
+# those subclasses their own _compiler_dispatcher that shadows GenericFunction's.
+# Register _fixup_st_arguments on each subclass so the "bigquery" compiler
+# hook is invoked for all spatial functions.
+for _cls in _get_all_subclasses(geoalchemy2.functions.GenericFunction):
+    sqlalchemy.ext.compiler.compiles(_cls, "bigquery")(_fixup_st_arguments)
 
 
 _argument_types = dict(

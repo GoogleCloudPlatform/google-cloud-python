@@ -425,6 +425,14 @@ class AgentServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_update_app_version(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_app_version(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_update_deployment(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -2331,6 +2339,54 @@ class AgentServiceRestInterceptor:
         `post_update_app` interceptor. The (possibly modified) response returned by
         `post_update_app` will be passed to
         `post_update_app_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_app_version(
+        self,
+        request: agent_service.UpdateAppVersionRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        agent_service.UpdateAppVersionRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for update_app_version
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the AgentService server.
+        """
+        return request, metadata
+
+    def post_update_app_version(
+        self, response: gcc_app_version.AppVersion
+    ) -> gcc_app_version.AppVersion:
+        """Post-rpc interceptor for update_app_version
+
+        DEPRECATED. Please use the `post_update_app_version_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the AgentService server but before
+        it is returned to user code. This `post_update_app_version` interceptor runs
+        before the `post_update_app_version_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_app_version_with_metadata(
+        self,
+        response: gcc_app_version.AppVersion,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[gcc_app_version.AppVersion, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_app_version
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the AgentService server but before it is returned to user code.
+
+        We recommend only using this `post_update_app_version_with_metadata`
+        interceptor in new development instead of the `post_update_app_version` interceptor.
+        When both interceptors are used, this `post_update_app_version_with_metadata` interceptor runs after the
+        `post_update_app_version` interceptor. The (possibly modified) response returned by
+        `post_update_app_version` will be passed to
+        `post_update_app_version_with_metadata`.
         """
         return response, metadata
 
@@ -9343,6 +9399,161 @@ class AgentServiceRestTransport(_BaseAgentServiceRestTransport):
                 )
             return resp
 
+    class _UpdateAppVersion(
+        _BaseAgentServiceRestTransport._BaseUpdateAppVersion, AgentServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("AgentServiceRestTransport.UpdateAppVersion")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: agent_service.UpdateAppVersionRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> gcc_app_version.AppVersion:
+            r"""Call the update app version method over HTTP.
+
+            Args:
+                request (~.agent_service.UpdateAppVersionRequest):
+                    The request object. Request message for
+                [AgentService.UpdateAppVersion][google.cloud.ces.v1beta.AgentService.UpdateAppVersion].
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.gcc_app_version.AppVersion:
+                    In Customer Engagement Suite (CES),
+                an app version is a snapshot of the app
+                at a specific point in time. It is
+                immutable and cannot be modified once
+                created.
+
+            """
+
+            http_options = (
+                _BaseAgentServiceRestTransport._BaseUpdateAppVersion._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_update_app_version(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseAgentServiceRestTransport._BaseUpdateAppVersion,
+                    "_BaseUpdateAppVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.ces_v1beta.AgentServiceClient.UpdateAppVersion",
+                    extra={
+                        "serviceName": "google.cloud.ces.v1beta.AgentService",
+                        "rpcName": "UpdateAppVersion",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = AgentServiceRestTransport._UpdateAppVersion._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = gcc_app_version.AppVersion()
+            pb_resp = gcc_app_version.AppVersion.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_app_version(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_app_version_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = gcc_app_version.AppVersion.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.ces_v1beta.AgentServiceClient.update_app_version",
+                    extra={
+                        "serviceName": "google.cloud.ces.v1beta.AgentService",
+                        "rpcName": "UpdateAppVersion",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _UpdateDeployment(
         _BaseAgentServiceRestTransport._BaseUpdateDeployment, AgentServiceRestStub
     ):
@@ -10625,6 +10836,14 @@ class AgentServiceRestTransport(_BaseAgentServiceRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._UpdateApp(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def update_app_version(
+        self,
+    ) -> Callable[[agent_service.UpdateAppVersionRequest], gcc_app_version.AppVersion]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateAppVersion(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def update_deployment(
