@@ -1420,7 +1420,7 @@ def test_mrd_zero_copy_bidi_read(
             # Default write() destination receives bytes.
             default_sink = _RecordingSink()
             await mrd.download_ranges([(0, 0, default_sink)])
-            assert all(type(chunk) is bytes for chunk in default_sink.chunks)
+            assert all(isinstance(chunk, bytes) for chunk in default_sink.chunks)
             assert b"".join(default_sink.chunks) == object_data
 
             # accepts_memoryview=True receives memoryview when crc32c supports it.
@@ -1463,7 +1463,7 @@ def test_mrd_zero_copy_bidi_read(
             with pytest.raises(BufferError) as exc_info:
                 await mrd.download_ranges([(object_size - 1024, 4096, short_buf)])
 
-            assert exc_info.tb is not None
+            assert str(exc_info.value).endswith("got 1024")
             assert mrd.is_stream_open
             short_buf.clear()
 
