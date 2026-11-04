@@ -93,7 +93,19 @@ def get_prep_value(self, value):
     return value
 
 
+old_jsonfield_from_db_value = getattr(JSONField, "from_db_value", None)
+
+
+def jsonfield_from_db_value(self, value, expression, connection):
+    if isinstance(value, (dict, list, JsonObject)):
+        return value
+    if old_jsonfield_from_db_value:
+        return old_jsonfield_from_db_value(self, value, expression, connection)
+    return value
+
+
 JSONField.get_prep_value = get_prep_value
+JSONField.from_db_value = jsonfield_from_db_value
 
 old_datetimewithnanoseconds_eq = getattr(DatetimeWithNanoseconds, "__eq__", None)
 

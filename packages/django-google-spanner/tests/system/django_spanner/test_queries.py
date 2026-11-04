@@ -19,6 +19,8 @@ from .utils import (
 
 
 class TestQueries(TransactionTestCase):
+    available_apps = []
+
     @classmethod
     def setUpClass(cls):
         setup_instance()

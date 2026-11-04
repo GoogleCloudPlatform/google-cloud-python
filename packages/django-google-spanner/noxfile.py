@@ -232,11 +232,6 @@ def system_test(session):
 
 @nox.session(python=SYSTEM_TEST_PYTHON_VERSIONS)
 def system(session):
-    # TODO(https://github.com/googleapis/google-cloud-python/issues/16099):
-    # System tests were disabled in the split repo to speed up the build process.
-    # See: https://github.com/googleapis/python-spanner-django/pull/929.
-    session.skip("System tests are temporarily disabled.")
-
     print("System tests with django 5.2")
     system_test(session)
 

@@ -77,8 +77,6 @@ INSTALLED_APPS = [
 
 cd $TESTS_DIR/django/tests
 
-export RUNNING_SPANNER_BACKEND_TESTS="${RUNNING_SPANNER_BACKEND_TESTS:-1}"
-
 EXIT_STATUS=0
 PIDS=""
 for DJANGO_TEST_APP in $DJANGO_TEST_APPS
@@ -89,7 +87,11 @@ do
    fi
    APP_PREFIX=$(echo "$DJANGO_TEST_APP" | tr -cd 'a-z0-9' | cut -c1-6)
    RUN_ID=$(python3 -c 'import os; print(os.urandom(6).hex())')
-   TEST_DBNAME="${SPANNER_TEST_DB:-${APP_PREFIX}_${RUN_ID}}"
+   if [ -n "$SPANNER_TEST_DB" ]; then
+       TEST_DBNAME="${SPANNER_TEST_DB}_${APP_PREFIX}"
+   else
+       TEST_DBNAME="${APP_PREFIX}_${RUN_ID}"
+   fi
    TEST_DBNAME_OTHER="${TEST_DBNAME}-ot"
    SETTINGS_FILE="${TEST_DBNAME}_settings"
    create_settings

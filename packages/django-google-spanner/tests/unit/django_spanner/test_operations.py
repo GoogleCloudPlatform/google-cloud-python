@@ -347,3 +347,22 @@ class TestOperations(SpannerSimpleTestClass):
             "TIMESTAMP(FORMAT_TIMESTAMP('%Y-%m-%d %R:%E9S %Z', field, 'UTC'))",
         )
         self.assertIsNone(params)
+
+    def test_adapt_json_value(self):
+        from django.db.models import JSONField
+        from google.cloud.spanner_v1 import JsonObject
+
+        self.assertIsNone(self.db_operations.adapt_json_value(None, None))
+        obj = JsonObject({"a": 1})
+        self.assertIs(self.db_operations.adapt_json_value(obj, None), obj)
+        adapted_dict = self.db_operations.adapt_json_value({"a": 1}, None)
+        self.assertIsInstance(adapted_dict, JsonObject)
+        adapted_list = self.db_operations.adapt_json_value([1, 2], None)
+        self.assertIsInstance(adapted_list, JsonObject)
+        self.assertEqual(self.db_operations.adapt_json_value("str", None), '"str"')
+
+        field = JSONField()
+        self.assertIs(field.from_db_value(obj, None, None), obj)
+        self.assertEqual(field.from_db_value({"a": 1}, None, None), {"a": 1})
+        self.assertEqual(field.from_db_value('{"a": 1}', None, None), {"a": 1})
+        self.assertIsNone(field.from_db_value(None, None, None))

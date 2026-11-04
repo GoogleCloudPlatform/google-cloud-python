@@ -25,6 +25,8 @@ from .models import Event
 
 @unittest.skipIf(USE_EMULATOR, "Check Constraint is not implemented in emulator.")
 class TestCheckConstraint(TransactionTestCase):
+    available_apps = []
+
     @classmethod
     def setUpClass(cls):
         setup_instance()

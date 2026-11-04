@@ -27,15 +27,8 @@ export PYTHONPATH=$PYTHONPATH:$(pwd):$(pwd)/$DJANGO_TESTS_DIR/django
 
 python3 create_test_instance.py
 
-# If no SPANNER_TEST_DB is set, generate a unique one
-# so that we can have multiple tests running without
-# conflicting which changes and constraints. We'll always
-# cleanup the created database.
-TEST_DBNAME=${SPANNER_TEST_DB:-$(python3 -c 'import os, time; print(chr(ord("a") + time.time_ns() % 26)+os.urandom(10).hex())')}
-TEST_DBNAME_OTHER="$TEST_DBNAME-ot"
 INSTANCE=${SPANNER_TEST_INSTANCE:-spanner-django-python-systest}
 PROJECT=${PROJECT_ID:-$GOOGLE_CLOUD_PROJECT}
-SETTINGS_FILE="$TEST_DBNAME-settings"
 TESTS_DIR=${DJANGO_TESTS_DIR:-django_tests}
 
 create_settings() {
@@ -76,8 +69,6 @@ INSTALLED_APPS = [
 
 cd $TESTS_DIR/django/tests
 
-export RUNNING_SPANNER_BACKEND_TESTS="${RUNNING_SPANNER_BACKEND_TESTS:-1}"
-
 EXIT_STATUS=0
 PIDS=""
 for DJANGO_TEST_APP in $DJANGO_TEST_APPS
@@ -88,7 +79,12 @@ do
    fi
    APP_PREFIX=$(echo "$DJANGO_TEST_APP" | tr -cd 'a-z0-9' | cut -c1-6)
    RUN_ID=$(python3 -c 'import os; print(os.urandom(6).hex())')
-   TEST_DBNAME="${SPANNER_TEST_DB:-${APP_PREFIX}_${RUN_ID}}"
+   if [ -n "$SPANNER_TEST_DB" ]; then
+       DB_PREFIX=$(echo "$SPANNER_TEST_DB" | cut -c1-20)
+       TEST_DBNAME="${DB_PREFIX}_${APP_PREFIX}"
+   else
+       TEST_DBNAME="${APP_PREFIX}_${RUN_ID}"
+   fi
    TEST_DBNAME_OTHER="${TEST_DBNAME}-ot"
    SETTINGS_FILE="${TEST_DBNAME}_settings"
    create_settings
