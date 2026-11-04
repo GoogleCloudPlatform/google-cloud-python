@@ -20,7 +20,6 @@ from google.cloud.spanner_dbapi.parse_utils import (
     TimestampStr,
     escape_name,
 )
-from google.cloud.spanner_v1 import JsonObject
 
 
 class DatabaseOperations(BaseDatabaseOperations):
@@ -771,12 +770,3 @@ class DatabaseOperations(BaseDatabaseOperations):
         Return the SQL for rolling back to a savepoint.
         """
         return "SELECT 1"
-
-    def adapt_json_value(self, value, encoder):
-        if value is None:
-            return None
-        if isinstance(value, JsonObject):
-            return value
-        if isinstance(value, (dict, list)):
-            return JsonObject(value)
-        return super().adapt_json_value(value, encoder)

@@ -5,8 +5,6 @@
 # https://developers.google.com/open-source/licenses/bsd
 
 import os
-import time
-import uuid
 
 DEBUG = True
 USE_TZ = True
@@ -31,10 +29,7 @@ INSTANCE_ID = os.environ.get(
 PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT", "emulator-test-project")
 
 # _get_test_db_name method in creation.py addes prefix of 'test_' to db name.
-DATABASE_NAME = os.getenv(
-    "DJANGO_SPANNER_DB",
-    f"dj_sys_{int(time.time())}_{uuid.uuid4().hex[:6]}",
-)
+DATABASE_NAME = os.getenv("DJANGO_SPANNER_DB", "django_test_db")
 
 DATABASES = {
     "default": {

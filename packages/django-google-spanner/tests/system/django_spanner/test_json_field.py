@@ -22,8 +22,6 @@ from .models import Detail
 
 @unittest.skipIf(USE_EMULATOR, "Jsonfield is not implemented in emulator.")
 class TestJsonField(TransactionTestCase):
-    available_apps = []
-
     @classmethod
     def setUpClass(cls):
         setup_instance()
