@@ -361,6 +361,21 @@ def test_decode_missing_crytography_alg(monkeypatch):
     assert excinfo.match(r"cryptography")
 
 
+def test_decode_alg_key_type_mismatch_is_invalid_signature():
+    # The token claims ES256 but the provided certificate is an RSA key. The
+    # verifier class is selected from the (attacker controlled) algorithm
+    # header, so this mismatch must be treated as an invalid signature and
+    # raise a library error instead of leaking a built-in exception.
+    headers = json.dumps({"kid": "1", "alg": "ES256"})
+    token = b".".join(
+        map(lambda seg: base64.b64encode(seg.encode("utf-8")), [headers, "{}", "sig"])
+    )
+
+    with pytest.raises(ValueError) as excinfo:
+        jwt.decode(token, certs=PUBLIC_CERT_BYTES)
+    assert excinfo.match(r"Could not verify token signature")
+
+
 def test_roundtrip_explicit_key_id(token_factory):
     token = token_factory(key_id="3")
     certs = {"2": OTHER_CERT_BYTES, "3": PUBLIC_CERT_BYTES}

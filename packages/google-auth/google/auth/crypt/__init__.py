@@ -75,9 +75,17 @@ def verify_signature(message, signature, certs, verifier_cls=rsa.RSAVerifier):
         certs = [certs]
 
     for cert in certs:
-        verifier = verifier_cls.from_string(cert)
-        if verifier.verify(message, signature):
-            return True
+        try:
+            verifier = verifier_cls.from_string(cert)
+            if verifier.verify(message, signature):
+                return True
+        except (TypeError, ValueError):
+            # Example: the algorithm header of the token to verify selects an
+            # ECDSA verifier while the certificate carries an RSA key (or vice
+            # versa). This is an invalid signature, not an error in the library,
+            # so keep trying the remaining certificates rather than leaking a
+            # Python built-in exception to the caller.
+            continue
     return False
 
 
