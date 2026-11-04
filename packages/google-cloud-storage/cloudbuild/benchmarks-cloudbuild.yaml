@@ -100,13 +100,22 @@ steps:
       - "generate-ssh-key"
       - "package-code"
 
-  # Step 4: Display benchmark performance summary table in Cloud Build logs
+  # Step 3: Display benchmark performance summary table in Cloud Build logs
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     id: "display-benchmark-results"
-    entrypoint: "python3"
+    entrypoint: "bash"
     args:
-      - "packages/google-cloud-storage/cloudbuild/display_benchmark_results.py"
-      - "/workspace/report/bench_result.json"
+      - "-c"
+      - |
+        set -euo pipefail
+        GCLOUD_PYTHON="$$(gcloud info --quiet --format='value(basic.python_location)')"
+        if [[ -z "$${GCLOUD_PYTHON}" || ! -x "$${GCLOUD_PYTHON}" ]]; then
+          echo "ERROR: Unable to locate executable gcloud bundled Python (got '$${GCLOUD_PYTHON}')." >&2
+          exit 1
+        fi
+        exec "$${GCLOUD_PYTHON}" \
+          packages/google-cloud-storage/cloudbuild/display_benchmark_results.py \
+          /workspace/report/bench_result.json
     waitFor:
       - "run-benchmark-on-vm"
 

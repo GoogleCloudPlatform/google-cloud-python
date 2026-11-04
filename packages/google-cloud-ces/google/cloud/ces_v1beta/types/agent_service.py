@@ -86,6 +86,7 @@ __protobuf__ = proto.module(
         "ListDeploymentsResponse",
         "GetDeploymentRequest",
         "CreateDeploymentRequest",
+        "DeployChannelResponse",
         "UpdateDeploymentRequest",
         "DeleteDeploymentRequest",
         "ListToolsetsRequest",
@@ -99,6 +100,7 @@ __protobuf__ = proto.module(
         "GetAppVersionRequest",
         "DeleteAppVersionRequest",
         "CreateAppVersionRequest",
+        "UpdateAppVersionRequest",
         "RestoreAppVersionRequest",
         "RestoreAppVersionResponse",
         "GenerateAppResourceRequest",
@@ -419,6 +421,15 @@ class ImportAppRequest(proto.Message):
             file with the app folder structure.
 
             This field is a member of `oneof`_ ``app``.
+        json_patch_content (str):
+            Optional. Patch content as a JSON string.
+
+            This field is a member of `oneof`_ ``json_patch``.
+        json_patch_gcs_uri (str):
+            Optional. A Cloud Storage URI pointing to a
+            JSON file containing the patches.
+
+            This field is a member of `oneof`_ ``json_patch``.
         parent (str):
             Required. The parent resource name with the
             location of the app to import.
@@ -459,6 +470,11 @@ class ImportAppRequest(proto.Message):
             conflict_resolution_strategy (google.cloud.ces_v1beta.types.ImportAppRequest.ImportOptions.ConflictResolutionStrategy):
                 Optional. The strategy to use when resolving
                 conflicts during import.
+            validate_only (bool):
+                Optional. Flag for dry-running the import
+                process. If set to true, the import process will
+                only perform validations and will not make any
+                changes to the existing app or create a new one.
         """
 
         class ConflictResolutionStrategy(proto.Enum):
@@ -502,6 +518,10 @@ class ImportAppRequest(proto.Message):
             number=1,
             enum="ImportAppRequest.ImportOptions.ConflictResolutionStrategy",
         )
+        validate_only: bool = proto.Field(
+            proto.BOOL,
+            number=2,
+        )
 
     gcs_uri: str = proto.Field(
         proto.STRING,
@@ -512,6 +532,16 @@ class ImportAppRequest(proto.Message):
         proto.BYTES,
         number=5,
         oneof="app",
+    )
+    json_patch_content: str = proto.Field(
+        proto.STRING,
+        number=9,
+        oneof="json_patch",
+    )
+    json_patch_gcs_uri: str = proto.Field(
+        proto.STRING,
+        number=10,
+        oneof="json_patch",
     )
     parent: str = proto.Field(
         proto.STRING,
@@ -1681,6 +1711,22 @@ class CreateDeploymentRequest(proto.Message):
     )
 
 
+class DeployChannelResponse(proto.Message):
+    r"""Response message for
+    [AgentService.DeployChannel][google.cloud.ces.v1beta.AgentService.DeployChannel].
+
+    Attributes:
+        deployment (google.cloud.ces_v1beta.types.Deployment):
+            The created deployment.
+    """
+
+    deployment: gcc_deployment.Deployment = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=gcc_deployment.Deployment,
+    )
+
+
 class UpdateDeploymentRequest(proto.Message):
     r"""Request message for
     [AgentService.UpdateDeployment][google.cloud.ces.v1beta.AgentService.UpdateDeployment].
@@ -2076,6 +2122,30 @@ class CreateAppVersionRequest(proto.Message):
         proto.MESSAGE,
         number=3,
         message=gcc_app_version.AppVersion,
+    )
+
+
+class UpdateAppVersionRequest(proto.Message):
+    r"""Request message for
+    [AgentService.UpdateAppVersion][google.cloud.ces.v1beta.AgentService.UpdateAppVersion].
+
+    Attributes:
+        app_version (google.cloud.ces_v1beta.types.AppVersion):
+            Required. The app version to update.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. The list of fields to update. If empty, fields
+            ``display_name`` and ``description`` will be updated.
+    """
+
+    app_version: gcc_app_version.AppVersion = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=gcc_app_version.AppVersion,
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask_pb2.FieldMask,
     )
 
 
