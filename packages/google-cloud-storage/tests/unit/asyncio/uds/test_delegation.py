@@ -119,9 +119,45 @@ def _public_members(cls):
             out[name] = prefix + str(inspect.signature(value))
     # Sentinel defaults (e.g. ``from_blob(generation=_marker)``) repr with an address.
     return {
-        name: re.sub(r"<object object at 0x[0-9a-f]+>", "<object object>", sig)
+        name: _normalize_unions(
+            re.sub(r"<object object at 0x[0-9a-f]+>", "<object object>", sig)
+        )
         for name, sig in out.items()
     }
+
+
+def _split_top_level(args):
+    parts, depth, start = [], 0, 0
+    for i, ch in enumerate(args):
+        if ch == "[":
+            depth += 1
+        elif ch == "]":
+            depth -= 1
+        elif ch == "," and depth == 0:
+            parts.append(args[start:i].strip())
+            start = i + 1
+    parts.append(args[start:].strip())
+    return parts
+
+
+def _normalize_unions(sig):
+    """Renders ``Optional[X]`` / ``Union[X, Y]`` as ``X | None`` / ``X | Y``.
+
+    Python 3.14 reprs evaluated ``typing.Optional`` / ``typing.Union`` annotations
+    with ``|``; normalizing keeps the snapshot valid on every supported version.
+    """
+    match = re.search(r"\b(Optional|Union)\[", sig)
+    if match is None:
+        return sig
+    end, depth = match.end(), 1
+    while depth:
+        depth += {"[": 1, "]": -1}.get(sig[end], 0)
+        end += 1
+    args = _split_top_level(sig[match.end() : end - 1])
+    if match.group(1) == "Optional":
+        args.append("None")
+    union = " | ".join(_normalize_unions(arg) for arg in args)
+    return _normalize_unions(sig[: match.start()] + union + sig[end:])
 
 
 # ------------------------------------------------------------------- fixtures
@@ -216,7 +252,20 @@ def _mock_client():
 
 @pytest.mark.parametrize("cls", list(_EXPECTED_PUBLIC_API), ids=lambda c: c.__name__)
 def test_public_signatures_unchanged(cls):
-    assert _public_members(cls) == _EXPECTED_PUBLIC_API[cls]
+    expected = {
+        name: _normalize_unions(sig) for name, sig in _EXPECTED_PUBLIC_API[cls].items()
+    }
+    assert _public_members(cls) == expected
+
+
+def test_normalize_unions():
+    assert _normalize_unions("x: 'Optional[List[Tuple[str, str]]]' = None") == (
+        "x: 'List[Tuple[str, str]] | None' = None"
+    )
+    assert _normalize_unions("-> Union[int, Optional[Dict[str, int]]]") == (
+        "-> int | Dict[str, int] | None"
+    )
+    assert _normalize_unions("(self) -> int") == "(self) -> int"
 
 
 def test_async_grpc_client_signature_reports_attempt_direct_path_true():
