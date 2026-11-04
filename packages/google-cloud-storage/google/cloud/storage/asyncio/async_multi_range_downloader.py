@@ -295,6 +295,7 @@ class AsyncMultiRangeDownloader:
         self._primary_stream: Optional[_PooledStream] = None
         self._metadata: Optional[List[Tuple[str, str]]] = None
         self._open_retry_policy: Optional[AsyncRetry] = None
+        self._user_open_on_error: Optional[Any] = None
 
     def _trace_span(
         self,
@@ -339,6 +340,9 @@ class AsyncMultiRangeDownloader:
             raise ValueError("Underlying bidi-gRPC stream is already open")
 
         async with self._trace_span("Storage.AsyncMultiRangeDownloader.open"):
+            self._user_open_on_error = (
+                retry_policy._on_error if retry_policy is not None else None
+            )
             if retry_policy is None:
 
                 def on_error_wrapper(exc):
@@ -396,6 +400,7 @@ class AsyncMultiRangeDownloader:
                             f"routing_token={self._routing_token}",
                         )
                     )
+                    self._routing_token = None
 
                 await self.read_obj_str.open(
                     metadata=current_metadata if current_metadata else None
@@ -459,10 +464,36 @@ class AsyncMultiRangeDownloader:
 
     async def _create_pooled_stream(self) -> _PooledStream:
         """Opens an additional pooled stream using current routing and read_handle."""
+        """Opens an additional pooled stream using current read_handle."""
         stream: Optional[_AsyncReadObjectStream] = None
+        pooled_routing_token: Optional[str] = None
+        user_on_error = self._user_open_on_error
+
+        def _on_pooled_open_error(exc):
+            nonlocal pooled_routing_token
+            self._open_retries += 1
+            logger.warning(f"Error occurred while opening MRD: {exc}")
+            routing_token, read_handle = _handle_redirect(exc)
+            if routing_token:
+                pooled_routing_token = routing_token
+            if read_handle:
+                self.read_handle = read_handle
+            if user_on_error:
+                user_on_error(exc)
+
+        base_policy = self._open_retry_policy
+        pooled_retry_policy = AsyncRetry(
+            predicate=_is_open_retryable,
+            initial=base_policy._initial,
+            maximum=base_policy._maximum,
+            multiplier=base_policy._multiplier,
+            deadline=base_policy._deadline,
+            on_error=_on_pooled_open_error,
+        )
 
         async def _do_open_pooled():
             nonlocal stream
+            nonlocal stream, pooled_routing_token
             if stream is not None and getattr(stream, "is_stream_open", False):
                 try:
                     await stream.close()
@@ -473,9 +504,12 @@ class AsyncMultiRangeDownloader:
 
             current_metadata = list(self._metadata) if self._metadata else []
             if self._routing_token:
+            if pooled_routing_token:
                 current_metadata.append(
                     ("x-goog-request-params", f"routing_token={self._routing_token}")
+                    ("x-goog-request-params", f"routing_token={pooled_routing_token}")
                 )
+                pooled_routing_token = None
 
             stream = _AsyncReadObjectStream(
                 client=self.client.grpc_client,
@@ -492,6 +526,7 @@ class AsyncMultiRangeDownloader:
                 self.read_handle = stream.read_handle
 
         await self._open_retry_policy(_do_open_pooled)()
+        await pooled_retry_policy(_do_open_pooled)()
 
         mux = _StreamMultiplexer(stream)
         return _PooledStream(stream, mux)
@@ -503,6 +538,7 @@ class AsyncMultiRangeDownloader:
         async def factory():
             current_handle = state.get("read_handle") or self.read_handle
             current_token = state.get("routing_token") or self._routing_token
+            current_token = state.get("routing_token")
 
             stream = _AsyncReadObjectStream(
                 client=self.client.grpc_client,
@@ -520,6 +556,7 @@ class AsyncMultiRangeDownloader:
                         f"routing_token={current_token}",
                     )
                 )
+                state["routing_token"] = None
 
             await stream.open(metadata=current_metadata if current_metadata else None)
 
@@ -598,6 +635,7 @@ class AsyncMultiRangeDownloader:
                 "download_states": download_states,
                 "read_handle": self.read_handle,
                 "routing_token": self._routing_token,
+                "routing_token": None,
                 "enable_checksum": enable_checksum,
                 "full_obj_server_crc32c": self.full_obj_server_crc32c,
             }
