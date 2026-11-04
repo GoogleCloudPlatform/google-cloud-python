@@ -25,7 +25,7 @@ replacements:
 
   - paths:
       - "packages/google-cloud-pubsub/google/pubsub_v1/services/*/client.py"
-    before: 'class\n(?:[ \t]*\n)*([ \t]+)self\._transport = transport_init\('
+    before: 'class\n(?:[ \t]*\n)*([ \t]+)transport_kwargs = \{'
     after: |-
       class
       \g<1>emulator_host = os.environ.get("PUBSUB_EMULATOR_HOST")
@@ -35,7 +35,7 @@ replacements:
       \g<1>    else:
       \g<1>        channel = grpc.aio.insecure_channel(target=emulator_host)
       \g<1>    transport_init = functools.partial(transport_init, channel=channel)
-      \g<1>self._transport = transport_init(
+      \g<1>transport_kwargs = {
     count: 3
 
   - paths:

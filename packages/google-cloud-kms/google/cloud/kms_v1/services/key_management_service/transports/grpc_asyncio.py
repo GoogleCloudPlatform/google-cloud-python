@@ -13,16 +13,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
@@ -37,6 +46,7 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.kms_v1._compat import _observability, apply_async_channel_interceptors
 from google.cloud.kms_v1.types import resources, service
 
 from .base import DEFAULT_CLIENT_INFO, KeyManagementServiceTransport
@@ -205,6 +215,10 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -256,6 +270,12 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -311,6 +331,7 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -332,12 +353,26 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -1518,9 +1553,12 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
         return self._stubs["generate_random_bytes"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.list_key_rings: self._wrap_method(
+            self.list_key_rings: self._wrap_async_method(
                 self.list_key_rings,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1534,8 +1572,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/ListKeyRings",
             ),
-            self.list_crypto_keys: self._wrap_method(
+            self.list_crypto_keys: self._wrap_async_method(
                 self.list_crypto_keys,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1549,8 +1588,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/ListCryptoKeys",
             ),
-            self.list_crypto_key_versions: self._wrap_method(
+            self.list_crypto_key_versions: self._wrap_async_method(
                 self.list_crypto_key_versions,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1564,8 +1604,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/ListCryptoKeyVersions",
             ),
-            self.list_import_jobs: self._wrap_method(
+            self.list_import_jobs: self._wrap_async_method(
                 self.list_import_jobs,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1579,8 +1620,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/ListImportJobs",
             ),
-            self.list_retired_resources: self._wrap_method(
+            self.list_retired_resources: self._wrap_async_method(
                 self.list_retired_resources,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1594,8 +1636,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/ListRetiredResources",
             ),
-            self.get_key_ring: self._wrap_method(
+            self.get_key_ring: self._wrap_async_method(
                 self.get_key_ring,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1609,8 +1652,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/GetKeyRing",
             ),
-            self.get_crypto_key: self._wrap_method(
+            self.get_crypto_key: self._wrap_async_method(
                 self.get_crypto_key,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1624,8 +1668,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/GetCryptoKey",
             ),
-            self.get_crypto_key_version: self._wrap_method(
+            self.get_crypto_key_version: self._wrap_async_method(
                 self.get_crypto_key_version,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1639,8 +1684,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/GetCryptoKeyVersion",
             ),
-            self.get_public_key: self._wrap_method(
+            self.get_public_key: self._wrap_async_method(
                 self.get_public_key,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1654,8 +1700,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/GetPublicKey",
             ),
-            self.get_import_job: self._wrap_method(
+            self.get_import_job: self._wrap_async_method(
                 self.get_import_job,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1669,8 +1716,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/GetImportJob",
             ),
-            self.get_retired_resource: self._wrap_method(
+            self.get_retired_resource: self._wrap_async_method(
                 self.get_retired_resource,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1684,8 +1732,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/GetRetiredResource",
             ),
-            self.create_key_ring: self._wrap_method(
+            self.create_key_ring: self._wrap_async_method(
                 self.create_key_ring,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1699,8 +1748,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/CreateKeyRing",
             ),
-            self.create_crypto_key: self._wrap_method(
+            self.create_crypto_key: self._wrap_async_method(
                 self.create_crypto_key,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1714,13 +1764,15 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/CreateCryptoKey",
             ),
-            self.create_crypto_key_version: self._wrap_method(
+            self.create_crypto_key_version: self._wrap_async_method(
                 self.create_crypto_key_version,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/CreateCryptoKeyVersion",
             ),
-            self.delete_crypto_key: self._wrap_method(
+            self.delete_crypto_key: self._wrap_async_method(
                 self.delete_crypto_key,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1734,8 +1786,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/DeleteCryptoKey",
             ),
-            self.delete_crypto_key_version: self._wrap_method(
+            self.delete_crypto_key_version: self._wrap_async_method(
                 self.delete_crypto_key_version,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1749,23 +1802,27 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/DeleteCryptoKeyVersion",
             ),
-            self.import_crypto_key_version: self._wrap_method(
+            self.import_crypto_key_version: self._wrap_async_method(
                 self.import_crypto_key_version,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/ImportCryptoKeyVersion",
             ),
-            self.import_trusted_key_wrapped_crypto_key_version: self._wrap_method(
+            self.import_trusted_key_wrapped_crypto_key_version: self._wrap_async_method(
                 self.import_trusted_key_wrapped_crypto_key_version,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/ImportTrustedKeyWrappedCryptoKeyVersion",
             ),
-            self.export_trusted_key_wrapped_crypto_key_version: self._wrap_method(
+            self.export_trusted_key_wrapped_crypto_key_version: self._wrap_async_method(
                 self.export_trusted_key_wrapped_crypto_key_version,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/ExportTrustedKeyWrappedCryptoKeyVersion",
             ),
-            self.create_import_job: self._wrap_method(
+            self.create_import_job: self._wrap_async_method(
                 self.create_import_job,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1779,8 +1836,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/CreateImportJob",
             ),
-            self.update_crypto_key: self._wrap_method(
+            self.update_crypto_key: self._wrap_async_method(
                 self.update_crypto_key,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1794,8 +1852,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/UpdateCryptoKey",
             ),
-            self.update_crypto_key_version: self._wrap_method(
+            self.update_crypto_key_version: self._wrap_async_method(
                 self.update_crypto_key_version,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1809,8 +1868,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/UpdateCryptoKeyVersion",
             ),
-            self.update_crypto_key_primary_version: self._wrap_method(
+            self.update_crypto_key_primary_version: self._wrap_async_method(
                 self.update_crypto_key_primary_version,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1824,8 +1884,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/UpdateCryptoKeyPrimaryVersion",
             ),
-            self.destroy_crypto_key_version: self._wrap_method(
+            self.destroy_crypto_key_version: self._wrap_async_method(
                 self.destroy_crypto_key_version,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1839,8 +1900,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/DestroyCryptoKeyVersion",
             ),
-            self.restore_crypto_key_version: self._wrap_method(
+            self.restore_crypto_key_version: self._wrap_async_method(
                 self.restore_crypto_key_version,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1854,8 +1916,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/RestoreCryptoKeyVersion",
             ),
-            self.encrypt: self._wrap_method(
+            self.encrypt: self._wrap_async_method(
                 self.encrypt,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1869,8 +1932,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/Encrypt",
             ),
-            self.decrypt: self._wrap_method(
+            self.decrypt: self._wrap_async_method(
                 self.decrypt,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1884,18 +1948,21 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/Decrypt",
             ),
-            self.raw_encrypt: self._wrap_method(
+            self.raw_encrypt: self._wrap_async_method(
                 self.raw_encrypt,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/RawEncrypt",
             ),
-            self.raw_decrypt: self._wrap_method(
+            self.raw_decrypt: self._wrap_async_method(
                 self.raw_decrypt,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/RawDecrypt",
             ),
-            self.asymmetric_sign: self._wrap_method(
+            self.asymmetric_sign: self._wrap_async_method(
                 self.asymmetric_sign,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1909,8 +1976,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/AsymmetricSign",
             ),
-            self.asymmetric_decrypt: self._wrap_method(
+            self.asymmetric_decrypt: self._wrap_async_method(
                 self.asymmetric_decrypt,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1924,8 +1992,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/AsymmetricDecrypt",
             ),
-            self.mac_sign: self._wrap_method(
+            self.mac_sign: self._wrap_async_method(
                 self.mac_sign,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1939,8 +2008,9 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/MacSign",
             ),
-            self.mac_verify: self._wrap_method(
+            self.mac_verify: self._wrap_async_method(
                 self.mac_verify,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1954,13 +2024,15 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/MacVerify",
             ),
-            self.decapsulate: self._wrap_method(
+            self.decapsulate: self._wrap_async_method(
                 self.decapsulate,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/Decapsulate",
             ),
-            self.generate_random_bytes: self._wrap_method(
+            self.generate_random_bytes: self._wrap_async_method(
                 self.generate_random_bytes,
                 default_retry=retries.AsyncRetry(
                     initial=0.1,
@@ -1974,43 +2046,45 @@ class KeyManagementServiceGrpcAsyncIOTransport(KeyManagementServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.kms.v1.KeyManagementService/GenerateRandomBytes",
             ),
-            self.get_location: self._wrap_method(
+            self.get_location: self._wrap_async_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: self._wrap_method(
+            self.list_locations: self._wrap_async_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.get_iam_policy: self._wrap_method(
+            self.get_iam_policy: self._wrap_async_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/GetIamPolicy",
             ),
-            self.set_iam_policy: self._wrap_method(
+            self.set_iam_policy: self._wrap_async_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/SetIamPolicy",
             ),
-            self.test_iam_permissions: self._wrap_method(
+            self.test_iam_permissions: self._wrap_async_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/TestIamPermissions",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

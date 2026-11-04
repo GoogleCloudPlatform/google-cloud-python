@@ -16,12 +16,24 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.bigtable_admin_v2 import gapic_version as package_version
+from google.cloud.bigtable_admin_v2._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.bigtable_admin_v2._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
 import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -29,7 +41,6 @@ from google.auth import credentials as ga_credentials  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.bigtable_admin_v2 import gapic_version as package_version
 from google.cloud.bigtable_admin_v2.types import bigtable_table_admin, table
 from google.cloud.bigtable_admin_v2.types import table as gba_table
 
@@ -64,6 +75,7 @@ class BigtableTableAdminTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -94,6 +106,9 @@ class BigtableTableAdminTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -143,26 +158,107 @@ class BigtableTableAdminTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.create_table: gapic_v1.method.wrap_method(
+            self.create_table: self._wrap_method(
                 self.create_table,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/CreateTable",
             ),
-            self.create_table_from_snapshot: gapic_v1.method.wrap_method(
+            self.create_table_from_snapshot: self._wrap_method(
                 self.create_table_from_snapshot,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/CreateTableFromSnapshot",
             ),
-            self.list_tables: gapic_v1.method.wrap_method(
+            self.list_tables: self._wrap_method(
                 self.list_tables,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -176,8 +272,9 @@ class BigtableTableAdminTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/ListTables",
             ),
-            self.get_table: gapic_v1.method.wrap_method(
+            self.get_table: self._wrap_method(
                 self.get_table,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -191,58 +288,69 @@ class BigtableTableAdminTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/GetTable",
             ),
-            self.update_table: gapic_v1.method.wrap_method(
+            self.update_table: self._wrap_method(
                 self.update_table,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/UpdateTable",
             ),
-            self.delete_table: gapic_v1.method.wrap_method(
+            self.delete_table: self._wrap_method(
                 self.delete_table,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/DeleteTable",
             ),
-            self.undelete_table: gapic_v1.method.wrap_method(
+            self.undelete_table: self._wrap_method(
                 self.undelete_table,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/UndeleteTable",
             ),
-            self.create_authorized_view: gapic_v1.method.wrap_method(
+            self.create_authorized_view: self._wrap_method(
                 self.create_authorized_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/CreateAuthorizedView",
             ),
-            self.list_authorized_views: gapic_v1.method.wrap_method(
+            self.list_authorized_views: self._wrap_method(
                 self.list_authorized_views,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/ListAuthorizedViews",
             ),
-            self.get_authorized_view: gapic_v1.method.wrap_method(
+            self.get_authorized_view: self._wrap_method(
                 self.get_authorized_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/GetAuthorizedView",
             ),
-            self.update_authorized_view: gapic_v1.method.wrap_method(
+            self.update_authorized_view: self._wrap_method(
                 self.update_authorized_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/UpdateAuthorizedView",
             ),
-            self.delete_authorized_view: gapic_v1.method.wrap_method(
+            self.delete_authorized_view: self._wrap_method(
                 self.delete_authorized_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/DeleteAuthorizedView",
             ),
-            self.modify_column_families: gapic_v1.method.wrap_method(
+            self.modify_column_families: self._wrap_method(
                 self.modify_column_families,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/ModifyColumnFamilies",
             ),
-            self.drop_row_range: gapic_v1.method.wrap_method(
+            self.drop_row_range: self._wrap_method(
                 self.drop_row_range,
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/DropRowRange",
             ),
-            self.generate_consistency_token: gapic_v1.method.wrap_method(
+            self.generate_consistency_token: self._wrap_method(
                 self.generate_consistency_token,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -256,8 +364,9 @@ class BigtableTableAdminTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/GenerateConsistencyToken",
             ),
-            self.check_consistency: gapic_v1.method.wrap_method(
+            self.check_consistency: self._wrap_method(
                 self.check_consistency,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -271,13 +380,15 @@ class BigtableTableAdminTransport(abc.ABC):
                 ),
                 default_timeout=3600.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/CheckConsistency",
             ),
-            self.snapshot_table: gapic_v1.method.wrap_method(
+            self.snapshot_table: self._wrap_method(
                 self.snapshot_table,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/SnapshotTable",
             ),
-            self.get_snapshot: gapic_v1.method.wrap_method(
+            self.get_snapshot: self._wrap_method(
                 self.get_snapshot,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -291,8 +402,9 @@ class BigtableTableAdminTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/GetSnapshot",
             ),
-            self.list_snapshots: gapic_v1.method.wrap_method(
+            self.list_snapshots: self._wrap_method(
                 self.list_snapshots,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -306,18 +418,21 @@ class BigtableTableAdminTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/ListSnapshots",
             ),
-            self.delete_snapshot: gapic_v1.method.wrap_method(
+            self.delete_snapshot: self._wrap_method(
                 self.delete_snapshot,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/DeleteSnapshot",
             ),
-            self.create_backup: gapic_v1.method.wrap_method(
+            self.create_backup: self._wrap_method(
                 self.create_backup,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/CreateBackup",
             ),
-            self.get_backup: gapic_v1.method.wrap_method(
+            self.get_backup: self._wrap_method(
                 self.get_backup,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -331,18 +446,21 @@ class BigtableTableAdminTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/GetBackup",
             ),
-            self.update_backup: gapic_v1.method.wrap_method(
+            self.update_backup: self._wrap_method(
                 self.update_backup,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/UpdateBackup",
             ),
-            self.delete_backup: gapic_v1.method.wrap_method(
+            self.delete_backup: self._wrap_method(
                 self.delete_backup,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/DeleteBackup",
             ),
-            self.list_backups: gapic_v1.method.wrap_method(
+            self.list_backups: self._wrap_method(
                 self.list_backups,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -356,18 +474,21 @@ class BigtableTableAdminTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/ListBackups",
             ),
-            self.restore_table: gapic_v1.method.wrap_method(
+            self.restore_table: self._wrap_method(
                 self.restore_table,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/RestoreTable",
             ),
-            self.copy_backup: gapic_v1.method.wrap_method(
+            self.copy_backup: self._wrap_method(
                 self.copy_backup,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/CopyBackup",
             ),
-            self.get_iam_policy: gapic_v1.method.wrap_method(
+            self.get_iam_policy: self._wrap_method(
                 self.get_iam_policy,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -381,13 +502,15 @@ class BigtableTableAdminTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/GetIamPolicy",
             ),
-            self.set_iam_policy: gapic_v1.method.wrap_method(
+            self.set_iam_policy: self._wrap_method(
                 self.set_iam_policy,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/SetIamPolicy",
             ),
-            self.test_iam_permissions: gapic_v1.method.wrap_method(
+            self.test_iam_permissions: self._wrap_method(
                 self.test_iam_permissions,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -401,31 +524,37 @@ class BigtableTableAdminTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/TestIamPermissions",
             ),
-            self.create_schema_bundle: gapic_v1.method.wrap_method(
+            self.create_schema_bundle: self._wrap_method(
                 self.create_schema_bundle,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/CreateSchemaBundle",
             ),
-            self.update_schema_bundle: gapic_v1.method.wrap_method(
+            self.update_schema_bundle: self._wrap_method(
                 self.update_schema_bundle,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/UpdateSchemaBundle",
             ),
-            self.get_schema_bundle: gapic_v1.method.wrap_method(
+            self.get_schema_bundle: self._wrap_method(
                 self.get_schema_bundle,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/GetSchemaBundle",
             ),
-            self.list_schema_bundles: gapic_v1.method.wrap_method(
+            self.list_schema_bundles: self._wrap_method(
                 self.list_schema_bundles,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/ListSchemaBundles",
             ),
-            self.delete_schema_bundle: gapic_v1.method.wrap_method(
+            self.delete_schema_bundle: self._wrap_method(
                 self.delete_schema_bundle,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.bigtable.admin.v2.BigtableTableAdmin/DeleteSchemaBundle",
             ),
         }
 

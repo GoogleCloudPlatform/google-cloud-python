@@ -13,16 +13,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
@@ -37,6 +46,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.network_services_v1._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.network_services_v1.types import (
     agent_gateway,
     endpoint_policy,
@@ -223,6 +236,10 @@ class NetworkServicesGrpcAsyncIOTransport(NetworkServicesTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -274,6 +291,12 @@ class NetworkServicesGrpcAsyncIOTransport(NetworkServicesTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -329,6 +352,7 @@ class NetworkServicesGrpcAsyncIOTransport(NetworkServicesTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -350,12 +374,26 @@ class NetworkServicesGrpcAsyncIOTransport(NetworkServicesTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -2169,374 +2207,444 @@ class NetworkServicesGrpcAsyncIOTransport(NetworkServicesTransport):
         return self._stubs["delete_agent_gateway"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.list_endpoint_policies: self._wrap_method(
+            self.list_endpoint_policies: self._wrap_async_method(
                 self.list_endpoint_policies,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListEndpointPolicies",
             ),
-            self.get_endpoint_policy: self._wrap_method(
+            self.get_endpoint_policy: self._wrap_async_method(
                 self.get_endpoint_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetEndpointPolicy",
             ),
-            self.create_endpoint_policy: self._wrap_method(
+            self.create_endpoint_policy: self._wrap_async_method(
                 self.create_endpoint_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateEndpointPolicy",
             ),
-            self.update_endpoint_policy: self._wrap_method(
+            self.update_endpoint_policy: self._wrap_async_method(
                 self.update_endpoint_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateEndpointPolicy",
             ),
-            self.delete_endpoint_policy: self._wrap_method(
+            self.delete_endpoint_policy: self._wrap_async_method(
                 self.delete_endpoint_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteEndpointPolicy",
             ),
-            self.list_wasm_plugin_versions: self._wrap_method(
+            self.list_wasm_plugin_versions: self._wrap_async_method(
                 self.list_wasm_plugin_versions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListWasmPluginVersions",
             ),
-            self.get_wasm_plugin_version: self._wrap_method(
+            self.get_wasm_plugin_version: self._wrap_async_method(
                 self.get_wasm_plugin_version,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetWasmPluginVersion",
             ),
-            self.create_wasm_plugin_version: self._wrap_method(
+            self.create_wasm_plugin_version: self._wrap_async_method(
                 self.create_wasm_plugin_version,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateWasmPluginVersion",
             ),
-            self.delete_wasm_plugin_version: self._wrap_method(
+            self.delete_wasm_plugin_version: self._wrap_async_method(
                 self.delete_wasm_plugin_version,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteWasmPluginVersion",
             ),
-            self.list_wasm_plugins: self._wrap_method(
+            self.list_wasm_plugins: self._wrap_async_method(
                 self.list_wasm_plugins,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListWasmPlugins",
             ),
-            self.get_wasm_plugin: self._wrap_method(
+            self.get_wasm_plugin: self._wrap_async_method(
                 self.get_wasm_plugin,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetWasmPlugin",
             ),
-            self.create_wasm_plugin: self._wrap_method(
+            self.create_wasm_plugin: self._wrap_async_method(
                 self.create_wasm_plugin,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateWasmPlugin",
             ),
-            self.update_wasm_plugin: self._wrap_method(
+            self.update_wasm_plugin: self._wrap_async_method(
                 self.update_wasm_plugin,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateWasmPlugin",
             ),
-            self.delete_wasm_plugin: self._wrap_method(
+            self.delete_wasm_plugin: self._wrap_async_method(
                 self.delete_wasm_plugin,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteWasmPlugin",
             ),
-            self.list_gateways: self._wrap_method(
+            self.list_gateways: self._wrap_async_method(
                 self.list_gateways,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListGateways",
             ),
-            self.get_gateway: self._wrap_method(
+            self.get_gateway: self._wrap_async_method(
                 self.get_gateway,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetGateway",
             ),
-            self.create_gateway: self._wrap_method(
+            self.create_gateway: self._wrap_async_method(
                 self.create_gateway,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateGateway",
             ),
-            self.update_gateway: self._wrap_method(
+            self.update_gateway: self._wrap_async_method(
                 self.update_gateway,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateGateway",
             ),
-            self.delete_gateway: self._wrap_method(
+            self.delete_gateway: self._wrap_async_method(
                 self.delete_gateway,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteGateway",
             ),
-            self.list_grpc_routes: self._wrap_method(
+            self.list_grpc_routes: self._wrap_async_method(
                 self.list_grpc_routes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListGrpcRoutes",
             ),
-            self.get_grpc_route: self._wrap_method(
+            self.get_grpc_route: self._wrap_async_method(
                 self.get_grpc_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetGrpcRoute",
             ),
-            self.create_grpc_route: self._wrap_method(
+            self.create_grpc_route: self._wrap_async_method(
                 self.create_grpc_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateGrpcRoute",
             ),
-            self.update_grpc_route: self._wrap_method(
+            self.update_grpc_route: self._wrap_async_method(
                 self.update_grpc_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateGrpcRoute",
             ),
-            self.delete_grpc_route: self._wrap_method(
+            self.delete_grpc_route: self._wrap_async_method(
                 self.delete_grpc_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteGrpcRoute",
             ),
-            self.list_http_routes: self._wrap_method(
+            self.list_http_routes: self._wrap_async_method(
                 self.list_http_routes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListHttpRoutes",
             ),
-            self.get_http_route: self._wrap_method(
+            self.get_http_route: self._wrap_async_method(
                 self.get_http_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetHttpRoute",
             ),
-            self.create_http_route: self._wrap_method(
+            self.create_http_route: self._wrap_async_method(
                 self.create_http_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateHttpRoute",
             ),
-            self.update_http_route: self._wrap_method(
+            self.update_http_route: self._wrap_async_method(
                 self.update_http_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateHttpRoute",
             ),
-            self.delete_http_route: self._wrap_method(
+            self.delete_http_route: self._wrap_async_method(
                 self.delete_http_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteHttpRoute",
             ),
-            self.list_tcp_routes: self._wrap_method(
+            self.list_tcp_routes: self._wrap_async_method(
                 self.list_tcp_routes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListTcpRoutes",
             ),
-            self.get_tcp_route: self._wrap_method(
+            self.get_tcp_route: self._wrap_async_method(
                 self.get_tcp_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetTcpRoute",
             ),
-            self.create_tcp_route: self._wrap_method(
+            self.create_tcp_route: self._wrap_async_method(
                 self.create_tcp_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateTcpRoute",
             ),
-            self.update_tcp_route: self._wrap_method(
+            self.update_tcp_route: self._wrap_async_method(
                 self.update_tcp_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateTcpRoute",
             ),
-            self.delete_tcp_route: self._wrap_method(
+            self.delete_tcp_route: self._wrap_async_method(
                 self.delete_tcp_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteTcpRoute",
             ),
-            self.list_tls_routes: self._wrap_method(
+            self.list_tls_routes: self._wrap_async_method(
                 self.list_tls_routes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListTlsRoutes",
             ),
-            self.get_tls_route: self._wrap_method(
+            self.get_tls_route: self._wrap_async_method(
                 self.get_tls_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetTlsRoute",
             ),
-            self.create_tls_route: self._wrap_method(
+            self.create_tls_route: self._wrap_async_method(
                 self.create_tls_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateTlsRoute",
             ),
-            self.update_tls_route: self._wrap_method(
+            self.update_tls_route: self._wrap_async_method(
                 self.update_tls_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateTlsRoute",
             ),
-            self.delete_tls_route: self._wrap_method(
+            self.delete_tls_route: self._wrap_async_method(
                 self.delete_tls_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteTlsRoute",
             ),
-            self.list_service_bindings: self._wrap_method(
+            self.list_service_bindings: self._wrap_async_method(
                 self.list_service_bindings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListServiceBindings",
             ),
-            self.get_service_binding: self._wrap_method(
+            self.get_service_binding: self._wrap_async_method(
                 self.get_service_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetServiceBinding",
             ),
-            self.create_service_binding: self._wrap_method(
+            self.create_service_binding: self._wrap_async_method(
                 self.create_service_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateServiceBinding",
             ),
-            self.update_service_binding: self._wrap_method(
+            self.update_service_binding: self._wrap_async_method(
                 self.update_service_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateServiceBinding",
             ),
-            self.delete_service_binding: self._wrap_method(
+            self.delete_service_binding: self._wrap_async_method(
                 self.delete_service_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteServiceBinding",
             ),
-            self.list_meshes: self._wrap_method(
+            self.list_meshes: self._wrap_async_method(
                 self.list_meshes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListMeshes",
             ),
-            self.get_mesh: self._wrap_method(
+            self.get_mesh: self._wrap_async_method(
                 self.get_mesh,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetMesh",
             ),
-            self.create_mesh: self._wrap_method(
+            self.create_mesh: self._wrap_async_method(
                 self.create_mesh,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateMesh",
             ),
-            self.update_mesh: self._wrap_method(
+            self.update_mesh: self._wrap_async_method(
                 self.update_mesh,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateMesh",
             ),
-            self.delete_mesh: self._wrap_method(
+            self.delete_mesh: self._wrap_async_method(
                 self.delete_mesh,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteMesh",
             ),
-            self.list_service_lb_policies: self._wrap_method(
+            self.list_service_lb_policies: self._wrap_async_method(
                 self.list_service_lb_policies,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListServiceLbPolicies",
             ),
-            self.get_service_lb_policy: self._wrap_method(
+            self.get_service_lb_policy: self._wrap_async_method(
                 self.get_service_lb_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetServiceLbPolicy",
             ),
-            self.create_service_lb_policy: self._wrap_method(
+            self.create_service_lb_policy: self._wrap_async_method(
                 self.create_service_lb_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateServiceLbPolicy",
             ),
-            self.update_service_lb_policy: self._wrap_method(
+            self.update_service_lb_policy: self._wrap_async_method(
                 self.update_service_lb_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateServiceLbPolicy",
             ),
-            self.delete_service_lb_policy: self._wrap_method(
+            self.delete_service_lb_policy: self._wrap_async_method(
                 self.delete_service_lb_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteServiceLbPolicy",
             ),
-            self.get_gateway_route_view: self._wrap_method(
+            self.get_gateway_route_view: self._wrap_async_method(
                 self.get_gateway_route_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetGatewayRouteView",
             ),
-            self.get_mesh_route_view: self._wrap_method(
+            self.get_mesh_route_view: self._wrap_async_method(
                 self.get_mesh_route_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetMeshRouteView",
             ),
-            self.list_gateway_route_views: self._wrap_method(
+            self.list_gateway_route_views: self._wrap_async_method(
                 self.list_gateway_route_views,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListGatewayRouteViews",
             ),
-            self.list_mesh_route_views: self._wrap_method(
+            self.list_mesh_route_views: self._wrap_async_method(
                 self.list_mesh_route_views,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListMeshRouteViews",
             ),
-            self.list_agent_gateways: self._wrap_method(
+            self.list_agent_gateways: self._wrap_async_method(
                 self.list_agent_gateways,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListAgentGateways",
             ),
-            self.get_agent_gateway: self._wrap_method(
+            self.get_agent_gateway: self._wrap_async_method(
                 self.get_agent_gateway,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetAgentGateway",
             ),
-            self.create_agent_gateway: self._wrap_method(
+            self.create_agent_gateway: self._wrap_async_method(
                 self.create_agent_gateway,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateAgentGateway",
             ),
-            self.update_agent_gateway: self._wrap_method(
+            self.update_agent_gateway: self._wrap_async_method(
                 self.update_agent_gateway,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateAgentGateway",
             ),
-            self.delete_agent_gateway: self._wrap_method(
+            self.delete_agent_gateway: self._wrap_async_method(
                 self.delete_agent_gateway,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteAgentGateway",
             ),
-            self.get_location: self._wrap_method(
+            self.get_location: self._wrap_async_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: self._wrap_method(
+            self.list_locations: self._wrap_async_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.get_iam_policy: self._wrap_method(
+            self.get_iam_policy: self._wrap_async_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/GetIamPolicy",
             ),
-            self.set_iam_policy: self._wrap_method(
+            self.set_iam_policy: self._wrap_async_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/SetIamPolicy",
             ),
-            self.test_iam_permissions: self._wrap_method(
+            self.test_iam_permissions: self._wrap_async_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/TestIamPermissions",
             ),
-            self.cancel_operation: self._wrap_method(
+            self.cancel_operation: self._wrap_async_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: self._wrap_method(
+            self.delete_operation: self._wrap_async_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: self._wrap_method(
+            self.list_operations: self._wrap_async_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

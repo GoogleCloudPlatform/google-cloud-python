@@ -16,11 +16,23 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.managedkafka_schemaregistry_v1 import gapic_version as package_version
+from google.cloud.managedkafka_schemaregistry_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.managedkafka_schemaregistry_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api.httpbody_pb2 as httpbody_pb2  # type: ignore
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
@@ -29,7 +41,6 @@ from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.managedkafka_schemaregistry_v1 import gapic_version as package_version
 from google.cloud.managedkafka_schemaregistry_v1.types import (
     schema_registry,
     schema_registry_resources,
@@ -62,6 +73,7 @@ class ManagedSchemaRegistryTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -92,6 +104,9 @@ class ManagedSchemaRegistryTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -141,179 +156,291 @@ class ManagedSchemaRegistryTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.get_schema_registry: gapic_v1.method.wrap_method(
+            self.get_schema_registry: self._wrap_method(
                 self.get_schema_registry,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/GetSchemaRegistry",
             ),
-            self.list_schema_registries: gapic_v1.method.wrap_method(
+            self.list_schema_registries: self._wrap_method(
                 self.list_schema_registries,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/ListSchemaRegistries",
             ),
-            self.create_schema_registry: gapic_v1.method.wrap_method(
+            self.create_schema_registry: self._wrap_method(
                 self.create_schema_registry,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/CreateSchemaRegistry",
             ),
-            self.delete_schema_registry: gapic_v1.method.wrap_method(
+            self.delete_schema_registry: self._wrap_method(
                 self.delete_schema_registry,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/DeleteSchemaRegistry",
             ),
-            self.get_context: gapic_v1.method.wrap_method(
+            self.get_context: self._wrap_method(
                 self.get_context,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/GetContext",
             ),
-            self.list_contexts: gapic_v1.method.wrap_method(
+            self.list_contexts: self._wrap_method(
                 self.list_contexts,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/ListContexts",
             ),
-            self.get_schema: gapic_v1.method.wrap_method(
+            self.get_schema: self._wrap_method(
                 self.get_schema,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/GetSchema",
             ),
-            self.get_raw_schema: gapic_v1.method.wrap_method(
+            self.get_raw_schema: self._wrap_method(
                 self.get_raw_schema,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/GetRawSchema",
             ),
-            self.list_schema_versions: gapic_v1.method.wrap_method(
+            self.list_schema_versions: self._wrap_method(
                 self.list_schema_versions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/ListSchemaVersions",
             ),
-            self.list_schema_types: gapic_v1.method.wrap_method(
+            self.list_schema_types: self._wrap_method(
                 self.list_schema_types,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/ListSchemaTypes",
             ),
-            self.list_subjects: gapic_v1.method.wrap_method(
+            self.list_subjects: self._wrap_method(
                 self.list_subjects,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/ListSubjects",
             ),
-            self.list_subjects_by_schema_id: gapic_v1.method.wrap_method(
+            self.list_subjects_by_schema_id: self._wrap_method(
                 self.list_subjects_by_schema_id,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/ListSubjectsBySchemaId",
             ),
-            self.delete_subject: gapic_v1.method.wrap_method(
+            self.delete_subject: self._wrap_method(
                 self.delete_subject,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/DeleteSubject",
             ),
-            self.lookup_version: gapic_v1.method.wrap_method(
+            self.lookup_version: self._wrap_method(
                 self.lookup_version,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/LookupVersion",
             ),
-            self.get_version: gapic_v1.method.wrap_method(
+            self.get_version: self._wrap_method(
                 self.get_version,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/GetVersion",
             ),
-            self.get_raw_schema_version: gapic_v1.method.wrap_method(
+            self.get_raw_schema_version: self._wrap_method(
                 self.get_raw_schema_version,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/GetRawSchemaVersion",
             ),
-            self.list_versions: gapic_v1.method.wrap_method(
+            self.list_versions: self._wrap_method(
                 self.list_versions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/ListVersions",
             ),
-            self.create_version: gapic_v1.method.wrap_method(
+            self.create_version: self._wrap_method(
                 self.create_version,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/CreateVersion",
             ),
-            self.delete_version: gapic_v1.method.wrap_method(
+            self.delete_version: self._wrap_method(
                 self.delete_version,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/DeleteVersion",
             ),
-            self.list_referenced_schemas: gapic_v1.method.wrap_method(
+            self.list_referenced_schemas: self._wrap_method(
                 self.list_referenced_schemas,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/ListReferencedSchemas",
             ),
-            self.check_compatibility: gapic_v1.method.wrap_method(
+            self.check_compatibility: self._wrap_method(
                 self.check_compatibility,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/CheckCompatibility",
             ),
-            self.get_schema_config: gapic_v1.method.wrap_method(
+            self.get_schema_config: self._wrap_method(
                 self.get_schema_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/GetSchemaConfig",
             ),
-            self.update_schema_config: gapic_v1.method.wrap_method(
+            self.update_schema_config: self._wrap_method(
                 self.update_schema_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/UpdateSchemaConfig",
             ),
-            self.delete_schema_config: gapic_v1.method.wrap_method(
+            self.delete_schema_config: self._wrap_method(
                 self.delete_schema_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/DeleteSchemaConfig",
             ),
-            self.get_schema_mode: gapic_v1.method.wrap_method(
+            self.get_schema_mode: self._wrap_method(
                 self.get_schema_mode,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/GetSchemaMode",
             ),
-            self.update_schema_mode: gapic_v1.method.wrap_method(
+            self.update_schema_mode: self._wrap_method(
                 self.update_schema_mode,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/UpdateSchemaMode",
             ),
-            self.delete_schema_mode: gapic_v1.method.wrap_method(
+            self.delete_schema_mode: self._wrap_method(
                 self.delete_schema_mode,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.managedkafka.schemaregistry.v1.ManagedSchemaRegistry/DeleteSchemaMode",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
 

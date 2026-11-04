@@ -13,12 +13,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
 import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
@@ -26,6 +34,7 @@ import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
@@ -39,6 +48,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.datacatalog_v1._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.datacatalog_v1.types import datacatalog, tags
 
 from .base import DEFAULT_CLIENT_INFO, DataCatalogTransport
@@ -199,6 +212,10 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -250,6 +267,12 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -305,6 +328,7 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -326,12 +350,26 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -1633,219 +1671,258 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
         return self._stubs["retrieve_effective_config"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.search_catalog: self._wrap_method(
+            self.search_catalog: self._wrap_async_method(
                 self.search_catalog,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/SearchCatalog",
             ),
-            self.create_entry_group: self._wrap_method(
+            self.create_entry_group: self._wrap_async_method(
                 self.create_entry_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/CreateEntryGroup",
             ),
-            self.get_entry_group: self._wrap_method(
+            self.get_entry_group: self._wrap_async_method(
                 self.get_entry_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/GetEntryGroup",
             ),
-            self.update_entry_group: self._wrap_method(
+            self.update_entry_group: self._wrap_async_method(
                 self.update_entry_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/UpdateEntryGroup",
             ),
-            self.delete_entry_group: self._wrap_method(
+            self.delete_entry_group: self._wrap_async_method(
                 self.delete_entry_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/DeleteEntryGroup",
             ),
-            self.list_entry_groups: self._wrap_method(
+            self.list_entry_groups: self._wrap_async_method(
                 self.list_entry_groups,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/ListEntryGroups",
             ),
-            self.create_entry: self._wrap_method(
+            self.create_entry: self._wrap_async_method(
                 self.create_entry,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/CreateEntry",
             ),
-            self.update_entry: self._wrap_method(
+            self.update_entry: self._wrap_async_method(
                 self.update_entry,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/UpdateEntry",
             ),
-            self.delete_entry: self._wrap_method(
+            self.delete_entry: self._wrap_async_method(
                 self.delete_entry,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/DeleteEntry",
             ),
-            self.get_entry: self._wrap_method(
+            self.get_entry: self._wrap_async_method(
                 self.get_entry,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/GetEntry",
             ),
-            self.lookup_entry: self._wrap_method(
+            self.lookup_entry: self._wrap_async_method(
                 self.lookup_entry,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/LookupEntry",
             ),
-            self.list_entries: self._wrap_method(
+            self.list_entries: self._wrap_async_method(
                 self.list_entries,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/ListEntries",
             ),
-            self.modify_entry_overview: self._wrap_method(
+            self.modify_entry_overview: self._wrap_async_method(
                 self.modify_entry_overview,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/ModifyEntryOverview",
             ),
-            self.modify_entry_contacts: self._wrap_method(
+            self.modify_entry_contacts: self._wrap_async_method(
                 self.modify_entry_contacts,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/ModifyEntryContacts",
             ),
-            self.create_tag_template: self._wrap_method(
+            self.create_tag_template: self._wrap_async_method(
                 self.create_tag_template,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/CreateTagTemplate",
             ),
-            self.get_tag_template: self._wrap_method(
+            self.get_tag_template: self._wrap_async_method(
                 self.get_tag_template,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/GetTagTemplate",
             ),
-            self.update_tag_template: self._wrap_method(
+            self.update_tag_template: self._wrap_async_method(
                 self.update_tag_template,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/UpdateTagTemplate",
             ),
-            self.delete_tag_template: self._wrap_method(
+            self.delete_tag_template: self._wrap_async_method(
                 self.delete_tag_template,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/DeleteTagTemplate",
             ),
-            self.create_tag_template_field: self._wrap_method(
+            self.create_tag_template_field: self._wrap_async_method(
                 self.create_tag_template_field,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/CreateTagTemplateField",
             ),
-            self.update_tag_template_field: self._wrap_method(
+            self.update_tag_template_field: self._wrap_async_method(
                 self.update_tag_template_field,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/UpdateTagTemplateField",
             ),
-            self.rename_tag_template_field: self._wrap_method(
+            self.rename_tag_template_field: self._wrap_async_method(
                 self.rename_tag_template_field,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/RenameTagTemplateField",
             ),
-            self.rename_tag_template_field_enum_value: self._wrap_method(
+            self.rename_tag_template_field_enum_value: self._wrap_async_method(
                 self.rename_tag_template_field_enum_value,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/RenameTagTemplateFieldEnumValue",
             ),
-            self.delete_tag_template_field: self._wrap_method(
+            self.delete_tag_template_field: self._wrap_async_method(
                 self.delete_tag_template_field,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/DeleteTagTemplateField",
             ),
-            self.create_tag: self._wrap_method(
+            self.create_tag: self._wrap_async_method(
                 self.create_tag,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/CreateTag",
             ),
-            self.update_tag: self._wrap_method(
+            self.update_tag: self._wrap_async_method(
                 self.update_tag,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/UpdateTag",
             ),
-            self.delete_tag: self._wrap_method(
+            self.delete_tag: self._wrap_async_method(
                 self.delete_tag,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/DeleteTag",
             ),
-            self.list_tags: self._wrap_method(
+            self.list_tags: self._wrap_async_method(
                 self.list_tags,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/ListTags",
             ),
-            self.reconcile_tags: self._wrap_method(
+            self.reconcile_tags: self._wrap_async_method(
                 self.reconcile_tags,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/ReconcileTags",
             ),
-            self.star_entry: self._wrap_method(
+            self.star_entry: self._wrap_async_method(
                 self.star_entry,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/StarEntry",
             ),
-            self.unstar_entry: self._wrap_method(
+            self.unstar_entry: self._wrap_async_method(
                 self.unstar_entry,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/UnstarEntry",
             ),
-            self.set_iam_policy: self._wrap_method(
+            self.set_iam_policy: self._wrap_async_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/SetIamPolicy",
             ),
-            self.get_iam_policy: self._wrap_method(
+            self.get_iam_policy: self._wrap_async_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/GetIamPolicy",
             ),
-            self.test_iam_permissions: self._wrap_method(
+            self.test_iam_permissions: self._wrap_async_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/TestIamPermissions",
             ),
-            self.import_entries: self._wrap_method(
+            self.import_entries: self._wrap_async_method(
                 self.import_entries,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/ImportEntries",
             ),
-            self.set_config: self._wrap_method(
+            self.set_config: self._wrap_async_method(
                 self.set_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/SetConfig",
             ),
-            self.retrieve_config: self._wrap_method(
+            self.retrieve_config: self._wrap_async_method(
                 self.retrieve_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/RetrieveConfig",
             ),
-            self.retrieve_effective_config: self._wrap_method(
+            self.retrieve_effective_config: self._wrap_async_method(
                 self.retrieve_effective_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.datacatalog.v1.DataCatalog/RetrieveEffectiveConfig",
             ),
-            self.cancel_operation: self._wrap_method(
+            self.cancel_operation: self._wrap_async_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: self._wrap_method(
+            self.delete_operation: self._wrap_async_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: self._wrap_method(
+            self.list_operations: self._wrap_async_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

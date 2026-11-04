@@ -16,12 +16,24 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud._storage_v2 import gapic_version as package_version
+from google.cloud._storage_v2._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud._storage_v2._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
 import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
@@ -29,7 +41,6 @@ from google.auth import credentials as ga_credentials  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud._storage_v2 import gapic_version as package_version
 from google.cloud._storage_v2.types import storage
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
@@ -62,6 +73,7 @@ class StorageTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -92,6 +104,9 @@ class StorageTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -141,134 +156,241 @@ class StorageTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.delete_bucket: gapic_v1.method.wrap_method(
+            self.delete_bucket: self._wrap_method(
                 self.delete_bucket,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/DeleteBucket",
             ),
-            self.get_bucket: gapic_v1.method.wrap_method(
+            self.get_bucket: self._wrap_method(
                 self.get_bucket,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/GetBucket",
             ),
-            self.create_bucket: gapic_v1.method.wrap_method(
+            self.create_bucket: self._wrap_method(
                 self.create_bucket,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/CreateBucket",
             ),
-            self.list_buckets: gapic_v1.method.wrap_method(
+            self.list_buckets: self._wrap_method(
                 self.list_buckets,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/ListBuckets",
             ),
-            self.lock_bucket_retention_policy: gapic_v1.method.wrap_method(
+            self.lock_bucket_retention_policy: self._wrap_method(
                 self.lock_bucket_retention_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/LockBucketRetentionPolicy",
             ),
-            self.get_iam_policy: gapic_v1.method.wrap_method(
+            self.get_iam_policy: self._wrap_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/GetIamPolicy",
             ),
-            self.set_iam_policy: gapic_v1.method.wrap_method(
+            self.set_iam_policy: self._wrap_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/SetIamPolicy",
             ),
-            self.test_iam_permissions: gapic_v1.method.wrap_method(
+            self.test_iam_permissions: self._wrap_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/TestIamPermissions",
             ),
-            self.update_bucket: gapic_v1.method.wrap_method(
+            self.update_bucket: self._wrap_method(
                 self.update_bucket,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/UpdateBucket",
             ),
-            self.compose_object: gapic_v1.method.wrap_method(
+            self.compose_object: self._wrap_method(
                 self.compose_object,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/ComposeObject",
             ),
-            self.delete_object: gapic_v1.method.wrap_method(
+            self.delete_object: self._wrap_method(
                 self.delete_object,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/DeleteObject",
             ),
-            self.restore_object: gapic_v1.method.wrap_method(
+            self.restore_object: self._wrap_method(
                 self.restore_object,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/RestoreObject",
             ),
-            self.cancel_resumable_write: gapic_v1.method.wrap_method(
+            self.cancel_resumable_write: self._wrap_method(
                 self.cancel_resumable_write,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/CancelResumableWrite",
             ),
-            self.get_object: gapic_v1.method.wrap_method(
+            self.get_object: self._wrap_method(
                 self.get_object,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/GetObject",
             ),
-            self.read_object: gapic_v1.method.wrap_method(
+            self.read_object: self._wrap_method(
                 self.read_object,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/ReadObject",
+                is_streaming=True,
             ),
-            self.bidi_read_object: gapic_v1.method.wrap_method(
+            self.bidi_read_object: self._wrap_method(
                 self.bidi_read_object,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/BidiReadObject",
+                is_streaming=True,
             ),
-            self.update_object: gapic_v1.method.wrap_method(
+            self.update_object: self._wrap_method(
                 self.update_object,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/UpdateObject",
             ),
-            self.write_object: gapic_v1.method.wrap_method(
+            self.write_object: self._wrap_method(
                 self.write_object,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/WriteObject",
+                is_streaming=True,
             ),
-            self.bidi_write_object: gapic_v1.method.wrap_method(
+            self.bidi_write_object: self._wrap_method(
                 self.bidi_write_object,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/BidiWriteObject",
+                is_streaming=True,
             ),
-            self.list_objects: gapic_v1.method.wrap_method(
+            self.list_objects: self._wrap_method(
                 self.list_objects,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/ListObjects",
             ),
-            self.rewrite_object: gapic_v1.method.wrap_method(
+            self.rewrite_object: self._wrap_method(
                 self.rewrite_object,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/RewriteObject",
             ),
-            self.start_resumable_write: gapic_v1.method.wrap_method(
+            self.start_resumable_write: self._wrap_method(
                 self.start_resumable_write,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/StartResumableWrite",
             ),
-            self.query_write_status: gapic_v1.method.wrap_method(
+            self.query_write_status: self._wrap_method(
                 self.query_write_status,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/QueryWriteStatus",
             ),
-            self.move_object: gapic_v1.method.wrap_method(
+            self.move_object: self._wrap_method(
                 self.move_object,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.storage.v2.Storage/MoveObject",
             ),
         }
 

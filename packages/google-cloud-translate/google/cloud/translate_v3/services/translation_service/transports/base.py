@@ -16,10 +16,22 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.translate_v3 import gapic_version as package_version
+from google.cloud.translate_v3._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.translate_v3._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -32,7 +44,6 @@ from google.iam.v1 import (
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.translate_v3 import gapic_version as package_version
 from google.cloud.translate_v3.types import (
     adaptive_mt,
     automl_translation,
@@ -67,6 +78,7 @@ class TranslationServiceTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -97,6 +109,9 @@ class TranslationServiceTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -146,31 +161,113 @@ class TranslationServiceTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.translate_text: gapic_v1.method.wrap_method(
+            self.translate_text: self._wrap_method(
                 self.translate_text,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/TranslateText",
             ),
-            self.romanize_text: gapic_v1.method.wrap_method(
+            self.romanize_text: self._wrap_method(
                 self.romanize_text,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/RomanizeText",
             ),
-            self.detect_language: gapic_v1.method.wrap_method(
+            self.detect_language: self._wrap_method(
                 self.detect_language,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/DetectLanguage",
             ),
-            self.get_supported_languages: gapic_v1.method.wrap_method(
+            self.get_supported_languages: self._wrap_method(
                 self.get_supported_languages,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -184,33 +281,39 @@ class TranslationServiceTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/GetSupportedLanguages",
             ),
-            self.translate_document: gapic_v1.method.wrap_method(
+            self.translate_document: self._wrap_method(
                 self.translate_document,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/TranslateDocument",
             ),
-            self.batch_translate_text: gapic_v1.method.wrap_method(
+            self.batch_translate_text: self._wrap_method(
                 self.batch_translate_text,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/BatchTranslateText",
             ),
-            self.batch_translate_document: gapic_v1.method.wrap_method(
+            self.batch_translate_document: self._wrap_method(
                 self.batch_translate_document,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/BatchTranslateDocument",
             ),
-            self.create_glossary: gapic_v1.method.wrap_method(
+            self.create_glossary: self._wrap_method(
                 self.create_glossary,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/CreateGlossary",
             ),
-            self.update_glossary: gapic_v1.method.wrap_method(
+            self.update_glossary: self._wrap_method(
                 self.update_glossary,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/UpdateGlossary",
             ),
-            self.list_glossaries: gapic_v1.method.wrap_method(
+            self.list_glossaries: self._wrap_method(
                 self.list_glossaries,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -224,8 +327,9 @@ class TranslationServiceTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/ListGlossaries",
             ),
-            self.get_glossary: gapic_v1.method.wrap_method(
+            self.get_glossary: self._wrap_method(
                 self.get_glossary,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -239,8 +343,9 @@ class TranslationServiceTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/GetGlossary",
             ),
-            self.delete_glossary: gapic_v1.method.wrap_method(
+            self.delete_glossary: self._wrap_method(
                 self.delete_glossary,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -254,171 +359,205 @@ class TranslationServiceTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/DeleteGlossary",
             ),
-            self.get_glossary_entry: gapic_v1.method.wrap_method(
+            self.get_glossary_entry: self._wrap_method(
                 self.get_glossary_entry,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/GetGlossaryEntry",
             ),
-            self.list_glossary_entries: gapic_v1.method.wrap_method(
+            self.list_glossary_entries: self._wrap_method(
                 self.list_glossary_entries,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/ListGlossaryEntries",
             ),
-            self.create_glossary_entry: gapic_v1.method.wrap_method(
+            self.create_glossary_entry: self._wrap_method(
                 self.create_glossary_entry,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/CreateGlossaryEntry",
             ),
-            self.update_glossary_entry: gapic_v1.method.wrap_method(
+            self.update_glossary_entry: self._wrap_method(
                 self.update_glossary_entry,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/UpdateGlossaryEntry",
             ),
-            self.delete_glossary_entry: gapic_v1.method.wrap_method(
+            self.delete_glossary_entry: self._wrap_method(
                 self.delete_glossary_entry,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/DeleteGlossaryEntry",
             ),
-            self.create_dataset: gapic_v1.method.wrap_method(
+            self.create_dataset: self._wrap_method(
                 self.create_dataset,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/CreateDataset",
             ),
-            self.get_dataset: gapic_v1.method.wrap_method(
+            self.get_dataset: self._wrap_method(
                 self.get_dataset,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/GetDataset",
             ),
-            self.list_datasets: gapic_v1.method.wrap_method(
+            self.list_datasets: self._wrap_method(
                 self.list_datasets,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/ListDatasets",
             ),
-            self.delete_dataset: gapic_v1.method.wrap_method(
+            self.delete_dataset: self._wrap_method(
                 self.delete_dataset,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/DeleteDataset",
             ),
-            self.create_adaptive_mt_dataset: gapic_v1.method.wrap_method(
+            self.create_adaptive_mt_dataset: self._wrap_method(
                 self.create_adaptive_mt_dataset,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/CreateAdaptiveMtDataset",
             ),
-            self.delete_adaptive_mt_dataset: gapic_v1.method.wrap_method(
+            self.delete_adaptive_mt_dataset: self._wrap_method(
                 self.delete_adaptive_mt_dataset,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/DeleteAdaptiveMtDataset",
             ),
-            self.get_adaptive_mt_dataset: gapic_v1.method.wrap_method(
+            self.get_adaptive_mt_dataset: self._wrap_method(
                 self.get_adaptive_mt_dataset,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/GetAdaptiveMtDataset",
             ),
-            self.list_adaptive_mt_datasets: gapic_v1.method.wrap_method(
+            self.list_adaptive_mt_datasets: self._wrap_method(
                 self.list_adaptive_mt_datasets,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/ListAdaptiveMtDatasets",
             ),
-            self.adaptive_mt_translate: gapic_v1.method.wrap_method(
+            self.adaptive_mt_translate: self._wrap_method(
                 self.adaptive_mt_translate,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/AdaptiveMtTranslate",
             ),
-            self.get_adaptive_mt_file: gapic_v1.method.wrap_method(
+            self.get_adaptive_mt_file: self._wrap_method(
                 self.get_adaptive_mt_file,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/GetAdaptiveMtFile",
             ),
-            self.delete_adaptive_mt_file: gapic_v1.method.wrap_method(
+            self.delete_adaptive_mt_file: self._wrap_method(
                 self.delete_adaptive_mt_file,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/DeleteAdaptiveMtFile",
             ),
-            self.import_adaptive_mt_file: gapic_v1.method.wrap_method(
+            self.import_adaptive_mt_file: self._wrap_method(
                 self.import_adaptive_mt_file,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/ImportAdaptiveMtFile",
             ),
-            self.list_adaptive_mt_files: gapic_v1.method.wrap_method(
+            self.list_adaptive_mt_files: self._wrap_method(
                 self.list_adaptive_mt_files,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/ListAdaptiveMtFiles",
             ),
-            self.list_adaptive_mt_sentences: gapic_v1.method.wrap_method(
+            self.list_adaptive_mt_sentences: self._wrap_method(
                 self.list_adaptive_mt_sentences,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/ListAdaptiveMtSentences",
             ),
-            self.import_data: gapic_v1.method.wrap_method(
+            self.import_data: self._wrap_method(
                 self.import_data,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/ImportData",
             ),
-            self.export_data: gapic_v1.method.wrap_method(
+            self.export_data: self._wrap_method(
                 self.export_data,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/ExportData",
             ),
-            self.list_examples: gapic_v1.method.wrap_method(
+            self.list_examples: self._wrap_method(
                 self.list_examples,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/ListExamples",
             ),
-            self.create_model: gapic_v1.method.wrap_method(
+            self.create_model: self._wrap_method(
                 self.create_model,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/CreateModel",
             ),
-            self.list_models: gapic_v1.method.wrap_method(
+            self.list_models: self._wrap_method(
                 self.list_models,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/ListModels",
             ),
-            self.get_model: gapic_v1.method.wrap_method(
+            self.get_model: self._wrap_method(
                 self.get_model,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/GetModel",
             ),
-            self.delete_model: gapic_v1.method.wrap_method(
+            self.delete_model: self._wrap_method(
                 self.delete_model,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.translation.v3.TranslationService/DeleteModel",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
-            self.wait_operation: gapic_v1.method.wrap_method(
+            self.wait_operation: self._wrap_method(
                 self.wait_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/WaitOperation",
             ),
         }
 

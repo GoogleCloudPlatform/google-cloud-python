@@ -16,12 +16,24 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.artifactregistry_v1beta2 import gapic_version as package_version
+from google.cloud.artifactregistry_v1beta2._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.artifactregistry_v1beta2._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
 import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -30,7 +42,6 @@ from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.artifactregistry_v1beta2 import gapic_version as package_version
 from google.cloud.artifactregistry_v1beta2.types import (
     apt_artifact,
     file,
@@ -71,6 +82,7 @@ class ArtifactRegistryTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -101,6 +113,9 @@ class ArtifactRegistryTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -150,26 +165,107 @@ class ArtifactRegistryTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.import_apt_artifacts: gapic_v1.method.wrap_method(
+            self.import_apt_artifacts: self._wrap_method(
                 self.import_apt_artifacts,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/ImportAptArtifacts",
             ),
-            self.import_yum_artifacts: gapic_v1.method.wrap_method(
+            self.import_yum_artifacts: self._wrap_method(
                 self.import_yum_artifacts,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/ImportYumArtifacts",
             ),
-            self.list_repositories: gapic_v1.method.wrap_method(
+            self.list_repositories: self._wrap_method(
                 self.list_repositories,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -182,8 +278,9 @@ class ArtifactRegistryTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/ListRepositories",
             ),
-            self.get_repository: gapic_v1.method.wrap_method(
+            self.get_repository: self._wrap_method(
                 self.get_repository,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -196,18 +293,21 @@ class ArtifactRegistryTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/GetRepository",
             ),
-            self.create_repository: gapic_v1.method.wrap_method(
+            self.create_repository: self._wrap_method(
                 self.create_repository,
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/CreateRepository",
             ),
-            self.update_repository: gapic_v1.method.wrap_method(
+            self.update_repository: self._wrap_method(
                 self.update_repository,
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/UpdateRepository",
             ),
-            self.delete_repository: gapic_v1.method.wrap_method(
+            self.delete_repository: self._wrap_method(
                 self.delete_repository,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -220,8 +320,9 @@ class ArtifactRegistryTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/DeleteRepository",
             ),
-            self.list_packages: gapic_v1.method.wrap_method(
+            self.list_packages: self._wrap_method(
                 self.list_packages,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -234,8 +335,9 @@ class ArtifactRegistryTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/ListPackages",
             ),
-            self.get_package: gapic_v1.method.wrap_method(
+            self.get_package: self._wrap_method(
                 self.get_package,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -248,8 +350,9 @@ class ArtifactRegistryTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/GetPackage",
             ),
-            self.delete_package: gapic_v1.method.wrap_method(
+            self.delete_package: self._wrap_method(
                 self.delete_package,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -262,8 +365,9 @@ class ArtifactRegistryTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/DeletePackage",
             ),
-            self.list_versions: gapic_v1.method.wrap_method(
+            self.list_versions: self._wrap_method(
                 self.list_versions,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -276,8 +380,9 @@ class ArtifactRegistryTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/ListVersions",
             ),
-            self.get_version: gapic_v1.method.wrap_method(
+            self.get_version: self._wrap_method(
                 self.get_version,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -290,8 +395,9 @@ class ArtifactRegistryTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/GetVersion",
             ),
-            self.delete_version: gapic_v1.method.wrap_method(
+            self.delete_version: self._wrap_method(
                 self.delete_version,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -304,8 +410,9 @@ class ArtifactRegistryTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/DeleteVersion",
             ),
-            self.list_files: gapic_v1.method.wrap_method(
+            self.list_files: self._wrap_method(
                 self.list_files,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -318,8 +425,9 @@ class ArtifactRegistryTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/ListFiles",
             ),
-            self.get_file: gapic_v1.method.wrap_method(
+            self.get_file: self._wrap_method(
                 self.get_file,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -332,8 +440,9 @@ class ArtifactRegistryTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/GetFile",
             ),
-            self.list_tags: gapic_v1.method.wrap_method(
+            self.list_tags: self._wrap_method(
                 self.list_tags,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -346,8 +455,9 @@ class ArtifactRegistryTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/ListTags",
             ),
-            self.get_tag: gapic_v1.method.wrap_method(
+            self.get_tag: self._wrap_method(
                 self.get_tag,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -360,18 +470,21 @@ class ArtifactRegistryTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/GetTag",
             ),
-            self.create_tag: gapic_v1.method.wrap_method(
+            self.create_tag: self._wrap_method(
                 self.create_tag,
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/CreateTag",
             ),
-            self.update_tag: gapic_v1.method.wrap_method(
+            self.update_tag: self._wrap_method(
                 self.update_tag,
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/UpdateTag",
             ),
-            self.delete_tag: gapic_v1.method.wrap_method(
+            self.delete_tag: self._wrap_method(
                 self.delete_tag,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -384,13 +497,15 @@ class ArtifactRegistryTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/DeleteTag",
             ),
-            self.set_iam_policy: gapic_v1.method.wrap_method(
+            self.set_iam_policy: self._wrap_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/SetIamPolicy",
             ),
-            self.get_iam_policy: gapic_v1.method.wrap_method(
+            self.get_iam_policy: self._wrap_method(
                 self.get_iam_policy,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -403,31 +518,37 @@ class ArtifactRegistryTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/GetIamPolicy",
             ),
-            self.test_iam_permissions: gapic_v1.method.wrap_method(
+            self.test_iam_permissions: self._wrap_method(
                 self.test_iam_permissions,
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/TestIamPermissions",
             ),
-            self.get_project_settings: gapic_v1.method.wrap_method(
+            self.get_project_settings: self._wrap_method(
                 self.get_project_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/GetProjectSettings",
             ),
-            self.update_project_settings: gapic_v1.method.wrap_method(
+            self.update_project_settings: self._wrap_method(
                 self.update_project_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.devtools.artifactregistry.v1beta2.ArtifactRegistry/UpdateProjectSettings",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
         }
 

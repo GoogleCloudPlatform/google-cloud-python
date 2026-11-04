@@ -16,10 +16,22 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.telcoautomation_v1 import gapic_version as package_version
+from google.cloud.telcoautomation_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.telcoautomation_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -28,7 +40,6 @@ from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.telcoautomation_v1 import gapic_version as package_version
 from google.cloud.telcoautomation_v1.types import telcoautomation
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
@@ -55,6 +66,7 @@ class TelcoAutomationTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -85,6 +97,9 @@ class TelcoAutomationTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -134,224 +149,345 @@ class TelcoAutomationTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.list_orchestration_clusters: gapic_v1.method.wrap_method(
+            self.list_orchestration_clusters: self._wrap_method(
                 self.list_orchestration_clusters,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/ListOrchestrationClusters",
             ),
-            self.get_orchestration_cluster: gapic_v1.method.wrap_method(
+            self.get_orchestration_cluster: self._wrap_method(
                 self.get_orchestration_cluster,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/GetOrchestrationCluster",
             ),
-            self.create_orchestration_cluster: gapic_v1.method.wrap_method(
+            self.create_orchestration_cluster: self._wrap_method(
                 self.create_orchestration_cluster,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/CreateOrchestrationCluster",
             ),
-            self.delete_orchestration_cluster: gapic_v1.method.wrap_method(
+            self.delete_orchestration_cluster: self._wrap_method(
                 self.delete_orchestration_cluster,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/DeleteOrchestrationCluster",
             ),
-            self.list_edge_slms: gapic_v1.method.wrap_method(
+            self.list_edge_slms: self._wrap_method(
                 self.list_edge_slms,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/ListEdgeSlms",
             ),
-            self.get_edge_slm: gapic_v1.method.wrap_method(
+            self.get_edge_slm: self._wrap_method(
                 self.get_edge_slm,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/GetEdgeSlm",
             ),
-            self.create_edge_slm: gapic_v1.method.wrap_method(
+            self.create_edge_slm: self._wrap_method(
                 self.create_edge_slm,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/CreateEdgeSlm",
             ),
-            self.delete_edge_slm: gapic_v1.method.wrap_method(
+            self.delete_edge_slm: self._wrap_method(
                 self.delete_edge_slm,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/DeleteEdgeSlm",
             ),
-            self.create_blueprint: gapic_v1.method.wrap_method(
+            self.create_blueprint: self._wrap_method(
                 self.create_blueprint,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/CreateBlueprint",
             ),
-            self.update_blueprint: gapic_v1.method.wrap_method(
+            self.update_blueprint: self._wrap_method(
                 self.update_blueprint,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/UpdateBlueprint",
             ),
-            self.get_blueprint: gapic_v1.method.wrap_method(
+            self.get_blueprint: self._wrap_method(
                 self.get_blueprint,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/GetBlueprint",
             ),
-            self.delete_blueprint: gapic_v1.method.wrap_method(
+            self.delete_blueprint: self._wrap_method(
                 self.delete_blueprint,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/DeleteBlueprint",
             ),
-            self.list_blueprints: gapic_v1.method.wrap_method(
+            self.list_blueprints: self._wrap_method(
                 self.list_blueprints,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/ListBlueprints",
             ),
-            self.approve_blueprint: gapic_v1.method.wrap_method(
+            self.approve_blueprint: self._wrap_method(
                 self.approve_blueprint,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/ApproveBlueprint",
             ),
-            self.propose_blueprint: gapic_v1.method.wrap_method(
+            self.propose_blueprint: self._wrap_method(
                 self.propose_blueprint,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/ProposeBlueprint",
             ),
-            self.reject_blueprint: gapic_v1.method.wrap_method(
+            self.reject_blueprint: self._wrap_method(
                 self.reject_blueprint,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/RejectBlueprint",
             ),
-            self.list_blueprint_revisions: gapic_v1.method.wrap_method(
+            self.list_blueprint_revisions: self._wrap_method(
                 self.list_blueprint_revisions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/ListBlueprintRevisions",
             ),
-            self.search_blueprint_revisions: gapic_v1.method.wrap_method(
+            self.search_blueprint_revisions: self._wrap_method(
                 self.search_blueprint_revisions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/SearchBlueprintRevisions",
             ),
-            self.search_deployment_revisions: gapic_v1.method.wrap_method(
+            self.search_deployment_revisions: self._wrap_method(
                 self.search_deployment_revisions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/SearchDeploymentRevisions",
             ),
-            self.discard_blueprint_changes: gapic_v1.method.wrap_method(
+            self.discard_blueprint_changes: self._wrap_method(
                 self.discard_blueprint_changes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/DiscardBlueprintChanges",
             ),
-            self.list_public_blueprints: gapic_v1.method.wrap_method(
+            self.list_public_blueprints: self._wrap_method(
                 self.list_public_blueprints,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/ListPublicBlueprints",
             ),
-            self.get_public_blueprint: gapic_v1.method.wrap_method(
+            self.get_public_blueprint: self._wrap_method(
                 self.get_public_blueprint,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/GetPublicBlueprint",
             ),
-            self.create_deployment: gapic_v1.method.wrap_method(
+            self.create_deployment: self._wrap_method(
                 self.create_deployment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/CreateDeployment",
             ),
-            self.update_deployment: gapic_v1.method.wrap_method(
+            self.update_deployment: self._wrap_method(
                 self.update_deployment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/UpdateDeployment",
             ),
-            self.get_deployment: gapic_v1.method.wrap_method(
+            self.get_deployment: self._wrap_method(
                 self.get_deployment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/GetDeployment",
             ),
-            self.remove_deployment: gapic_v1.method.wrap_method(
+            self.remove_deployment: self._wrap_method(
                 self.remove_deployment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/RemoveDeployment",
             ),
-            self.list_deployments: gapic_v1.method.wrap_method(
+            self.list_deployments: self._wrap_method(
                 self.list_deployments,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/ListDeployments",
             ),
-            self.list_deployment_revisions: gapic_v1.method.wrap_method(
+            self.list_deployment_revisions: self._wrap_method(
                 self.list_deployment_revisions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/ListDeploymentRevisions",
             ),
-            self.discard_deployment_changes: gapic_v1.method.wrap_method(
+            self.discard_deployment_changes: self._wrap_method(
                 self.discard_deployment_changes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/DiscardDeploymentChanges",
             ),
-            self.apply_deployment: gapic_v1.method.wrap_method(
+            self.apply_deployment: self._wrap_method(
                 self.apply_deployment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/ApplyDeployment",
             ),
-            self.compute_deployment_status: gapic_v1.method.wrap_method(
+            self.compute_deployment_status: self._wrap_method(
                 self.compute_deployment_status,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/ComputeDeploymentStatus",
             ),
-            self.rollback_deployment: gapic_v1.method.wrap_method(
+            self.rollback_deployment: self._wrap_method(
                 self.rollback_deployment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/RollbackDeployment",
             ),
-            self.get_hydrated_deployment: gapic_v1.method.wrap_method(
+            self.get_hydrated_deployment: self._wrap_method(
                 self.get_hydrated_deployment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/GetHydratedDeployment",
             ),
-            self.list_hydrated_deployments: gapic_v1.method.wrap_method(
+            self.list_hydrated_deployments: self._wrap_method(
                 self.list_hydrated_deployments,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/ListHydratedDeployments",
             ),
-            self.update_hydrated_deployment: gapic_v1.method.wrap_method(
+            self.update_hydrated_deployment: self._wrap_method(
                 self.update_hydrated_deployment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/UpdateHydratedDeployment",
             ),
-            self.apply_hydrated_deployment: gapic_v1.method.wrap_method(
+            self.apply_hydrated_deployment: self._wrap_method(
                 self.apply_hydrated_deployment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.telcoautomation.v1.TelcoAutomation/ApplyHydratedDeployment",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
 

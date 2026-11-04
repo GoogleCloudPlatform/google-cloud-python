@@ -16,11 +16,23 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.securesourcemanager_v1 import gapic_version as package_version
+from google.cloud.securesourcemanager_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.securesourcemanager_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
 import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -33,7 +45,6 @@ from google.iam.v1 import (
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.securesourcemanager_v1 import gapic_version as package_version
 from google.cloud.securesourcemanager_v1.types import secure_source_manager
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
@@ -63,6 +74,7 @@ class SecureSourceManagerTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -93,6 +105,9 @@ class SecureSourceManagerTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -142,16 +157,95 @@ class SecureSourceManagerTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.list_instances: gapic_v1.method.wrap_method(
+            self.list_instances: self._wrap_method(
                 self.list_instances,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -164,8 +258,9 @@ class SecureSourceManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ListInstances",
             ),
-            self.get_instance: gapic_v1.method.wrap_method(
+            self.get_instance: self._wrap_method(
                 self.get_instance,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -178,18 +273,21 @@ class SecureSourceManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/GetInstance",
             ),
-            self.create_instance: gapic_v1.method.wrap_method(
+            self.create_instance: self._wrap_method(
                 self.create_instance,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/CreateInstance",
             ),
-            self.delete_instance: gapic_v1.method.wrap_method(
+            self.delete_instance: self._wrap_method(
                 self.delete_instance,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/DeleteInstance",
             ),
-            self.list_repositories: gapic_v1.method.wrap_method(
+            self.list_repositories: self._wrap_method(
                 self.list_repositories,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -202,8 +300,9 @@ class SecureSourceManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ListRepositories",
             ),
-            self.get_repository: gapic_v1.method.wrap_method(
+            self.get_repository: self._wrap_method(
                 self.get_repository,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -216,48 +315,57 @@ class SecureSourceManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/GetRepository",
             ),
-            self.create_repository: gapic_v1.method.wrap_method(
+            self.create_repository: self._wrap_method(
                 self.create_repository,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/CreateRepository",
             ),
-            self.update_repository: gapic_v1.method.wrap_method(
+            self.update_repository: self._wrap_method(
                 self.update_repository,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/UpdateRepository",
             ),
-            self.delete_repository: gapic_v1.method.wrap_method(
+            self.delete_repository: self._wrap_method(
                 self.delete_repository,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/DeleteRepository",
             ),
-            self.list_hooks: gapic_v1.method.wrap_method(
+            self.list_hooks: self._wrap_method(
                 self.list_hooks,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ListHooks",
             ),
-            self.get_hook: gapic_v1.method.wrap_method(
+            self.get_hook: self._wrap_method(
                 self.get_hook,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/GetHook",
             ),
-            self.create_hook: gapic_v1.method.wrap_method(
+            self.create_hook: self._wrap_method(
                 self.create_hook,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/CreateHook",
             ),
-            self.update_hook: gapic_v1.method.wrap_method(
+            self.update_hook: self._wrap_method(
                 self.update_hook,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/UpdateHook",
             ),
-            self.delete_hook: gapic_v1.method.wrap_method(
+            self.delete_hook: self._wrap_method(
                 self.delete_hook,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/DeleteHook",
             ),
-            self.get_iam_policy_repo: gapic_v1.method.wrap_method(
+            self.get_iam_policy_repo: self._wrap_method(
                 self.get_iam_policy_repo,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -270,241 +378,289 @@ class SecureSourceManagerTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/GetIamPolicyRepo",
             ),
-            self.set_iam_policy_repo: gapic_v1.method.wrap_method(
+            self.set_iam_policy_repo: self._wrap_method(
                 self.set_iam_policy_repo,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/SetIamPolicyRepo",
             ),
-            self.test_iam_permissions_repo: gapic_v1.method.wrap_method(
+            self.test_iam_permissions_repo: self._wrap_method(
                 self.test_iam_permissions_repo,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/TestIamPermissionsRepo",
             ),
-            self.create_branch_rule: gapic_v1.method.wrap_method(
+            self.create_branch_rule: self._wrap_method(
                 self.create_branch_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/CreateBranchRule",
             ),
-            self.list_branch_rules: gapic_v1.method.wrap_method(
+            self.list_branch_rules: self._wrap_method(
                 self.list_branch_rules,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ListBranchRules",
             ),
-            self.get_branch_rule: gapic_v1.method.wrap_method(
+            self.get_branch_rule: self._wrap_method(
                 self.get_branch_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/GetBranchRule",
             ),
-            self.update_branch_rule: gapic_v1.method.wrap_method(
+            self.update_branch_rule: self._wrap_method(
                 self.update_branch_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/UpdateBranchRule",
             ),
-            self.delete_branch_rule: gapic_v1.method.wrap_method(
+            self.delete_branch_rule: self._wrap_method(
                 self.delete_branch_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/DeleteBranchRule",
             ),
-            self.create_pull_request: gapic_v1.method.wrap_method(
+            self.create_pull_request: self._wrap_method(
                 self.create_pull_request,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/CreatePullRequest",
             ),
-            self.get_pull_request: gapic_v1.method.wrap_method(
+            self.get_pull_request: self._wrap_method(
                 self.get_pull_request,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/GetPullRequest",
             ),
-            self.list_pull_requests: gapic_v1.method.wrap_method(
+            self.list_pull_requests: self._wrap_method(
                 self.list_pull_requests,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ListPullRequests",
             ),
-            self.update_pull_request: gapic_v1.method.wrap_method(
+            self.update_pull_request: self._wrap_method(
                 self.update_pull_request,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/UpdatePullRequest",
             ),
-            self.merge_pull_request: gapic_v1.method.wrap_method(
+            self.merge_pull_request: self._wrap_method(
                 self.merge_pull_request,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/MergePullRequest",
             ),
-            self.open_pull_request: gapic_v1.method.wrap_method(
+            self.open_pull_request: self._wrap_method(
                 self.open_pull_request,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/OpenPullRequest",
             ),
-            self.close_pull_request: gapic_v1.method.wrap_method(
+            self.close_pull_request: self._wrap_method(
                 self.close_pull_request,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ClosePullRequest",
             ),
-            self.list_pull_request_file_diffs: gapic_v1.method.wrap_method(
+            self.list_pull_request_file_diffs: self._wrap_method(
                 self.list_pull_request_file_diffs,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ListPullRequestFileDiffs",
             ),
-            self.fetch_tree: gapic_v1.method.wrap_method(
+            self.fetch_tree: self._wrap_method(
                 self.fetch_tree,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/FetchTree",
             ),
-            self.fetch_blob: gapic_v1.method.wrap_method(
+            self.fetch_blob: self._wrap_method(
                 self.fetch_blob,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/FetchBlob",
             ),
-            self.fetch_refs: gapic_v1.method.wrap_method(
+            self.fetch_refs: self._wrap_method(
                 self.fetch_refs,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/FetchRefs",
             ),
-            self.create_issue: gapic_v1.method.wrap_method(
+            self.create_issue: self._wrap_method(
                 self.create_issue,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/CreateIssue",
             ),
-            self.get_issue: gapic_v1.method.wrap_method(
+            self.get_issue: self._wrap_method(
                 self.get_issue,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/GetIssue",
             ),
-            self.list_issues: gapic_v1.method.wrap_method(
+            self.list_issues: self._wrap_method(
                 self.list_issues,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ListIssues",
             ),
-            self.update_issue: gapic_v1.method.wrap_method(
+            self.update_issue: self._wrap_method(
                 self.update_issue,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/UpdateIssue",
             ),
-            self.delete_issue: gapic_v1.method.wrap_method(
+            self.delete_issue: self._wrap_method(
                 self.delete_issue,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/DeleteIssue",
             ),
-            self.open_issue: gapic_v1.method.wrap_method(
+            self.open_issue: self._wrap_method(
                 self.open_issue,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/OpenIssue",
             ),
-            self.close_issue: gapic_v1.method.wrap_method(
+            self.close_issue: self._wrap_method(
                 self.close_issue,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/CloseIssue",
             ),
-            self.get_pull_request_comment: gapic_v1.method.wrap_method(
+            self.get_pull_request_comment: self._wrap_method(
                 self.get_pull_request_comment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/GetPullRequestComment",
             ),
-            self.list_pull_request_comments: gapic_v1.method.wrap_method(
+            self.list_pull_request_comments: self._wrap_method(
                 self.list_pull_request_comments,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ListPullRequestComments",
             ),
-            self.create_pull_request_comment: gapic_v1.method.wrap_method(
+            self.create_pull_request_comment: self._wrap_method(
                 self.create_pull_request_comment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/CreatePullRequestComment",
             ),
-            self.update_pull_request_comment: gapic_v1.method.wrap_method(
+            self.update_pull_request_comment: self._wrap_method(
                 self.update_pull_request_comment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/UpdatePullRequestComment",
             ),
-            self.delete_pull_request_comment: gapic_v1.method.wrap_method(
+            self.delete_pull_request_comment: self._wrap_method(
                 self.delete_pull_request_comment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/DeletePullRequestComment",
             ),
-            self.batch_create_pull_request_comments: gapic_v1.method.wrap_method(
+            self.batch_create_pull_request_comments: self._wrap_method(
                 self.batch_create_pull_request_comments,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/BatchCreatePullRequestComments",
             ),
-            self.resolve_pull_request_comments: gapic_v1.method.wrap_method(
+            self.resolve_pull_request_comments: self._wrap_method(
                 self.resolve_pull_request_comments,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ResolvePullRequestComments",
             ),
-            self.unresolve_pull_request_comments: gapic_v1.method.wrap_method(
+            self.unresolve_pull_request_comments: self._wrap_method(
                 self.unresolve_pull_request_comments,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/UnresolvePullRequestComments",
             ),
-            self.create_issue_comment: gapic_v1.method.wrap_method(
+            self.create_issue_comment: self._wrap_method(
                 self.create_issue_comment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/CreateIssueComment",
             ),
-            self.get_issue_comment: gapic_v1.method.wrap_method(
+            self.get_issue_comment: self._wrap_method(
                 self.get_issue_comment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/GetIssueComment",
             ),
-            self.list_issue_comments: gapic_v1.method.wrap_method(
+            self.list_issue_comments: self._wrap_method(
                 self.list_issue_comments,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ListIssueComments",
             ),
-            self.update_issue_comment: gapic_v1.method.wrap_method(
+            self.update_issue_comment: self._wrap_method(
                 self.update_issue_comment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/UpdateIssueComment",
             ),
-            self.delete_issue_comment: gapic_v1.method.wrap_method(
+            self.delete_issue_comment: self._wrap_method(
                 self.delete_issue_comment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/DeleteIssueComment",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.get_iam_policy: gapic_v1.method.wrap_method(
+            self.get_iam_policy: self._wrap_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/GetIamPolicy",
             ),
-            self.set_iam_policy: gapic_v1.method.wrap_method(
+            self.set_iam_policy: self._wrap_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/SetIamPolicy",
             ),
-            self.test_iam_permissions: gapic_v1.method.wrap_method(
+            self.test_iam_permissions: self._wrap_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/TestIamPermissions",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
 

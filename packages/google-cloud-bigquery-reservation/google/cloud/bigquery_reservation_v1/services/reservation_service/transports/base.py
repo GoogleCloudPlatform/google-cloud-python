@@ -16,19 +16,30 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.bigquery_reservation_v1 import gapic_version as package_version
+from google.cloud.bigquery_reservation_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.bigquery_reservation_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
 import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
 from google.auth import credentials as ga_credentials  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.bigquery_reservation_v1 import gapic_version as package_version
 from google.cloud.bigquery_reservation_v1.types import reservation
 from google.cloud.bigquery_reservation_v1.types import reservation as gcbr_reservation
 
@@ -59,6 +70,7 @@ class ReservationServiceTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -89,6 +101,9 @@ class ReservationServiceTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -138,21 +153,101 @@ class ReservationServiceTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.create_reservation: gapic_v1.method.wrap_method(
+            self.create_reservation: self._wrap_method(
                 self.create_reservation,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/CreateReservation",
             ),
-            self.list_reservations: gapic_v1.method.wrap_method(
+            self.list_reservations: self._wrap_method(
                 self.list_reservations,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -166,8 +261,9 @@ class ReservationServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/ListReservations",
             ),
-            self.get_reservation: gapic_v1.method.wrap_method(
+            self.get_reservation: self._wrap_method(
                 self.get_reservation,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -181,8 +277,9 @@ class ReservationServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/GetReservation",
             ),
-            self.delete_reservation: gapic_v1.method.wrap_method(
+            self.delete_reservation: self._wrap_method(
                 self.delete_reservation,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -196,23 +293,27 @@ class ReservationServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/DeleteReservation",
             ),
-            self.update_reservation: gapic_v1.method.wrap_method(
+            self.update_reservation: self._wrap_method(
                 self.update_reservation,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/UpdateReservation",
             ),
-            self.failover_reservation: gapic_v1.method.wrap_method(
+            self.failover_reservation: self._wrap_method(
                 self.failover_reservation,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/FailoverReservation",
             ),
-            self.create_capacity_commitment: gapic_v1.method.wrap_method(
+            self.create_capacity_commitment: self._wrap_method(
                 self.create_capacity_commitment,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/CreateCapacityCommitment",
             ),
-            self.list_capacity_commitments: gapic_v1.method.wrap_method(
+            self.list_capacity_commitments: self._wrap_method(
                 self.list_capacity_commitments,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -226,8 +327,9 @@ class ReservationServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/ListCapacityCommitments",
             ),
-            self.get_capacity_commitment: gapic_v1.method.wrap_method(
+            self.get_capacity_commitment: self._wrap_method(
                 self.get_capacity_commitment,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -241,8 +343,9 @@ class ReservationServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/GetCapacityCommitment",
             ),
-            self.delete_capacity_commitment: gapic_v1.method.wrap_method(
+            self.delete_capacity_commitment: self._wrap_method(
                 self.delete_capacity_commitment,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -256,28 +359,33 @@ class ReservationServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/DeleteCapacityCommitment",
             ),
-            self.update_capacity_commitment: gapic_v1.method.wrap_method(
+            self.update_capacity_commitment: self._wrap_method(
                 self.update_capacity_commitment,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/UpdateCapacityCommitment",
             ),
-            self.split_capacity_commitment: gapic_v1.method.wrap_method(
+            self.split_capacity_commitment: self._wrap_method(
                 self.split_capacity_commitment,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/SplitCapacityCommitment",
             ),
-            self.merge_capacity_commitments: gapic_v1.method.wrap_method(
+            self.merge_capacity_commitments: self._wrap_method(
                 self.merge_capacity_commitments,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/MergeCapacityCommitments",
             ),
-            self.create_assignment: gapic_v1.method.wrap_method(
+            self.create_assignment: self._wrap_method(
                 self.create_assignment,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/CreateAssignment",
             ),
-            self.list_assignments: gapic_v1.method.wrap_method(
+            self.list_assignments: self._wrap_method(
                 self.list_assignments,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -291,8 +399,9 @@ class ReservationServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/ListAssignments",
             ),
-            self.delete_assignment: gapic_v1.method.wrap_method(
+            self.delete_assignment: self._wrap_method(
                 self.delete_assignment,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -306,8 +415,9 @@ class ReservationServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/DeleteAssignment",
             ),
-            self.search_assignments: gapic_v1.method.wrap_method(
+            self.search_assignments: self._wrap_method(
                 self.search_assignments,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -321,23 +431,27 @@ class ReservationServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/SearchAssignments",
             ),
-            self.search_all_assignments: gapic_v1.method.wrap_method(
+            self.search_all_assignments: self._wrap_method(
                 self.search_all_assignments,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/SearchAllAssignments",
             ),
-            self.move_assignment: gapic_v1.method.wrap_method(
+            self.move_assignment: self._wrap_method(
                 self.move_assignment,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/MoveAssignment",
             ),
-            self.update_assignment: gapic_v1.method.wrap_method(
+            self.update_assignment: self._wrap_method(
                 self.update_assignment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/UpdateAssignment",
             ),
-            self.get_bi_reservation: gapic_v1.method.wrap_method(
+            self.get_bi_reservation: self._wrap_method(
                 self.get_bi_reservation,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -351,51 +465,61 @@ class ReservationServiceTransport(abc.ABC):
                 ),
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/GetBiReservation",
             ),
-            self.update_bi_reservation: gapic_v1.method.wrap_method(
+            self.update_bi_reservation: self._wrap_method(
                 self.update_bi_reservation,
                 default_timeout=300.0,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/UpdateBiReservation",
             ),
-            self.get_iam_policy: gapic_v1.method.wrap_method(
+            self.get_iam_policy: self._wrap_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/GetIamPolicy",
             ),
-            self.set_iam_policy: gapic_v1.method.wrap_method(
+            self.set_iam_policy: self._wrap_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/SetIamPolicy",
             ),
-            self.test_iam_permissions: gapic_v1.method.wrap_method(
+            self.test_iam_permissions: self._wrap_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/TestIamPermissions",
             ),
-            self.create_reservation_group: gapic_v1.method.wrap_method(
+            self.create_reservation_group: self._wrap_method(
                 self.create_reservation_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/CreateReservationGroup",
             ),
-            self.get_reservation_group: gapic_v1.method.wrap_method(
+            self.get_reservation_group: self._wrap_method(
                 self.get_reservation_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/GetReservationGroup",
             ),
-            self.delete_reservation_group: gapic_v1.method.wrap_method(
+            self.delete_reservation_group: self._wrap_method(
                 self.delete_reservation_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/DeleteReservationGroup",
             ),
-            self.list_reservation_groups: gapic_v1.method.wrap_method(
+            self.list_reservation_groups: self._wrap_method(
                 self.list_reservation_groups,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/ListReservationGroups",
             ),
-            self.update_reservation_group: gapic_v1.method.wrap_method(
+            self.update_reservation_group: self._wrap_method(
                 self.update_reservation_group,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.bigquery.reservation.v1.ReservationService/UpdateReservationGroup",
             ),
         }
 

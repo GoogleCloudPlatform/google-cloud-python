@@ -16,17 +16,28 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.recaptchaenterprise_v1 import gapic_version as package_version
+from google.cloud.recaptchaenterprise_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.recaptchaenterprise_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
 from google.auth import credentials as ga_credentials  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.recaptchaenterprise_v1 import gapic_version as package_version
 from google.cloud.recaptchaenterprise_v1.types import recaptchaenterprise
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
@@ -53,6 +64,7 @@ class RecaptchaEnterpriseServiceTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -83,6 +95,9 @@ class RecaptchaEnterpriseServiceTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -132,134 +147,237 @@ class RecaptchaEnterpriseServiceTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.create_assessment: gapic_v1.method.wrap_method(
+            self.create_assessment: self._wrap_method(
                 self.create_assessment,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/CreateAssessment",
             ),
-            self.annotate_assessment: gapic_v1.method.wrap_method(
+            self.annotate_assessment: self._wrap_method(
                 self.annotate_assessment,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/AnnotateAssessment",
             ),
-            self.create_key: gapic_v1.method.wrap_method(
+            self.create_key: self._wrap_method(
                 self.create_key,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/CreateKey",
             ),
-            self.list_keys: gapic_v1.method.wrap_method(
+            self.list_keys: self._wrap_method(
                 self.list_keys,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/ListKeys",
             ),
-            self.retrieve_legacy_secret_key: gapic_v1.method.wrap_method(
+            self.retrieve_legacy_secret_key: self._wrap_method(
                 self.retrieve_legacy_secret_key,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/RetrieveLegacySecretKey",
             ),
-            self.get_key: gapic_v1.method.wrap_method(
+            self.get_key: self._wrap_method(
                 self.get_key,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/GetKey",
             ),
-            self.update_key: gapic_v1.method.wrap_method(
+            self.update_key: self._wrap_method(
                 self.update_key,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/UpdateKey",
             ),
-            self.delete_key: gapic_v1.method.wrap_method(
+            self.delete_key: self._wrap_method(
                 self.delete_key,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/DeleteKey",
             ),
-            self.migrate_key: gapic_v1.method.wrap_method(
+            self.migrate_key: self._wrap_method(
                 self.migrate_key,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/MigrateKey",
             ),
-            self.add_ip_override: gapic_v1.method.wrap_method(
+            self.add_ip_override: self._wrap_method(
                 self.add_ip_override,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/AddIpOverride",
             ),
-            self.remove_ip_override: gapic_v1.method.wrap_method(
+            self.remove_ip_override: self._wrap_method(
                 self.remove_ip_override,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/RemoveIpOverride",
             ),
-            self.list_ip_overrides: gapic_v1.method.wrap_method(
+            self.list_ip_overrides: self._wrap_method(
                 self.list_ip_overrides,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/ListIpOverrides",
             ),
-            self.get_metrics: gapic_v1.method.wrap_method(
+            self.get_metrics: self._wrap_method(
                 self.get_metrics,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/GetMetrics",
             ),
-            self.get_policy: gapic_v1.method.wrap_method(
+            self.get_policy: self._wrap_method(
                 self.get_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/GetPolicy",
             ),
-            self.update_policy: gapic_v1.method.wrap_method(
+            self.update_policy: self._wrap_method(
                 self.update_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/UpdatePolicy",
             ),
-            self.create_firewall_policy: gapic_v1.method.wrap_method(
+            self.create_firewall_policy: self._wrap_method(
                 self.create_firewall_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/CreateFirewallPolicy",
             ),
-            self.list_firewall_policies: gapic_v1.method.wrap_method(
+            self.list_firewall_policies: self._wrap_method(
                 self.list_firewall_policies,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/ListFirewallPolicies",
             ),
-            self.get_firewall_policy: gapic_v1.method.wrap_method(
+            self.get_firewall_policy: self._wrap_method(
                 self.get_firewall_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/GetFirewallPolicy",
             ),
-            self.update_firewall_policy: gapic_v1.method.wrap_method(
+            self.update_firewall_policy: self._wrap_method(
                 self.update_firewall_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/UpdateFirewallPolicy",
             ),
-            self.delete_firewall_policy: gapic_v1.method.wrap_method(
+            self.delete_firewall_policy: self._wrap_method(
                 self.delete_firewall_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/DeleteFirewallPolicy",
             ),
-            self.reorder_firewall_policies: gapic_v1.method.wrap_method(
+            self.reorder_firewall_policies: self._wrap_method(
                 self.reorder_firewall_policies,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/ReorderFirewallPolicies",
             ),
-            self.list_related_account_groups: gapic_v1.method.wrap_method(
+            self.list_related_account_groups: self._wrap_method(
                 self.list_related_account_groups,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/ListRelatedAccountGroups",
             ),
-            self.list_related_account_group_memberships: gapic_v1.method.wrap_method(
+            self.list_related_account_group_memberships: self._wrap_method(
                 self.list_related_account_group_memberships,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/ListRelatedAccountGroupMemberships",
             ),
-            self.search_related_account_group_memberships: gapic_v1.method.wrap_method(
+            self.search_related_account_group_memberships: self._wrap_method(
                 self.search_related_account_group_memberships,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService/SearchRelatedAccountGroupMemberships",
             ),
         }
 

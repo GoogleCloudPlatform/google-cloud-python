@@ -17,12 +17,13 @@ import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import TYPE_CHECKING, Callable, Dict, Optional, Sequence, Tuple, Union
 
 import google.auth  # type: ignore
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import gapic_v1, grpc_helpers, operations_v1
 from google.auth import credentials as ga_credentials  # type: ignore
 from google.auth.transport.grpc import SslCredentials  # type: ignore
@@ -34,6 +35,10 @@ from google.iam.v1 import (
 from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 
+from google.cloud.network_security_v1alpha1._compat import (
+    _observability,
+    apply_channel_interceptors,
+)
 from google.cloud.network_security_v1alpha1.types import (
     authorization_policy,
     authz_policy,
@@ -72,6 +77,12 @@ from google.cloud.network_security_v1alpha1.types import (
 from google.cloud.network_security_v1alpha1.types import url_list as gcn_url_list
 
 from .base import DEFAULT_CLIENT_INFO, NetworkSecurityTransport
+
+if TYPE_CHECKING:  # pragma: NO COVER
+    # ClientInterceptor was added in google-api-core 2.36.0+; ignore attribute-defined for older api-core versions during type checking
+    from google.api_core.grpc_helpers import (
+        ClientInterceptor,  # type: ignore[attr-defined]
+    )
 
 try:
     from google.api_core import client_logging  # type: ignore
@@ -181,6 +192,10 @@ class NetworkSecurityGrpcTransport(NetworkSecurityTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union["ClientInterceptor", Callable[[grpc.Channel], grpc.Channel]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -231,6 +246,12 @@ class NetworkSecurityGrpcTransport(NetworkSecurityTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[ClientInterceptor, Callable[[grpc.Channel], grpc.Channel]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
           google.auth.exceptions.MutualTLSChannelError: If mutual TLS transport
@@ -287,6 +308,7 @@ class NetworkSecurityGrpcTransport(NetworkSecurityTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -307,6 +329,27 @@ class NetworkSecurityGrpcTransport(NetworkSecurityTransport):
                     ("grpc.max_receive_message_length", -1),
                 ],
             )
+
+        channel_interceptors = list(interceptors) if interceptors else []
+        if (
+            _observability is not None
+            and (
+                otel_interceptor := _observability.get_otel_interceptor(
+                    self._client_options
+                )
+            )
+            is not None
+            and otel_interceptor not in channel_interceptors
+            and not any(
+                getattr(i, "_is_otel_interceptor", None) is True
+                for i in channel_interceptors
+            )
+        ):
+            channel_interceptors.append(otel_interceptor)
+
+        self._grpc_channel = apply_channel_interceptors(
+            self._grpc_channel, channel_interceptors
+        )
 
         self._interceptor = _LoggingClientInterceptor()
         self._logged_channel = grpc.intercept_channel(

@@ -13,18 +13,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
 import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
@@ -39,6 +48,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.securesourcemanager_v1._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.securesourcemanager_v1.types import secure_source_manager
 
 from .base import DEFAULT_CLIENT_INFO, SecureSourceManagerTransport
@@ -199,6 +212,10 @@ class SecureSourceManagerGrpcAsyncIOTransport(SecureSourceManagerTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -250,6 +267,12 @@ class SecureSourceManagerGrpcAsyncIOTransport(SecureSourceManagerTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -305,6 +328,7 @@ class SecureSourceManagerGrpcAsyncIOTransport(SecureSourceManagerTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -326,12 +350,26 @@ class SecureSourceManagerGrpcAsyncIOTransport(SecureSourceManagerTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -1929,9 +1967,12 @@ class SecureSourceManagerGrpcAsyncIOTransport(SecureSourceManagerTransport):
         return self._stubs["delete_issue_comment"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.list_instances: self._wrap_method(
+            self.list_instances: self._wrap_async_method(
                 self.list_instances,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1944,8 +1985,9 @@ class SecureSourceManagerGrpcAsyncIOTransport(SecureSourceManagerTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ListInstances",
             ),
-            self.get_instance: self._wrap_method(
+            self.get_instance: self._wrap_async_method(
                 self.get_instance,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1958,18 +2000,21 @@ class SecureSourceManagerGrpcAsyncIOTransport(SecureSourceManagerTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/GetInstance",
             ),
-            self.create_instance: self._wrap_method(
+            self.create_instance: self._wrap_async_method(
                 self.create_instance,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/CreateInstance",
             ),
-            self.delete_instance: self._wrap_method(
+            self.delete_instance: self._wrap_async_method(
                 self.delete_instance,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/DeleteInstance",
             ),
-            self.list_repositories: self._wrap_method(
+            self.list_repositories: self._wrap_async_method(
                 self.list_repositories,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1982,8 +2027,9 @@ class SecureSourceManagerGrpcAsyncIOTransport(SecureSourceManagerTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ListRepositories",
             ),
-            self.get_repository: self._wrap_method(
+            self.get_repository: self._wrap_async_method(
                 self.get_repository,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1996,48 +2042,57 @@ class SecureSourceManagerGrpcAsyncIOTransport(SecureSourceManagerTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/GetRepository",
             ),
-            self.create_repository: self._wrap_method(
+            self.create_repository: self._wrap_async_method(
                 self.create_repository,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/CreateRepository",
             ),
-            self.update_repository: self._wrap_method(
+            self.update_repository: self._wrap_async_method(
                 self.update_repository,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/UpdateRepository",
             ),
-            self.delete_repository: self._wrap_method(
+            self.delete_repository: self._wrap_async_method(
                 self.delete_repository,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/DeleteRepository",
             ),
-            self.list_hooks: self._wrap_method(
+            self.list_hooks: self._wrap_async_method(
                 self.list_hooks,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ListHooks",
             ),
-            self.get_hook: self._wrap_method(
+            self.get_hook: self._wrap_async_method(
                 self.get_hook,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/GetHook",
             ),
-            self.create_hook: self._wrap_method(
+            self.create_hook: self._wrap_async_method(
                 self.create_hook,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/CreateHook",
             ),
-            self.update_hook: self._wrap_method(
+            self.update_hook: self._wrap_async_method(
                 self.update_hook,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/UpdateHook",
             ),
-            self.delete_hook: self._wrap_method(
+            self.delete_hook: self._wrap_async_method(
                 self.delete_hook,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/DeleteHook",
             ),
-            self.get_iam_policy_repo: self._wrap_method(
+            self.get_iam_policy_repo: self._wrap_async_method(
                 self.get_iam_policy_repo,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -2050,248 +2105,291 @@ class SecureSourceManagerGrpcAsyncIOTransport(SecureSourceManagerTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/GetIamPolicyRepo",
             ),
-            self.set_iam_policy_repo: self._wrap_method(
+            self.set_iam_policy_repo: self._wrap_async_method(
                 self.set_iam_policy_repo,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/SetIamPolicyRepo",
             ),
-            self.test_iam_permissions_repo: self._wrap_method(
+            self.test_iam_permissions_repo: self._wrap_async_method(
                 self.test_iam_permissions_repo,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/TestIamPermissionsRepo",
             ),
-            self.create_branch_rule: self._wrap_method(
+            self.create_branch_rule: self._wrap_async_method(
                 self.create_branch_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/CreateBranchRule",
             ),
-            self.list_branch_rules: self._wrap_method(
+            self.list_branch_rules: self._wrap_async_method(
                 self.list_branch_rules,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ListBranchRules",
             ),
-            self.get_branch_rule: self._wrap_method(
+            self.get_branch_rule: self._wrap_async_method(
                 self.get_branch_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/GetBranchRule",
             ),
-            self.update_branch_rule: self._wrap_method(
+            self.update_branch_rule: self._wrap_async_method(
                 self.update_branch_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/UpdateBranchRule",
             ),
-            self.delete_branch_rule: self._wrap_method(
+            self.delete_branch_rule: self._wrap_async_method(
                 self.delete_branch_rule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/DeleteBranchRule",
             ),
-            self.create_pull_request: self._wrap_method(
+            self.create_pull_request: self._wrap_async_method(
                 self.create_pull_request,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/CreatePullRequest",
             ),
-            self.get_pull_request: self._wrap_method(
+            self.get_pull_request: self._wrap_async_method(
                 self.get_pull_request,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/GetPullRequest",
             ),
-            self.list_pull_requests: self._wrap_method(
+            self.list_pull_requests: self._wrap_async_method(
                 self.list_pull_requests,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ListPullRequests",
             ),
-            self.update_pull_request: self._wrap_method(
+            self.update_pull_request: self._wrap_async_method(
                 self.update_pull_request,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/UpdatePullRequest",
             ),
-            self.merge_pull_request: self._wrap_method(
+            self.merge_pull_request: self._wrap_async_method(
                 self.merge_pull_request,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/MergePullRequest",
             ),
-            self.open_pull_request: self._wrap_method(
+            self.open_pull_request: self._wrap_async_method(
                 self.open_pull_request,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/OpenPullRequest",
             ),
-            self.close_pull_request: self._wrap_method(
+            self.close_pull_request: self._wrap_async_method(
                 self.close_pull_request,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ClosePullRequest",
             ),
-            self.list_pull_request_file_diffs: self._wrap_method(
+            self.list_pull_request_file_diffs: self._wrap_async_method(
                 self.list_pull_request_file_diffs,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ListPullRequestFileDiffs",
             ),
-            self.fetch_tree: self._wrap_method(
+            self.fetch_tree: self._wrap_async_method(
                 self.fetch_tree,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/FetchTree",
             ),
-            self.fetch_blob: self._wrap_method(
+            self.fetch_blob: self._wrap_async_method(
                 self.fetch_blob,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/FetchBlob",
             ),
-            self.fetch_refs: self._wrap_method(
+            self.fetch_refs: self._wrap_async_method(
                 self.fetch_refs,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/FetchRefs",
             ),
-            self.create_issue: self._wrap_method(
+            self.create_issue: self._wrap_async_method(
                 self.create_issue,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/CreateIssue",
             ),
-            self.get_issue: self._wrap_method(
+            self.get_issue: self._wrap_async_method(
                 self.get_issue,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/GetIssue",
             ),
-            self.list_issues: self._wrap_method(
+            self.list_issues: self._wrap_async_method(
                 self.list_issues,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ListIssues",
             ),
-            self.update_issue: self._wrap_method(
+            self.update_issue: self._wrap_async_method(
                 self.update_issue,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/UpdateIssue",
             ),
-            self.delete_issue: self._wrap_method(
+            self.delete_issue: self._wrap_async_method(
                 self.delete_issue,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/DeleteIssue",
             ),
-            self.open_issue: self._wrap_method(
+            self.open_issue: self._wrap_async_method(
                 self.open_issue,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/OpenIssue",
             ),
-            self.close_issue: self._wrap_method(
+            self.close_issue: self._wrap_async_method(
                 self.close_issue,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/CloseIssue",
             ),
-            self.get_pull_request_comment: self._wrap_method(
+            self.get_pull_request_comment: self._wrap_async_method(
                 self.get_pull_request_comment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/GetPullRequestComment",
             ),
-            self.list_pull_request_comments: self._wrap_method(
+            self.list_pull_request_comments: self._wrap_async_method(
                 self.list_pull_request_comments,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ListPullRequestComments",
             ),
-            self.create_pull_request_comment: self._wrap_method(
+            self.create_pull_request_comment: self._wrap_async_method(
                 self.create_pull_request_comment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/CreatePullRequestComment",
             ),
-            self.update_pull_request_comment: self._wrap_method(
+            self.update_pull_request_comment: self._wrap_async_method(
                 self.update_pull_request_comment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/UpdatePullRequestComment",
             ),
-            self.delete_pull_request_comment: self._wrap_method(
+            self.delete_pull_request_comment: self._wrap_async_method(
                 self.delete_pull_request_comment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/DeletePullRequestComment",
             ),
-            self.batch_create_pull_request_comments: self._wrap_method(
+            self.batch_create_pull_request_comments: self._wrap_async_method(
                 self.batch_create_pull_request_comments,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/BatchCreatePullRequestComments",
             ),
-            self.resolve_pull_request_comments: self._wrap_method(
+            self.resolve_pull_request_comments: self._wrap_async_method(
                 self.resolve_pull_request_comments,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ResolvePullRequestComments",
             ),
-            self.unresolve_pull_request_comments: self._wrap_method(
+            self.unresolve_pull_request_comments: self._wrap_async_method(
                 self.unresolve_pull_request_comments,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/UnresolvePullRequestComments",
             ),
-            self.create_issue_comment: self._wrap_method(
+            self.create_issue_comment: self._wrap_async_method(
                 self.create_issue_comment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/CreateIssueComment",
             ),
-            self.get_issue_comment: self._wrap_method(
+            self.get_issue_comment: self._wrap_async_method(
                 self.get_issue_comment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/GetIssueComment",
             ),
-            self.list_issue_comments: self._wrap_method(
+            self.list_issue_comments: self._wrap_async_method(
                 self.list_issue_comments,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/ListIssueComments",
             ),
-            self.update_issue_comment: self._wrap_method(
+            self.update_issue_comment: self._wrap_async_method(
                 self.update_issue_comment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/UpdateIssueComment",
             ),
-            self.delete_issue_comment: self._wrap_method(
+            self.delete_issue_comment: self._wrap_async_method(
                 self.delete_issue_comment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.securesourcemanager.v1.SecureSourceManager/DeleteIssueComment",
             ),
-            self.get_location: self._wrap_method(
+            self.get_location: self._wrap_async_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: self._wrap_method(
+            self.list_locations: self._wrap_async_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.get_iam_policy: self._wrap_method(
+            self.get_iam_policy: self._wrap_async_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/GetIamPolicy",
             ),
-            self.set_iam_policy: self._wrap_method(
+            self.set_iam_policy: self._wrap_async_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/SetIamPolicy",
             ),
-            self.test_iam_permissions: self._wrap_method(
+            self.test_iam_permissions: self._wrap_async_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/TestIamPermissions",
             ),
-            self.cancel_operation: self._wrap_method(
+            self.cancel_operation: self._wrap_async_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: self._wrap_method(
+            self.delete_operation: self._wrap_async_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: self._wrap_method(
+            self.list_operations: self._wrap_async_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

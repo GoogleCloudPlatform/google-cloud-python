@@ -13,17 +13,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
@@ -38,6 +47,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.designcenter_v1._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.designcenter_v1.types import (
     apphub_integration_messages,
     authoring,
@@ -207,6 +220,10 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -258,6 +275,12 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -313,6 +336,7 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -334,12 +358,26 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -2791,9 +2829,12 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
         return self._stubs["recommend_iam_roles"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.get_space: self._wrap_method(
+            self.get_space: self._wrap_async_method(
                 self.get_space,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -2806,8 +2847,9 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetSpace",
             ),
-            self.list_spaces: self._wrap_method(
+            self.list_spaces: self._wrap_async_method(
                 self.list_spaces,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -2820,23 +2862,27 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListSpaces",
             ),
-            self.create_space: self._wrap_method(
+            self.create_space: self._wrap_async_method(
                 self.create_space,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreateSpace",
             ),
-            self.update_space: self._wrap_method(
+            self.update_space: self._wrap_async_method(
                 self.update_space,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/UpdateSpace",
             ),
-            self.delete_space: self._wrap_method(
+            self.delete_space: self._wrap_async_method(
                 self.delete_space,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteSpace",
             ),
-            self.get_application_template: self._wrap_method(
+            self.get_application_template: self._wrap_async_method(
                 self.get_application_template,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -2849,8 +2895,9 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetApplicationTemplate",
             ),
-            self.list_application_templates: self._wrap_method(
+            self.list_application_templates: self._wrap_async_method(
                 self.list_application_templates,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -2863,58 +2910,69 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListApplicationTemplates",
             ),
-            self.create_application_template: self._wrap_method(
+            self.create_application_template: self._wrap_async_method(
                 self.create_application_template,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreateApplicationTemplate",
             ),
-            self.update_application_template: self._wrap_method(
+            self.update_application_template: self._wrap_async_method(
                 self.update_application_template,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/UpdateApplicationTemplate",
             ),
-            self.import_application_template: self._wrap_method(
+            self.import_application_template: self._wrap_async_method(
                 self.import_application_template,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ImportApplicationTemplate",
             ),
-            self.delete_application_template: self._wrap_method(
+            self.delete_application_template: self._wrap_async_method(
                 self.delete_application_template,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteApplicationTemplate",
             ),
-            self.commit_application_template: self._wrap_method(
+            self.commit_application_template: self._wrap_async_method(
                 self.commit_application_template,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CommitApplicationTemplate",
             ),
-            self.snapshot_application_template: self._wrap_method(
+            self.snapshot_application_template: self._wrap_async_method(
                 self.snapshot_application_template,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/SnapshotApplicationTemplate",
             ),
-            self.generate_application_template_ia_c: self._wrap_method(
+            self.generate_application_template_ia_c: self._wrap_async_method(
                 self.generate_application_template_ia_c,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GenerateApplicationTemplateIaC",
             ),
-            self.export_application_template_ia_c: self._wrap_method(
+            self.export_application_template_ia_c: self._wrap_async_method(
                 self.export_application_template_ia_c,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ExportApplicationTemplateIaC",
             ),
-            self.generate_application_template_revision_ia_c: self._wrap_method(
+            self.generate_application_template_revision_ia_c: self._wrap_async_method(
                 self.generate_application_template_revision_ia_c,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GenerateApplicationTemplateRevisionIaC",
             ),
-            self.export_application_template_revision_ia_c: self._wrap_method(
+            self.export_application_template_revision_ia_c: self._wrap_async_method(
                 self.export_application_template_revision_ia_c,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ExportApplicationTemplateRevisionIaC",
             ),
-            self.get_component: self._wrap_method(
+            self.get_component: self._wrap_async_method(
                 self.get_component,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -2927,8 +2985,9 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetComponent",
             ),
-            self.list_components: self._wrap_method(
+            self.list_components: self._wrap_async_method(
                 self.list_components,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -2941,23 +3000,27 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListComponents",
             ),
-            self.create_component: self._wrap_method(
+            self.create_component: self._wrap_async_method(
                 self.create_component,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreateComponent",
             ),
-            self.update_component: self._wrap_method(
+            self.update_component: self._wrap_async_method(
                 self.update_component,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/UpdateComponent",
             ),
-            self.delete_component: self._wrap_method(
+            self.delete_component: self._wrap_async_method(
                 self.delete_component,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteComponent",
             ),
-            self.get_connection: self._wrap_method(
+            self.get_connection: self._wrap_async_method(
                 self.get_connection,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -2970,8 +3033,9 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetConnection",
             ),
-            self.list_connections: self._wrap_method(
+            self.list_connections: self._wrap_async_method(
                 self.list_connections,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -2984,23 +3048,27 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListConnections",
             ),
-            self.create_connection: self._wrap_method(
+            self.create_connection: self._wrap_async_method(
                 self.create_connection,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreateConnection",
             ),
-            self.update_connection: self._wrap_method(
+            self.update_connection: self._wrap_async_method(
                 self.update_connection,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/UpdateConnection",
             ),
-            self.delete_connection: self._wrap_method(
+            self.delete_connection: self._wrap_async_method(
                 self.delete_connection,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteConnection",
             ),
-            self.get_application_template_revision: self._wrap_method(
+            self.get_application_template_revision: self._wrap_async_method(
                 self.get_application_template_revision,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3013,8 +3081,9 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetApplicationTemplateRevision",
             ),
-            self.list_application_template_revisions: self._wrap_method(
+            self.list_application_template_revisions: self._wrap_async_method(
                 self.list_application_template_revisions,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3027,13 +3096,15 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListApplicationTemplateRevisions",
             ),
-            self.delete_application_template_revision: self._wrap_method(
+            self.delete_application_template_revision: self._wrap_async_method(
                 self.delete_application_template_revision,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteApplicationTemplateRevision",
             ),
-            self.get_catalog: self._wrap_method(
+            self.get_catalog: self._wrap_async_method(
                 self.get_catalog,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3046,8 +3117,9 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetCatalog",
             ),
-            self.list_catalogs: self._wrap_method(
+            self.list_catalogs: self._wrap_async_method(
                 self.list_catalogs,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3060,28 +3132,33 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListCatalogs",
             ),
-            self.create_catalog: self._wrap_method(
+            self.create_catalog: self._wrap_async_method(
                 self.create_catalog,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreateCatalog",
             ),
-            self.update_catalog: self._wrap_method(
+            self.update_catalog: self._wrap_async_method(
                 self.update_catalog,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/UpdateCatalog",
             ),
-            self.delete_catalog: self._wrap_method(
+            self.delete_catalog: self._wrap_async_method(
                 self.delete_catalog,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteCatalog",
             ),
-            self.create_catalog_template: self._wrap_method(
+            self.create_catalog_template: self._wrap_async_method(
                 self.create_catalog_template,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreateCatalogTemplate",
             ),
-            self.get_catalog_template: self._wrap_method(
+            self.get_catalog_template: self._wrap_async_method(
                 self.get_catalog_template,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3094,8 +3171,9 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetCatalogTemplate",
             ),
-            self.list_catalog_templates: self._wrap_method(
+            self.list_catalog_templates: self._wrap_async_method(
                 self.list_catalog_templates,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3108,23 +3186,27 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListCatalogTemplates",
             ),
-            self.update_catalog_template: self._wrap_method(
+            self.update_catalog_template: self._wrap_async_method(
                 self.update_catalog_template,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/UpdateCatalogTemplate",
             ),
-            self.delete_catalog_template: self._wrap_method(
+            self.delete_catalog_template: self._wrap_async_method(
                 self.delete_catalog_template,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteCatalogTemplate",
             ),
-            self.create_share: self._wrap_method(
+            self.create_share: self._wrap_async_method(
                 self.create_share,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreateShare",
             ),
-            self.list_shares: self._wrap_method(
+            self.list_shares: self._wrap_async_method(
                 self.list_shares,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3137,8 +3219,9 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListShares",
             ),
-            self.get_share: self._wrap_method(
+            self.get_share: self._wrap_async_method(
                 self.get_share,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3151,18 +3234,21 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetShare",
             ),
-            self.delete_share: self._wrap_method(
+            self.delete_share: self._wrap_async_method(
                 self.delete_share,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteShare",
             ),
-            self.sync_share: self._wrap_method(
+            self.sync_share: self._wrap_async_method(
                 self.sync_share,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/SyncShare",
             ),
-            self.get_shared_template: self._wrap_method(
+            self.get_shared_template: self._wrap_async_method(
                 self.get_shared_template,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3175,8 +3261,9 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetSharedTemplate",
             ),
-            self.list_shared_templates: self._wrap_method(
+            self.list_shared_templates: self._wrap_async_method(
                 self.list_shared_templates,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3189,8 +3276,9 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListSharedTemplates",
             ),
-            self.get_shared_template_revision: self._wrap_method(
+            self.get_shared_template_revision: self._wrap_async_method(
                 self.get_shared_template_revision,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3203,8 +3291,9 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetSharedTemplateRevision",
             ),
-            self.list_shared_template_revisions: self._wrap_method(
+            self.list_shared_template_revisions: self._wrap_async_method(
                 self.list_shared_template_revisions,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3217,13 +3306,15 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListSharedTemplateRevisions",
             ),
-            self.create_catalog_template_revision: self._wrap_method(
+            self.create_catalog_template_revision: self._wrap_async_method(
                 self.create_catalog_template_revision,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreateCatalogTemplateRevision",
             ),
-            self.get_catalog_template_revision: self._wrap_method(
+            self.get_catalog_template_revision: self._wrap_async_method(
                 self.get_catalog_template_revision,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3236,8 +3327,9 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetCatalogTemplateRevision",
             ),
-            self.list_catalog_template_revisions: self._wrap_method(
+            self.list_catalog_template_revisions: self._wrap_async_method(
                 self.list_catalog_template_revisions,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3250,18 +3342,21 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListCatalogTemplateRevisions",
             ),
-            self.delete_catalog_template_revision: self._wrap_method(
+            self.delete_catalog_template_revision: self._wrap_async_method(
                 self.delete_catalog_template_revision,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteCatalogTemplateRevision",
             ),
-            self.create_application: self._wrap_method(
+            self.create_application: self._wrap_async_method(
                 self.create_application,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreateApplication",
             ),
-            self.get_application: self._wrap_method(
+            self.get_application: self._wrap_async_method(
                 self.get_application,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3274,8 +3369,9 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetApplication",
             ),
-            self.list_applications: self._wrap_method(
+            self.list_applications: self._wrap_async_method(
                 self.list_applications,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3288,28 +3384,33 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListApplications",
             ),
-            self.update_application: self._wrap_method(
+            self.update_application: self._wrap_async_method(
                 self.update_application,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/UpdateApplication",
             ),
-            self.delete_application: self._wrap_method(
+            self.delete_application: self._wrap_async_method(
                 self.delete_application,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteApplication",
             ),
-            self.deploy_application: self._wrap_method(
+            self.deploy_application: self._wrap_async_method(
                 self.deploy_application,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeployApplication",
             ),
-            self.preview_application: self._wrap_method(
+            self.preview_application: self._wrap_async_method(
                 self.preview_application,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/PreviewApplication",
             ),
-            self.fetch_application_assessment_report: self._wrap_method(
+            self.fetch_application_assessment_report: self._wrap_async_method(
                 self.fetch_application_assessment_report,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3322,28 +3423,33 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/FetchApplicationAssessmentReport",
             ),
-            self.generate_application_assessment_report: self._wrap_method(
+            self.generate_application_assessment_report: self._wrap_async_method(
                 self.generate_application_assessment_report,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GenerateApplicationAssessmentReport",
             ),
-            self.generate_application_template_assessment_report: self._wrap_method(
+            self.generate_application_template_assessment_report: self._wrap_async_method(
                 self.generate_application_template_assessment_report,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GenerateApplicationTemplateAssessmentReport",
             ),
-            self.generate_assessment_report: self._wrap_method(
+            self.generate_assessment_report: self._wrap_async_method(
                 self.generate_assessment_report,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GenerateAssessmentReport",
             ),
-            self.generate_terraform_plan_assessment_report: self._wrap_method(
+            self.generate_terraform_plan_assessment_report: self._wrap_async_method(
                 self.generate_terraform_plan_assessment_report,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GenerateTerraformPlanAssessmentReport",
             ),
-            self.get_policy: self._wrap_method(
+            self.get_policy: self._wrap_async_method(
                 self.get_policy,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3356,8 +3462,9 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetPolicy",
             ),
-            self.list_policies: self._wrap_method(
+            self.list_policies: self._wrap_async_method(
                 self.list_policies,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3370,23 +3477,27 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListPolicies",
             ),
-            self.create_policy: self._wrap_method(
+            self.create_policy: self._wrap_async_method(
                 self.create_policy,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreatePolicy",
             ),
-            self.update_policy: self._wrap_method(
+            self.update_policy: self._wrap_async_method(
                 self.update_policy,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/UpdatePolicy",
             ),
-            self.delete_policy: self._wrap_method(
+            self.delete_policy: self._wrap_async_method(
                 self.delete_policy,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeletePolicy",
             ),
-            self.fetch_frameworks: self._wrap_method(
+            self.fetch_frameworks: self._wrap_async_method(
                 self.fetch_frameworks,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3399,38 +3510,45 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/FetchFrameworks",
             ),
-            self.generate_application_ia_c: self._wrap_method(
+            self.generate_application_ia_c: self._wrap_async_method(
                 self.generate_application_ia_c,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GenerateApplicationIaC",
             ),
-            self.export_application_ia_c: self._wrap_method(
+            self.export_application_ia_c: self._wrap_async_method(
                 self.export_application_ia_c,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ExportApplicationIaC",
             ),
-            self.import_application_template_ia_c: self._wrap_method(
+            self.import_application_template_ia_c: self._wrap_async_method(
                 self.import_application_template_ia_c,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ImportApplicationTemplateIaC",
             ),
-            self.ingest_application_template_ia_c: self._wrap_method(
+            self.ingest_application_template_ia_c: self._wrap_async_method(
                 self.ingest_application_template_ia_c,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/IngestApplicationTemplateIaC",
             ),
-            self.import_application_ia_c: self._wrap_method(
+            self.import_application_ia_c: self._wrap_async_method(
                 self.import_application_ia_c,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ImportApplicationIaC",
             ),
-            self.register_app_hub_application_resources: self._wrap_method(
+            self.register_app_hub_application_resources: self._wrap_async_method(
                 self.register_app_hub_application_resources,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/RegisterAppHubApplicationResources",
             ),
-            self.list_application_template_system_revisions: self._wrap_method(
+            self.list_application_template_system_revisions: self._wrap_async_method(
                 self.list_application_template_system_revisions,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3443,8 +3561,9 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListApplicationTemplateSystemRevisions",
             ),
-            self.get_application_template_system_revision: self._wrap_method(
+            self.get_application_template_system_revision: self._wrap_async_method(
                 self.get_application_template_system_revision,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -3457,63 +3576,69 @@ class DesignCenterGrpcAsyncIOTransport(DesignCenterTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetApplicationTemplateSystemRevision",
             ),
-            self.recommend_iam_roles: self._wrap_method(
+            self.recommend_iam_roles: self._wrap_async_method(
                 self.recommend_iam_roles,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/RecommendIAMRoles",
             ),
-            self.get_location: self._wrap_method(
+            self.get_location: self._wrap_async_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: self._wrap_method(
+            self.list_locations: self._wrap_async_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.get_iam_policy: self._wrap_method(
+            self.get_iam_policy: self._wrap_async_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/GetIamPolicy",
             ),
-            self.set_iam_policy: self._wrap_method(
+            self.set_iam_policy: self._wrap_async_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/SetIamPolicy",
             ),
-            self.test_iam_permissions: self._wrap_method(
+            self.test_iam_permissions: self._wrap_async_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/TestIamPermissions",
             ),
-            self.cancel_operation: self._wrap_method(
+            self.cancel_operation: self._wrap_async_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: self._wrap_method(
+            self.delete_operation: self._wrap_async_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: self._wrap_method(
+            self.list_operations: self._wrap_async_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

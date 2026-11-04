@@ -59,6 +59,9 @@ from google.cloud.compute_v1.services.global_public_delegated_prefixes import (
     pagers,
     transports,
 )
+from google.cloud.compute_v1.services.global_public_delegated_prefixes.client import (
+    _observability,
+)
 from google.cloud.compute_v1.types import compute
 
 try:
@@ -4243,3 +4246,104 @@ def test_api_key_credentials(client_class, transport_class):
                 always_use_jwt_access=True,
                 api_audience=None,
             )
+
+
+def test_global_public_delegated_prefixes_base_transport_wrap_method_modern_api_core(
+    monkeypatch,
+):
+    monkeypatch.setattr(transports.base, "_WRAP_METHOD_SUPPORTS_TRACING", True)
+    # 1. Concrete transport: passes client_options=None and kind="rest"
+    with mock.patch.object(transports.base.gapic_v1.method, "wrap_method") as mock_wrap:
+        transport = transports.GlobalPublicDelegatedPrefixesRestTransport(
+            credentials=ga_credentials.AnonymousCredentials()
+        )
+        func = mock.MagicMock()
+        transport._wrap_method(func)
+        assert mock_wrap.call_args.kwargs["kind"] == "rest"
+        assert "client_options" in mock_wrap.call_args.kwargs
+
+    # 2. Base transport: kind raises NotImplementedError and is cleanly omitted
+    with mock.patch.object(transports.base.gapic_v1.method, "wrap_method") as mock_wrap:
+        base_transport = transports.GlobalPublicDelegatedPrefixesTransport(
+            credentials=ga_credentials.AnonymousCredentials()
+        )
+        func = mock.MagicMock()
+        base_transport._wrap_method(func)
+        assert "kind" not in mock_wrap.call_args.kwargs
+        assert "client_options" in mock_wrap.call_args.kwargs
+
+
+def test_global_public_delegated_prefixes_base_transport_wrap_method_older_api_core_fallbacks(
+    monkeypatch,
+):
+    monkeypatch.setattr(transports.base, "_WRAP_METHOD_SUPPORTS_TRACING", False)
+    with mock.patch.object(transports.base.gapic_v1.method, "wrap_method"):
+        transport = transports.GlobalPublicDelegatedPrefixesRestTransport(
+            credentials=ga_credentials.AnonymousCredentials()
+        )
+
+    # Era 1: Ancient google-api-core (< 2.29.0: can be removed once google-api-core < 2.29.0 is no longer supported)
+    monkeypatch.setattr(transports.base, "_WRAP_METHOD_SUPPORTS_KIND", False)
+    with mock.patch.object(transports.base.gapic_v1.method, "wrap_method") as mock_wrap:
+        func = mock.MagicMock()
+        transport._wrap_method(
+            func,
+            client_options="fake_options",
+            method_name="fake_method",
+            is_streaming=False,
+        )
+        kwargs = mock_wrap.call_args.kwargs
+        assert "kind" not in kwargs
+        assert "client_options" not in kwargs
+        assert "method_name" not in kwargs
+        assert "is_streaming" not in kwargs
+
+    with mock.patch.object(transports.base.gapic_v1.method, "wrap_method") as mock_wrap:
+        base_transport = transports.GlobalPublicDelegatedPrefixesTransport(
+            credentials=ga_credentials.AnonymousCredentials()
+        )
+        func = mock.MagicMock()
+        base_transport._wrap_method(
+            func,
+            client_options="fake_options",
+            method_name="fake_method",
+            is_streaming=False,
+        )
+        kwargs = mock_wrap.call_args.kwargs
+        assert "kind" not in kwargs
+        assert "client_options" not in kwargs
+        assert "method_name" not in kwargs
+        assert "is_streaming" not in kwargs
+
+    # Era 2: Intermediate google-api-core (>= 2.29.0, < 2.36.0: can be removed once google-api-core < 2.36.0 is no longer supported)
+    monkeypatch.setattr(transports.base, "_WRAP_METHOD_SUPPORTS_KIND", True)
+    with mock.patch.object(transports.base.gapic_v1.method, "wrap_method") as mock_wrap:
+        func = mock.MagicMock()
+        transport._wrap_method(
+            func,
+            client_options="fake_options",
+            method_name="fake_method",
+            is_streaming=False,
+        )
+        kwargs = mock_wrap.call_args.kwargs
+        assert kwargs.get("kind") == "rest"
+        assert "client_options" not in kwargs
+        assert "method_name" not in kwargs
+        assert "is_streaming" not in kwargs
+
+    with mock.patch.object(transports.base.gapic_v1.method, "wrap_method") as mock_wrap:
+        base_transport = transports.GlobalPublicDelegatedPrefixesTransport(
+            credentials=ga_credentials.AnonymousCredentials()
+        )
+        func = mock.MagicMock()
+        base_transport._wrap_method(
+            func,
+            client_options="fake_options",
+            method_name="fake_method",
+            is_streaming=False,
+        )
+        kwargs = mock_wrap.call_args.kwargs
+        assert "kind" not in kwargs
+        assert "client_options" not in kwargs
+        assert "method_name" not in kwargs
+        assert "is_streaming" not in kwargs

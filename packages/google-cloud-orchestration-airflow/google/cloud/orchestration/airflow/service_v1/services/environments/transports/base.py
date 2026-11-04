@@ -16,10 +16,24 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.orchestration.airflow.service_v1 import (
+    gapic_version as package_version,
+)
+from google.cloud.orchestration.airflow.service_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.orchestration.airflow.service_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -27,9 +41,6 @@ from google.auth import credentials as ga_credentials  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.orchestration.airflow.service_v1 import (
-    gapic_version as package_version,
-)
 from google.cloud.orchestration.airflow.service_v1.types import environments
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
@@ -56,6 +67,7 @@ class EnvironmentsTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -86,6 +98,9 @@ class EnvironmentsTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -135,149 +150,255 @@ class EnvironmentsTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.create_environment: gapic_v1.method.wrap_method(
+            self.create_environment: self._wrap_method(
                 self.create_environment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/CreateEnvironment",
             ),
-            self.get_environment: gapic_v1.method.wrap_method(
+            self.get_environment: self._wrap_method(
                 self.get_environment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/GetEnvironment",
             ),
-            self.list_environments: gapic_v1.method.wrap_method(
+            self.list_environments: self._wrap_method(
                 self.list_environments,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/ListEnvironments",
             ),
-            self.update_environment: gapic_v1.method.wrap_method(
+            self.update_environment: self._wrap_method(
                 self.update_environment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/UpdateEnvironment",
             ),
-            self.delete_environment: gapic_v1.method.wrap_method(
+            self.delete_environment: self._wrap_method(
                 self.delete_environment,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/DeleteEnvironment",
             ),
-            self.execute_airflow_command: gapic_v1.method.wrap_method(
+            self.execute_airflow_command: self._wrap_method(
                 self.execute_airflow_command,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/ExecuteAirflowCommand",
             ),
-            self.stop_airflow_command: gapic_v1.method.wrap_method(
+            self.stop_airflow_command: self._wrap_method(
                 self.stop_airflow_command,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/StopAirflowCommand",
             ),
-            self.poll_airflow_command: gapic_v1.method.wrap_method(
+            self.poll_airflow_command: self._wrap_method(
                 self.poll_airflow_command,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/PollAirflowCommand",
             ),
-            self.list_workloads: gapic_v1.method.wrap_method(
+            self.list_workloads: self._wrap_method(
                 self.list_workloads,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/ListWorkloads",
             ),
-            self.check_upgrade: gapic_v1.method.wrap_method(
+            self.check_upgrade: self._wrap_method(
                 self.check_upgrade,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/CheckUpgrade",
             ),
-            self.create_user_workloads_secret: gapic_v1.method.wrap_method(
+            self.create_user_workloads_secret: self._wrap_method(
                 self.create_user_workloads_secret,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/CreateUserWorkloadsSecret",
             ),
-            self.get_user_workloads_secret: gapic_v1.method.wrap_method(
+            self.get_user_workloads_secret: self._wrap_method(
                 self.get_user_workloads_secret,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/GetUserWorkloadsSecret",
             ),
-            self.list_user_workloads_secrets: gapic_v1.method.wrap_method(
+            self.list_user_workloads_secrets: self._wrap_method(
                 self.list_user_workloads_secrets,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/ListUserWorkloadsSecrets",
             ),
-            self.update_user_workloads_secret: gapic_v1.method.wrap_method(
+            self.update_user_workloads_secret: self._wrap_method(
                 self.update_user_workloads_secret,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/UpdateUserWorkloadsSecret",
             ),
-            self.delete_user_workloads_secret: gapic_v1.method.wrap_method(
+            self.delete_user_workloads_secret: self._wrap_method(
                 self.delete_user_workloads_secret,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/DeleteUserWorkloadsSecret",
             ),
-            self.create_user_workloads_config_map: gapic_v1.method.wrap_method(
+            self.create_user_workloads_config_map: self._wrap_method(
                 self.create_user_workloads_config_map,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/CreateUserWorkloadsConfigMap",
             ),
-            self.get_user_workloads_config_map: gapic_v1.method.wrap_method(
+            self.get_user_workloads_config_map: self._wrap_method(
                 self.get_user_workloads_config_map,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/GetUserWorkloadsConfigMap",
             ),
-            self.list_user_workloads_config_maps: gapic_v1.method.wrap_method(
+            self.list_user_workloads_config_maps: self._wrap_method(
                 self.list_user_workloads_config_maps,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/ListUserWorkloadsConfigMaps",
             ),
-            self.update_user_workloads_config_map: gapic_v1.method.wrap_method(
+            self.update_user_workloads_config_map: self._wrap_method(
                 self.update_user_workloads_config_map,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/UpdateUserWorkloadsConfigMap",
             ),
-            self.delete_user_workloads_config_map: gapic_v1.method.wrap_method(
+            self.delete_user_workloads_config_map: self._wrap_method(
                 self.delete_user_workloads_config_map,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/DeleteUserWorkloadsConfigMap",
             ),
-            self.save_snapshot: gapic_v1.method.wrap_method(
+            self.save_snapshot: self._wrap_method(
                 self.save_snapshot,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/SaveSnapshot",
             ),
-            self.load_snapshot: gapic_v1.method.wrap_method(
+            self.load_snapshot: self._wrap_method(
                 self.load_snapshot,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/LoadSnapshot",
             ),
-            self.database_failover: gapic_v1.method.wrap_method(
+            self.database_failover: self._wrap_method(
                 self.database_failover,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/DatabaseFailover",
             ),
-            self.fetch_database_properties: gapic_v1.method.wrap_method(
+            self.fetch_database_properties: self._wrap_method(
                 self.fetch_database_properties,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.orchestration.airflow.service.v1.Environments/FetchDatabaseProperties",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
 

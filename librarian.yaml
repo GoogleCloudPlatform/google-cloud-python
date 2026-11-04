@@ -24,8 +24,8 @@ tools:
       version: 23.7.0
       package: black[jupyter]==23.7.0
     - name: gapic-generator
-      version: 78ff458d055a6104a385dc96990773f02a138f7d
-      package: gapic-generator@git+https://github.com/googleapis/google-cloud-python.git@78ff458d055a6104a385dc96990773f02a138f7d#subdirectory=packages/gapic-generator
+      version: ad03b95d16184762176614c5adb556c7f33c654b
+      package: gapic-generator@git+https://github.com/googleapis/google-cloud-python.git@ad03b95d16184762176614c5adb556c7f33c654b#subdirectory=packages/gapic-generator
     - name: isort
       version: 5.11.0
     - name: nox

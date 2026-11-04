@@ -13,17 +13,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
@@ -34,6 +43,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.observability_v1._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.observability_v1.types import observability
 
 from .base import DEFAULT_CLIENT_INFO, ObservabilityTransport
@@ -191,6 +204,10 @@ class ObservabilityGrpcAsyncIOTransport(ObservabilityTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -242,6 +259,12 @@ class ObservabilityGrpcAsyncIOTransport(ObservabilityTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -297,6 +320,7 @@ class ObservabilityGrpcAsyncIOTransport(ObservabilityTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -318,12 +342,26 @@ class ObservabilityGrpcAsyncIOTransport(ObservabilityTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -959,9 +997,12 @@ class ObservabilityGrpcAsyncIOTransport(ObservabilityTransport):
         return self._stubs["update_settings"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.get_scope: self._wrap_method(
+            self.get_scope: self._wrap_async_method(
                 self.get_scope,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -974,13 +1015,15 @@ class ObservabilityGrpcAsyncIOTransport(ObservabilityTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/GetScope",
             ),
-            self.update_scope: self._wrap_method(
+            self.update_scope: self._wrap_async_method(
                 self.update_scope,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/UpdateScope",
             ),
-            self.get_bucket: self._wrap_method(
+            self.get_bucket: self._wrap_async_method(
                 self.get_bucket,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -993,8 +1036,9 @@ class ObservabilityGrpcAsyncIOTransport(ObservabilityTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/GetBucket",
             ),
-            self.list_buckets: self._wrap_method(
+            self.list_buckets: self._wrap_async_method(
                 self.list_buckets,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1007,18 +1051,21 @@ class ObservabilityGrpcAsyncIOTransport(ObservabilityTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/ListBuckets",
             ),
-            self.create_bucket: self._wrap_method(
+            self.create_bucket: self._wrap_async_method(
                 self.create_bucket,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/CreateBucket",
             ),
-            self.update_bucket: self._wrap_method(
+            self.update_bucket: self._wrap_async_method(
                 self.update_bucket,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/UpdateBucket",
             ),
-            self.get_dataset: self._wrap_method(
+            self.get_dataset: self._wrap_async_method(
                 self.get_dataset,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1031,8 +1078,9 @@ class ObservabilityGrpcAsyncIOTransport(ObservabilityTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/GetDataset",
             ),
-            self.list_datasets: self._wrap_method(
+            self.list_datasets: self._wrap_async_method(
                 self.list_datasets,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1045,8 +1093,9 @@ class ObservabilityGrpcAsyncIOTransport(ObservabilityTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/ListDatasets",
             ),
-            self.get_view: self._wrap_method(
+            self.get_view: self._wrap_async_method(
                 self.get_view,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1059,8 +1108,9 @@ class ObservabilityGrpcAsyncIOTransport(ObservabilityTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/GetView",
             ),
-            self.list_views: self._wrap_method(
+            self.list_views: self._wrap_async_method(
                 self.list_views,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1073,8 +1123,9 @@ class ObservabilityGrpcAsyncIOTransport(ObservabilityTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/ListViews",
             ),
-            self.get_link: self._wrap_method(
+            self.get_link: self._wrap_async_method(
                 self.get_link,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1087,8 +1138,9 @@ class ObservabilityGrpcAsyncIOTransport(ObservabilityTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/GetLink",
             ),
-            self.list_links: self._wrap_method(
+            self.list_links: self._wrap_async_method(
                 self.list_links,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1101,23 +1153,27 @@ class ObservabilityGrpcAsyncIOTransport(ObservabilityTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/ListLinks",
             ),
-            self.create_link: self._wrap_method(
+            self.create_link: self._wrap_async_method(
                 self.create_link,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/CreateLink",
             ),
-            self.update_link: self._wrap_method(
+            self.update_link: self._wrap_async_method(
                 self.update_link,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/UpdateLink",
             ),
-            self.delete_link: self._wrap_method(
+            self.delete_link: self._wrap_async_method(
                 self.delete_link,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/DeleteLink",
             ),
-            self.get_trace_scope: self._wrap_method(
+            self.get_trace_scope: self._wrap_async_method(
                 self.get_trace_scope,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1130,8 +1186,9 @@ class ObservabilityGrpcAsyncIOTransport(ObservabilityTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/GetTraceScope",
             ),
-            self.list_trace_scopes: self._wrap_method(
+            self.list_trace_scopes: self._wrap_async_method(
                 self.list_trace_scopes,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1144,23 +1201,27 @@ class ObservabilityGrpcAsyncIOTransport(ObservabilityTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/ListTraceScopes",
             ),
-            self.create_trace_scope: self._wrap_method(
+            self.create_trace_scope: self._wrap_async_method(
                 self.create_trace_scope,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/CreateTraceScope",
             ),
-            self.update_trace_scope: self._wrap_method(
+            self.update_trace_scope: self._wrap_async_method(
                 self.update_trace_scope,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/UpdateTraceScope",
             ),
-            self.delete_trace_scope: self._wrap_method(
+            self.delete_trace_scope: self._wrap_async_method(
                 self.delete_trace_scope,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/DeleteTraceScope",
             ),
-            self.get_settings: self._wrap_method(
+            self.get_settings: self._wrap_async_method(
                 self.get_settings,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1173,48 +1234,51 @@ class ObservabilityGrpcAsyncIOTransport(ObservabilityTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/GetSettings",
             ),
-            self.update_settings: self._wrap_method(
+            self.update_settings: self._wrap_async_method(
                 self.update_settings,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.observability.v1.Observability/UpdateSettings",
             ),
-            self.get_location: self._wrap_method(
+            self.get_location: self._wrap_async_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: self._wrap_method(
+            self.list_locations: self._wrap_async_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.cancel_operation: self._wrap_method(
+            self.cancel_operation: self._wrap_async_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: self._wrap_method(
+            self.delete_operation: self._wrap_async_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: self._wrap_method(
+            self.list_operations: self._wrap_async_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

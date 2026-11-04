@@ -47,6 +47,7 @@ from google.oauth2 import service_account  # type: ignore
 
 from grafeas.grafeas_v1 import gapic_version as package_version
 from grafeas.grafeas_v1._compat import (
+    _observability,
     get_api_endpoint,
     get_default_mtls_endpoint,
     get_universe_domain,

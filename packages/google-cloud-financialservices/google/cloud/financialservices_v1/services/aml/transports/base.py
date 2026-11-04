@@ -16,9 +16,21 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.financialservices_v1 import gapic_version as package_version
+from google.cloud.financialservices_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.financialservices_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -27,7 +39,6 @@ from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.financialservices_v1 import gapic_version as package_version
 from google.cloud.financialservices_v1.types import (
     backtest_result,
     dataset,
@@ -72,6 +83,7 @@ class AMLTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -102,6 +114,9 @@ class AMLTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -151,234 +166,357 @@ class AMLTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.list_instances: gapic_v1.method.wrap_method(
+            self.list_instances: self._wrap_method(
                 self.list_instances,
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/ListInstances",
             ),
-            self.get_instance: gapic_v1.method.wrap_method(
+            self.get_instance: self._wrap_method(
                 self.get_instance,
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/GetInstance",
             ),
-            self.create_instance: gapic_v1.method.wrap_method(
+            self.create_instance: self._wrap_method(
                 self.create_instance,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/CreateInstance",
             ),
-            self.update_instance: gapic_v1.method.wrap_method(
+            self.update_instance: self._wrap_method(
                 self.update_instance,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/UpdateInstance",
             ),
-            self.delete_instance: gapic_v1.method.wrap_method(
+            self.delete_instance: self._wrap_method(
                 self.delete_instance,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/DeleteInstance",
             ),
-            self.import_registered_parties: gapic_v1.method.wrap_method(
+            self.import_registered_parties: self._wrap_method(
                 self.import_registered_parties,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/ImportRegisteredParties",
             ),
-            self.export_registered_parties: gapic_v1.method.wrap_method(
+            self.export_registered_parties: self._wrap_method(
                 self.export_registered_parties,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/ExportRegisteredParties",
             ),
-            self.list_datasets: gapic_v1.method.wrap_method(
+            self.list_datasets: self._wrap_method(
                 self.list_datasets,
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/ListDatasets",
             ),
-            self.get_dataset: gapic_v1.method.wrap_method(
+            self.get_dataset: self._wrap_method(
                 self.get_dataset,
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/GetDataset",
             ),
-            self.create_dataset: gapic_v1.method.wrap_method(
+            self.create_dataset: self._wrap_method(
                 self.create_dataset,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/CreateDataset",
             ),
-            self.update_dataset: gapic_v1.method.wrap_method(
+            self.update_dataset: self._wrap_method(
                 self.update_dataset,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/UpdateDataset",
             ),
-            self.delete_dataset: gapic_v1.method.wrap_method(
+            self.delete_dataset: self._wrap_method(
                 self.delete_dataset,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/DeleteDataset",
             ),
-            self.list_models: gapic_v1.method.wrap_method(
+            self.list_models: self._wrap_method(
                 self.list_models,
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/ListModels",
             ),
-            self.get_model: gapic_v1.method.wrap_method(
+            self.get_model: self._wrap_method(
                 self.get_model,
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/GetModel",
             ),
-            self.create_model: gapic_v1.method.wrap_method(
+            self.create_model: self._wrap_method(
                 self.create_model,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/CreateModel",
             ),
-            self.update_model: gapic_v1.method.wrap_method(
+            self.update_model: self._wrap_method(
                 self.update_model,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/UpdateModel",
             ),
-            self.export_model_metadata: gapic_v1.method.wrap_method(
+            self.export_model_metadata: self._wrap_method(
                 self.export_model_metadata,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/ExportModelMetadata",
             ),
-            self.delete_model: gapic_v1.method.wrap_method(
+            self.delete_model: self._wrap_method(
                 self.delete_model,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/DeleteModel",
             ),
-            self.list_engine_configs: gapic_v1.method.wrap_method(
+            self.list_engine_configs: self._wrap_method(
                 self.list_engine_configs,
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/ListEngineConfigs",
             ),
-            self.get_engine_config: gapic_v1.method.wrap_method(
+            self.get_engine_config: self._wrap_method(
                 self.get_engine_config,
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/GetEngineConfig",
             ),
-            self.create_engine_config: gapic_v1.method.wrap_method(
+            self.create_engine_config: self._wrap_method(
                 self.create_engine_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/CreateEngineConfig",
             ),
-            self.update_engine_config: gapic_v1.method.wrap_method(
+            self.update_engine_config: self._wrap_method(
                 self.update_engine_config,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/UpdateEngineConfig",
             ),
-            self.export_engine_config_metadata: gapic_v1.method.wrap_method(
+            self.export_engine_config_metadata: self._wrap_method(
                 self.export_engine_config_metadata,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/ExportEngineConfigMetadata",
             ),
-            self.delete_engine_config: gapic_v1.method.wrap_method(
+            self.delete_engine_config: self._wrap_method(
                 self.delete_engine_config,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/DeleteEngineConfig",
             ),
-            self.get_engine_version: gapic_v1.method.wrap_method(
+            self.get_engine_version: self._wrap_method(
                 self.get_engine_version,
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/GetEngineVersion",
             ),
-            self.list_engine_versions: gapic_v1.method.wrap_method(
+            self.list_engine_versions: self._wrap_method(
                 self.list_engine_versions,
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/ListEngineVersions",
             ),
-            self.list_prediction_results: gapic_v1.method.wrap_method(
+            self.list_prediction_results: self._wrap_method(
                 self.list_prediction_results,
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/ListPredictionResults",
             ),
-            self.get_prediction_result: gapic_v1.method.wrap_method(
+            self.get_prediction_result: self._wrap_method(
                 self.get_prediction_result,
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/GetPredictionResult",
             ),
-            self.create_prediction_result: gapic_v1.method.wrap_method(
+            self.create_prediction_result: self._wrap_method(
                 self.create_prediction_result,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/CreatePredictionResult",
             ),
-            self.update_prediction_result: gapic_v1.method.wrap_method(
+            self.update_prediction_result: self._wrap_method(
                 self.update_prediction_result,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/UpdatePredictionResult",
             ),
-            self.export_prediction_result_metadata: gapic_v1.method.wrap_method(
+            self.export_prediction_result_metadata: self._wrap_method(
                 self.export_prediction_result_metadata,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/ExportPredictionResultMetadata",
             ),
-            self.delete_prediction_result: gapic_v1.method.wrap_method(
+            self.delete_prediction_result: self._wrap_method(
                 self.delete_prediction_result,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/DeletePredictionResult",
             ),
-            self.list_backtest_results: gapic_v1.method.wrap_method(
+            self.list_backtest_results: self._wrap_method(
                 self.list_backtest_results,
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/ListBacktestResults",
             ),
-            self.get_backtest_result: gapic_v1.method.wrap_method(
+            self.get_backtest_result: self._wrap_method(
                 self.get_backtest_result,
                 default_timeout=10.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/GetBacktestResult",
             ),
-            self.create_backtest_result: gapic_v1.method.wrap_method(
+            self.create_backtest_result: self._wrap_method(
                 self.create_backtest_result,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/CreateBacktestResult",
             ),
-            self.update_backtest_result: gapic_v1.method.wrap_method(
+            self.update_backtest_result: self._wrap_method(
                 self.update_backtest_result,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/UpdateBacktestResult",
             ),
-            self.export_backtest_result_metadata: gapic_v1.method.wrap_method(
+            self.export_backtest_result_metadata: self._wrap_method(
                 self.export_backtest_result_metadata,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/ExportBacktestResultMetadata",
             ),
-            self.delete_backtest_result: gapic_v1.method.wrap_method(
+            self.delete_backtest_result: self._wrap_method(
                 self.delete_backtest_result,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.financialservices.v1.AML/DeleteBacktestResult",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
 

@@ -13,12 +13,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
 import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
@@ -26,6 +34,7 @@ import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
@@ -40,6 +49,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.dataform_v1._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.dataform_v1.types import dataform
 
 from .base import DEFAULT_CLIENT_INFO, DataformTransport
@@ -198,6 +211,10 @@ class DataformGrpcAsyncIOTransport(DataformTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -249,6 +266,12 @@ class DataformGrpcAsyncIOTransport(DataformTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -304,6 +327,7 @@ class DataformGrpcAsyncIOTransport(DataformTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -325,12 +349,26 @@ class DataformGrpcAsyncIOTransport(DataformTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -2470,409 +2508,486 @@ class DataformGrpcAsyncIOTransport(DataformTransport):
         return self._stubs["test_iam_permissions"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.get_team_folder: self._wrap_method(
+            self.get_team_folder: self._wrap_async_method(
                 self.get_team_folder,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/GetTeamFolder",
             ),
-            self.create_team_folder: self._wrap_method(
+            self.create_team_folder: self._wrap_async_method(
                 self.create_team_folder,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/CreateTeamFolder",
             ),
-            self.update_team_folder: self._wrap_method(
+            self.update_team_folder: self._wrap_async_method(
                 self.update_team_folder,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/UpdateTeamFolder",
             ),
-            self.delete_team_folder: self._wrap_method(
+            self.delete_team_folder: self._wrap_async_method(
                 self.delete_team_folder,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/DeleteTeamFolder",
             ),
-            self.delete_team_folder_tree: self._wrap_method(
+            self.delete_team_folder_tree: self._wrap_async_method(
                 self.delete_team_folder_tree,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/DeleteTeamFolderTree",
             ),
-            self.query_team_folder_contents: self._wrap_method(
+            self.query_team_folder_contents: self._wrap_async_method(
                 self.query_team_folder_contents,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/QueryTeamFolderContents",
             ),
-            self.search_team_folders: self._wrap_method(
+            self.search_team_folders: self._wrap_async_method(
                 self.search_team_folders,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/SearchTeamFolders",
             ),
-            self.get_folder: self._wrap_method(
+            self.get_folder: self._wrap_async_method(
                 self.get_folder,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/GetFolder",
             ),
-            self.create_folder: self._wrap_method(
+            self.create_folder: self._wrap_async_method(
                 self.create_folder,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/CreateFolder",
             ),
-            self.update_folder: self._wrap_method(
+            self.update_folder: self._wrap_async_method(
                 self.update_folder,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/UpdateFolder",
             ),
-            self.delete_folder: self._wrap_method(
+            self.delete_folder: self._wrap_async_method(
                 self.delete_folder,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/DeleteFolder",
             ),
-            self.delete_folder_tree: self._wrap_method(
+            self.delete_folder_tree: self._wrap_async_method(
                 self.delete_folder_tree,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/DeleteFolderTree",
             ),
-            self.query_folder_contents: self._wrap_method(
+            self.query_folder_contents: self._wrap_async_method(
                 self.query_folder_contents,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/QueryFolderContents",
             ),
-            self.query_user_root_contents: self._wrap_method(
+            self.query_user_root_contents: self._wrap_async_method(
                 self.query_user_root_contents,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/QueryUserRootContents",
             ),
-            self.move_folder: self._wrap_method(
+            self.move_folder: self._wrap_async_method(
                 self.move_folder,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/MoveFolder",
             ),
-            self.list_repositories: self._wrap_method(
+            self.list_repositories: self._wrap_async_method(
                 self.list_repositories,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/ListRepositories",
             ),
-            self.get_repository: self._wrap_method(
+            self.get_repository: self._wrap_async_method(
                 self.get_repository,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/GetRepository",
             ),
-            self.create_repository: self._wrap_method(
+            self.create_repository: self._wrap_async_method(
                 self.create_repository,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/CreateRepository",
             ),
-            self.update_repository: self._wrap_method(
+            self.update_repository: self._wrap_async_method(
                 self.update_repository,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/UpdateRepository",
             ),
-            self.delete_repository: self._wrap_method(
+            self.delete_repository: self._wrap_async_method(
                 self.delete_repository,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/DeleteRepository",
             ),
-            self.move_repository: self._wrap_method(
+            self.move_repository: self._wrap_async_method(
                 self.move_repository,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/MoveRepository",
             ),
-            self.commit_repository_changes: self._wrap_method(
+            self.commit_repository_changes: self._wrap_async_method(
                 self.commit_repository_changes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/CommitRepositoryChanges",
             ),
-            self.read_repository_file: self._wrap_method(
+            self.read_repository_file: self._wrap_async_method(
                 self.read_repository_file,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/ReadRepositoryFile",
             ),
-            self.query_repository_directory_contents: self._wrap_method(
+            self.query_repository_directory_contents: self._wrap_async_method(
                 self.query_repository_directory_contents,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/QueryRepositoryDirectoryContents",
             ),
-            self.fetch_repository_history: self._wrap_method(
+            self.fetch_repository_history: self._wrap_async_method(
                 self.fetch_repository_history,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/FetchRepositoryHistory",
             ),
-            self.compute_repository_access_token_status: self._wrap_method(
+            self.compute_repository_access_token_status: self._wrap_async_method(
                 self.compute_repository_access_token_status,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/ComputeRepositoryAccessTokenStatus",
             ),
-            self.fetch_remote_branches: self._wrap_method(
+            self.fetch_remote_branches: self._wrap_async_method(
                 self.fetch_remote_branches,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/FetchRemoteBranches",
             ),
-            self.list_workspaces: self._wrap_method(
+            self.list_workspaces: self._wrap_async_method(
                 self.list_workspaces,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/ListWorkspaces",
             ),
-            self.get_workspace: self._wrap_method(
+            self.get_workspace: self._wrap_async_method(
                 self.get_workspace,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/GetWorkspace",
             ),
-            self.create_workspace: self._wrap_method(
+            self.create_workspace: self._wrap_async_method(
                 self.create_workspace,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/CreateWorkspace",
             ),
-            self.delete_workspace: self._wrap_method(
+            self.delete_workspace: self._wrap_async_method(
                 self.delete_workspace,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/DeleteWorkspace",
             ),
-            self.install_npm_packages: self._wrap_method(
+            self.install_npm_packages: self._wrap_async_method(
                 self.install_npm_packages,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/InstallNpmPackages",
             ),
-            self.pull_git_commits: self._wrap_method(
+            self.pull_git_commits: self._wrap_async_method(
                 self.pull_git_commits,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/PullGitCommits",
             ),
-            self.push_git_commits: self._wrap_method(
+            self.push_git_commits: self._wrap_async_method(
                 self.push_git_commits,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/PushGitCommits",
             ),
-            self.fetch_file_git_statuses: self._wrap_method(
+            self.fetch_file_git_statuses: self._wrap_async_method(
                 self.fetch_file_git_statuses,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/FetchFileGitStatuses",
             ),
-            self.fetch_git_ahead_behind: self._wrap_method(
+            self.fetch_git_ahead_behind: self._wrap_async_method(
                 self.fetch_git_ahead_behind,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/FetchGitAheadBehind",
             ),
-            self.commit_workspace_changes: self._wrap_method(
+            self.commit_workspace_changes: self._wrap_async_method(
                 self.commit_workspace_changes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/CommitWorkspaceChanges",
             ),
-            self.reset_workspace_changes: self._wrap_method(
+            self.reset_workspace_changes: self._wrap_async_method(
                 self.reset_workspace_changes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/ResetWorkspaceChanges",
             ),
-            self.fetch_file_diff: self._wrap_method(
+            self.fetch_file_diff: self._wrap_async_method(
                 self.fetch_file_diff,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/FetchFileDiff",
             ),
-            self.query_directory_contents: self._wrap_method(
+            self.query_directory_contents: self._wrap_async_method(
                 self.query_directory_contents,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/QueryDirectoryContents",
             ),
-            self.search_files: self._wrap_method(
+            self.search_files: self._wrap_async_method(
                 self.search_files,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/SearchFiles",
             ),
-            self.make_directory: self._wrap_method(
+            self.make_directory: self._wrap_async_method(
                 self.make_directory,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/MakeDirectory",
             ),
-            self.remove_directory: self._wrap_method(
+            self.remove_directory: self._wrap_async_method(
                 self.remove_directory,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/RemoveDirectory",
             ),
-            self.move_directory: self._wrap_method(
+            self.move_directory: self._wrap_async_method(
                 self.move_directory,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/MoveDirectory",
             ),
-            self.read_file: self._wrap_method(
+            self.read_file: self._wrap_async_method(
                 self.read_file,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/ReadFile",
             ),
-            self.remove_file: self._wrap_method(
+            self.remove_file: self._wrap_async_method(
                 self.remove_file,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/RemoveFile",
             ),
-            self.move_file: self._wrap_method(
+            self.move_file: self._wrap_async_method(
                 self.move_file,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/MoveFile",
             ),
-            self.write_file: self._wrap_method(
+            self.write_file: self._wrap_async_method(
                 self.write_file,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/WriteFile",
             ),
-            self.list_release_configs: self._wrap_method(
+            self.list_release_configs: self._wrap_async_method(
                 self.list_release_configs,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/ListReleaseConfigs",
             ),
-            self.get_release_config: self._wrap_method(
+            self.get_release_config: self._wrap_async_method(
                 self.get_release_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/GetReleaseConfig",
             ),
-            self.create_release_config: self._wrap_method(
+            self.create_release_config: self._wrap_async_method(
                 self.create_release_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/CreateReleaseConfig",
             ),
-            self.update_release_config: self._wrap_method(
+            self.update_release_config: self._wrap_async_method(
                 self.update_release_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/UpdateReleaseConfig",
             ),
-            self.delete_release_config: self._wrap_method(
+            self.delete_release_config: self._wrap_async_method(
                 self.delete_release_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/DeleteReleaseConfig",
             ),
-            self.list_compilation_results: self._wrap_method(
+            self.list_compilation_results: self._wrap_async_method(
                 self.list_compilation_results,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/ListCompilationResults",
             ),
-            self.get_compilation_result: self._wrap_method(
+            self.get_compilation_result: self._wrap_async_method(
                 self.get_compilation_result,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/GetCompilationResult",
             ),
-            self.create_compilation_result: self._wrap_method(
+            self.create_compilation_result: self._wrap_async_method(
                 self.create_compilation_result,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/CreateCompilationResult",
             ),
-            self.query_compilation_result_actions: self._wrap_method(
+            self.query_compilation_result_actions: self._wrap_async_method(
                 self.query_compilation_result_actions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/QueryCompilationResultActions",
             ),
-            self.list_workflow_configs: self._wrap_method(
+            self.list_workflow_configs: self._wrap_async_method(
                 self.list_workflow_configs,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/ListWorkflowConfigs",
             ),
-            self.get_workflow_config: self._wrap_method(
+            self.get_workflow_config: self._wrap_async_method(
                 self.get_workflow_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/GetWorkflowConfig",
             ),
-            self.create_workflow_config: self._wrap_method(
+            self.create_workflow_config: self._wrap_async_method(
                 self.create_workflow_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/CreateWorkflowConfig",
             ),
-            self.update_workflow_config: self._wrap_method(
+            self.update_workflow_config: self._wrap_async_method(
                 self.update_workflow_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/UpdateWorkflowConfig",
             ),
-            self.delete_workflow_config: self._wrap_method(
+            self.delete_workflow_config: self._wrap_async_method(
                 self.delete_workflow_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/DeleteWorkflowConfig",
             ),
-            self.list_workflow_invocations: self._wrap_method(
+            self.list_workflow_invocations: self._wrap_async_method(
                 self.list_workflow_invocations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/ListWorkflowInvocations",
             ),
-            self.get_workflow_invocation: self._wrap_method(
+            self.get_workflow_invocation: self._wrap_async_method(
                 self.get_workflow_invocation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/GetWorkflowInvocation",
             ),
-            self.create_workflow_invocation: self._wrap_method(
+            self.create_workflow_invocation: self._wrap_async_method(
                 self.create_workflow_invocation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/CreateWorkflowInvocation",
             ),
-            self.delete_workflow_invocation: self._wrap_method(
+            self.delete_workflow_invocation: self._wrap_async_method(
                 self.delete_workflow_invocation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/DeleteWorkflowInvocation",
             ),
-            self.cancel_workflow_invocation: self._wrap_method(
+            self.cancel_workflow_invocation: self._wrap_async_method(
                 self.cancel_workflow_invocation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/CancelWorkflowInvocation",
             ),
-            self.query_workflow_invocation_actions: self._wrap_method(
+            self.query_workflow_invocation_actions: self._wrap_async_method(
                 self.query_workflow_invocation_actions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/QueryWorkflowInvocationActions",
             ),
-            self.get_config: self._wrap_method(
+            self.get_config: self._wrap_async_method(
                 self.get_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/GetConfig",
             ),
-            self.update_config: self._wrap_method(
+            self.update_config: self._wrap_async_method(
                 self.update_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/UpdateConfig",
             ),
-            self.get_iam_policy: self._wrap_method(
+            self.get_iam_policy: self._wrap_async_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/GetIamPolicy",
             ),
-            self.set_iam_policy: self._wrap_method(
+            self.set_iam_policy: self._wrap_async_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/SetIamPolicy",
             ),
-            self.test_iam_permissions: self._wrap_method(
+            self.test_iam_permissions: self._wrap_async_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataform.v1.Dataform/TestIamPermissions",
             ),
-            self.get_location: self._wrap_method(
+            self.get_location: self._wrap_async_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: self._wrap_method(
+            self.list_locations: self._wrap_async_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.cancel_operation: self._wrap_method(
+            self.cancel_operation: self._wrap_async_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: self._wrap_method(
+            self.delete_operation: self._wrap_async_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: self._wrap_method(
+            self.list_operations: self._wrap_async_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

@@ -16,9 +16,21 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.sqladmin_v1 import gapic_version as package_version
+from google.cloud.sqladmin_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.sqladmin_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
@@ -27,7 +39,6 @@ from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.sqladmin_v1 import gapic_version as package_version
 from google.cloud.sqladmin_v1.types import cloud_sql_instances, cloud_sql_resources
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
@@ -57,6 +68,7 @@ class SqlInstancesServiceTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -87,6 +99,9 @@ class SqlInstancesServiceTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -136,229 +151,351 @@ class SqlInstancesServiceTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.add_server_ca: gapic_v1.method.wrap_method(
+            self.add_server_ca: self._wrap_method(
                 self.add_server_ca,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/AddServerCa",
             ),
-            self.add_server_certificate: gapic_v1.method.wrap_method(
+            self.add_server_certificate: self._wrap_method(
                 self.add_server_certificate,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/AddServerCertificate",
             ),
-            self.add_entra_id_certificate: gapic_v1.method.wrap_method(
+            self.add_entra_id_certificate: self._wrap_method(
                 self.add_entra_id_certificate,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/AddEntraIdCertificate",
             ),
-            self.clone: gapic_v1.method.wrap_method(
+            self.clone: self._wrap_method(
                 self.clone,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/Clone",
             ),
-            self.delete: gapic_v1.method.wrap_method(
+            self.delete: self._wrap_method(
                 self.delete,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/Delete",
             ),
-            self.demote_master: gapic_v1.method.wrap_method(
+            self.demote_master: self._wrap_method(
                 self.demote_master,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/DemoteMaster",
             ),
-            self.demote: gapic_v1.method.wrap_method(
+            self.demote: self._wrap_method(
                 self.demote,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/Demote",
             ),
-            self.export: gapic_v1.method.wrap_method(
+            self.export: self._wrap_method(
                 self.export,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/Export",
             ),
-            self.failover: gapic_v1.method.wrap_method(
+            self.failover: self._wrap_method(
                 self.failover,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/Failover",
             ),
-            self.reencrypt: gapic_v1.method.wrap_method(
+            self.reencrypt: self._wrap_method(
                 self.reencrypt,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/Reencrypt",
             ),
-            self.get: gapic_v1.method.wrap_method(
+            self.get: self._wrap_method(
                 self.get,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/Get",
             ),
-            self.import_: gapic_v1.method.wrap_method(
+            self.import_: self._wrap_method(
                 self.import_,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/Import",
             ),
-            self.insert: gapic_v1.method.wrap_method(
+            self.insert: self._wrap_method(
                 self.insert,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/Insert",
             ),
-            self.list: gapic_v1.method.wrap_method(
+            self.list: self._wrap_method(
                 self.list,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/List",
             ),
-            self.list_server_cas: gapic_v1.method.wrap_method(
+            self.list_server_cas: self._wrap_method(
                 self.list_server_cas,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/ListServerCas",
             ),
-            self.list_server_certificates: gapic_v1.method.wrap_method(
+            self.list_server_certificates: self._wrap_method(
                 self.list_server_certificates,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/ListServerCertificates",
             ),
-            self.list_entra_id_certificates: gapic_v1.method.wrap_method(
+            self.list_entra_id_certificates: self._wrap_method(
                 self.list_entra_id_certificates,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/ListEntraIdCertificates",
             ),
-            self.patch: gapic_v1.method.wrap_method(
+            self.patch: self._wrap_method(
                 self.patch,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/Patch",
             ),
-            self.promote_replica: gapic_v1.method.wrap_method(
+            self.promote_replica: self._wrap_method(
                 self.promote_replica,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/PromoteReplica",
             ),
-            self.switchover: gapic_v1.method.wrap_method(
+            self.switchover: self._wrap_method(
                 self.switchover,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/Switchover",
             ),
-            self.reset_ssl_config: gapic_v1.method.wrap_method(
+            self.reset_ssl_config: self._wrap_method(
                 self.reset_ssl_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/ResetSslConfig",
             ),
-            self.restart: gapic_v1.method.wrap_method(
+            self.restart: self._wrap_method(
                 self.restart,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/Restart",
             ),
-            self.restore_backup: gapic_v1.method.wrap_method(
+            self.restore_backup: self._wrap_method(
                 self.restore_backup,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/RestoreBackup",
             ),
-            self.rotate_server_ca: gapic_v1.method.wrap_method(
+            self.rotate_server_ca: self._wrap_method(
                 self.rotate_server_ca,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/RotateServerCa",
             ),
-            self.rotate_server_certificate: gapic_v1.method.wrap_method(
+            self.rotate_server_certificate: self._wrap_method(
                 self.rotate_server_certificate,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/RotateServerCertificate",
             ),
-            self.rotate_entra_id_certificate: gapic_v1.method.wrap_method(
+            self.rotate_entra_id_certificate: self._wrap_method(
                 self.rotate_entra_id_certificate,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/RotateEntraIdCertificate",
             ),
-            self.start_replica: gapic_v1.method.wrap_method(
+            self.start_replica: self._wrap_method(
                 self.start_replica,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/StartReplica",
             ),
-            self.stop_replica: gapic_v1.method.wrap_method(
+            self.stop_replica: self._wrap_method(
                 self.stop_replica,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/StopReplica",
             ),
-            self.truncate_log: gapic_v1.method.wrap_method(
+            self.truncate_log: self._wrap_method(
                 self.truncate_log,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/TruncateLog",
             ),
-            self.update: gapic_v1.method.wrap_method(
+            self.update: self._wrap_method(
                 self.update,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/Update",
             ),
-            self.create_ephemeral: gapic_v1.method.wrap_method(
+            self.create_ephemeral: self._wrap_method(
                 self.create_ephemeral,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/CreateEphemeral",
             ),
-            self.reschedule_maintenance: gapic_v1.method.wrap_method(
+            self.reschedule_maintenance: self._wrap_method(
                 self.reschedule_maintenance,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/RescheduleMaintenance",
             ),
-            self.verify_external_sync_settings: gapic_v1.method.wrap_method(
+            self.verify_external_sync_settings: self._wrap_method(
                 self.verify_external_sync_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/VerifyExternalSyncSettings",
             ),
-            self.start_external_sync: gapic_v1.method.wrap_method(
+            self.start_external_sync: self._wrap_method(
                 self.start_external_sync,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/StartExternalSync",
             ),
-            self.perform_disk_shrink: gapic_v1.method.wrap_method(
+            self.perform_disk_shrink: self._wrap_method(
                 self.perform_disk_shrink,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/PerformDiskShrink",
             ),
-            self.get_disk_shrink_config: gapic_v1.method.wrap_method(
+            self.get_disk_shrink_config: self._wrap_method(
                 self.get_disk_shrink_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/GetDiskShrinkConfig",
             ),
-            self.reset_replica_size: gapic_v1.method.wrap_method(
+            self.reset_replica_size: self._wrap_method(
                 self.reset_replica_size,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/ResetReplicaSize",
             ),
-            self.get_latest_recovery_time: gapic_v1.method.wrap_method(
+            self.get_latest_recovery_time: self._wrap_method(
                 self.get_latest_recovery_time,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/GetLatestRecoveryTime",
             ),
-            self.execute_sql: gapic_v1.method.wrap_method(
+            self.execute_sql: self._wrap_method(
                 self.execute_sql,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/ExecuteSql",
             ),
-            self.acquire_ssrs_lease: gapic_v1.method.wrap_method(
+            self.acquire_ssrs_lease: self._wrap_method(
                 self.acquire_ssrs_lease,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/AcquireSsrsLease",
             ),
-            self.release_ssrs_lease: gapic_v1.method.wrap_method(
+            self.release_ssrs_lease: self._wrap_method(
                 self.release_ssrs_lease,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/ReleaseSsrsLease",
             ),
-            self.pre_check_major_version_upgrade: gapic_v1.method.wrap_method(
+            self.pre_check_major_version_upgrade: self._wrap_method(
                 self.pre_check_major_version_upgrade,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/PreCheckMajorVersionUpgrade",
             ),
-            self.point_in_time_restore: gapic_v1.method.wrap_method(
+            self.point_in_time_restore: self._wrap_method(
                 self.point_in_time_restore,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1.SqlInstancesService/PointInTimeRestore",
             ),
         }
 

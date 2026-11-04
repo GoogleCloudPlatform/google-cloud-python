@@ -16,9 +16,21 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.notebooks_v1 import gapic_version as package_version
+from google.cloud.notebooks_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.notebooks_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -31,7 +43,6 @@ from google.iam.v1 import (
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.notebooks_v1 import gapic_version as package_version
 from google.cloud.notebooks_v1.types import (
     environment,
     execution,
@@ -64,6 +75,7 @@ class NotebookServiceTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -94,6 +106,9 @@ class NotebookServiceTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -143,229 +158,351 @@ class NotebookServiceTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.list_instances: gapic_v1.method.wrap_method(
+            self.list_instances: self._wrap_method(
                 self.list_instances,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/ListInstances",
             ),
-            self.get_instance: gapic_v1.method.wrap_method(
+            self.get_instance: self._wrap_method(
                 self.get_instance,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/GetInstance",
             ),
-            self.create_instance: gapic_v1.method.wrap_method(
+            self.create_instance: self._wrap_method(
                 self.create_instance,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/CreateInstance",
             ),
-            self.register_instance: gapic_v1.method.wrap_method(
+            self.register_instance: self._wrap_method(
                 self.register_instance,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/RegisterInstance",
             ),
-            self.set_instance_accelerator: gapic_v1.method.wrap_method(
+            self.set_instance_accelerator: self._wrap_method(
                 self.set_instance_accelerator,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/SetInstanceAccelerator",
             ),
-            self.set_instance_machine_type: gapic_v1.method.wrap_method(
+            self.set_instance_machine_type: self._wrap_method(
                 self.set_instance_machine_type,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/SetInstanceMachineType",
             ),
-            self.update_instance_config: gapic_v1.method.wrap_method(
+            self.update_instance_config: self._wrap_method(
                 self.update_instance_config,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/UpdateInstanceConfig",
             ),
-            self.update_shielded_instance_config: gapic_v1.method.wrap_method(
+            self.update_shielded_instance_config: self._wrap_method(
                 self.update_shielded_instance_config,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/UpdateShieldedInstanceConfig",
             ),
-            self.set_instance_labels: gapic_v1.method.wrap_method(
+            self.set_instance_labels: self._wrap_method(
                 self.set_instance_labels,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/SetInstanceLabels",
             ),
-            self.update_instance_metadata_items: gapic_v1.method.wrap_method(
+            self.update_instance_metadata_items: self._wrap_method(
                 self.update_instance_metadata_items,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/UpdateInstanceMetadataItems",
             ),
-            self.delete_instance: gapic_v1.method.wrap_method(
+            self.delete_instance: self._wrap_method(
                 self.delete_instance,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/DeleteInstance",
             ),
-            self.start_instance: gapic_v1.method.wrap_method(
+            self.start_instance: self._wrap_method(
                 self.start_instance,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/StartInstance",
             ),
-            self.stop_instance: gapic_v1.method.wrap_method(
+            self.stop_instance: self._wrap_method(
                 self.stop_instance,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/StopInstance",
             ),
-            self.reset_instance: gapic_v1.method.wrap_method(
+            self.reset_instance: self._wrap_method(
                 self.reset_instance,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/ResetInstance",
             ),
-            self.report_instance_info: gapic_v1.method.wrap_method(
+            self.report_instance_info: self._wrap_method(
                 self.report_instance_info,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/ReportInstanceInfo",
             ),
-            self.is_instance_upgradeable: gapic_v1.method.wrap_method(
+            self.is_instance_upgradeable: self._wrap_method(
                 self.is_instance_upgradeable,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/IsInstanceUpgradeable",
             ),
-            self.get_instance_health: gapic_v1.method.wrap_method(
+            self.get_instance_health: self._wrap_method(
                 self.get_instance_health,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/GetInstanceHealth",
             ),
-            self.upgrade_instance: gapic_v1.method.wrap_method(
+            self.upgrade_instance: self._wrap_method(
                 self.upgrade_instance,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/UpgradeInstance",
             ),
-            self.rollback_instance: gapic_v1.method.wrap_method(
+            self.rollback_instance: self._wrap_method(
                 self.rollback_instance,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/RollbackInstance",
             ),
-            self.diagnose_instance: gapic_v1.method.wrap_method(
+            self.diagnose_instance: self._wrap_method(
                 self.diagnose_instance,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/DiagnoseInstance",
             ),
-            self.upgrade_instance_internal: gapic_v1.method.wrap_method(
+            self.upgrade_instance_internal: self._wrap_method(
                 self.upgrade_instance_internal,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/UpgradeInstanceInternal",
             ),
-            self.list_environments: gapic_v1.method.wrap_method(
+            self.list_environments: self._wrap_method(
                 self.list_environments,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/ListEnvironments",
             ),
-            self.get_environment: gapic_v1.method.wrap_method(
+            self.get_environment: self._wrap_method(
                 self.get_environment,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/GetEnvironment",
             ),
-            self.create_environment: gapic_v1.method.wrap_method(
+            self.create_environment: self._wrap_method(
                 self.create_environment,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/CreateEnvironment",
             ),
-            self.delete_environment: gapic_v1.method.wrap_method(
+            self.delete_environment: self._wrap_method(
                 self.delete_environment,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/DeleteEnvironment",
             ),
-            self.list_schedules: gapic_v1.method.wrap_method(
+            self.list_schedules: self._wrap_method(
                 self.list_schedules,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/ListSchedules",
             ),
-            self.get_schedule: gapic_v1.method.wrap_method(
+            self.get_schedule: self._wrap_method(
                 self.get_schedule,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/GetSchedule",
             ),
-            self.delete_schedule: gapic_v1.method.wrap_method(
+            self.delete_schedule: self._wrap_method(
                 self.delete_schedule,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/DeleteSchedule",
             ),
-            self.create_schedule: gapic_v1.method.wrap_method(
+            self.create_schedule: self._wrap_method(
                 self.create_schedule,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/CreateSchedule",
             ),
-            self.trigger_schedule: gapic_v1.method.wrap_method(
+            self.trigger_schedule: self._wrap_method(
                 self.trigger_schedule,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/TriggerSchedule",
             ),
-            self.list_executions: gapic_v1.method.wrap_method(
+            self.list_executions: self._wrap_method(
                 self.list_executions,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/ListExecutions",
             ),
-            self.get_execution: gapic_v1.method.wrap_method(
+            self.get_execution: self._wrap_method(
                 self.get_execution,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/GetExecution",
             ),
-            self.delete_execution: gapic_v1.method.wrap_method(
+            self.delete_execution: self._wrap_method(
                 self.delete_execution,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/DeleteExecution",
             ),
-            self.create_execution: gapic_v1.method.wrap_method(
+            self.create_execution: self._wrap_method(
                 self.create_execution,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.notebooks.v1.NotebookService/CreateExecution",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.get_iam_policy: gapic_v1.method.wrap_method(
+            self.get_iam_policy: self._wrap_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/GetIamPolicy",
             ),
-            self.set_iam_policy: gapic_v1.method.wrap_method(
+            self.set_iam_policy: self._wrap_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/SetIamPolicy",
             ),
-            self.test_iam_permissions: gapic_v1.method.wrap_method(
+            self.test_iam_permissions: self._wrap_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/TestIamPermissions",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
 

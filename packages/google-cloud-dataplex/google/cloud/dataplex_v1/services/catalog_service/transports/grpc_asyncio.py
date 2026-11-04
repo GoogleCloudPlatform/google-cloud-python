@@ -13,17 +13,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
@@ -38,6 +47,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.dataplex_v1._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.dataplex_v1.types import catalog
 
 from .base import DEFAULT_CLIENT_INFO, CatalogServiceTransport
@@ -200,6 +213,10 @@ class CatalogServiceGrpcAsyncIOTransport(CatalogServiceTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -251,6 +268,12 @@ class CatalogServiceGrpcAsyncIOTransport(CatalogServiceTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -306,6 +329,7 @@ class CatalogServiceGrpcAsyncIOTransport(CatalogServiceTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -327,12 +351,26 @@ class CatalogServiceGrpcAsyncIOTransport(CatalogServiceTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -1404,24 +1442,30 @@ class CatalogServiceGrpcAsyncIOTransport(CatalogServiceTransport):
         return self._stubs["update_metadata_feed"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.create_entry_type: self._wrap_method(
+            self.create_entry_type: self._wrap_async_method(
                 self.create_entry_type,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/CreateEntryType",
             ),
-            self.update_entry_type: self._wrap_method(
+            self.update_entry_type: self._wrap_async_method(
                 self.update_entry_type,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/UpdateEntryType",
             ),
-            self.delete_entry_type: self._wrap_method(
+            self.delete_entry_type: self._wrap_async_method(
                 self.delete_entry_type,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/DeleteEntryType",
             ),
-            self.list_entry_types: self._wrap_method(
+            self.list_entry_types: self._wrap_async_method(
                 self.list_entry_types,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1435,8 +1479,9 @@ class CatalogServiceGrpcAsyncIOTransport(CatalogServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/ListEntryTypes",
             ),
-            self.get_entry_type: self._wrap_method(
+            self.get_entry_type: self._wrap_async_method(
                 self.get_entry_type,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1450,23 +1495,27 @@ class CatalogServiceGrpcAsyncIOTransport(CatalogServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/GetEntryType",
             ),
-            self.create_aspect_type: self._wrap_method(
+            self.create_aspect_type: self._wrap_async_method(
                 self.create_aspect_type,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/CreateAspectType",
             ),
-            self.update_aspect_type: self._wrap_method(
+            self.update_aspect_type: self._wrap_async_method(
                 self.update_aspect_type,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/UpdateAspectType",
             ),
-            self.delete_aspect_type: self._wrap_method(
+            self.delete_aspect_type: self._wrap_async_method(
                 self.delete_aspect_type,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/DeleteAspectType",
             ),
-            self.list_aspect_types: self._wrap_method(
+            self.list_aspect_types: self._wrap_async_method(
                 self.list_aspect_types,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1480,8 +1529,9 @@ class CatalogServiceGrpcAsyncIOTransport(CatalogServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/ListAspectTypes",
             ),
-            self.get_aspect_type: self._wrap_method(
+            self.get_aspect_type: self._wrap_async_method(
                 self.get_aspect_type,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1495,23 +1545,27 @@ class CatalogServiceGrpcAsyncIOTransport(CatalogServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/GetAspectType",
             ),
-            self.create_entry_group: self._wrap_method(
+            self.create_entry_group: self._wrap_async_method(
                 self.create_entry_group,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/CreateEntryGroup",
             ),
-            self.update_entry_group: self._wrap_method(
+            self.update_entry_group: self._wrap_async_method(
                 self.update_entry_group,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/UpdateEntryGroup",
             ),
-            self.delete_entry_group: self._wrap_method(
+            self.delete_entry_group: self._wrap_async_method(
                 self.delete_entry_group,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/DeleteEntryGroup",
             ),
-            self.list_entry_groups: self._wrap_method(
+            self.list_entry_groups: self._wrap_async_method(
                 self.list_entry_groups,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1525,8 +1579,9 @@ class CatalogServiceGrpcAsyncIOTransport(CatalogServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/ListEntryGroups",
             ),
-            self.get_entry_group: self._wrap_method(
+            self.get_entry_group: self._wrap_async_method(
                 self.get_entry_group,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1540,13 +1595,15 @@ class CatalogServiceGrpcAsyncIOTransport(CatalogServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/GetEntryGroup",
             ),
-            self.create_entry: self._wrap_method(
+            self.create_entry: self._wrap_async_method(
                 self.create_entry,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/CreateEntry",
             ),
-            self.update_entry: self._wrap_method(
+            self.update_entry: self._wrap_async_method(
                 self.update_entry,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1560,13 +1617,15 @@ class CatalogServiceGrpcAsyncIOTransport(CatalogServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/UpdateEntry",
             ),
-            self.delete_entry: self._wrap_method(
+            self.delete_entry: self._wrap_async_method(
                 self.delete_entry,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/DeleteEntry",
             ),
-            self.list_entries: self._wrap_method(
+            self.list_entries: self._wrap_async_method(
                 self.list_entries,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1580,8 +1639,9 @@ class CatalogServiceGrpcAsyncIOTransport(CatalogServiceTransport):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/ListEntries",
             ),
-            self.get_entry: self._wrap_method(
+            self.get_entry: self._wrap_async_method(
                 self.get_entry,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1595,8 +1655,9 @@ class CatalogServiceGrpcAsyncIOTransport(CatalogServiceTransport):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/GetEntry",
             ),
-            self.lookup_entry: self._wrap_method(
+            self.lookup_entry: self._wrap_async_method(
                 self.lookup_entry,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1610,13 +1671,15 @@ class CatalogServiceGrpcAsyncIOTransport(CatalogServiceTransport):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/LookupEntry",
             ),
-            self.modify_entry: self._wrap_method(
+            self.modify_entry: self._wrap_async_method(
                 self.modify_entry,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/ModifyEntry",
             ),
-            self.search_entries: self._wrap_method(
+            self.search_entries: self._wrap_async_method(
                 self.search_entries,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1630,33 +1693,39 @@ class CatalogServiceGrpcAsyncIOTransport(CatalogServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/SearchEntries",
             ),
-            self.create_metadata_job: self._wrap_method(
+            self.create_metadata_job: self._wrap_async_method(
                 self.create_metadata_job,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/CreateMetadataJob",
             ),
-            self.get_metadata_job: self._wrap_method(
+            self.get_metadata_job: self._wrap_async_method(
                 self.get_metadata_job,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/GetMetadataJob",
             ),
-            self.list_metadata_jobs: self._wrap_method(
+            self.list_metadata_jobs: self._wrap_async_method(
                 self.list_metadata_jobs,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/ListMetadataJobs",
             ),
-            self.cancel_metadata_job: self._wrap_method(
+            self.cancel_metadata_job: self._wrap_async_method(
                 self.cancel_metadata_job,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/CancelMetadataJob",
             ),
-            self.create_entry_link: self._wrap_method(
+            self.create_entry_link: self._wrap_async_method(
                 self.create_entry_link,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/CreateEntryLink",
             ),
-            self.update_entry_link: self._wrap_method(
+            self.update_entry_link: self._wrap_async_method(
                 self.update_entry_link,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1670,13 +1739,15 @@ class CatalogServiceGrpcAsyncIOTransport(CatalogServiceTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/UpdateEntryLink",
             ),
-            self.delete_entry_link: self._wrap_method(
+            self.delete_entry_link: self._wrap_async_method(
                 self.delete_entry_link,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/DeleteEntryLink",
             ),
-            self.lookup_entry_links: self._wrap_method(
+            self.lookup_entry_links: self._wrap_async_method(
                 self.lookup_entry_links,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1690,13 +1761,15 @@ class CatalogServiceGrpcAsyncIOTransport(CatalogServiceTransport):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/LookupEntryLinks",
             ),
-            self.lookup_context: self._wrap_method(
+            self.lookup_context: self._wrap_async_method(
                 self.lookup_context,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/LookupContext",
             ),
-            self.get_entry_link: self._wrap_method(
+            self.get_entry_link: self._wrap_async_method(
                 self.get_entry_link,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1710,83 +1783,93 @@ class CatalogServiceGrpcAsyncIOTransport(CatalogServiceTransport):
                 ),
                 default_timeout=20.0,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/GetEntryLink",
             ),
-            self.create_metadata_feed: self._wrap_method(
+            self.create_metadata_feed: self._wrap_async_method(
                 self.create_metadata_feed,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/CreateMetadataFeed",
             ),
-            self.get_metadata_feed: self._wrap_method(
+            self.get_metadata_feed: self._wrap_async_method(
                 self.get_metadata_feed,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/GetMetadataFeed",
             ),
-            self.list_metadata_feeds: self._wrap_method(
+            self.list_metadata_feeds: self._wrap_async_method(
                 self.list_metadata_feeds,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/ListMetadataFeeds",
             ),
-            self.delete_metadata_feed: self._wrap_method(
+            self.delete_metadata_feed: self._wrap_async_method(
                 self.delete_metadata_feed,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/DeleteMetadataFeed",
             ),
-            self.update_metadata_feed: self._wrap_method(
+            self.update_metadata_feed: self._wrap_async_method(
                 self.update_metadata_feed,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.dataplex.v1.CatalogService/UpdateMetadataFeed",
             ),
-            self.get_location: self._wrap_method(
+            self.get_location: self._wrap_async_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: self._wrap_method(
+            self.list_locations: self._wrap_async_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.get_iam_policy: self._wrap_method(
+            self.get_iam_policy: self._wrap_async_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/GetIamPolicy",
             ),
-            self.set_iam_policy: self._wrap_method(
+            self.set_iam_policy: self._wrap_async_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/SetIamPolicy",
             ),
-            self.test_iam_permissions: self._wrap_method(
+            self.test_iam_permissions: self._wrap_async_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/TestIamPermissions",
             ),
-            self.cancel_operation: self._wrap_method(
+            self.cancel_operation: self._wrap_async_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: self._wrap_method(
+            self.delete_operation: self._wrap_async_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: self._wrap_method(
+            self.list_operations: self._wrap_async_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

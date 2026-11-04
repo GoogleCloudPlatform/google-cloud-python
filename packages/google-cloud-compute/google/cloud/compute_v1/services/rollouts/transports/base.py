@@ -16,16 +16,27 @@
 import abc
 from typing import Any, Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.compute_v1 import gapic_version as package_version
+from google.cloud.compute_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.compute_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
 from google.auth import credentials as ga_credentials  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.compute_v1 import gapic_version as package_version
 from google.cloud.compute_v1.services import global_operations
 from google.cloud.compute_v1.types import compute
 
@@ -56,6 +67,7 @@ class RolloutsTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -86,6 +98,9 @@ class RolloutsTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
         self._extended_operations_services: Dict[str, Any] = {}
 
@@ -136,31 +151,113 @@ class RolloutsTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.advance: gapic_v1.method.wrap_method(
+            self.advance: self._wrap_method(
                 self.advance,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Rollouts/Advance",
             ),
-            self.cancel: gapic_v1.method.wrap_method(
+            self.cancel: self._wrap_method(
                 self.cancel,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Rollouts/Cancel",
             ),
-            self.delete: gapic_v1.method.wrap_method(
+            self.delete: self._wrap_method(
                 self.delete,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Rollouts/Delete",
             ),
-            self.get: gapic_v1.method.wrap_method(
+            self.get: self._wrap_method(
                 self.get,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -174,8 +271,9 @@ class RolloutsTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Rollouts/Get",
             ),
-            self.list: gapic_v1.method.wrap_method(
+            self.list: self._wrap_method(
                 self.list,
                 default_retry=retries.Retry(
                     initial=0.1,
@@ -189,16 +287,19 @@ class RolloutsTransport(abc.ABC):
                 ),
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Rollouts/List",
             ),
-            self.pause: gapic_v1.method.wrap_method(
+            self.pause: self._wrap_method(
                 self.pause,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Rollouts/Pause",
             ),
-            self.resume: gapic_v1.method.wrap_method(
+            self.resume: self._wrap_method(
                 self.resume,
                 default_timeout=600.0,
                 client_info=client_info,
+                method_name="google.cloud.compute.v1.Rollouts/Resume",
             ),
         }
 

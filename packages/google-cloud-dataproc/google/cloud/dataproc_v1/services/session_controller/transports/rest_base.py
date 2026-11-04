@@ -18,6 +18,7 @@ import re
 from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
 from google.api_core import gapic_v1, path_template
+from google.api_core.client_options import ClientOptions
 from google.iam.v1 import (
     iam_policy_pb2,  # type: ignore
     policy_pb2,  # type: ignore
@@ -52,6 +53,8 @@ class _BaseSessionControllerRestTransport(SessionControllerTransport):
         always_use_jwt_access: Optional[bool] = False,
         url_scheme: str = "https",
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[ClientOptions, dict]] = None,
+        **kwargs,
     ) -> None:
         """Instantiate the transport.
         Args:
@@ -72,6 +75,9 @@ class _BaseSessionControllerRestTransport(SessionControllerTransport):
             url_scheme: the protocol scheme for the API endpoint.  Normally
                 "https", but for testing or local servers,
                 "http" can be specified.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
         # Run the base constructor
         maybe_url_match = re.match("^(?P<scheme>http(?:s)?://)?(?P<host>.*)$", host)
@@ -90,6 +96,8 @@ class _BaseSessionControllerRestTransport(SessionControllerTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
+            **kwargs,
         )
 
     class _BaseCreateSession:

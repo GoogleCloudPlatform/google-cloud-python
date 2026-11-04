@@ -16,17 +16,28 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.apps.chat_v1 import gapic_version as package_version
+from google.apps.chat_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.apps.chat_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
 from google.auth import credentials as ga_credentials  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.apps.chat_v1 import gapic_version as package_version
 from google.apps.chat_v1.types import (
     attachment,
     availability,
@@ -120,6 +131,7 @@ class ChatServiceTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -150,6 +162,9 @@ class ChatServiceTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -199,16 +214,95 @@ class ChatServiceTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.create_message: gapic_v1.method.wrap_method(
+            self.create_message: self._wrap_method(
                 self.create_message,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -221,8 +315,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/CreateMessage",
             ),
-            self.list_messages: gapic_v1.method.wrap_method(
+            self.list_messages: self._wrap_method(
                 self.list_messages,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -235,8 +330,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/ListMessages",
             ),
-            self.list_memberships: gapic_v1.method.wrap_method(
+            self.list_memberships: self._wrap_method(
                 self.list_memberships,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -249,8 +345,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/ListMemberships",
             ),
-            self.get_membership: gapic_v1.method.wrap_method(
+            self.get_membership: self._wrap_method(
                 self.get_membership,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -263,8 +360,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/GetMembership",
             ),
-            self.get_message: gapic_v1.method.wrap_method(
+            self.get_message: self._wrap_method(
                 self.get_message,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -277,8 +375,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/GetMessage",
             ),
-            self.update_message: gapic_v1.method.wrap_method(
+            self.update_message: self._wrap_method(
                 self.update_message,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -291,8 +390,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/UpdateMessage",
             ),
-            self.delete_message: gapic_v1.method.wrap_method(
+            self.delete_message: self._wrap_method(
                 self.delete_message,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -305,8 +405,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/DeleteMessage",
             ),
-            self.search_messages: gapic_v1.method.wrap_method(
+            self.search_messages: self._wrap_method(
                 self.search_messages,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -319,8 +420,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/SearchMessages",
             ),
-            self.get_attachment: gapic_v1.method.wrap_method(
+            self.get_attachment: self._wrap_method(
                 self.get_attachment,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -333,8 +435,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/GetAttachment",
             ),
-            self.upload_attachment: gapic_v1.method.wrap_method(
+            self.upload_attachment: self._wrap_method(
                 self.upload_attachment,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -347,8 +450,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/UploadAttachment",
             ),
-            self.list_spaces: gapic_v1.method.wrap_method(
+            self.list_spaces: self._wrap_method(
                 self.list_spaces,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -361,8 +465,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/ListSpaces",
             ),
-            self.search_spaces: gapic_v1.method.wrap_method(
+            self.search_spaces: self._wrap_method(
                 self.search_spaces,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -375,8 +480,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/SearchSpaces",
             ),
-            self.get_space: gapic_v1.method.wrap_method(
+            self.get_space: self._wrap_method(
                 self.get_space,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -389,8 +495,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/GetSpace",
             ),
-            self.create_space: gapic_v1.method.wrap_method(
+            self.create_space: self._wrap_method(
                 self.create_space,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -403,8 +510,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/CreateSpace",
             ),
-            self.set_up_space: gapic_v1.method.wrap_method(
+            self.set_up_space: self._wrap_method(
                 self.set_up_space,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -417,8 +525,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/SetUpSpace",
             ),
-            self.update_space: gapic_v1.method.wrap_method(
+            self.update_space: self._wrap_method(
                 self.update_space,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -431,8 +540,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/UpdateSpace",
             ),
-            self.delete_space: gapic_v1.method.wrap_method(
+            self.delete_space: self._wrap_method(
                 self.delete_space,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -445,8 +555,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/DeleteSpace",
             ),
-            self.complete_import_space: gapic_v1.method.wrap_method(
+            self.complete_import_space: self._wrap_method(
                 self.complete_import_space,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -459,8 +570,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/CompleteImportSpace",
             ),
-            self.find_direct_message: gapic_v1.method.wrap_method(
+            self.find_direct_message: self._wrap_method(
                 self.find_direct_message,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -473,8 +585,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/FindDirectMessage",
             ),
-            self.find_group_chats: gapic_v1.method.wrap_method(
+            self.find_group_chats: self._wrap_method(
                 self.find_group_chats,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -487,8 +600,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/FindGroupChats",
             ),
-            self.create_membership: gapic_v1.method.wrap_method(
+            self.create_membership: self._wrap_method(
                 self.create_membership,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -501,8 +615,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/CreateMembership",
             ),
-            self.update_membership: gapic_v1.method.wrap_method(
+            self.update_membership: self._wrap_method(
                 self.update_membership,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -515,8 +630,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/UpdateMembership",
             ),
-            self.delete_membership: gapic_v1.method.wrap_method(
+            self.delete_membership: self._wrap_method(
                 self.delete_membership,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -529,8 +645,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/DeleteMembership",
             ),
-            self.create_reaction: gapic_v1.method.wrap_method(
+            self.create_reaction: self._wrap_method(
                 self.create_reaction,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -543,8 +660,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/CreateReaction",
             ),
-            self.list_reactions: gapic_v1.method.wrap_method(
+            self.list_reactions: self._wrap_method(
                 self.list_reactions,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -557,8 +675,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/ListReactions",
             ),
-            self.delete_reaction: gapic_v1.method.wrap_method(
+            self.delete_reaction: self._wrap_method(
                 self.delete_reaction,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -571,23 +690,27 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/DeleteReaction",
             ),
-            self.list_message_pins: gapic_v1.method.wrap_method(
+            self.list_message_pins: self._wrap_method(
                 self.list_message_pins,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/ListMessagePins",
             ),
-            self.create_message_pin: gapic_v1.method.wrap_method(
+            self.create_message_pin: self._wrap_method(
                 self.create_message_pin,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/CreateMessagePin",
             ),
-            self.delete_message_pin: gapic_v1.method.wrap_method(
+            self.delete_message_pin: self._wrap_method(
                 self.delete_message_pin,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/DeleteMessagePin",
             ),
-            self.create_custom_emoji: gapic_v1.method.wrap_method(
+            self.create_custom_emoji: self._wrap_method(
                 self.create_custom_emoji,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -600,8 +723,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/CreateCustomEmoji",
             ),
-            self.get_custom_emoji: gapic_v1.method.wrap_method(
+            self.get_custom_emoji: self._wrap_method(
                 self.get_custom_emoji,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -614,8 +738,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/GetCustomEmoji",
             ),
-            self.list_custom_emojis: gapic_v1.method.wrap_method(
+            self.list_custom_emojis: self._wrap_method(
                 self.list_custom_emojis,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -628,8 +753,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/ListCustomEmojis",
             ),
-            self.delete_custom_emoji: gapic_v1.method.wrap_method(
+            self.delete_custom_emoji: self._wrap_method(
                 self.delete_custom_emoji,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -642,8 +768,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/DeleteCustomEmoji",
             ),
-            self.get_space_read_state: gapic_v1.method.wrap_method(
+            self.get_space_read_state: self._wrap_method(
                 self.get_space_read_state,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -656,8 +783,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/GetSpaceReadState",
             ),
-            self.update_space_read_state: gapic_v1.method.wrap_method(
+            self.update_space_read_state: self._wrap_method(
                 self.update_space_read_state,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -670,8 +798,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/UpdateSpaceReadState",
             ),
-            self.get_thread_read_state: gapic_v1.method.wrap_method(
+            self.get_thread_read_state: self._wrap_method(
                 self.get_thread_read_state,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -684,8 +813,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/GetThreadReadState",
             ),
-            self.get_availability: gapic_v1.method.wrap_method(
+            self.get_availability: self._wrap_method(
                 self.get_availability,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -698,8 +828,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/GetAvailability",
             ),
-            self.mark_as_active: gapic_v1.method.wrap_method(
+            self.mark_as_active: self._wrap_method(
                 self.mark_as_active,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -712,8 +843,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/MarkAsActive",
             ),
-            self.mark_as_away: gapic_v1.method.wrap_method(
+            self.mark_as_away: self._wrap_method(
                 self.mark_as_away,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -726,8 +858,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/MarkAsAway",
             ),
-            self.mark_as_do_not_disturb: gapic_v1.method.wrap_method(
+            self.mark_as_do_not_disturb: self._wrap_method(
                 self.mark_as_do_not_disturb,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -740,8 +873,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/MarkAsDoNotDisturb",
             ),
-            self.update_availability: gapic_v1.method.wrap_method(
+            self.update_availability: self._wrap_method(
                 self.update_availability,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -754,8 +888,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/UpdateAvailability",
             ),
-            self.get_space_event: gapic_v1.method.wrap_method(
+            self.get_space_event: self._wrap_method(
                 self.get_space_event,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -768,8 +903,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/GetSpaceEvent",
             ),
-            self.list_space_events: gapic_v1.method.wrap_method(
+            self.list_space_events: self._wrap_method(
                 self.list_space_events,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -782,8 +918,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/ListSpaceEvents",
             ),
-            self.get_space_notification_setting: gapic_v1.method.wrap_method(
+            self.get_space_notification_setting: self._wrap_method(
                 self.get_space_notification_setting,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -796,8 +933,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/GetSpaceNotificationSetting",
             ),
-            self.update_space_notification_setting: gapic_v1.method.wrap_method(
+            self.update_space_notification_setting: self._wrap_method(
                 self.update_space_notification_setting,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -810,8 +948,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/UpdateSpaceNotificationSetting",
             ),
-            self.create_section: gapic_v1.method.wrap_method(
+            self.create_section: self._wrap_method(
                 self.create_section,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -824,8 +963,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/CreateSection",
             ),
-            self.delete_section: gapic_v1.method.wrap_method(
+            self.delete_section: self._wrap_method(
                 self.delete_section,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -838,8 +978,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/DeleteSection",
             ),
-            self.update_section: gapic_v1.method.wrap_method(
+            self.update_section: self._wrap_method(
                 self.update_section,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -852,8 +993,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/UpdateSection",
             ),
-            self.list_sections: gapic_v1.method.wrap_method(
+            self.list_sections: self._wrap_method(
                 self.list_sections,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -866,8 +1008,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/ListSections",
             ),
-            self.position_section: gapic_v1.method.wrap_method(
+            self.position_section: self._wrap_method(
                 self.position_section,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -880,8 +1023,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/PositionSection",
             ),
-            self.list_section_items: gapic_v1.method.wrap_method(
+            self.list_section_items: self._wrap_method(
                 self.list_section_items,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -894,8 +1038,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/ListSectionItems",
             ),
-            self.move_section_item: gapic_v1.method.wrap_method(
+            self.move_section_item: self._wrap_method(
                 self.move_section_item,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -908,8 +1053,9 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/MoveSectionItem",
             ),
-            self.replace_message_cards: gapic_v1.method.wrap_method(
+            self.replace_message_cards: self._wrap_method(
                 self.replace_message_cards,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -922,6 +1068,7 @@ class ChatServiceTransport(abc.ABC):
                 ),
                 default_timeout=30.0,
                 client_info=client_info,
+                method_name="google.chat.v1.ChatService/ReplaceMessageCards",
             ),
         }
 

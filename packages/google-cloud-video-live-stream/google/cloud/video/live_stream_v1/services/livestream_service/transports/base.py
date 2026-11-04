@@ -16,10 +16,22 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.video.live_stream_v1 import gapic_version as package_version
+from google.cloud.video.live_stream_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.video.live_stream_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -28,7 +40,6 @@ from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.video.live_stream_v1 import gapic_version as package_version
 from google.cloud.video.live_stream_v1.types import resources, service
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
@@ -55,6 +66,7 @@ class LivestreamServiceTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -85,6 +97,9 @@ class LivestreamServiceTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -134,21 +149,101 @@ class LivestreamServiceTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.create_channel_: gapic_v1.method.wrap_method(
+            self.create_channel_: self._wrap_method(
                 self.create_channel_,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/CreateChannel",
             ),
-            self.list_channels: gapic_v1.method.wrap_method(
+            self.list_channels: self._wrap_method(
                 self.list_channels,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -161,8 +256,9 @@ class LivestreamServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/ListChannels",
             ),
-            self.get_channel: gapic_v1.method.wrap_method(
+            self.get_channel: self._wrap_method(
                 self.get_channel,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -175,43 +271,51 @@ class LivestreamServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/GetChannel",
             ),
-            self.delete_channel: gapic_v1.method.wrap_method(
+            self.delete_channel: self._wrap_method(
                 self.delete_channel,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/DeleteChannel",
             ),
-            self.update_channel: gapic_v1.method.wrap_method(
+            self.update_channel: self._wrap_method(
                 self.update_channel,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/UpdateChannel",
             ),
-            self.start_channel: gapic_v1.method.wrap_method(
+            self.start_channel: self._wrap_method(
                 self.start_channel,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/StartChannel",
             ),
-            self.stop_channel: gapic_v1.method.wrap_method(
+            self.stop_channel: self._wrap_method(
                 self.stop_channel,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/StopChannel",
             ),
-            self.start_distribution: gapic_v1.method.wrap_method(
+            self.start_distribution: self._wrap_method(
                 self.start_distribution,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/StartDistribution",
             ),
-            self.stop_distribution: gapic_v1.method.wrap_method(
+            self.stop_distribution: self._wrap_method(
                 self.stop_distribution,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/StopDistribution",
             ),
-            self.create_input: gapic_v1.method.wrap_method(
+            self.create_input: self._wrap_method(
                 self.create_input,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/CreateInput",
             ),
-            self.list_inputs: gapic_v1.method.wrap_method(
+            self.list_inputs: self._wrap_method(
                 self.list_inputs,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -224,8 +328,9 @@ class LivestreamServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/ListInputs",
             ),
-            self.get_input: gapic_v1.method.wrap_method(
+            self.get_input: self._wrap_method(
                 self.get_input,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -238,28 +343,33 @@ class LivestreamServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/GetInput",
             ),
-            self.delete_input: gapic_v1.method.wrap_method(
+            self.delete_input: self._wrap_method(
                 self.delete_input,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/DeleteInput",
             ),
-            self.update_input: gapic_v1.method.wrap_method(
+            self.update_input: self._wrap_method(
                 self.update_input,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/UpdateInput",
             ),
-            self.preview_input: gapic_v1.method.wrap_method(
+            self.preview_input: self._wrap_method(
                 self.preview_input,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/PreviewInput",
             ),
-            self.create_event: gapic_v1.method.wrap_method(
+            self.create_event: self._wrap_method(
                 self.create_event,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/CreateEvent",
             ),
-            self.list_events: gapic_v1.method.wrap_method(
+            self.list_events: self._wrap_method(
                 self.list_events,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -272,8 +382,9 @@ class LivestreamServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/ListEvents",
             ),
-            self.get_event: gapic_v1.method.wrap_method(
+            self.get_event: self._wrap_method(
                 self.get_event,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -286,13 +397,15 @@ class LivestreamServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/GetEvent",
             ),
-            self.delete_event: gapic_v1.method.wrap_method(
+            self.delete_event: self._wrap_method(
                 self.delete_event,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/DeleteEvent",
             ),
-            self.list_clips: gapic_v1.method.wrap_method(
+            self.list_clips: self._wrap_method(
                 self.list_clips,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -305,8 +418,9 @@ class LivestreamServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/ListClips",
             ),
-            self.get_clip: gapic_v1.method.wrap_method(
+            self.get_clip: self._wrap_method(
                 self.get_clip,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -319,23 +433,27 @@ class LivestreamServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/GetClip",
             ),
-            self.create_clip: gapic_v1.method.wrap_method(
+            self.create_clip: self._wrap_method(
                 self.create_clip,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/CreateClip",
             ),
-            self.delete_clip: gapic_v1.method.wrap_method(
+            self.delete_clip: self._wrap_method(
                 self.delete_clip,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/DeleteClip",
             ),
-            self.create_dvr_session: gapic_v1.method.wrap_method(
+            self.create_dvr_session: self._wrap_method(
                 self.create_dvr_session,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/CreateDvrSession",
             ),
-            self.list_dvr_sessions: gapic_v1.method.wrap_method(
+            self.list_dvr_sessions: self._wrap_method(
                 self.list_dvr_sessions,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -348,8 +466,9 @@ class LivestreamServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/ListDvrSessions",
             ),
-            self.get_dvr_session: gapic_v1.method.wrap_method(
+            self.get_dvr_session: self._wrap_method(
                 self.get_dvr_session,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -362,28 +481,33 @@ class LivestreamServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/GetDvrSession",
             ),
-            self.delete_dvr_session: gapic_v1.method.wrap_method(
+            self.delete_dvr_session: self._wrap_method(
                 self.delete_dvr_session,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/DeleteDvrSession",
             ),
-            self.update_dvr_session: gapic_v1.method.wrap_method(
+            self.update_dvr_session: self._wrap_method(
                 self.update_dvr_session,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/UpdateDvrSession",
             ),
-            self.create_asset: gapic_v1.method.wrap_method(
+            self.create_asset: self._wrap_method(
                 self.create_asset,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/CreateAsset",
             ),
-            self.delete_asset: gapic_v1.method.wrap_method(
+            self.delete_asset: self._wrap_method(
                 self.delete_asset,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/DeleteAsset",
             ),
-            self.get_asset: gapic_v1.method.wrap_method(
+            self.get_asset: self._wrap_method(
                 self.get_asset,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -396,8 +520,9 @@ class LivestreamServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/GetAsset",
             ),
-            self.list_assets: gapic_v1.method.wrap_method(
+            self.list_assets: self._wrap_method(
                 self.list_assets,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -410,8 +535,9 @@ class LivestreamServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/ListAssets",
             ),
-            self.get_pool: gapic_v1.method.wrap_method(
+            self.get_pool: self._wrap_method(
                 self.get_pool,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -424,41 +550,49 @@ class LivestreamServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/GetPool",
             ),
-            self.update_pool: gapic_v1.method.wrap_method(
+            self.update_pool: self._wrap_method(
                 self.update_pool,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.video.livestream.v1.LivestreamService/UpdatePool",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
 

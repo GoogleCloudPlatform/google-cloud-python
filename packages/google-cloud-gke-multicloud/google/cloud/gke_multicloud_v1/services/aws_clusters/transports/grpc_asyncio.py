@@ -13,16 +13,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async, operations_v1
 from google.api_core import retry_async as retries
@@ -32,6 +41,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.gke_multicloud_v1._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.gke_multicloud_v1.types import aws_resources, aws_service
 
 from .base import DEFAULT_CLIENT_INFO, AwsClustersTransport
@@ -191,6 +204,10 @@ class AwsClustersGrpcAsyncIOTransport(AwsClustersTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -242,6 +259,12 @@ class AwsClustersGrpcAsyncIOTransport(AwsClustersTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -297,6 +320,7 @@ class AwsClustersGrpcAsyncIOTransport(AwsClustersTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -318,12 +342,26 @@ class AwsClustersGrpcAsyncIOTransport(AwsClustersTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -863,19 +901,24 @@ class AwsClustersGrpcAsyncIOTransport(AwsClustersTransport):
         return self._stubs["get_aws_server_config"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.create_aws_cluster: self._wrap_method(
+            self.create_aws_cluster: self._wrap_async_method(
                 self.create_aws_cluster,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkemulticloud.v1.AwsClusters/CreateAwsCluster",
             ),
-            self.update_aws_cluster: self._wrap_method(
+            self.update_aws_cluster: self._wrap_async_method(
                 self.update_aws_cluster,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkemulticloud.v1.AwsClusters/UpdateAwsCluster",
             ),
-            self.get_aws_cluster: self._wrap_method(
+            self.get_aws_cluster: self._wrap_async_method(
                 self.get_aws_cluster,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -888,8 +931,9 @@ class AwsClustersGrpcAsyncIOTransport(AwsClustersTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkemulticloud.v1.AwsClusters/GetAwsCluster",
             ),
-            self.list_aws_clusters: self._wrap_method(
+            self.list_aws_clusters: self._wrap_async_method(
                 self.list_aws_clusters,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -902,13 +946,15 @@ class AwsClustersGrpcAsyncIOTransport(AwsClustersTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkemulticloud.v1.AwsClusters/ListAwsClusters",
             ),
-            self.delete_aws_cluster: self._wrap_method(
+            self.delete_aws_cluster: self._wrap_async_method(
                 self.delete_aws_cluster,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkemulticloud.v1.AwsClusters/DeleteAwsCluster",
             ),
-            self.generate_aws_cluster_agent_token: self._wrap_method(
+            self.generate_aws_cluster_agent_token: self._wrap_async_method(
                 self.generate_aws_cluster_agent_token,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -921,8 +967,9 @@ class AwsClustersGrpcAsyncIOTransport(AwsClustersTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkemulticloud.v1.AwsClusters/GenerateAwsClusterAgentToken",
             ),
-            self.generate_aws_access_token: self._wrap_method(
+            self.generate_aws_access_token: self._wrap_async_method(
                 self.generate_aws_access_token,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -935,23 +982,27 @@ class AwsClustersGrpcAsyncIOTransport(AwsClustersTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkemulticloud.v1.AwsClusters/GenerateAwsAccessToken",
             ),
-            self.create_aws_node_pool: self._wrap_method(
+            self.create_aws_node_pool: self._wrap_async_method(
                 self.create_aws_node_pool,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkemulticloud.v1.AwsClusters/CreateAwsNodePool",
             ),
-            self.update_aws_node_pool: self._wrap_method(
+            self.update_aws_node_pool: self._wrap_async_method(
                 self.update_aws_node_pool,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkemulticloud.v1.AwsClusters/UpdateAwsNodePool",
             ),
-            self.rollback_aws_node_pool_update: self._wrap_method(
+            self.rollback_aws_node_pool_update: self._wrap_async_method(
                 self.rollback_aws_node_pool_update,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkemulticloud.v1.AwsClusters/RollbackAwsNodePoolUpdate",
             ),
-            self.get_aws_node_pool: self._wrap_method(
+            self.get_aws_node_pool: self._wrap_async_method(
                 self.get_aws_node_pool,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -964,8 +1015,9 @@ class AwsClustersGrpcAsyncIOTransport(AwsClustersTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkemulticloud.v1.AwsClusters/GetAwsNodePool",
             ),
-            self.list_aws_node_pools: self._wrap_method(
+            self.list_aws_node_pools: self._wrap_async_method(
                 self.list_aws_node_pools,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -978,13 +1030,15 @@ class AwsClustersGrpcAsyncIOTransport(AwsClustersTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkemulticloud.v1.AwsClusters/ListAwsNodePools",
             ),
-            self.delete_aws_node_pool: self._wrap_method(
+            self.delete_aws_node_pool: self._wrap_async_method(
                 self.delete_aws_node_pool,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkemulticloud.v1.AwsClusters/DeleteAwsNodePool",
             ),
-            self.get_aws_open_id_config: self._wrap_method(
+            self.get_aws_open_id_config: self._wrap_async_method(
                 self.get_aws_open_id_config,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -997,8 +1051,9 @@ class AwsClustersGrpcAsyncIOTransport(AwsClustersTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkemulticloud.v1.AwsClusters/GetAwsOpenIdConfig",
             ),
-            self.get_aws_json_web_keys: self._wrap_method(
+            self.get_aws_json_web_keys: self._wrap_async_method(
                 self.get_aws_json_web_keys,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1011,8 +1066,9 @@ class AwsClustersGrpcAsyncIOTransport(AwsClustersTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkemulticloud.v1.AwsClusters/GetAwsJsonWebKeys",
             ),
-            self.get_aws_server_config: self._wrap_method(
+            self.get_aws_server_config: self._wrap_async_method(
                 self.get_aws_server_config,
                 default_retry=retries.AsyncRetry(
                     initial=1.0,
@@ -1025,33 +1081,33 @@ class AwsClustersGrpcAsyncIOTransport(AwsClustersTransport):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.gkemulticloud.v1.AwsClusters/GetAwsServerConfig",
             ),
-            self.cancel_operation: self._wrap_method(
+            self.cancel_operation: self._wrap_async_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: self._wrap_method(
+            self.delete_operation: self._wrap_async_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: self._wrap_method(
+            self.get_operation: self._wrap_async_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: self._wrap_method(
+            self.list_operations: self._wrap_async_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

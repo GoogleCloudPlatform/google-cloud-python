@@ -16,9 +16,21 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.analytics.data_v1alpha import gapic_version as package_version
+from google.analytics.data_v1alpha._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.analytics.data_v1alpha._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -26,7 +38,6 @@ from google.auth import credentials as ga_credentials  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.analytics.data_v1alpha import gapic_version as package_version
 from google.analytics.data_v1alpha.types import analytics_data_api
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
@@ -57,6 +68,7 @@ class AlphaAnalyticsDataTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -87,6 +99,9 @@ class AlphaAnalyticsDataTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -136,94 +151,189 @@ class AlphaAnalyticsDataTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.run_funnel_report: gapic_v1.method.wrap_method(
+            self.run_funnel_report: self._wrap_method(
                 self.run_funnel_report,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.analytics.data.v1alpha.AlphaAnalyticsData/RunFunnelReport",
             ),
-            self.create_audience_list: gapic_v1.method.wrap_method(
+            self.create_audience_list: self._wrap_method(
                 self.create_audience_list,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.data.v1alpha.AlphaAnalyticsData/CreateAudienceList",
             ),
-            self.query_audience_list: gapic_v1.method.wrap_method(
+            self.query_audience_list: self._wrap_method(
                 self.query_audience_list,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.data.v1alpha.AlphaAnalyticsData/QueryAudienceList",
             ),
-            self.get_audience_list: gapic_v1.method.wrap_method(
+            self.get_audience_list: self._wrap_method(
                 self.get_audience_list,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.data.v1alpha.AlphaAnalyticsData/GetAudienceList",
             ),
-            self.list_audience_lists: gapic_v1.method.wrap_method(
+            self.list_audience_lists: self._wrap_method(
                 self.list_audience_lists,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.data.v1alpha.AlphaAnalyticsData/ListAudienceLists",
             ),
-            self.create_recurring_audience_list: gapic_v1.method.wrap_method(
+            self.create_recurring_audience_list: self._wrap_method(
                 self.create_recurring_audience_list,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.data.v1alpha.AlphaAnalyticsData/CreateRecurringAudienceList",
             ),
-            self.get_recurring_audience_list: gapic_v1.method.wrap_method(
+            self.get_recurring_audience_list: self._wrap_method(
                 self.get_recurring_audience_list,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.data.v1alpha.AlphaAnalyticsData/GetRecurringAudienceList",
             ),
-            self.list_recurring_audience_lists: gapic_v1.method.wrap_method(
+            self.list_recurring_audience_lists: self._wrap_method(
                 self.list_recurring_audience_lists,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.data.v1alpha.AlphaAnalyticsData/ListRecurringAudienceLists",
             ),
-            self.get_property_quotas_snapshot: gapic_v1.method.wrap_method(
+            self.get_property_quotas_snapshot: self._wrap_method(
                 self.get_property_quotas_snapshot,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.data.v1alpha.AlphaAnalyticsData/GetPropertyQuotasSnapshot",
             ),
-            self.create_report_task: gapic_v1.method.wrap_method(
+            self.create_report_task: self._wrap_method(
                 self.create_report_task,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.data.v1alpha.AlphaAnalyticsData/CreateReportTask",
             ),
-            self.query_report_task: gapic_v1.method.wrap_method(
+            self.query_report_task: self._wrap_method(
                 self.query_report_task,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.data.v1alpha.AlphaAnalyticsData/QueryReportTask",
             ),
-            self.get_report_task: gapic_v1.method.wrap_method(
+            self.get_report_task: self._wrap_method(
                 self.get_report_task,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.data.v1alpha.AlphaAnalyticsData/GetReportTask",
             ),
-            self.list_report_tasks: gapic_v1.method.wrap_method(
+            self.list_report_tasks: self._wrap_method(
                 self.list_report_tasks,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.data.v1alpha.AlphaAnalyticsData/ListReportTasks",
             ),
-            self.chat: gapic_v1.method.wrap_method(
+            self.chat: self._wrap_method(
                 self.chat,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.data.v1alpha.AlphaAnalyticsData/Chat",
             ),
-            self.run_report: gapic_v1.method.wrap_method(
+            self.run_report: self._wrap_method(
                 self.run_report,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.data.v1alpha.AlphaAnalyticsData/RunReport",
             ),
-            self.get_metadata: gapic_v1.method.wrap_method(
+            self.get_metadata: self._wrap_method(
                 self.get_metadata,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.analytics.data.v1alpha.AlphaAnalyticsData/GetMetadata",
             ),
         }
 

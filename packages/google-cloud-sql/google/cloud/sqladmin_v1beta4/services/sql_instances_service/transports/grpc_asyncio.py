@@ -13,16 +13,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import inspect
 import json
 import logging as std_logging
 import pickle
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import (
+    TYPE_CHECKING,
+    Awaitable,
+    Callable,
+    Dict,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import google.protobuf.message
 import grpc  # type: ignore
 import proto  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, grpc_helpers_async
 from google.api_core import retry_async as retries
@@ -33,6 +42,10 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf.json_format import MessageToJson
 from grpc.experimental import aio  # type: ignore
 
+from google.cloud.sqladmin_v1beta4._compat import (
+    _observability,
+    apply_async_channel_interceptors,
+)
 from google.cloud.sqladmin_v1beta4.types import cloud_sql, cloud_sql_resources
 
 from .base import DEFAULT_CLIENT_INFO, SqlInstancesServiceTransport
@@ -188,6 +201,10 @@ class SqlInstancesServiceGrpcAsyncIOTransport(SqlInstancesServiceTransport):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        interceptors: Optional[
+            Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]
+        ] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
     ) -> None:
         """Instantiate the transport.
 
@@ -239,6 +256,12 @@ class SqlInstancesServiceGrpcAsyncIOTransport(SqlInstancesServiceTransport):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            interceptors (Optional[Sequence[Union[aio.ClientInterceptor, Callable[..., aio.ClientInterceptor]]]]):
+                Additional interceptors (or callables that apply interceptors) to apply to the
+                gRPC channel.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -293,6 +316,7 @@ class SqlInstancesServiceGrpcAsyncIOTransport(SqlInstancesServiceTransport):
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
+            client_options=client_options,
         )
 
         if not self._grpc_channel:
@@ -314,12 +338,26 @@ class SqlInstancesServiceGrpcAsyncIOTransport(SqlInstancesServiceTransport):
                 ],
             )
 
+        # Wrap channel with user-specified and logging interceptors.
+        channel_interceptors = list(interceptors) if interceptors else []
         self._interceptor = _LoggingClientAIOInterceptor()
-        self._grpc_channel._unary_unary_interceptors.append(self._interceptor)
-        self._logged_channel = self._grpc_channel
-        self._wrap_with_kind = (
-            "kind" in inspect.signature(gapic_v1.method_async.wrap_method).parameters
+        channel_interceptors.append(self._interceptor)
+        self._grpc_channel = apply_async_channel_interceptors(
+            self._grpc_channel, channel_interceptors
         )
+
+        # Configure OpenTelemetry tracing and span suppression on the channel.
+        if _observability is not None and hasattr(
+            _observability, "apply_otel_async_channel_interceptors"
+        ):
+            # NOTE: Coverage tool ignores async interceptors in environments running
+            # legacy google-api-core (< 2.36.0) where OpenTelemetry is unavailable.
+            # TODO (Issue #18657): Remove once lowest constraints require google-api-core >= v2.43.0.
+            self._grpc_channel = _observability.apply_otel_async_channel_interceptors(
+                self._grpc_channel, self._client_options
+            )  # pragma: NO COVER
+
+        self._logged_channel = self._grpc_channel
         # Wrap messages. This must be done after self._logged_channel exists
         self._prep_wrapped_messages(client_info)
 
@@ -1660,229 +1698,270 @@ class SqlInstancesServiceGrpcAsyncIOTransport(SqlInstancesServiceTransport):
         return self._stubs["point_in_time_restore"]
 
     def _prep_wrapped_messages(self, client_info):
-        """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
+        """Precompute and cache wrapped methods for async RPC dispatch.
+
+        Overrides the base class method to use asynchronous wrappers and retries.
+        """
         self._wrapped_methods = {
-            self.add_server_ca: self._wrap_method(
+            self.add_server_ca: self._wrap_async_method(
                 self.add_server_ca,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/AddServerCa",
             ),
-            self.add_server_certificate: self._wrap_method(
+            self.add_server_certificate: self._wrap_async_method(
                 self.add_server_certificate,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/AddServerCertificate",
             ),
-            self.add_entra_id_certificate: self._wrap_method(
+            self.add_entra_id_certificate: self._wrap_async_method(
                 self.add_entra_id_certificate,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/AddEntraIdCertificate",
             ),
-            self.clone: self._wrap_method(
+            self.clone: self._wrap_async_method(
                 self.clone,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/Clone",
             ),
-            self.delete: self._wrap_method(
+            self.delete: self._wrap_async_method(
                 self.delete,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/Delete",
             ),
-            self.demote_master: self._wrap_method(
+            self.demote_master: self._wrap_async_method(
                 self.demote_master,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/DemoteMaster",
             ),
-            self.demote: self._wrap_method(
+            self.demote: self._wrap_async_method(
                 self.demote,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/Demote",
             ),
-            self.export: self._wrap_method(
+            self.export: self._wrap_async_method(
                 self.export,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/Export",
             ),
-            self.failover: self._wrap_method(
+            self.failover: self._wrap_async_method(
                 self.failover,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/Failover",
             ),
-            self.reencrypt: self._wrap_method(
+            self.reencrypt: self._wrap_async_method(
                 self.reencrypt,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/Reencrypt",
             ),
-            self.get: self._wrap_method(
+            self.get: self._wrap_async_method(
                 self.get,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/Get",
             ),
-            self.import_: self._wrap_method(
+            self.import_: self._wrap_async_method(
                 self.import_,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/Import",
             ),
-            self.insert: self._wrap_method(
+            self.insert: self._wrap_async_method(
                 self.insert,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/Insert",
             ),
-            self.list: self._wrap_method(
+            self.list: self._wrap_async_method(
                 self.list,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/List",
             ),
-            self.list_server_cas: self._wrap_method(
+            self.list_server_cas: self._wrap_async_method(
                 self.list_server_cas,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/ListServerCas",
             ),
-            self.list_server_certificates: self._wrap_method(
+            self.list_server_certificates: self._wrap_async_method(
                 self.list_server_certificates,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/ListServerCertificates",
             ),
-            self.list_entra_id_certificates: self._wrap_method(
+            self.list_entra_id_certificates: self._wrap_async_method(
                 self.list_entra_id_certificates,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/ListEntraIdCertificates",
             ),
-            self.patch: self._wrap_method(
+            self.patch: self._wrap_async_method(
                 self.patch,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/Patch",
             ),
-            self.promote_replica: self._wrap_method(
+            self.promote_replica: self._wrap_async_method(
                 self.promote_replica,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/PromoteReplica",
             ),
-            self.switchover: self._wrap_method(
+            self.switchover: self._wrap_async_method(
                 self.switchover,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/Switchover",
             ),
-            self.reset_ssl_config: self._wrap_method(
+            self.reset_ssl_config: self._wrap_async_method(
                 self.reset_ssl_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/ResetSslConfig",
             ),
-            self.restart: self._wrap_method(
+            self.restart: self._wrap_async_method(
                 self.restart,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/Restart",
             ),
-            self.restore_backup: self._wrap_method(
+            self.restore_backup: self._wrap_async_method(
                 self.restore_backup,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/RestoreBackup",
             ),
-            self.rotate_server_ca: self._wrap_method(
+            self.rotate_server_ca: self._wrap_async_method(
                 self.rotate_server_ca,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/RotateServerCa",
             ),
-            self.rotate_server_certificate: self._wrap_method(
+            self.rotate_server_certificate: self._wrap_async_method(
                 self.rotate_server_certificate,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/RotateServerCertificate",
             ),
-            self.rotate_entra_id_certificate: self._wrap_method(
+            self.rotate_entra_id_certificate: self._wrap_async_method(
                 self.rotate_entra_id_certificate,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/RotateEntraIdCertificate",
             ),
-            self.start_replica: self._wrap_method(
+            self.start_replica: self._wrap_async_method(
                 self.start_replica,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/StartReplica",
             ),
-            self.stop_replica: self._wrap_method(
+            self.stop_replica: self._wrap_async_method(
                 self.stop_replica,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/StopReplica",
             ),
-            self.truncate_log: self._wrap_method(
+            self.truncate_log: self._wrap_async_method(
                 self.truncate_log,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/TruncateLog",
             ),
-            self.update: self._wrap_method(
+            self.update: self._wrap_async_method(
                 self.update,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/Update",
             ),
-            self.create_ephemeral: self._wrap_method(
+            self.create_ephemeral: self._wrap_async_method(
                 self.create_ephemeral,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/CreateEphemeral",
             ),
-            self.reschedule_maintenance: self._wrap_method(
+            self.reschedule_maintenance: self._wrap_async_method(
                 self.reschedule_maintenance,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/RescheduleMaintenance",
             ),
-            self.verify_external_sync_settings: self._wrap_method(
+            self.verify_external_sync_settings: self._wrap_async_method(
                 self.verify_external_sync_settings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/VerifyExternalSyncSettings",
             ),
-            self.start_external_sync: self._wrap_method(
+            self.start_external_sync: self._wrap_async_method(
                 self.start_external_sync,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/StartExternalSync",
             ),
-            self.perform_disk_shrink: self._wrap_method(
+            self.perform_disk_shrink: self._wrap_async_method(
                 self.perform_disk_shrink,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/PerformDiskShrink",
             ),
-            self.get_disk_shrink_config: self._wrap_method(
+            self.get_disk_shrink_config: self._wrap_async_method(
                 self.get_disk_shrink_config,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/GetDiskShrinkConfig",
             ),
-            self.reset_replica_size: self._wrap_method(
+            self.reset_replica_size: self._wrap_async_method(
                 self.reset_replica_size,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/ResetReplicaSize",
             ),
-            self.get_latest_recovery_time: self._wrap_method(
+            self.get_latest_recovery_time: self._wrap_async_method(
                 self.get_latest_recovery_time,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/GetLatestRecoveryTime",
             ),
-            self.execute_sql: self._wrap_method(
+            self.execute_sql: self._wrap_async_method(
                 self.execute_sql,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/ExecuteSql",
             ),
-            self.acquire_ssrs_lease: self._wrap_method(
+            self.acquire_ssrs_lease: self._wrap_async_method(
                 self.acquire_ssrs_lease,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/AcquireSsrsLease",
             ),
-            self.release_ssrs_lease: self._wrap_method(
+            self.release_ssrs_lease: self._wrap_async_method(
                 self.release_ssrs_lease,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/ReleaseSsrsLease",
             ),
-            self.pre_check_major_version_upgrade: self._wrap_method(
+            self.pre_check_major_version_upgrade: self._wrap_async_method(
                 self.pre_check_major_version_upgrade,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/PreCheckMajorVersionUpgrade",
             ),
-            self.point_in_time_restore: self._wrap_method(
+            self.point_in_time_restore: self._wrap_async_method(
                 self.point_in_time_restore,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.sql.v1beta4.SqlInstancesService/PointInTimeRestore",
             ),
         }
-
-    def _wrap_method(self, func, *args, **kwargs):
-        if self._wrap_with_kind:  # pragma: NO COVER
-            kwargs["kind"] = self.kind
-        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
 
     def close(self):
         return self._logged_channel.close()

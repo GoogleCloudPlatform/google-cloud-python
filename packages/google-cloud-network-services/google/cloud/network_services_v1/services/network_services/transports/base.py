@@ -16,9 +16,21 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.network_services_v1 import gapic_version as package_version
+from google.cloud.network_services_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.network_services_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -31,7 +43,6 @@ from google.iam.v1 import (
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.network_services_v1 import gapic_version as package_version
 from google.cloud.network_services_v1.types import (
     agent_gateway,
     endpoint_policy,
@@ -87,6 +98,7 @@ class NetworkServicesTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -117,6 +129,9 @@ class NetworkServicesTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -166,374 +181,525 @@ class NetworkServicesTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.list_endpoint_policies: gapic_v1.method.wrap_method(
+            self.list_endpoint_policies: self._wrap_method(
                 self.list_endpoint_policies,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListEndpointPolicies",
             ),
-            self.get_endpoint_policy: gapic_v1.method.wrap_method(
+            self.get_endpoint_policy: self._wrap_method(
                 self.get_endpoint_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetEndpointPolicy",
             ),
-            self.create_endpoint_policy: gapic_v1.method.wrap_method(
+            self.create_endpoint_policy: self._wrap_method(
                 self.create_endpoint_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateEndpointPolicy",
             ),
-            self.update_endpoint_policy: gapic_v1.method.wrap_method(
+            self.update_endpoint_policy: self._wrap_method(
                 self.update_endpoint_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateEndpointPolicy",
             ),
-            self.delete_endpoint_policy: gapic_v1.method.wrap_method(
+            self.delete_endpoint_policy: self._wrap_method(
                 self.delete_endpoint_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteEndpointPolicy",
             ),
-            self.list_wasm_plugin_versions: gapic_v1.method.wrap_method(
+            self.list_wasm_plugin_versions: self._wrap_method(
                 self.list_wasm_plugin_versions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListWasmPluginVersions",
             ),
-            self.get_wasm_plugin_version: gapic_v1.method.wrap_method(
+            self.get_wasm_plugin_version: self._wrap_method(
                 self.get_wasm_plugin_version,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetWasmPluginVersion",
             ),
-            self.create_wasm_plugin_version: gapic_v1.method.wrap_method(
+            self.create_wasm_plugin_version: self._wrap_method(
                 self.create_wasm_plugin_version,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateWasmPluginVersion",
             ),
-            self.delete_wasm_plugin_version: gapic_v1.method.wrap_method(
+            self.delete_wasm_plugin_version: self._wrap_method(
                 self.delete_wasm_plugin_version,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteWasmPluginVersion",
             ),
-            self.list_wasm_plugins: gapic_v1.method.wrap_method(
+            self.list_wasm_plugins: self._wrap_method(
                 self.list_wasm_plugins,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListWasmPlugins",
             ),
-            self.get_wasm_plugin: gapic_v1.method.wrap_method(
+            self.get_wasm_plugin: self._wrap_method(
                 self.get_wasm_plugin,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetWasmPlugin",
             ),
-            self.create_wasm_plugin: gapic_v1.method.wrap_method(
+            self.create_wasm_plugin: self._wrap_method(
                 self.create_wasm_plugin,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateWasmPlugin",
             ),
-            self.update_wasm_plugin: gapic_v1.method.wrap_method(
+            self.update_wasm_plugin: self._wrap_method(
                 self.update_wasm_plugin,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateWasmPlugin",
             ),
-            self.delete_wasm_plugin: gapic_v1.method.wrap_method(
+            self.delete_wasm_plugin: self._wrap_method(
                 self.delete_wasm_plugin,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteWasmPlugin",
             ),
-            self.list_gateways: gapic_v1.method.wrap_method(
+            self.list_gateways: self._wrap_method(
                 self.list_gateways,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListGateways",
             ),
-            self.get_gateway: gapic_v1.method.wrap_method(
+            self.get_gateway: self._wrap_method(
                 self.get_gateway,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetGateway",
             ),
-            self.create_gateway: gapic_v1.method.wrap_method(
+            self.create_gateway: self._wrap_method(
                 self.create_gateway,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateGateway",
             ),
-            self.update_gateway: gapic_v1.method.wrap_method(
+            self.update_gateway: self._wrap_method(
                 self.update_gateway,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateGateway",
             ),
-            self.delete_gateway: gapic_v1.method.wrap_method(
+            self.delete_gateway: self._wrap_method(
                 self.delete_gateway,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteGateway",
             ),
-            self.list_grpc_routes: gapic_v1.method.wrap_method(
+            self.list_grpc_routes: self._wrap_method(
                 self.list_grpc_routes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListGrpcRoutes",
             ),
-            self.get_grpc_route: gapic_v1.method.wrap_method(
+            self.get_grpc_route: self._wrap_method(
                 self.get_grpc_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetGrpcRoute",
             ),
-            self.create_grpc_route: gapic_v1.method.wrap_method(
+            self.create_grpc_route: self._wrap_method(
                 self.create_grpc_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateGrpcRoute",
             ),
-            self.update_grpc_route: gapic_v1.method.wrap_method(
+            self.update_grpc_route: self._wrap_method(
                 self.update_grpc_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateGrpcRoute",
             ),
-            self.delete_grpc_route: gapic_v1.method.wrap_method(
+            self.delete_grpc_route: self._wrap_method(
                 self.delete_grpc_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteGrpcRoute",
             ),
-            self.list_http_routes: gapic_v1.method.wrap_method(
+            self.list_http_routes: self._wrap_method(
                 self.list_http_routes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListHttpRoutes",
             ),
-            self.get_http_route: gapic_v1.method.wrap_method(
+            self.get_http_route: self._wrap_method(
                 self.get_http_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetHttpRoute",
             ),
-            self.create_http_route: gapic_v1.method.wrap_method(
+            self.create_http_route: self._wrap_method(
                 self.create_http_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateHttpRoute",
             ),
-            self.update_http_route: gapic_v1.method.wrap_method(
+            self.update_http_route: self._wrap_method(
                 self.update_http_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateHttpRoute",
             ),
-            self.delete_http_route: gapic_v1.method.wrap_method(
+            self.delete_http_route: self._wrap_method(
                 self.delete_http_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteHttpRoute",
             ),
-            self.list_tcp_routes: gapic_v1.method.wrap_method(
+            self.list_tcp_routes: self._wrap_method(
                 self.list_tcp_routes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListTcpRoutes",
             ),
-            self.get_tcp_route: gapic_v1.method.wrap_method(
+            self.get_tcp_route: self._wrap_method(
                 self.get_tcp_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetTcpRoute",
             ),
-            self.create_tcp_route: gapic_v1.method.wrap_method(
+            self.create_tcp_route: self._wrap_method(
                 self.create_tcp_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateTcpRoute",
             ),
-            self.update_tcp_route: gapic_v1.method.wrap_method(
+            self.update_tcp_route: self._wrap_method(
                 self.update_tcp_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateTcpRoute",
             ),
-            self.delete_tcp_route: gapic_v1.method.wrap_method(
+            self.delete_tcp_route: self._wrap_method(
                 self.delete_tcp_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteTcpRoute",
             ),
-            self.list_tls_routes: gapic_v1.method.wrap_method(
+            self.list_tls_routes: self._wrap_method(
                 self.list_tls_routes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListTlsRoutes",
             ),
-            self.get_tls_route: gapic_v1.method.wrap_method(
+            self.get_tls_route: self._wrap_method(
                 self.get_tls_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetTlsRoute",
             ),
-            self.create_tls_route: gapic_v1.method.wrap_method(
+            self.create_tls_route: self._wrap_method(
                 self.create_tls_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateTlsRoute",
             ),
-            self.update_tls_route: gapic_v1.method.wrap_method(
+            self.update_tls_route: self._wrap_method(
                 self.update_tls_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateTlsRoute",
             ),
-            self.delete_tls_route: gapic_v1.method.wrap_method(
+            self.delete_tls_route: self._wrap_method(
                 self.delete_tls_route,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteTlsRoute",
             ),
-            self.list_service_bindings: gapic_v1.method.wrap_method(
+            self.list_service_bindings: self._wrap_method(
                 self.list_service_bindings,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListServiceBindings",
             ),
-            self.get_service_binding: gapic_v1.method.wrap_method(
+            self.get_service_binding: self._wrap_method(
                 self.get_service_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetServiceBinding",
             ),
-            self.create_service_binding: gapic_v1.method.wrap_method(
+            self.create_service_binding: self._wrap_method(
                 self.create_service_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateServiceBinding",
             ),
-            self.update_service_binding: gapic_v1.method.wrap_method(
+            self.update_service_binding: self._wrap_method(
                 self.update_service_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateServiceBinding",
             ),
-            self.delete_service_binding: gapic_v1.method.wrap_method(
+            self.delete_service_binding: self._wrap_method(
                 self.delete_service_binding,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteServiceBinding",
             ),
-            self.list_meshes: gapic_v1.method.wrap_method(
+            self.list_meshes: self._wrap_method(
                 self.list_meshes,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListMeshes",
             ),
-            self.get_mesh: gapic_v1.method.wrap_method(
+            self.get_mesh: self._wrap_method(
                 self.get_mesh,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetMesh",
             ),
-            self.create_mesh: gapic_v1.method.wrap_method(
+            self.create_mesh: self._wrap_method(
                 self.create_mesh,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateMesh",
             ),
-            self.update_mesh: gapic_v1.method.wrap_method(
+            self.update_mesh: self._wrap_method(
                 self.update_mesh,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateMesh",
             ),
-            self.delete_mesh: gapic_v1.method.wrap_method(
+            self.delete_mesh: self._wrap_method(
                 self.delete_mesh,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteMesh",
             ),
-            self.list_service_lb_policies: gapic_v1.method.wrap_method(
+            self.list_service_lb_policies: self._wrap_method(
                 self.list_service_lb_policies,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListServiceLbPolicies",
             ),
-            self.get_service_lb_policy: gapic_v1.method.wrap_method(
+            self.get_service_lb_policy: self._wrap_method(
                 self.get_service_lb_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetServiceLbPolicy",
             ),
-            self.create_service_lb_policy: gapic_v1.method.wrap_method(
+            self.create_service_lb_policy: self._wrap_method(
                 self.create_service_lb_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateServiceLbPolicy",
             ),
-            self.update_service_lb_policy: gapic_v1.method.wrap_method(
+            self.update_service_lb_policy: self._wrap_method(
                 self.update_service_lb_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateServiceLbPolicy",
             ),
-            self.delete_service_lb_policy: gapic_v1.method.wrap_method(
+            self.delete_service_lb_policy: self._wrap_method(
                 self.delete_service_lb_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteServiceLbPolicy",
             ),
-            self.get_gateway_route_view: gapic_v1.method.wrap_method(
+            self.get_gateway_route_view: self._wrap_method(
                 self.get_gateway_route_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetGatewayRouteView",
             ),
-            self.get_mesh_route_view: gapic_v1.method.wrap_method(
+            self.get_mesh_route_view: self._wrap_method(
                 self.get_mesh_route_view,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetMeshRouteView",
             ),
-            self.list_gateway_route_views: gapic_v1.method.wrap_method(
+            self.list_gateway_route_views: self._wrap_method(
                 self.list_gateway_route_views,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListGatewayRouteViews",
             ),
-            self.list_mesh_route_views: gapic_v1.method.wrap_method(
+            self.list_mesh_route_views: self._wrap_method(
                 self.list_mesh_route_views,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListMeshRouteViews",
             ),
-            self.list_agent_gateways: gapic_v1.method.wrap_method(
+            self.list_agent_gateways: self._wrap_method(
                 self.list_agent_gateways,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/ListAgentGateways",
             ),
-            self.get_agent_gateway: gapic_v1.method.wrap_method(
+            self.get_agent_gateway: self._wrap_method(
                 self.get_agent_gateway,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/GetAgentGateway",
             ),
-            self.create_agent_gateway: gapic_v1.method.wrap_method(
+            self.create_agent_gateway: self._wrap_method(
                 self.create_agent_gateway,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/CreateAgentGateway",
             ),
-            self.update_agent_gateway: gapic_v1.method.wrap_method(
+            self.update_agent_gateway: self._wrap_method(
                 self.update_agent_gateway,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/UpdateAgentGateway",
             ),
-            self.delete_agent_gateway: gapic_v1.method.wrap_method(
+            self.delete_agent_gateway: self._wrap_method(
                 self.delete_agent_gateway,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.networkservices.v1.NetworkServices/DeleteAgentGateway",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.get_iam_policy: gapic_v1.method.wrap_method(
+            self.get_iam_policy: self._wrap_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/GetIamPolicy",
             ),
-            self.set_iam_policy: gapic_v1.method.wrap_method(
+            self.set_iam_policy: self._wrap_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/SetIamPolicy",
             ),
-            self.test_iam_permissions: gapic_v1.method.wrap_method(
+            self.test_iam_permissions: self._wrap_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/TestIamPermissions",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
 

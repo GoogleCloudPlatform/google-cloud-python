@@ -16,10 +16,22 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.cloud.designcenter_v1 import gapic_version as package_version
+from google.cloud.designcenter_v1._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.cloud.designcenter_v1._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
 import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
 from google.api_core import retry as retries
@@ -32,7 +44,6 @@ from google.iam.v1 import (
 from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.designcenter_v1 import gapic_version as package_version
 from google.cloud.designcenter_v1.types import (
     apphub_integration_messages,
     authoring,
@@ -71,6 +82,7 @@ class DesignCenterTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -101,6 +113,9 @@ class DesignCenterTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -150,16 +165,95 @@ class DesignCenterTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.get_space: gapic_v1.method.wrap_method(
+            self.get_space: self._wrap_method(
                 self.get_space,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -172,8 +266,9 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetSpace",
             ),
-            self.list_spaces: gapic_v1.method.wrap_method(
+            self.list_spaces: self._wrap_method(
                 self.list_spaces,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -186,23 +281,27 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListSpaces",
             ),
-            self.create_space: gapic_v1.method.wrap_method(
+            self.create_space: self._wrap_method(
                 self.create_space,
                 default_timeout=120.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreateSpace",
             ),
-            self.update_space: gapic_v1.method.wrap_method(
+            self.update_space: self._wrap_method(
                 self.update_space,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/UpdateSpace",
             ),
-            self.delete_space: gapic_v1.method.wrap_method(
+            self.delete_space: self._wrap_method(
                 self.delete_space,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteSpace",
             ),
-            self.get_application_template: gapic_v1.method.wrap_method(
+            self.get_application_template: self._wrap_method(
                 self.get_application_template,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -215,8 +314,9 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetApplicationTemplate",
             ),
-            self.list_application_templates: gapic_v1.method.wrap_method(
+            self.list_application_templates: self._wrap_method(
                 self.list_application_templates,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -229,58 +329,69 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListApplicationTemplates",
             ),
-            self.create_application_template: gapic_v1.method.wrap_method(
+            self.create_application_template: self._wrap_method(
                 self.create_application_template,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreateApplicationTemplate",
             ),
-            self.update_application_template: gapic_v1.method.wrap_method(
+            self.update_application_template: self._wrap_method(
                 self.update_application_template,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/UpdateApplicationTemplate",
             ),
-            self.import_application_template: gapic_v1.method.wrap_method(
+            self.import_application_template: self._wrap_method(
                 self.import_application_template,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ImportApplicationTemplate",
             ),
-            self.delete_application_template: gapic_v1.method.wrap_method(
+            self.delete_application_template: self._wrap_method(
                 self.delete_application_template,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteApplicationTemplate",
             ),
-            self.commit_application_template: gapic_v1.method.wrap_method(
+            self.commit_application_template: self._wrap_method(
                 self.commit_application_template,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CommitApplicationTemplate",
             ),
-            self.snapshot_application_template: gapic_v1.method.wrap_method(
+            self.snapshot_application_template: self._wrap_method(
                 self.snapshot_application_template,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/SnapshotApplicationTemplate",
             ),
-            self.generate_application_template_ia_c: gapic_v1.method.wrap_method(
+            self.generate_application_template_ia_c: self._wrap_method(
                 self.generate_application_template_ia_c,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GenerateApplicationTemplateIaC",
             ),
-            self.export_application_template_ia_c: gapic_v1.method.wrap_method(
+            self.export_application_template_ia_c: self._wrap_method(
                 self.export_application_template_ia_c,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ExportApplicationTemplateIaC",
             ),
-            self.generate_application_template_revision_ia_c: gapic_v1.method.wrap_method(
+            self.generate_application_template_revision_ia_c: self._wrap_method(
                 self.generate_application_template_revision_ia_c,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GenerateApplicationTemplateRevisionIaC",
             ),
-            self.export_application_template_revision_ia_c: gapic_v1.method.wrap_method(
+            self.export_application_template_revision_ia_c: self._wrap_method(
                 self.export_application_template_revision_ia_c,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ExportApplicationTemplateRevisionIaC",
             ),
-            self.get_component: gapic_v1.method.wrap_method(
+            self.get_component: self._wrap_method(
                 self.get_component,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -293,8 +404,9 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetComponent",
             ),
-            self.list_components: gapic_v1.method.wrap_method(
+            self.list_components: self._wrap_method(
                 self.list_components,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -307,23 +419,27 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListComponents",
             ),
-            self.create_component: gapic_v1.method.wrap_method(
+            self.create_component: self._wrap_method(
                 self.create_component,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreateComponent",
             ),
-            self.update_component: gapic_v1.method.wrap_method(
+            self.update_component: self._wrap_method(
                 self.update_component,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/UpdateComponent",
             ),
-            self.delete_component: gapic_v1.method.wrap_method(
+            self.delete_component: self._wrap_method(
                 self.delete_component,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteComponent",
             ),
-            self.get_connection: gapic_v1.method.wrap_method(
+            self.get_connection: self._wrap_method(
                 self.get_connection,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -336,8 +452,9 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetConnection",
             ),
-            self.list_connections: gapic_v1.method.wrap_method(
+            self.list_connections: self._wrap_method(
                 self.list_connections,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -350,23 +467,27 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListConnections",
             ),
-            self.create_connection: gapic_v1.method.wrap_method(
+            self.create_connection: self._wrap_method(
                 self.create_connection,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreateConnection",
             ),
-            self.update_connection: gapic_v1.method.wrap_method(
+            self.update_connection: self._wrap_method(
                 self.update_connection,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/UpdateConnection",
             ),
-            self.delete_connection: gapic_v1.method.wrap_method(
+            self.delete_connection: self._wrap_method(
                 self.delete_connection,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteConnection",
             ),
-            self.get_application_template_revision: gapic_v1.method.wrap_method(
+            self.get_application_template_revision: self._wrap_method(
                 self.get_application_template_revision,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -379,8 +500,9 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetApplicationTemplateRevision",
             ),
-            self.list_application_template_revisions: gapic_v1.method.wrap_method(
+            self.list_application_template_revisions: self._wrap_method(
                 self.list_application_template_revisions,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -393,13 +515,15 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListApplicationTemplateRevisions",
             ),
-            self.delete_application_template_revision: gapic_v1.method.wrap_method(
+            self.delete_application_template_revision: self._wrap_method(
                 self.delete_application_template_revision,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteApplicationTemplateRevision",
             ),
-            self.get_catalog: gapic_v1.method.wrap_method(
+            self.get_catalog: self._wrap_method(
                 self.get_catalog,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -412,8 +536,9 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetCatalog",
             ),
-            self.list_catalogs: gapic_v1.method.wrap_method(
+            self.list_catalogs: self._wrap_method(
                 self.list_catalogs,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -426,28 +551,33 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListCatalogs",
             ),
-            self.create_catalog: gapic_v1.method.wrap_method(
+            self.create_catalog: self._wrap_method(
                 self.create_catalog,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreateCatalog",
             ),
-            self.update_catalog: gapic_v1.method.wrap_method(
+            self.update_catalog: self._wrap_method(
                 self.update_catalog,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/UpdateCatalog",
             ),
-            self.delete_catalog: gapic_v1.method.wrap_method(
+            self.delete_catalog: self._wrap_method(
                 self.delete_catalog,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteCatalog",
             ),
-            self.create_catalog_template: gapic_v1.method.wrap_method(
+            self.create_catalog_template: self._wrap_method(
                 self.create_catalog_template,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreateCatalogTemplate",
             ),
-            self.get_catalog_template: gapic_v1.method.wrap_method(
+            self.get_catalog_template: self._wrap_method(
                 self.get_catalog_template,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -460,8 +590,9 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetCatalogTemplate",
             ),
-            self.list_catalog_templates: gapic_v1.method.wrap_method(
+            self.list_catalog_templates: self._wrap_method(
                 self.list_catalog_templates,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -474,23 +605,27 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListCatalogTemplates",
             ),
-            self.update_catalog_template: gapic_v1.method.wrap_method(
+            self.update_catalog_template: self._wrap_method(
                 self.update_catalog_template,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/UpdateCatalogTemplate",
             ),
-            self.delete_catalog_template: gapic_v1.method.wrap_method(
+            self.delete_catalog_template: self._wrap_method(
                 self.delete_catalog_template,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteCatalogTemplate",
             ),
-            self.create_share: gapic_v1.method.wrap_method(
+            self.create_share: self._wrap_method(
                 self.create_share,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreateShare",
             ),
-            self.list_shares: gapic_v1.method.wrap_method(
+            self.list_shares: self._wrap_method(
                 self.list_shares,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -503,8 +638,9 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListShares",
             ),
-            self.get_share: gapic_v1.method.wrap_method(
+            self.get_share: self._wrap_method(
                 self.get_share,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -517,18 +653,21 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetShare",
             ),
-            self.delete_share: gapic_v1.method.wrap_method(
+            self.delete_share: self._wrap_method(
                 self.delete_share,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteShare",
             ),
-            self.sync_share: gapic_v1.method.wrap_method(
+            self.sync_share: self._wrap_method(
                 self.sync_share,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/SyncShare",
             ),
-            self.get_shared_template: gapic_v1.method.wrap_method(
+            self.get_shared_template: self._wrap_method(
                 self.get_shared_template,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -541,8 +680,9 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetSharedTemplate",
             ),
-            self.list_shared_templates: gapic_v1.method.wrap_method(
+            self.list_shared_templates: self._wrap_method(
                 self.list_shared_templates,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -555,8 +695,9 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListSharedTemplates",
             ),
-            self.get_shared_template_revision: gapic_v1.method.wrap_method(
+            self.get_shared_template_revision: self._wrap_method(
                 self.get_shared_template_revision,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -569,8 +710,9 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetSharedTemplateRevision",
             ),
-            self.list_shared_template_revisions: gapic_v1.method.wrap_method(
+            self.list_shared_template_revisions: self._wrap_method(
                 self.list_shared_template_revisions,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -583,13 +725,15 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListSharedTemplateRevisions",
             ),
-            self.create_catalog_template_revision: gapic_v1.method.wrap_method(
+            self.create_catalog_template_revision: self._wrap_method(
                 self.create_catalog_template_revision,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreateCatalogTemplateRevision",
             ),
-            self.get_catalog_template_revision: gapic_v1.method.wrap_method(
+            self.get_catalog_template_revision: self._wrap_method(
                 self.get_catalog_template_revision,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -602,8 +746,9 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetCatalogTemplateRevision",
             ),
-            self.list_catalog_template_revisions: gapic_v1.method.wrap_method(
+            self.list_catalog_template_revisions: self._wrap_method(
                 self.list_catalog_template_revisions,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -616,18 +761,21 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListCatalogTemplateRevisions",
             ),
-            self.delete_catalog_template_revision: gapic_v1.method.wrap_method(
+            self.delete_catalog_template_revision: self._wrap_method(
                 self.delete_catalog_template_revision,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteCatalogTemplateRevision",
             ),
-            self.create_application: gapic_v1.method.wrap_method(
+            self.create_application: self._wrap_method(
                 self.create_application,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreateApplication",
             ),
-            self.get_application: gapic_v1.method.wrap_method(
+            self.get_application: self._wrap_method(
                 self.get_application,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -640,8 +788,9 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetApplication",
             ),
-            self.list_applications: gapic_v1.method.wrap_method(
+            self.list_applications: self._wrap_method(
                 self.list_applications,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -654,28 +803,33 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListApplications",
             ),
-            self.update_application: gapic_v1.method.wrap_method(
+            self.update_application: self._wrap_method(
                 self.update_application,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/UpdateApplication",
             ),
-            self.delete_application: gapic_v1.method.wrap_method(
+            self.delete_application: self._wrap_method(
                 self.delete_application,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeleteApplication",
             ),
-            self.deploy_application: gapic_v1.method.wrap_method(
+            self.deploy_application: self._wrap_method(
                 self.deploy_application,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeployApplication",
             ),
-            self.preview_application: gapic_v1.method.wrap_method(
+            self.preview_application: self._wrap_method(
                 self.preview_application,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/PreviewApplication",
             ),
-            self.fetch_application_assessment_report: gapic_v1.method.wrap_method(
+            self.fetch_application_assessment_report: self._wrap_method(
                 self.fetch_application_assessment_report,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -688,28 +842,33 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/FetchApplicationAssessmentReport",
             ),
-            self.generate_application_assessment_report: gapic_v1.method.wrap_method(
+            self.generate_application_assessment_report: self._wrap_method(
                 self.generate_application_assessment_report,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GenerateApplicationAssessmentReport",
             ),
-            self.generate_application_template_assessment_report: gapic_v1.method.wrap_method(
+            self.generate_application_template_assessment_report: self._wrap_method(
                 self.generate_application_template_assessment_report,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GenerateApplicationTemplateAssessmentReport",
             ),
-            self.generate_assessment_report: gapic_v1.method.wrap_method(
+            self.generate_assessment_report: self._wrap_method(
                 self.generate_assessment_report,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GenerateAssessmentReport",
             ),
-            self.generate_terraform_plan_assessment_report: gapic_v1.method.wrap_method(
+            self.generate_terraform_plan_assessment_report: self._wrap_method(
                 self.generate_terraform_plan_assessment_report,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GenerateTerraformPlanAssessmentReport",
             ),
-            self.get_policy: gapic_v1.method.wrap_method(
+            self.get_policy: self._wrap_method(
                 self.get_policy,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -722,8 +881,9 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetPolicy",
             ),
-            self.list_policies: gapic_v1.method.wrap_method(
+            self.list_policies: self._wrap_method(
                 self.list_policies,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -736,23 +896,27 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListPolicies",
             ),
-            self.create_policy: gapic_v1.method.wrap_method(
+            self.create_policy: self._wrap_method(
                 self.create_policy,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/CreatePolicy",
             ),
-            self.update_policy: gapic_v1.method.wrap_method(
+            self.update_policy: self._wrap_method(
                 self.update_policy,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/UpdatePolicy",
             ),
-            self.delete_policy: gapic_v1.method.wrap_method(
+            self.delete_policy: self._wrap_method(
                 self.delete_policy,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/DeletePolicy",
             ),
-            self.fetch_frameworks: gapic_v1.method.wrap_method(
+            self.fetch_frameworks: self._wrap_method(
                 self.fetch_frameworks,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -765,38 +929,45 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/FetchFrameworks",
             ),
-            self.generate_application_ia_c: gapic_v1.method.wrap_method(
+            self.generate_application_ia_c: self._wrap_method(
                 self.generate_application_ia_c,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GenerateApplicationIaC",
             ),
-            self.export_application_ia_c: gapic_v1.method.wrap_method(
+            self.export_application_ia_c: self._wrap_method(
                 self.export_application_ia_c,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ExportApplicationIaC",
             ),
-            self.import_application_template_ia_c: gapic_v1.method.wrap_method(
+            self.import_application_template_ia_c: self._wrap_method(
                 self.import_application_template_ia_c,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ImportApplicationTemplateIaC",
             ),
-            self.ingest_application_template_ia_c: gapic_v1.method.wrap_method(
+            self.ingest_application_template_ia_c: self._wrap_method(
                 self.ingest_application_template_ia_c,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/IngestApplicationTemplateIaC",
             ),
-            self.import_application_ia_c: gapic_v1.method.wrap_method(
+            self.import_application_ia_c: self._wrap_method(
                 self.import_application_ia_c,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ImportApplicationIaC",
             ),
-            self.register_app_hub_application_resources: gapic_v1.method.wrap_method(
+            self.register_app_hub_application_resources: self._wrap_method(
                 self.register_app_hub_application_resources,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/RegisterAppHubApplicationResources",
             ),
-            self.list_application_template_system_revisions: gapic_v1.method.wrap_method(
+            self.list_application_template_system_revisions: self._wrap_method(
                 self.list_application_template_system_revisions,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -809,8 +980,9 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/ListApplicationTemplateSystemRevisions",
             ),
-            self.get_application_template_system_revision: gapic_v1.method.wrap_method(
+            self.get_application_template_system_revision: self._wrap_method(
                 self.get_application_template_system_revision,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -823,56 +995,67 @@ class DesignCenterTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/GetApplicationTemplateSystemRevision",
             ),
-            self.recommend_iam_roles: gapic_v1.method.wrap_method(
+            self.recommend_iam_roles: self._wrap_method(
                 self.recommend_iam_roles,
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.cloud.designcenter.v1.DesignCenter/RecommendIAMRoles",
             ),
-            self.get_location: gapic_v1.method.wrap_method(
+            self.get_location: self._wrap_method(
                 self.get_location,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/GetLocation",
             ),
-            self.list_locations: gapic_v1.method.wrap_method(
+            self.list_locations: self._wrap_method(
                 self.list_locations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.cloud.location.Locations/ListLocations",
             ),
-            self.get_iam_policy: gapic_v1.method.wrap_method(
+            self.get_iam_policy: self._wrap_method(
                 self.get_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/GetIamPolicy",
             ),
-            self.set_iam_policy: gapic_v1.method.wrap_method(
+            self.set_iam_policy: self._wrap_method(
                 self.set_iam_policy,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/SetIamPolicy",
             ),
-            self.test_iam_permissions: gapic_v1.method.wrap_method(
+            self.test_iam_permissions: self._wrap_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.iam.v1.IAMPolicy/TestIamPermissions",
             ),
-            self.cancel_operation: gapic_v1.method.wrap_method(
+            self.cancel_operation: self._wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/CancelOperation",
             ),
-            self.delete_operation: gapic_v1.method.wrap_method(
+            self.delete_operation: self._wrap_method(
                 self.delete_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/DeleteOperation",
             ),
-            self.get_operation: gapic_v1.method.wrap_method(
+            self.get_operation: self._wrap_method(
                 self.get_operation,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/GetOperation",
             ),
-            self.list_operations: gapic_v1.method.wrap_method(
+            self.list_operations: self._wrap_method(
                 self.list_operations,
                 default_timeout=None,
                 client_info=client_info,
+                method_name="google.longrunning.Operations/ListOperations",
             ),
         }
 

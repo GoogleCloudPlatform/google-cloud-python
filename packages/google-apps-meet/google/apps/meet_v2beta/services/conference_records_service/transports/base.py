@@ -16,16 +16,27 @@
 import abc
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
+from google.apps.meet_v2beta import gapic_version as package_version
+from google.apps.meet_v2beta._compat import (
+    ASYNC_WRAP_METHOD_SUPPORTS_KIND as _ASYNC_WRAP_METHOD_SUPPORTS_KIND,
+)
+from google.apps.meet_v2beta._compat import (
+    WRAP_METHOD_SUPPORTS_TRACING as _WRAP_METHOD_SUPPORTS_TRACING,
+)
+
+_ASYNC_WRAP_METHOD_SUPPORTS_TRACING = _WRAP_METHOD_SUPPORTS_TRACING
+_WRAP_METHOD_SUPPORTS_KIND = _WRAP_METHOD_SUPPORTS_TRACING
+
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
 from google.auth import credentials as ga_credentials  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.apps.meet_v2beta import gapic_version as package_version
 from google.apps.meet_v2beta.types import resource, service
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
@@ -55,6 +66,7 @@ class ConferenceRecordsServiceTransport(abc.ABC):
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
         always_use_jwt_access: Optional[bool] = False,
         api_audience: Optional[str] = None,
+        client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -85,6 +97,9 @@ class ConferenceRecordsServiceTransport(abc.ABC):
                 to the service that will be set when using certain 3rd party
                 authentication flows. Audience is typically a resource identifier.
                 If not set, the host value will be used as a default.
+            client_options (Optional[Union[google.api_core.client_options.ClientOptions, dict]]):
+                Custom options for the client, containing options such as
+                custom OpenTelemetry tracer providers.
         """
 
         # Save the scopes.
@@ -134,16 +149,95 @@ class ConferenceRecordsServiceTransport(abc.ABC):
             host += ":443"
         self._host = host
 
+        self._client_options = client_options
         self._wrapped_methods: Dict[Callable, Callable] = {}
 
     @property
     def host(self):
         return self._host
 
+    def _wrap_method(self, func, *args, **kwargs):
+        """Wrap an RPC method with common client-level features.
+
+        Applies retry, timeout, metadata, and tracing wrappers to the
+        underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method.wrap_method(func, *args, **kwargs)
+
+    def _wrap_async_method(self, func, *args, **kwargs):
+        """Wrap an async RPC method with common client-level features.
+
+        Applies asynchronous retry, timeout, metadata, and tracing wrappers
+        to the underlying RPC method callable. If the runtime `google-api-core`
+        version supports tracing, transport attributes (`client_options` and
+        `kind`) are injected. Otherwise, tracing-specific arguments are
+        stripped for backward compatibility with older `google-api-core`
+        versions.
+        """
+        if _ASYNC_WRAP_METHOD_SUPPORTS_TRACING:
+            kwargs["client_options"] = self._client_options
+            try:
+                kind = self.kind
+            except NotImplementedError:
+                kind = None
+            if kind:
+                kwargs["kind"] = kind
+            return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+        # Fallback for older runtime versions of google-api-core:
+        # - Era 1 (< 2.29.0): Neither tracing args nor `kind` are supported.
+        # - Era 2 (>= 2.29.0, < 2.36.0): `kind` is supported (prevents REST from
+        #   falling back to gRPC wrapping), but tracing args are not.
+        # (These fallbacks can be removed once google-api-core < 2.36.0 is no longer supported.)
+        for k in ["client_options", "method_name", "is_streaming"]:
+            kwargs.pop(k, None)
+
+        try:
+            kind = self.kind
+        except NotImplementedError:
+            kind = None
+
+        if _ASYNC_WRAP_METHOD_SUPPORTS_KIND and kind:
+            kwargs["kind"] = kind
+        else:
+            kwargs.pop("kind", None)
+
+        return gapic_v1.method_async.wrap_method(func, *args, **kwargs)
+
     def _prep_wrapped_messages(self, client_info):
-        # Precompute the wrapped methods.
+        """Precompute and cache wrapped methods for RPC dispatch."""
         self._wrapped_methods = {
-            self.get_conference_record: gapic_v1.method.wrap_method(
+            self.get_conference_record: self._wrap_method(
                 self.get_conference_record,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -156,8 +250,9 @@ class ConferenceRecordsServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.apps.meet.v2beta.ConferenceRecordsService/GetConferenceRecord",
             ),
-            self.list_conference_records: gapic_v1.method.wrap_method(
+            self.list_conference_records: self._wrap_method(
                 self.list_conference_records,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -170,8 +265,9 @@ class ConferenceRecordsServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.apps.meet.v2beta.ConferenceRecordsService/ListConferenceRecords",
             ),
-            self.get_participant: gapic_v1.method.wrap_method(
+            self.get_participant: self._wrap_method(
                 self.get_participant,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -184,8 +280,9 @@ class ConferenceRecordsServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.apps.meet.v2beta.ConferenceRecordsService/GetParticipant",
             ),
-            self.list_participants: gapic_v1.method.wrap_method(
+            self.list_participants: self._wrap_method(
                 self.list_participants,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -198,8 +295,9 @@ class ConferenceRecordsServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.apps.meet.v2beta.ConferenceRecordsService/ListParticipants",
             ),
-            self.get_participant_session: gapic_v1.method.wrap_method(
+            self.get_participant_session: self._wrap_method(
                 self.get_participant_session,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -212,8 +310,9 @@ class ConferenceRecordsServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.apps.meet.v2beta.ConferenceRecordsService/GetParticipantSession",
             ),
-            self.list_participant_sessions: gapic_v1.method.wrap_method(
+            self.list_participant_sessions: self._wrap_method(
                 self.list_participant_sessions,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -226,8 +325,9 @@ class ConferenceRecordsServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.apps.meet.v2beta.ConferenceRecordsService/ListParticipantSessions",
             ),
-            self.get_recording: gapic_v1.method.wrap_method(
+            self.get_recording: self._wrap_method(
                 self.get_recording,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -240,8 +340,9 @@ class ConferenceRecordsServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.apps.meet.v2beta.ConferenceRecordsService/GetRecording",
             ),
-            self.list_recordings: gapic_v1.method.wrap_method(
+            self.list_recordings: self._wrap_method(
                 self.list_recordings,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -254,8 +355,9 @@ class ConferenceRecordsServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.apps.meet.v2beta.ConferenceRecordsService/ListRecordings",
             ),
-            self.get_transcript: gapic_v1.method.wrap_method(
+            self.get_transcript: self._wrap_method(
                 self.get_transcript,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -268,8 +370,9 @@ class ConferenceRecordsServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.apps.meet.v2beta.ConferenceRecordsService/GetTranscript",
             ),
-            self.list_transcripts: gapic_v1.method.wrap_method(
+            self.list_transcripts: self._wrap_method(
                 self.list_transcripts,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -282,8 +385,9 @@ class ConferenceRecordsServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.apps.meet.v2beta.ConferenceRecordsService/ListTranscripts",
             ),
-            self.get_transcript_entry: gapic_v1.method.wrap_method(
+            self.get_transcript_entry: self._wrap_method(
                 self.get_transcript_entry,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -296,8 +400,9 @@ class ConferenceRecordsServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.apps.meet.v2beta.ConferenceRecordsService/GetTranscriptEntry",
             ),
-            self.list_transcript_entries: gapic_v1.method.wrap_method(
+            self.list_transcript_entries: self._wrap_method(
                 self.list_transcript_entries,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -310,8 +415,9 @@ class ConferenceRecordsServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.apps.meet.v2beta.ConferenceRecordsService/ListTranscriptEntries",
             ),
-            self.get_smart_note: gapic_v1.method.wrap_method(
+            self.get_smart_note: self._wrap_method(
                 self.get_smart_note,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -324,8 +430,9 @@ class ConferenceRecordsServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.apps.meet.v2beta.ConferenceRecordsService/GetSmartNote",
             ),
-            self.list_smart_notes: gapic_v1.method.wrap_method(
+            self.list_smart_notes: self._wrap_method(
                 self.list_smart_notes,
                 default_retry=retries.Retry(
                     initial=1.0,
@@ -338,6 +445,7 @@ class ConferenceRecordsServiceTransport(abc.ABC):
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
+                method_name="google.apps.meet.v2beta.ConferenceRecordsService/ListSmartNotes",
             ),
         }
 
