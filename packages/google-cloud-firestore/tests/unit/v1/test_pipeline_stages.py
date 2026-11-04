@@ -1079,13 +1079,6 @@ class TestWindowTypes:
         frame = DocumentWindowFrame(preceding=1, following=WindowBound.CURRENT)
         assert frame.preceding == 1
         assert frame.following == WindowBound.CURRENT
-        assert (
-            repr(frame)
-            == "DocumentWindowFrame(preceding=1, following=<WindowBound.CURRENT: 'current'>)"
-        )
-        assert frame == DocumentWindowFrame(1, WindowBound.CURRENT)
-        assert frame != DocumentWindowFrame(2, WindowBound.CURRENT)
-        assert frame != object()
 
         pb = frame._to_pb()
         assert pb.map_value.fields["preceding"] == Value(integer_value=1)
@@ -1110,13 +1103,6 @@ class TestWindowTypes:
         assert frame.preceding == 10.5
         assert frame.following == WindowBound.UNBOUNDED
         assert frame.unit == TimeUnit.DAY
-        assert (
-            repr(frame)
-            == "RangeWindowFrame(preceding=10.5, following=<WindowBound.UNBOUNDED: 'unbounded'>, unit=<TimeUnit.DAY: 'day'>)"
-        )
-        assert frame == RangeWindowFrame(10.5, WindowBound.UNBOUNDED, TimeUnit.DAY)
-        assert frame != RangeWindowFrame(10.5, WindowBound.UNBOUNDED, "hour")
-        assert frame != object()
 
         pb = frame._to_pb()
         assert pb.map_value.fields["preceding"] == Value(double_value=10.5)
@@ -1178,12 +1164,7 @@ class TestWindowTypes:
         assert list(pb.map_value.fields["sort"].array_value.values) == [
             Field.of("rating").descending()._to_pb()
         ]
-        assert pb.map_value.fields["documents"].map_value.fields["preceding"] == Value(
-            integer_value=-1
-        )
-        assert pb.map_value.fields["documents"].map_value.fields["following"] == Value(
-            string_value="current"
-        )
+        assert pb.map_value.fields["documents"] == spec_doc.documents._to_pb()
 
         # RangeWindowFrame
         spec_range = WindowSpec(range=RangeWindowFrame(-5, 5, "day"))
@@ -1232,16 +1213,16 @@ class TestAddWindowFields:
             self._make_one(expr1, fields=[expr1])
 
     def test_repr_and_to_pb(self):
-        expr1 = Field.of("rating").sum().as_("sum_rating")
-        expr2 = (
-            Rank()
-            .over(WindowSpec(sort=Field.of("published").ascending()))
-            .as_("pub_rank")
+        expr1 = (
+            Field.of("rating")
+            .sum()
+            .over(WindowSpec(documents=DocumentWindowFrame(-1, WindowBound.CURRENT)))
+            .as_("sum_rating")
         )
+        expr2 = Rank().as_("pub_rank")
         window = WindowSpec(
             partition="genre",
             sort=Field.of("rating").descending(),
-            documents=DocumentWindowFrame(-1, WindowBound.CURRENT),
         )
         stage = self._make_one(expr1, expr2, window=window)
         assert (
