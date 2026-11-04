@@ -2277,15 +2277,17 @@ class TestWindowExpressions:
 
     def test_over_repr_and_equality(self):
         agg = Field.of("rating").sum()
-        window = WindowSpec(partition="genre")
+        window = WindowSpec(documents=DocumentWindowFrame(1, WindowBound.CURRENT))
         win_fn = agg.over(window)
         assert isinstance(win_fn, WindowFunction)
         assert not isinstance(win_fn, AggregateFunction)
         assert (
             repr(win_fn)
-            == "Field.of('rating').sum().over(WindowSpec(partition=[Field.of('genre')]))"
+            == "Field.of('rating').sum().over(WindowSpec(documents=DocumentWindowFrame(preceding=1, following=<WindowBound.CURRENT: 'current'>)))"
         )
-        assert win_fn == agg.over(WindowSpec(partition="genre"))
+        assert win_fn == agg.over(
+            WindowSpec(documents=DocumentWindowFrame(1, WindowBound.CURRENT))
+        )
         assert win_fn != agg.over(WindowSpec())
         assert win_fn != agg
 

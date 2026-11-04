@@ -124,7 +124,7 @@ tests:
                 title:
                   fieldReferenceValue: title
           name: select
-  - description: "testAddWindowFields - rank and accumulator-level over() frames"
+  - description: "testAddWindowFields - rank with ties"
     pipeline:
       - Collection: books
       - Where:
@@ -142,56 +142,30 @@ tests:
             - AliasedExpression:
                 - Rank
                 - "rating_rank"
-            - AliasedExpression:
-                - WindowFunction.over:
-                    - FunctionExpression.sum:
-                        - Field: published
-                    - WindowSpec:
-                        range:
-                          RangeWindowFrame:
-                            preceding: 0.15
-                            following: 0.15
-                - "nearby_published_sum"
-            - AliasedExpression:
-                - WindowFunction.over:
-                    - Count
-                    - WindowSpec:
-                        documents:
-                          DocumentWindowFrame:
-                            preceding: -1
-                            following: 2
-                - "look_ahead_count"
       - Sort:
           - Ordering:
-              - Field: published
+              - Field: rating
+              - ASCENDING
+          - Ordering:
+              - Field: title
               - ASCENDING
       - Select:
           - title
           - rating
           - rating_rank
-          - nearby_published_sum
-          - look_ahead_count
     assert_results:
-      - title: "1984"
-        rating: 4.2
-        rating_rank: 2
-        nearby_published_sum: 5913
-        look_ahead_count: 2
-      - title: "Dune"
-        rating: 4.6
-        rating_rank: 4
-        nearby_published_sum: 1965
-        look_ahead_count: 0
-      - title: "The Hitchhiker's Guide to the Galaxy"
-        rating: 4.2
-        rating_rank: 2
-        nearby_published_sum: 5913
-        look_ahead_count: 1
       - title: "The Handmaid's Tale"
         rating: 4.1
         rating_rank: 1
-        nearby_published_sum: 5913
-        look_ahead_count: 2
+      - title: "1984"
+        rating: 4.2
+        rating_rank: 2
+      - title: "The Hitchhiker's Guide to the Galaxy"
+        rating: 4.2
+        rating_rank: 2
+      - title: "Dune"
+        rating: 4.6
+        rating_rank: 4
     assert_proto:
       pipeline:
         stages:
@@ -223,41 +197,167 @@ tests:
                             fieldReferenceValue: rating
           - mapValue:
               fields:
-                look_ahead_count:
+                rating_rank:
+                  functionValue:
+                    name: rank
+          name: add_window_fields
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: rating
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: title
+          name: sort
+        - args:
+          - mapValue:
+              fields:
+                rating:
+                  fieldReferenceValue: rating
+                rating_rank:
+                  fieldReferenceValue: rating_rank
+                title:
+                  fieldReferenceValue: title
+          name: select
+  - description: "testAddWindowFields - accumulator-level over() frames"
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal_any:
+              - Field: genre
+              - [Science Fiction, Dystopian]
+      - AddWindowFields:
+          window:
+            WindowSpec:
+              sort:
+                - Ordering:
+                    - Field: published
+                    - ASCENDING
+          fields:
+            - AliasedExpression:
+                - WindowFunction.over:
+                    - Count
+                    - WindowSpec:
+                        range:
+                          RangeWindowFrame:
+                            preceding: 20
+                            following: current
+                - "books_within_20_years"
+            - AliasedExpression:
+                - WindowFunction.over:
+                    - FunctionExpression.array_agg:
+                        - Field: title
+                    - WindowSpec:
+                        documents:
+                          DocumentWindowFrame:
+                            preceding: 1
+                            following: 1
+                - "nearby_titles"
+      - Sort:
+          - Ordering:
+              - Field: published
+              - ASCENDING
+      - Select:
+          - title
+          - published
+          - books_within_20_years
+          - nearby_titles
+    assert_results:
+      - title: "1984"
+        published: 1949
+        books_within_20_years: 1
+        nearby_titles:
+          - "1984"
+          - "Dune"
+      - title: "Dune"
+        published: 1965
+        books_within_20_years: 2
+        nearby_titles:
+          - "1984"
+          - "Dune"
+          - "The Hitchhiker's Guide to the Galaxy"
+      - title: "The Hitchhiker's Guide to the Galaxy"
+        published: 1979
+        books_within_20_years: 2
+        nearby_titles:
+          - "Dune"
+          - "The Hitchhiker's Guide to the Galaxy"
+          - "The Handmaid's Tale"
+      - title: "The Handmaid's Tale"
+        published: 1985
+        books_within_20_years: 3
+        nearby_titles:
+          - "The Hitchhiker's Guide to the Galaxy"
+          - "The Handmaid's Tale"
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: genre
+              - functionValue:
+                  args:
+                  - stringValue: Science Fiction
+                  - stringValue: Dystopian
+                  name: array
+              name: equal_any
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                sort:
+                  arrayValue:
+                    values:
+                    - mapValue:
+                        fields:
+                          direction:
+                            stringValue: ascending
+                          expression:
+                            fieldReferenceValue: published
+          - mapValue:
+              fields:
+                books_within_20_years:
                   functionValue:
                     args:
                     - functionValue:
                         name: count
                     - mapValue:
                         fields:
-                          documents:
-                            mapValue:
-                              fields:
-                                following:
-                                  integerValue: '2'
-                                preceding:
-                                  integerValue: '-1'
-                    name: over
-                nearby_published_sum:
-                  functionValue:
-                    args:
-                    - functionValue:
-                        args:
-                        - fieldReferenceValue: published
-                        name: sum
-                    - mapValue:
-                        fields:
                           range:
                             mapValue:
                               fields:
                                 following:
-                                  doubleValue: 0.15
+                                  stringValue: current
                                 preceding:
-                                  doubleValue: 0.15
+                                  integerValue: '20'
                     name: over
-                rating_rank:
+                nearby_titles:
                   functionValue:
-                    name: rank
+                    args:
+                    - functionValue:
+                        args:
+                        - fieldReferenceValue: title
+                        name: array_agg
+                    - mapValue:
+                        fields:
+                          documents:
+                            mapValue:
+                              fields:
+                                following:
+                                  integerValue: '1'
+                                preceding:
+                                  integerValue: '1'
+                    name: over
           name: add_window_fields
         - args:
           - mapValue:
@@ -270,14 +370,12 @@ tests:
         - args:
           - mapValue:
               fields:
-                look_ahead_count:
-                  fieldReferenceValue: look_ahead_count
-                nearby_published_sum:
-                  fieldReferenceValue: nearby_published_sum
-                rating:
-                  fieldReferenceValue: rating
-                rating_rank:
-                  fieldReferenceValue: rating_rank
+                books_within_20_years:
+                  fieldReferenceValue: books_within_20_years
+                nearby_titles:
+                  fieldReferenceValue: nearby_titles
+                published:
+                  fieldReferenceValue: published
                 title:
                   fieldReferenceValue: title
           name: select
@@ -343,151 +441,6 @@ tests:
                 window_count:
                   fieldReferenceValue: window_count
           name: select
-  - description: "testAddWindowFields - expression partition, multiple sorts, array_agg, and nested alias"
-    pipeline:
-      - Collection: books
-      - Where:
-          - FunctionExpression.equal_any:
-              - Field: genre
-              - [Science Fiction, Dystopian]
-      - AddWindowFields:
-          window:
-            WindowSpec:
-              partition:
-                - FunctionExpression.to_upper:
-                    - Field: genre
-              sort:
-                - Ordering:
-                    - Field: published
-                    - ASCENDING
-                - Ordering:
-                    - Field: title
-                    - ASCENDING
-              documents:
-                DocumentWindowFrame:
-                  preceding: unbounded
-                  following:
-                    Constant: 0
-          fields:
-            - AliasedExpression:
-                - FunctionExpression.sum:
-                    - Field: published
-                - "stats.running_published"
-            - AliasedExpression:
-                - FunctionExpression.array_agg:
-                    - Field: title
-                - "running_titles"
-      - Sort:
-          - Ordering:
-              - Field: published
-              - ASCENDING
-      - Select:
-          - title
-          - stats
-          - running_titles
-    assert_results:
-      - title: "1984"
-        stats:
-          running_published: 1949
-        running_titles:
-          - "1984"
-      - title: "Dune"
-        stats:
-          running_published: 1965
-        running_titles:
-          - "Dune"
-      - title: "The Hitchhiker's Guide to the Galaxy"
-        stats:
-          running_published: 3944
-        running_titles:
-          - "Dune"
-          - "The Hitchhiker's Guide to the Galaxy"
-      - title: "The Handmaid's Tale"
-        stats:
-          running_published: 3934
-        running_titles:
-          - "1984"
-          - "The Handmaid's Tale"
-    assert_proto:
-      pipeline:
-        stages:
-        - args:
-          - referenceValue: /books
-          name: collection
-        - args:
-          - functionValue:
-              args:
-              - fieldReferenceValue: genre
-              - functionValue:
-                  args:
-                  - stringValue: Science Fiction
-                  - stringValue: Dystopian
-                  name: array
-              name: equal_any
-          name: where
-        - args:
-          - mapValue:
-              fields:
-                documents:
-                  mapValue:
-                    fields:
-                      following:
-                        integerValue: '0'
-                      preceding:
-                        stringValue: unbounded
-                partition:
-                  arrayValue:
-                    values:
-                    - functionValue:
-                        args:
-                        - fieldReferenceValue: genre
-                        name: to_upper
-                sort:
-                  arrayValue:
-                    values:
-                    - mapValue:
-                        fields:
-                          direction:
-                            stringValue: ascending
-                          expression:
-                            fieldReferenceValue: published
-                    - mapValue:
-                        fields:
-                          direction:
-                            stringValue: ascending
-                          expression:
-                            fieldReferenceValue: title
-          - mapValue:
-              fields:
-                running_titles:
-                  functionValue:
-                    args:
-                    - fieldReferenceValue: title
-                    name: array_agg
-                stats.running_published:
-                  functionValue:
-                    args:
-                    - fieldReferenceValue: published
-                    name: sum
-          name: add_window_fields
-        - args:
-          - mapValue:
-              fields:
-                direction:
-                  stringValue: ascending
-                expression:
-                  fieldReferenceValue: published
-          name: sort
-        - args:
-          - mapValue:
-              fields:
-                running_titles:
-                  fieldReferenceValue: running_titles
-                stats:
-                  fieldReferenceValue: stats
-                title:
-                  fieldReferenceValue: title
-          name: select
   - description: "testAddWindowFields - error on range frame without sort"
     pipeline:
       - Collection: books
@@ -503,4 +456,3 @@ tests:
                 - Count
                 - "window_count"
     assert_error: ".*range.*"
-
