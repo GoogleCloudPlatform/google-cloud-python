@@ -103,6 +103,9 @@ class AppVersion(proto.Message):
         create_time (google.protobuf.timestamp_pb2.Timestamp):
             Output only. Timestamp when the app version
             was created.
+        update_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. Timestamp when the app version
+            was last updated.
         snapshot (google.cloud.ces_v1beta.types.AppSnapshot):
             Output only. The snapshot of the app when the
             version is created.
@@ -132,6 +135,11 @@ class AppVersion(proto.Message):
     create_time: timestamp_pb2.Timestamp = proto.Field(
         proto.MESSAGE,
         number=5,
+        message=timestamp_pb2.Timestamp,
+    )
+    update_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=9,
         message=timestamp_pb2.Timestamp,
     )
     snapshot: "AppSnapshot" = proto.Field(

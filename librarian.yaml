@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 language: python
-version: v0.50.0
+version: v0.51.0
 repo: googleapis/google-cloud-python
 sources:
   googleapis:
@@ -734,12 +734,13 @@ libraries:
       default_version: v1
   - name: google-cloud-ces
     version: 0.7.2
-    comment: Generation is skipped due to https://github.com/googleapis/google-cloud-python/issues/18888
     apis:
       - path: google/cloud/ces/v1
       - path: google/cloud/ces/v1beta
-    skip_generate: true
     python:
+      opt_args_by_api:
+        google/cloud/ces/v1beta:
+          - resource-name-alias=agentregistry.googleapis.com/Service:AgentRegistryService
       default_version: v1
   - name: google-cloud-channel
     version: 1.29.0
