@@ -202,12 +202,19 @@ def _fixup_st_arguments(element, compiler, **kw):
     return compiler.visit_function(element, **kw)
 
 
+def _get_all_subclasses(cls):
+    subclasses = set(cls.__subclasses__())
+    for sub in list(subclasses):
+        subclasses.update(_get_all_subclasses(sub))
+    return subclasses
+
+
 # GeoAlchemy2 registers dialect-specific @compiles handlers (e.g. for "mssql")
 # on several GenericFunction subclasses such as ST_GeogFromText, which gives
 # those subclasses their own _compiler_dispatcher that shadows GenericFunction's.
 # Register _fixup_st_arguments on each subclass so the "bigquery" compiler
 # hook is invoked for all spatial functions.
-for _cls in geoalchemy2.functions.GenericFunction.__subclasses__():
+for _cls in _get_all_subclasses(geoalchemy2.functions.GenericFunction):
     sqlalchemy.ext.compiler.compiles(_cls, "bigquery")(_fixup_st_arguments)
 
 

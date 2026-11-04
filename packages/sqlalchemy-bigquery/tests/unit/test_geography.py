@@ -220,3 +220,30 @@ def test_fixup_st_arguments():
     )
     _fixup_st_arguments(func_element4, DummyCompiler())
     assert isinstance(func_element4.clauses.clauses[0].type, sqlalchemy.types.NullType)
+
+
+def test_nested_generic_function_subclasses_register_compiler():
+    """Verify that multi-tier GenericFunction subclasses register the bigquery compiler handler."""
+    from geoalchemy2.functions import GenericFunction
+
+    from sqlalchemy_bigquery.geography import _get_all_subclasses
+
+    # Intermediate base class inheriting directly from GenericFunction
+    class ST_BaseFunction(GenericFunction):
+        name = "ST_BaseFunction"
+
+    # Multi-tier / nested subclass inheriting through the intermediate base
+    class ST_NestedFunction(ST_BaseFunction):
+        name = "ST_NestedFunction"
+
+    # Step 1: Ensure the recursive discovery function resolves transitive descendants
+    discovered_classes = _get_all_subclasses(GenericFunction)
+    assert ST_NestedFunction in discovered_classes, (
+        "ST_NestedFunction must be discovered by recursive subclass collection."
+    )
+
+    # Step 2: Ensure the BigQuery compiler dispatcher hook is registered on the nested class
+    dispatcher = getattr(ST_NestedFunction, "_compiler_dispatcher", None)
+    assert dispatcher is not None and "bigquery" in dispatcher.specs, (
+        "Nested GenericFunction subclasses must have the 'bigquery' compiler handler registered."
+    )
