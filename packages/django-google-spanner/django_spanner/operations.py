@@ -776,7 +776,7 @@ class DatabaseOperations(BaseDatabaseOperations):
         if value is None:
             return None
         if isinstance(value, JsonObject):
-            return value
-        if isinstance(value, (dict, list)):
-            return JsonObject(value)
-        return super().adapt_json_value(value, encoder)
+            if value._is_null or value._is_array or value._is_scalar_value:
+                return value
+            value = dict(value)
+        return JsonObject.from_str(super().adapt_json_value(value, encoder))

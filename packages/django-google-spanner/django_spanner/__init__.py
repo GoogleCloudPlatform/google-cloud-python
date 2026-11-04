@@ -97,7 +97,15 @@ old_jsonfield_from_db_value = getattr(JSONField, "from_db_value", None)
 
 
 def jsonfield_from_db_value(self, value, expression, connection):
-    if isinstance(value, (dict, list, JsonObject)):
+    if isinstance(value, JsonObject):
+        if value._is_null:
+            return None
+        if value._is_array:
+            return value._array_value
+        if value._is_scalar_value:
+            return value._simple_value
+        return dict(value)
+    if isinstance(value, (dict, list)):
         return value
     if old_jsonfield_from_db_value:
         return old_jsonfield_from_db_value(self, value, expression, connection)

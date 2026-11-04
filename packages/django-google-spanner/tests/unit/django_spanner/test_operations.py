@@ -349,20 +349,41 @@ class TestOperations(SpannerSimpleTestClass):
         self.assertIsNone(params)
 
     def test_adapt_json_value(self):
+        import uuid
+
+        from django.core.serializers.json import DjangoJSONEncoder
         from django.db.models import JSONField
         from google.cloud.spanner_v1 import JsonObject
 
         self.assertIsNone(self.db_operations.adapt_json_value(None, None))
         obj = JsonObject({"a": 1})
-        self.assertIs(self.db_operations.adapt_json_value(obj, None), obj)
+        self.assertEqual(self.db_operations.adapt_json_value(obj, None), {"a": 1})
         adapted_dict = self.db_operations.adapt_json_value({"a": 1}, None)
         self.assertIsInstance(adapted_dict, JsonObject)
+        self.assertEqual(adapted_dict, {"a": 1})
         adapted_list = self.db_operations.adapt_json_value([1, 2], None)
         self.assertIsInstance(adapted_list, JsonObject)
-        self.assertEqual(self.db_operations.adapt_json_value("str", None), '"str"')
+        self.assertEqual(adapted_list, [1, 2])
+        adapted_str = self.db_operations.adapt_json_value("str", None)
+        self.assertIsInstance(adapted_str, JsonObject)
+        self.assertEqual(adapted_str, "str")
+
+        u = uuid.UUID("12345678-1234-5678-1234-567812345678")
+        adapted_uuid = self.db_operations.adapt_json_value({"u": u}, DjangoJSONEncoder)
+        self.assertIsInstance(adapted_uuid, JsonObject)
+        self.assertEqual(
+            adapted_uuid, {"u": "12345678-1234-5678-1234-567812345678"}
+        )
 
         field = JSONField()
-        self.assertIs(field.from_db_value(obj, None, None), obj)
+        self.assertEqual(field.from_db_value(obj, None, None), {"a": 1})
+        self.assertEqual(
+            field.from_db_value(JsonObject([1, 2]), None, None), [1, 2]
+        )
+        self.assertEqual(
+            field.from_db_value(JsonObject("str"), None, None), "str"
+        )
+        self.assertIsNone(field.from_db_value(JsonObject(), None, None))
         self.assertEqual(field.from_db_value({"a": 1}, None, None), {"a": 1})
         self.assertEqual(field.from_db_value('{"a": 1}', None, None), {"a": 1})
         self.assertIsNone(field.from_db_value(None, None, None))
