@@ -73,11 +73,15 @@ def _validate_binary(path: str) -> str:
     try:
         st = os.stat(path)
     except OSError as exc:
-        raise CoreSdkUnavailableError(f"gcs-core-server binary {path!r}: {exc}") from exc
+        raise CoreSdkUnavailableError(
+            f"gcs-core-server binary {path!r}: {exc}"
+        ) from exc
     if stat.S_ISDIR(st.st_mode):
         raise CoreSdkUnavailableError(f"gcs-core-server binary {path!r} is a directory")
     if not os.access(path, os.X_OK):
-        raise CoreSdkUnavailableError(f"gcs-core-server binary {path!r} is not executable")
+        raise CoreSdkUnavailableError(
+            f"gcs-core-server binary {path!r} is not executable"
+        )
     if st.st_mode & stat.S_IWOTH:
         raise CoreSdkUnavailableError(
             f"gcs-core-server binary {path!r} is world-writable; refusing to execute it"
@@ -128,7 +132,9 @@ def runtime_dir() -> str:
     except FileExistsError:
         pass
     except OSError as exc:
-        raise CoreSdkUnavailableError(f"cannot create runtime dir {path}: {exc}") from exc
+        raise CoreSdkUnavailableError(
+            f"cannot create runtime dir {path}: {exc}"
+        ) from exc
     verify_private_dir(path)
     return path
 
@@ -150,7 +156,9 @@ def verify_private_dir(path: str) -> None:
         )
 
 
-def config_hash(binary: str, endpoint: Optional[str], universe_domain: Optional[str]) -> str:
+def config_hash(
+    binary: str, endpoint: Optional[str], universe_domain: Optional[str]
+) -> str:
     """Hash of everything the spawned daemon inherits, used to key the socket name."""
     try:
         st = os.stat(binary)
@@ -171,7 +179,9 @@ def config_hash(binary: str, endpoint: Optional[str], universe_domain: Optional[
 def peer_uid(sock: socket.socket) -> int:
     """Returns the uid of the process on the other end of a connected UDS."""
     if hasattr(socket, "SO_PEERCRED"):
-        creds = sock.getsockopt(socket.SOL_SOCKET, socket.SO_PEERCRED, struct.calcsize("3i"))
+        creds = sock.getsockopt(
+            socket.SOL_SOCKET, socket.SO_PEERCRED, struct.calcsize("3i")
+        )
         _pid, uid, _gid = struct.unpack("3i", creds)
         return uid
     if hasattr(os, "getpeereid"):  # pragma: NO COVER - macOS / BSD

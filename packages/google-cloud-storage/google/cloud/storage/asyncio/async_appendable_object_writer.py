@@ -584,7 +584,9 @@ class AsyncAppendableObjectWriter:
         preconditions = None if self._created_generation else self.preconditions
         if self.generation is not None and self.generation > 0:
             spec.reopen_generation = self.generation
-            if self.write_handle is not None and getattr(self.write_handle, "handle", None):
+            if self.write_handle is not None and getattr(
+                self.write_handle, "handle", None
+            ):
                 spec.write_handle = bytes(self.write_handle.handle)
             if self._routing_token:
                 spec.routing_token = self._routing_token

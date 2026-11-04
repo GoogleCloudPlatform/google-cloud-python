@@ -444,7 +444,11 @@ def system_uds(session):
         "-c",
         constraints_path,
     )
-    extras = "grpc,protobuf" if os.environ.get("GOOGLE_CLOUD_STORAGE_UDS_BINARY") else "grpc,uds"
+    extras = (
+        "grpc,protobuf"
+        if os.environ.get("GOOGLE_CLOUD_STORAGE_UDS_BINARY")
+        else "grpc,uds"
+    )
     session.install("-e", f".[{extras}]", "-c", constraints_path)
     session.run(
         "py.test",

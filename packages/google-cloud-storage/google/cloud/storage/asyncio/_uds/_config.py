@@ -148,7 +148,9 @@ def check_direct_path_not_enforced(
     """Raises ``CoreSdkUnavailableError`` if DirectPath is enforced while UDS is enabled."""
     if not is_enabled():
         return
-    reason = direct_path_enforcement_reason(attempt_direct_path_explicit, client_options)
+    reason = direct_path_enforcement_reason(
+        attempt_direct_path_explicit, client_options
+    )
     if reason:
         raise _core_errors()(
             f"DirectPath is enforced ({reason}) but the Rust Core SDK UDS backend "
@@ -157,7 +159,9 @@ def check_direct_path_not_enforced(
         )
 
 
-def normalize_endpoint(endpoint: Optional[str], anonymous: bool = False) -> Optional[str]:
+def normalize_endpoint(
+    endpoint: Optional[str], anonymous: bool = False
+) -> Optional[str]:
     """Normalizes a custom ``api_endpoint`` into a URL understood by the Rust SDK.
 
     * ``None`` / empty -> ``None`` (default ``https://storage.googleapis.com``)

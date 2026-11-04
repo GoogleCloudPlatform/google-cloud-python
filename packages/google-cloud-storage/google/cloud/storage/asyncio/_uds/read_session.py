@@ -234,7 +234,9 @@ class UdsReadSession:
                 ):
                     await self._reopen_once(epoch)
                 else:
-                    raise self._error or ValueError("Underlying bidi-gRPC stream is not open")
+                    raise self._error or ValueError(
+                        "Underlying bidi-gRPC stream is not open"
+                    )
             epoch = self._epoch
             specs = []
             for st in pending:
@@ -252,7 +254,9 @@ class UdsReadSession:
                         length=length,
                     )
                 )
-            self._send_nowait(pb.BidiReadObjectRequest(read=pb.ReadRanges(ranges=specs)))
+            self._send_nowait(
+                pb.BidiReadObjectRequest(read=pb.ReadRanges(ranges=specs))
+            )
             try:
                 await asyncio.wait([st.fut for st in pending])
             except asyncio.CancelledError:

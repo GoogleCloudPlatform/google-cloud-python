@@ -274,9 +274,7 @@ class FakeGcsState:
         return queue.pop(0) if queue else None
 
 
-async def _maybe_fail(
-    injection: Optional[_InjectedError], index: int, context
-) -> None:
+async def _maybe_fail(injection: Optional[_InjectedError], index: int, context) -> None:
     """Aborts the call if ``injection`` is due at request ``index``."""
     if injection is not None and injection.after_requests == index:
         await context.abort(injection.code, injection.message)
@@ -432,8 +430,7 @@ class FakeStorageServicer:
         if obj is None:
             await context.abort(
                 grpc.StatusCode.NOT_FOUND,
-                f"No such object: {spec.bucket}/{spec.object_}"
-                f"#{spec.generation}",
+                f"No such object: {spec.bucket}/{spec.object_}#{spec.generation}",
             )
         if not obj.appendable:
             await context.abort(
@@ -459,7 +456,9 @@ class FakeStorageServicer:
     def _persisted_checksums(self, obj: FakeObject) -> _storage_v2.ObjectChecksums:
         return _storage_v2.ObjectChecksums(crc32c=obj.crc32c)
 
-    def _resource_response(self, obj: FakeObject) -> _storage_v2.BidiWriteObjectResponse:
+    def _resource_response(
+        self, obj: FakeObject
+    ) -> _storage_v2.BidiWriteObjectResponse:
         return _storage_v2.BidiWriteObjectResponse(
             resource=obj.to_proto(),
             write_handle=self._write_handle(obj),
@@ -587,10 +586,14 @@ class FakeStorageServicer:
         await context.abort(
             grpc.StatusCode.OUT_OF_RANGE,
             message,
-            trailing_metadata=(("grpc-status-details-bin", status.SerializeToString()),),
+            trailing_metadata=(
+                ("grpc-status-details-bin", status.SerializeToString()),
+            ),
         )
 
-    def _range_chunks(self, obj: FakeObject, rng) -> List[_storage_v2.BidiReadObjectResponse]:
+    def _range_chunks(
+        self, obj: FakeObject, rng
+    ) -> List[_storage_v2.BidiReadObjectResponse]:
         data = bytes(obj.data)
         size = len(data)
         if rng.read_offset < 0:

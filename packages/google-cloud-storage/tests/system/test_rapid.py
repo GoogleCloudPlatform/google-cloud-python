@@ -72,6 +72,8 @@ def _uds_enabled():
     DirectPath fixtures resolve to the CloudPath client.
     """
     return _uds_config.is_enabled()
+
+
 _RCU_BUCKET = os.getenv("RCU_BUCKET")
 _BUCKET_UNDER_TEST = _RCU_BUCKET if RCU_SYSTEM_TESTS else _RAPID_BUCKET
 

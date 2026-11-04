@@ -125,7 +125,9 @@ class UdsRuntime:
             rt = _instances.get(key)
             if rt is not None and rt._usable(loop):
                 return rt
-            rt = cls(loop, endpoint, anonymous, None if explicit is None else creds, quota)
+            rt = cls(
+                loop, endpoint, anonymous, None if explicit is None else creds, quota
+            )
             await rt._start()
             _instances[key] = rt
             return rt
@@ -255,7 +257,11 @@ class UdsRuntime:
         creds = self.credentials
 
         def _refresh():
-            if force or not getattr(creds, "valid", False) or not getattr(creds, "token", None):
+            if (
+                force
+                or not getattr(creds, "valid", False)
+                or not getattr(creds, "token", None)
+            ):
                 creds.refresh(google.auth.transport.requests.Request())
             expiry = getattr(creds, "expiry", None)
             exp = calendar.timegm(expiry.utctimetuple()) if expiry is not None else 0
@@ -264,7 +270,9 @@ class UdsRuntime:
         try:
             return await asyncio.get_running_loop().run_in_executor(None, _refresh)
         except Exception as exc:
-            raise CoreSdkUnavailableError(f"cannot obtain an access token: {exc}") from exc
+            raise CoreSdkUnavailableError(
+                f"cannot obtain an access token: {exc}"
+            ) from exc
 
     async def _refresh_loop(self, expiry: int) -> None:
         while not self.closed:
@@ -314,7 +322,9 @@ class UdsRuntime:
                 ),
             )
         except CoreSdkUnavailableError as exc:
-            logger.warning("UDS read region unavailable, using inline payloads: %s", exc)
+            logger.warning(
+                "UDS read region unavailable, using inline payloads: %s", exc
+            )
             self._read_region_failed = True
             return None
         self._read_region = region
@@ -340,12 +350,16 @@ class UdsRuntime:
                 ),
             )
         except CoreSdkUnavailableError as exc:
-            logger.warning("UDS write region unavailable, using inline payloads: %s", exc)
+            logger.warning(
+                "UDS write region unavailable, using inline payloads: %s", exc
+            )
             return None
         self._live_regions += 1
         return region
 
-    def return_write_region(self, region: Optional[WriteRegion], reusable: bool) -> None:
+    def return_write_region(
+        self, region: Optional[WriteRegion], reusable: bool
+    ) -> None:
         if region is None:
             return
         if reusable and not self.closed and not region.closed and region.all_free():

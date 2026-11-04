@@ -40,10 +40,12 @@ from google.api_core import exceptions
 from google.api_core.client_options import ClientOptions
 from google.auth.credentials import AnonymousCredentials
 
-from google.cloud.storage.asyncio._uds import _config
+from google.cloud.storage.asyncio._uds import _config, runtime
 from google.cloud.storage.asyncio._uds import gcscore_pb2 as pb
-from google.cloud.storage.asyncio._uds import runtime
-from google.cloud.storage.asyncio._uds.write_session import INLINE_CHUNK, UdsWriteSession
+from google.cloud.storage.asyncio._uds.write_session import (
+    INLINE_CHUNK,
+    UdsWriteSession,
+)
 from google.cloud.storage.asyncio.async_appendable_object_writer import (
     AsyncAppendableObjectWriter,
 )
@@ -228,7 +230,9 @@ class FakeGcsCore:
                 yield self._reply(
                     st,
                     op_id=req.op_id,
-                    flushed=pb.Flushed(persisted_size=len(st.data) + self.persisted_bias),
+                    flushed=pb.Flushed(
+                        persisted_size=len(st.data) + self.persisted_bias
+                    ),
                 )
             elif kind == "close":
                 st.ops.append(("close", req.op_id, None))
@@ -244,7 +248,11 @@ class FakeGcsCore:
                 )
             elif kind == "finalize":
                 fin = req.finalize
-                crc = fin.full_object_crc32c if fin.HasField("full_object_crc32c") else None
+                crc = (
+                    fin.full_object_crc32c
+                    if fin.HasField("full_object_crc32c")
+                    else None
+                )
                 st.ops.append(("finalize", req.op_id, crc))
                 actual = google_crc32c.value(bytes(st.data))
                 if crc is not None and crc != actual:

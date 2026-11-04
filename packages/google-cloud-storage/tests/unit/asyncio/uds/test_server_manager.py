@@ -120,7 +120,9 @@ def fake_server(tmp_path, clean_env):
     record = tmp_path / "record.jsonl"
     record.touch()
     clean_env.setenv("FAKE_GCS_CORE_RECORD", str(record))
-    binary = _make_exe(tmp_path / "gcs-core-server", _FAKE_SERVER.format(python=sys.executable))
+    binary = _make_exe(
+        tmp_path / "gcs-core-server", _FAKE_SERVER.format(python=sys.executable)
+    )
 
     def entries():
         with open(record) as f:
@@ -160,7 +162,9 @@ def test_resolve_binary_env_override(tmp_path, clean_env):
     assert server_manager.resolve_binary() == os.path.abspath(exe)
 
 
-def test_resolve_binary_env_override_relative_path_is_made_absolute(tmp_path, clean_env):
+def test_resolve_binary_env_override_relative_path_is_made_absolute(
+    tmp_path, clean_env
+):
     _make_exe(tmp_path / "rel-server")
     clean_env.chdir(tmp_path)
     clean_env.setenv(_config.ENV_BINARY, "rel-server")
@@ -218,7 +222,9 @@ def test_resolve_binary_precedence_env_then_companion_then_path(tmp_path, clean_
     assert server_manager.resolve_binary() == path_exe
 
 
-def test_resolve_binary_companion_invalid_path_is_not_silently_ignored(tmp_path, clean_env):
+def test_resolve_binary_companion_invalid_path_is_not_silently_ignored(
+    tmp_path, clean_env
+):
     path_dir = tmp_path / "bin"
     path_dir.mkdir()
     _make_exe(path_dir / server_manager.BINARY_NAME)
@@ -324,7 +330,9 @@ def test_config_hash_is_stable_and_short(tmp_path, clean_env):
     int(h, 16)
 
 
-def test_config_hash_differs_by_endpoint_universe_and_credential_env(tmp_path, clean_env):
+def test_config_hash_differs_by_endpoint_universe_and_credential_env(
+    tmp_path, clean_env
+):
     exe = _make_exe(tmp_path / "srv")
     base = server_manager.config_hash(exe, None, None)
     hashes = {
@@ -333,7 +341,11 @@ def test_config_hash_differs_by_endpoint_universe_and_credential_env(tmp_path, c
         server_manager.config_hash(exe, "https://storage.example.com", None),
         server_manager.config_hash(exe, None, "example.com"),
     }
-    for env in ("GOOGLE_APPLICATION_CREDENTIALS", "CLOUDSDK_CONFIG", "GOOGLE_CLOUD_UNIVERSE_DOMAIN"):
+    for env in (
+        "GOOGLE_APPLICATION_CREDENTIALS",
+        "CLOUDSDK_CONFIG",
+        "GOOGLE_CLOUD_UNIVERSE_DOMAIN",
+    ):
         clean_env.setenv(env, f"/some/{env}")
         hashes.add(server_manager.config_hash(exe, None, None))
         clean_env.delenv(env)
@@ -504,7 +516,9 @@ def test_python_never_kills_the_shared_daemon(fake_server, xdg):
     mgr = server_manager.ServerManager(binary=fake_server.binary, mode="shared")
     mgr.ensure_server()
     pid = fake_server.entries()[0]["pid"]
-    assert not any(hasattr(mgr, name) for name in ("kill", "terminate", "shutdown", "stop"))
+    assert not any(
+        hasattr(mgr, name) for name in ("kill", "terminate", "shutdown", "stop")
+    )
     del mgr
     gc.collect()
     time.sleep(0.2)

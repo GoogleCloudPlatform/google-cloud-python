@@ -75,7 +75,9 @@ class UdsWriteSession:
             spec.user_agent = self._rt.user_agent
         call = self._rt.bidi_write(metadata=self._rt.metadata)
         try:
-            await call.write(pb.BidiWriteObjectRequest(open=spec, op_id=next(self._ops)))
+            await call.write(
+                pb.BidiWriteObjectRequest(open=spec, op_id=next(self._ops))
+            )
             resp = await call.read()
         except grpc.RpcError as exc:
             call.cancel()
@@ -88,7 +90,8 @@ class UdsWriteSession:
             self._rt.return_write_region(self._region, reusable=True)
             self._region = None
             raise exceptions.from_grpc_status(
-                code or grpc.StatusCode.INTERNAL, "BidiWriteObject ended before WriteOpened"
+                code or grpc.StatusCode.INTERNAL,
+                "BidiWriteObject ended before WriteOpened",
             )
         self._call = call
         self.generation = resp.opened.generation
@@ -137,7 +140,9 @@ class UdsWriteSession:
             self.is_open = False
             for fut in self._waiters.values():
                 if not fut.done():
-                    fut.set_exception(err or exceptions.Cancelled("write session closed"))
+                    fut.set_exception(
+                        err or exceptions.Cancelled("write session closed")
+                    )
             self._waiters.clear()
             if self._region is not None:
                 self._region.fail_waiters()
@@ -191,7 +196,9 @@ class UdsWriteSession:
                 # Starvation guard: force the SDK to ack and drop its replay buffer.
                 op_id = next(self._ops)
                 self._internal_flush = op_id
-                await self._send(pb.BidiWriteObjectRequest(op_id=op_id, flush=pb.Flush()))
+                await self._send(
+                    pb.BidiWriteObjectRequest(op_id=op_id, flush=pb.Flush())
+                )
             if region.free_count:
                 continue
             await ev.wait()
@@ -220,7 +227,9 @@ class UdsWriteSession:
         while len(self._inline_buf) >= INLINE_CHUNK or (final and self._inline_buf):
             chunk = bytes(self._inline_buf[:INLINE_CHUNK])
             del self._inline_buf[:INLINE_CHUNK]
-            await self._send(pb.BidiWriteObjectRequest(append=pb.Append(inline_data=chunk)))
+            await self._send(
+                pb.BidiWriteObjectRequest(append=pb.Append(inline_data=chunk))
+            )
             self.submitted_since_flush += len(chunk)
 
     async def _submit_pending(self) -> None:
@@ -260,9 +269,7 @@ class UdsWriteSession:
         return resp.flushed.persisted_size
 
     def has_unflushed_bytes(self) -> bool:
-        return bool(
-            self.submitted_since_flush or self._cur_fill or self._inline_buf
-        )
+        return bool(self.submitted_since_flush or self._cur_fill or self._inline_buf)
 
     async def close(self) -> int:
         await self._submit_pending()

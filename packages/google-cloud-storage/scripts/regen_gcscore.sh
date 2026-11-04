@@ -24,6 +24,9 @@
 #   GCS_CORE_COMMIT         optional commit/branch to read the proto from (`git show`);
 #                           defaults to the working tree.
 #   PYTHON                  interpreter with grpcio-tools installed (default: python3)
+#   RUFF                    ruff executable used to format the gencode (default: `ruff`
+#                           on PATH, else `${PYTHON} -m ruff`; use the version pinned
+#                           by RUFF_VERSION in noxfile.py)
 #
 # `--check` verifies that the vendored proto body still matches PINNED_PROTO_SHA256 and
 # that the generated module is up to date; it exits non-zero on drift (CI guard).
@@ -74,6 +77,24 @@ s = re.sub(
 s = re.sub(r"# Protobuf Python Version: .*", "# Protobuf Python Version: ${PROTOBUF_FLOOR_MAJOR}.${PROTOBUF_FLOOR_MINOR}.${PROTOBUF_FLOOR_PATCH} (floor; see scripts/regen_gcscore.sh)", s, count=1)
 open(p, "w").write(s)
 EOF
+  # Match `nox -s lint` / `nox -s format` (ruff format, py310, line length 88) so the
+  # checked-in gencode is lint-clean and `--check` compares like with like.
+  local ruff_cmd=()
+  if [[ -n "${RUFF:-}" ]]; then
+    ruff_cmd=("${RUFF}")
+  elif command -v ruff >/dev/null 2>&1; then
+    ruff_cmd=(ruff)
+  elif "${python}" -m ruff --version >/dev/null 2>&1; then
+    ruff_cmd=("${python}" -m ruff)
+  fi
+  if [[ ${#ruff_cmd[@]} -gt 0 ]]; then
+    "${ruff_cmd[@]}" check --quiet --fix --select I --target-version=py310 \
+      --line-length=88 "${tmp}/gcscore_pb2.py" "${tmp}/gcscore_pb2.pyi"
+    "${ruff_cmd[@]}" format --quiet --target-version=py310 --line-length=88 \
+      "${tmp}/gcscore_pb2.py" "${tmp}/gcscore_pb2.pyi"
+  else
+    echo "warning: ruff not found (set RUFF=...); gencode left unformatted" >&2
+  fi
   cp "${tmp}/gcscore_pb2.py" "${out}/gcscore_pb2.py"
   cp "${tmp}/gcscore_pb2.pyi" "${out}/gcscore_pb2.pyi"
 }

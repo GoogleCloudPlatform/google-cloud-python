@@ -146,34 +146,141 @@ class BenchConfig:
 
 # (field, env var, CLI flag, kind, help)
 _SPECS: List[Tuple[str, str, str, str, str]] = [
-    ("project", "UDS_BENCH_PROJECT", "--project", "str", "GCP project (listing/cleanup)."),
+    (
+        "project",
+        "UDS_BENCH_PROJECT",
+        "--project",
+        "str",
+        "GCP project (listing/cleanup).",
+    ),
     ("bucket", "UDS_BENCH_BUCKET", "--bucket", "str", "Rapid (zonal) bucket name."),
-    ("bucket_zone", "UDS_BENCH_BUCKET_ZONE", "--bucket-zone", "str", "Bucket zone (metadata only)."),
-    ("runner_vm", "UDS_BENCH_RUNNER_VM", "--runner-vm", "str", "Runner VM (metadata only)."),
-    ("runner_zone", "UDS_BENCH_RUNNER_ZONE", "--runner-zone", "str", "Runner zone (metadata only)."),
-    ("object_size", "UDS_BENCH_OBJECT_SIZE", "--object-size", "size", "Object size, e.g. 200MB, 8MiB."),
+    (
+        "bucket_zone",
+        "UDS_BENCH_BUCKET_ZONE",
+        "--bucket-zone",
+        "str",
+        "Bucket zone (metadata only).",
+    ),
+    (
+        "runner_vm",
+        "UDS_BENCH_RUNNER_VM",
+        "--runner-vm",
+        "str",
+        "Runner VM (metadata only).",
+    ),
+    (
+        "runner_zone",
+        "UDS_BENCH_RUNNER_ZONE",
+        "--runner-zone",
+        "str",
+        "Runner zone (metadata only).",
+    ),
+    (
+        "object_size",
+        "UDS_BENCH_OBJECT_SIZE",
+        "--object-size",
+        "size",
+        "Object size, e.g. 200MB, 8MiB.",
+    ),
     ("workers", "UDS_BENCH_WORKERS", "--workers", "int", "Worker processes."),
-    ("concurrency", "UDS_BENCH_CONCURRENCY", "--concurrency", "int", "Coroutines per worker."),
-    ("duration_s", "UDS_BENCH_DURATION_S", "--duration", "float", "Measured seconds per run."),
+    (
+        "concurrency",
+        "UDS_BENCH_CONCURRENCY",
+        "--concurrency",
+        "int",
+        "Coroutines per worker.",
+    ),
+    (
+        "duration_s",
+        "UDS_BENCH_DURATION_S",
+        "--duration",
+        "float",
+        "Measured seconds per run.",
+    ),
     ("warmup_s", "UDS_BENCH_WARMUP_S", "--warmup", "float", "Warmup seconds per run."),
     ("rounds", "UDS_BENCH_ROUNDS", "--rounds", "int", "Rounds per matrix entry."),
-    ("modes", "UDS_BENCH_MODES", "--modes", "list", "Comma list of gapic,uds-inline,uds-shm."),
-    ("topologies", "UDS_BENCH_TOPOLOGIES", "--topologies", "list", "Comma list of shared,child."),
+    (
+        "modes",
+        "UDS_BENCH_MODES",
+        "--modes",
+        "list",
+        "Comma list of gapic,uds-inline,uds-shm.",
+    ),
+    (
+        "topologies",
+        "UDS_BENCH_TOPOLOGIES",
+        "--topologies",
+        "list",
+        "Comma list of shared,child.",
+    ),
     ("range_size", "UDS_BENCH_RANGE_SIZE", "--range-size", "size", "W4 range size."),
-    ("ranges_per_op", "UDS_BENCH_RANGES_PER_OP", "--ranges-per-op", "int", "W4 ranges per download_ranges call."),
-    ("num_objects", "UDS_BENCH_NUM_OBJECTS", "--num-objects", "int", "W4 objects (0 => one per worker)."),
-    ("read_buffer", "UDS_BENCH_READ_BUFFER", "--read-buffer", "str", "W4 sink: prealloc|bytesio|discard."),
-    ("append_size", "UDS_BENCH_APPEND_SIZE", "--append-size", "size", "W5 bytes per append() call."),
-    ("flush_interval_bytes", "UDS_BENCH_FLUSH_INTERVAL_BYTES", "--flush-interval-bytes", "sizelist", "W5 comma list, e.g. 16MiB,128MiB."),
+    (
+        "ranges_per_op",
+        "UDS_BENCH_RANGES_PER_OP",
+        "--ranges-per-op",
+        "int",
+        "W4 ranges per download_ranges call.",
+    ),
+    (
+        "num_objects",
+        "UDS_BENCH_NUM_OBJECTS",
+        "--num-objects",
+        "int",
+        "W4 objects (0 => one per worker).",
+    ),
+    (
+        "read_buffer",
+        "UDS_BENCH_READ_BUFFER",
+        "--read-buffer",
+        "str",
+        "W4 sink: prealloc|bytesio|discard.",
+    ),
+    (
+        "append_size",
+        "UDS_BENCH_APPEND_SIZE",
+        "--append-size",
+        "size",
+        "W5 bytes per append() call.",
+    ),
+    (
+        "flush_interval_bytes",
+        "UDS_BENCH_FLUSH_INTERVAL_BYTES",
+        "--flush-interval-bytes",
+        "sizelist",
+        "W5 comma list, e.g. 16MiB,128MiB.",
+    ),
     ("output_dir", "UDS_BENCH_OUTPUT_DIR", "--output-dir", "str", "JSON results dir."),
-    ("setup_timeout_s", "UDS_BENCH_SETUP_TIMEOUT_S", "--setup-timeout", "float", "Worker startup / object setup timeout."),
-    ("kill_spawned_daemons", "UDS_BENCH_KILL_SPAWNED_DAEMONS", "--kill-spawned-daemons", "bool", "Kill gcs-core-server daemons spawned by a run (true|false)."),
+    (
+        "setup_timeout_s",
+        "UDS_BENCH_SETUP_TIMEOUT_S",
+        "--setup-timeout",
+        "float",
+        "Worker startup / object setup timeout.",
+    ),
+    (
+        "kill_spawned_daemons",
+        "UDS_BENCH_KILL_SPAWNED_DAEMONS",
+        "--kill-spawned-daemons",
+        "bool",
+        "Kill gcs-core-server daemons spawned by a run (true|false).",
+    ),
 ]
 
 _SIZE_UNITS = {
-    "": 1, "b": 1,
-    "k": 1000, "kb": 1000, "m": 1000**2, "mb": 1000**2, "g": 1000**3, "gb": 1000**3,
-    "ki": 1024, "kib": 1024, "mi": 1024**2, "mib": 1024**2, "gi": 1024**3, "gib": 1024**3,
+    "": 1,
+    "b": 1,
+    "k": 1000,
+    "kb": 1000,
+    "m": 1000**2,
+    "mb": 1000**2,
+    "g": 1000**3,
+    "gb": 1000**3,
+    "ki": 1024,
+    "kib": 1024,
+    "mi": 1024**2,
+    "mib": 1024**2,
+    "gi": 1024**3,
+    "gib": 1024**3,
 }
 
 
@@ -221,7 +328,9 @@ def _coerce(kind: str, value: Any) -> Any:
     if kind == "sizelist":
         return [parse_size(v) for v in _as_list(value)]
     if kind == "bool":
-        return value if isinstance(value, bool) else str(value).strip().lower() in _TRUTHY
+        return (
+            value if isinstance(value, bool) else str(value).strip().lower() in _TRUTHY
+        )
     raise ValueError(kind)
 
 
@@ -254,7 +363,9 @@ def load_yaml_config(path: str = CONFIG_PATH) -> Dict[str, Any]:
             key, val = line.split(":", 1)
             val = val.strip()
             if val.startswith("[") and val.endswith("]"):
-                data[key.strip()] = [_unquote(x) for x in val[1:-1].split(",") if x.strip()]
+                data[key.strip()] = [
+                    _unquote(x) for x in val[1:-1].split(",") if x.strip()
+                ]
             else:
                 data[key.strip()] = _unquote(val)
     return data
@@ -283,7 +394,9 @@ def build_arg_parser(workload: str, description: str) -> argparse.ArgumentParser
         ),
     )
     for field, env, flag, kind, help_text in _SPECS:
-        parser.add_argument(flag, dest=field, default=None, type=str, help=f"{help_text} [{env}]")
+        parser.add_argument(
+            flag, dest=field, default=None, type=str, help=f"{help_text} [{env}]"
+        )
     try:
         from google.cloud.storage.asyncio._uds._config import add_core_sdk_cli_flags
     except ImportError:
@@ -325,7 +438,11 @@ def load_config(
             if v is not None:
                 values[field] = v
                 explicit.add(field)
-        force = force or bool(getattr(ns, "force_use_core_sdk", False)) or FORCE_FLAG in argv
+        force = (
+            force
+            or bool(getattr(ns, "force_use_core_sdk", False))
+            or FORCE_FLAG in argv
+        )
     for field, kind in kinds.items():
         values[field] = _coerce(kind, values[field])
     values["force_core_sdk"] = force
@@ -343,13 +460,27 @@ def load_config(
 def validate_config(cfg: BenchConfig) -> None:
     bad = [m for m in cfg.modes if m not in MODES]
     if bad or not cfg.modes:
-        raise ValueError(f"modes must be a non-empty subset of {MODES}, got {cfg.modes}")
+        raise ValueError(
+            f"modes must be a non-empty subset of {MODES}, got {cfg.modes}"
+        )
     bad = [t for t in cfg.topologies if t not in TOPOLOGIES]
     if bad or not cfg.topologies:
-        raise ValueError(f"topologies must be a non-empty subset of {TOPOLOGIES}, got {cfg.topologies}")
+        raise ValueError(
+            f"topologies must be a non-empty subset of {TOPOLOGIES}, got {cfg.topologies}"
+        )
     if cfg.read_buffer not in READ_BUFFERS:
-        raise ValueError(f"read_buffer must be one of {READ_BUFFERS}, got {cfg.read_buffer}")
-    for name in ("workers", "concurrency", "rounds", "ranges_per_op", "object_size", "range_size", "append_size"):
+        raise ValueError(
+            f"read_buffer must be one of {READ_BUFFERS}, got {cfg.read_buffer}"
+        )
+    for name in (
+        "workers",
+        "concurrency",
+        "rounds",
+        "ranges_per_op",
+        "object_size",
+        "range_size",
+        "append_size",
+    ):
         if getattr(cfg, name) < 1:
             raise ValueError(f"{name} must be >= 1, got {getattr(cfg, name)}")
     if cfg.num_objects < 0:
@@ -357,7 +488,9 @@ def validate_config(cfg: BenchConfig) -> None:
     if cfg.duration_s <= 0 or cfg.warmup_s < 0:
         raise ValueError("duration_s must be > 0 and warmup_s >= 0")
     if cfg.range_size > cfg.object_size:
-        raise ValueError(f"range_size ({cfg.range_size}) > object_size ({cfg.object_size})")
+        raise ValueError(
+            f"range_size ({cfg.range_size}) > object_size ({cfg.object_size})"
+        )
     if not cfg.bucket:
         raise ValueError("bucket must be set")
     if any(m != "gapic" for m in cfg.modes) and sys.platform == "win32":
@@ -412,7 +545,12 @@ def apply_mode_env(mode: str, topology: str) -> None:
 
 def apply_cpu_affinity() -> None:
     """Mirrors the sibling harness: keep workers off NIC IRQ CPUs (best effort)."""
-    if os.environ.get(ENV_IRQ_AFFINITY, "1").strip().lower() in ("0", "false", "off", "no"):
+    if os.environ.get(ENV_IRQ_AFFINITY, "1").strip().lower() in (
+        "0",
+        "false",
+        "off",
+        "no",
+    ):
         return
     try:
         from tests.perf.microbenchmarks._utils import get_irq_affinity
@@ -533,7 +671,9 @@ class ResourceSampler:
     cgroup v2 ``memory.current`` (sampled peak) and ``memory.peak`` (lifetime).
     """
 
-    def __init__(self, worker_pids: Iterable[int], track_daemons: bool, interval: float = 1.0):
+    def __init__(
+        self, worker_pids: Iterable[int], track_daemons: bool, interval: float = 1.0
+    ):
         self._workers: Dict[int, psutil.Process] = {}
         for pid in worker_pids:
             try:
@@ -593,7 +733,10 @@ class ResourceSampler:
         self._bump("total_pss", totals["python_pss"] + totals["daemon_pss"])
         self._bump("total_rss", totals["python_rss"] + totals["daemon_rss"])
         if self._cg:
-            self._bump("cgroup_current", _read_int_file(os.path.join(self._cg, "memory.current")))
+            self._bump(
+                "cgroup_current",
+                _read_int_file(os.path.join(self._cg, "memory.current")),
+            )
         self._samples += 1
 
     def _tick(self) -> None:
@@ -615,7 +758,9 @@ class ResourceSampler:
             self._snapshot_cpu()
             self._cpu0 = dict(self._last_cpu)
             self._sample_memory()
-        self._thread = threading.Thread(target=self._loop, name="uds-bench-sampler", daemon=True)
+        self._thread = threading.Thread(
+            target=self._loop, name="uds-bench-sampler", daemon=True
+        )
         self._thread.start()
 
     def end(self) -> None:
@@ -641,12 +786,16 @@ class ResourceSampler:
             "daemon_pids": sorted(self._daemons),
             "peak_pss_bytes": {
                 "python": self._peak.get("python_pss"),
-                "daemon": self._peak.get("daemon_pss", 0) if self._track_daemons else None,
+                "daemon": self._peak.get("daemon_pss", 0)
+                if self._track_daemons
+                else None,
                 "total": self._peak.get("total_pss"),
             },
             "peak_rss_bytes": {
                 "python": self._peak.get("python_rss"),
-                "daemon": self._peak.get("daemon_rss", 0) if self._track_daemons else None,
+                "daemon": self._peak.get("daemon_rss", 0)
+                if self._track_daemons
+                else None,
                 "total": self._peak.get("total_rss"),
                 "max_single_python": self._peak.get("python_single_rss_max"),
                 "max_single_daemon": self._peak.get("daemon_single_rss_max"),
@@ -743,11 +892,17 @@ def run_workers(
                     except queue.Empty:
                         pass
                     if i not in results and i not in errors:
-                        errors[i] = f"worker {i} exited with code {p.exitcode} without reporting"
+                        errors[i] = (
+                            f"worker {i} exited with code {p.exitcode} without reporting"
+                        )
 
     def fail(message: str) -> BenchmarkError:
-        details = "\n".join(f"--- worker {i} ---\n{tb}" for i, tb in sorted(errors.items())[:5])
-        return BenchmarkError(f"[{matrix_id(mode, topology)}] {message}\n{details}", leftovers)
+        details = "\n".join(
+            f"--- worker {i} ---\n{tb}" for i, tb in sorted(errors.items())[:5]
+        )
+        return BenchmarkError(
+            f"[{matrix_id(mode, topology)}] {message}\n{details}", leftovers
+        )
 
     try:
         for p in procs:
@@ -756,7 +911,9 @@ def run_workers(
         if errors:
             raise fail(f"{len(errors)} worker(s) failed during setup")
         if len(ready) != n:
-            raise fail(f"only {len(ready)}/{n} workers ready after {cfg.setup_timeout_s}s")
+            raise fail(
+                f"only {len(ready)}/{n} workers ready after {cfg.setup_timeout_s}s"
+            )
 
         now = time.monotonic()
         window[0] = now + cfg.warmup_s
@@ -775,7 +932,9 @@ def run_workers(
         if errors:
             raise fail(f"{len(errors)} worker(s) failed")
         if len(results) != n:
-            raise fail(f"only {len(results)}/{n} workers reported within {grace}s after the window")
+            raise fail(
+                f"only {len(results)}/{n} workers reported within {grace}s after the window"
+            )
         for p in procs:
             p.join(timeout=30)
     finally:
@@ -850,9 +1009,11 @@ def summarize_run(
     ops = sum(p["ops"] for p in payloads)
     lat_keys = sorted({k for p in payloads for k in p if k.endswith("latencies_s")})
     latencies = {
-        ("latency_ms" if k == "latencies_s" else k.replace("latencies_s", "latency_ms")): latency_summary_ms(
-            v for p in payloads for v in p.get(k, [])
-        )
+        (
+            "latency_ms"
+            if k == "latencies_s"
+            else k.replace("latencies_s", "latency_ms")
+        ): latency_summary_ms(v for p in payloads for v in p.get(k, []))
         for k in lat_keys
     }
     res = outcome.resources
@@ -864,7 +1025,9 @@ def summarize_run(
         label += "/" + ",".join(f"{k}={v}" for k, v in variant.items())
     warnings = []
     if mode != "gapic" and not res.get("daemon_pids"):
-        warnings.append(f"no '{DAEMON_PROCESS_NAME}' process observed during a {mode} run")
+        warnings.append(
+            f"no '{DAEMON_PROCESS_NAME}' process observed during a {mode} run"
+        )
     return {
         "workload": workload,
         "label": label,
@@ -909,14 +1072,21 @@ def summarize_rounds(runs: List[Dict[str, Any]]) -> Dict[str, Any]:
         summary[label] = {
             "rounds": len(items),
             "throughput_MBps_median": _median(r["throughput_MBps"] for r in items),
-            "throughput_MBps_mean": statistics.fmean(r["throughput_MBps"] for r in items),
-            "latency_p50_ms_median": _median(l.get("p50") for l in lat),
-            "latency_p90_ms_median": _median(l.get("p90") for l in lat),
-            "latency_p99_ms_median": _median(l.get("p99") for l in lat),
-            "python_cpu_s_per_GiB_median": _median(r["python_cpu_s_per_GiB"] for r in items),
-            "daemon_cpu_s_per_GiB_median": _median(r["daemon_cpu_s_per_GiB"] for r in items),
+            "throughput_MBps_mean": statistics.fmean(
+                r["throughput_MBps"] for r in items
+            ),
+            "latency_p50_ms_median": _median(stats.get("p50") for stats in lat),
+            "latency_p90_ms_median": _median(stats.get("p90") for stats in lat),
+            "latency_p99_ms_median": _median(stats.get("p99") for stats in lat),
+            "python_cpu_s_per_GiB_median": _median(
+                r["python_cpu_s_per_GiB"] for r in items
+            ),
+            "daemon_cpu_s_per_GiB_median": _median(
+                r["daemon_cpu_s_per_GiB"] for r in items
+            ),
             "peak_pss_total_bytes_max": max(
-                (r["resources"].get("peak_pss_bytes", {}).get("total") or 0) for r in items
+                (r["resources"].get("peak_pss_bytes", {}).get("total") or 0)
+                for r in items
             ),
         }
     return summary
@@ -926,7 +1096,9 @@ class Report:
     """Accumulates runs and rewrites the JSON results file after every run."""
 
     def __init__(self, cfg: BenchConfig, workload: str, run_id: str):
-        out_dir = cfg.output_dir or os.path.join(tempfile.gettempdir(), "uds-bench-results")
+        out_dir = cfg.output_dir or os.path.join(
+            tempfile.gettempdir(), "uds-bench-results"
+        )
         os.makedirs(out_dir, exist_ok=True)
         self.path = os.path.join(out_dir, f"{run_id}.json")
         self.doc: Dict[str, Any] = {
@@ -1027,7 +1199,9 @@ async def _create_object_async(bucket: str, name: str, size: int) -> int:
         written += n
     obj = await writer.close(finalize_on_close=True)
     if getattr(obj, "size", size) != size:
-        raise BenchmarkError(f"setup object {name} has size {obj.size}, expected {size}")
+        raise BenchmarkError(
+            f"setup object {name} has size {obj.size}, expected {size}"
+        )
     return written
 
 
@@ -1043,7 +1217,10 @@ def create_objects(cfg: BenchConfig, names: Sequence[str], size: int) -> None:
         return
     ctx = multiprocessing.get_context("spawn")
     procs = max(1, min(len(names), os.cpu_count() or 1, 16))
-    print(f"Creating {len(names)} x {format_size(size)} objects in gs://{cfg.bucket} ...", flush=True)
+    print(
+        f"Creating {len(names)} x {format_size(size)} objects in gs://{cfg.bucket} ...",
+        flush=True,
+    )
     t0 = time.monotonic()
     with ctx.Pool(procs, initializer=_init_gapic_process) as pool:
         created = pool.map(_create_object_task, [(cfg.bucket, n, size) for n in names])
@@ -1052,7 +1229,9 @@ def create_objects(cfg: BenchConfig, names: Sequence[str], size: int) -> None:
     print(f"Created {len(names)} objects in {time.monotonic() - t0:.1f}s", flush=True)
 
 
-async def delete_names_async(client: Any, bucket: str, names: Iterable[str], parallelism: int = 32) -> List[str]:
+async def delete_names_async(
+    client: Any, bucket: str, names: Iterable[str], parallelism: int = 32
+) -> List[str]:
     """Deletes ``names``; returns those that could not be deleted (NotFound == deleted)."""
     from google.api_core import exceptions as api_exceptions
 
@@ -1073,7 +1252,9 @@ async def delete_names_async(client: Any, bucket: str, names: Iterable[str], par
     return [n for n in failed if n]
 
 
-def _delete_task(bucket: str, project: str, names: List[str], sweep_prefix: Optional[str]) -> Dict[str, Any]:
+def _delete_task(
+    bucket: str, project: str, names: List[str], sweep_prefix: Optional[str]
+) -> Dict[str, Any]:
     todo = list(dict.fromkeys(names))
     listing_error = None
     if sweep_prefix:
@@ -1099,7 +1280,9 @@ def _delete_task(bucket: str, project: str, names: List[str], sweep_prefix: Opti
     }
 
 
-def delete_objects(cfg: BenchConfig, names: Iterable[str], sweep_prefix: Optional[str] = None) -> Dict[str, Any]:
+def delete_objects(
+    cfg: BenchConfig, names: Iterable[str], sweep_prefix: Optional[str] = None
+) -> Dict[str, Any]:
     """Deletes ``names`` plus everything under ``sweep_prefix``. Never raises."""
     names = list(names)
     if not names and not sweep_prefix:
@@ -1107,13 +1290,27 @@ def delete_objects(cfg: BenchConfig, names: Iterable[str], sweep_prefix: Optiona
     ctx = multiprocessing.get_context("spawn")
     try:
         with ctx.Pool(1, initializer=_init_gapic_process) as pool:
-            result = pool.apply(_delete_task, (cfg.bucket, cfg.project, names, sweep_prefix))
+            result = pool.apply(
+                _delete_task, (cfg.bucket, cfg.project, names, sweep_prefix)
+            )
     except Exception as e:  # noqa: BLE001
-        result = {"sweep_prefix": sweep_prefix, "attempted": len(names), "failed": names, "error": repr(e)}
+        result = {
+            "sweep_prefix": sweep_prefix,
+            "attempted": len(names),
+            "failed": names,
+            "error": repr(e),
+        }
     if result.get("failed") or result.get("error"):
-        print(f"WARNING: cleanup left objects behind: {result}", file=sys.stderr, flush=True)
+        print(
+            f"WARNING: cleanup left objects behind: {result}",
+            file=sys.stderr,
+            flush=True,
+        )
     else:
-        print(f"Cleanup: deleted {result['attempted']} object(s) (prefix {sweep_prefix})", flush=True)
+        print(
+            f"Cleanup: deleted {result['attempted']} object(s) (prefix {sweep_prefix})",
+            flush=True,
+        )
     return result
 
 
@@ -1151,7 +1348,7 @@ class _PreallocBuffer:
         end = self.size + src.nbytes
         if end > len(self._mv):
             raise ValueError(f"received {end} bytes for a {len(self._mv)}-byte range")
-        self._mv[self.size:end] = src
+        self._mv[self.size : end] = src
         self.size = end
         return src.nbytes
 
@@ -1189,10 +1386,16 @@ class _DiscardBuffer:
         return n
 
 
-_BUFFERS = {"prealloc": _PreallocBuffer, "bytesio": _BytesIOBuffer, "discard": _DiscardBuffer}
+_BUFFERS = {
+    "prealloc": _PreallocBuffer,
+    "bytesio": _BytesIOBuffer,
+    "discard": _DiscardBuffer,
+}
 
 
-async def _w4_reader(mrd: Any, cfg: BenchConfig, warmup_end: float, end: float, rng: random.Random) -> Tuple[List[float], int, int, int]:
+async def _w4_reader(
+    mrd: Any, cfg: BenchConfig, warmup_end: float, end: float, rng: random.Random
+) -> Tuple[List[float], int, int, int]:
     bufs = [_BUFFERS[cfg.read_buffer](cfg.range_size) for _ in range(cfg.ranges_per_op)]
     expected = cfg.range_size * cfg.ranges_per_op
     max_offset = cfg.object_size - cfg.range_size
@@ -1207,7 +1410,9 @@ async def _w4_reader(mrd: Any, cfg: BenchConfig, warmup_end: float, end: float, 
         t1 = time.monotonic()
         got = sum(b.size for b in bufs)
         if got != expected:
-            raise AssertionError(f"download_ranges returned {got} bytes, expected {expected}")
+            raise AssertionError(
+                f"download_ranges returned {got} bytes, expected {expected}"
+            )
         if t0 >= warmup_end and t1 <= end:
             latencies.append(t1 - t0)
             nbytes += got
@@ -1217,7 +1422,9 @@ async def _w4_reader(mrd: Any, cfg: BenchConfig, warmup_end: float, end: float, 
     return latencies, nbytes, ops, unmeasured
 
 
-async def _w4_worker_async(idx: int, cfg: BenchConfig, object_name: str, chan: Any, start_evt: Any, window: Any) -> Dict[str, Any]:
+async def _w4_worker_async(
+    idx: int, cfg: BenchConfig, object_name: str, chan: Any, start_evt: Any, window: Any
+) -> Dict[str, Any]:
     from google.cloud.storage.asyncio.async_multi_range_downloader import (
         AsyncMultiRangeDownloader,
     )
@@ -1248,15 +1455,32 @@ async def _w4_worker_async(idx: int, cfg: BenchConfig, object_name: str, chan: A
     }
 
 
-def _w4_worker(idx: int, cfg_dict: Dict[str, Any], mode: str, topology: str, chan: Any, start_evt: Any, window: Any, object_name: str) -> None:
+def _w4_worker(
+    idx: int,
+    cfg_dict: Dict[str, Any],
+    mode: str,
+    topology: str,
+    chan: Any,
+    start_evt: Any,
+    window: Any,
+    object_name: str,
+) -> None:
     apply_mode_env(mode, topology)  # before google.cloud.storage is imported
     apply_cpu_affinity()
     try:
         cfg = BenchConfig(**cfg_dict)
-        payload = asyncio.run(_w4_worker_async(idx, cfg, object_name, chan, start_evt, window))
+        payload = asyncio.run(
+            _w4_worker_async(idx, cfg, object_name, chan, start_evt, window)
+        )
         chan.put(("result", idx, payload))
     except BaseException:  # noqa: BLE001 - report everything to the parent
-        chan.put(("error", idx, {"traceback": traceback.format_exc(), "leftover_objects": []}))
+        chan.put(
+            (
+                "error",
+                idx,
+                {"traceback": traceback.format_exc(), "leftover_objects": []},
+            )
+        )
 
 
 def w4_object_names(cfg: BenchConfig, run_id: str) -> List[str]:
@@ -1264,7 +1488,13 @@ def w4_object_names(cfg: BenchConfig, run_id: str) -> List[str]:
     return [f"{OBJECT_PREFIX}{run_id}-obj-{i:04d}" for i in range(count)]
 
 
-def run_w4_entry(cfg: BenchConfig, mode: str, topology: str, object_names: Sequence[str], report: Report) -> List[Dict[str, Any]]:
+def run_w4_entry(
+    cfg: BenchConfig,
+    mode: str,
+    topology: str,
+    object_names: Sequence[str],
+    report: Report,
+) -> List[Dict[str, Any]]:
     """Runs every round of one mode/topology matrix entry."""
     runs = []
     for round_idx in range(cfg.rounds):
@@ -1298,7 +1528,9 @@ def _w4_check(cfg: BenchConfig, runs: List[Dict[str, Any]]) -> None:
         assert run["bytes"] == run["ops"] * cfg.range_size * cfg.ranges_per_op
 
 
-W4_DESCRIPTION = "Workload 4: N processes x AsyncMultiRangeDownloader random-range BidiReads."
+W4_DESCRIPTION = (
+    "Workload 4: N processes x AsyncMultiRangeDownloader random-range BidiReads."
+)
 
 # pytest owns sys.argv, so pytest runs use config.yaml + UDS_BENCH_* env only.
 _CFG = load_config(None, "w4")
@@ -1315,11 +1547,15 @@ def w4_env():
         create_objects(_CFG, names, _CFG.object_size)
         yield names, report
     finally:
-        report.add_cleanup(delete_objects(_CFG, names, sweep_prefix=f"{OBJECT_PREFIX}{run_id}-"))
+        report.add_cleanup(
+            delete_objects(_CFG, names, sweep_prefix=f"{OBJECT_PREFIX}{run_id}-")
+        )
         report.print_summary()
 
 
-@pytest.mark.parametrize("mode,topology", _MATRIX, ids=[matrix_id(m, t) for m, t in _MATRIX])
+@pytest.mark.parametrize(
+    "mode,topology", _MATRIX, ids=[matrix_id(m, t) for m, t in _MATRIX]
+)
 def test_w4_bidi_read(w4_env, mode, topology):
     names, report = w4_env
     runs = run_w4_entry(_CFG, mode, topology, names, report)
@@ -1338,7 +1574,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         for mode, topology in mode_topology_matrix(cfg):
             _w4_check(cfg, run_w4_entry(cfg, mode, topology, names, report))
     finally:
-        report.add_cleanup(delete_objects(cfg, names, sweep_prefix=f"{OBJECT_PREFIX}{run_id}-"))
+        report.add_cleanup(
+            delete_objects(cfg, names, sweep_prefix=f"{OBJECT_PREFIX}{run_id}-")
+        )
         report.print_summary()
     return 0
 

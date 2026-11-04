@@ -112,7 +112,9 @@ def fake_server(sock_dir):
     servers = []
 
     def _make(**kwargs):
-        srv = _FakeShmServer(os.path.join(sock_dir, f"s{len(servers)}.sock.shm"), **kwargs)
+        srv = _FakeShmServer(
+            os.path.join(sock_dir, f"s{len(servers)}.sock.shm"), **kwargs
+        )
         servers.append(srv)
         return srv
 
@@ -265,7 +267,9 @@ def test_fd_smaller_than_advertised_is_rejected(fake_server):
 
 def test_connect_without_server_raises_core_sdk_unavailable(sock_dir):
     with pytest.raises(CoreSdkUnavailableError, match="handshake"):
-        shm.ShmRegion.connect(os.path.join(sock_dir, "missing.shm"), _SLOT, writable=False)
+        shm.ShmRegion.connect(
+            os.path.join(sock_dir, "missing.shm"), _SLOT, writable=False
+        )
 
 
 def test_connect_rejects_server_owned_by_other_uid(fake_server, monkeypatch):

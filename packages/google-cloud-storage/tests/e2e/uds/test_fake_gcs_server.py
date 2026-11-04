@@ -193,7 +193,9 @@ async def test_appendable_write_flush_finalize_and_read(fake):
         chunk = payload[offset : offset + step]
         await stream.send(_data(chunk, offset))
         offset += len(chunk)
-        await stream.send(_storage_v2.BidiWriteObjectRequest(flush=True, write_offset=offset))
+        await stream.send(
+            _storage_v2.BidiWriteObjectRequest(flush=True, write_offset=offset)
+        )
     await stream.send(
         _storage_v2.BidiWriteObjectRequest(
             flush=True, state_lookup=True, write_offset=offset
@@ -455,7 +457,9 @@ async def test_read_out_of_range_has_bidi_read_object_error(fake):
     assert first.metadata.size == 10
     await stream.send(
         _storage_v2.BidiReadObjectRequest(
-            read_ranges=[_storage_v2.ReadRange(read_offset=11, read_length=1, read_id=7)]
+            read_ranges=[
+                _storage_v2.ReadRange(read_offset=11, read_length=1, read_id=7)
+            ]
         )
     )
     with pytest.raises(api_exceptions.OutOfRange):

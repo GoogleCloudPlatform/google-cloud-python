@@ -231,7 +231,9 @@ class _ReadCall:
                 spec.range_id, OUT_OF_RANGE, f"offset {spec.offset} > size {len(data)}"
             )
             return
-        end = len(data) if spec.length == 0 else min(len(data), spec.offset + spec.length)
+        end = (
+            len(data) if spec.length == 0 else min(len(data), spec.offset + spec.length)
+        )
         limit = action[1] if kind in ("abort_after", "partial_hold") else None
         chunk = SLOT if self.region_id else INLINE_CHUNK
         pos = spec.offset
@@ -247,7 +249,9 @@ class _ReadCall:
             if last:
                 return
         if kind == "abort_after":
-            self.finish((grpc.StatusCode.UNAVAILABLE, "fake gcs-core-server restarting"))
+            self.finish(
+                (grpc.StatusCode.UNAVAILABLE, "fake gcs-core-server restarting")
+            )
         # "partial_hold": keep the range open forever.
 
     async def read_loop(self):
@@ -270,7 +274,9 @@ class _ReadCall:
                     self.read_requests.append(req.read)
                     for spec in req.read.ranges:
                         self.read_specs.append(spec)
-                        self.tasks[spec.range_id] = asyncio.ensure_future(self.serve(spec))
+                        self.tasks[spec.range_id] = asyncio.ensure_future(
+                            self.serve(spec)
+                        )
                 elif kind == "release":
                     self.on_release(req.release.slots)
                 elif kind == "cancel":
@@ -631,7 +637,9 @@ async def test_cancel_sends_cancel_ranges_and_releases_every_slot(fake):
         )
         done_buf, held_buf = io.BytesIO(), io.BytesIO()
         task = asyncio.ensure_future(
-            session.download_ranges([(0, 1000, done_buf), (held_offset, 3 * MiB, held_buf)])
+            session.download_ranges(
+                [(0, 1000, done_buf), (held_offset, 3 * MiB, held_buf)]
+            )
         )
         # Both ranges got one slot each and the client processed (released) both.
         await _eventually(
@@ -652,7 +660,12 @@ async def test_cancel_sends_cancel_ranges_and_releases_every_slot(fake):
 
         # Late data for the cancelled range and data for an unknown range still
         # hand out slots; the client must return them without touching buffers.
-        await call.send_data(held_id, held_offset + SLOT, DATA[held_offset + SLOT : held_offset + 3 * MiB], True)
+        await call.send_data(
+            held_id,
+            held_offset + SLOT,
+            DATA[held_offset + SLOT : held_offset + 3 * MiB],
+            True,
+        )
         await call.send_data(999, 0, b"x" * 10, True)
         await _wait_all_released(call)
         assert len(call.handed_out) == 4
@@ -703,11 +716,15 @@ async def test_range_error_checksum_mismatch_raises_data_corruption(fake):
     try:
         call = fake.calls[0]
         fake.range_action = lambda idx, spec: (
-            ("error", INTERNAL, "crc32c mismatch", True) if spec.offset == 4 * MiB else None
+            ("error", INTERNAL, "crc32c mismatch", True)
+            if spec.offset == 4 * MiB
+            else None
         )
         good, corrupt = io.BytesIO(), io.BytesIO()
         with pytest.raises(DataCorruption) as exc_info:
-            await _w(session.download_ranges([(0, 3 * MiB, good), (4 * MiB, 10, corrupt)]))
+            await _w(
+                session.download_ranges([(0, 3 * MiB, good), (4 * MiB, 10, corrupt)])
+            )
         assert "crc32c mismatch" in str(exc_info.value)
         assert good.getvalue() == DATA[: 3 * MiB]
         assert corrupt.getvalue() == b""
@@ -781,7 +798,8 @@ async def test_unavailable_with_concurrent_calls_reopens_once(fake):
     finally:
         await _w(session.close())
     await _eventually(
-        lambda: all(c.ended for c in fake.calls), "every server stream to end after close"
+        lambda: all(c.ended for c in fake.calls),
+        "every server stream to end after close",
     )
 
 

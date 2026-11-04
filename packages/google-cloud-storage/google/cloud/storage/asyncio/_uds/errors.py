@@ -74,7 +74,10 @@ def range_error_to_exception(range_error):
 
     from google.cloud.storage.exceptions import DataCorruption
 
-    if range_error.checksum_mismatch or range_error.code == grpc.StatusCode.DATA_LOSS.value[0]:
+    if (
+        range_error.checksum_mismatch
+        or range_error.code == grpc.StatusCode.DATA_LOSS.value[0]
+    ):
         # The Rust SDK validated per-chunk / full-object CRC32C (or detected a truncated
         # range); surface it exactly like the GAPIC path does.
         return DataCorruption(

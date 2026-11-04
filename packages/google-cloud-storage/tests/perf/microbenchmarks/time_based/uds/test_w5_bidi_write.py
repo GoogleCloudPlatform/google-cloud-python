@@ -62,7 +62,9 @@ _WRITER_CHUNK_BYTES = 2 * 1024 * 1024
 def w5_matrix(cfg: harness.BenchConfig) -> List[Tuple[str, str, int]]:
     for fi in cfg.flush_interval_bytes:
         if fi < _WRITER_CHUNK_BYTES or fi % _WRITER_CHUNK_BYTES:
-            raise ValueError(f"flush_interval_bytes must be a positive multiple of 2 MiB, got {fi}")
+            raise ValueError(
+                f"flush_interval_bytes must be a positive multiple of 2 MiB, got {fi}"
+            )
     if not cfg.flush_interval_bytes:
         raise ValueError("flush_interval_bytes must not be empty")
     return [
@@ -76,7 +78,9 @@ def w5_id(mode: str, topology: str, flush_interval: int) -> str:
     return f"{harness.matrix_id(mode, topology)}-flush{harness.format_size(flush_interval)}"
 
 
-def w5_prefix(run_id: str, mode: str, topology: str, flush_interval: int, round_idx: int) -> str:
+def w5_prefix(
+    run_id: str, mode: str, topology: str, flush_interval: int, round_idx: int
+) -> str:
     return (
         f"{harness.OBJECT_PREFIX}{run_id}-{harness.matrix_id(mode, topology)}-"
         f"f{harness.format_size(flush_interval)}-r{round_idx}-"
@@ -142,7 +146,9 @@ async def _w5_worker_async(
             t1 = time.monotonic()
             size = getattr(obj, "size", None)
             if size is not None and size != cfg.object_size:
-                raise AssertionError(f"{name}: finalized size {size} != {cfg.object_size}")
+                raise AssertionError(
+                    f"{name}: finalized size {size} != {cfg.object_size}"
+                )
             if t0 >= warmup_end and t1 <= end:
                 op_lat.append(t1 - t0)
                 open_lat.append(t_open - t0)
@@ -156,7 +162,9 @@ async def _w5_worker_async(
         # Outside the measured window (the sampler stops at window end).
         state["leftover"] = list(created)
         if created:
-            state["leftover"] = await harness.delete_names_async(client, cfg.bucket, created)
+            state["leftover"] = await harness.delete_names_async(
+                client, cfg.bucket, created
+            )
     return {
         "worker": idx,
         "pid": os.getpid(),
@@ -189,12 +197,20 @@ def _w5_worker(
     try:
         cfg = harness.BenchConfig(**cfg_dict)
         payload = asyncio.run(
-            _w5_worker_async(idx, cfg, flush_interval, name_prefix, chan, start_evt, window, state)
+            _w5_worker_async(
+                idx, cfg, flush_interval, name_prefix, chan, start_evt, window, state
+            )
         )
         chan.put(("result", idx, payload))
     except BaseException:  # noqa: BLE001 - report everything to the parent
         leftover = state["leftover"] or state["created"]
-        chan.put(("error", idx, {"traceback": traceback.format_exc(), "leftover_objects": leftover}))
+        chan.put(
+            (
+                "error",
+                idx,
+                {"traceback": traceback.format_exc(), "leftover_objects": leftover},
+            )
+        )
 
 
 def run_w5_entry(
@@ -217,10 +233,14 @@ def run_w5_entry(
             leftovers = outcome.leftover_objects
         except harness.BenchmarkError as e:
             leftovers = e.leftover_objects
-            report.add_error(f"{w5_id(mode, topology, flush_interval)} round {round_idx}", e)
+            report.add_error(
+                f"{w5_id(mode, topology, flush_interval)} round {round_idx}", e
+            )
             raise
         finally:
-            report.add_cleanup(harness.delete_objects(cfg, leftovers, sweep_prefix=prefix))
+            report.add_cleanup(
+                harness.delete_objects(cfg, leftovers, sweep_prefix=prefix)
+            )
         run = harness.summarize_run(
             "w5",
             cfg,
@@ -264,7 +284,9 @@ def w5_env():
         yield run_id, report
     finally:
         report.add_cleanup(
-            harness.delete_objects(_CFG, [], sweep_prefix=f"{harness.OBJECT_PREFIX}{run_id}-")
+            harness.delete_objects(
+                _CFG, [], sweep_prefix=f"{harness.OBJECT_PREFIX}{run_id}-"
+            )
         )
         report.print_summary()
 
@@ -279,7 +301,9 @@ def test_w5_bidi_write(w5_env, mode, topology, flush_interval):
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
-    cfg = harness.load_config(sys.argv[1:] if argv is None else argv, "w5", W5_DESCRIPTION)
+    cfg = harness.load_config(
+        sys.argv[1:] if argv is None else argv, "w5", W5_DESCRIPTION
+    )
     matrix = w5_matrix(cfg)
     run_id = harness.new_run_id("w5")
     report = harness.Report(cfg, "w5", run_id)
@@ -287,10 +311,14 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     print(f"Results: {report.path}", flush=True)
     try:
         for mode, topology, flush_interval in matrix:
-            _w5_check(cfg, run_w5_entry(cfg, run_id, mode, topology, flush_interval, report))
+            _w5_check(
+                cfg, run_w5_entry(cfg, run_id, mode, topology, flush_interval, report)
+            )
     finally:
         report.add_cleanup(
-            harness.delete_objects(cfg, [], sweep_prefix=f"{harness.OBJECT_PREFIX}{run_id}-")
+            harness.delete_objects(
+                cfg, [], sweep_prefix=f"{harness.OBJECT_PREFIX}{run_id}-"
+            )
         )
         report.print_summary()
     return 0

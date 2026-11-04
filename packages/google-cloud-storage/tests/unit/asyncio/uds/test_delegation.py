@@ -220,7 +220,9 @@ def test_public_signatures_unchanged(cls):
 
 
 def test_async_grpc_client_signature_reports_attempt_direct_path_true():
-    param = inspect.signature(AsyncGrpcClient.__init__).parameters["attempt_direct_path"]
+    param = inspect.signature(AsyncGrpcClient.__init__).parameters[
+        "attempt_direct_path"
+    ]
     assert param.default is True
     assert param.kind is inspect.Parameter.KEYWORD_ONLY
 
@@ -288,7 +290,8 @@ def test_off_mode_allows_explicit_direct_path(uds_env, storage_client_cls, monke
     assert _channel_kwargs(storage_client_cls)["attempt_direct_path"] is True
     assert client._direct_path_enforced is True
     _make_client(
-        storage_client_cls, client_options={"api_endpoint": "google-c2p:///storage.googleapis.com"}
+        storage_client_cls,
+        client_options={"api_endpoint": "google-c2p:///storage.googleapis.com"},
     )
     monkeypatch.setenv(_config.ENV_DIRECT_PATH_XDS, "true")
     _make_client(storage_client_cls)
@@ -362,7 +365,9 @@ def test_should_use_uds_auto_missing_binary_falls_back_and_logs_once(
     assert len(fallbacks) == 1
 
 
-def test_should_use_uds_auto_with_binary_or_socket(uds_env, storage_client_cls, monkeypatch, tmp_path):
+def test_should_use_uds_auto_with_binary_or_socket(
+    uds_env, storage_client_cls, monkeypatch, tmp_path
+):
     uds_env("auto")
     client = _make_client(storage_client_cls)
     exe = tmp_path / "gcs-core-server"
@@ -420,14 +425,43 @@ def test_platform_supported():
     "kwargs,env",
     [
         ({"attempt_direct_path": True}, None),
-        ({"client_options": {"api_endpoint": "google-c2p:///storage.googleapis.com"}}, None),
-        ({"client_options": ClientOptions(api_endpoint="google-c2p:///storage.googleapis.com")}, None),
-        ({"client_options": {"api_endpoint": "google-c2p-experimental:///storage.googleapis.com"}}, None),
+        (
+            {
+                "client_options": {
+                    "api_endpoint": "google-c2p:///storage.googleapis.com"
+                }
+            },
+            None,
+        ),
+        (
+            {
+                "client_options": ClientOptions(
+                    api_endpoint="google-c2p:///storage.googleapis.com"
+                )
+            },
+            None,
+        ),
+        (
+            {
+                "client_options": {
+                    "api_endpoint": "google-c2p-experimental:///storage.googleapis.com"
+                }
+            },
+            None,
+        ),
         ({}, "1"),
         ({}, "true"),
         ({"attempt_direct_path_xds_over_interconnect": True}, None),
     ],
-    ids=["explicit-true", "c2p-dict", "c2p-options", "c2p-experimental", "xds-env-1", "xds-env-true", "interconnect"],
+    ids=[
+        "explicit-true",
+        "c2p-dict",
+        "c2p-options",
+        "c2p-experimental",
+        "xds-env-1",
+        "xds-env-true",
+        "interconnect",
+    ],
 )
 def test_direct_path_enforced_raises_when_uds_enabled(
     uds_env, storage_client_cls, monkeypatch, mode, kwargs, env
@@ -450,7 +484,9 @@ def test_cloudpath_clients_succeed_when_uds_enabled(uds_env, storage_client_cls,
     _config.check_direct_path_not_enforced(False, {"api_endpoint": "localhost:8080"})
 
 
-def test_should_use_uds_rechecks_direct_path_on_existing_client(uds_env, storage_client_cls, monkeypatch):
+def test_should_use_uds_rechecks_direct_path_on_existing_client(
+    uds_env, storage_client_cls, monkeypatch
+):
     uds_env("off")
     client = _make_client(storage_client_cls, attempt_direct_path=True)
     uds_env("auto")
@@ -466,7 +502,9 @@ def test_should_use_uds_rechecks_direct_path_on_existing_client(uds_env, storage
 @pytest.mark.parametrize("mode", ["off", "auto"])
 async def test_mrd_mock_client_uses_gapic(uds_env, read_stream_cls, mode):
     uds_env(mode)
-    with mock.patch.object(AsyncMultiRangeDownloader, "_open_uds", AsyncMock()) as open_uds:
+    with mock.patch.object(
+        AsyncMultiRangeDownloader, "_open_uds", AsyncMock()
+    ) as open_uds:
         mrd = await AsyncMultiRangeDownloader.create_mrd(_mock_client(), "b", "o")
     open_uds.assert_not_awaited()
     read_stream_cls.assert_called_once()
@@ -474,37 +512,53 @@ async def test_mrd_mock_client_uses_gapic(uds_env, read_stream_cls, mode):
 
 
 @pytest.mark.asyncio
-async def test_mrd_auto_missing_binary_falls_back_to_gapic(uds_env, storage_client_cls, read_stream_cls):
+async def test_mrd_auto_missing_binary_falls_back_to_gapic(
+    uds_env, storage_client_cls, read_stream_cls
+):
     uds_env("auto")
-    mrd = await AsyncMultiRangeDownloader.create_mrd(_make_client(storage_client_cls), "b", "o")
+    mrd = await AsyncMultiRangeDownloader.create_mrd(
+        _make_client(storage_client_cls), "b", "o"
+    )
     read_stream_cls.assert_called_once()
     assert mrd._uds is None
 
 
 @pytest.mark.asyncio
-async def test_mrd_auto_runtime_unavailable_falls_back(uds_env, storage_client_cls, read_stream_cls, monkeypatch):
+async def test_mrd_auto_runtime_unavailable_falls_back(
+    uds_env, storage_client_cls, read_stream_cls, monkeypatch
+):
     uds_env("auto")
     monkeypatch.setenv(_config.ENV_SOCKET, "/tmp/irrelevant.sock")
     get_rt = AsyncMock(side_effect=CoreSdkUnavailableError("socket gone"))
     with mock.patch(_RUNTIME_GET, get_rt):
-        mrd = await AsyncMultiRangeDownloader.create_mrd(_make_client(storage_client_cls), "b", "o")
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            _make_client(storage_client_cls), "b", "o"
+        )
     get_rt.assert_awaited_once()
     read_stream_cls.assert_called_once()
     assert mrd._uds is None
 
 
 @pytest.mark.asyncio
-async def test_mrd_force_runtime_unavailable_raises(uds_env, storage_client_cls, read_stream_cls, monkeypatch):
+async def test_mrd_force_runtime_unavailable_raises(
+    uds_env, storage_client_cls, read_stream_cls, monkeypatch
+):
     uds_env("force")
     monkeypatch.setenv(_config.ENV_SOCKET, "/tmp/irrelevant.sock")
-    with mock.patch(_RUNTIME_GET, AsyncMock(side_effect=CoreSdkUnavailableError("socket gone"))):
+    with mock.patch(
+        _RUNTIME_GET, AsyncMock(side_effect=CoreSdkUnavailableError("socket gone"))
+    ):
         with pytest.raises(CoreSdkUnavailableError, match="socket gone"):
-            await AsyncMultiRangeDownloader.create_mrd(_make_client(storage_client_cls), "b", "o")
+            await AsyncMultiRangeDownloader.create_mrd(
+                _make_client(storage_client_cls), "b", "o"
+            )
     read_stream_cls.assert_not_called()
 
 
 @pytest.mark.asyncio
-async def test_mrd_force_missing_binary_raises_without_gapic(uds_env, storage_client_cls, read_stream_cls):
+async def test_mrd_force_missing_binary_raises_without_gapic(
+    uds_env, storage_client_cls, read_stream_cls
+):
     uds_env("force")
     client = _make_client(storage_client_cls)
     with pytest.raises(CoreSdkUnavailableError):
@@ -531,21 +585,37 @@ def _fake_read_session(resource):
 
 
 @pytest.mark.asyncio
-async def test_mrd_uds_open_download_close_delegate(uds_env, storage_client_cls, read_stream_cls, monkeypatch):
+async def test_mrd_uds_open_download_close_delegate(
+    uds_env, storage_client_cls, read_stream_cls, monkeypatch
+):
     uds_env("force")
     monkeypatch.setenv(_config.ENV_SOCKET, "/tmp/irrelevant.sock")
-    resource = pb.ObjectResource(bucket="b", name="o", generation=42, size=1234, finalized=True, crc32c=99)
+    resource = pb.ObjectResource(
+        bucket="b", name="o", generation=42, size=1234, finalized=True, crc32c=99
+    )
     session = _fake_read_session(resource)
-    with mock.patch(_RUNTIME_GET, AsyncMock(return_value=mock.Mock())), mock.patch(
-        "google.cloud.storage.asyncio._uds.read_session.UdsReadSession", return_value=session
-    ) as session_cls:
+    with (
+        mock.patch(_RUNTIME_GET, AsyncMock(return_value=mock.Mock())),
+        mock.patch(
+            "google.cloud.storage.asyncio._uds.read_session.UdsReadSession",
+            return_value=session,
+        ) as session_cls,
+    ):
         mrd = await AsyncMultiRangeDownloader.create_mrd(
-            _make_client(storage_client_cls), "b", "o", metadata=[("x-goog-user-project", "p")]
+            _make_client(storage_client_cls),
+            "b",
+            "o",
+            metadata=[("x-goog-user-project", "p")],
         )
     read_stream_cls.assert_not_called()
     assert session_cls.call_args.kwargs["metadata"] == [("x-goog-user-project", "p")]
     assert mrd._uds is session
-    assert (mrd.generation, mrd.persisted_size, mrd.is_finalized, mrd.full_obj_server_crc32c) == (42, 1234, True, 99)
+    assert (
+        mrd.generation,
+        mrd.persisted_size,
+        mrd.is_finalized,
+        mrd.full_obj_server_crc32c,
+    ) == (42, 1234, True, 99)
     assert mrd.object_metadata is session.object_metadata
     ranges = [(0, 10, BytesIO())]
     await mrd.download_ranges(ranges)
@@ -556,27 +626,47 @@ async def test_mrd_uds_open_download_close_delegate(uds_env, storage_client_cls,
 
 
 @pytest.mark.asyncio
-async def test_mrd_uds_unfinalized_object_has_no_crc(uds_env, storage_client_cls, read_stream_cls, monkeypatch):
+async def test_mrd_uds_unfinalized_object_has_no_crc(
+    uds_env, storage_client_cls, read_stream_cls, monkeypatch
+):
     uds_env("force")
     monkeypatch.setenv(_config.ENV_SOCKET, "/tmp/irrelevant.sock")
-    session = _fake_read_session(pb.ObjectResource(generation=7, size=5, finalized=False, crc32c=1))
-    with mock.patch(_RUNTIME_GET, AsyncMock(return_value=mock.Mock())), mock.patch(
-        "google.cloud.storage.asyncio._uds.read_session.UdsReadSession", return_value=session
+    session = _fake_read_session(
+        pb.ObjectResource(generation=7, size=5, finalized=False, crc32c=1)
+    )
+    with (
+        mock.patch(_RUNTIME_GET, AsyncMock(return_value=mock.Mock())),
+        mock.patch(
+            "google.cloud.storage.asyncio._uds.read_session.UdsReadSession",
+            return_value=session,
+        ),
     ):
-        mrd = await AsyncMultiRangeDownloader.create_mrd(_make_client(storage_client_cls), "b", "o")
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            _make_client(storage_client_cls), "b", "o"
+        )
     assert mrd.is_finalized is False and mrd.full_obj_server_crc32c is None
 
 
 @pytest.mark.asyncio
-async def test_mrd_uds_data_corruption_closes_stream(uds_env, storage_client_cls, read_stream_cls, monkeypatch):
+async def test_mrd_uds_data_corruption_closes_stream(
+    uds_env, storage_client_cls, read_stream_cls, monkeypatch
+):
     uds_env("force")
     monkeypatch.setenv(_config.ENV_SOCKET, "/tmp/irrelevant.sock")
-    session = _fake_read_session(pb.ObjectResource(generation=1, size=5, finalized=True))
+    session = _fake_read_session(
+        pb.ObjectResource(generation=1, size=5, finalized=True)
+    )
     session.download_ranges.side_effect = DataCorruption(None, "bad crc")
-    with mock.patch(_RUNTIME_GET, AsyncMock(return_value=mock.Mock())), mock.patch(
-        "google.cloud.storage.asyncio._uds.read_session.UdsReadSession", return_value=session
+    with (
+        mock.patch(_RUNTIME_GET, AsyncMock(return_value=mock.Mock())),
+        mock.patch(
+            "google.cloud.storage.asyncio._uds.read_session.UdsReadSession",
+            return_value=session,
+        ),
     ):
-        mrd = await AsyncMultiRangeDownloader.create_mrd(_make_client(storage_client_cls), "b", "o")
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            _make_client(storage_client_cls), "b", "o"
+        )
     with pytest.raises(DataCorruption):
         await mrd.download_ranges([(0, 5, BytesIO())])
     session.close.assert_awaited_once()
@@ -591,7 +681,9 @@ async def test_mrd_uds_data_corruption_closes_stream(uds_env, storage_client_cls
 async def test_writer_mock_client_uses_gapic(uds_env, write_stream_cls, mode):
     uds_env(mode)
     writer = AsyncAppendableObjectWriter(_mock_client(), "b", "o")
-    with mock.patch.object(AsyncAppendableObjectWriter, "_open_uds", AsyncMock()) as open_uds:
+    with mock.patch.object(
+        AsyncAppendableObjectWriter, "_open_uds", AsyncMock()
+    ) as open_uds:
         await writer.open()
     open_uds.assert_not_awaited()
     write_stream_cls.assert_called_once()
@@ -599,7 +691,9 @@ async def test_writer_mock_client_uses_gapic(uds_env, write_stream_cls, mode):
 
 
 @pytest.mark.asyncio
-async def test_writer_auto_missing_binary_falls_back_to_gapic(uds_env, storage_client_cls, write_stream_cls):
+async def test_writer_auto_missing_binary_falls_back_to_gapic(
+    uds_env, storage_client_cls, write_stream_cls
+):
     uds_env("auto")
     writer = AsyncAppendableObjectWriter(_make_client(storage_client_cls), "b", "o")
     await writer.open()
@@ -608,7 +702,9 @@ async def test_writer_auto_missing_binary_falls_back_to_gapic(uds_env, storage_c
 
 
 @pytest.mark.asyncio
-async def test_writer_force_missing_binary_raises_without_gapic(uds_env, storage_client_cls, write_stream_cls):
+async def test_writer_force_missing_binary_raises_without_gapic(
+    uds_env, storage_client_cls, write_stream_cls
+):
     uds_env("force")
     writer = AsyncAppendableObjectWriter(_make_client(storage_client_cls), "b", "o")
     with pytest.raises(CoreSdkUnavailableError):
@@ -617,7 +713,9 @@ async def test_writer_force_missing_binary_raises_without_gapic(uds_env, storage
 
 
 @pytest.mark.asyncio
-async def test_writer_force_unsupported_platform_raises(uds_env, storage_client_cls, write_stream_cls, monkeypatch):
+async def test_writer_force_unsupported_platform_raises(
+    uds_env, storage_client_cls, write_stream_cls, monkeypatch
+):
     uds_env("force")
     writer = AsyncAppendableObjectWriter(_make_client(storage_client_cls), "b", "o")
     monkeypatch.setattr(sys, "platform", "win32")
@@ -636,10 +734,14 @@ def _blob_with_hold():
 
 
 @pytest.mark.asyncio
-async def test_writer_force_unsupported_blob_attrs_raise(uds_env, storage_client_cls, write_stream_cls, monkeypatch):
+async def test_writer_force_unsupported_blob_attrs_raise(
+    uds_env, storage_client_cls, write_stream_cls, monkeypatch
+):
     uds_env("force")
     monkeypatch.setenv(_config.ENV_SOCKET, "/tmp/irrelevant.sock")
-    writer = AsyncAppendableObjectWriter.from_blob(_make_client(storage_client_cls), _blob_with_hold())
+    writer = AsyncAppendableObjectWriter.from_blob(
+        _make_client(storage_client_cls), _blob_with_hold()
+    )
     get_rt = AsyncMock()
     with mock.patch(_RUNTIME_GET, get_rt):
         with pytest.raises(CoreSdkUnavailableError, match="temporary_hold"):
@@ -649,10 +751,14 @@ async def test_writer_force_unsupported_blob_attrs_raise(uds_env, storage_client
 
 
 @pytest.mark.asyncio
-async def test_writer_auto_unsupported_blob_attrs_fall_back(uds_env, storage_client_cls, write_stream_cls, monkeypatch):
+async def test_writer_auto_unsupported_blob_attrs_fall_back(
+    uds_env, storage_client_cls, write_stream_cls, monkeypatch
+):
     uds_env("auto")
     monkeypatch.setenv(_config.ENV_SOCKET, "/tmp/irrelevant.sock")
-    writer = AsyncAppendableObjectWriter.from_blob(_make_client(storage_client_cls), _blob_with_hold())
+    writer = AsyncAppendableObjectWriter.from_blob(
+        _make_client(storage_client_cls), _blob_with_hold()
+    )
     get_rt = AsyncMock()
     with mock.patch(_RUNTIME_GET, get_rt):
         await writer.open()
@@ -663,7 +769,10 @@ async def test_writer_auto_unsupported_blob_attrs_fall_back(uds_env, storage_cli
 
 def _writer_with_session(storage_client_cls, flush_interval=4 * _MiB):
     writer = AsyncAppendableObjectWriter(
-        mock.MagicMock(), "b", "o", writer_options={"FLUSH_INTERVAL_BYTES": flush_interval}
+        mock.MagicMock(),
+        "b",
+        "o",
+        writer_options={"FLUSH_INTERVAL_BYTES": flush_interval},
     )
     session = mock.MagicMock()
     session.append = AsyncMock()
@@ -671,7 +780,9 @@ def _writer_with_session(storage_client_cls, flush_interval=4 * _MiB):
     session.flush = AsyncMock(side_effect=lambda: next(persisted) * _MiB)
     session.close = AsyncMock(return_value=77)
     session.finalize = AsyncMock(
-        return_value=pb.ObjectResource(bucket="projects/_/buckets/b", name="o", generation=3, size=10)
+        return_value=pb.ObjectResource(
+            bucket="projects/_/buckets/b", name="o", generation=3, size=10
+        )
     )
     session.has_unflushed_bytes = mock.Mock(return_value=False)
     session.last_persisted_size = 5
@@ -683,15 +794,23 @@ def _writer_with_session(storage_client_cls, flush_interval=4 * _MiB):
 
 
 @pytest.mark.asyncio
-async def test_writer_uds_open_sets_state(uds_env, storage_client_cls, write_stream_cls, monkeypatch):
+async def test_writer_uds_open_sets_state(
+    uds_env, storage_client_cls, write_stream_cls, monkeypatch
+):
     uds_env("force")
     monkeypatch.setenv(_config.ENV_SOCKET, "/tmp/irrelevant.sock")
     session = mock.MagicMock()
     session.open = AsyncMock(return_value=(55, 1024))
-    with mock.patch(_RUNTIME_GET, AsyncMock(return_value=mock.Mock())), mock.patch(
-        "google.cloud.storage.asyncio._uds.write_session.UdsWriteSession", return_value=session
+    with (
+        mock.patch(_RUNTIME_GET, AsyncMock(return_value=mock.Mock())),
+        mock.patch(
+            "google.cloud.storage.asyncio._uds.write_session.UdsWriteSession",
+            return_value=session,
+        ),
     ):
-        writer = AsyncAppendableObjectWriter(_make_client(storage_client_cls), "b", "o", generation=0)
+        writer = AsyncAppendableObjectWriter(
+            _make_client(storage_client_cls), "b", "o", generation=0
+        )
         await writer.open(metadata=[("x-goog-user-project", "qp")])
     write_stream_cls.assert_not_called()
     spec = session.open.call_args.args[0]
@@ -706,7 +825,11 @@ async def test_writer_uds_open_sets_state(uds_env, storage_client_cls, write_str
 
 def test_writer_uds_open_spec_reopen_and_blob_attrs():
     writer = AsyncAppendableObjectWriter(
-        mock.MagicMock(), "b", "o", generation=9, write_handle=_storage_v2.BidiWriteHandle(handle=b"wh")
+        mock.MagicMock(),
+        "b",
+        "o",
+        generation=9,
+        write_handle=_storage_v2.BidiWriteHandle(handle=b"wh"),
     )
     writer._routing_token = "rt"
     spec = writer._uds_open_spec(None)
@@ -722,7 +845,9 @@ def test_writer_uds_open_spec_reopen_and_blob_attrs():
     blob.content_type = "text/plain"
     blob.cache_control = "no-cache"
     blob.metadata = {"k": "v"}
-    blob.custom_time = datetime.datetime(2026, 1, 2, 3, 4, 5, 6000, tzinfo=datetime.timezone.utc)
+    blob.custom_time = datetime.datetime(
+        2026, 1, 2, 3, 4, 5, 6000, tzinfo=datetime.timezone.utc
+    )
     creator = AsyncAppendableObjectWriter.from_blob(mock.MagicMock(), blob)
     creator.storage_class = "STANDARD"
     spec = creator._uds_open_spec(None)
@@ -732,7 +857,10 @@ def test_writer_uds_open_spec_reopen_and_blob_attrs():
     assert dict(spec.attrs.metadata) == {"k": "v"}
     assert spec.attrs.storage_class == "STANDARD"
     expected = int(blob.custom_time.timestamp())
-    assert (spec.attrs.custom_time_secs, spec.attrs.custom_time_nanos) == (expected, 6000 * 1000)
+    assert (spec.attrs.custom_time_secs, spec.attrs.custom_time_nanos) == (
+        expected,
+        6000 * 1000,
+    )
 
 
 @pytest.mark.asyncio
@@ -789,7 +917,11 @@ async def test_writer_uds_finalize_and_close_finalize(storage_client_cls):
         ("localhost:9000", False, "https://localhost:9000"),
         ("localhost:9000", True, "http://localhost:9000"),
         (" storage.example.com:443/ ", False, "https://storage.example.com:443"),
-        ("dns:///storage.googleapis.com:443", False, "https://storage.googleapis.com:443"),
+        (
+            "dns:///storage.googleapis.com:443",
+            False,
+            "https://storage.googleapis.com:443",
+        ),
         ("https://private.googleapis.com", True, "https://private.googleapis.com"),
     ],
 )
@@ -798,7 +930,11 @@ def test_normalize_endpoint(endpoint, anonymous, expected):
 
 
 @pytest.mark.parametrize(
-    "endpoint", ["google-c2p:///storage.googleapis.com", "GOOGLE-C2P-EXPERIMENTAL:///storage.googleapis.com"]
+    "endpoint",
+    [
+        "google-c2p:///storage.googleapis.com",
+        "GOOGLE-C2P-EXPERIMENTAL:///storage.googleapis.com",
+    ],
 )
 def test_normalize_endpoint_rejects_direct_path(endpoint):
     with pytest.raises(CoreSdkUnavailableError, match="DirectPath"):
@@ -823,7 +959,10 @@ def test_unsupported_blob_attrs():
     assert _config.unsupported_blob_attrs(blob) == []
     blob.temporary_hold = False  # explicitly set (even False) cannot be honoured
     blob.event_based_hold = True
-    assert _config.unsupported_blob_attrs(blob) == ["temporary_hold", "event_based_hold"]
+    assert _config.unsupported_blob_attrs(blob) == [
+        "temporary_hold",
+        "event_based_hold",
+    ]
 
 
 def _aio_error(code, details="boom"):
@@ -831,14 +970,21 @@ def _aio_error(code, details="boom"):
 
 
 def test_to_api_exception_mapping():
-    assert isinstance(uds_errors.to_api_exception(_aio_error(grpc.StatusCode.NOT_FOUND)), exceptions.NotFound)
     assert isinstance(
-        uds_errors.to_api_exception(_aio_error(grpc.StatusCode.INVALID_ARGUMENT)), exceptions.InvalidArgument
+        uds_errors.to_api_exception(_aio_error(grpc.StatusCode.NOT_FOUND)),
+        exceptions.NotFound,
     )
     assert isinstance(
-        uds_errors.to_api_exception(_aio_error(grpc.StatusCode.UNAVAILABLE)), exceptions.ServiceUnavailable
+        uds_errors.to_api_exception(_aio_error(grpc.StatusCode.INVALID_ARGUMENT)),
+        exceptions.InvalidArgument,
     )
-    corrupt = uds_errors.to_api_exception(_aio_error(grpc.StatusCode.DATA_LOSS, "crc32c mismatch"))
+    assert isinstance(
+        uds_errors.to_api_exception(_aio_error(grpc.StatusCode.UNAVAILABLE)),
+        exceptions.ServiceUnavailable,
+    )
+    corrupt = uds_errors.to_api_exception(
+        _aio_error(grpc.StatusCode.DATA_LOSS, "crc32c mismatch")
+    )
     assert isinstance(corrupt, DataCorruption)
     already = exceptions.NotFound("x")
     assert uds_errors.to_api_exception(already) is already
@@ -848,19 +994,30 @@ def test_to_api_exception_mapping():
 
 def test_range_error_to_exception_mapping():
     oor = uds_errors.range_error_to_exception(
-        pb.RangeError(range_id=1, code=grpc.StatusCode.OUT_OF_RANGE.value[0], message="past EOF")
+        pb.RangeError(
+            range_id=1, code=grpc.StatusCode.OUT_OF_RANGE.value[0], message="past EOF"
+        )
     )
     assert isinstance(oor, exceptions.OutOfRange) and "past EOF" in str(oor)
     assert isinstance(
-        uds_errors.range_error_to_exception(pb.RangeError(code=5, message="gone")), exceptions.NotFound
+        uds_errors.range_error_to_exception(pb.RangeError(code=5, message="gone")),
+        exceptions.NotFound,
     )
     assert isinstance(
-        uds_errors.range_error_to_exception(pb.RangeError(checksum_mismatch=True, message="crc")), DataCorruption
+        uds_errors.range_error_to_exception(
+            pb.RangeError(checksum_mismatch=True, message="crc")
+        ),
+        DataCorruption,
     )
     assert isinstance(
-        uds_errors.range_error_to_exception(pb.RangeError(code=grpc.StatusCode.DATA_LOSS.value[0])), DataCorruption
+        uds_errors.range_error_to_exception(
+            pb.RangeError(code=grpc.StatusCode.DATA_LOSS.value[0])
+        ),
+        DataCorruption,
     )
-    assert isinstance(uds_errors.range_error_to_exception(pb.RangeError(code=999)), exceptions.Unknown)
+    assert isinstance(
+        uds_errors.range_error_to_exception(pb.RangeError(code=999)), exceptions.Unknown
+    )
 
 
 def test_object_from_resource_json_and_typed_fallback():
@@ -868,19 +1025,35 @@ def test_object_from_resource_json_and_typed_fallback():
     as_json = uds_errors.object_from_resource(
         pb.ObjectResource(
             object_json=json.dumps(
-                {"bucket": "projects/_/buckets/b", "name": "o", "generation": "5", "size": "12", "someNewField": 1}
+                {
+                    "bucket": "projects/_/buckets/b",
+                    "name": "o",
+                    "generation": "5",
+                    "size": "12",
+                    "someNewField": 1,
+                }
             )
         )
     )
-    assert (as_json.bucket, as_json.name, as_json.generation, as_json.size) == ("projects/_/buckets/b", "o", 5, 12)
+    assert (as_json.bucket, as_json.name, as_json.generation, as_json.size) == (
+        "projects/_/buckets/b",
+        "o",
+        5,
+        12,
+    )
     typed = uds_errors.object_from_resource(
-        pb.ObjectResource(bucket="b", name="o", generation=6, size=3, crc32c=0, metadata={"a": "b"})
+        pb.ObjectResource(
+            bucket="b", name="o", generation=6, size=3, crc32c=0, metadata={"a": "b"}
+        )
     )
     assert (typed.name, typed.generation, typed.size) == ("o", 6, 3)
     assert typed.checksums.crc32c == 0  # presence of crc32c=0 is preserved
     assert dict(typed.metadata) == {"a": "b"}
     no_crc = uds_errors.object_from_resource(pb.ObjectResource(name="o"))
-    assert "checksums" not in _storage_v2.Object.to_dict(no_crc) or not no_crc.checksums.crc32c
+    assert (
+        "checksums" not in _storage_v2.Object.to_dict(no_crc)
+        or not no_crc.checksums.crc32c
+    )
 
 
 def test_prewarm_is_opt_in(uds_env, storage_client_cls, monkeypatch):
