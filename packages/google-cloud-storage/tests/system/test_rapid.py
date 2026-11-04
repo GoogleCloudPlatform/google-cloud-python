@@ -229,8 +229,9 @@ def test_basic_wrd_x_region(
             object_name,
             multi_stream_config=multi_stream_config,
         )
+        expected_retries = multi_stream_config.min_streams if multi_stream_config else 1
         async with mrd:
-            assert mrd._open_retries == 1
+            assert mrd._open_retries == expected_retries
             # (0, 0) means read the whole object
             await mrd.download_ranges([(0, 0, buffer)])
             assert mrd.persisted_size == object_size
