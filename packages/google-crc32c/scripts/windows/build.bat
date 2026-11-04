@@ -51,7 +51,9 @@ FOR %%P IN (%SUPPORTED_PYTHON_VERSIONS%) DO (
 
     echo "Listing available Python versions"
     py -0
-
+    @rem pyreadline is removed here because pip>=26.3 and pytest will opportunistically
+    @rem use it if available, but the pre-installed version is too old to work.
+    py -!python_version_trimmed!-64 -m pip uninstall -y pyreadline || goto :error
     py -!python_version_trimmed!-64 -m pip install --upgrade pip || goto :error
 
     echo "Installing cmake for Python %%P"
