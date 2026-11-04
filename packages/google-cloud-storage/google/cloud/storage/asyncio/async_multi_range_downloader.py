@@ -463,7 +463,6 @@ class AsyncMultiRangeDownloader:
                 self._pool = None
 
     async def _create_pooled_stream(self) -> _PooledStream:
-        """Opens an additional pooled stream using current routing and read_handle."""
         """Opens an additional pooled stream using current read_handle."""
         stream: Optional[_AsyncReadObjectStream] = None
         pooled_routing_token: Optional[str] = None
@@ -492,7 +491,6 @@ class AsyncMultiRangeDownloader:
         )
 
         async def _do_open_pooled():
-            nonlocal stream
             nonlocal stream, pooled_routing_token
             if stream is not None and getattr(stream, "is_stream_open", False):
                 try:
@@ -503,10 +501,8 @@ class AsyncMultiRangeDownloader:
                     )
 
             current_metadata = list(self._metadata) if self._metadata else []
-            if self._routing_token:
             if pooled_routing_token:
                 current_metadata.append(
-                    ("x-goog-request-params", f"routing_token={self._routing_token}")
                     ("x-goog-request-params", f"routing_token={pooled_routing_token}")
                 )
                 pooled_routing_token = None
@@ -525,7 +521,6 @@ class AsyncMultiRangeDownloader:
             if stream.read_handle:
                 self.read_handle = stream.read_handle
 
-        await self._open_retry_policy(_do_open_pooled)()
         await pooled_retry_policy(_do_open_pooled)()
 
         mux = _StreamMultiplexer(stream)
@@ -537,7 +532,6 @@ class AsyncMultiRangeDownloader:
 
         async def factory():
             current_handle = state.get("read_handle") or self.read_handle
-            current_token = state.get("routing_token") or self._routing_token
             current_token = state.get("routing_token")
 
             stream = _AsyncReadObjectStream(
@@ -564,8 +558,6 @@ class AsyncMultiRangeDownloader:
                 self.generation = stream.generation_number
             if stream.read_handle:
                 self.read_handle = stream.read_handle
-            if current_token:
-                self._routing_token = current_token
             if stream.object_metadata is not None:
                 self.is_finalized = stream.is_finalized
                 self.full_obj_server_crc32c = stream.full_obj_server_crc32c
@@ -634,7 +626,6 @@ class AsyncMultiRangeDownloader:
             initial_state = {
                 "download_states": download_states,
                 "read_handle": self.read_handle,
-                "routing_token": self._routing_token,
                 "routing_token": None,
                 "enable_checksum": enable_checksum,
                 "full_obj_server_crc32c": self.full_obj_server_crc32c,
@@ -761,8 +752,6 @@ class AsyncMultiRangeDownloader:
 
             if initial_state.get("read_handle"):
                 self.read_handle = initial_state["read_handle"]
-            if initial_state.get("routing_token"):
-                self._routing_token = initial_state["routing_token"]
 
             for download_state in download_states.values():
                 if (
