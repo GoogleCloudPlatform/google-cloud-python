@@ -34,7 +34,7 @@ import grpc
 from google.api_core import exceptions
 
 from google.cloud.storage.asyncio._uds import gcscore_pb2 as pb
-from google.cloud.storage.asyncio._uds.errors import to_api_exception
+from google.cloud.storage.asyncio._uds.errors import stream_write, to_api_exception
 
 logger = logging.getLogger(__name__)
 
@@ -75,8 +75,8 @@ class UdsWriteSession:
             spec.user_agent = self._rt.user_agent
         call = self._rt.bidi_write(metadata=self._rt.metadata)
         try:
-            await call.write(
-                pb.BidiWriteObjectRequest(open=spec, op_id=next(self._ops))
+            await stream_write(
+                call, pb.BidiWriteObjectRequest(open=spec, op_id=next(self._ops))
             )
             resp = await call.read()
         except grpc.RpcError as exc:
@@ -156,7 +156,7 @@ class UdsWriteSession:
     async def _send(self, req: pb.BidiWriteObjectRequest) -> None:
         self._raise_if_failed()
         try:
-            await self._call.write(req)
+            await stream_write(self._call, req)
         except (grpc.RpcError, asyncio.InvalidStateError) as exc:
             await self._wait_reader()
             if self._error is not None:

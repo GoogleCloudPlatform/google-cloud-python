@@ -130,3 +130,36 @@ def object_from_resource(resource):
             md5_hash=resource.md5_hash or None,
         )
     return obj
+
+
+async def stream_write(call, req) -> None:
+    """Writes ``req`` to a bidi stream without clobbering peer close status.
+
+    ``grpc.aio.StreamStreamCall.write`` catches ``cygrpc.InternalError``
+    (raised as ``ExecuteBatchError`` when C-core has already closed the stream
+    on its poller thread before asyncio processes ``RECV_STATUS_ON_CLIENT``)
+    and calls ``set_internal_error``, replacing the server's real status (for
+    example ``UNAVAILABLE``) with ``INTERNAL`` (``"Internal error from Core"``).
+    Waiting for ``call.code()`` on ``InternalError`` lets ``RECV_STATUS_ON_CLIENT``
+    deliver the peer's status instead.
+    """
+    import asyncio
+
+    import grpc
+    from grpc._cython import cygrpc
+
+    if not isinstance(call, grpc.aio.StreamStreamCall):
+        await call.write(req)
+        return
+    if call.done():
+        raise asyncio.InvalidStateError("RPC already finished.")
+    await call.wait_for_connection()
+    try:
+        await call._cython_call.send_serialized_message(req.SerializeToString())
+    except cygrpc.InternalError as err:
+        await call.code()
+        await call._raise_for_status()
+        raise asyncio.InvalidStateError(str(err)) from err
+    except asyncio.CancelledError:
+        call.cancel()
+        raise

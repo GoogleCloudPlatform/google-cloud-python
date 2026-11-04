@@ -18,6 +18,7 @@ the default ``off`` mode never touches the UDS runtime, that ``auto`` falls back
 to GAPIC and that ``force`` (``--force-use-core-sdk``) fails closed.
 """
 
+import asyncio
 import datetime
 import inspect
 import json
@@ -1113,3 +1114,106 @@ def test_prewarm_is_opt_in(uds_env, storage_client_cls, monkeypatch):
         monkeypatch.setenv(_config.ENV_PREWARM, "1")
         client = _make_client(storage_client_cls)
         prewarm.assert_called_once_with(client)
+
+
+@pytest.mark.asyncio
+async def test_stream_write_preserves_peer_status_and_handles_edge_cases():
+    # 1. Non-StreamStreamCall fakes delegate to call.write().
+    fake_call = mock.Mock(write=mock.AsyncMock())
+    req = pb.BidiReadObjectRequest(release=pb.ReleaseSlots(slots=[0]))
+    await uds_errors.stream_write(fake_call, req)
+    fake_call.write.assert_awaited_once_with(req)
+
+    # Spin up a tiny real grpc.aio server to exercise StreamStreamCall branches.
+    mode = "unavailable"
+    srv = grpc.aio.server()
+
+    async def handler(req_iter, ctx):
+        await ctx.read()
+        if mode == "unavailable":
+            await ctx.write(b"")
+            await ctx.write(b"")
+            await ctx.abort(grpc.StatusCode.UNAVAILABLE, "restarting")
+
+    srv.add_generic_rpc_handlers(
+        [
+            grpc.method_handlers_generic_handler(
+                "gcscore.v1.GcsCore",
+                {
+                    "BidiReadObject": grpc.stream_stream_rpc_method_handler(
+                        handler,
+                        request_deserializer=pb.BidiReadObjectRequest.FromString,
+                        response_serializer=lambda b: b,
+                    )
+                },
+            )
+        ]
+    )
+    port = srv.add_insecure_port("127.0.0.1:0")
+    await srv.start()
+    ch = grpc.aio.insecure_channel(f"127.0.0.1:{port}")
+    stub = ch.stream_stream(
+        "/gcscore.v1.GcsCore/BidiReadObject",
+        request_serializer=pb.BidiReadObjectRequest.SerializeToString,
+        response_deserializer=lambda b: b,
+    )
+    try:
+        # 2. Concurrent write racing with server UNAVAILABLE abort never clobbers
+        #    the call status to INTERNAL ("Internal error from Core").
+        for _ in range(30):
+            call = stub()
+            await uds_errors.stream_write(call, req)
+            await call.read()
+            writer = asyncio.create_task(uds_errors.stream_write(call, req))
+            with pytest.raises(grpc.aio.AioRpcError) as exc_info:
+                await call.read()
+                await call.read()
+            assert exc_info.value.code() == grpc.StatusCode.UNAVAILABLE
+            try:
+                await writer
+            except (grpc.RpcError, asyncio.InvalidStateError):
+                pass
+
+        # 3. Writing to an already-done StreamStreamCall raises InvalidStateError.
+        assert call.done()
+        with pytest.raises(asyncio.InvalidStateError):
+            await uds_errors.stream_write(call, req)
+
+        # 4. InternalError on a cleanly-closed (OK) stream raises InvalidStateError.
+        mode = "ok"
+        ok_call = stub()
+        await uds_errors.stream_write(ok_call, req)
+        assert await ok_call.read() is grpc.aio.EOF
+        with (
+            mock.patch.object(ok_call, "done", return_value=False),
+            mock.patch.object(ok_call, "wait_for_connection", new=mock.AsyncMock()),
+        ):
+            with pytest.raises(asyncio.InvalidStateError):
+                await uds_errors.stream_write(ok_call, req)
+
+        # 5. Cancellation during send_serialized_message cancels the underlying call.
+        hang_call = stub()
+        gate = asyncio.Event()
+
+        async def _slow_send(_):
+            gate.set()
+            await asyncio.Event().wait()
+
+        with (
+            mock.patch.object(hang_call, "wait_for_connection", new=mock.AsyncMock()),
+            mock.patch.object(
+                hang_call,
+                "_cython_call",
+                wraps=hang_call._cython_call,
+            ) as wrapped_cython,
+        ):
+            wrapped_cython.send_serialized_message = _slow_send
+            task = asyncio.create_task(uds_errors.stream_write(hang_call, req))
+            await gate.wait()
+            task.cancel()
+            with pytest.raises(asyncio.CancelledError):
+                await task
+        assert hang_call.cancelled()
+    finally:
+        await ch.close()
+        await srv.stop(None)

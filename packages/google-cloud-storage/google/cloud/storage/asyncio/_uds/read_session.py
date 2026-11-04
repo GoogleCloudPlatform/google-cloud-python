@@ -28,6 +28,7 @@ from google.cloud.storage.asyncio._uds import gcscore_pb2 as pb
 from google.cloud.storage.asyncio._uds.errors import (
     object_from_resource,
     range_error_to_exception,
+    stream_write,
     to_api_exception,
 )
 
@@ -100,7 +101,7 @@ class UdsReadSession:
         )
         call = self._rt.bidi_read(metadata=self._rt.metadata)
         try:
-            await call.write(pb.BidiReadObjectRequest(open=spec))
+            await stream_write(call, pb.BidiReadObjectRequest(open=spec))
             resp = await call.read()
         except grpc.RpcError as exc:
             call.cancel()
@@ -139,7 +140,7 @@ class UdsReadSession:
                 if req is None:
                     await call.done_writing()
                     return
-                await call.write(req)
+                await stream_write(call, req)
         except asyncio.CancelledError:
             raise
         except Exception as exc:  # stream broken; the reader reports the status
