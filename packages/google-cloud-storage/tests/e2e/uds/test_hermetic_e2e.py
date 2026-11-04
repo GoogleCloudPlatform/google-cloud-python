@@ -39,6 +39,7 @@ from google.auth.credentials import AnonymousCredentials
 
 from google.cloud.storage.asyncio.async_appendable_object_writer import (
     AsyncAppendableObjectWriter,
+    Preconditions,
 )
 from google.cloud.storage.asyncio.async_grpc_client import AsyncGrpcClient
 from google.cloud.storage.asyncio.async_multi_range_downloader import (
@@ -249,6 +250,105 @@ async def test_generation_zero_on_existing_object(e2e):
     assert bytes(state.get_object(BUCKET, "exists").data) == b"already here"
 
 
+def _write_specs(state, field):
+    return [
+        getattr(r, field) for r in state.requests_for("BidiWriteObject") if field in r
+    ]
+
+
+@pytest.mark.asyncio
+async def test_preconditions_on_create_overwrite_and_reopen(e2e):
+    """`Preconditions` (#18641) reach GCS through the Rust SDK on open and reopen."""
+    client, state = e2e
+    name = "preconditions"
+
+    # Create: if_generation_match=0 only succeeds while no live object exists.
+    writer = AsyncAppendableObjectWriter(
+        client, BUCKET, name, preconditions=Preconditions(if_generation_match=0)
+    )
+    await writer.open()
+    assert writer._uds is not None, "writer did not take the Rust (UDS) path"
+    await writer.append(b"first")
+    assert await writer.close() == 5
+    first_gen = writer.generation
+    create = _write_specs(state, "write_object_spec")[-1]
+    assert "if_generation_match" in create and create.if_generation_match == 0
+    with pytest.raises(exceptions.FailedPrecondition):
+        await AsyncAppendableObjectWriter(
+            client, BUCKET, name, preconditions=Preconditions(if_generation_match=0)
+        ).open()
+
+    # Overwrite: generation + metageneration preconditions on WriteObjectSpec.
+    for bad in (
+        Preconditions(if_generation_match=first_gen + 100),
+        Preconditions(if_generation_not_match=first_gen),
+        Preconditions(if_metageneration_match=99),
+        Preconditions(if_metageneration_not_match=1),
+    ):
+        with pytest.raises(exceptions.FailedPrecondition):
+            await AsyncAppendableObjectWriter(
+                client, BUCKET, name, preconditions=bad
+            ).open()
+    assert state.get_object(BUCKET, name).generation == first_gen
+
+    overwrite = AsyncAppendableObjectWriter(
+        client,
+        BUCKET,
+        name,
+        preconditions=Preconditions(
+            if_generation_match=first_gen,
+            if_generation_not_match=first_gen + 100,
+            if_metageneration_match=1,
+            if_metageneration_not_match=7,
+        ),
+    )
+    await overwrite.open()
+    await overwrite.append(b"second")
+    assert await overwrite.close() == 6
+    second_gen = overwrite.generation
+    assert second_gen != first_gen
+    spec = _write_specs(state, "write_object_spec")[-1]
+    assert (
+        spec.if_generation_match,
+        spec.if_generation_not_match,
+        spec.if_metageneration_match,
+        spec.if_metageneration_not_match,
+    ) == (first_gen, first_gen + 100, 1, 7)
+
+    # Reopen (append to generation > 0): metageneration preconditions only.
+    for bad in (
+        Preconditions(if_metageneration_match=2),
+        Preconditions(if_metageneration_not_match=1),
+    ):
+        with pytest.raises(exceptions.FailedPrecondition):
+            await AsyncAppendableObjectWriter(
+                client, BUCKET, name, generation=second_gen, preconditions=bad
+            ).open()
+
+    reopen = AsyncAppendableObjectWriter(
+        client,
+        BUCKET,
+        name,
+        generation=second_gen,
+        preconditions=Preconditions(
+            if_metageneration_match=1, if_metageneration_not_match=3
+        ),
+    )
+    await reopen.open()
+    assert reopen._uds is not None and reopen.persisted_size == 6
+    await reopen.append(b"+more")
+    obj = await reopen.finalize(full_object_checksum=_crc(b"second+more"))
+    assert obj.generation == second_gen and obj.size == 11
+    append = _write_specs(state, "append_object_spec")[-1]
+    assert append.generation == second_gen
+    assert (append.if_metageneration_match, append.if_metageneration_not_match) == (
+        1,
+        3,
+    )
+    assert bytes(state.get_object(BUCKET, name).data) == b"second+more"
+    _assert_via_rust(state, "BidiWriteObject")
+
+
 @pytest.mark.asyncio
 async def test_mrd_reads(e2e, monkeypatch, transport_mode):
     _set_transport(monkeypatch, transport_mode)
@@ -315,6 +415,50 @@ async def test_mrd_reads(e2e, monkeypatch, transport_mode):
     _assert_via_rust(state, "BidiReadObject")
     read_requests = state.requests_for("BidiReadObject")
     assert read_requests[0].read_object_spec.object_ == name
+
+
+@pytest.mark.asyncio
+async def test_mrd_reads_into_buffer_destinations(e2e, monkeypatch, transport_mode):
+    """Buffer-protocol destinations (#18627 contract) are filled in place."""
+    _set_transport(monkeypatch, transport_mode)
+    client, state = e2e
+    data = _payload(3 * MiB + 17, seed=9)
+    state.put_object(BUCKET, f"buffers-{transport_mode}", data)
+
+    mrd = await _open_mrd(client, f"buffers-{transport_mode}")
+    try:
+        whole = bytearray(len(data))
+        backing = bytearray(2 * MiB)
+        middle = memoryview(backing)[MiB:]
+        chunks = []
+
+        class Collector:
+            def write(self, chunk):
+                chunks.append(chunk)
+
+        await mrd.download_ranges(
+            [
+                (0, len(data), whole),
+                (MiB + 5, MiB, middle),
+                (17, 4096, Collector()),
+            ],
+            accepts_memoryview=True,
+        )
+        assert whole == data
+        assert backing[MiB:] == data[MiB + 5 : 2 * MiB + 5]
+        assert b"".join(chunks) == data[17 : 17 + 4096]
+        assert all(type(c) is bytes for c in chunks)
+        middle.release()
+        whole.extend(b"!")  # exports released after the call
+
+        short = bytearray(64)
+        with pytest.raises(BufferError):
+            await mrd.download_ranges([(len(data) - 10, 64, short)])
+        assert short[:10] == data[-10:]
+        assert mrd.is_stream_open
+    finally:
+        await mrd.close()
+    _assert_via_rust(state, "BidiReadObject")
 
 
 @pytest.mark.asyncio

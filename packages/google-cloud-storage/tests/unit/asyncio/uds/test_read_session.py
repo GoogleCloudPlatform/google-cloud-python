@@ -41,7 +41,7 @@ from google.auth.credentials import AnonymousCredentials
 
 from google.cloud import _storage_v2
 from google.cloud.storage import __version__
-from google.cloud.storage.asyncio._uds import _config, runtime
+from google.cloud.storage.asyncio._uds import _config, read_session, runtime
 from google.cloud.storage.asyncio._uds import gcscore_pb2 as pb
 from google.cloud.storage.asyncio._uds.read_session import UdsReadSession
 from google.cloud.storage.asyncio.async_grpc_client import AsyncGrpcClient
@@ -91,8 +91,6 @@ class _ShmListener:
                 conn, _ = self._sock.accept()
             except socket.timeout:
                 continue
-            except OSError:
-                return
             fd = os.memfd_create("fake", 0)
             os.ftruncate(fd, self.size)
             mm = mmap.mmap(fd, self.size, flags=mmap.MAP_SHARED)
@@ -200,31 +198,21 @@ class _ReadCall:
 
     def on_release(self, slots):
         self.release_requests += 1
-        for s in slots:
-            self.released.append(s)
-            if s in self.leased:
-                self.leased.discard(s)
-                self.srv.free_slot(self.region_id, s)
-            else:
-                self.srv.bogus_releases.append((self.idx, s))
+        self.released.extend(slots)
+        self.srv.bogus_releases.extend(
+            (self.idx, s) for s in slots if s not in self.leased
+        )
+        for s in self.leased.intersection(slots):
+            self.leased.discard(s)
+            self.srv.free_slot(self.region_id, s)
 
     async def serve(self, spec):
-        try:
-            await self._serve(spec)
-        except asyncio.CancelledError:
-            raise
-        except Exception as exc:  # recorded and asserted on by the fixture
-            self.srv.errors.append(exc)
-
-    async def _serve(self, spec):
         data = self.srv.data
         action = self.srv.range_action(self.idx, spec) or ("serve",)
         kind = action[0]
         if kind == "error":
             _, code, message, checksum_mismatch = action
             await self.send_range_error(spec.range_id, code, message, checksum_mismatch)
-            return
-        if kind == "hold":
             return
         if spec.offset > len(data):
             await self.send_range_error(
@@ -279,16 +267,10 @@ class _ReadCall:
                         )
                 elif kind == "release":
                     self.on_release(req.release.slots)
-                elif kind == "cancel":
+                else:  # "cancel": every id was announced by an earlier "read"
                     self.cancelled_ids.extend(req.cancel.range_ids)
                     for rid in req.cancel.range_ids:
-                        task = self.tasks.get(rid)
-                        if task is not None:
-                            task.cancel()
-        except asyncio.CancelledError:
-            raise
-        except Exception:  # client went away
-            pass
+                        self.tasks[rid].cancel()
         finally:
             self.finish(None)
 
@@ -362,7 +344,9 @@ class _FakeGcsCore:
             tasks = list(call.tasks.values())
             for t in tasks:
                 t.cancel()
-            await asyncio.gather(reader, *tasks, return_exceptions=True)
+            results = await asyncio.gather(reader, *tasks, return_exceptions=True)
+            # Recorded and asserted on by the fixture (cancellation is expected).
+            self.errors.extend(r for r in results if isinstance(r, Exception))
             # Like gcs-core-server: a dead stream drops its slot leases.
             call.reclaimed = sorted(call.leased)
             for s in call.reclaimed:
@@ -848,3 +832,296 @@ async def test_public_multi_range_downloader_uses_uds(fake):
     assert not mrd.is_stream_open
     assert mrd._uds is None
     await _eventually(lambda: fake.calls[0].ended, "server stream to end after close")
+
+
+@pytest.mark.asyncio
+async def test_eventually_times_out():
+    with pytest.raises(AssertionError, match="timed out waiting for never"):
+        await _eventually(lambda: False, "never", timeout=0)
+
+
+# ------------------------------------------------------- scripted-stream unit tests
+#
+# Edge cases that a well-behaved server never produces are driven through a scripted
+# client-side stand-in for the ``grpc.aio`` stream instead of the fake server.
+
+
+class _ScriptedCall:
+    """Client-side ``BidiReadObject`` call whose responses are pushed by the test."""
+
+    def __init__(self, *responses, write_exc=None, code=None, eof_on_half_close=True):
+        self._responses = asyncio.Queue()
+        for resp in responses:
+            self.push(resp)
+        self.write_exc = write_exc
+        self._code = code
+        self.eof_on_half_close = eof_on_half_close
+        self.written = []
+        self.cancelled = False
+
+    def push(self, resp):
+        self._responses.put_nowait(resp)
+
+    async def write(self, req):
+        if self.write_exc is not None:
+            raise self.write_exc
+        self.written.append(req)
+
+    async def read(self):
+        return await self._responses.get()
+
+    async def done_writing(self):
+        if self.eof_on_half_close:
+            self.push(grpc.aio.EOF)
+
+    def cancel(self):
+        self.cancelled = True
+
+    async def code(self):
+        return self._code
+
+    def requests(self, op):
+        return [getattr(r, op) for r in self.written if r.WhichOneof("op") == op]
+
+
+class _ScriptedRuntime:
+    user_agent = "ua"
+    metadata = (("x-session", "s1"),)
+
+    def __init__(self, call):
+        self.call = call
+
+    async def read_region(self):
+        return None
+
+    def bidi_read(self, metadata):
+        assert metadata == self.metadata
+        return self.call
+
+
+def _opened():
+    return pb.BidiReadObjectResponse(opened=pb.ReadOpened(object=_default_resource()))
+
+
+def _rpc_error(code):
+    return grpc.aio.AioRpcError(
+        code, grpc.aio.Metadata(), grpc.aio.Metadata(), details="scripted"
+    )
+
+
+async def _scripted_session(call=None, **kwargs):
+    call = call or _ScriptedCall(_opened())
+    session = UdsReadSession(_ScriptedRuntime(call), "b", "o", **kwargs)
+    await _w(session.open())
+    return session, call
+
+
+def _pending_range(range_id, done=False):
+    fut = asyncio.get_running_loop().create_future()
+    if done:
+        fut.set_result(0)
+    return read_session._RangeState(range_id, 0, 1, io.BytesIO(), fut)
+
+
+@pytest.mark.asyncio
+async def test_open_maps_rpc_error_and_ignores_unknown_metadata():
+    call = _ScriptedCall(write_exc=_rpc_error(grpc.StatusCode.UNAVAILABLE))
+    session = UdsReadSession(
+        _ScriptedRuntime(call),
+        "b",
+        "o",
+        metadata=[("x-goog-api-client", "gl-python"), ("X-Goog-User-Project", "qp")],
+    )
+    assert session._quota_project == "qp"
+    with pytest.raises(exceptions.ServiceUnavailable):
+        await _w(session.open())
+    assert call.cancelled
+    assert not session.is_open
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "first, code, expected",
+    [
+        (grpc.aio.EOF, None, exceptions.InternalServerError),
+        (
+            pb.BidiReadObjectResponse(data=pb.RangeData(range_id=1)),
+            grpc.StatusCode.NOT_FOUND,
+            exceptions.NotFound,
+        ),
+    ],
+    ids=["eof", "data-before-opened"],
+)
+async def test_open_fails_when_stream_ends_before_opened(first, code, expected):
+    call = _ScriptedCall(first, code=code)
+    session = UdsReadSession(_ScriptedRuntime(call), "b", "o")
+    with pytest.raises(expected, match="ended before ReadOpened"):
+        await _w(session.open())
+    assert call.cancelled
+    assert not session.is_open
+    assert session._send_q is None
+    session._send_nowait(pb.BidiReadObjectRequest())  # no queue => dropped
+    await _w(session.close())  # never-opened session: nothing to tear down
+
+
+@pytest.mark.asyncio
+async def test_reader_skips_unexpected_messages_and_fails_pending_on_eof():
+    session, call = await _scripted_session()
+    finished, pending = _pending_range(7, done=True), _pending_range(8)
+    session._ranges.update({7: finished, 8: pending})
+
+    call.push(_opened())  # unexpected message kind: ignored
+    for range_id in (999, 7):  # unknown range / already finished range
+        call.push(
+            pb.BidiReadObjectResponse(
+                range_error=pb.RangeError(range_id=range_id, code=OUT_OF_RANGE)
+            )
+        )
+    call.push(grpc.aio.EOF)  # server ended the stream while a range is pending
+    await _w(session._reader)
+
+    assert finished.fut.result() == 0
+    assert isinstance(pending.fut.exception(), exceptions.ServiceUnavailable)
+    assert isinstance(session._error, exceptions.ServiceUnavailable)
+    assert not session.is_open
+    assert session._ranges == {}
+    await _w(session.close())
+
+
+@pytest.mark.asyncio
+async def test_writer_stops_quietly_when_stream_write_fails():
+    session, call = await _scripted_session()
+    call.write_exc = RuntimeError("stream broken")
+    session._send_nowait(pb.BidiReadObjectRequest(release=pb.ReleaseSlots(slots=[1])))
+    await _w(session._writer)  # swallowed; the reader reports the stream status
+    assert session._writer.exception() is None
+    call.push(grpc.aio.EOF)
+    await _w(session.close())
+
+
+class _FailingBuffer:
+    def write(self, data):
+        raise OSError("disk full")
+
+
+@pytest.mark.asyncio
+async def test_user_buffer_failure_fails_only_that_download():
+    session, call = await _scripted_session()
+    task = asyncio.ensure_future(session.download_ranges([(0, 10, _FailingBuffer())]))
+    await _eventually(lambda: call.requests("read"), "ReadRanges")
+    (spec,) = call.requests("read")[0].ranges
+    call.push(
+        pb.BidiReadObjectResponse(
+            data=pb.RangeData(range_id=spec.range_id, inline_data=b"x" * 10)
+        )
+    )
+    with pytest.raises(OSError, match="disk full"):
+        await _w(task)
+    assert session.is_open
+    await _w(session.close())
+
+
+@pytest.mark.asyncio
+async def test_slot_release_failure_for_unknown_range_is_contained():
+    class _BrokenQueue:
+        def put_nowait(self, item):
+            raise asyncio.QueueFull
+
+    session = UdsReadSession(_ScriptedRuntime(None), "b", "o")
+    session._send_q = _BrokenQueue()
+    session._on_data(
+        pb.RangeData(range_id=5, slot=pb.ShmSlotRef(slot=2, length=3), range_end=True)
+    )
+    assert session._ranges == {}
+
+
+@pytest.mark.asyncio
+async def test_download_ranges_on_closed_session():
+    session = UdsReadSession(_ScriptedRuntime(None), "b", "o")
+    assert await session.download_ranges([]) is None
+    with pytest.raises(ValueError, match="stream is not open"):
+        await session.download_ranges([(0, 1, io.BytesIO())])
+    session._error = exceptions.NotFound("gone")
+    with pytest.raises(exceptions.NotFound, match="gone"):
+        await session.download_ranges([(0, 1, io.BytesIO())])
+
+
+@pytest.mark.asyncio
+async def test_cancel_racing_completion_sends_no_cancel_ranges():
+    session, call = await _scripted_session()
+    task = None
+
+    class _CancellingBuffer(io.BytesIO):
+        def write(self, data):
+            task.cancel()  # cancelled while the range completes
+            return super().write(data)
+
+    buf = _CancellingBuffer()
+    task = asyncio.ensure_future(session.download_ranges([(0, 3, buf)]))
+    await _eventually(lambda: call.requests("read"), "ReadRanges")
+    (spec,) = call.requests("read")[0].ranges
+    call.push(
+        pb.BidiReadObjectResponse(
+            data=pb.RangeData(
+                range_id=spec.range_id, inline_data=b"abc", range_end=True
+            )
+        )
+    )
+    with pytest.raises(asyncio.CancelledError):
+        await _w(task)
+    assert buf.getvalue() == b"abc"
+    assert call.requests("cancel") == []
+    assert session.is_open
+    await _w(session.close())
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "error, expected",
+    [
+        (exceptions.ServiceUnavailable("died again"), exceptions.ServiceUnavailable),
+        (None, exceptions.ServiceUnavailable),
+    ],
+    ids=["replacement-failed", "replacement-closed"],
+)
+async def test_reopen_once_raises_when_replacement_stream_is_down(error, expected):
+    # A concurrent caller already replaced the stream of epoch 0, and the
+    # replacement is down as well: report instead of reopening again.
+    session = UdsReadSession(_ScriptedRuntime(None), "b", "o")
+    session._epoch = 1
+    session._error = error
+    with pytest.raises(expected):
+        await session._reopen_once(0)
+
+
+@pytest.mark.asyncio
+async def test_close_times_out_waiting_for_server_and_cancels_reader(monkeypatch):
+    session, call = await _scripted_session(
+        _ScriptedCall(_opened(), eof_on_half_close=False)
+    )
+    reader = session._reader
+    real_wait_for = asyncio.wait_for
+
+    def short_wait_for(aw, timeout):
+        assert timeout == 10
+        return real_wait_for(aw, 0.01)
+
+    monkeypatch.setattr(asyncio, "wait_for", short_wait_for)
+    await session.close()
+
+    assert call.cancelled
+    assert reader.cancelled()
+    assert isinstance(session._error, exceptions.Cancelled)
+    assert not session.is_open
+
+
+@pytest.mark.asyncio
+async def test_close_without_reader_task():
+    session, call = await _scripted_session()
+    reader = session._reader
+    session._reader = None
+    await _w(session.close())
+    assert call.cancelled
+    assert not session.is_open
+    call.push(grpc.aio.EOF)
+    await _w(reader)

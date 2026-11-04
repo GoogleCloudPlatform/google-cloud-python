@@ -26,7 +26,6 @@ import socket
 import struct
 import tempfile
 import threading
-import time
 
 import pytest
 
@@ -124,11 +123,10 @@ def fake_server(sock_dir):
 
 
 def _wait_for_map(srv, n=1):
-    for _ in range(500):
-        if len(srv.maps) >= n:
-            return srv.maps[n - 1]
-        time.sleep(0.01)
-    raise AssertionError("fake shm server never mapped the region")
+    # The fake appends its mmap before it sends the fd, and ``connect()`` returns only
+    # after it received that fd, so the server-side mapping is already there.
+    assert len(srv.maps) >= n
+    return srv.maps[n - 1]
 
 
 def _anon_region(cls=shm.WriteRegion, n_slots=_SLOTS, writable=True):

@@ -21,6 +21,7 @@ straight out of the shared mapping and releases slots only when it gets a ``Flus
 (or ``Close`` / ``Finalize``), like the Rust SDK's replay buffer.
 """
 
+import array
 import asyncio
 import itertools
 import mmap
@@ -31,6 +32,7 @@ import socket
 import struct
 import tempfile
 import threading
+from unittest import mock
 
 import google_crc32c
 import grpc
@@ -91,10 +93,8 @@ class FakeShmListener:
         while not self._stop.is_set():
             try:
                 conn, _ = self._sock.accept()
-            except socket.timeout:
+            except OSError:  # accept() timeout: re-check the stop flag
                 continue
-            except OSError:
-                break
             conn.setblocking(True)
             rid = next(self._ids)
             fd = os.memfd_create("fake", 0)
@@ -119,10 +119,6 @@ class FakeShmListener:
                 os.close(fd)
                 conn.close()
             self.regions.clear()
-        try:
-            os.unlink(self.path)
-        except OSError:
-            pass
 
 
 class StreamState:
@@ -152,6 +148,8 @@ class FakeGcsCore:
         self.release_on_flush = True
         self.release_on_close = True
         self.open_error = None  # grpc.StatusCode
+        self.open_replies = None  # replace WriteOpened with these replies, then end
+        self.close_error = None  # grpc.StatusCode
         self.noise = False  # send replies with unknown op_ids first
         self.persisted_bias = 0
 
@@ -198,6 +196,10 @@ class FakeGcsCore:
                 st.ops.append(("open", req.op_id, None))
                 if self.open_error is not None:
                     await context.abort(self.open_error, "fake open failure")
+                if self.open_replies is not None:
+                    for kwargs in self.open_replies:
+                        yield self._reply(st, op_id=req.op_id, **kwargs)
+                    return
                 yield self._reply(
                     st,
                     op_id=req.op_id,
@@ -236,6 +238,8 @@ class FakeGcsCore:
                 )
             elif kind == "close":
                 st.ops.append(("close", req.op_id, None))
+                if self.close_error is not None:
+                    await context.abort(self.close_error, "fake close failure")
                 if self.release_on_close and st.outstanding:
                     yield self._release(st)
                 if self.noise:
@@ -246,7 +250,7 @@ class FakeGcsCore:
                     op_id=req.op_id,
                     closed=pb.Closed(persisted_size=len(st.data) + self.persisted_bias),
                 )
-            elif kind == "finalize":
+            else:  # "finalize" (the only remaining ``op``)
                 fin = req.finalize
                 crc = (
                     fin.full_object_crc32c
@@ -690,3 +694,288 @@ async def test_public_appendable_writer_goes_through_uds(env):
     assert st.spec.bucket == "b" and st.spec.object == "pub"
     assert st.ops[-1][0] == "finalize" and st.ops[-1][2] == crc
     _assert_slot_packing(st)
+
+
+@pytest.mark.asyncio
+async def test_open_keeps_caller_user_agent(env):
+    session = UdsWriteSession(env.rt)
+    spec = pb.OpenAppendSpec(bucket="b", object="o", user_agent="custom-agent/1.0")
+    await _w(session.open(spec))
+    assert env.fake.last.spec.user_agent == "custom-agent/1.0"
+    await _w(session.close())
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "open_replies",
+    [[], [{"flushed": pb.Flushed(persisted_size=0)}]],
+    ids=["eof", "wrong-reply"],
+)
+async def test_open_without_write_opened_raises_and_returns_region(env, open_replies):
+    env.fake.open_replies = open_replies
+    session = UdsWriteSession(env.rt)
+    with pytest.raises(exceptions.GoogleAPICallError, match="before WriteOpened"):
+        await _w(session.open(pb.OpenAppendSpec(bucket="b", object="o")))
+    assert not session.is_open
+    assert session.region is None
+    idle = env.rt._idle_write_regions
+    assert len(idle) == 1 and not idle[0].closed and idle[0].all_free()
+
+
+@pytest.mark.asyncio
+async def test_append_casts_non_byte_buffers(env):
+    session, _ = await _open(env)
+    data = array.array("I", range(300_000))  # itemsize 4: not a "B" memoryview
+    await _w(session.append(data))
+    await _w(session.flush())
+    assert bytes(env.fake.last.data) == data.tobytes()
+    await _w(session.close())
+
+
+@pytest.mark.asyncio
+async def test_close_error_discards_region(env):
+    env.fake.close_error = grpc.StatusCode.ABORTED
+    session, _ = await _open(env)
+    region = session.region
+    await _w(session.append(b"abc"))
+    with pytest.raises(exceptions.Aborted):
+        await _w(session.close())
+    assert not session.is_open
+    assert session.region is None
+    assert region.closed
+    assert region not in env.rt._idle_write_regions
+    assert env.rt._live_regions == 0
+
+
+@pytest.mark.asyncio
+async def test_abort_releases_partial_slot_discards_region_and_is_idempotent(env):
+    session, _ = await _open(env)
+    region = session.region
+    await _w(session.append(b"partial"))
+    assert session._cur_slot is not None
+    await _w(session.abort())
+    assert not session.is_open
+    assert session.region is None
+    assert session._cur_slot is None
+    assert session._reader.done()
+    assert region.closed
+    assert env.rt._live_regions == 0
+    assert "close" not in env.fake.last.kinds()
+    await _w(session.abort())  # nothing left to tear down
+    assert not session.is_open
+
+
+@pytest.mark.asyncio
+async def test_finalize_empty_object(env):
+    session, _ = await _open(env, obj="empty")
+    obj = await _w(session.finalize(None))
+    assert obj.size == 0
+    assert env.fake.last.kinds() == ["open", "finalize"]
+
+
+@pytest.mark.asyncio
+async def test_fake_records_protocol_violations(env):
+    """Self-check: the ``violations == []`` assertions above can actually fail."""
+    session, _ = await _open(env)
+    other, _ = await _open(env)
+    own_id = session.region.region_id
+    other_id = other.region.region_id
+    assert own_id != other_id
+
+    def ref(region_id, slot):
+        slot_ref = pb.ShmSlotRef(region_id=region_id, slot=slot, length=1)
+        return pb.BidiWriteObjectRequest(append=pb.Append(slot=slot_ref))
+
+    await _w(session._send(ref(own_id, 0)))
+    await _w(session._send(ref(own_id, 0)))  # slot 0 again, never released
+    await _w(session._send(ref(other_id, 1)))  # someone else's region
+    await _w(session.flush())
+    assert env.fake.streams[0].violations == [
+        ("reused-unreleased", 0),
+        ("region", other_id),
+    ]
+    await _w(session.close())
+    await _w(other.close())
+
+
+# ------------------------------------------------------- unit tests (no server)
+
+
+def _rpc_error(code=grpc.StatusCode.UNAVAILABLE, details="boom"):
+    return grpc.aio.AioRpcError(code, grpc.aio.Metadata(), grpc.aio.Metadata(), details)
+
+
+class _ScriptedCall:
+    """Minimal stand-in for a ``grpc.aio`` stream-stream call.
+
+    ``read()`` returns the scripted replies in order, then blocks forever.
+    """
+
+    def __init__(self, replies=(), write_exc=None, done_writing_exc=None):
+        self._replies = list(replies)
+        self._write_exc = write_exc
+        self._done_writing_exc = done_writing_exc
+        self.written = []
+        self.cancelled = False
+
+    async def read(self):
+        if not self._replies:
+            await asyncio.Event().wait()
+        return self._replies.pop(0)
+
+    async def write(self, req):
+        if self._write_exc is not None:
+            raise self._write_exc
+        self.written.append(req)
+
+    async def done_writing(self):
+        if self._done_writing_exc is not None:
+            raise self._done_writing_exc
+
+    def cancel(self):
+        self.cancelled = True
+
+
+async def _forever():
+    await asyncio.Event().wait()
+
+
+@pytest.mark.asyncio
+async def test_read_loop_without_region_tolerates_releases_and_internal_flush():
+    session = UdsWriteSession(mock.Mock())
+    session._internal_flush = 5
+    call = _ScriptedCall(
+        [
+            pb.BidiWriteObjectResponse(released=pb.SlotsReleased(slots=[1])),
+            pb.BidiWriteObjectResponse(op_id=5, flushed=pb.Flushed(persisted_size=9)),
+            grpc.aio.EOF,
+        ]
+    )
+    await _w(session._read_loop(call))
+    assert session._internal_flush is None
+    assert session.last_persisted_size == 9
+    assert session._error is None
+    assert not session.is_open
+
+
+@pytest.mark.asyncio
+async def test_read_loop_eof_fails_pending_ops():
+    loop = asyncio.get_running_loop()
+    session = UdsWriteSession(mock.Mock())
+    session._region = mock.Mock()
+    done, pending = loop.create_future(), loop.create_future()
+    done.set_result("already answered")
+    session._waiters = {1: done, 2: pending}
+    await _w(session._read_loop(_ScriptedCall([grpc.aio.EOF])))
+    assert isinstance(session._error, exceptions.ServiceUnavailable)
+    assert pending.exception() is session._error
+    assert done.result() == "already answered"
+    assert session._waiters == {}
+    session._region.fail_waiters.assert_called_once_with()
+
+
+@pytest.mark.asyncio
+async def test_read_loop_cancellation_records_cancelled_error():
+    session = UdsWriteSession(mock.Mock())
+    session.is_open = True
+    task = asyncio.ensure_future(session._read_loop(_ScriptedCall()))
+    await asyncio.sleep(0)
+    task.cancel()
+    with pytest.raises(asyncio.CancelledError):
+        await task
+    assert isinstance(session._error, exceptions.Cancelled)
+    assert not session.is_open
+
+
+@pytest.mark.asyncio
+async def test_append_raises_stored_error_or_not_open():
+    session = UdsWriteSession(mock.Mock())
+    with pytest.raises(ValueError, match="Stream is not open"):
+        await session.append(b"x")
+    session._error = exceptions.Aborted("stream broke")
+    with pytest.raises(exceptions.Aborted, match="stream broke"):
+        await session.append(b"x")
+
+
+@pytest.mark.asyncio
+async def test_op_write_failure_maps_rpc_error_and_drops_waiter():
+    session = UdsWriteSession(mock.Mock())
+    session._call = _ScriptedCall(write_exc=_rpc_error())
+    with pytest.raises(exceptions.ServiceUnavailable, match="boom"):
+        await _w(session._op(flush=pb.Flush()))
+    assert session._waiters == {}
+
+
+@pytest.mark.asyncio
+async def test_op_write_failure_prefers_reader_error():
+    session = UdsWriteSession(mock.Mock())
+    session._call = _ScriptedCall(write_exc=asyncio.InvalidStateError())
+
+    async def _failing_reader():
+        session._error = exceptions.NotFound("object gone")
+
+    session._reader = asyncio.ensure_future(_failing_reader())
+    with pytest.raises(exceptions.NotFound, match="object gone"):
+        await _w(session._op(flush=pb.Flush()))
+    assert session._waiters == {}
+
+
+@pytest.mark.asyncio
+async def test_wait_reader_swallows_timeouts_and_reader_errors():
+    session = UdsWriteSession(mock.Mock())
+    await session._wait_reader()  # no reader
+
+    session._reader = asyncio.ensure_future(_forever())
+    await _w(session._wait_reader(timeout=0.01))
+    assert not session._reader.done()  # shielded: the reader keeps running
+    session._reader.cancel()
+    with pytest.raises(asyncio.CancelledError):
+        await session._reader
+    await session._wait_reader()  # reader already done
+
+    async def _broken():
+        raise RuntimeError("reader crashed")
+
+    session._reader = asyncio.ensure_future(_broken())
+    await _w(session._wait_reader())
+    assert isinstance(session._reader.exception(), RuntimeError)
+
+
+@pytest.mark.asyncio
+async def test_acquire_slot_sends_one_internal_flush_and_rechecks_free():
+    session = UdsWriteSession(mock.Mock())
+    session._call = _ScriptedCall()
+    region = mock.Mock(free_count=1)  # a release raced in after try_acquire()
+    region.try_acquire.side_effect = [None, None, 3]
+    region._ev.return_value = asyncio.Event()
+    session._region = region
+    assert await _w(session._acquire_slot()) == 3
+    # The second starved iteration reuses the in-flight starvation Flush.
+    assert len(session._call.written) == 1
+    assert session._call.written[0].HasField("flush")
+    assert session._internal_flush == session._call.written[0].op_id
+
+
+@pytest.mark.asyncio
+async def test_submit_current_returns_empty_slot_unsubmitted():
+    session = UdsWriteSession(mock.Mock())
+    session._region = mock.Mock()
+    session._cur_slot, session._cur_fill = 2, 0
+    await session._submit_current()
+    session._region.unacquire.assert_called_once_with(2)
+    assert session._cur_slot is None
+    assert session.slot_submissions == []
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("done_writing_exc", [None, _rpc_error()], ids=["ok", "error"])
+async def test_teardown_reusable_tolerates_done_writing_errors(done_writing_exc):
+    rt = mock.Mock()
+    session = UdsWriteSession(rt)
+    call = _ScriptedCall(done_writing_exc=done_writing_exc)
+    session._call, session.is_open = call, True
+    await _w(session._teardown(reusable=True))
+    assert call.cancelled
+    assert session._call is None
+    assert not session.is_open
+    rt.return_write_region.assert_not_called()

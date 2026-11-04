@@ -19,6 +19,7 @@ No real ``gcs-core-server`` is used: a tiny Python script (written to
 
 import errno
 import gc
+import importlib.util
 import json
 import os
 import shutil
@@ -32,6 +33,7 @@ import textwrap
 import threading
 import time
 import types
+from unittest import mock
 
 import pytest
 
@@ -142,15 +144,9 @@ def fake_server(tmp_path, clean_env):
 
 
 def _alive(pid):
-    try:
-        os.kill(pid, 0)
-    except ProcessLookupError:
-        return False
-    try:  # a zombie child is not alive
-        done, _ = os.waitpid(pid, os.WNOHANG)
-        return done == 0
-    except ChildProcessError:
-        return True
+    # ``pid`` is our (Popen) child: a non-zero waitpid() means it exited (zombie).
+    done, _ = os.waitpid(pid, os.WNOHANG)
+    return done == 0
 
 
 # ---------------------------------------------------------------- resolve_binary
@@ -421,6 +417,47 @@ def test_verify_server_peer_rejects_foreign_uid(listener, monkeypatch):
         server_manager.verify_server_peer(listener)
 
 
+def _patch_connect_error(monkeypatch, err):
+    class _Sock:
+        def __init__(self, family, kind):
+            assert (family, kind) == (socket.AF_UNIX, socket.SOCK_STREAM)
+
+        def settimeout(self, timeout):
+            pass
+
+        def connect(self, path):
+            raise err
+
+    fake = types.SimpleNamespace(
+        AF_UNIX=socket.AF_UNIX, SOCK_STREAM=socket.SOCK_STREAM, socket=_Sock
+    )
+    monkeypatch.setattr(server_manager, "socket", fake)
+
+
+def test_verify_server_peer_false_for_enotsock(monkeypatch):
+    _patch_connect_error(monkeypatch, OSError(errno.ENOTSOCK, "not a socket"))
+    assert server_manager.verify_server_peer("/run/whatever.sock") is False
+
+
+def test_verify_server_peer_raises_on_other_connect_errors(monkeypatch):
+    _patch_connect_error(monkeypatch, PermissionError(errno.EACCES, "denied"))
+    with pytest.raises(CoreSdkUnavailableError, match="cannot connect to") as info:
+        server_manager.verify_server_peer("/run/whatever.sock")
+    assert isinstance(info.value.__cause__, PermissionError)
+
+
+def test_module_import_without_register_at_fork(monkeypatch):
+    """Platforms without ``os.register_at_fork`` skip the after-fork lock reset."""
+    monkeypatch.delattr(os, "register_at_fork")
+    spec = importlib.util.spec_from_file_location(
+        "_server_manager_without_fork_hook", server_manager.__file__
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    assert module._lock is not server_manager._lock
+    assert module.BINARY_NAME == server_manager.BINARY_NAME
+
+
 # ----------------------------------------------------------------- ServerManager
 
 
@@ -437,11 +474,9 @@ def test_attach_via_socket_env_never_spawns(listener, clean_env, monkeypatch):
     clean_env.setenv(_config.ENV_SOCKET, listener)
     clean_env.setenv(_config.ENV_BINARY, "/nonexistent/gcs-core-server")
 
-    def _boom(*a, **k):
-        raise AssertionError("must not resolve or spawn when attaching")
-
-    monkeypatch.setattr(server_manager, "resolve_binary", _boom)
-    monkeypatch.setattr(server_manager.ServerManager, "_spawn", _boom)
+    boom = mock.Mock(side_effect=AssertionError("must not resolve or spawn"))
+    monkeypatch.setattr(server_manager, "resolve_binary", boom)
+    monkeypatch.setattr(server_manager.ServerManager, "_spawn", boom)
     mgr = server_manager.ServerManager()
     assert mgr.socket_path == listener
     target = mgr.ensure_server()
@@ -449,6 +484,22 @@ def test_attach_via_socket_env_never_spawns(listener, clean_env, monkeypatch):
     assert mgr.spawned is False
     assert mgr.process is None
     assert mgr.shm_socket_path(target) == f"{listener}.shm"
+    boom.assert_not_called()
+
+
+def test_ensure_server_double_checked_lock_skips_spawn(xdg, monkeypatch):
+    """Another process spawned the daemon while we waited for the flock."""
+    probes = iter([False, True])
+    monkeypatch.setattr(server_manager, "verify_server_peer", lambda p: next(probes))
+    spawn = mock.Mock()
+    monkeypatch.setattr(server_manager.ServerManager, "_spawn", spawn)
+    mgr = server_manager.ServerManager(binary="/nonexistent/gcs-core-server")
+    target = mgr.ensure_server()
+    key = mgr._key("/nonexistent/gcs-core-server")
+    sock = os.path.join(xdg, "gcs-core", f"gcs-core-{key}.sock")
+    assert target == f"unix://{sock}"
+    spawn.assert_not_called()
+    assert mgr.spawned is False
 
 
 def test_attach_via_socket_env_not_listening_raises(tmp_path, clean_env):

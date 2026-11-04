@@ -114,7 +114,7 @@ def _public_members(cls):
             out[name] = "property"
         elif isinstance(value, classmethod):
             out[name] = "classmethod " + str(inspect.signature(value.__func__))
-        elif callable(value):
+        else:
             prefix = "async " if inspect.iscoroutinefunction(value) else ""
             out[name] = prefix + str(inspect.signature(value))
     # Sentinel defaults (e.g. ``from_blob(generation=_marker)``) repr with an address.
