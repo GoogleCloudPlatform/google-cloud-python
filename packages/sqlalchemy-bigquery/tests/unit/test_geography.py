@@ -184,6 +184,7 @@ def test_calling_st_functions_that_dont_take_geographies(faux_conn, last_query):
 
 
 def test_fixup_st_arguments():
+    import sqlalchemy.types
     from geoalchemy2.functions import GenericFunction, ST_Area
     from sqlalchemy.sql.elements import BindParameter
 
@@ -203,9 +204,19 @@ def test_fixup_st_arguments():
     func_element2 = ST_Area(BindParameter("param", "point(0 0)", type_=GEOGRAPHY()))
     _fixup_st_arguments(func_element2, DummyCompiler())
 
-    # Case 3: function without specified argument types
+    # Case 3: function without specified argument types coerces NullType str to String
     class ST_Unknown(GenericFunction):
         name = "ST_Unknown"
 
-    func_element3 = ST_Unknown(BindParameter("param", "point(0 0)"))
+    func_element3 = ST_Unknown(
+        BindParameter("param", "point(0 0)", type_=sqlalchemy.types.NullType())
+    )
     _fixup_st_arguments(func_element3, DummyCompiler())
+    assert isinstance(func_element3.clauses.clauses[0].type, sqlalchemy.types.String)
+
+    # Case 4: NullType with non-str value (e.g. None) remains NullType
+    func_element4 = ST_Unknown(
+        BindParameter("param", None, type_=sqlalchemy.types.NullType())
+    )
+    _fixup_st_arguments(func_element4, DummyCompiler())
+    assert isinstance(func_element4.clauses.clauses[0].type, sqlalchemy.types.NullType)
