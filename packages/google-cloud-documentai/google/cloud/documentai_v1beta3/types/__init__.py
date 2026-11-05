@@ -133,9 +133,11 @@ from .operation_metadata import (
     CommonOperationMetadata,
 )
 from .processor import (
+    GroundingSettings,
     Processor,
     ProcessorVersion,
     ProcessorVersionAlias,
+    ProcessorVersionOverrides,
 )
 from .processor_type import (
     ProcessorType,
@@ -241,8 +243,10 @@ __all__ = (
     "NormalizedVertex",
     "Vertex",
     "CommonOperationMetadata",
+    "GroundingSettings",
     "Processor",
     "ProcessorVersion",
     "ProcessorVersionAlias",
+    "ProcessorVersionOverrides",
     "ProcessorType",
 )

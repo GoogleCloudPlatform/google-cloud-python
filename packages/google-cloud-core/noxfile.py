@@ -23,6 +23,11 @@ import nox
 
 BLACK_VERSION = "black==23.7.0"
 RUFF_VERSION = "ruff==0.14.14"
+# Temporarily pin pytest<9.2 because pytest 9.2.0 applies filterwarnings=error
+# before pytest_configure hooks run, turning pytest-asyncio's unset
+# asyncio_default_fixture_loop_scope warning (inherited via shared CI venvs)
+# into an error. Remove once pytest 9.2+ deprecations are resolved.
+PYTEST_VERSION = "pytest<9.2"
 BLACK_PATHS = ["docs", "google", "tests", "noxfile.py", "setup.py"]
 
 DEFAULT_PYTHON_VERSION = "3.14"
@@ -136,7 +141,7 @@ def default(session):
     )
 
     # Install all test dependencies, then install local packages in-place.
-    session.install("pytest", "pytest-cov", "-c", constraints_path)
+    session.install(PYTEST_VERSION, "pytest-cov", "-c", constraints_path)
     session.install("-e", ".[grpc]", "-c", constraints_path)
 
     # Run py.test against the unit tests.
@@ -275,7 +280,7 @@ def prerelease_deps(session, protobuf_implementation):
     """Run all tests with prerelease versions of dependencies installed."""
 
     # Install all test dependencies, then install local packages in-place.
-    session.install("pytest", "pytest-cov")
+    session.install(PYTEST_VERSION, "pytest-cov")
     session.install("-e", ".[grpc]")
 
     # Because we test minimum dependency versions on the minimum Python
@@ -362,7 +367,7 @@ def core_deps_from_source(session, protobuf_implementation):
     """
 
     # Install all test dependencies, then install local packages in-place.
-    session.install("pytest", "pytest-cov")
+    session.install(PYTEST_VERSION, "pytest-cov")
     session.install("-e", ".[grpc]")
 
     # Because we test minimum dependency versions on the minimum Python

@@ -81,6 +81,10 @@ class SqlWorkloadCapturesServiceAsyncClient:
     )
     _DEFAULT_UNIVERSE = SqlWorkloadCapturesServiceClient._DEFAULT_UNIVERSE
 
+    instance_path = staticmethod(SqlWorkloadCapturesServiceClient.instance_path)
+    parse_instance_path = staticmethod(
+        SqlWorkloadCapturesServiceClient.parse_instance_path
+    )
     common_billing_account_path = staticmethod(
         SqlWorkloadCapturesServiceClient.common_billing_account_path
     )
@@ -318,7 +322,7 @@ class SqlWorkloadCapturesServiceAsyncClient:
     async def start(
         self,
         request: Optional[
-            Union[cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest, dict]
+            Union[cloud_sql_workload_captures.WorkloadCapturesStartRequest, dict]
         ] = None,
         *,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
@@ -349,7 +353,7 @@ class SqlWorkloadCapturesServiceAsyncClient:
                 client = sqladmin_v1beta4.SqlWorkloadCapturesServiceAsyncClient()
 
                 # Initialize request argument(s)
-                request = sqladmin_v1beta4.SqlWorkloadCapturesStartRequest(
+                request = sqladmin_v1beta4.WorkloadCapturesStartRequest(
                     project="project_value",
                     instance="instance_value",
                 )
@@ -361,7 +365,7 @@ class SqlWorkloadCapturesServiceAsyncClient:
                 print(response)
 
         Args:
-            request (Optional[Union[google.cloud.sqladmin_v1beta4.types.SqlWorkloadCapturesStartRequest, dict]]):
+            request (Optional[Union[google.cloud.sqladmin_v1beta4.types.WorkloadCapturesStartRequest, dict]]):
                 The request object. Request to start recording traffic
                 from the primary instance (captured
                 workload).
@@ -386,11 +390,9 @@ class SqlWorkloadCapturesServiceAsyncClient:
         # - Use the request object if provided (there's no risk of modifying the input as
         #   there are no flattened fields), or create one.
         if not isinstance(
-            request, cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest
+            request, cloud_sql_workload_captures.WorkloadCapturesStartRequest
         ):
-            request = cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest(
-                request
-            )
+            request = cloud_sql_workload_captures.WorkloadCapturesStartRequest(request)
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
@@ -424,7 +426,7 @@ class SqlWorkloadCapturesServiceAsyncClient:
     async def stop(
         self,
         request: Optional[
-            Union[cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest, dict]
+            Union[cloud_sql_workload_captures.WorkloadCapturesStopRequest, dict]
         ] = None,
         *,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
@@ -450,7 +452,7 @@ class SqlWorkloadCapturesServiceAsyncClient:
                 client = sqladmin_v1beta4.SqlWorkloadCapturesServiceAsyncClient()
 
                 # Initialize request argument(s)
-                request = sqladmin_v1beta4.SqlWorkloadCapturesStopRequest(
+                request = sqladmin_v1beta4.WorkloadCapturesStopRequest(
                     project="project_value",
                     instance="instance_value",
                 )
@@ -462,7 +464,7 @@ class SqlWorkloadCapturesServiceAsyncClient:
                 print(response)
 
         Args:
-            request (Optional[Union[google.cloud.sqladmin_v1beta4.types.SqlWorkloadCapturesStopRequest, dict]]):
+            request (Optional[Union[google.cloud.sqladmin_v1beta4.types.WorkloadCapturesStopRequest, dict]]):
                 The request object. Request to stop recording traffic
                 from the primary instance.
             retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
@@ -486,11 +488,9 @@ class SqlWorkloadCapturesServiceAsyncClient:
         # - Use the request object if provided (there's no risk of modifying the input as
         #   there are no flattened fields), or create one.
         if not isinstance(
-            request, cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest
+            request, cloud_sql_workload_captures.WorkloadCapturesStopRequest
         ):
-            request = cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest(
-                request
-            )
+            request = cloud_sql_workload_captures.WorkloadCapturesStopRequest(request)
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
@@ -524,9 +524,7 @@ class SqlWorkloadCapturesServiceAsyncClient:
     async def start_replay(
         self,
         request: Optional[
-            Union[
-                cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest, dict
-            ]
+            Union[cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest, dict]
         ] = None,
         *,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
@@ -557,7 +555,7 @@ class SqlWorkloadCapturesServiceAsyncClient:
                 start_workload_replay_context = sqladmin_v1beta4.StartWorkloadReplayContext()
                 start_workload_replay_context.replay_instance = "replay_instance_value"
 
-                request = sqladmin_v1beta4.SqlWorkloadCapturesStartReplayRequest(
+                request = sqladmin_v1beta4.WorkloadCapturesStartReplayRequest(
                     project="project_value",
                     instance="instance_value",
                     start_workload_replay_context=start_workload_replay_context,
@@ -571,7 +569,7 @@ class SqlWorkloadCapturesServiceAsyncClient:
                 print(response)
 
         Args:
-            request (Optional[Union[google.cloud.sqladmin_v1beta4.types.SqlWorkloadCapturesStartReplayRequest, dict]]):
+            request (Optional[Union[google.cloud.sqladmin_v1beta4.types.WorkloadCapturesStartReplayRequest, dict]]):
                 The request object. Request to start executing a captured
                 workload on a replay instance (the Cloud
                 SQL instance where the recorded SQL
@@ -597,9 +595,9 @@ class SqlWorkloadCapturesServiceAsyncClient:
         # - Use the request object if provided (there's no risk of modifying the input as
         #   there are no flattened fields), or create one.
         if not isinstance(
-            request, cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest
+            request, cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest
         ):
-            request = cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest(
+            request = cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest(
                 request
             )
 
@@ -638,9 +636,7 @@ class SqlWorkloadCapturesServiceAsyncClient:
     async def stop_replay(
         self,
         request: Optional[
-            Union[
-                cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest, dict
-            ]
+            Union[cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest, dict]
         ] = None,
         *,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
@@ -666,7 +662,7 @@ class SqlWorkloadCapturesServiceAsyncClient:
                 client = sqladmin_v1beta4.SqlWorkloadCapturesServiceAsyncClient()
 
                 # Initialize request argument(s)
-                request = sqladmin_v1beta4.SqlWorkloadCapturesStopReplayRequest(
+                request = sqladmin_v1beta4.WorkloadCapturesStopReplayRequest(
                     project="project_value",
                     instance="instance_value",
                 )
@@ -678,7 +674,7 @@ class SqlWorkloadCapturesServiceAsyncClient:
                 print(response)
 
         Args:
-            request (Optional[Union[google.cloud.sqladmin_v1beta4.types.SqlWorkloadCapturesStopReplayRequest, dict]]):
+            request (Optional[Union[google.cloud.sqladmin_v1beta4.types.WorkloadCapturesStopReplayRequest, dict]]):
                 The request object. Request to stop an active workload
                 replay on a target Cloud SQL replay
                 instance.
@@ -703,9 +699,9 @@ class SqlWorkloadCapturesServiceAsyncClient:
         # - Use the request object if provided (there's no risk of modifying the input as
         #   there are no flattened fields), or create one.
         if not isinstance(
-            request, cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest
+            request, cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest
         ):
-            request = cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest(
+            request = cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest(
                 request
             )
 

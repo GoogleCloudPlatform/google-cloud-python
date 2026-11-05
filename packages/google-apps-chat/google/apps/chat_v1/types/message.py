@@ -58,6 +58,8 @@ __protobuf__ = proto.module(
         "DialogAction",
         "Dialog",
         "CardWithId",
+        "ReplaceMessageCardsRequest",
+        "ReplaceMessageCardsResponse",
         "SearchMessagesRequest",
         "SearchMessagesResponse",
         "SearchMessageResult",
@@ -1318,6 +1320,8 @@ class CardWithId(proto.Message):
             message.
         card (google.apps.card_v1.types.Card):
             A card. Maximum size is 32 KB.
+        owner_user (google.apps.chat_v1.types.User):
+            Output only. The app that owns the card.
     """
 
     card_id: str = proto.Field(
@@ -1329,6 +1333,42 @@ class CardWithId(proto.Message):
         number=2,
         message=gac_card.Card,
     )
+    owner_user: user.User = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=user.User,
+    )
+
+
+class ReplaceMessageCardsRequest(proto.Message):
+    r"""Request message for ReplaceMessageCards API method.
+
+    Attributes:
+        name (str):
+            Required. The resource name of the message.
+
+            Format: ``spaces/{space}/messages/{message}``
+        cards_v2 (MutableSequence[google.apps.chat_v1.types.CardWithId]):
+            Optional. An array of
+            `cards <https://developers.google.com/workspace/chat/api/reference/rest/v1/cards>`__
+            to be included in the message. These cards will replace the
+            existing cards of the message. If empty, the original cards
+            included in the message will be cleared.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    cards_v2: MutableSequence["CardWithId"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message="CardWithId",
+    )
+
+
+class ReplaceMessageCardsResponse(proto.Message):
+    r"""Response message for ReplaceMessageCards API."""
 
 
 class SearchMessagesRequest(proto.Message):

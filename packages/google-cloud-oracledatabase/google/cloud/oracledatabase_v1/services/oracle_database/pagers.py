@@ -64,6 +64,7 @@ from google.cloud.oracledatabase_v1.types import (
     goldengate_deployment_type,
     goldengate_deployment_version,
     minor_version,
+    odb_dns_zone,
     odb_network,
     odb_subnet,
     oracledatabase,
@@ -2282,6 +2283,162 @@ class ListOdbSubnetsAsyncPager:
         async def async_generator():
             async for page in self.pages:
                 for response in page.odb_subnets:
+                    yield response
+
+        return async_generator()
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListOdbDnsZonesPager:
+    """A pager for iterating through ``list_odb_dns_zones`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.oracledatabase_v1.types.ListOdbDnsZonesResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``odb_dns_zones`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``ListOdbDnsZones`` requests and continue to iterate
+    through the ``odb_dns_zones`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.oracledatabase_v1.types.ListOdbDnsZonesResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[..., odb_dns_zone.ListOdbDnsZonesResponse],
+        request: odb_dns_zone.ListOdbDnsZonesRequest,
+        response: odb_dns_zone.ListOdbDnsZonesResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.oracledatabase_v1.types.ListOdbDnsZonesRequest):
+                The initial request object.
+            response (google.cloud.oracledatabase_v1.types.ListOdbDnsZonesResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = odb_dns_zone.ListOdbDnsZonesRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(self) -> Iterator[odb_dns_zone.ListOdbDnsZonesResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(self) -> Iterator[odb_dns_zone.OdbDnsZone]:
+        for page in self.pages:
+            yield from page.odb_dns_zones
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListOdbDnsZonesAsyncPager:
+    """A pager for iterating through ``list_odb_dns_zones`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.oracledatabase_v1.types.ListOdbDnsZonesResponse` object, and
+    provides an ``__aiter__`` method to iterate through its
+    ``odb_dns_zones`` field.
+
+    If there are more pages, the ``__aiter__`` method will make additional
+    ``ListOdbDnsZones`` requests and continue to iterate
+    through the ``odb_dns_zones`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.oracledatabase_v1.types.ListOdbDnsZonesResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[..., Awaitable[odb_dns_zone.ListOdbDnsZonesResponse]],
+        request: odb_dns_zone.ListOdbDnsZonesRequest,
+        response: odb_dns_zone.ListOdbDnsZonesResponse,
+        *,
+        retry: OptionalAsyncRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiates the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.oracledatabase_v1.types.ListOdbDnsZonesRequest):
+                The initial request object.
+            response (google.cloud.oracledatabase_v1.types.ListOdbDnsZonesResponse):
+                The initial response object.
+            retry (google.api_core.retry.AsyncRetry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = odb_dns_zone.ListOdbDnsZonesRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    async def pages(self) -> AsyncIterator[odb_dns_zone.ListOdbDnsZonesResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = await self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __aiter__(self) -> AsyncIterator[odb_dns_zone.OdbDnsZone]:
+        async def async_generator():
+            async for page in self.pages:
+                for response in page.odb_dns_zones:
                     yield response
 
         return async_generator()

@@ -272,7 +272,9 @@ class Client(ClientWithProject):
         default_job_creation_mode (Optional[str]):
             Sets the default job creation mode used by query methods such as
             query_and_wait().  For lightweight queries, JOB_CREATION_OPTIONAL is
-            generally recommended.
+            generally recommended. If unset, query_and_wait() uses
+            JOB_CREATION_OPTIONAL for ``ARROW`` results and creates a job
+            otherwise.
 
     Raises:
         google.auth.exceptions.DefaultCredentialsError:
@@ -3049,13 +3051,8 @@ class Client(ClientWithProject):
                     )
 
             else:
-                dataframe.to_csv(
-                    tmppath,
-                    index=False,
-                    header=False,
-                    encoding="utf-8",
-                    float_format="%.17g",
-                    date_format="%Y-%m-%d %H:%M:%S.%f",
+                _pandas_helpers.dataframe_to_csv(
+                    dataframe, new_job_config.schema, tmppath
                 )
 
             with open(tmppath, "rb") as tmpfile:
@@ -3808,6 +3805,13 @@ class Client(ClientWithProject):
                 The maximum total number of rows from this request.
             query_results_format (Optional[Union[str, google.cloud.bigquery.enums.QueryResultsFormat]]):
                 [Beta] The format for query results (e.g. "ARROW" or :class:`~google.cloud.bigquery.enums.QueryResultsFormat.ARROW`).
+
+                With ``ARROW``, the query uses ``JOB_CREATION_OPTIONAL``
+                unless :attr:`default_job_creation_mode` is set. Results that
+                fit in one page then have no job, so the returned iterator's
+                ``job_id`` is ``None``. To always create a job, set
+                ``default_job_creation_mode`` to ``JOB_CREATION_REQUIRED`` or
+                use :meth:`query`.
             compression_codec (Optional[Union[str, google.cloud.bigquery.enums.QueryResultsCompressionCodec]]):
                 [Beta] Compression codec for Arrow serialization (e.g. "LZ4_FRAME" or :class:`~google.cloud.bigquery.enums.QueryResultsCompressionCodec.LZ4_FRAME`).
             timestamp_precision (Optional[enums.TimestampPrecision]):

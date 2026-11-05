@@ -62,18 +62,6 @@
         }
       ]
     },
-    "packages/google-cloud-compute": {
-      "component": "google-cloud-compute",
-      "extra-files": [
-        "google/cloud/compute/gapic_version.py",
-        "google/cloud/compute_v1/gapic_version.py",
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.cloud.compute.v1.json",
-          "type": "json"
-        }
-      ]
-    },
     "packages/google-cloud-datastore": {
       "component": "google-cloud-datastore",
       "extra-files": [
@@ -89,6 +77,18 @@
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.datastore.v1.json",
+          "type": "json"
+        }
+      ]
+    },
+    "packages/google-cloud-designcenter": {
+      "component": "google-cloud-designcenter",
+      "extra-files": [
+        "google/cloud/designcenter/gapic_version.py",
+        "google/cloud/designcenter_v1/gapic_version.py",
+        {
+          "jsonpath": "$.clientLibrary.version",
+          "path": "samples/generated_samples/snippet_metadata_google.cloud.designcenter.v1.json",
           "type": "json"
         }
       ]
@@ -204,23 +204,6 @@
     },
     "packages/sqlalchemy-spanner": {
       "component": "sqlalchemy-spanner"
-    },
-    "preview-packages/google-cloud-compute": {
-      "component": "google-cloud-compute-preview",
-      "draft-pull-request": true,
-      "extra-files": [
-        "google/cloud/compute/gapic_version.py",
-        "google/cloud/compute_v1/gapic_version.py",
-        {
-          "jsonpath": "$.clientLibrary.version",
-          "path": "samples/generated_samples/snippet_metadata_google.cloud.compute.v1.json",
-          "type": "json"
-        }
-      ],
-      "package-name": "google-cloud-compute",
-      "prerelease": true,
-      "prerelease-type": "preview",
-      "versioning": "prerelease"
     }
   },
   "release-type": "python-librarian",

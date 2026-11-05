@@ -125,9 +125,17 @@ class TestGoogleCloudMetricsHandler:
 
     def test_close(self):
         mock_instance = mock.Mock()
+        mock_instance._exporter.shutting_down = False
+
+        def _shutdown():
+            # the exporter must be flagged before shutdown runs the final export
+            assert mock_instance._exporter.shutting_down is True
+
+        mock_instance.meter_provider.shutdown.side_effect = _shutdown
         assert mock_instance.meter_provider.shutdown.call_count == 0
         GoogleCloudMetricsHandler.close(mock_instance)
         assert mock_instance.meter_provider.shutdown.call_count == 1
+        assert mock_instance._exporter.shutting_down is True
 
 
 BIGTABLE_DATA_SCOPE = "https://www.googleapis.com/auth/bigtable.data"
@@ -269,6 +277,7 @@ class TestBigtableMetricsExporter:
         assert instance.prefix == "bigtable.googleapis.com/internal/client"
         assert isinstance(instance.client, MetricServiceClient)
         assert instance._disabled is False
+        assert instance.shutting_down is False
 
     def test_ctor_mocks(self):
         with mock.patch(
@@ -676,3 +685,49 @@ class TestBigtableMetricsExporter:
         assert result == MetricExportResult.FAILURE
         to_point_mock.assert_not_called()
         instance._batch_write.assert_not_called()
+
+    @staticmethod
+    def _make_sampling_period_error():
+        return api_exceptions.FailedPrecondition(
+            "One or more TimeSeries could not be written: One or more points "
+            "were written more frequently than the maximum sampling period "
+            "configured for the metric."
+        )
+
+    def test_export_failed_precondition_during_shutdown(self, caplog):
+        """
+        the final export triggered by shutdown is expected to be rejected for
+        series written within the sampling period. That must not be logged as a
+        warning, and must not disable the exporter
+        """
+        instance = self._make_one()
+        instance.client = mock.Mock()
+        instance.client.create_service_time_series.side_effect = (
+            self._make_sampling_period_error()
+        )
+        instance.shutting_down = True
+        with caplog.at_level(logging.DEBUG, logger=EXPORTER_LOGGER):
+            result = instance.export(self._make_metrics_data())
+        assert result == MetricExportResult.FAILURE
+        assert instance._disabled is False
+        assert instance.client.create_service_time_series.call_count == 1
+        assert not [r for r in caplog.records if r.levelno >= logging.WARNING]
+        debug_messages = [
+            r.getMessage() for r in caplog.records if r.levelno == logging.DEBUG
+        ]
+        assert any("shutdown" in m and "sampling period" in m for m in debug_messages)
+
+    def test_export_failed_precondition_while_running(self, caplog):
+        """outside of shutdown, FAILED_PRECONDITION is still a warning"""
+        instance = self._make_one()
+        instance.client = mock.Mock()
+        instance.client.create_service_time_series.side_effect = (
+            self._make_sampling_period_error()
+        )
+        with caplog.at_level(logging.WARNING, logger=EXPORTER_LOGGER):
+            result = instance.export(self._make_metrics_data())
+        assert result == MetricExportResult.FAILURE
+        assert instance._disabled is False
+        warnings = [r for r in caplog.records if r.levelno == logging.WARNING]
+        assert len(warnings) == 1
+        assert "sampling period" in warnings[0].getMessage()

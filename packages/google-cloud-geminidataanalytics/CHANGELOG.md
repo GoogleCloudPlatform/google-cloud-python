@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-cloud-geminidataanalytics/#history
 
+## [0.13.6](https://github.com/googleapis/google-cloud-python/compare/google-cloud-geminidataanalytics-v0.13.5...google-cloud-geminidataanalytics-v0.13.6) (2026-10-29)
+
+
+### Features
+
+* update API sources and regenerate ([#18889](https://github.com/googleapis/google-cloud-python/issues/18889)) ([8705243](https://github.com/googleapis/google-cloud-python/commit/870524380c52ea234235e0c449f5c9aee2945283))
+
 ## [0.13.5](https://github.com/googleapis/google-cloud-python/compare/google-cloud-geminidataanalytics-v0.13.4...google-cloud-geminidataanalytics-v0.13.5) (2026-10-01)
 
 

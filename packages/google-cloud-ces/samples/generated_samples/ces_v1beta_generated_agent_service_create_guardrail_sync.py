@@ -40,7 +40,7 @@ def sample_create_guardrail():
 
     # Initialize request argument(s)
     guardrail = ces_v1beta.Guardrail()
-    guardrail.content_filter.match_type = "REGEXP_MATCH"
+    guardrail.content_filter.match_type = "SENSITIVE_WORDS"
     guardrail.display_name = "display_name_value"
 
     request = ces_v1beta.CreateGuardrailRequest(

@@ -590,7 +590,7 @@ replacements:
           # this dependency.
           "google-resumable-media >= 2.7.2, < 3.0.0",
           "requests >= 2.22.0, < 3.0.0",
-          "google-crc32c >= 1.6.0, < 2.0.0",
+          "google-crc32c >= 1.9.0, < 2.0.0",
       ]
       extras = {
           # TODO: Make these extra dependencies as mandatory once gRPC out of
@@ -659,7 +659,7 @@ replacements:
       grpc-google-iam-v1==0.14.2
       opentelemetry-api==1.1.0
       requests==2.22.0
-      google-crc32c==1.6.0
+      google-crc32c==1.9.0
     count: 1
   - paths: [
       packages/google-cloud-storage/testing/constraints-3.11.txt,

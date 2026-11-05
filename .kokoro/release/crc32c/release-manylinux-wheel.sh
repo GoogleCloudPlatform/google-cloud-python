@@ -17,7 +17,5 @@ set -eo pipefail
 
 cd github/google-cloud-python/packages/google-crc32c
 
-export PUBLISH_WHEELS="${PUBLISH_WHEELS:-true}"
-
-# Build and publish ManyLinux wheels
+# Build ManyLinux wheels
 ./scripts/manylinux/build.sh

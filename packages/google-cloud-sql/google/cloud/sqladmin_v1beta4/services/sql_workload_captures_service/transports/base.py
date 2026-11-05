@@ -188,7 +188,7 @@ class SqlWorkloadCapturesServiceTransport(abc.ABC):
     def start(
         self,
     ) -> Callable[
-        [cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest],
+        [cloud_sql_workload_captures.WorkloadCapturesStartRequest],
         Union[cloud_sql_resources.Operation, Awaitable[cloud_sql_resources.Operation]],
     ]:
         raise NotImplementedError()
@@ -197,7 +197,7 @@ class SqlWorkloadCapturesServiceTransport(abc.ABC):
     def stop(
         self,
     ) -> Callable[
-        [cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest],
+        [cloud_sql_workload_captures.WorkloadCapturesStopRequest],
         Union[cloud_sql_resources.Operation, Awaitable[cloud_sql_resources.Operation]],
     ]:
         raise NotImplementedError()
@@ -206,7 +206,7 @@ class SqlWorkloadCapturesServiceTransport(abc.ABC):
     def start_replay(
         self,
     ) -> Callable[
-        [cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest],
+        [cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest],
         Union[cloud_sql_resources.Operation, Awaitable[cloud_sql_resources.Operation]],
     ]:
         raise NotImplementedError()
@@ -215,7 +215,7 @@ class SqlWorkloadCapturesServiceTransport(abc.ABC):
     def stop_replay(
         self,
     ) -> Callable[
-        [cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest],
+        [cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest],
         Union[cloud_sql_resources.Operation, Awaitable[cloud_sql_resources.Operation]],
     ]:
         raise NotImplementedError()

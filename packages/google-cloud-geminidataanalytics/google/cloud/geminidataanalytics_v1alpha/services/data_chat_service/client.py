@@ -664,7 +664,8 @@ class DataChatServiceClient(metaclass=DataChatServiceClientMeta):
         metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
     ) -> Iterable[data_chat_service.Message]:
         r"""Answers a data question by generating a stream of
-        [Message][google.cloud.geminidataanalytics.v1.Message] objects.
+        [Message][google.cloud.geminidataanalytics.v1alpha.Message]
+        objects.
 
         .. code-block:: python
 

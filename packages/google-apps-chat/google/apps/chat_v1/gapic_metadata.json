@@ -215,6 +215,11 @@
                 "position_section"
               ]
             },
+            "ReplaceMessageCards": {
+              "methods": [
+                "replace_message_cards"
+              ]
+            },
             "SearchMessages": {
               "methods": [
                 "search_messages"
@@ -480,6 +485,11 @@
                 "position_section"
               ]
             },
+            "ReplaceMessageCards": {
+              "methods": [
+                "replace_message_cards"
+              ]
+            },
             "SearchMessages": {
               "methods": [
                 "search_messages"
@@ -743,6 +753,11 @@
             "PositionSection": {
               "methods": [
                 "position_section"
+              ]
+            },
+            "ReplaceMessageCards": {
+              "methods": [
+                "replace_message_cards"
               ]
             },
             "SearchMessages": {

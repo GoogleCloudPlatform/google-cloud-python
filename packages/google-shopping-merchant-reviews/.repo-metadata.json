@@ -9,7 +9,7 @@
     "language": "python",
     "library_type": "GAPIC_AUTO",
     "name": "google-shopping-merchant-reviews",
-    "name_pretty": "Merchant",
+    "name_pretty": "Shopping Merchant Reviews",
     "product_documentation": "https://developers.google.com/merchant/api",
     "release_level": "preview",
     "repo": "googleapis/google-cloud-python"

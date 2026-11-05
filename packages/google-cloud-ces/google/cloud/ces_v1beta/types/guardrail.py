@@ -72,6 +72,11 @@ class Guardrail(proto.Message):
             callback execution.
 
             This field is a member of `oneof`_ ``guardrail_type``.
+        supervisor (google.cloud.ces_v1beta.types.Guardrail.Supervisor):
+            Optional. Guardrail that runs supervisor
+            intervention.
+
+            This field is a member of `oneof`_ ``guardrail_type``.
         name (str):
             Identifier. The unique identifier of the guardrail. Format:
             ``projects/{project}/locations/{location}/apps/{app}/guardrails/{guardrail}``
@@ -116,6 +121,13 @@ class Guardrail(proto.Message):
             disregard_diacritics (bool):
                 Optional. If true, diacritics are ignored
                 during matching.
+            sensitive_words_exemptions (MutableSequence[str]):
+                Optional. Entries of the sensitive words list that this
+                guardrail allows. Only valid when match_type is
+                SENSITIVE_WORDS. Each value must equal a list entry
+                (case-insensitive, surrounding whitespace ignored); other
+                values have no effect. Applies to this guardrail only. At
+                most 1000 entries of up to 256 characters each.
         """
 
         class MatchType(proto.Enum):
@@ -134,12 +146,20 @@ class Guardrail(proto.Message):
                 REGEXP_MATCH (3):
                     Content is matched using regular expression
                     syntax.
+                SENSITIVE_WORDS (4):
+                    Content is matched against a system-managed
+                    list of sensitive words and phrases. Attaching a
+                    guardrail with this match type to an app or
+                    agent replaces the default sensitive words
+                    filter for the affected agents; disable the
+                    guardrail to opt out of the default filter.
             """
 
             MATCH_TYPE_UNSPECIFIED = 0
             SIMPLE_STRING_MATCH = 1
             WORD_BOUNDARY_STRING_MATCH = 2
             REGEXP_MATCH = 3
+            SENSITIVE_WORDS = 4
 
         banned_contents: MutableSequence[str] = proto.RepeatedField(
             proto.STRING,
@@ -161,6 +181,10 @@ class Guardrail(proto.Message):
         disregard_diacritics: bool = proto.Field(
             proto.BOOL,
             number=5,
+        )
+        sensitive_words_exemptions: MutableSequence[str] = proto.RepeatedField(
+            proto.STRING,
+            number=7,
         )
 
     class LlmPromptSecurity(proto.Message):
@@ -245,7 +269,10 @@ class Guardrail(proto.Message):
             model_settings (google.cloud.ces_v1beta.types.ModelSettings):
                 Optional. Model settings.
             prompt (str):
-                Required. Policy prompt.
+                Required. Policy prompt. Supports session variable
+                placeholders (``{var}``) as well as
+                ``{agent_system_instruction}`` to inject the agent's
+                resolved system instructions.
             policy_scope (google.cloud.ces_v1beta.types.Guardrail.LlmPolicy.PolicyScope):
                 Required. Defines when to apply the policy check during the
                 conversation. If set to ``POLICY_SCOPE_UNSPECIFIED``, the
@@ -341,6 +368,10 @@ class Guardrail(proto.Message):
                 HARM_CATEGORY_SEXUALLY_EXPLICIT (4):
                     The harm category is sexually explicit
                     content.
+                HARM_CATEGORY_PROFANITY (5):
+                    The harm category is profanity.
+                HARM_CATEGORY_TOXIC (6):
+                    The harm category is toxic.
             """
 
             HARM_CATEGORY_UNSPECIFIED = 0
@@ -348,6 +379,8 @@ class Guardrail(proto.Message):
             HARM_CATEGORY_DANGEROUS_CONTENT = 2
             HARM_CATEGORY_HARASSMENT = 3
             HARM_CATEGORY_SEXUALLY_EXPLICIT = 4
+            HARM_CATEGORY_PROFANITY = 5
+            HARM_CATEGORY_TOXIC = 6
 
         class HarmBlockThreshold(proto.Enum):
             r"""Probability based thresholds levels for blocking.
@@ -476,6 +509,82 @@ class Guardrail(proto.Message):
             message=common.Callback,
         )
 
+    class Supervisor(proto.Message):
+        r"""Guardrail that runs supervisor intervention.
+
+        Attributes:
+            type_ (google.cloud.ces_v1beta.types.Guardrail.Supervisor.Type):
+                Optional. The type of the supervisor.
+            detection_mode (google.cloud.ces_v1beta.types.Guardrail.Supervisor.DetectionMode):
+                Optional. The detection mode of the
+                supervisor.
+        """
+
+        class Type(proto.Enum):
+            r"""Type of supervisor.
+
+            Values:
+                TYPE_UNSPECIFIED (0):
+                    Type is unspecified.
+                INVALID_TEXT (1):
+                    Invalid text issue type.
+                LANGUAGE_SHIFT (2):
+                    Language shift issue type.
+                SPEAKER_SHIFT (3):
+                    Speaker shift issue type.
+                AUDIO_MISMATCH (4):
+                    Audio mismatch issue type.
+                MISSING_TOOL_CALL (5):
+                    Missing tool call issue type.
+                CUSTOM (6):
+                    Custom issue type.
+                CHOPPY_AUDIO (7):
+                    Choppy audio issue type.
+                PROFANITY (8):
+                    Agent profanity issue type.
+            """
+
+            TYPE_UNSPECIFIED = 0
+            INVALID_TEXT = 1
+            LANGUAGE_SHIFT = 2
+            SPEAKER_SHIFT = 3
+            AUDIO_MISMATCH = 4
+            MISSING_TOOL_CALL = 5
+            CUSTOM = 6
+            CHOPPY_AUDIO = 7
+            PROFANITY = 8
+
+        class DetectionMode(proto.Enum):
+            r"""Detection mode of the supervisor.
+
+            Values:
+                DETECTION_MODE_UNSPECIFIED (0):
+                    Detection mode is unspecified. Default to NON_BLOCKING.
+                NON_BLOCKING (1):
+                    Non blocking detection mode.
+                    Response is not blocked when the supervisor
+                    detection is ongoing.
+                BLOCKING (2):
+                    Blocking detection mode.
+                    Response is blocked when the supervisor
+                    detection is ongoing.
+            """
+
+            DETECTION_MODE_UNSPECIFIED = 0
+            NON_BLOCKING = 1
+            BLOCKING = 2
+
+        type_: "Guardrail.Supervisor.Type" = proto.Field(
+            proto.ENUM,
+            number=1,
+            enum="Guardrail.Supervisor.Type",
+        )
+        detection_mode: "Guardrail.Supervisor.DetectionMode" = proto.Field(
+            proto.ENUM,
+            number=2,
+            enum="Guardrail.Supervisor.DetectionMode",
+        )
+
     content_filter: ContentFilter = proto.Field(
         proto.MESSAGE,
         number=8,
@@ -505,6 +614,12 @@ class Guardrail(proto.Message):
         number=14,
         oneof="guardrail_type",
         message=CodeCallback,
+    )
+    supervisor: Supervisor = proto.Field(
+        proto.MESSAGE,
+        number=16,
+        oneof="guardrail_type",
+        message=Supervisor,
     )
     name: str = proto.Field(
         proto.STRING,

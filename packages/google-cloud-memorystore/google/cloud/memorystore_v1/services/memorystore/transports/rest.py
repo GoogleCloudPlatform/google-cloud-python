@@ -98,11 +98,27 @@ class MemorystoreRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_create_acl_policy(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_create_acl_policy(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_create_instance(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
 
             def post_create_instance(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_delete_acl_policy(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_delete_acl_policy(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -151,6 +167,22 @@ class MemorystoreRestInterceptor:
                 return request, metadata
 
             def post_finish_migration(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_get_acl_policy(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_get_acl_policy(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_get_acl_policy_revision(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_get_acl_policy_revision(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -210,6 +242,22 @@ class MemorystoreRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_list_acl_policies(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_acl_policies(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_list_acl_policy_revisions(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_acl_policy_revisions(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_list_auth_tokens(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -263,6 +311,14 @@ class MemorystoreRestInterceptor:
                 return request, metadata
 
             def post_start_migration(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_acl_policy(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_acl_policy(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -424,6 +480,54 @@ class MemorystoreRestInterceptor:
         """
         return response, metadata
 
+    def pre_create_acl_policy(
+        self,
+        request: memorystore.CreateAclPolicyRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        memorystore.CreateAclPolicyRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for create_acl_policy
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the Memorystore server.
+        """
+        return request, metadata
+
+    def post_create_acl_policy(
+        self, response: memorystore.AclPolicy
+    ) -> memorystore.AclPolicy:
+        """Post-rpc interceptor for create_acl_policy
+
+        DEPRECATED. Please use the `post_create_acl_policy_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the Memorystore server but before
+        it is returned to user code. This `post_create_acl_policy` interceptor runs
+        before the `post_create_acl_policy_with_metadata` interceptor.
+        """
+        return response
+
+    def post_create_acl_policy_with_metadata(
+        self,
+        response: memorystore.AclPolicy,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[memorystore.AclPolicy, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for create_acl_policy
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the Memorystore server but before it is returned to user code.
+
+        We recommend only using this `post_create_acl_policy_with_metadata`
+        interceptor in new development instead of the `post_create_acl_policy` interceptor.
+        When both interceptors are used, this `post_create_acl_policy_with_metadata` interceptor runs after the
+        `post_create_acl_policy` interceptor. The (possibly modified) response returned by
+        `post_create_acl_policy` will be passed to
+        `post_create_acl_policy_with_metadata`.
+        """
+        return response, metadata
+
     def pre_create_instance(
         self,
         request: memorystore.CreateInstanceRequest,
@@ -469,6 +573,54 @@ class MemorystoreRestInterceptor:
         `post_create_instance` interceptor. The (possibly modified) response returned by
         `post_create_instance` will be passed to
         `post_create_instance_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_delete_acl_policy(
+        self,
+        request: memorystore.DeleteAclPolicyRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        memorystore.DeleteAclPolicyRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for delete_acl_policy
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the Memorystore server.
+        """
+        return request, metadata
+
+    def post_delete_acl_policy(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for delete_acl_policy
+
+        DEPRECATED. Please use the `post_delete_acl_policy_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the Memorystore server but before
+        it is returned to user code. This `post_delete_acl_policy` interceptor runs
+        before the `post_delete_acl_policy_with_metadata` interceptor.
+        """
+        return response
+
+    def post_delete_acl_policy_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for delete_acl_policy
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the Memorystore server but before it is returned to user code.
+
+        We recommend only using this `post_delete_acl_policy_with_metadata`
+        interceptor in new development instead of the `post_delete_acl_policy` interceptor.
+        When both interceptors are used, this `post_delete_acl_policy_with_metadata` interceptor runs after the
+        `post_delete_acl_policy` interceptor. The (possibly modified) response returned by
+        `post_delete_acl_policy` will be passed to
+        `post_delete_acl_policy_with_metadata`.
         """
         return response, metadata
 
@@ -757,6 +909,102 @@ class MemorystoreRestInterceptor:
         `post_finish_migration` interceptor. The (possibly modified) response returned by
         `post_finish_migration` will be passed to
         `post_finish_migration_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_get_acl_policy(
+        self,
+        request: memorystore.GetAclPolicyRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        memorystore.GetAclPolicyRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for get_acl_policy
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the Memorystore server.
+        """
+        return request, metadata
+
+    def post_get_acl_policy(
+        self, response: memorystore.AclPolicy
+    ) -> memorystore.AclPolicy:
+        """Post-rpc interceptor for get_acl_policy
+
+        DEPRECATED. Please use the `post_get_acl_policy_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the Memorystore server but before
+        it is returned to user code. This `post_get_acl_policy` interceptor runs
+        before the `post_get_acl_policy_with_metadata` interceptor.
+        """
+        return response
+
+    def post_get_acl_policy_with_metadata(
+        self,
+        response: memorystore.AclPolicy,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[memorystore.AclPolicy, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for get_acl_policy
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the Memorystore server but before it is returned to user code.
+
+        We recommend only using this `post_get_acl_policy_with_metadata`
+        interceptor in new development instead of the `post_get_acl_policy` interceptor.
+        When both interceptors are used, this `post_get_acl_policy_with_metadata` interceptor runs after the
+        `post_get_acl_policy` interceptor. The (possibly modified) response returned by
+        `post_get_acl_policy` will be passed to
+        `post_get_acl_policy_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_get_acl_policy_revision(
+        self,
+        request: memorystore.GetAclPolicyRevisionRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        memorystore.GetAclPolicyRevisionRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for get_acl_policy_revision
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the Memorystore server.
+        """
+        return request, metadata
+
+    def post_get_acl_policy_revision(
+        self, response: memorystore.AclPolicyRevision
+    ) -> memorystore.AclPolicyRevision:
+        """Post-rpc interceptor for get_acl_policy_revision
+
+        DEPRECATED. Please use the `post_get_acl_policy_revision_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the Memorystore server but before
+        it is returned to user code. This `post_get_acl_policy_revision` interceptor runs
+        before the `post_get_acl_policy_revision_with_metadata` interceptor.
+        """
+        return response
+
+    def post_get_acl_policy_revision_with_metadata(
+        self,
+        response: memorystore.AclPolicyRevision,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[memorystore.AclPolicyRevision, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for get_acl_policy_revision
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the Memorystore server but before it is returned to user code.
+
+        We recommend only using this `post_get_acl_policy_revision_with_metadata`
+        interceptor in new development instead of the `post_get_acl_policy_revision` interceptor.
+        When both interceptors are used, this `post_get_acl_policy_revision_with_metadata` interceptor runs after the
+        `post_get_acl_policy_revision` interceptor. The (possibly modified) response returned by
+        `post_get_acl_policy_revision` will be passed to
+        `post_get_acl_policy_revision_with_metadata`.
         """
         return response, metadata
 
@@ -1092,6 +1340,108 @@ class MemorystoreRestInterceptor:
         `post_get_token_auth_user` interceptor. The (possibly modified) response returned by
         `post_get_token_auth_user` will be passed to
         `post_get_token_auth_user_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_list_acl_policies(
+        self,
+        request: memorystore.ListAclPoliciesRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        memorystore.ListAclPoliciesRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for list_acl_policies
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the Memorystore server.
+        """
+        return request, metadata
+
+    def post_list_acl_policies(
+        self, response: memorystore.ListAclPoliciesResponse
+    ) -> memorystore.ListAclPoliciesResponse:
+        """Post-rpc interceptor for list_acl_policies
+
+        DEPRECATED. Please use the `post_list_acl_policies_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the Memorystore server but before
+        it is returned to user code. This `post_list_acl_policies` interceptor runs
+        before the `post_list_acl_policies_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_acl_policies_with_metadata(
+        self,
+        response: memorystore.ListAclPoliciesResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        memorystore.ListAclPoliciesResponse, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for list_acl_policies
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the Memorystore server but before it is returned to user code.
+
+        We recommend only using this `post_list_acl_policies_with_metadata`
+        interceptor in new development instead of the `post_list_acl_policies` interceptor.
+        When both interceptors are used, this `post_list_acl_policies_with_metadata` interceptor runs after the
+        `post_list_acl_policies` interceptor. The (possibly modified) response returned by
+        `post_list_acl_policies` will be passed to
+        `post_list_acl_policies_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_list_acl_policy_revisions(
+        self,
+        request: memorystore.ListAclPolicyRevisionsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        memorystore.ListAclPolicyRevisionsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for list_acl_policy_revisions
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the Memorystore server.
+        """
+        return request, metadata
+
+    def post_list_acl_policy_revisions(
+        self, response: memorystore.ListAclPolicyRevisionsResponse
+    ) -> memorystore.ListAclPolicyRevisionsResponse:
+        """Post-rpc interceptor for list_acl_policy_revisions
+
+        DEPRECATED. Please use the `post_list_acl_policy_revisions_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the Memorystore server but before
+        it is returned to user code. This `post_list_acl_policy_revisions` interceptor runs
+        before the `post_list_acl_policy_revisions_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_acl_policy_revisions_with_metadata(
+        self,
+        response: memorystore.ListAclPolicyRevisionsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        memorystore.ListAclPolicyRevisionsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for list_acl_policy_revisions
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the Memorystore server but before it is returned to user code.
+
+        We recommend only using this `post_list_acl_policy_revisions_with_metadata`
+        interceptor in new development instead of the `post_list_acl_policy_revisions` interceptor.
+        When both interceptors are used, this `post_list_acl_policy_revisions_with_metadata` interceptor runs after the
+        `post_list_acl_policy_revisions` interceptor. The (possibly modified) response returned by
+        `post_list_acl_policy_revisions` will be passed to
+        `post_list_acl_policy_revisions_with_metadata`.
         """
         return response, metadata
 
@@ -1439,6 +1789,54 @@ class MemorystoreRestInterceptor:
         `post_start_migration` interceptor. The (possibly modified) response returned by
         `post_start_migration` will be passed to
         `post_start_migration_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_acl_policy(
+        self,
+        request: memorystore.UpdateAclPolicyRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        memorystore.UpdateAclPolicyRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for update_acl_policy
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the Memorystore server.
+        """
+        return request, metadata
+
+    def post_update_acl_policy(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for update_acl_policy
+
+        DEPRECATED. Please use the `post_update_acl_policy_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the Memorystore server but before
+        it is returned to user code. This `post_update_acl_policy` interceptor runs
+        before the `post_update_acl_policy_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_acl_policy_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_acl_policy
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the Memorystore server but before it is returned to user code.
+
+        We recommend only using this `post_update_acl_policy_with_metadata`
+        interceptor in new development instead of the `post_update_acl_policy` interceptor.
+        When both interceptors are used, this `post_update_acl_policy_with_metadata` interceptor runs after the
+        `post_update_acl_policy` interceptor. The (possibly modified) response returned by
+        `post_update_acl_policy` will be passed to
+        `post_update_acl_policy_with_metadata`.
         """
         return response, metadata
 
@@ -2229,6 +2627,155 @@ class MemorystoreRestTransport(_BaseMemorystoreRestTransport):
                 )
             return resp
 
+    class _CreateAclPolicy(
+        _BaseMemorystoreRestTransport._BaseCreateAclPolicy, MemorystoreRestStub
+    ):
+        def __hash__(self):
+            return hash("MemorystoreRestTransport.CreateAclPolicy")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: memorystore.CreateAclPolicyRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> memorystore.AclPolicy:
+            r"""Call the create acl policy method over HTTP.
+
+            Args:
+                request (~.memorystore.CreateAclPolicyRequest):
+                    The request object. Request for ``CreateAclPolicy``.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.memorystore.AclPolicy:
+                    The ACL policy resource.
+            """
+
+            http_options = (
+                _BaseMemorystoreRestTransport._BaseCreateAclPolicy._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_create_acl_policy(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMemorystoreRestTransport._BaseCreateAclPolicy,
+                    "_BaseCreateAclPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.memorystore_v1.MemorystoreClient.CreateAclPolicy",
+                    extra={
+                        "serviceName": "google.cloud.memorystore.v1.Memorystore",
+                        "rpcName": "CreateAclPolicy",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = MemorystoreRestTransport._CreateAclPolicy._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = memorystore.AclPolicy()
+            pb_resp = memorystore.AclPolicy.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_create_acl_policy(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_create_acl_policy_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = memorystore.AclPolicy.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.memorystore_v1.MemorystoreClient.create_acl_policy",
+                    extra={
+                        "serviceName": "google.cloud.memorystore.v1.Memorystore",
+                        "rpcName": "CreateAclPolicy",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _CreateInstance(
         _BaseMemorystoreRestTransport._BaseCreateInstance, MemorystoreRestStub
     ):
@@ -2371,6 +2918,154 @@ class MemorystoreRestTransport(_BaseMemorystoreRestTransport):
                     extra={
                         "serviceName": "google.cloud.memorystore.v1.Memorystore",
                         "rpcName": "CreateInstance",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _DeleteAclPolicy(
+        _BaseMemorystoreRestTransport._BaseDeleteAclPolicy, MemorystoreRestStub
+    ):
+        def __hash__(self):
+            return hash("MemorystoreRestTransport.DeleteAclPolicy")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: memorystore.DeleteAclPolicyRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the delete acl policy method over HTTP.
+
+            Args:
+                request (~.memorystore.DeleteAclPolicyRequest):
+                    The request object. Request for ``DeleteAclPolicy``.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = (
+                _BaseMemorystoreRestTransport._BaseDeleteAclPolicy._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_delete_acl_policy(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMemorystoreRestTransport._BaseDeleteAclPolicy,
+                    "_BaseDeleteAclPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.memorystore_v1.MemorystoreClient.DeleteAclPolicy",
+                    extra={
+                        "serviceName": "google.cloud.memorystore.v1.Memorystore",
+                        "rpcName": "DeleteAclPolicy",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = MemorystoreRestTransport._DeleteAclPolicy._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_delete_acl_policy(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_delete_acl_policy_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.memorystore_v1.MemorystoreClient.delete_acl_policy",
+                    extra={
+                        "serviceName": "google.cloud.memorystore.v1.Memorystore",
+                        "rpcName": "DeleteAclPolicy",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -3255,6 +3950,296 @@ class MemorystoreRestTransport(_BaseMemorystoreRestTransport):
                     extra={
                         "serviceName": "google.cloud.memorystore.v1.Memorystore",
                         "rpcName": "FinishMigration",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _GetAclPolicy(
+        _BaseMemorystoreRestTransport._BaseGetAclPolicy, MemorystoreRestStub
+    ):
+        def __hash__(self):
+            return hash("MemorystoreRestTransport.GetAclPolicy")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: memorystore.GetAclPolicyRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> memorystore.AclPolicy:
+            r"""Call the get acl policy method over HTTP.
+
+            Args:
+                request (~.memorystore.GetAclPolicyRequest):
+                    The request object. Request for ``GetAclPolicy``.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.memorystore.AclPolicy:
+                    The ACL policy resource.
+            """
+
+            http_options = (
+                _BaseMemorystoreRestTransport._BaseGetAclPolicy._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_get_acl_policy(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMemorystoreRestTransport._BaseGetAclPolicy,
+                    "_BaseGetAclPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.memorystore_v1.MemorystoreClient.GetAclPolicy",
+                    extra={
+                        "serviceName": "google.cloud.memorystore.v1.Memorystore",
+                        "rpcName": "GetAclPolicy",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = MemorystoreRestTransport._GetAclPolicy._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = memorystore.AclPolicy()
+            pb_resp = memorystore.AclPolicy.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_get_acl_policy(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_get_acl_policy_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = memorystore.AclPolicy.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.memorystore_v1.MemorystoreClient.get_acl_policy",
+                    extra={
+                        "serviceName": "google.cloud.memorystore.v1.Memorystore",
+                        "rpcName": "GetAclPolicy",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _GetAclPolicyRevision(
+        _BaseMemorystoreRestTransport._BaseGetAclPolicyRevision, MemorystoreRestStub
+    ):
+        def __hash__(self):
+            return hash("MemorystoreRestTransport.GetAclPolicyRevision")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: memorystore.GetAclPolicyRevisionRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> memorystore.AclPolicyRevision:
+            r"""Call the get acl policy revision method over HTTP.
+
+            Args:
+                request (~.memorystore.GetAclPolicyRevisionRequest):
+                    The request object. Request for ``GetAclPolicyRevision``.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.memorystore.AclPolicyRevision:
+                    The ACL policy revision resource.
+            """
+
+            http_options = _BaseMemorystoreRestTransport._BaseGetAclPolicyRevision._get_http_options()
+            request, metadata = self._interceptor.pre_get_acl_policy_revision(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMemorystoreRestTransport._BaseGetAclPolicyRevision,
+                    "_BaseGetAclPolicyRevision__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.memorystore_v1.MemorystoreClient.GetAclPolicyRevision",
+                    extra={
+                        "serviceName": "google.cloud.memorystore.v1.Memorystore",
+                        "rpcName": "GetAclPolicyRevision",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = MemorystoreRestTransport._GetAclPolicyRevision._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = memorystore.AclPolicyRevision()
+            pb_resp = memorystore.AclPolicyRevision.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_get_acl_policy_revision(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_get_acl_policy_revision_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = memorystore.AclPolicyRevision.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.memorystore_v1.MemorystoreClient.get_acl_policy_revision",
+                    extra={
+                        "serviceName": "google.cloud.memorystore.v1.Memorystore",
+                        "rpcName": "GetAclPolicyRevision",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -4296,6 +5281,302 @@ class MemorystoreRestTransport(_BaseMemorystoreRestTransport):
                 )
             return resp
 
+    class _ListAclPolicies(
+        _BaseMemorystoreRestTransport._BaseListAclPolicies, MemorystoreRestStub
+    ):
+        def __hash__(self):
+            return hash("MemorystoreRestTransport.ListAclPolicies")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: memorystore.ListAclPoliciesRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> memorystore.ListAclPoliciesResponse:
+            r"""Call the list acl policies method over HTTP.
+
+            Args:
+                request (~.memorystore.ListAclPoliciesRequest):
+                    The request object. Request for ``ListAclPolicies``.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.memorystore.ListAclPoliciesResponse:
+                    Response for ``ListAclPolicies``.
+            """
+
+            http_options = (
+                _BaseMemorystoreRestTransport._BaseListAclPolicies._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_list_acl_policies(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMemorystoreRestTransport._BaseListAclPolicies,
+                    "_BaseListAclPolicies__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.memorystore_v1.MemorystoreClient.ListAclPolicies",
+                    extra={
+                        "serviceName": "google.cloud.memorystore.v1.Memorystore",
+                        "rpcName": "ListAclPolicies",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = MemorystoreRestTransport._ListAclPolicies._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = memorystore.ListAclPoliciesResponse()
+            pb_resp = memorystore.ListAclPoliciesResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_acl_policies(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_list_acl_policies_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = memorystore.ListAclPoliciesResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.memorystore_v1.MemorystoreClient.list_acl_policies",
+                    extra={
+                        "serviceName": "google.cloud.memorystore.v1.Memorystore",
+                        "rpcName": "ListAclPolicies",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _ListAclPolicyRevisions(
+        _BaseMemorystoreRestTransport._BaseListAclPolicyRevisions, MemorystoreRestStub
+    ):
+        def __hash__(self):
+            return hash("MemorystoreRestTransport.ListAclPolicyRevisions")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: memorystore.ListAclPolicyRevisionsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> memorystore.ListAclPolicyRevisionsResponse:
+            r"""Call the list acl policy revisions method over HTTP.
+
+            Args:
+                request (~.memorystore.ListAclPolicyRevisionsRequest):
+                    The request object. Request for ``ListAclPolicyRevisions``.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.memorystore.ListAclPolicyRevisionsResponse:
+                    Response for ``ListAclPolicyRevisions``.
+            """
+
+            http_options = _BaseMemorystoreRestTransport._BaseListAclPolicyRevisions._get_http_options()
+            request, metadata = self._interceptor.pre_list_acl_policy_revisions(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMemorystoreRestTransport._BaseListAclPolicyRevisions,
+                    "_BaseListAclPolicyRevisions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.memorystore_v1.MemorystoreClient.ListAclPolicyRevisions",
+                    extra={
+                        "serviceName": "google.cloud.memorystore.v1.Memorystore",
+                        "rpcName": "ListAclPolicyRevisions",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = MemorystoreRestTransport._ListAclPolicyRevisions._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = memorystore.ListAclPolicyRevisionsResponse()
+            pb_resp = memorystore.ListAclPolicyRevisionsResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_acl_policy_revisions(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_list_acl_policy_revisions_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        memorystore.ListAclPolicyRevisionsResponse.to_json(response)
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.memorystore_v1.MemorystoreClient.list_acl_policy_revisions",
+                    extra={
+                        "serviceName": "google.cloud.memorystore.v1.Memorystore",
+                        "rpcName": "ListAclPolicyRevisions",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _ListAuthTokens(
         _BaseMemorystoreRestTransport._BaseListAuthTokens, MemorystoreRestStub
     ):
@@ -5328,6 +6609,156 @@ class MemorystoreRestTransport(_BaseMemorystoreRestTransport):
                 )
             return resp
 
+    class _UpdateAclPolicy(
+        _BaseMemorystoreRestTransport._BaseUpdateAclPolicy, MemorystoreRestStub
+    ):
+        def __hash__(self):
+            return hash("MemorystoreRestTransport.UpdateAclPolicy")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: memorystore.UpdateAclPolicyRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the update acl policy method over HTTP.
+
+            Args:
+                request (~.memorystore.UpdateAclPolicyRequest):
+                    The request object. Request for ``UpdateAclPolicy``.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = (
+                _BaseMemorystoreRestTransport._BaseUpdateAclPolicy._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_update_acl_policy(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseMemorystoreRestTransport._BaseUpdateAclPolicy,
+                    "_BaseUpdateAclPolicy__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.memorystore_v1.MemorystoreClient.UpdateAclPolicy",
+                    extra={
+                        "serviceName": "google.cloud.memorystore.v1.Memorystore",
+                        "rpcName": "UpdateAclPolicy",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = MemorystoreRestTransport._UpdateAclPolicy._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_acl_policy(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_acl_policy_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.memorystore_v1.MemorystoreClient.update_acl_policy",
+                    extra={
+                        "serviceName": "google.cloud.memorystore.v1.Memorystore",
+                        "rpcName": "UpdateAclPolicy",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _UpdateInstance(
         _BaseMemorystoreRestTransport._BaseUpdateInstance, MemorystoreRestStub
     ):
@@ -5501,12 +6932,28 @@ class MemorystoreRestTransport(_BaseMemorystoreRestTransport):
         return self._BackupInstance(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def create_acl_policy(
+        self,
+    ) -> Callable[[memorystore.CreateAclPolicyRequest], memorystore.AclPolicy]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._CreateAclPolicy(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def create_instance(
         self,
     ) -> Callable[[memorystore.CreateInstanceRequest], operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._CreateInstance(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def delete_acl_policy(
+        self,
+    ) -> Callable[[memorystore.DeleteAclPolicyRequest], operations_pb2.Operation]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._DeleteAclPolicy(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def delete_auth_token(
@@ -5555,6 +7002,24 @@ class MemorystoreRestTransport(_BaseMemorystoreRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._FinishMigration(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def get_acl_policy(
+        self,
+    ) -> Callable[[memorystore.GetAclPolicyRequest], memorystore.AclPolicy]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GetAclPolicy(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def get_acl_policy_revision(
+        self,
+    ) -> Callable[
+        [memorystore.GetAclPolicyRevisionRequest], memorystore.AclPolicyRevision
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GetAclPolicyRevision(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def get_auth_token(
@@ -5624,6 +7089,29 @@ class MemorystoreRestTransport(_BaseMemorystoreRestTransport):
         return self._GetTokenAuthUser(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def list_acl_policies(
+        self,
+    ) -> Callable[
+        [memorystore.ListAclPoliciesRequest], memorystore.ListAclPoliciesResponse
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListAclPolicies(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def list_acl_policy_revisions(
+        self,
+    ) -> Callable[
+        [memorystore.ListAclPolicyRevisionsRequest],
+        memorystore.ListAclPolicyRevisionsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListAclPolicyRevisions(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
     def list_auth_tokens(
         self,
     ) -> Callable[
@@ -5687,6 +7175,14 @@ class MemorystoreRestTransport(_BaseMemorystoreRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._StartMigration(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def update_acl_policy(
+        self,
+    ) -> Callable[[memorystore.UpdateAclPolicyRequest], operations_pb2.Operation]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateAclPolicy(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def update_instance(

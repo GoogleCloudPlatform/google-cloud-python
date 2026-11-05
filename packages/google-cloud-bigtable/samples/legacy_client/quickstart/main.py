@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# [START bigtable_quickstart]
+# [START bigtable_quickstart_legacy]
 import argparse
 
 from google.cloud import bigtable
@@ -54,4 +54,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     main(args.project_id, args.instance_id, args.table)
-# [END bigtable_quickstart]
+# [END bigtable_quickstart_legacy]

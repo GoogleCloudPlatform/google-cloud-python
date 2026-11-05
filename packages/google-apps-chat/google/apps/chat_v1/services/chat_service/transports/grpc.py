@@ -2856,6 +2856,49 @@ class ChatServiceGrpcTransport(ChatServiceTransport):
             )
         return self._stubs["move_section_item"]
 
+    @property
+    def replace_message_cards(
+        self,
+    ) -> Callable[
+        [message.ReplaceMessageCardsRequest], message.ReplaceMessageCardsResponse
+    ]:
+        r"""Return a callable for the replace message cards method over gRPC.
+
+        Replaces the cards included in a message.
+
+        A Chat app can only replace cards on a human-created message if
+        the message already contains cards, and the cards were created
+        by the app.
+
+        If the app replaces the cards with an empty list, the cards are
+        removed. After removing the cards, the app cannot add cards back
+        to the message.
+
+        Requires `app
+        authentication <https://developers.google.com/workspace/chat/authenticate-authorize-chat-app>`__
+        with the `authorization
+        scope <https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes>`__:
+
+        - ``https://www.googleapis.com/auth/chat.bot``
+
+        Returns:
+            Callable[[~.ReplaceMessageCardsRequest],
+                    ~.ReplaceMessageCardsResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "replace_message_cards" not in self._stubs:
+            self._stubs["replace_message_cards"] = self._logged_channel.unary_unary(
+                "/google.chat.v1.ChatService/ReplaceMessageCards",
+                request_serializer=message.ReplaceMessageCardsRequest.serialize,
+                response_deserializer=message.ReplaceMessageCardsResponse.deserialize,
+            )
+        return self._stubs["replace_message_cards"]
+
     def close(self):
         self._logged_channel.close()
 

@@ -32,6 +32,8 @@ __protobuf__ = proto.module(
         "DatasourceReferences",
         "BigQueryTableReferences",
         "BigQueryTableReference",
+        "BigQueryDatasetReference",
+        "SearchScope",
         "StudioDatasourceReferences",
         "StudioDatasourceReference",
         "AlloyDbReference",
@@ -188,6 +190,20 @@ class BigQueryTableReferences(proto.Message):
             BigQuery Graph. The field and message names
             retain the original term for backward
             compatibility; both refer to the same resource.
+        search_scope (google.cloud.geminidataanalytics_v1alpha.types.SearchScope):
+            Optional. Search over BigQuery resources to discover most
+            relevant tables to the query.
+
+            When set, at least one of ``include_project_ids`` or
+            ``include_dataset_references`` must be populated with
+            non-blank identifiers. Matches from the two fields are
+            unioned (OR-ed).
+
+            Note: ``search_scope`` is only supported for standalone
+            conversations (``ChatRequest.inline_context`` or
+            ``ClientManagedResourceContext.inline_context``) and is not
+            supported in
+            [DataAgent][google.cloud.geminidataanalytics.v1alpha.DataAgent].
         agent_context_reference (google.cloud.geminidataanalytics_v1alpha.types.AgentContextReference):
             Optional. Parameters for retrieving data from
             Agent Context.
@@ -204,6 +220,11 @@ class BigQueryTableReferences(proto.Message):
             number=2,
             message="BigQueryPropertyGraphReference",
         )
+    )
+    search_scope: "SearchScope" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message="SearchScope",
     )
     agent_context_reference: agent_context.AgentContextReference = proto.Field(
         proto.MESSAGE,
@@ -244,6 +265,65 @@ class BigQueryTableReference(proto.Message):
         proto.MESSAGE,
         number=6,
         message="Schema",
+    )
+
+
+class BigQueryDatasetReference(proto.Message):
+    r"""Message representing a reference to a single BigQuery
+    dataset.
+
+    Attributes:
+        project_id (str):
+            Required. The project ID that the dataset
+            belongs to.
+        dataset_id (str):
+            Required. The dataset ID.
+    """
+
+    project_id: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    dataset_id: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class SearchScope(proto.Message):
+    r"""Message representing filters to apply to search over BigQuery
+    tables.
+
+    At least one of ``include_project_ids`` or
+    ``include_dataset_references`` must be populated with non-blank
+    identifiers. Tables matching either field are included, so the two
+    fields are unioned (OR-ed) rather than intersected.
+
+    Note: ``SearchScope`` is only supported for standalone conversations
+    (``ChatRequest.inline_context`` or
+    ``ClientManagedResourceContext.inline_context``) and is not
+    supported in
+    [DataAgent][google.cloud.geminidataanalytics.v1alpha.DataAgent].
+
+    Attributes:
+        include_project_ids (MutableSequence[str]):
+            Optional. The BigQuery project ids to search
+            over.
+        include_dataset_references (MutableSequence[google.cloud.geminidataanalytics_v1alpha.types.BigQueryDatasetReference]):
+            Optional. The BigQuery dataset references to
+            search over.
+    """
+
+    include_project_ids: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=1,
+    )
+    include_dataset_references: MutableSequence["BigQueryDatasetReference"] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=2,
+            message="BigQueryDatasetReference",
+        )
     )
 
 
@@ -606,6 +686,8 @@ class SpannerDatabaseReference(proto.Message):
             Tag to be attached to all queries to Spanner.
             Allows to identify and monitor queries sent to
             Spanner by the GDA service.
+        graph_ids (MutableSequence[str]):
+            Optional. The graph IDs to query.
     """
 
     class Engine(proto.Enum):
@@ -659,6 +741,10 @@ class SpannerDatabaseReference(proto.Message):
     request_tag: str = proto.Field(
         proto.STRING,
         number=9,
+    )
+    graph_ids: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=10,
     )
 
 

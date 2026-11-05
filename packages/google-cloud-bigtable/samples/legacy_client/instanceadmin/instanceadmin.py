@@ -55,14 +55,14 @@ def run_instance_operations(project_id, instance_id, cluster_id):
     labels = {"prod-label": "prod-label"}
     instance = client.instance(instance_id, labels=labels)
 
-    # [START bigtable_check_instance_exists]
+    # [START bigtable_check_instance_exists_legacy]
     if not instance.exists():
         print("Instance {} does not exist.".format(instance_id))
     else:
         print("Instance {} already exists.".format(instance_id))
-    # [END bigtable_check_instance_exists]
+    # [END bigtable_check_instance_exists_legacy]
 
-    # [START bigtable_create_prod_instance]
+    # [START bigtable_create_prod_instance_legacy]
     cluster = instance.cluster(
         cluster_id,
         location_id=location_id,
@@ -76,27 +76,27 @@ def run_instance_operations(project_id, instance_id, cluster_id):
         # Ensure the operation completes.
         operation.result(timeout=480)
         print("\nCreated instance: {}".format(instance_id))
-    # [END bigtable_create_prod_instance]
+    # [END bigtable_create_prod_instance_legacy]
 
-    # [START bigtable_list_instances]
+    # [START bigtable_list_instances_legacy]
     print("\nListing instances:")
     for instance_local in client.list_instances()[0]:
         print(instance_local.instance_id)
-    # [END bigtable_list_instances]
+    # [END bigtable_list_instances_legacy]
 
-    # [START bigtable_get_instance]
+    # [START bigtable_get_instance_legacy]
     print(
         "\nName of instance: {}\nLabels: {}".format(
             instance.display_name, instance.labels
         )
     )
-    # [END bigtable_get_instance]
+    # [END bigtable_get_instance_legacy]
 
-    # [START bigtable_get_clusters]
+    # [START bigtable_get_clusters_legacy]
     print("\nListing clusters...")
     for cluster in instance.list_clusters()[0]:
         print(cluster.cluster_id)
-    # [END bigtable_get_clusters]
+    # [END bigtable_get_clusters_legacy]
 
 
 def delete_instance(project_id, instance_id):
@@ -111,14 +111,14 @@ def delete_instance(project_id, instance_id):
 
     client = bigtable.Client(project=project_id, admin=True)
     instance = client.instance(instance_id)
-    # [START bigtable_delete_instance]
+    # [START bigtable_delete_instance_legacy]
     print("\nDeleting instance")
     if not instance.exists():
         print("Instance {} does not exist.".format(instance_id))
     else:
         instance.delete()
         print("Deleted instance: {}".format(instance_id))
-    # [END bigtable_delete_instance]
+    # [END bigtable_delete_instance_legacy]
 
 
 def add_cluster(project_id, instance_id, cluster_id):
@@ -144,7 +144,7 @@ def add_cluster(project_id, instance_id, cluster_id):
         print("Instance {} does not exist.".format(instance_id))
     else:
         print("\nAdding cluster to instance {}".format(instance_id))
-        # [START bigtable_create_cluster]
+        # [START bigtable_create_cluster_legacy]
         print("\nListing clusters...")
         for cluster in instance.list_clusters()[0]:
             print(cluster.cluster_id)
@@ -161,7 +161,7 @@ def add_cluster(project_id, instance_id, cluster_id):
             # Ensure the operation completes.
             operation.result(timeout=480)
             print("\nCluster created: {}".format(cluster_id))
-        # [END bigtable_create_cluster]
+        # [END bigtable_create_cluster_legacy]
 
 
 def delete_cluster(project_id, instance_id, cluster_id):
@@ -181,7 +181,7 @@ def delete_cluster(project_id, instance_id, cluster_id):
     instance = client.instance(instance_id)
     cluster = instance.cluster(cluster_id)
 
-    # [START bigtable_delete_cluster]
+    # [START bigtable_delete_cluster_legacy]
     print("\nDeleting cluster")
     if cluster.exists():
         cluster.delete()
@@ -189,7 +189,7 @@ def delete_cluster(project_id, instance_id, cluster_id):
     else:
         print("\nCluster {} does not exist.".format(cluster_id))
 
-    # [END bigtable_delete_cluster]
+    # [END bigtable_delete_cluster_legacy]
 
 
 if __name__ == "__main__":

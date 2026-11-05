@@ -1184,6 +1184,55 @@ class TestMutationsBatcherAsync:
                     assert called_with == []
 
     @CrossSync.pytest
+    async def test__execute_mutate_rows_batch_completed_callback_unexpected_error(self):
+        from google.rpc import code_pb2, status_pb2
+
+        with mock.patch.object(CrossSync._MutateRowsOperation, "start") as mutate_rows:
+            mutate_rows.side_effect = RuntimeError("unexpected error")
+            table = mock.Mock()
+            table.default_mutate_rows_operation_timeout = 17
+            table.default_mutate_rows_attempt_timeout = 13
+            table.default_mutate_rows_retryable_errors = ()
+            callback = mock.Mock()
+            async with self._make_one(table) as instance:
+                instance._user_batch_completed_callback = callback
+                batch = [self._make_mutation(), self._make_mutation()]
+                with pytest.raises(RuntimeError, match="unexpected error"):
+                    await instance._execute_mutate_rows(batch, mock.Mock())
+                callback.assert_called_once_with(
+                    [
+                        status_pb2.Status(code=code_pb2.UNKNOWN),
+                        status_pb2.Status(code=code_pb2.UNKNOWN),
+                    ]
+                )
+
+    @CrossSync.pytest
+    async def test__wait_for_batch_results_unexpected_task_exception(self):
+        """Unexpected exceptions raised by batch tasks should be wrapped in FailedMutationEntryError."""
+        batch = [self._make_mutation(), self._make_mutation()]
+        expected_err = RuntimeError("task failed")
+
+        async with self._make_one() as instance:
+            with mock.patch.object(
+                instance, "_execute_mutate_rows", side_effect=expected_err
+            ):
+                with mock.patch.object(
+                    instance._flow_control, "add_to_flow"
+                ) as flow_mock:
+
+                    async def gen(x):
+                        yield x
+
+                    flow_mock.side_effect = lambda x: gen(x)
+                    await instance._flush_internal(batch)
+                    assert len(instance._oldest_exceptions) == 2
+                    for failed_entry in instance._oldest_exceptions:
+                        assert failed_entry.index is None
+                        assert failed_entry.__cause__ is expected_err
+                    instance._oldest_exceptions.clear()
+                    instance._newest_exceptions.clear()
+
+    @CrossSync.pytest
     async def test__raise_exceptions(self):
         """Raise exceptions and reset error state"""
         from google.cloud.bigtable.data import exceptions

@@ -33,6 +33,7 @@ from typing import (
 from google.api_core import exceptions as core_exceptions
 from google.api_core import retry as retries
 from google.api_core.retry import RetryFailureReason, exponential_sleep_generator
+from google.protobuf import any_pb2, message
 from google.rpc import code_pb2, status_pb2
 
 from google.cloud.bigtable.data.exceptions import (
@@ -287,20 +288,59 @@ def _get_status(exc: Optional[Exception]) -> status_pb2.Status:
     Returns:
         status_pb2.Status: A Status proto object.
     """
-    if (
-        isinstance(exc, core_exceptions.GoogleAPICallError)
-        and exc.grpc_status_code is not None
-    ):
-        return status_pb2.Status(  # type: ignore[unreachable]
-            code=exc.grpc_status_code.value[0],
-            message=exc.message,
-            details=exc.details,
-        )
+    if isinstance(exc, core_exceptions.GoogleAPICallError):
+        grpc_code = exc.grpc_status_code
+        if grpc_code is not None:
+            try:
+                details: list[any_pb2.Any] = []
+                for detail in exc.details or ():
+                    try:
+                        if isinstance(detail, any_pb2.Any):
+                            details.append(detail)
+                        elif isinstance(detail, message.Message):
+                            packed = any_pb2.Any()
+                            packed.Pack(detail)
+                            details.append(packed)
+                        elif isinstance(getattr(detail, "_pb", None), message.Message):
+                            packed = any_pb2.Any()
+                            packed.Pack(detail._pb)
+                            details.append(packed)
+                    except Exception:
+                        continue
+                return status_pb2.Status(
+                    code=grpc_code.value[0],
+                    message=exc.message or "",
+                    details=details,
+                )
+            except Exception:
+                pass
 
     return status_pb2.Status(
         code=code_pb2.UNKNOWN,
-        message=str(exc) if exc else "An unknown error has occurred",
+        message=_exc_message(exc),
     )
+
+
+def _exc_message(exc: Optional[Exception]) -> str:
+    """
+    Helper function that renders an exception as a string, without raising.
+
+    ``GoogleAPICallError.__str__`` reads ``exc.details``, which raises if the
+    exception was built with a malformed ``details`` value, so fall back to the
+    raw message when that happens.
+
+    Args:
+        exc: The exception to render.
+    Returns:
+        str: A description of the exception.
+    """
+    if exc is None:
+        return "An unknown error has occurred"
+    try:
+        return str(exc)
+    except Exception:
+        raw_message = getattr(exc, "message", None)
+        return raw_message if isinstance(raw_message, str) else type(exc).__name__
 
 
 def _validate_timeouts(
@@ -337,11 +377,22 @@ def _get_error_type(
 
     Args:
       - call_code: Exception type or gRPC status code.
+    Raises:
+      - ValueError: if call_code is not a valid retryable gRPC error status code
+        or exception type.
     """
     if isinstance(call_code, type):
         return call_code
-    else:
-        return type(core_exceptions.from_grpc_status(call_code, ""))
+    if isinstance(call_code, bool):
+        raise ValueError(f"Invalid gRPC error status code: {call_code!r}")
+    error_type = type(core_exceptions.from_grpc_status(call_code, ""))
+    # from_grpc_status falls back to the base GoogleAPICallError for codes it
+    # doesn't recognize (including OK / 0). Returning the base class here would
+    # make retries.if_exception_type match every GoogleAPICallError subclass,
+    # silently turning all errors into retryable ones, so reject it instead.
+    if error_type is core_exceptions.GoogleAPICallError:
+        raise ValueError(f"Invalid gRPC error status code: {call_code!r}")
+    return error_type
 
 
 def _get_retryable_errors(
