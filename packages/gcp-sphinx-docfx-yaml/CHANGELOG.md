@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/gcp-sphinx-docfx-yaml/#history
 
+## [3.4.1](https://github.com/googleapis/google-cloud-python/compare/gcp-sphinx-docfx-yaml-v3.4.0...gcp-sphinx-docfx-yaml-v3.4.1) (2026-11-05)
+
+
+### Documentation
+
+* fix typos ([#18979](https://github.com/googleapis/google-cloud-python/issues/18979)) ([5c8baeb](https://github.com/googleapis/google-cloud-python/commit/5c8baeb753c29e5bf00428a4471d530179b50649))
+
 ## [3.4.0](https://github.com/googleapis/google-cloud-python/compare/gcp-sphinx-docfx-yaml-v3.3.3...gcp-sphinx-docfx-yaml-v3.4.0) (2026-10-15)
 
 

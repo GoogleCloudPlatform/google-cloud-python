@@ -4,6 +4,19 @@
 
 [1]: https://pypi.org/project/google-api-core/#history
 
+## [2.44.0](https://github.com/googleapis/google-cloud-python/compare/google-api-core-v2.43.2...google-api-core-v2.44.0) (2026-11-05)
+
+
+### Features
+
+* **google-api-core:** extend ErrorInfo dict accessors, centralize status code extraction, and update StructuredLogFormatter ([#18884](https://github.com/googleapis/google-cloud-python/issues/18884)) ([0c3fa2b](https://github.com/googleapis/google-cloud-python/commit/0c3fa2b8bf60103f201fb349fe38ff058593568c))
+
+
+### Bug Fixes
+
+* **gapic-generator:** default client_options.api_endpoint to transport host for OpenTelemetry spans ([#18869](https://github.com/googleapis/google-cloud-python/issues/18869)) ([10cdc90](https://github.com/googleapis/google-cloud-python/commit/10cdc908c0fbd146ebdb7c170ad5df474344529e))
+* **google-api-core:** make RetryError picklable and copyable ([#18947](https://github.com/googleapis/google-cloud-python/issues/18947)) ([5ffc395](https://github.com/googleapis/google-cloud-python/commit/5ffc395a6f618f29cc1c1201c7da513ad16c3c40))
+
 ## [2.43.2](https://github.com/googleapis/google-cloud-python/compare/google-api-core-v2.43.1...google-api-core-v2.43.2) (2026-10-29)
 
 
