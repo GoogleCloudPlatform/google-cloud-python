@@ -15,6 +15,7 @@
 """A user-friendly wrapper for a Google Cloud Bigtable Backup."""
 
 import re
+import warnings
 
 from google.cloud._helpers import _datetime_to_pb_timestamp  # type: ignore
 from google.cloud.exceptions import NotFound  # type: ignore
@@ -41,6 +42,9 @@ _TABLE_NAME_RE = re.compile(
 
 class Backup(object):
     """Representation of a Google Cloud Bigtable Backup.
+
+    .. deprecated:: 2.30.0
+        Use :class:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient` instead.
 
     A :class: `Backup` can be used to:
 
@@ -301,6 +305,11 @@ class Backup(object):
     def create(self, cluster_id=None):
         """Creates this backup within its instance.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.create_backup`
+            instead.
+
         :type cluster_id: str
         :param cluster_id: (Optional) The ID of the Cluster for the newly
                            created Backup.
@@ -312,6 +321,13 @@ class Backup(object):
         :raises BadRequest: if the `table` or `expire_time` values are invalid,
                             or `expire_time` is not set
         """
+        warnings.warn(
+            "Backup.create is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "create_backup instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         if not self._expire_time:
             raise ValueError('"expire_time" parameter must be set')
             # TODO: Consider implementing a method that sets a default value of
@@ -342,6 +358,11 @@ class Backup(object):
     def get(self):
         """Retrieves metadata of a pending or completed Backup.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.get_backup`
+            instead.
+
         :returns: An instance of
                  :class:`~google.cloud.bigtable_admin_v2.types.Backup`
 
@@ -351,6 +372,13 @@ class Backup(object):
                 due to a retryable error and retry attempts failed.
         :raises ValueError: If the parameters are invalid.
         """
+        warnings.warn(
+            "Backup.get is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "get_backup instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         api = self._instance._client.table_admin_client
         try:
             return api.get_backup(request={"name": self.name})
@@ -358,7 +386,20 @@ class Backup(object):
             return None
 
     def reload(self):
-        """Refreshes the stored backup properties."""
+        """Refreshes the stored backup properties.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.get_backup`
+            instead.
+        """
+        warnings.warn(
+            "Backup.reload is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "get_backup instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         backup = self.get()
         self._source_table = backup.source_table
         self._expire_time = backup._pb.expire_time
@@ -370,17 +411,41 @@ class Backup(object):
     def exists(self):
         """Tests whether this Backup exists.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.get_backup`
+            instead.
+
         :rtype: bool
         :returns: True if the Backup exists, else False.
         """
+        warnings.warn(
+            "Backup.exists is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "get_backup instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         return self.get() is not None
 
     def update_expire_time(self, new_expire_time):
         """Update the expire time of this Backup.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.update_backup`
+            instead.
+
         :type new_expire_time: :class:`datetime.datetime`
         :param new_expire_time: the new expiration time timestamp
         """
+        warnings.warn(
+            "Backup.update_expire_time is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "update_backup instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         backup_update = table.Backup(
             name=self.name,
             expire_time=_datetime_to_pb_timestamp(new_expire_time),
@@ -391,7 +456,20 @@ class Backup(object):
         self._expire_time = new_expire_time
 
     def delete(self):
-        """Delete this Backup."""
+        """Delete this Backup.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.delete_backup`
+            instead.
+        """
+        warnings.warn(
+            "Backup.delete is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "delete_backup instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         self._instance._client.table_admin_client.delete_backup(
             request={"name": self.name}
         )
@@ -403,6 +481,11 @@ class Backup(object):
         The returned Table ``long-running operation`` can be used to track the
         progress of the operation and to cancel it. The ``response`` type is
         ``Table``, if successful.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.restore_table`
+            instead.
 
         :type table_id: str
         :param table_id: The ID of the Table to create and restore to.
@@ -424,6 +507,13 @@ class Backup(object):
                  due to a retryable error and retry attempts failed.
         :raises: ValueError: If the parameters are invalid.
         """
+        warnings.warn(
+            "Backup.restore is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "restore_table instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         api = self._instance._client.table_admin_client
         if instance_id:
             parent = BaseBigtableTableAdminClient.instance_path(
@@ -440,9 +530,21 @@ class Backup(object):
     def get_iam_policy(self):
         """Gets the IAM access control policy for this backup.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.get_iam_policy`
+            instead.
+
         :rtype: :class:`google.cloud.bigtable.policy.Policy`
         :returns: The current IAM policy of this backup.
         """
+        warnings.warn(
+            "Backup.get_iam_policy is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "get_iam_policy instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         table_api = self._instance._client.table_admin_client
         response = table_api.get_iam_policy(request={"resource": self.name})
         return Policy.from_pb(response)
@@ -450,6 +552,11 @@ class Backup(object):
     def set_iam_policy(self, policy):
         """Sets the IAM access control policy for this backup. Replaces any
         existing policy.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.set_iam_policy`
+            instead.
 
         For more information about policy, please see documentation of
         class `google.cloud.bigtable.policy.Policy`
@@ -461,6 +568,13 @@ class Backup(object):
         :rtype: :class:`google.cloud.bigtable.policy.Policy`
         :returns: The current IAM policy of this backup.
         """
+        warnings.warn(
+            "Backup.set_iam_policy is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "set_iam_policy instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         table_api = self._instance._client.table_admin_client
         response = table_api.set_iam_policy(
             request={"resource": self.name, "policy": policy.to_pb()}
@@ -470,6 +584,11 @@ class Backup(object):
     def test_iam_permissions(self, permissions):
         """Tests whether the caller has the given permissions for this backup.
         Returns the permissions that the caller has.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.test_iam_permissions`
+            instead.
 
         :type permissions: list
         :param permissions: The set of permissions to check for
@@ -483,6 +602,13 @@ class Backup(object):
         :rtype: list
         :returns: A List(string) of permissions allowed on the backup.
         """
+        warnings.warn(
+            "Backup.test_iam_permissions is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "test_iam_permissions instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         table_api = self._instance._client.table_admin_client
         response = table_api.test_iam_permissions(
             request={"resource": self.name, "permissions": permissions}

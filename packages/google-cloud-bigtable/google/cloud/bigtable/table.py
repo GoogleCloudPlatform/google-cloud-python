@@ -181,6 +181,11 @@ class Table(object):
     def get_iam_policy(self):
         """Gets the IAM access control policy for this table.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.get_iam_policy`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -191,6 +196,13 @@ class Table(object):
         :rtype: :class:`google.cloud.bigtable.policy.Policy`
         :returns: The current IAM policy of this table.
         """
+        warnings.warn(
+            "Table.get_iam_policy is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "get_iam_policy instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         table_client = self._instance._client.table_admin_client
         resp = table_client.get_iam_policy(request={"resource": self.name})
         return Policy.from_pb(resp)
@@ -198,6 +210,11 @@ class Table(object):
     def set_iam_policy(self, policy):
         """Sets the IAM access control policy for this table. Replaces any
         existing policy.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.set_iam_policy`
+            instead.
 
         For more information about policy, please see documentation of
         class `google.cloud.bigtable.policy.Policy`
@@ -216,6 +233,13 @@ class Table(object):
         :rtype: :class:`google.cloud.bigtable.policy.Policy`
         :returns: The current IAM policy of this table.
         """
+        warnings.warn(
+            "Table.set_iam_policy is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "set_iam_policy instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         table_client = self._instance._client.table_admin_client
         resp = table_client.set_iam_policy(
             request={"resource": self.name, "policy": policy.to_pb()}
@@ -225,6 +249,11 @@ class Table(object):
     def test_iam_permissions(self, permissions):
         """Tests whether the caller has the given permissions for this table.
         Returns the permissions that the caller has.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.test_iam_permissions`
+            instead.
 
         For example:
 
@@ -245,6 +274,13 @@ class Table(object):
         :rtype: list
         :returns: A List(string) of permissions allowed on the table.
         """
+        warnings.warn(
+            "Table.test_iam_permissions is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "test_iam_permissions instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         table_client = self._instance._client.table_admin_client
         resp = table_client.test_iam_permissions(
             request={"resource": self.name, "permissions": permissions}
@@ -253,6 +289,10 @@ class Table(object):
 
     def column_family(self, column_family_id, gc_rule=None):
         """Factory to create a column family associated with this table.
+
+        .. deprecated:: 2.30.0
+            Use :class:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient`
+            instead.
 
         For example:
 
@@ -390,6 +430,11 @@ class Table(object):
     def create(self, initial_split_keys=[], column_families={}):
         """Creates this table.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.create_table`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -413,6 +458,13 @@ class Table(object):
                                the column_id str and the value is a
                                :class:`GarbageCollectionRule`
         """
+        warnings.warn(
+            "Table.create is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "create_table instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         table_client = self._instance._client.table_admin_client
         instance_name = self._instance.name
 
@@ -437,6 +489,11 @@ class Table(object):
     def exists(self):
         """Check whether the table exists.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.get_table`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -447,6 +504,13 @@ class Table(object):
         :rtype: bool
         :returns: True if the table exists, else False.
         """
+        warnings.warn(
+            "Table.exists is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "get_table instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         table_client = self._instance._client.table_admin_client
         try:
             table_client.get_table(request={"name": self.name, "view": VIEW_NAME_ONLY})
@@ -457,6 +521,11 @@ class Table(object):
     def delete(self):
         """Delete this table.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.delete_table`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -464,11 +533,23 @@ class Table(object):
             :end-before: [END bigtable_api_delete_table]
             :dedent: 4
         """
+        warnings.warn(
+            "Table.delete is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "delete_table instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         table_client = self._instance._client.table_admin_client
         table_client.delete_table(request={"name": self.name})
 
     def list_column_families(self):
         """List the column families owned by this table.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.get_table`
+            instead.
 
         For example:
 
@@ -485,6 +566,13 @@ class Table(object):
                  family name from the response does not agree with the computed
                  name from the column family ID.
         """
+        warnings.warn(
+            "Table.list_column_families is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "get_table instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         table_client = self._instance._client.table_admin_client
         table_pb = table_client.get_table(request={"name": self.name})
 
@@ -498,6 +586,11 @@ class Table(object):
     def get_cluster_states(self):
         """List the cluster states owned by this table.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.get_table`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -510,6 +603,13 @@ class Table(object):
                   Keys are cluster ids and values are
                   :class: 'ClusterState' instances.
         """
+        warnings.warn(
+            "Table.get_cluster_states is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "get_table instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
 
         REPLICATION_VIEW = enums.Table.View.REPLICATION_VIEW
         table_client = self._instance._client.table_admin_client
@@ -525,6 +625,11 @@ class Table(object):
     def get_encryption_info(self):
         """List the encryption info for each cluster owned by this table.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.get_table`
+            instead.
+
         Gets the current encryption info for the table across all of the clusters.  The
         returned dict will be keyed by cluster id and contain a status for all of the
         keys in use.
@@ -533,6 +638,13 @@ class Table(object):
         :returns: Dictionary of encryption info for this table. Keys are cluster ids and
                   values are tuples of :class:`google.cloud.bigtable.encryption.EncryptionInfo` instances.
         """
+        warnings.warn(
+            "Table.get_encryption_info is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "get_table instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         ENCRYPTION_VIEW = enums.Table.View.ENCRYPTION_VIEW
         table_client = self._instance._client.table_admin_client
         table_pb = table_client.get_table(
@@ -873,6 +985,11 @@ class Table(object):
     def truncate(self, timeout=None):
         """Truncate the table
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.drop_row_range`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -890,6 +1007,13 @@ class Table(object):
                 due to a retryable error and retry attempts failed.
                 ValueError: If the parameters are invalid.
         """
+        warnings.warn(
+            "Table.truncate is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "drop_row_range instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         client = self._instance._client
         table_admin_client = client.table_admin_client
         if timeout:
@@ -904,6 +1028,11 @@ class Table(object):
 
     def drop_by_prefix(self, row_key_prefix, timeout=None):
         """
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.drop_row_range`
+            instead.
 
         For example:
 
@@ -926,6 +1055,13 @@ class Table(object):
                 due to a retryable error and retry attempts failed.
                 ValueError: If the parameters are invalid.
         """
+        warnings.warn(
+            "Table.drop_by_prefix is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "drop_row_range instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         client = self._instance._client
         table_admin_client = client.table_admin_client
         if timeout:
@@ -977,6 +1113,10 @@ class Table(object):
     def backup(self, backup_id, cluster_id=None, expire_time=None):
         """Factory to create a Backup linked to this Table.
 
+        .. deprecated:: 2.30.0
+            Use :class:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient`
+            instead.
+
         :type backup_id: str
         :param backup_id: The ID of the Backup to be created.
 
@@ -1000,6 +1140,11 @@ class Table(object):
 
     def list_backups(self, cluster_id=None, filter_=None, order_by=None, page_size=0):
         """List Backups for this Table.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.list_backups`
+            instead.
 
         :type cluster_id: str
         :param cluster_id: (Optional) Specifies a single cluster to list
@@ -1078,6 +1223,13 @@ class Table(object):
         :raises: :class:`ValueError <exceptions.ValueError>` if one of the
                  returned Backups' name is not of the expected format.
         """
+        warnings.warn(
+            "Table.list_backups is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "list_backups instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         cluster_id = cluster_id or "-"
 
         backups_filter = "source_table:{}".format(self.name)
@@ -1111,6 +1263,11 @@ class Table(object):
         can be used to track the progress of the operation and to cancel it.
         The ``response`` type is ``Table``, if successful.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.restore_table`
+            instead.
+
         :type new_table_id: str
         :param new_table_id: The ID of the Table to create and restore to.
                          This Table must not already exist.
@@ -1141,6 +1298,13 @@ class Table(object):
                  due to a retryable error and retry attempts failed.
         :raises: ValueError: If the parameters are invalid.
         """
+        warnings.warn(
+            "Table.restore is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "restore_table instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         api = self._instance._client.table_admin_client
         if not backup_name:
             backup_name = BaseBigtableTableAdminClient.backup_path(
