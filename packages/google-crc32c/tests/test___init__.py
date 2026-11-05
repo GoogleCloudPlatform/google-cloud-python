@@ -303,19 +303,21 @@ def test_value_w_large_readonly_view_of_bytearray_releases_buffer(_cext):
 
 
 @pytest.mark.parametrize(
-    "factory",
+    "factory, base_object",
     [
-        pytest.param(lambda data: data, id="bytes"),
-        pytest.param(lambda data: memoryview(data), id="memoryview"),
-        pytest.param(lambda data: memoryview(data)[1:-1], id="slice"),
-        pytest.param(lambda buffer: buffer, id="bytearray"),
-        pytest.param(lambda buffer: memoryview(buffer).toreadonly(), id="readonly"),
+        pytest.param(lambda data: data, bytes, id="bytes"),
+        pytest.param(lambda data: memoryview(data), bytes, id="memoryview"),
+        pytest.param(lambda data: memoryview(data)[1:-1], bytes, id="slice"),
+        pytest.param(lambda buffer: buffer, bytearray, id="bytearray"),
+        pytest.param(
+            lambda buffer: memoryview(buffer).toreadonly(), bytearray, id="readonly"
+        ),
     ],
 )
-def test_value_releases_gil(_cext, factory):
+def test_value_releases_gil(_cext, factory, base_object):
     # hashing runs with the GIL released and the
     # probe thread gets to run while value() is in progress.
-    data = factory(bytes(2 * _cext.GIL_RELEASE_THRESHOLD))
+    data = factory(base_object(2 * _cext.GIL_RELEASE_THRESHOLD))
     go = threading.Event()
     in_call = False
     seen = []
