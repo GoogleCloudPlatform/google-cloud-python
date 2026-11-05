@@ -104,50 +104,39 @@ def extract_trace_context(span: Any = None) -> dict[str, Any]:
     Returns:
         dict[str, Any]: Trace and span correlation attributes.
     """
-    if span is None and has_opentelemetry():
-        try:
+    try:
+        if span is None:
+            if not has_opentelemetry():
+                return {}
             # Ignored by mypy: Optional dependency only loaded after
             # has_opentelemetry() check
             from opentelemetry import trace  # type: ignore[import-not-found]
 
             span = trace.get_current_span()
-        # Defensive fail-open: telemetry correlation must never crash an RPC call
-        # if a custom or broken OpenTelemetry TracerProvider raises at runtime.
-        except Exception:
-            span = None
 
-    if span is None or not hasattr(span, "get_span_context"):
-        return {}
-
-    try:
         ctx = span.get_span_context()
-    # Defensive fail-open: guard against broken third-party or mock span objects.
-    except Exception:
-        return {}
+        if not ctx or not ctx.is_valid:
+            return {}
 
-    if ctx is None or not getattr(ctx, "is_valid", False):
-        return {}
-
-    try:
         trace_id_hex = f"{ctx.trace_id:032x}"
         span_id_hex = f"{ctx.span_id:016x}"
-        trace_flags = getattr(ctx, "trace_flags", None)
-        if trace_flags is not None and hasattr(trace_flags, "sampled"):
-            sampled = bool(trace_flags.sampled)
-        elif isinstance(trace_flags, int):
-            sampled = bool(trace_flags & 0x01)
-        else:
-            sampled = False
-    except (TypeError, ValueError, AttributeError):
-        return {}
+        # Per W3C Trace Context, trace_flags is an 8-bit integer (TraceFlags(int))
+        # that uses bits as configuration flags; the least-significant (last) bit
+        # (0x01) indicates whether the span is sampled (True: recorded/exported,
+        # allowing Cloud Logging to link the log entry to Cloud Trace) or not
+        # (False: not recorded).
+        sampled = bool(getattr(ctx, "trace_flags", 0) & 0x01)
 
-    return {
-        "trace_id": trace_id_hex,
-        "span_id": span_id_hex,
-        "logging.googleapis.com/trace": trace_id_hex,
-        "logging.googleapis.com/spanId": span_id_hex,
-        "logging.googleapis.com/trace_sampled": sampled,
-    }
+        return {
+            "trace_id": trace_id_hex,
+            "span_id": span_id_hex,
+            "logging.googleapis.com/trace": trace_id_hex,
+            "logging.googleapis.com/spanId": span_id_hex,
+            "logging.googleapis.com/trace_sampled": sampled,
+        }
+    except Exception:
+        # Defensive fail-open: telemetry correlation must never crash an RPC call.
+        return {}
 
 
 def _extract_error_info_fields(target_exc: Any) -> tuple[Any, Any, Any]:
