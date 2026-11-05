@@ -728,9 +728,9 @@ class AsyncAppendableObjectWriter:
                                     self.offset = self.persisted_size
                                 if resp.write_handle:
                                     self.write_handle = resp.write_handle
-                                    state["write_state"].write_handle = (
-                                        resp.write_handle
-                                    )
+                                    state[
+                                        "write_state"
+                                    ].write_handle = resp.write_handle
 
                             yield resp
 

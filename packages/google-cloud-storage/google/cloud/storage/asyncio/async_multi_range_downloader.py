@@ -341,9 +341,7 @@ class AsyncMultiRangeDownloader:
     ) -> str:
         """Resolves ``network.path`` from the underlying Bidi read stream call."""
         target_stream = stream if stream is not None else self.read_obj_str
-        call = getattr(
-            getattr(target_stream, "socket_like_rpc", None), "call", None
-        )
+        call = getattr(getattr(target_stream, "socket_like_rpc", None), "call", None)
         return _resolve_network_path(
             call=call,
             exc=exc,
@@ -851,12 +849,8 @@ class AsyncMultiRangeDownloader:
                 strategy.discard_pending_checksums(initial_state)
 
             if recorder is not None:
-                total_bytes = sum(
-                    ds.bytes_written for ds in download_states.values()
-                )
-                recorder.record_response_body_size(
-                    total_bytes, operation="ReadObject"
-                )
+                total_bytes = sum(ds.bytes_written for ds in download_states.values())
+                recorder.record_response_body_size(total_bytes, operation="ReadObject")
 
             if initial_state.get("read_handle"):
                 self.read_handle = initial_state["read_handle"]
@@ -1079,7 +1073,9 @@ class AsyncMultiRangeDownloader:
                         except BaseException:
                             for t in overflow_tasks:
                                 t.cancel()
-                            await asyncio.gather(*overflow_tasks, return_exceptions=True)
+                            await asyncio.gather(
+                                *overflow_tasks, return_exceptions=True
+                            )
                             raise
 
                     assignments, overflow, scale_tasks = await pool.distribute_ranges(
