@@ -19,6 +19,7 @@ import urllib.parse
 from unittest import mock
 
 import pytest
+from google.rpc import error_details_pb2
 from opentelemetry.trace import INVALID_SPAN, SpanContext, TraceFlags
 
 from google.api_core import _observability, exceptions
@@ -1743,7 +1744,7 @@ def test_extract_trace_context_fail_open_on_broken_spans(span):
 
 
 def test_extract_trace_context_ambient_fallback(monkeypatch, mock_otel):
-    """Proves extract_trace_context falls back to get_current_span()."""
+    """Proves extract_trace_context falls back to get_current_span() when span is None."""
     monkeypatch.setattr(_observability, "has_opentelemetry", lambda: True)
     mock_otel.span.get_span_context.return_value = SpanContext(
         trace_id=0x0123456789ABCDEF0123456789ABCDEF,
@@ -1752,17 +1753,40 @@ def test_extract_trace_context_ambient_fallback(monkeypatch, mock_otel):
         trace_flags=TraceFlags.SAMPLED,
     )
 
-    res = _observability.extract_trace_context(None)
-    assert res["trace_id"] == "0123456789abcdef0123456789abcdef"
-    assert res["logging.googleapis.com/trace_sampled"] is True
+    assert _observability.extract_trace_context(None) == {
+        "trace_id": "0123456789abcdef0123456789abcdef",
+        "span_id": "0123456789abcdef",
+        "logging.googleapis.com/trace": "0123456789abcdef0123456789abcdef",
+        "logging.googleapis.com/spanId": "0123456789abcdef",
+        "logging.googleapis.com/trace_sampled": True,
+    }
 
-    # Ambient get_current_span raising an exception returns {}
+
+def test_extract_trace_context_ambient_get_current_span_error(monkeypatch, mock_otel):
+    """Proves extract_trace_context fails open to {} if get_current_span() raises."""
+    monkeypatch.setattr(_observability, "has_opentelemetry", lambda: True)
     mock_otel.trace.get_current_span.side_effect = RuntimeError("ambient error")
     assert _observability.extract_trace_context(None) == {}
 
-    # OTel not installed returns {}
+
+def test_extract_trace_context_ambient_otel_missing(monkeypatch):
+    """Proves extract_trace_context returns {} when span is None and OTel is not installed."""
     monkeypatch.setattr(_observability, "has_opentelemetry", lambda: False)
     assert _observability.extract_trace_context(None) == {}
+
+
+def _with_cause(exc: BaseException, cause: BaseException) -> BaseException:
+    """Attaches __cause__ to an exception instance for parametrized test construction."""
+    exc.__cause__ = cause
+    return exc
+
+
+def _with_error_info_attr(exc: BaseException, error_info: object) -> BaseException:
+    """Attaches a public .error_info attribute to an exception instance."""
+    # Ignored by mypy: BaseException does not declare a public .error_info
+    # attribute, which we attach dynamically here to test the .error_info fallback.
+    exc.error_info = error_info  # type: ignore[attr-defined]
+    return exc
 
 
 @pytest.mark.parametrize(
@@ -1785,15 +1809,16 @@ def test_extract_trace_context_ambient_fallback(monkeypatch, mock_otel):
             id="google_api_call_error_with_dict_error_info",
         ),
         pytest.param(
-            types.SimpleNamespace(
-                error_info=types.SimpleNamespace(
+            exceptions.BadRequest(
+                "Service disabled",
+                error_info=error_details_pb2.ErrorInfo(
                     domain="googleapis.com",
                     reason="SERVICE_DISABLED",
                     metadata={
                         "service": "secretmanager.googleapis.com",
                         "consumer": "projects/123",
                     },
-                )
+                ),
             ),
             (
                 "googleapis.com",
@@ -1803,16 +1828,38 @@ def test_extract_trace_context_ambient_fallback(monkeypatch, mock_otel):
                     "consumer": "projects/123",
                 },
             ),
-            id="error_info_namespace",
+            id="google_api_call_error_with_proto_error_info",
         ),
         pytest.param(
-            types.SimpleNamespace(
+            _with_error_info_attr(
+                exceptions.BadRequest("Service disabled"),
+                error_details_pb2.ErrorInfo(
+                    domain="googleapis.com",
+                    reason="SERVICE_DISABLED",
+                    metadata={
+                        "service": "secretmanager.googleapis.com",
+                        "consumer": "projects/123",
+                    },
+                ),
+            ),
+            (
+                "googleapis.com",
+                "SERVICE_DISABLED",
+                {
+                    "service": "secretmanager.googleapis.com",
+                    "consumer": "projects/123",
+                },
+            ),
+            id="exception_with_public_error_info_attr",
+        ),
+        pytest.param(
+            error_details_pb2.ErrorInfo(
                 domain="fallback_d",
                 reason="fallback_r",
-                metadata={"f_key": 42},
+                metadata={"f_key": "42"},
             ),
-            ("fallback_d", "fallback_r", {"f_key": 42}),
-            id="direct_attributes_fallback",
+            ("fallback_d", "fallback_r", {"f_key": "42"}),
+            id="direct_error_info_proto_input",
         ),
         pytest.param(
             {
@@ -1824,11 +1871,12 @@ def test_extract_trace_context_ambient_fallback(monkeypatch, mock_otel):
             id="raw_dict_input",
         ),
         pytest.param(
-            types.SimpleNamespace(
-                error_info=types.SimpleNamespace(domain="", reason="", metadata=None)
+            exceptions.BadRequest(
+                "bad request",
+                error_info=error_details_pb2.ErrorInfo(),
             ),
-            ("", "", None),
-            id="empty_error_info_attributes",
+            ("", "", {}),
+            id="empty_error_info_proto_attributes",
         ),
         pytest.param(
             ValueError("invalid argument"),
@@ -1838,7 +1886,7 @@ def test_extract_trace_context_ambient_fallback(monkeypatch, mock_otel):
     ],
 )
 def test_extract_error_info_fields(target_exc, expected):
-    """Proves _extract_error_info_fields resolves (domain, reason, metadata) across exception and dict shapes."""
+    """Proves _extract_error_info_fields resolves (domain, reason, metadata) across exception, proto, and dict shapes."""
     assert _observability._extract_error_info_fields(target_exc) == expected
 
 
@@ -1846,10 +1894,13 @@ def test_extract_error_info_fields(target_exc, expected):
     "target_exc,return_value,side_effect,expected",
     [
         pytest.param(
-            types.SimpleNamespace(trailing_metadata=[("meta", "val")]),
+            mock.Mock(
+                spec=["trailing_metadata"],
+                trailing_metadata=[("meta", "val")],
+            ),
             (
-                None,
-                types.SimpleNamespace(
+                [],
+                error_details_pb2.ErrorInfo(
                     domain="parse_d",
                     reason="parse_r",
                     metadata={"foo": "bar"},
@@ -1860,7 +1911,10 @@ def test_extract_error_info_fields(target_exc, expected):
             id="direct_trailing_metadata_parsed",
         ),
         pytest.param(
-            types.SimpleNamespace(response=types.SimpleNamespace(trailing_metadata=[])),
+            exceptions.BadRequest(
+                "bad proto",
+                response=mock.Mock(spec=["trailing_metadata"], trailing_metadata=()),
+            ),
             None,
             ValueError("bad proto"),
             (None, None, None),
@@ -1887,41 +1941,46 @@ def test_extract_error_info_fields_grpc_trailing_metadata(
             exceptions.ServiceUnavailable(
                 "POST http://localhost:7469/v1beta1/sequences/23: Persistent outage"
             ),
-            types.SimpleNamespace(
+            mock.Mock(
                 status_code=503,
-                json=lambda: {"error": {"message": "Persistent outage"}},
+                json=mock.Mock(
+                    return_value={"error": {"message": "Persistent outage"}}
+                ),
             ),
             None,
             "Persistent outage",
             id="http_response_json_takes_precedence",
         ),
         pytest.param(
-            types.SimpleNamespace(message="api call failed"),
+            exceptions.GoogleAPICallError("api call failed"),
             None,
             None,
             "api call failed",
-            id="message_attribute",
+            id="google_api_call_error_message_attribute",
         ),
         pytest.param(
-            types.SimpleNamespace(details=lambda: "rpc deadline exceeded"),
+            mock.Mock(
+                spec=["details"],
+                details=mock.Mock(return_value="rpc deadline exceeded"),
+            ),
             None,
             None,
             "rpc deadline exceeded",
-            id="details_callable",
+            id="grpc_details_callable",
         ),
         pytest.param(
-            types.SimpleNamespace(details="static details string"),
+            mock.Mock(spec=["details"], details="static details string"),
             None,
             None,
             "static details string",
             id="details_string_attribute",
         ),
         pytest.param(
-            types.SimpleNamespace(),
+            ValueError(""),
             None,
             "explicit fallback",
             "explicit fallback",
-            id="fallback_argument",
+            id="fallback_argument_when_exception_str_is_empty",
         ),
         pytest.param(
             ValueError("invalid argument passed"),
@@ -2023,34 +2082,38 @@ _UNAVAILABLE_CODE = (
             id="google_api_call_error_without_error_info",
         ),
         pytest.param(
-            types.SimpleNamespace(
-                error_info=types.SimpleNamespace(
+            exceptions.BadRequest(
+                "Service disabled",
+                error_info=error_details_pb2.ErrorInfo(
                     domain="googleapis.com",
                     reason="SERVICE_DISABLED",
                     metadata={
                         "service": "secretmanager.googleapis.com",
                         "consumer": "projects/123",
-                        "count": 42,
                     },
-                )
+                ),
             ),
             {},
             {
-                "rpc.response.status_code": "SimpleNamespace",
+                "rpc.response.status_code": "BAD_REQUEST",
                 "gcp.errors.domain": "googleapis.com",
                 "error.type": "SERVICE_DISABLED",
                 "gcp.errors.metadata.service": "secretmanager.googleapis.com",
                 "gcp.errors.metadata.consumer": "projects/123",
-                "gcp.errors.metadata.count": "42",
+                "status.message": "Service disabled",
             },
-            id="error_info_with_domain_reason_and_metadata",
+            id="error_info_proto_with_domain_reason_and_metadata",
         ),
         pytest.param(
-            types.SimpleNamespace(domain="", reason="", metadata={}),
+            exceptions.BadRequest(
+                "bad request",
+                error_info=error_details_pb2.ErrorInfo(),
+            ),
             {},
             {
-                "rpc.response.status_code": "SimpleNamespace",
-                "error.type": "SimpleNamespace",
+                "rpc.response.status_code": "BAD_REQUEST",
+                "error.type": "BAD_REQUEST",
+                "status.message": "bad request",
             },
             id="empty_error_info_falls_back_to_resolved_code",
         ),
@@ -2058,7 +2121,7 @@ _UNAVAILABLE_CODE = (
             {
                 "domain": "googleapis.com",
                 "reason": "RATE_LIMIT_EXCEEDED",
-                "metadata": {"quota": "100"},
+                "metadata": {"quota": "100", "count": 42},
             },
             {"status_message": "Quota exceeded"},
             {
@@ -2066,33 +2129,40 @@ _UNAVAILABLE_CODE = (
                 "gcp.errors.domain": "googleapis.com",
                 "error.type": "RATE_LIMIT_EXCEEDED",
                 "gcp.errors.metadata.quota": "100",
+                "gcp.errors.metadata.count": "42",
                 "status.message": "Quota exceeded",
             },
-            id="dict_error_info",
+            id="dict_error_info_with_non_str_metadata_value",
         ),
         pytest.param(
-            types.SimpleNamespace(
-                __cause__=types.SimpleNamespace(
-                    error_info=types.SimpleNamespace(
+            _with_cause(
+                RuntimeError("wrapper error"),
+                exceptions.BadRequest(
+                    "Service disabled",
+                    error_info=error_details_pb2.ErrorInfo(
                         domain="d", reason="r", metadata={"k": "v"}
-                    )
-                )
+                    ),
+                ),
             ),
             {},
             {
-                "rpc.response.status_code": "SimpleNamespace",
+                "rpc.response.status_code": "BAD_REQUEST",
                 "gcp.errors.domain": "d",
                 "error.type": "r",
                 "gcp.errors.metadata.k": "v",
+                "status.message": "Service disabled",
             },
             id="dunder_cause_unwrapping",
         ),
         pytest.param(
             exceptions.ServiceUnavailable(
                 "POST http://localhost:7469/v1beta1/sequences/23: Persistent outage",
-                response=types.SimpleNamespace(
+                response=mock.Mock(
+                    spec=["status_code", "json"],
                     status_code=503,
-                    json=lambda: {"error": {"message": "Persistent outage"}},
+                    json=mock.Mock(
+                        return_value={"error": {"message": "Persistent outage"}}
+                    ),
                 ),
             ),
             {},
@@ -2104,13 +2174,54 @@ _UNAVAILABLE_CODE = (
             id="http_response_error_without_reason",
         ),
         pytest.param(
+            exceptions.ServiceUnavailable(
+                "POST http://localhost:7469/v1beta1/sequences/23: Persistent outage",
+                response=mock.Mock(
+                    spec=["status", "json"],
+                    status=503,
+                    json=mock.Mock(
+                        return_value={"error": {"message": "Persistent outage"}}
+                    ),
+                ),
+            ),
+            {},
+            {
+                "rpc.response.status_code": _UNAVAILABLE_CODE,
+                "error.type": "503",
+                "status.message": "Persistent outage",
+            },
+            id="http_response_using_status_attribute",
+        ),
+        pytest.param(
+            exceptions.ServiceUnavailable(
+                "Service unavailable fallback message",
+                response=mock.Mock(
+                    spec=["status_code", "json"],
+                    status_code=True,
+                    json=mock.Mock(
+                        return_value={"error": {"message": "Should be ignored"}}
+                    ),
+                ),
+            ),
+            {},
+            {
+                "rpc.response.status_code": _UNAVAILABLE_CODE,
+                "error.type": _UNAVAILABLE_CODE,
+                "status.message": "Service unavailable fallback message",
+            },
+            id="http_response_with_boolean_status_code_ignored",
+        ),
+        pytest.param(
             exceptions.RetryError(
                 "Deadline of 0.1s exceeded",
                 cause=exceptions.ServiceUnavailable(
                     "POST http://localhost:7469/v1beta1/sequences/23: Persistent outage",
-                    response=types.SimpleNamespace(
+                    response=mock.Mock(
+                        spec=["status_code", "json"],
                         status_code=503,
-                        json=lambda: {"error": {"message": "Persistent outage"}},
+                        json=mock.Mock(
+                            return_value={"error": {"message": "Persistent outage"}}
+                        ),
                     ),
                 ),
             ),
@@ -2125,9 +2236,12 @@ _UNAVAILABLE_CODE = (
         pytest.param(
             exceptions.BadRequest(
                 "POST http://localhost:7469/v1beta1/echo:echo: Quota exceeded",
-                response=types.SimpleNamespace(
+                response=mock.Mock(
+                    spec=["status_code", "json"],
                     status_code=400,
-                    json=lambda: {"error": {"message": "Quota exceeded"}},
+                    json=mock.Mock(
+                        return_value={"error": {"message": "Quota exceeded"}}
+                    ),
                 ),
                 error_info={
                     "domain": "googleapis.com",
@@ -2148,7 +2262,8 @@ _UNAVAILABLE_CODE = (
         pytest.param(
             exceptions.ServiceUnavailable(
                 "gRPC transport error",
-                response=types.SimpleNamespace(
+                response=mock.Mock(
+                    spec=["status_code", "trailing_metadata"],
                     status_code=503,
                     trailing_metadata=(),
                 ),
@@ -2168,23 +2283,58 @@ def test_build_telemetry_error_attributes(exc, kwargs, expected):
     assert _observability.build_telemetry_error_attributes(exc, **kwargs) == expected
 
 
-def test_build_telemetry_error_attributes_include_exception():
-    """Proves include_exception=True formats real exception stacktraces."""
+@pytest.mark.parametrize(
+    "exc_factory,kwargs,expected_code,expected_error_type,expected_status_msg,expected_exc_type,expected_exc_msg_substr",
+    [
+        pytest.param(
+            lambda: RuntimeError(""),
+            {"status_code": "UNAVAILABLE", "status_message": "backend down"},
+            "UNAVAILABLE",
+            "UNAVAILABLE",
+            "backend down",
+            "RuntimeError",
+            "",
+            id="standalone_runtime_error_with_empty_message",
+        ),
+        pytest.param(
+            lambda: exceptions.RetryError(
+                "Deadline of 0.1s exceeded",
+                cause=exceptions.ServiceUnavailable("Persistent outage"),
+            ),
+            {},
+            _UNAVAILABLE_CODE,
+            _UNAVAILABLE_CODE,
+            "Persistent outage",
+            "RetryError",
+            "Deadline of 0.1s exceeded",
+            id="chained_retry_error_records_outer_exception_and_inner_status",
+        ),
+    ],
+)
+def test_build_telemetry_error_attributes_include_exception(
+    exc_factory,
+    kwargs,
+    expected_code,
+    expected_error_type,
+    expected_status_msg,
+    expected_exc_type,
+    expected_exc_msg_substr,
+):
+    """Proves include_exception=True formats stacktraces and records outer exception.* alongside unwrapped status."""
     try:
-        raise RuntimeError("")
-    except RuntimeError as caught_exc:
-        exc_empty = caught_exc
+        raise exc_factory()
+    except BaseException as caught_exc:
+        exc = caught_exc
 
     attrs_inc = _observability.build_telemetry_error_attributes(
-        exc_empty,
-        status_code="UNAVAILABLE",
-        status_message="backend down",
+        exc,
         include_exception=True,
+        **kwargs,
     )
-    assert attrs_inc["rpc.response.status_code"] == "UNAVAILABLE"
-    assert attrs_inc["error.type"] == "UNAVAILABLE"
-    assert attrs_inc["status.message"] == "backend down"
-    assert attrs_inc["exception.type"] == "RuntimeError"
-    assert attrs_inc["exception.message"] == ""
+    assert attrs_inc["rpc.response.status_code"] == expected_code
+    assert attrs_inc["error.type"] == expected_error_type
+    assert attrs_inc["status.message"] == expected_status_msg
+    assert attrs_inc["exception.type"] == expected_exc_type
+    assert expected_exc_msg_substr in attrs_inc["exception.message"]
     assert "Traceback (most recent call last):" in attrs_inc["exception.stacktrace"]
-    assert "raise RuntimeError" in attrs_inc["exception.stacktrace"]
+    assert "raise exc_factory()" in attrs_inc["exception.stacktrace"]
