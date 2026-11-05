@@ -19,7 +19,7 @@ import urllib.parse
 from unittest import mock
 
 import pytest
-from opentelemetry.trace import INVALID_SPAN_CONTEXT, SpanContext, TraceFlags
+from opentelemetry.trace import INVALID_SPAN, SpanContext, TraceFlags
 
 from google.api_core import _observability, exceptions
 from google.api_core._feature_gating_helpers import FeatureGatingError
@@ -1710,15 +1710,36 @@ def test_extract_trace_context_with_real_span_context(flags, expected_sampled):
     assert _observability.extract_trace_context(span) == expected
 
 
-def test_extract_trace_context_invalid_or_broken_span():
-    """Proves extract_trace_context returns {} on broken or invalid spans."""
-    bad_span = mock.Mock(spec_set=["get_span_context"])
-    bad_span.get_span_context.side_effect = RuntimeError("broken span")
-    assert _observability.extract_trace_context(bad_span) == {}
-
-    invalid_ctx_span = mock.Mock(spec_set=["get_span_context"])
-    invalid_ctx_span.get_span_context.return_value = INVALID_SPAN_CONTEXT
-    assert _observability.extract_trace_context(invalid_ctx_span) == {}
+@pytest.mark.parametrize(
+    "span",
+    [
+        pytest.param(
+            INVALID_SPAN,
+            id="invalid_span_context",
+        ),
+        pytest.param(
+            mock.Mock(
+                get_span_context=mock.Mock(side_effect=RuntimeError("broken span"))
+            ),
+            id="get_span_context_raises_runtime_error",
+        ),
+        pytest.param(
+            mock.Mock(
+                get_span_context=mock.Mock(
+                    return_value=mock.Mock(
+                        is_valid=True,
+                        trace_id="not_an_int",
+                        span_id="not_an_int",
+                    )
+                )
+            ),
+            id="corrupt_non_int_ids",
+        ),
+    ],
+)
+def test_extract_trace_context_fail_open_on_broken_spans(span):
+    """Proves extract_trace_context cleanly returns {} when span or context is invalid."""
+    assert _observability.extract_trace_context(span) == {}
 
 
 def test_extract_trace_context_ambient_fallback(monkeypatch, mock_otel):
