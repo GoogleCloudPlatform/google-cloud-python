@@ -79,6 +79,34 @@ class TestExtraEnv:
         # Parent env is preserved (merged, not replaced).
         assert env["EXISTING"] == "keep"
 
+    @pytest.mark.parametrize("is_windows", [False, True])
+    def test_spawns_in_isolated_process_group(self, tmp_path, monkeypatch, is_windows):
+        captured = {}
+
+        def fake_popen(argv, **kwargs):
+            captured.update(kwargs)
+            raise _StopStart()
+
+        monkeypatch.setattr(_daemon, "_IS_WINDOWS", is_windows)
+        monkeypatch.setattr(_daemon.subprocess, "Popen", fake_popen)
+        if is_windows:
+            monkeypatch.setattr(
+                _daemon.subprocess,
+                "CREATE_NEW_PROCESS_GROUP",
+                0x00000200,
+                raising=False,
+            )
+            monkeypatch.setattr(_daemon.socket, "AF_UNIX", 1, raising=False)
+        daemon = _make_daemon(tmp_path)
+        with pytest.raises(_StopStart):
+            daemon.start()
+        if is_windows:
+            assert captured.get("creationflags") == 0x00000200
+            assert "start_new_session" not in captured
+        else:
+            assert captured.get("start_new_session") is True
+            assert "creationflags" not in captured
+
 
 class TestReadIdentity:
     def test_reads_and_unlinks(self, tmp_path):

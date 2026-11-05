@@ -144,6 +144,15 @@ class TestUseAccelerator:
         t._accelerator_breaker.trip()
         assert t._use_accelerator("read_row") is False
 
+    def test_close_trips_breaker_before_teardown(self):
+        t = _bare_target(accel_client=mock.AsyncMock(), accel_daemon=mock.Mock())
+        t._accelerator_health = None
+        t._register_instance_future = None
+        t.client._remove_instance_registration = mock.Mock()
+        assert t._accelerator_breaker.is_tripped is False
+        asyncio.get_event_loop().run_until_complete(t.close())
+        assert t._accelerator_breaker.is_tripped is True
+
 
 # ---------------------------------------------------------------------------
 # _mutate_row_via_accelerator
