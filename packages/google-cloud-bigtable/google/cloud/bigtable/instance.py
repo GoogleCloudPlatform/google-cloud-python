@@ -229,6 +229,11 @@ class Instance(object):
     ):
         """Create this instance.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.create_instance`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -319,6 +324,14 @@ class Instance(object):
                              default_storage_type can not be set \
                              simultaneously."
             )
+        else:
+            warnings.warn(
+                "Instance.create is deprecated. Use "
+                "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+                "create_instance instead.",
+                DeprecationWarning,
+                stacklevel=2,
+            )
 
         instance_pb = instance.Instance(
             display_name=self.display_name, type_=self.type_, labels=self.labels
@@ -338,6 +351,11 @@ class Instance(object):
     def exists(self):
         """Check whether the instance already exists.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.get_instance`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -348,6 +366,13 @@ class Instance(object):
         :rtype: bool
         :returns: True if the table exists, else False.
         """
+        warnings.warn(
+            "Instance.exists is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "get_instance instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         try:
             self._client.instance_admin_client.get_instance(request={"name": self.name})
             return True
@@ -358,6 +383,11 @@ class Instance(object):
     def reload(self):
         """Reload the metadata for this instance.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.get_instance`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -365,6 +395,13 @@ class Instance(object):
             :end-before: [END bigtable_api_reload_instance]
             :dedent: 4
         """
+        warnings.warn(
+            "Instance.reload is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "get_instance instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         instance_pb = self._client.instance_admin_client.get_instance(
             request={"name": self.name}
         )
@@ -375,6 +412,11 @@ class Instance(object):
 
     def update(self):
         """Updates an instance within a project.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.partial_update_instance`
+            instead.
 
         For example:
 
@@ -402,6 +444,13 @@ class Instance(object):
         :returns: The long-running operation corresponding to the update
                     operation.
         """
+        warnings.warn(
+            "Instance.update is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "partial_update_instance instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         update_mask_pb = field_mask_pb2.FieldMask()
         if self.display_name is not None:
             update_mask_pb.paths.append("display_name")
@@ -422,6 +471,11 @@ class Instance(object):
 
     def delete(self):
         """Delete this instance.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.delete_instance`
+            instead.
 
         For example:
 
@@ -449,10 +503,22 @@ class Instance(object):
           irrevocably disappear from the API, and their data will be
           permanently deleted.
         """
+        warnings.warn(
+            "Instance.delete is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "delete_instance instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         self._client.instance_admin_client.delete_instance(request={"name": self.name})
 
     def get_iam_policy(self, requested_policy_version=None):
         """Gets the access control policy for an instance resource.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.get_iam_policy`
+            instead.
 
         For example:
 
@@ -476,6 +542,13 @@ class Instance(object):
         :rtype: :class:`google.cloud.bigtable.policy.Policy`
         :returns: The current IAM policy of this instance
         """
+        warnings.warn(
+            "Instance.get_iam_policy is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "get_iam_policy instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         args = {"resource": self.name}
         if requested_policy_version is not None:
             args["options_"] = options_pb2.GetPolicyOptions(
@@ -490,6 +563,11 @@ class Instance(object):
     def set_iam_policy(self, policy):
         """Sets the access control policy on an instance resource. Replaces any
         existing policy.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.set_iam_policy`
+            instead.
 
         For more information about policy, please see documentation of
         class `google.cloud.bigtable.policy.Policy`
@@ -508,6 +586,13 @@ class Instance(object):
         :rtype: :class:`google.cloud.bigtable.policy.Policy`
         :returns: The current IAM policy of this instance.
         """
+        warnings.warn(
+            "Instance.set_iam_policy is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "set_iam_policy instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         instance_admin_client = self._client.instance_admin_client
         resp = instance_admin_client.set_iam_policy(
             request={"resource": self.name, "policy": policy.to_pb()}
@@ -517,6 +602,11 @@ class Instance(object):
     def test_iam_permissions(self, permissions):
         """Returns permissions that the caller has on the specified instance
         resource.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.test_iam_permissions`
+            instead.
 
         For example:
 
@@ -537,6 +627,13 @@ class Instance(object):
         :rtype: list
         :returns: A List(string) of permissions allowed on the instance
         """
+        warnings.warn(
+            "Instance.test_iam_permissions is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "test_iam_permissions instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         instance_admin_client = self._client.instance_admin_client
         resp = instance_admin_client.test_iam_permissions(
             request={"resource": self.name, "permissions": permissions}
@@ -555,6 +652,10 @@ class Instance(object):
         cpu_utilization_percent=None,
     ):
         """Factory to create a cluster associated with this instance.
+
+        .. deprecated:: 2.30.0
+            Use :class:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient`
+            instead.
 
         For example:
 
@@ -620,6 +721,11 @@ class Instance(object):
     def list_clusters(self):
         """List the clusters in this instance.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.list_clusters`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -634,6 +740,13 @@ class Instance(object):
             'failed_locations' is a list of locations which could not
             be resolved.
         """
+        warnings.warn(
+            "Instance.list_clusters is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "list_clusters instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         resp = self._client.instance_admin_client.list_clusters(
             request={"parent": self.name}
         )
@@ -672,6 +785,11 @@ class Instance(object):
     def list_tables(self):
         """List the tables in this instance.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.list_tables`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -684,6 +802,13 @@ class Instance(object):
         :raises: :class:`ValueError <exceptions.ValueError>` if one of the
                  returned tables has a name that is not of the expected format.
         """
+        warnings.warn(
+            "Instance.list_tables is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "list_tables instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         table_list_pb = self._client.table_admin_client.list_tables(
             request={"parent": self.name}
         )
@@ -710,6 +835,10 @@ class Instance(object):
         allow_transactional_writes=None,
     ):
         """Factory to create AppProfile associated with this instance.
+
+        .. deprecated:: 2.30.0
+            Use :class:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient`
+            instead.
 
         For example:
 
@@ -764,6 +893,11 @@ class Instance(object):
     def list_app_profiles(self):
         """Lists information about AppProfiles in an instance.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.list_app_profiles`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -777,6 +911,13 @@ class Instance(object):
                   :class:`~google.cloud.bigtable.app_profile.AppProfile`
                   instances.
         """
+        warnings.warn(
+            "Instance.list_app_profiles is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "list_app_profiles instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         resp = self._client.instance_admin_client.list_app_profiles(
             request={"parent": self.name}
         )
