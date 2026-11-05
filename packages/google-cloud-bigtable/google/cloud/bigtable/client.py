@@ -450,13 +450,6 @@ class Client(ClientWithProject):
             'failed_locations' is a list of locations which could not
             be resolved.
         """
-        warnings.warn(
-            "Client.list_instances is deprecated. Use "
-            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
-            "list_instances instead.",
-            DeprecationWarning,
-            stacklevel=2,
-        )
         resp = self.instance_admin_client.list_instances(
             request={"parent": self.project_path}
         )
@@ -485,13 +478,6 @@ class Client(ClientWithProject):
             'failed_locations' is a list of strings representing
             locations which could not be resolved.
         """
-        warnings.warn(
-            "Client.list_clusters is deprecated. Use "
-            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
-            "list_clusters instead.",
-            DeprecationWarning,
-            stacklevel=2,
-        )
         resp = self.instance_admin_client.list_clusters(
             request={
                 "parent": self.instance_admin_client.instance_path(self.project, "-")
