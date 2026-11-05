@@ -18,12 +18,15 @@ This is used by gapic clients to provide common error mapping, retry, timeout,
 compression, pagination, and long-running operations to gRPC methods.
 """
 
+from __future__ import annotations
+
 import asyncio
 import contextlib
 import enum
 import functools
 import logging
-from typing import Any, List, Optional, Tuple
+from collections.abc import Iterator
+from typing import TYPE_CHECKING, Any, List, Tuple
 
 from google.api_core import (
     _observability,
@@ -33,6 +36,10 @@ from google.api_core import (
 from google.api_core.gapic_v1 import client_info
 from google.api_core.gapic_v1.client_info import METRICS_METADATA_KEY
 from google.api_core.timeout import TimeToDeadlineTimeout
+
+if TYPE_CHECKING:
+    # flake8: opentelemetry.trace is imported only for static analysis and type annotations
+    import opentelemetry.trace  # noqa: F401
 
 USE_DEFAULT_METADATA = object()
 
@@ -266,19 +273,19 @@ class _GapicCallable(object):
     def _emit_method_error_log(
         self,
         exc: BaseException,
-        span: Any,
+        span: opentelemetry.trace.Span | None,
         error_attrs: dict[str, Any],
         is_cancelled: bool,
-        logger: Optional[logging.Logger] = None,
+        logger: logging.Logger | None = None,
     ) -> None:
         """Constructs and emits the L3 terminal method error/cancellation log record.
 
         Args:
             exc (BaseException): The terminal exception raised by the RPC method.
-            span (Any): The active Tier 3 OpenTelemetry span, if any.
+            span (opentelemetry.trace.Span | None): The active Tier 3 OpenTelemetry span, if any.
             error_attrs (dict[str, Any]): Pre-extracted telemetry error attributes.
             is_cancelled (bool): True if the RPC was cancelled rather than failed.
-            logger (Optional[logging.Logger]): Explicit logger override for testing.
+            logger (logging.Logger | None): Explicit logger override for testing.
         """
         try:
             rpc_system = _observability._resolve_rpc_system(self._kind)
@@ -314,15 +321,15 @@ class _GapicCallable(object):
     def _report_method_error(
         self,
         exc: BaseException,
-        span: Any = None,
-        logger: Optional[logging.Logger] = None,
+        span: opentelemetry.trace.Span | None = None,
+        logger: logging.Logger | None = None,
     ) -> None:
         """Enriches the active Tier 3 method span and emits an L3 terminal method error log.
 
         Args:
             exc (BaseException): The terminal exception raised by the RPC method.
-            span (Optional[Any]): The active Tier 3 OpenTelemetry span, if any.
-            logger (Optional[logging.Logger]): Explicit logger override for testing.
+            span (opentelemetry.trace.Span | None): The active Tier 3 OpenTelemetry span, if any.
+            logger (logging.Logger | None): Explicit logger override for testing.
         """
         error_logging_enabled = client_logging.is_error_logging_enabled(
             self._client_options
@@ -356,7 +363,7 @@ class _GapicCallable(object):
             )
 
     @contextlib.contextmanager
-    def _trace_span(self):
+    def _trace_span(self) -> Iterator[None]:
         """Context manager that wraps method execution in a Tier 3 OpenTelemetry span."""
         span_cm = contextlib.nullcontext()
         if self._start_span_fn is not None:
