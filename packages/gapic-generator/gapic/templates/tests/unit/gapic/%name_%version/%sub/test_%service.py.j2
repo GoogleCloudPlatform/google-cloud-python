@@ -2513,7 +2513,7 @@ def test_api_key_credentials(client_class, transport_class):
         pytest.param(
             True,
             True,
-            "{{ opts.transport[0] }}",
+            "grpc_asyncio",
             True,
             id="concrete_transport_supports_default_host",
         ),
@@ -2526,24 +2526,24 @@ def test_api_key_credentials(client_class, transport_class):
         ),
     ],
 )
-def test_{{ service.name|snake_case }}_base_transport_wrap_method_modern_api_core(
+def test_{{ service.name|snake_case }}_base_transport_wrap_async_method_modern_api_core(
     monkeypatch,
     supports_default_host,
     is_concrete,
     expected_kind,
     expected_has_default_host,
 ):
-    monkeypatch.setattr(transports.base, "_WRAP_METHOD_SUPPORTS_TRACING", True)
+    monkeypatch.setattr(transports.base, "_ASYNC_WRAP_METHOD_SUPPORTS_TRACING", True)
     monkeypatch.setattr(transports.base, "_SUPPORTS_DEFAULT_HOST", supports_default_host)
     transport_cls = (
-        transports.{{ service.name }}{{ opts.transport[0].capitalize() }}Transport
+        transports.{{ service.grpc_asyncio_transport_name }}
         if is_concrete
         else transports.{{ service.name }}Transport
     )
-    with mock.patch.object(transports.base.gapic_v1.method, "wrap_method") as mock_wrap:
+    with mock.patch.object(transports.base.gapic_v1.method_async, "wrap_method") as mock_wrap:
         transport = transport_cls(credentials=ga_credentials.AnonymousCredentials())
         func = mock.MagicMock()
-        transport._wrap_method(func)
+        transport._wrap_async_method(func)
         if expected_kind:
             assert mock_wrap.call_args.kwargs["kind"] == expected_kind
         else:
