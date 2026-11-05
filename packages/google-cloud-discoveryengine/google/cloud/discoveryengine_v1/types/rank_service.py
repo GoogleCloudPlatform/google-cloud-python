@@ -52,8 +52,8 @@ class RankingRecord(proto.Message):
         score (float):
             The score of this record based on the given
             query and selected model. The score will be
-            rounded to 2 decimal places. If the score is
-            close to 0, it will be rounded to 0.0001 to
+            rounded to 4 decimal places. If the score is
+            close to 0, it will be rounded to 0.00001 to
             avoid returning unset.
     """
 
@@ -100,8 +100,7 @@ class RankRequest(proto.Message):
         query (str):
             The query to use.
         records (MutableSequence[google.cloud.discoveryengine_v1.types.RankingRecord]):
-            Required. A list of records to rank. At most
-            200 records to rank.
+            Required. A list of records to rank.
         ignore_record_details_in_response (bool):
             If true, the response will contain only
             record ID and score. By default, it is false,

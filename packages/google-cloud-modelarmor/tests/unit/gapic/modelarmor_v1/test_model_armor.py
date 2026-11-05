@@ -6884,6 +6884,7 @@ def test_create_template_rest_call_success(request_type):
                     }
                 ]
             },
+            "csam_filter_settings": {"filter_enforcement": 1, "confidence_level": 1},
         },
         "template_metadata": {
             "ignore_partial_invocation_failures": True,
@@ -7138,6 +7139,7 @@ def test_update_template_rest_call_success(request_type):
                     }
                 ]
             },
+            "csam_filter_settings": {"filter_enforcement": 1, "confidence_level": 1},
         },
         "template_metadata": {
             "ignore_partial_invocation_failures": True,
@@ -7633,6 +7635,7 @@ def test_update_floor_setting_rest_call_success(request_type):
                     }
                 ]
             },
+            "csam_filter_settings": {"filter_enforcement": 1, "confidence_level": 1},
         },
         "enable_floor_setting_enforcement": True,
         "integrated_services": [1],

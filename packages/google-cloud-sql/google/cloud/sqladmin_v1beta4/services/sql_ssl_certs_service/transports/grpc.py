@@ -112,6 +112,8 @@ class _LoggingClientInterceptor(grpc.UnaryUnaryClientInterceptor):  # pragma: NO
 class SqlSslCertsServiceGrpcTransport(SqlSslCertsServiceTransport):
     """gRPC backend transport for SqlSslCertsService.
 
+    Service to manage SSL certs for Cloud SQL instances.
+
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
     and call it.

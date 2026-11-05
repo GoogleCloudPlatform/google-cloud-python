@@ -125,6 +125,14 @@ class DataformRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_create_compilation_result_long_running(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_create_compilation_result_long_running(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_create_folder(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -294,6 +302,14 @@ class DataformRestInterceptor:
                 return request, metadata
 
             def post_fetch_workspace_branches(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_fetch_workspace_history(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_fetch_workspace_history(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -951,6 +967,54 @@ class DataformRestInterceptor:
         `post_create_compilation_result` interceptor. The (possibly modified) response returned by
         `post_create_compilation_result` will be passed to
         `post_create_compilation_result_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_create_compilation_result_long_running(
+        self,
+        request: dataform.CreateCompilationResultRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        dataform.CreateCompilationResultRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for create_compilation_result_long_running
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the Dataform server.
+        """
+        return request, metadata
+
+    def post_create_compilation_result_long_running(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for create_compilation_result_long_running
+
+        DEPRECATED. Please use the `post_create_compilation_result_long_running_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the Dataform server but before
+        it is returned to user code. This `post_create_compilation_result_long_running` interceptor runs
+        before the `post_create_compilation_result_long_running_with_metadata` interceptor.
+        """
+        return response
+
+    def post_create_compilation_result_long_running_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for create_compilation_result_long_running
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the Dataform server but before it is returned to user code.
+
+        We recommend only using this `post_create_compilation_result_long_running_with_metadata`
+        interceptor in new development instead of the `post_create_compilation_result_long_running` interceptor.
+        When both interceptors are used, this `post_create_compilation_result_long_running_with_metadata` interceptor runs after the
+        `post_create_compilation_result_long_running` interceptor. The (possibly modified) response returned by
+        `post_create_compilation_result_long_running` will be passed to
+        `post_create_compilation_result_long_running_with_metadata`.
         """
         return response, metadata
 
@@ -1918,6 +1982,56 @@ class DataformRestInterceptor:
         `post_fetch_workspace_branches` interceptor. The (possibly modified) response returned by
         `post_fetch_workspace_branches` will be passed to
         `post_fetch_workspace_branches_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_fetch_workspace_history(
+        self,
+        request: dataform.FetchWorkspaceHistoryRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        dataform.FetchWorkspaceHistoryRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for fetch_workspace_history
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the Dataform server.
+        """
+        return request, metadata
+
+    def post_fetch_workspace_history(
+        self, response: dataform.FetchWorkspaceHistoryResponse
+    ) -> dataform.FetchWorkspaceHistoryResponse:
+        """Post-rpc interceptor for fetch_workspace_history
+
+        DEPRECATED. Please use the `post_fetch_workspace_history_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the Dataform server but before
+        it is returned to user code. This `post_fetch_workspace_history` interceptor runs
+        before the `post_fetch_workspace_history_with_metadata` interceptor.
+        """
+        return response
+
+    def post_fetch_workspace_history_with_metadata(
+        self,
+        response: dataform.FetchWorkspaceHistoryResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        dataform.FetchWorkspaceHistoryResponse, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for fetch_workspace_history
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the Dataform server but before it is returned to user code.
+
+        We recommend only using this `post_fetch_workspace_history_with_metadata`
+        interceptor in new development instead of the `post_fetch_workspace_history` interceptor.
+        When both interceptors are used, this `post_fetch_workspace_history_with_metadata` interceptor runs after the
+        `post_fetch_workspace_history` interceptor. The (possibly modified) response returned by
+        `post_fetch_workspace_history` will be passed to
+        `post_fetch_workspace_history_with_metadata`.
         """
         return response, metadata
 
@@ -5383,6 +5497,162 @@ class DataformRestTransport(_BaseDataformRestTransport):
                 )
             return resp
 
+    class _CreateCompilationResultLongRunning(
+        _BaseDataformRestTransport._BaseCreateCompilationResultLongRunning,
+        DataformRestStub,
+    ):
+        def __hash__(self):
+            return hash("DataformRestTransport.CreateCompilationResultLongRunning")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: dataform.CreateCompilationResultRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the create compilation result
+            long running method over HTTP.
+
+                Args:
+                    request (~.dataform.CreateCompilationResultRequest):
+                        The request object. ``CreateCompilationResult`` request message.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.operations_pb2.Operation:
+                        This resource represents a
+                    long-running operation that is the
+                    result of a network API call.
+
+            """
+
+            http_options = _BaseDataformRestTransport._BaseCreateCompilationResultLongRunning._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_create_compilation_result_long_running(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataformRestTransport._BaseCreateCompilationResultLongRunning,
+                    "_BaseCreateCompilationResultLongRunning__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.dataform_v1beta1.DataformClient.CreateCompilationResultLongRunning",
+                    extra={
+                        "serviceName": "google.cloud.dataform.v1beta1.Dataform",
+                        "rpcName": "CreateCompilationResultLongRunning",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                DataformRestTransport._CreateCompilationResultLongRunning._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                    body,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_create_compilation_result_long_running(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_create_compilation_result_long_running_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.dataform_v1beta1.DataformClient.create_compilation_result_long_running",
+                    extra={
+                        "serviceName": "google.cloud.dataform.v1beta1.Dataform",
+                        "rpcName": "CreateCompilationResultLongRunning",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _CreateFolder(_BaseDataformRestTransport._BaseCreateFolder, DataformRestStub):
         def __hash__(self):
             return hash("DataformRestTransport.CreateFolder")
@@ -8825,6 +9095,153 @@ class DataformRestTransport(_BaseDataformRestTransport):
                     extra={
                         "serviceName": "google.cloud.dataform.v1beta1.Dataform",
                         "rpcName": "FetchWorkspaceBranches",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _FetchWorkspaceHistory(
+        _BaseDataformRestTransport._BaseFetchWorkspaceHistory, DataformRestStub
+    ):
+        def __hash__(self):
+            return hash("DataformRestTransport.FetchWorkspaceHistory")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: dataform.FetchWorkspaceHistoryRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> dataform.FetchWorkspaceHistoryResponse:
+            r"""Call the fetch workspace history method over HTTP.
+
+            Args:
+                request (~.dataform.FetchWorkspaceHistoryRequest):
+                    The request object. ``FetchWorkspaceHistory`` request message.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.dataform.FetchWorkspaceHistoryResponse:
+                    ``FetchWorkspaceHistory`` response message.
+            """
+
+            http_options = _BaseDataformRestTransport._BaseFetchWorkspaceHistory._get_http_options()
+            request, metadata = self._interceptor.pre_fetch_workspace_history(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseDataformRestTransport._BaseFetchWorkspaceHistory,
+                    "_BaseFetchWorkspaceHistory__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.dataform_v1beta1.DataformClient.FetchWorkspaceHistory",
+                    extra={
+                        "serviceName": "google.cloud.dataform.v1beta1.Dataform",
+                        "rpcName": "FetchWorkspaceHistory",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = DataformRestTransport._FetchWorkspaceHistory._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = dataform.FetchWorkspaceHistoryResponse()
+            pb_resp = dataform.FetchWorkspaceHistoryResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_fetch_workspace_history(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_fetch_workspace_history_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = dataform.FetchWorkspaceHistoryResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.dataform_v1beta1.DataformClient.fetch_workspace_history",
+                    extra={
+                        "serviceName": "google.cloud.dataform.v1beta1.Dataform",
+                        "rpcName": "FetchWorkspaceHistory",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -16162,6 +16579,16 @@ class DataformRestTransport(_BaseDataformRestTransport):
         )  # type: ignore
 
     @property
+    def create_compilation_result_long_running(
+        self,
+    ) -> Callable[[dataform.CreateCompilationResultRequest], operations_pb2.Operation]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._CreateCompilationResultLongRunning(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
     def create_folder(
         self,
     ) -> Callable[[dataform.CreateFolderRequest], dataform.Folder]:
@@ -16391,6 +16818,16 @@ class DataformRestTransport(_BaseDataformRestTransport):
         return self._FetchWorkspaceBranches(
             self._session, self._host, self._interceptor
         )  # type: ignore
+
+    @property
+    def fetch_workspace_history(
+        self,
+    ) -> Callable[
+        [dataform.FetchWorkspaceHistoryRequest], dataform.FetchWorkspaceHistoryResponse
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._FetchWorkspaceHistory(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def get_compilation_result(

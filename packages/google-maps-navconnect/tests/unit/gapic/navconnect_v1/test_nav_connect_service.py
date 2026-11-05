@@ -41,6 +41,7 @@ except ImportError:  # pragma: NO COVER
 import google.auth
 import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
 import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
+import google.protobuf.struct_pb2 as struct_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import google.type.latlng_pb2 as latlng_pb2  # type: ignore
 from google.api_core import (
@@ -2031,6 +2032,9 @@ def test_get_trip_rest_required_fields(request_type=navconnect_service.GetTripRe
 
     jsonified_request["name"] = "name_value"
 
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(("routePolylineFormat",))
+
     # verify required fields with non-default values are left alone
     assert "name" in jsonified_request
     assert jsonified_request["name"] == "name_value"
@@ -2404,6 +2408,8 @@ def test_create_trip_rest_call_success(request_type):
             "enable_high_frequency_updates": True,
             "enable_pubsub": True,
             "pubsub_field_mask": {"paths": ["paths_value1", "paths_value2"]},
+            "enable_remaining_route_reporting": True,
+            "enable_route_deviation_reporting": True,
         },
         "android_app_id": "android_app_id_value",
         "ios_app_id": "ios_app_id_value",
@@ -2420,6 +2426,20 @@ def test_create_trip_rest_call_success(request_type):
             },
             "destination": {"point": {}},
             "location": {},
+            "remaining_route": {
+                "simple_polyline": {"points": {}},
+                "encoded_polyline": "encoded_polyline_value",
+                "s2_polyline": b"s2_polyline_blob",
+                "geo_json": {"fields": {}},
+                "traffic_information": [
+                    {
+                        "start_polyline_point_index": 2809,
+                        "end_polyline_point_index": 2562,
+                        "speed": 1,
+                    }
+                ],
+            },
+            "last_route_deviation": {"location": {}, "source": 1},
             "traveled_duration": {"seconds": 751, "nanos": 543},
             "remaining_duration": {},
             "traveled_distance_meters": 2544,

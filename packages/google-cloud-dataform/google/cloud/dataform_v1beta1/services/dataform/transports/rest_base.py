@@ -197,6 +197,23 @@ class _BaseDataformRestTransport(DataformTransport):
             ]
             return http_options
 
+    class _BaseCreateCompilationResultLongRunning:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1beta1/{parent=projects/*/locations/*/repositories/*}/compilationResults:createLongRunning",
+                    "body": "compilation_result",
+                },
+            ]
+            return http_options
+
     class _BaseCreateFolder:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -614,6 +631,22 @@ class _BaseDataformRestTransport(DataformTransport):
                 {
                     "method": "get",
                     "uri": "/v1beta1/{name=projects/*/locations/*/repositories/*/workspaces/*}:fetchBranches",
+                },
+            ]
+            return http_options
+
+    class _BaseFetchWorkspaceHistory:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1beta1/{name=projects/*/locations/*/repositories/*/workspaces/*}:fetchHistory",
                 },
             ]
             return http_options

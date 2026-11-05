@@ -65,7 +65,7 @@ _LOGGER = std_logging.getLogger(__name__)
 
 
 class SqlSslCertsServiceAsyncClient:
-    """"""
+    """Service to manage SSL certs for Cloud SQL instances."""
 
     _client: SqlSslCertsServiceClient
 

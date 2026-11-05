@@ -117,7 +117,7 @@ class SqlOperationsServiceClientMeta(type):
 
 
 class SqlOperationsServiceClient(metaclass=SqlOperationsServiceClientMeta):
-    """"""
+    """Service to fetch operations for database instances."""
 
     # Note: DEFAULT_ENDPOINT is deprecated. Use _DEFAULT_ENDPOINT_TEMPLATE instead.
     DEFAULT_ENDPOINT = "sqladmin.googleapis.com"

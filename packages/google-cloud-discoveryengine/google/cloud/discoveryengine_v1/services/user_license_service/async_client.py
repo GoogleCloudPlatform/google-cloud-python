@@ -353,8 +353,9 @@ class UserLicenseServiceAsyncClient:
                 The request object. Request message for
                 [UserLicenseService.ListUserLicenses][google.cloud.discoveryengine.v1.UserLicenseService.ListUserLicenses].
             parent (:class:`str`):
-                Required. The parent [UserStore][] resource name,
-                format:
+                Required. The parent
+                [UserStore][google.cloud.discoveryengine.v1.UserStore]
+                resource name, format:
                 ``projects/{project}/locations/{location}/userStores/{user_store_id}``.
 
                 This corresponds to the ``parent`` field
@@ -429,6 +430,125 @@ class UserLicenseServiceAsyncClient:
             method=rpc,
             request=request,
             response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def list_license_configs_usage_stats(
+        self,
+        request: Optional[
+            Union[user_license_service.ListLicenseConfigsUsageStatsRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> user_license_service.ListLicenseConfigsUsageStatsResponse:
+        r"""Lists all the
+        [LicenseConfigUsageStats][google.cloud.discoveryengine.v1.LicenseConfigUsageStats]s
+        associated with the project.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import discoveryengine_v1
+
+            async def sample_list_license_configs_usage_stats():
+                # Create a client
+                client = discoveryengine_v1.UserLicenseServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = discoveryengine_v1.ListLicenseConfigsUsageStatsRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                response = await client.list_license_configs_usage_stats(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.discoveryengine_v1.types.ListLicenseConfigsUsageStatsRequest, dict]]):
+                The request object. Request message for
+                [UserLicenseService.ListLicenseConfigsUsageStats][google.cloud.discoveryengine.v1.UserLicenseService.ListLicenseConfigsUsageStats]
+                method.
+            parent (:class:`str`):
+                Required. The parent branch resource name, such as
+                ``projects/{project}/locations/{location}/userStores/{user_store_id}``.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.discoveryengine_v1.types.ListLicenseConfigsUsageStatsResponse:
+                Response message for
+                   [UserLicenseService.ListLicenseConfigsUsageStats][google.cloud.discoveryengine.v1.UserLicenseService.ListLicenseConfigsUsageStats]
+                   method.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, user_license_service.ListLicenseConfigsUsageStatsRequest
+        ):
+            request = user_license_service.ListLicenseConfigsUsageStatsRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.list_license_configs_usage_stats
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
             retry=retry,
             timeout=timeout,
             metadata=metadata,

@@ -90,12 +90,16 @@ class Document(proto.Message):
         acl_info (google.cloud.discoveryengine_v1.types.Document.AclInfo):
             Access control information for the document.
         index_time (google.protobuf.timestamp_pb2.Timestamp):
-            Output only. The last time the document was indexed. If this
-            field is set, the document could be returned in search
-            results.
+            Output only. The time when the document was
+            last indexed.
+            If this field is populated, it means the
+            document has been indexed. While documents
+            typically become searchable within seconds of
+            indexing, it can sometimes take up to a few
+            hours.
 
-            This field is OUTPUT_ONLY. If this field is not populated,
-            it means the document has never been indexed.
+            If this field is not populated, it means the
+            document has never been indexed.
         index_status (google.cloud.discoveryengine_v1.types.Document.IndexStatus):
             Output only. The index status of the document.
 
@@ -241,7 +245,10 @@ class Document(proto.Message):
             index_time (google.protobuf.timestamp_pb2.Timestamp):
                 The time when the document was indexed.
                 If this field is populated, it means the
-                document has been indexed.
+                document has been indexed. While documents
+                typically become searchable within seconds of
+                indexing, it can sometimes take up to a few
+                hours.
             error_samples (MutableSequence[google.rpc.status_pb2.Status]):
                 A sample of errors encountered while indexing
                 the document. If this field is populated, the

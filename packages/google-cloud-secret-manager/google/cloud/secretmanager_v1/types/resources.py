@@ -35,6 +35,7 @@ __protobuf__ = proto.module(
         "Topic",
         "Rotation",
         "SecretPayload",
+        "CloudSqlSingleUserCredentials",
     },
 )
 
@@ -882,6 +883,36 @@ class SecretPayload(proto.Message):
         proto.INT64,
         number=2,
         optional=True,
+    )
+
+
+class CloudSqlSingleUserCredentials(proto.Message):
+    r"""These are the credentials required for Cloud SQL DB for
+    Single user Managed Rotation.
+
+    Attributes:
+        instance_id (str):
+            Required. Instance ID of the Cloud SQL
+            instance.
+        username (str):
+            Required. Username of the Cloud SQL instance.
+        password (str):
+            Optional. Password of the Cloud SQL instance.
+            If this is not provided, a random password will
+            be generated.
+    """
+
+    instance_id: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    username: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    password: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 

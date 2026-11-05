@@ -17,9 +17,11 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import proto  # type: ignore
 
 from google.cloud.discoveryengine_v1.types import assist_answer, search_service
+from google.cloud.discoveryengine_v1.types import assistant as gcd_assistant
 from google.cloud.discoveryengine_v1.types import session as gcd_session
 
 __protobuf__ = proto.module(
@@ -28,6 +30,12 @@ __protobuf__ = proto.module(
         "AssistUserMetadata",
         "StreamAssistRequest",
         "StreamAssistResponse",
+        "CreateAssistantRequest",
+        "DeleteAssistantRequest",
+        "GetAssistantRequest",
+        "ListAssistantsRequest",
+        "ListAssistantsResponse",
+        "UpdateAssistantRequest",
     },
 )
 
@@ -145,8 +153,10 @@ class StreamAssistRequest(proto.Message):
                 Optional. Specification of the web grounding tool. If field
                 is present, enables grounding with web search. Works only if
                 [Assistant.web_grounding_type][google.cloud.discoveryengine.v1.Assistant.web_grounding_type]
-                is [WEB_GROUNDING_TYPE_GOOGLE_SEARCH][] or
-                [WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH][].
+                is
+                [WEB_GROUNDING_TYPE_GOOGLE_SEARCH][google.cloud.discoveryengine.v1.Assistant.WebGroundingType.WEB_GROUNDING_TYPE_GOOGLE_SEARCH]
+                or
+                [WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH][google.cloud.discoveryengine.v1.Assistant.WebGroundingType.WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH].
             image_generation_spec (google.cloud.discoveryengine_v1.types.StreamAssistRequest.ToolsSpec.ImageGenerationSpec):
                 Optional. Specification of the image
                 generation tool.
@@ -309,17 +319,32 @@ class StreamAssistResponse(proto.Message):
             [AssistAnswer.replies][google.cloud.discoveryengine.v1.AssistAnswer.replies]
             field in each response will contain replies (reply
             fragments) to be appended to the ones received in previous
-            responses. [AssistAnswer.name][] won't be filled.
+            responses.
+            [AssistAnswer.name][google.cloud.discoveryengine.v1.AssistAnswer.name]
+            won't be filled.
 
             If the state is ``SUCCEEDED``, ``FAILED`` or ``SKIPPED``,
-            the response is the last response and [AssistAnswer.name][]
+            the response is the last response and
+            [AssistAnswer.name][google.cloud.discoveryengine.v1.AssistAnswer.name]
             will have a value.
         session_info (google.cloud.discoveryengine_v1.types.StreamAssistResponse.SessionInfo):
-            Session information.
+            Session information. Only included in the
+            final StreamAssistResponse of the response
+            stream.
         assist_token (str):
             A global unique ID that identifies the
             current pair of request and stream of responses.
             Used for feedback and support.
+        invocation_tools (MutableSequence[str]):
+            The tool names of the tools that were
+            invoked.
+        invoked_skills (MutableSequence[google.cloud.discoveryengine_v1.types.StreamAssistResponse.InvokedSkill]):
+            The skills executed during the turn.
+        connector_auth_errors (MutableSequence[google.cloud.discoveryengine_v1.types.StreamAssistResponse.ConnectorAuthError]):
+            Per-connector authentication errors
+            encountered during the request. Present when one
+            or more connectors failed authentication but the
+            request proceeded with the remaining connectors.
     """
 
     class SessionInfo(proto.Message):
@@ -338,6 +363,47 @@ class StreamAssistResponse(proto.Message):
             number=1,
         )
 
+    class InvokedSkill(proto.Message):
+        r"""Represents a skill used during the assist call.
+
+        Attributes:
+            name (str):
+                The resource name of the skill.
+            display_name (str):
+                The display name of the skill.
+        """
+
+        name: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+        display_name: str = proto.Field(
+            proto.STRING,
+            number=2,
+        )
+
+    class ConnectorAuthError(proto.Message):
+        r"""Describes an authentication error for a specific data
+        connector.
+
+        Attributes:
+            data_connector (str):
+                Resource name of the data connector that
+                failed authentication.
+            error_message (str):
+                Human-readable error message describing the
+                auth failure.
+        """
+
+        data_connector: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+        error_message: str = proto.Field(
+            proto.STRING,
+            number=2,
+        )
+
     answer: assist_answer.AssistAnswer = proto.Field(
         proto.MESSAGE,
         number=1,
@@ -351,6 +417,220 @@ class StreamAssistResponse(proto.Message):
     assist_token: str = proto.Field(
         proto.STRING,
         number=4,
+    )
+    invocation_tools: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=8,
+    )
+    invoked_skills: MutableSequence[InvokedSkill] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=10,
+        message=InvokedSkill,
+    )
+    connector_auth_errors: MutableSequence[ConnectorAuthError] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=11,
+        message=ConnectorAuthError,
+    )
+
+
+class CreateAssistantRequest(proto.Message):
+    r"""Request for the
+    [AssistantService.CreateAssistant][google.cloud.discoveryengine.v1.AssistantService.CreateAssistant]
+    method.
+
+    Attributes:
+        parent (str):
+            Required. The parent resource name. Format:
+            ``projects/{project}/locations/{location}/collections/{collection}/engines/{engine}``
+        assistant (google.cloud.discoveryengine_v1.types.Assistant):
+            Required. The
+            [Assistant][google.cloud.discoveryengine.v1.Assistant] to
+            create.
+        assistant_id (str):
+            Required. The ID to use for the
+            [Assistant][google.cloud.discoveryengine.v1.Assistant],
+            which will become the final component of the
+            [Assistant][google.cloud.discoveryengine.v1.Assistant]'s
+            resource name.
+
+            This field must conform to
+            `RFC-1034 <https://tools.ietf.org/html/rfc1034>`__ with a
+            length limit of 63 characters.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    assistant: gcd_assistant.Assistant = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=gcd_assistant.Assistant,
+    )
+    assistant_id: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class DeleteAssistantRequest(proto.Message):
+    r"""Request message for the
+    [AssistantService.DeleteAssistant][google.cloud.discoveryengine.v1.AssistantService.DeleteAssistant]
+    method.
+
+    Attributes:
+        name (str):
+            Required. Resource name of
+            [Assistant][google.cloud.discoveryengine.v1.Assistant].
+            Format:
+            ``projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}``
+
+            If the caller does not have permission to delete the
+            [Assistant][google.cloud.discoveryengine.v1.Assistant],
+            regardless of whether or not it exists, a PERMISSION_DENIED
+            error is returned.
+
+            If the
+            [Assistant][google.cloud.discoveryengine.v1.Assistant] to
+            delete does not exist, a NOT_FOUND error is returned.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class GetAssistantRequest(proto.Message):
+    r"""Request message for the
+    [AssistantService.GetAssistant][google.cloud.discoveryengine.v1.AssistantService.GetAssistant]
+    method.
+
+    Attributes:
+        name (str):
+            Required. Resource name of
+            [Assistant][google.cloud.discoveryengine.v1.Assistant].
+            Format:
+            ``projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}``
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class ListAssistantsRequest(proto.Message):
+    r"""Request message for the
+    [AssistantService.ListAssistants][google.cloud.discoveryengine.v1.AssistantService.ListAssistants]
+    method.
+
+    Attributes:
+        parent (str):
+            Required. The parent resource name. Format:
+            ``projects/{project}/locations/{location}/collections/{collection}/engines/{engine}``
+        page_size (int):
+            Maximum number of
+            [Assistant][google.cloud.discoveryengine.v1.Assistant]s to
+            return. If unspecified, defaults to 100. The maximum allowed
+            value is 1000; anything above that will be coerced down to
+            1000.
+        page_token (str):
+            A page token
+            [ListAssistantsResponse.next_page_token][google.cloud.discoveryengine.v1.ListAssistantsResponse.next_page_token],
+            received from a previous
+            [AssistantService.ListAssistants][google.cloud.discoveryengine.v1.AssistantService.ListAssistants]
+            call. Provide this to retrieve the subsequent page.
+
+            When paginating, all other parameters provided to
+            [ListAssistants][google.cloud.discoveryengine.v1.AssistantService.ListAssistants]
+            must match the call that provided the page token.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class ListAssistantsResponse(proto.Message):
+    r"""Response message for the
+    [AssistantService.ListAssistants][google.cloud.discoveryengine.v1.AssistantService.ListAssistants]
+    method.
+
+    Attributes:
+        assistants (MutableSequence[google.cloud.discoveryengine_v1.types.Assistant]):
+            All the customer's
+            [Assistant][google.cloud.discoveryengine.v1.Assistant]s.
+        next_page_token (str):
+            A token that can be sent as
+            [ListAssistantsRequest.page_token][google.cloud.discoveryengine.v1.ListAssistantsRequest.page_token]
+            to retrieve the next page. If this field is omitted, there
+            are no subsequent pages.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    assistants: MutableSequence[gcd_assistant.Assistant] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=gcd_assistant.Assistant,
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class UpdateAssistantRequest(proto.Message):
+    r"""Request message for the
+    [AssistantService.UpdateAssistant][google.cloud.discoveryengine.v1.AssistantService.UpdateAssistant]
+    method.
+
+    Attributes:
+        assistant (google.cloud.discoveryengine_v1.types.Assistant):
+            Required. The
+            [Assistant][google.cloud.discoveryengine.v1.Assistant] to
+            update.
+
+            The [Assistant][google.cloud.discoveryengine.v1.Assistant]'s
+            ``name`` field is used to identify the
+            [Assistant][google.cloud.discoveryengine.v1.Assistant] to
+            update. Format:
+            ``projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}``
+
+            If the caller does not have permission to update the
+            [Assistant][google.cloud.discoveryengine.v1.Assistant],
+            regardless of whether or not it exists, a PERMISSION_DENIED
+            error is returned.
+
+            If the
+            [Assistant][google.cloud.discoveryengine.v1.Assistant] to
+            update does not exist, a NOT_FOUND error is returned.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            The list of fields to update.
+    """
+
+    assistant: gcd_assistant.Assistant = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=gcd_assistant.Assistant,
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask_pb2.FieldMask,
     )
 
 

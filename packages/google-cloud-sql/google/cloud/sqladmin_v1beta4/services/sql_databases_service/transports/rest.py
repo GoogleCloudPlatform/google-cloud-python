@@ -430,6 +430,8 @@ class SqlDatabasesServiceRestStub:
 class SqlDatabasesServiceRestTransport(_BaseSqlDatabasesServiceRestTransport):
     """REST backend synchronous transport for SqlDatabasesService.
 
+    Service to manage databases.
+
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
     and call it.

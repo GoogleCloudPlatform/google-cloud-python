@@ -18,6 +18,7 @@ from __future__ import annotations
 from typing import MutableMapping, MutableSequence
 
 import google.protobuf.any_pb2 as any_pb2  # type: ignore
+import google.protobuf.struct_pb2 as struct_pb2  # type: ignore
 import proto  # type: ignore
 
 __protobuf__ = proto.module(
@@ -80,6 +81,7 @@ __protobuf__ = proto.module(
         "AggregatedListBackendServicesRequest",
         "AggregatedListDiskTypesRequest",
         "AggregatedListDisksRequest",
+        "AggregatedListFolderGlobalVmExtensionPoliciesRequest",
         "AggregatedListForwardingRulesRequest",
         "AggregatedListFutureReservationsRequest",
         "AggregatedListGlobalOperationsRequest",
@@ -100,6 +102,7 @@ __protobuf__ = proto.module(
         "AggregatedListNodeGroupsRequest",
         "AggregatedListNodeTemplatesRequest",
         "AggregatedListNodeTypesRequest",
+        "AggregatedListOrganizationGlobalVmExtensionPoliciesRequest",
         "AggregatedListPacketMirroringsRequest",
         "AggregatedListPublicDelegatedPrefixesRequest",
         "AggregatedListRegionCommitmentsRequest",
@@ -315,6 +318,8 @@ __protobuf__ = proto.module(
         "DeleteExternalVpnGatewayRequest",
         "DeleteFirewallPolicyRequest",
         "DeleteFirewallRequest",
+        "DeleteFolderGlobalVmExtensionPolicyRequest",
+        "DeleteFolderZoneVmExtensionPolicyRequest",
         "DeleteForwardingRuleRequest",
         "DeleteFutureReservationRequest",
         "DeleteGlobalAddressRequest",
@@ -354,7 +359,9 @@ __protobuf__ = proto.module(
         "DeleteNodeGroupRequest",
         "DeleteNodeTemplateRequest",
         "DeleteNodesNodeGroupRequest",
+        "DeleteOrganizationGlobalVmExtensionPolicyRequest",
         "DeleteOrganizationSecurityPolicyRequest",
+        "DeleteOrganizationZoneVmExtensionPolicyRequest",
         "DeletePacketMirroringRequest",
         "DeletePerInstanceConfigsInstanceGroupManagerRequest",
         "DeletePerInstanceConfigsRegionInstanceGroupManagerRequest",
@@ -467,6 +474,8 @@ __protobuf__ = proto.module(
         "ExternalVpnGatewayList",
         "ExternalVpnGatewayParams",
         "FailoverHaControllerRequest",
+        "FetchEncryptionKeyRegionSslCertificateRequest",
+        "FetchEncryptionKeySslCertificateRequest",
         "FileContentBuffer",
         "Firewall",
         "FirewallList",
@@ -483,6 +492,7 @@ __protobuf__ = proto.module(
         "FirewallPolicyRuleSecureTag",
         "FixedOrPercent",
         "FlexibleTimeRange",
+        "FolderVmExtensionPolicyAggregatedListResponse",
         "ForwardingRule",
         "ForwardingRuleAggregatedList",
         "ForwardingRuleAttachedExtension",
@@ -539,10 +549,13 @@ __protobuf__ = proto.module(
         "GetExternalVpnGatewayRequest",
         "GetFirewallPolicyRequest",
         "GetFirewallRequest",
+        "GetFolderGlobalVmExtensionPolicyRequest",
+        "GetFolderZoneVmExtensionPolicyRequest",
         "GetForwardingRuleRequest",
         "GetFromFamilyImageRequest",
         "GetFutureReservationRequest",
         "GetGlobalAddressRequest",
+        "GetGlobalFolderOperationRequest",
         "GetGlobalForwardingRuleRequest",
         "GetGlobalFrontendSettingRequest",
         "GetGlobalNetworkEndpointGroupRequest",
@@ -632,7 +645,9 @@ __protobuf__ = proto.module(
         "GetNodeTypeRequest",
         "GetOperationalStatusInterconnectAttachmentGroupRequest",
         "GetOperationalStatusInterconnectGroupRequest",
+        "GetOrganizationGlobalVmExtensionPolicyRequest",
         "GetOrganizationSecurityPolicyRequest",
+        "GetOrganizationZoneVmExtensionPolicyRequest",
         "GetPacketMirroringRequest",
         "GetPacketMirroringRuleNetworkFirewallPolicyRequest",
         "GetPreviewFeatureRequest",
@@ -716,22 +731,32 @@ __protobuf__ = proto.module(
         "GetVersionOperationMetadataSbomInfo",
         "GetVersionReservationSlotRequest",
         "GetVersionReservationSubBlockRequest",
+        "GetVmExtensionFolderGlobalVmExtensionPolicyRequest",
+        "GetVmExtensionFolderZoneVmExtensionPolicyRequest",
+        "GetVmExtensionGlobalVmExtensionPolicyRequest",
+        "GetVmExtensionOrganizationGlobalVmExtensionPolicyRequest",
+        "GetVmExtensionOrganizationZoneVmExtensionPolicyRequest",
+        "GetVmExtensionZoneVmExtensionPolicyRequest",
         "GetVpnGatewayRequest",
         "GetVpnTunnelRequest",
         "GetWireGroupRequest",
         "GetXpnHostProjectRequest",
         "GetXpnResourcesProjectsRequest",
+        "GetZoneFolderOperationRequest",
         "GetZoneOperationRequest",
+        "GetZoneOrganizationOperationRequest",
         "GetZoneRequest",
         "GetZoneVmExtensionPolicyRequest",
         "GlobalAddressesMoveRequest",
         "GlobalFrontendSettings",
         "GlobalFrontendSettingsPatchResponse",
+        "GlobalListVmExtensionsResponse",
         "GlobalNetworkEndpointGroupsAttachEndpointsRequest",
         "GlobalNetworkEndpointGroupsDetachEndpointsRequest",
         "GlobalOrganizationSetPolicyRequest",
         "GlobalSetLabelsRequest",
         "GlobalSetPolicyRequest",
+        "GlobalVmExtension",
         "GlobalVmExtensionPolicy",
         "GlobalVmExtensionPolicyExtensionPolicy",
         "GlobalVmExtensionPolicyInstanceSelector",
@@ -831,6 +856,8 @@ __protobuf__ = proto.module(
         "InsertExternalVpnGatewayRequest",
         "InsertFirewallPolicyRequest",
         "InsertFirewallRequest",
+        "InsertFolderGlobalVmExtensionPolicyRequest",
+        "InsertFolderZoneVmExtensionPolicyRequest",
         "InsertForwardingRuleRequest",
         "InsertFutureReservationRequest",
         "InsertGlobalAddressRequest",
@@ -861,7 +888,9 @@ __protobuf__ = proto.module(
         "InsertNetworkRequest",
         "InsertNodeGroupRequest",
         "InsertNodeTemplateRequest",
+        "InsertOrganizationGlobalVmExtensionPolicyRequest",
         "InsertOrganizationSecurityPolicyRequest",
+        "InsertOrganizationZoneVmExtensionPolicyRequest",
         "InsertPacketMirroringRequest",
         "InsertPublicAdvertisedPrefixeRequest",
         "InsertPublicDelegatedPrefixeRequest",
@@ -1131,9 +1160,12 @@ __protobuf__ = proto.module(
         "ListExternalVpnGatewaysRequest",
         "ListFirewallPoliciesRequest",
         "ListFirewallsRequest",
+        "ListFolderGlobalVmExtensionPoliciesRequest",
+        "ListFolderZoneVmExtensionPoliciesRequest",
         "ListForwardingRulesRequest",
         "ListFutureReservationsRequest",
         "ListGlobalAddressesRequest",
+        "ListGlobalFolderOperationsRequest",
         "ListGlobalForwardingRulesRequest",
         "ListGlobalNetworkEndpointGroupsRequest",
         "ListGlobalOperationsRequest",
@@ -1180,7 +1212,9 @@ __protobuf__ = proto.module(
         "ListNodeTemplatesRequest",
         "ListNodeTypesRequest",
         "ListNodesNodeGroupsRequest",
+        "ListOrganizationGlobalVmExtensionPoliciesRequest",
         "ListOrganizationSecurityPoliciesRequest",
+        "ListOrganizationZoneVmExtensionPoliciesRequest",
         "ListPacketMirroringsRequest",
         "ListPeeringRoutesNetworksRequest",
         "ListPerInstanceConfigsInstanceGroupManagersRequest",
@@ -1255,11 +1289,20 @@ __protobuf__ = proto.module(
         "ListUsableRegionBackendBucketsRequest",
         "ListUsableRegionBackendServicesRequest",
         "ListUsableSubnetworksRequest",
+        "ListVmExtensionsFolderGlobalVmExtensionPoliciesRequest",
+        "ListVmExtensionsFolderZoneVmExtensionPoliciesRequest",
+        "ListVmExtensionsGlobalVmExtensionPoliciesRequest",
+        "ListVmExtensionsOrganizationGlobalVmExtensionPoliciesRequest",
+        "ListVmExtensionsOrganizationZoneVmExtensionPoliciesRequest",
+        "ListVmExtensionsResponse",
+        "ListVmExtensionsZoneVmExtensionPoliciesRequest",
         "ListVpnGatewaysRequest",
         "ListVpnTunnelsRequest",
         "ListWireGroupsRequest",
         "ListXpnHostsProjectsRequest",
+        "ListZoneFolderOperationsRequest",
         "ListZoneOperationsRequest",
+        "ListZoneOrganizationOperationsRequest",
         "ListZoneVmExtensionPoliciesRequest",
         "ListZonesRequest",
         "LocalDisk",
@@ -1346,6 +1389,7 @@ __protobuf__ = proto.module(
         "NetworksGetEffectiveFirewallsResponseEffectiveFirewallPolicy",
         "NetworksRemovePeeringRequest",
         "NetworksRequestRemovePeeringRequest",
+        "NetworksUpdateNetworkProfileRequest",
         "NetworksUpdatePeeringRequest",
         "NodeGroup",
         "NodeGroupAggregatedList",
@@ -1376,9 +1420,11 @@ __protobuf__ = proto.module(
         "NotificationEndpointsScopedList",
         "Operation",
         "OperationAggregatedList",
+        "OperationDetails",
         "OperationList",
         "OperationsScopedList",
         "OrganizationSecurityPoliciesListAssociationsResponse",
+        "OrganizationVmExtensionPolicyAggregatedListResponse",
         "OutlierDetection",
         "PacketIntervals",
         "PacketMirroring",
@@ -1892,6 +1938,7 @@ __protobuf__ = proto.module(
         "SslCertificateList",
         "SslCertificateManagedSslCertificate",
         "SslCertificateSelfManagedSslCertificate",
+        "SslCertificatesFetchEncryptionKeyResponse",
         "SslCertificatesScopedList",
         "SslPoliciesAggregatedList",
         "SslPoliciesList",
@@ -1968,11 +2015,13 @@ __protobuf__ = proto.module(
         "TargetInstance",
         "TargetInstanceAggregatedList",
         "TargetInstanceList",
+        "TargetInstanceParams",
         "TargetInstancesScopedList",
         "TargetPool",
         "TargetPoolAggregatedList",
         "TargetPoolInstanceHealth",
         "TargetPoolList",
+        "TargetPoolParams",
         "TargetPoolsAddHealthCheckRequest",
         "TargetPoolsAddInstanceRequest",
         "TargetPoolsRemoveHealthCheckRequest",
@@ -2066,6 +2115,8 @@ __protobuf__ = proto.module(
         "UpdateDiskRequest",
         "UpdateDisplayDeviceInstanceRequest",
         "UpdateFirewallRequest",
+        "UpdateFolderGlobalVmExtensionPolicyRequest",
+        "UpdateFolderZoneVmExtensionPolicyRequest",
         "UpdateFutureReservationRequest",
         "UpdateGlobalVmExtensionPolicyRequest",
         "UpdateHealthCheckRequest",
@@ -2077,6 +2128,9 @@ __protobuf__ = proto.module(
         "UpdateLicenseRequest",
         "UpdateNamedSetRouterRequest",
         "UpdateNetworkInterfaceInstanceRequest",
+        "UpdateNetworkProfileNetworkRequest",
+        "UpdateOrganizationGlobalVmExtensionPolicyRequest",
+        "UpdateOrganizationZoneVmExtensionPolicyRequest",
         "UpdatePeeringNetworkRequest",
         "UpdatePerInstanceConfigsInstanceGroupManagerRequest",
         "UpdatePerInstanceConfigsRegionInstanceGroupManagerRequest",
@@ -2116,6 +2170,7 @@ __protobuf__ = proto.module(
         "VmEndpointNatMappingsInterfaceNatMappings",
         "VmEndpointNatMappingsInterfaceNatMappingsNatRuleMappings",
         "VmEndpointNatMappingsList",
+        "VmExtension",
         "VmExtensionPoliciesScopedList",
         "VmExtensionPolicy",
         "VmExtensionPolicyAggregatedListResponse",
@@ -2135,12 +2190,14 @@ __protobuf__ = proto.module(
         "VpnGatewaysGetStatusResponse",
         "VpnGatewaysScopedList",
         "VpnTunnel",
+        "VpnTunnelAdditionalKeyExchanges",
         "VpnTunnelAggregatedList",
         "VpnTunnelCipherSuite",
         "VpnTunnelList",
         "VpnTunnelParams",
         "VpnTunnelPhase1Algorithms",
         "VpnTunnelPhase2Algorithms",
+        "VpnTunnelPqc",
         "VpnTunnelsScopedList",
         "WafExpressionSet",
         "WafExpressionSetExpression",
@@ -7116,6 +7173,177 @@ class AggregatedListDisksRequest(proto.Message):
     )
 
 
+class AggregatedListFolderGlobalVmExtensionPoliciesRequest(proto.Message):
+    r"""A request message for
+    FolderGlobalVmExtensionPolicies.AggregatedList. See the method
+    description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        filter (str):
+            A filter expression that filters resources listed in the
+            response. Most Compute resources support two types of filter
+            expressions: expressions that support regular expressions
+            and expressions that follow API improvement proposal
+            AIP-160. These two types of filter expressions cannot be
+            mixed in one request.
+
+            If you want to use AIP-160, your expression must specify the
+            field name, an operator, and the value that you want to use
+            for filtering. The value must be a string, a number, or a
+            boolean. The operator must be either ``=``, ``!=``, ``>``,
+            ``<``, ``<=``, ``>=`` or ``:``.
+
+            For example, if you are filtering Compute Engine instances,
+            you can exclude instances named ``example-instance`` by
+            specifying ``name != example-instance``.
+
+            The ``:*`` comparison can be used to test whether a key has
+            been defined. For example, to find all objects with
+            ``owner`` label use:
+
+            ::
+
+               labels.owner:*
+
+            You can also filter nested fields. For example, you could
+            specify ``scheduling.automaticRestart = false`` to include
+            instances only if they are not scheduled for automatic
+            restarts. You can use filtering on nested fields to filter
+            based onresource labels.
+
+            To filter on multiple expressions, provide each separate
+            expression within parentheses. For example:
+
+            ::
+
+               (scheduling.automaticRestart = true)
+               (cpuPlatform = "Intel Skylake")
+
+            By default, each expression is an ``AND`` expression.
+            However, you can include ``AND`` and ``OR`` expressions
+            explicitly. For example:
+
+            ::
+
+               (cpuPlatform = "Intel Skylake") OR
+               (cpuPlatform = "Intel Broadwell") AND
+               (scheduling.automaticRestart = true)
+
+            If you want to use a regular expression, use the ``eq``
+            (equal) or ``ne`` (not equal) operator against a single
+            un-parenthesized expression with or without quotes or
+            against multiple parenthesized expressions. Examples:
+
+            ``fieldname eq unquoted literal``
+            ``fieldname eq 'single quoted literal'``
+            ``fieldname eq "double quoted literal"``
+            ``(fieldname1 eq literal) (fieldname2 ne "literal")``
+
+            The literal value is interpreted as a regular expression
+            using GoogleRE2 library syntax. The literal value must match
+            the entire field.
+
+            For example, to filter for instances that do not end with
+            name "instance", you would use ``name ne .*instance``.
+
+            You cannot combine constraints on multiple fields using
+            regular expressions.
+
+            This field is a member of `oneof`_ ``_filter``.
+        folder (str):
+            Folder ID for this request.
+        include_all_scopes (bool):
+            Indicates whether every visible scope for
+            each scope type (zone, region, global) should be
+            included in the response. For new resource types
+            added after this field, the flag has no effect
+            as new resource types will always include every
+            visible scope for each scope type in response.
+            For resource types which predate this field, if
+            this flag is omitted or false, only scopes of
+            the scope types where the resource type is
+            expected to be found will be included.
+
+            This field is a member of `oneof`_ ``_include_all_scopes``.
+        max_results (int):
+            The maximum number of results per page that should be
+            returned. If the number of available results is larger than
+            ``maxResults``, Compute Engine returns a ``nextPageToken``
+            that can be used to get the next page of results in
+            subsequent list requests. Acceptable values are ``0`` to
+            ``500``, inclusive. (Default: ``500``)
+
+            This field is a member of `oneof`_ ``_max_results``.
+        order_by (str):
+            Sorts list results by a certain order. By default, results
+            are returned in alphanumerical order based on the resource
+            name.
+
+            You can also sort results in descending order based on the
+            creation timestamp using
+            ``orderBy="creationTimestamp desc"``. This sorts results
+            based on the ``creationTimestamp`` field in reverse
+            chronological order (newest result first). Use this to sort
+            resources like operations so that the newest operation is
+            returned first.
+
+            Currently, only sorting by ``name`` or
+            ``creationTimestamp desc`` is supported.
+
+            This field is a member of `oneof`_ ``_order_by``.
+        page_token (str):
+            Specifies a page token to use. Set ``pageToken`` to the
+            ``nextPageToken`` returned by a previous list request to get
+            the next page of results.
+
+            This field is a member of `oneof`_ ``_page_token``.
+        service_project_number (int):
+            The Shared VPC service project id or service
+            project number for which aggregated list request
+            is invoked for subnetworks list-usable api.
+
+            This field is a member of `oneof`_ ``_service_project_number``.
+    """
+
+    filter: str = proto.Field(
+        proto.STRING,
+        number=336120696,
+        optional=True,
+    )
+    folder: str = proto.Field(
+        proto.STRING,
+        number=341646446,
+    )
+    include_all_scopes: bool = proto.Field(
+        proto.BOOL,
+        number=391327988,
+        optional=True,
+    )
+    max_results: int = proto.Field(
+        proto.UINT32,
+        number=54715419,
+        optional=True,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=160562920,
+        optional=True,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=19994697,
+        optional=True,
+    )
+    service_project_number: int = proto.Field(
+        proto.INT64,
+        number=316757497,
+        optional=True,
+    )
+
+
 class AggregatedListForwardingRulesRequest(proto.Message):
     r"""A request message for ForwardingRules.AggregatedList. See the
     method description for details.
@@ -10510,6 +10738,177 @@ class AggregatedListNodeTypesRequest(proto.Message):
     project: str = proto.Field(
         proto.STRING,
         number=227560217,
+    )
+    service_project_number: int = proto.Field(
+        proto.INT64,
+        number=316757497,
+        optional=True,
+    )
+
+
+class AggregatedListOrganizationGlobalVmExtensionPoliciesRequest(proto.Message):
+    r"""A request message for
+    OrganizationGlobalVmExtensionPolicies.AggregatedList. See the
+    method description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        filter (str):
+            A filter expression that filters resources listed in the
+            response. Most Compute resources support two types of filter
+            expressions: expressions that support regular expressions
+            and expressions that follow API improvement proposal
+            AIP-160. These two types of filter expressions cannot be
+            mixed in one request.
+
+            If you want to use AIP-160, your expression must specify the
+            field name, an operator, and the value that you want to use
+            for filtering. The value must be a string, a number, or a
+            boolean. The operator must be either ``=``, ``!=``, ``>``,
+            ``<``, ``<=``, ``>=`` or ``:``.
+
+            For example, if you are filtering Compute Engine instances,
+            you can exclude instances named ``example-instance`` by
+            specifying ``name != example-instance``.
+
+            The ``:*`` comparison can be used to test whether a key has
+            been defined. For example, to find all objects with
+            ``owner`` label use:
+
+            ::
+
+               labels.owner:*
+
+            You can also filter nested fields. For example, you could
+            specify ``scheduling.automaticRestart = false`` to include
+            instances only if they are not scheduled for automatic
+            restarts. You can use filtering on nested fields to filter
+            based onresource labels.
+
+            To filter on multiple expressions, provide each separate
+            expression within parentheses. For example:
+
+            ::
+
+               (scheduling.automaticRestart = true)
+               (cpuPlatform = "Intel Skylake")
+
+            By default, each expression is an ``AND`` expression.
+            However, you can include ``AND`` and ``OR`` expressions
+            explicitly. For example:
+
+            ::
+
+               (cpuPlatform = "Intel Skylake") OR
+               (cpuPlatform = "Intel Broadwell") AND
+               (scheduling.automaticRestart = true)
+
+            If you want to use a regular expression, use the ``eq``
+            (equal) or ``ne`` (not equal) operator against a single
+            un-parenthesized expression with or without quotes or
+            against multiple parenthesized expressions. Examples:
+
+            ``fieldname eq unquoted literal``
+            ``fieldname eq 'single quoted literal'``
+            ``fieldname eq "double quoted literal"``
+            ``(fieldname1 eq literal) (fieldname2 ne "literal")``
+
+            The literal value is interpreted as a regular expression
+            using GoogleRE2 library syntax. The literal value must match
+            the entire field.
+
+            For example, to filter for instances that do not end with
+            name "instance", you would use ``name ne .*instance``.
+
+            You cannot combine constraints on multiple fields using
+            regular expressions.
+
+            This field is a member of `oneof`_ ``_filter``.
+        include_all_scopes (bool):
+            Indicates whether every visible scope for
+            each scope type (zone, region, global) should be
+            included in the response. For new resource types
+            added after this field, the flag has no effect
+            as new resource types will always include every
+            visible scope for each scope type in response.
+            For resource types which predate this field, if
+            this flag is omitted or false, only scopes of
+            the scope types where the resource type is
+            expected to be found will be included.
+
+            This field is a member of `oneof`_ ``_include_all_scopes``.
+        max_results (int):
+            The maximum number of results per page that should be
+            returned. If the number of available results is larger than
+            ``maxResults``, Compute Engine returns a ``nextPageToken``
+            that can be used to get the next page of results in
+            subsequent list requests. Acceptable values are ``0`` to
+            ``500``, inclusive. (Default: ``500``)
+
+            This field is a member of `oneof`_ ``_max_results``.
+        order_by (str):
+            Sorts list results by a certain order. By default, results
+            are returned in alphanumerical order based on the resource
+            name.
+
+            You can also sort results in descending order based on the
+            creation timestamp using
+            ``orderBy="creationTimestamp desc"``. This sorts results
+            based on the ``creationTimestamp`` field in reverse
+            chronological order (newest result first). Use this to sort
+            resources like operations so that the newest operation is
+            returned first.
+
+            Currently, only sorting by ``name`` or
+            ``creationTimestamp desc`` is supported.
+
+            This field is a member of `oneof`_ ``_order_by``.
+        organization (str):
+            Organization ID for this request.
+        page_token (str):
+            Specifies a page token to use. Set ``pageToken`` to the
+            ``nextPageToken`` returned by a previous list request to get
+            the next page of results.
+
+            This field is a member of `oneof`_ ``_page_token``.
+        service_project_number (int):
+            The Shared VPC service project id or service
+            project number for which aggregated list request
+            is invoked for subnetworks list-usable api.
+
+            This field is a member of `oneof`_ ``_service_project_number``.
+    """
+
+    filter: str = proto.Field(
+        proto.STRING,
+        number=336120696,
+        optional=True,
+    )
+    include_all_scopes: bool = proto.Field(
+        proto.BOOL,
+        number=391327988,
+        optional=True,
+    )
+    max_results: int = proto.Field(
+        proto.UINT32,
+        number=54715419,
+        optional=True,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=160562920,
+        optional=True,
+    )
+    organization: str = proto.Field(
+        proto.STRING,
+        number=105180467,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=19994697,
+        optional=True,
     )
     service_project_number: int = proto.Field(
         proto.INT64,
@@ -15582,6 +15981,9 @@ class AliasNetworkEndpointStatus(proto.Message):
                 The endpoint is being created.
             DELETING (528602024):
                 The endpoint is being deleted.
+            FROZEN (471598752):
+                The endpoint is frozen and deprogrammed from
+                the dataplane.
             STATE_UNSPECIFIED (470755401):
                 Unspecified state.
         """
@@ -15590,6 +15992,7 @@ class AliasNetworkEndpointStatus(proto.Message):
         ACTIVE = 314733318
         CREATING = 455564985
         DELETING = 528602024
+        FROZEN = 471598752
         STATE_UNSPECIFIED = 470755401
 
     network: str = proto.Field(
@@ -22350,6 +22753,9 @@ class BackendServiceHAPolicy(proto.Message):
                Advertisement(RA) packet (IPv6).  Google Cloud immediately but
                temporarily associates the forwarding rule IP address with that VM, and
                both new and in-flight packets are quickly delivered to that VM.
+               - HA_CONTROLLER: The Backend Service is managed by a High Availability
+               Controller. Failover and leader election are exclusively managed by the
+               HA Controller service.
 
             Note the important properties of the Fast IP Move
             functionality:
@@ -22451,6 +22857,9 @@ class BackendServiceHAPolicy(proto.Message):
            Advertisement(RA) packet (IPv6).  Google Cloud immediately but
            temporarily associates the forwarding rule IP address with that VM, and
            both new and in-flight packets are quickly delivered to that VM.
+           - HA_CONTROLLER: The Backend Service is managed by a High Availability
+           Controller. Failover and leader election are exclusively managed by the
+           HA Controller service.
 
         Note the important properties of the Fast IP Move functionality:
 
@@ -22519,11 +22928,14 @@ class BackendServiceHAPolicy(proto.Message):
                 No description available.
             GARP_RA (527352630):
                 No description available.
+            HA_CONTROLLER (213612194):
+                No description available.
         """
 
         UNDEFINED_FAST_I_P_MOVE = 0
         DISABLED = 516696700
         GARP_RA = 527352630
+        HA_CONTROLLER = 213612194
 
     fast_i_p_move: str = proto.Field(
         proto.STRING,
@@ -24572,8 +24984,14 @@ class BulkInsertInstanceResource(proto.Message):
 
             This field is a member of `oneof`_ ``_count``.
         instance_flexibility_policy (google.cloud.compute_v1.types.InstanceFlexibilityPolicy):
-            A flexible specification of machine type of
-            instances to create.
+            A specification of alternative machine types
+            to use when creating instances. A single
+            bulkInsert request can create instances with
+            multiple different machine types based on
+            capacity and quota availability. This field is
+            supported only for regional bulkInsert requests.
+            For more information, see About
+            instance flexibility for VMs created in bulk.
 
             This field is a member of `oneof`_ ``_instance_flexibility_policy``.
         instance_properties (google.cloud.compute_v1.types.InstanceProperties):
@@ -25084,9 +25502,11 @@ class CacheInvalidationRule(proto.Message):
             Up to 10 tags can be specified in a single invalidation
             request.
         host (str):
-            If set, this invalidation rule will only
-            apply to requests with a Host header matching
-            host.
+            If set, this invalidation rule will only apply to requests
+            with a Host header matching host. This field also accepts
+            wildcards (\*) to replace the leftmost (or first) label of a
+            hostname. For example, \*.example.com will match
+            www.example.com, but not sub1.dev.example.com.
 
             This field is a member of `oneof`_ ``_host``.
         path (str):
@@ -26021,6 +26441,13 @@ class CapacityAdviceRequest(proto.Message):
             Instance properties for this request.
 
             This field is a member of `oneof`_ ``_instance_properties``.
+        session_id (str):
+            Optional. Input only. Client-provided UUID
+            correlating multiple capacity advice requests
+            belonging to a single logical client-side fanout
+            session.
+
+            This field is a member of `oneof`_ ``_session_id``.
         size (int):
             The number of VM instances to request.
 
@@ -26046,6 +26473,11 @@ class CapacityAdviceRequest(proto.Message):
         number=215355165,
         optional=True,
         message="CapacityAdviceRequestInstanceProperties",
+    )
+    session_id: str = proto.Field(
+        proto.STRING,
+        number=51240804,
+        optional=True,
     )
     size: int = proto.Field(
         proto.INT32,
@@ -27545,6 +27977,12 @@ class Commitment(proto.Message):
                 No description available.
             MEMORY_OPTIMIZED_M4 (276301373):
                 No description available.
+            MEMORY_OPTIMIZED_M4N (512278961):
+                CUD bucket for M4N machines with less than
+                6TB of memory.
+            MEMORY_OPTIMIZED_M4N_6TB (69895574):
+                CUD bucket for M4N machines with 6TB of
+                memory.
             MEMORY_OPTIMIZED_M4_6TB (210543650):
                 No description available.
             MEMORY_OPTIMIZED_X4_1440_24T (206669823):
@@ -27644,6 +28082,8 @@ class Commitment(proto.Message):
         MEMORY_OPTIMIZED = 281753417
         MEMORY_OPTIMIZED_M3 = 276301372
         MEMORY_OPTIMIZED_M4 = 276301373
+        MEMORY_OPTIMIZED_M4N = 512278961
+        MEMORY_OPTIMIZED_M4N_6TB = 69895574
         MEMORY_OPTIMIZED_M4_6TB = 210543650
         MEMORY_OPTIMIZED_X4_1440_24T = 206669823
         MEMORY_OPTIMIZED_X4_16TB = 183089120
@@ -30424,6 +30864,123 @@ class DeleteFirewallRequest(proto.Message):
     )
 
 
+class DeleteFolderGlobalVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for FolderGlobalVmExtensionPolicies.Delete.
+    See the method description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        folder (str):
+            Folder ID for this request.
+        global_vm_extension_policy (str):
+            Name of the global VM extension policy to
+            purge scoped resources for.
+        global_vm_extension_policy_rollout_operation_rollout_input_resource (google.cloud.compute_v1.types.GlobalVmExtensionPolicyRolloutOperationRolloutInput):
+            The body resource for this request
+        request_id (str):
+            An optional request ID to identify requests.
+            Specify a unique request ID so that if you must
+            retry your request, the server will know to
+            ignore the request if it has already been
+            completed.
+
+            For example, consider a situation where you make
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
+            prevents clients from accidentally creating
+            duplicate commitments.
+
+            The request ID must be
+            a valid UUID with the exception that zero UUID
+            is not supported
+            (00000000-0000-0000-0000-000000000000).
+
+            This field is a member of `oneof`_ ``_request_id``.
+    """
+
+    folder: str = proto.Field(
+        proto.STRING,
+        number=341646446,
+    )
+    global_vm_extension_policy: str = proto.Field(
+        proto.STRING,
+        number=8334110,
+    )
+    global_vm_extension_policy_rollout_operation_rollout_input_resource: "GlobalVmExtensionPolicyRolloutOperationRolloutInput" = proto.Field(
+        proto.MESSAGE,
+        number=147209176,
+        message="GlobalVmExtensionPolicyRolloutOperationRolloutInput",
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=37109963,
+        optional=True,
+    )
+
+
+class DeleteFolderZoneVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for FolderZoneVmExtensionPolicies.Delete.
+    See the method description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        folder (str):
+            Folder ID for this request.
+        request_id (str):
+            An optional request ID to identify requests.
+            Specify a unique request ID so that if you must
+            retry your request, the server will know to
+            ignore the request if it has already been
+            completed.
+
+            For example, consider a situation where you make
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
+            prevents clients from accidentally creating
+            duplicate commitments.
+
+            The request ID must be
+            a valid UUID with the exception that zero UUID
+            is not supported
+            (00000000-0000-0000-0000-000000000000).
+
+            This field is a member of `oneof`_ ``_request_id``.
+        vm_extension_policy (str):
+            Name of the zone VM extension policy to
+            delete.
+        zone (str):
+            Name of the zone for this request.
+    """
+
+    folder: str = proto.Field(
+        proto.STRING,
+        number=341646446,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=37109963,
+        optional=True,
+    )
+    vm_extension_policy: str = proto.Field(
+        proto.STRING,
+        number=331532730,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
+    )
+
+
 class DeleteForwardingRuleRequest(proto.Message):
     r"""A request message for ForwardingRules.Delete. See the method
     description for details.
@@ -32511,6 +33068,66 @@ class DeleteNodesNodeGroupRequest(proto.Message):
     )
 
 
+class DeleteOrganizationGlobalVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for
+    OrganizationGlobalVmExtensionPolicies.Delete. See the method
+    description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        global_vm_extension_policy (str):
+            Name of the global VM extension policy to
+            purge scoped resources for.
+        global_vm_extension_policy_rollout_operation_rollout_input_resource (google.cloud.compute_v1.types.GlobalVmExtensionPolicyRolloutOperationRolloutInput):
+            The body resource for this request
+        organization (str):
+            Organization ID for this request.
+        request_id (str):
+            An optional request ID to identify requests.
+            Specify a unique request ID so that if you must
+            retry your request, the server will know to
+            ignore the request if it has already been
+            completed.
+
+            For example, consider a situation where you make
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
+            prevents clients from accidentally creating
+            duplicate commitments.
+
+            The request ID must be
+            a valid UUID with the exception that zero UUID
+            is not supported
+            (00000000-0000-0000-0000-000000000000).
+
+            This field is a member of `oneof`_ ``_request_id``.
+    """
+
+    global_vm_extension_policy: str = proto.Field(
+        proto.STRING,
+        number=8334110,
+    )
+    global_vm_extension_policy_rollout_operation_rollout_input_resource: "GlobalVmExtensionPolicyRolloutOperationRolloutInput" = proto.Field(
+        proto.MESSAGE,
+        number=147209176,
+        message="GlobalVmExtensionPolicyRolloutOperationRolloutInput",
+    )
+    organization: str = proto.Field(
+        proto.STRING,
+        number=105180467,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=37109963,
+        optional=True,
+    )
+
+
 class DeleteOrganizationSecurityPolicyRequest(proto.Message):
     r"""A request message for OrganizationSecurityPolicies.Delete.
     See the method description for details.
@@ -32553,6 +33170,65 @@ class DeleteOrganizationSecurityPolicyRequest(proto.Message):
     security_policy: str = proto.Field(
         proto.STRING,
         number=171082513,
+    )
+
+
+class DeleteOrganizationZoneVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for
+    OrganizationZoneVmExtensionPolicies.Delete. See the method
+    description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        organization (str):
+            Organization ID for this request.
+        request_id (str):
+            An optional request ID to identify requests.
+            Specify a unique request ID so that if you must
+            retry your request, the server will know to
+            ignore the request if it has already been
+            completed.
+
+            For example, consider a situation where you make
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
+            prevents clients from accidentally creating
+            duplicate commitments.
+
+            The request ID must be
+            a valid UUID with the exception that zero UUID
+            is not supported
+            (00000000-0000-0000-0000-000000000000).
+
+            This field is a member of `oneof`_ ``_request_id``.
+        vm_extension_policy (str):
+            Name of the zone VM extension policy to
+            delete.
+        zone (str):
+            Name of the zone for this request.
+    """
+
+    organization: str = proto.Field(
+        proto.STRING,
+        number=105180467,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=37109963,
+        optional=True,
+    )
+    vm_extension_policy: str = proto.Field(
+        proto.STRING,
+        number=331532730,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
     )
 
 
@@ -39553,6 +40229,43 @@ class FailoverHaControllerRequest(proto.Message):
     )
 
 
+class FetchEncryptionKeyRegionSslCertificateRequest(proto.Message):
+    r"""A request message for
+    RegionSslCertificates.FetchEncryptionKey. See the method
+    description for details.
+
+    Attributes:
+        project (str):
+            Project ID for this request.
+        region (str):
+            Name of the region scoping this request.
+    """
+
+    project: str = proto.Field(
+        proto.STRING,
+        number=227560217,
+    )
+    region: str = proto.Field(
+        proto.STRING,
+        number=138946292,
+    )
+
+
+class FetchEncryptionKeySslCertificateRequest(proto.Message):
+    r"""A request message for SslCertificates.FetchEncryptionKey. See
+    the method description for details.
+
+    Attributes:
+        project (str):
+            Project ID for this request.
+    """
+
+    project: str = proto.Field(
+        proto.STRING,
+        number=227560217,
+    )
+
+
 class FileContentBuffer(proto.Message):
     r"""
 
@@ -41243,6 +41956,98 @@ class FlexibleTimeRange(proto.Message):
         proto.STRING,
         number=212764853,
         optional=True,
+    )
+
+
+class FolderVmExtensionPolicyAggregatedListResponse(proto.Message):
+    r"""
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        etag (str):
+
+            This field is a member of `oneof`_ ``_etag``.
+        id (str):
+            [Output Only] Unique identifier for the resource; defined by
+            the server.
+
+            This field is a member of `oneof`_ ``_id``.
+        items (MutableMapping[str, google.cloud.compute_v1.types.VmExtensionPoliciesScopedList]):
+            A list of VmExtensionPoliciesScopedList
+            resources.
+        kind (str):
+            Output only. [Output Only] Type of resource.
+            Alwayscompute#FolderVmExtensionPolicyAggregatedList for
+            lists of VmExtensionPolicies.
+
+            This field is a member of `oneof`_ ``_kind``.
+        next_page_token (str):
+            [Output Only] This token allows you to get the next page of
+            results for list requests. If the number of results is
+            larger thanmaxResults, use the nextPageToken as a value for
+            the query parameter pageToken in the next list request.
+            Subsequent list requests will have their own nextPageToken
+            to continue paging through the results.
+
+            This field is a member of `oneof`_ ``_next_page_token``.
+        self_link (str):
+            Output only. [Output Only] Server-defined URL for this
+            resource.
+
+            This field is a member of `oneof`_ ``_self_link``.
+        unreachables (MutableSequence[str]):
+            Output only. [Output Only] Unreachable resources.
+        warning (google.cloud.compute_v1.types.Warning):
+            [Output Only] Informational warning message.
+
+            This field is a member of `oneof`_ ``_warning``.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    etag: str = proto.Field(
+        proto.STRING,
+        number=3123477,
+        optional=True,
+    )
+    id: str = proto.Field(
+        proto.STRING,
+        number=3355,
+        optional=True,
+    )
+    items: MutableMapping[str, "VmExtensionPoliciesScopedList"] = proto.MapField(
+        proto.STRING,
+        proto.MESSAGE,
+        number=100526016,
+        message="VmExtensionPoliciesScopedList",
+    )
+    kind: str = proto.Field(
+        proto.STRING,
+        number=3292052,
+        optional=True,
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=79797525,
+        optional=True,
+    )
+    self_link: str = proto.Field(
+        proto.STRING,
+        number=456214797,
+        optional=True,
+    )
+    unreachables: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=243372063,
+    )
+    warning: "Warning" = proto.Field(
+        proto.MESSAGE,
+        number=50704284,
+        optional=True,
+        message="Warning",
     )
 
 
@@ -45264,6 +46069,56 @@ class GetFirewallRequest(proto.Message):
     )
 
 
+class GetFolderGlobalVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for FolderGlobalVmExtensionPolicies.Get.
+    See the method description for details.
+
+    Attributes:
+        folder (str):
+            Folder ID for this request.
+        global_vm_extension_policy (str):
+            Name of the GlobalVmExtensionPolicy resource
+            to return.
+    """
+
+    folder: str = proto.Field(
+        proto.STRING,
+        number=341646446,
+    )
+    global_vm_extension_policy: str = proto.Field(
+        proto.STRING,
+        number=8334110,
+    )
+
+
+class GetFolderZoneVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for FolderZoneVmExtensionPolicies.Get. See
+    the method description for details.
+
+    Attributes:
+        folder (str):
+            Folder ID for this request.
+        vm_extension_policy (str):
+            Name of the VM extension policy resource to
+            return.
+        zone (str):
+            Name of the zone for this request.
+    """
+
+    folder: str = proto.Field(
+        proto.STRING,
+        number=341646446,
+    )
+    vm_extension_policy: str = proto.Field(
+        proto.STRING,
+        number=331532730,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
+    )
+
+
 class GetForwardingRuleRequest(proto.Message):
     r"""A request message for ForwardingRules.Get. See the method
     description for details.
@@ -45394,6 +46249,27 @@ class GetGlobalAddressRequest(proto.Message):
     project: str = proto.Field(
         proto.STRING,
         number=227560217,
+    )
+
+
+class GetGlobalFolderOperationRequest(proto.Message):
+    r"""A request message for GlobalFolderOperations.Get. See the
+    method description for details.
+
+    Attributes:
+        folder (str):
+            Folder ID for this request.
+        operation (str):
+            Name of the Operations resource to return.
+    """
+
+    folder: str = proto.Field(
+        proto.STRING,
+        number=341646446,
+    )
+    operation: str = proto.Field(
+        proto.STRING,
+        number=52090215,
     )
 
 
@@ -48430,6 +49306,29 @@ class GetOperationalStatusInterconnectGroupRequest(proto.Message):
     )
 
 
+class GetOrganizationGlobalVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for
+    OrganizationGlobalVmExtensionPolicies.Get. See the method
+    description for details.
+
+    Attributes:
+        global_vm_extension_policy (str):
+            Name of the GlobalVmExtensionPolicy resource
+            to return.
+        organization (str):
+            Organization ID for this request.
+    """
+
+    global_vm_extension_policy: str = proto.Field(
+        proto.STRING,
+        number=8334110,
+    )
+    organization: str = proto.Field(
+        proto.STRING,
+        number=105180467,
+    )
+
+
 class GetOrganizationSecurityPolicyRequest(proto.Message):
     r"""A request message for OrganizationSecurityPolicies.Get. See
     the method description for details.
@@ -48442,6 +49341,35 @@ class GetOrganizationSecurityPolicyRequest(proto.Message):
     security_policy: str = proto.Field(
         proto.STRING,
         number=171082513,
+    )
+
+
+class GetOrganizationZoneVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for
+    OrganizationZoneVmExtensionPolicies.Get. See the method
+    description for details.
+
+    Attributes:
+        organization (str):
+            Organization ID for this request.
+        vm_extension_policy (str):
+            Name of the VM extension policy resource to
+            return.
+        zone (str):
+            Name of the zone for this request.
+    """
+
+    organization: str = proto.Field(
+        proto.STRING,
+        number=105180467,
+    )
+    vm_extension_policy: str = proto.Field(
+        proto.STRING,
+        number=331532730,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
     )
 
 
@@ -50992,6 +51920,161 @@ class GetVersionReservationSubBlockRequest(proto.Message):
     )
 
 
+class GetVmExtensionFolderGlobalVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for
+    FolderGlobalVmExtensionPolicies.GetVmExtension. See the method
+    description for details.
+
+    Attributes:
+        extension_name (str):
+            Required. Name of the VM extension for this
+            request.
+        folder (str):
+            Folder ID for this request.
+    """
+
+    extension_name: str = proto.Field(
+        proto.STRING,
+        number=54781579,
+    )
+    folder: str = proto.Field(
+        proto.STRING,
+        number=341646446,
+    )
+
+
+class GetVmExtensionFolderZoneVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for
+    FolderZoneVmExtensionPolicies.GetVmExtension. See the method
+    description for details.
+
+    Attributes:
+        extension_name (str):
+            Required. Name of the VM extension for this
+            request.
+        folder (str):
+            Folder ID for this request.
+        zone (str):
+            Name of the zone for this request.
+    """
+
+    extension_name: str = proto.Field(
+        proto.STRING,
+        number=54781579,
+    )
+    folder: str = proto.Field(
+        proto.STRING,
+        number=341646446,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
+    )
+
+
+class GetVmExtensionGlobalVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for
+    GlobalVmExtensionPolicies.GetVmExtension. See the method
+    description for details.
+
+    Attributes:
+        extension_name (str):
+            Required. Name of the VM extension for this
+            request.
+        project (str):
+            Project ID for this request.
+    """
+
+    extension_name: str = proto.Field(
+        proto.STRING,
+        number=54781579,
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=227560217,
+    )
+
+
+class GetVmExtensionOrganizationGlobalVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for
+    OrganizationGlobalVmExtensionPolicies.GetVmExtension. See the
+    method description for details.
+
+    Attributes:
+        extension_name (str):
+            Required. Name of the VM extension for this
+            request.
+        organization (str):
+            Organization ID for this request.
+    """
+
+    extension_name: str = proto.Field(
+        proto.STRING,
+        number=54781579,
+    )
+    organization: str = proto.Field(
+        proto.STRING,
+        number=105180467,
+    )
+
+
+class GetVmExtensionOrganizationZoneVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for
+    OrganizationZoneVmExtensionPolicies.GetVmExtension. See the
+    method description for details.
+
+    Attributes:
+        extension_name (str):
+            Required. Name of the VM extension for this
+            request.
+        organization (str):
+            Organization ID for this request.
+        zone (str):
+            Name of the zone for this request.
+    """
+
+    extension_name: str = proto.Field(
+        proto.STRING,
+        number=54781579,
+    )
+    organization: str = proto.Field(
+        proto.STRING,
+        number=105180467,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
+    )
+
+
+class GetVmExtensionZoneVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for ZoneVmExtensionPolicies.GetVmExtension.
+    See the method description for details.
+
+    Attributes:
+        extension_name (str):
+            Required. Name of the VM extension for this
+            request.
+        project (str):
+            Project ID for this request.
+        zone (str):
+            Name of the zone for this request.
+    """
+
+    extension_name: str = proto.Field(
+        proto.STRING,
+        number=54781579,
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=227560217,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
+    )
+
+
 class GetVpnGatewayRequest(proto.Message):
     r"""A request message for VpnGateways.Get. See the method
     description for details.
@@ -51229,6 +52312,33 @@ class GetXpnResourcesProjectsRequest(proto.Message):
     )
 
 
+class GetZoneFolderOperationRequest(proto.Message):
+    r"""A request message for ZoneFolderOperations.Get. See the
+    method description for details.
+
+    Attributes:
+        folder (str):
+            Folder ID for this request.
+        operation (str):
+            Name of the Operations resource to return.
+        zone (str):
+            Name of the zone for this request.
+    """
+
+    folder: str = proto.Field(
+        proto.STRING,
+        number=341646446,
+    )
+    operation: str = proto.Field(
+        proto.STRING,
+        number=52090215,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
+    )
+
+
 class GetZoneOperationRequest(proto.Message):
     r"""A request message for ZoneOperations.Get. See the method
     description for details.
@@ -51250,6 +52360,34 @@ class GetZoneOperationRequest(proto.Message):
     project: str = proto.Field(
         proto.STRING,
         number=227560217,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
+    )
+
+
+class GetZoneOrganizationOperationRequest(proto.Message):
+    r"""A request message for ZoneOrganizationOperations.Get. See the
+    method description for details.
+
+    Attributes:
+        operation (str):
+            Name of the Operations resource to return.
+            Parent is derived from this field.
+        organization (str):
+            Organization ID for this request.
+        zone (str):
+            Name of the zone for this request.
+    """
+
+    operation: str = proto.Field(
+        proto.STRING,
+        number=52090215,
+    )
+    organization: str = proto.Field(
+        proto.STRING,
+        number=105180467,
     )
     zone: str = proto.Field(
         proto.STRING,
@@ -51474,6 +52612,106 @@ class GlobalFrontendSettingsPatchResponse(proto.Message):
     )
 
 
+class GlobalListVmExtensionsResponse(proto.Message):
+    r"""
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        etag (str):
+            Output only. Fingerprint of this resource. A
+            hash of the contents stored in this object. This
+            field is used in optimistic locking. This field
+            will be ignored when inserting a
+            VmExtensionPolicy. An up-to-date fingerprint
+            must be provided in order to update the
+            VmExtensionPolicy.
+
+            To see the latest value of the fingerprint, make
+            a get() request to retrieve a VmExtensionPolicy.
+
+            This field is a member of `oneof`_ ``_etag``.
+        id (str):
+            Output only. Unique identifier for the
+            resource; defined by the server.
+
+            This field is a member of `oneof`_ ``_id``.
+        items (MutableSequence[google.cloud.compute_v1.types.GlobalVmExtension]):
+            Output only. A list of VM extensions.
+        kind (str):
+            Output only. Type of resource.
+
+            This field is a member of `oneof`_ ``_kind``.
+        next_page_token (str):
+            Output only. This token allows you to get the
+            next page of results for list requests. If the
+            number of results is larger thanmaxResults, use
+            the nextPageToken as a value for the query
+            parameter pageToken in the next list request.
+            Subsequent list requests will have their own
+            nextPageToken to continue paging through the
+            results.
+
+            This field is a member of `oneof`_ ``_next_page_token``.
+        self_link (str):
+            Output only. Server-defined URL for this
+            resource.
+
+            This field is a member of `oneof`_ ``_self_link``.
+        unreachables (MutableSequence[str]):
+            Output only. Unreachable resources.
+        warning (google.cloud.compute_v1.types.Warning):
+            Output only. Informational warning message.
+
+            This field is a member of `oneof`_ ``_warning``.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    etag: str = proto.Field(
+        proto.STRING,
+        number=3123477,
+        optional=True,
+    )
+    id: str = proto.Field(
+        proto.STRING,
+        number=3355,
+        optional=True,
+    )
+    items: MutableSequence["GlobalVmExtension"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=100526016,
+        message="GlobalVmExtension",
+    )
+    kind: str = proto.Field(
+        proto.STRING,
+        number=3292052,
+        optional=True,
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=79797525,
+        optional=True,
+    )
+    self_link: str = proto.Field(
+        proto.STRING,
+        number=456214797,
+        optional=True,
+    )
+    unreachables: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=243372063,
+    )
+    warning: "Warning" = proto.Field(
+        proto.MESSAGE,
+        number=50704284,
+        optional=True,
+        message="Warning",
+    )
+
+
 class GlobalNetworkEndpointGroupsAttachEndpointsRequest(proto.Message):
     r"""
 
@@ -51628,6 +52866,80 @@ class GlobalSetPolicyRequest(proto.Message):
         number=91071794,
         optional=True,
         message="Policy",
+    )
+
+
+class GlobalVmExtension(proto.Message):
+    r"""
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        creation_timestamp (str):
+            Output only. [Output Only] Creation timestamp inRFC3339 text
+            format.
+
+            This field is a member of `oneof`_ ``_creation_timestamp``.
+        description (str):
+            Output only. [Output Only] An optional textual description
+            of the resource.
+
+            This field is a member of `oneof`_ ``_description``.
+        id (int):
+            Output only. [Output Only] The unique identifier for the
+            resource. This identifier is defined by the server.
+
+            This field is a member of `oneof`_ ``_id``.
+        kind (str):
+            Output only. [Output Only] Type of the resource.
+            Alwayscompute#globalVmExtension.
+
+            This field is a member of `oneof`_ ``_kind``.
+        name (str):
+
+            This field is a member of `oneof`_ ``_name``.
+        self_link (str):
+            Output only. [Output Only] Server-defined URL for the
+            resource.
+
+            This field is a member of `oneof`_ ``_self_link``.
+        versions (MutableSequence[str]):
+
+    """
+
+    creation_timestamp: str = proto.Field(
+        proto.STRING,
+        number=30525366,
+        optional=True,
+    )
+    description: str = proto.Field(
+        proto.STRING,
+        number=422937596,
+        optional=True,
+    )
+    id: int = proto.Field(
+        proto.UINT64,
+        number=3355,
+        optional=True,
+    )
+    kind: str = proto.Field(
+        proto.STRING,
+        number=3292052,
+        optional=True,
+    )
+    name: str = proto.Field(
+        proto.STRING,
+        number=3373707,
+        optional=True,
+    )
+    self_link: str = proto.Field(
+        proto.STRING,
+        number=456214797,
+        optional=True,
+    )
+    versions: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=162430619,
     )
 
 
@@ -59637,6 +60949,116 @@ class InsertFirewallRequest(proto.Message):
     )
 
 
+class InsertFolderGlobalVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for FolderGlobalVmExtensionPolicies.Insert.
+    See the method description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        folder (str):
+            Folder ID for this request.
+        global_vm_extension_policy_resource (google.cloud.compute_v1.types.GlobalVmExtensionPolicy):
+            The body resource for this request
+        request_id (str):
+            An optional request ID to identify requests.
+            Specify a unique request ID so that if you must
+            retry your request, the server will know to
+            ignore the request if it has already been
+            completed.
+
+            For example, consider a situation where you make
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
+            prevents clients from accidentally creating
+            duplicate commitments.
+
+            The request ID must be
+            a valid UUID with the exception that zero UUID
+            is not supported
+            (00000000-0000-0000-0000-000000000000).
+
+            This field is a member of `oneof`_ ``_request_id``.
+    """
+
+    folder: str = proto.Field(
+        proto.STRING,
+        number=341646446,
+    )
+    global_vm_extension_policy_resource: "GlobalVmExtensionPolicy" = proto.Field(
+        proto.MESSAGE,
+        number=101542927,
+        message="GlobalVmExtensionPolicy",
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=37109963,
+        optional=True,
+    )
+
+
+class InsertFolderZoneVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for FolderZoneVmExtensionPolicies.Insert.
+    See the method description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        folder (str):
+            Folder ID for this request.
+        request_id (str):
+            An optional request ID to identify requests.
+            Specify a unique request ID so that if you must
+            retry your request, the server will know to
+            ignore the request if it has already been
+            completed.
+
+            For example, consider a situation where you make
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
+            prevents clients from accidentally creating
+            duplicate commitments.
+
+            The request ID must be
+            a valid UUID with the exception that zero UUID
+            is not supported
+            (00000000-0000-0000-0000-000000000000).
+
+            This field is a member of `oneof`_ ``_request_id``.
+        vm_extension_policy_resource (google.cloud.compute_v1.types.VmExtensionPolicy):
+            The body resource for this request
+        zone (str):
+            Name of the zone for this request.
+    """
+
+    folder: str = proto.Field(
+        proto.STRING,
+        number=341646446,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=37109963,
+        optional=True,
+    )
+    vm_extension_policy_resource: "VmExtensionPolicy" = proto.Field(
+        proto.MESSAGE,
+        number=515669235,
+        message="VmExtensionPolicy",
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
+    )
+
+
 class InsertForwardingRuleRequest(proto.Message):
     r"""A request message for ForwardingRules.Insert. See the method
     description for details.
@@ -61376,6 +62798,59 @@ class InsertNodeTemplateRequest(proto.Message):
     )
 
 
+class InsertOrganizationGlobalVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for
+    OrganizationGlobalVmExtensionPolicies.Insert. See the method
+    description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        global_vm_extension_policy_resource (google.cloud.compute_v1.types.GlobalVmExtensionPolicy):
+            The body resource for this request
+        organization (str):
+            Organization ID for this request.
+        request_id (str):
+            An optional request ID to identify requests.
+            Specify a unique request ID so that if you must
+            retry your request, the server will know to
+            ignore the request if it has already been
+            completed.
+
+            For example, consider a situation where you make
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
+            prevents clients from accidentally creating
+            duplicate commitments.
+
+            The request ID must be
+            a valid UUID with the exception that zero UUID
+            is not supported
+            (00000000-0000-0000-0000-000000000000).
+
+            This field is a member of `oneof`_ ``_request_id``.
+    """
+
+    global_vm_extension_policy_resource: "GlobalVmExtensionPolicy" = proto.Field(
+        proto.MESSAGE,
+        number=101542927,
+        message="GlobalVmExtensionPolicy",
+    )
+    organization: str = proto.Field(
+        proto.STRING,
+        number=105180467,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=37109963,
+        optional=True,
+    )
+
+
 class InsertOrganizationSecurityPolicyRequest(proto.Message):
     r"""A request message for OrganizationSecurityPolicies.Insert.
     See the method description for details.
@@ -61431,6 +62906,65 @@ class InsertOrganizationSecurityPolicyRequest(proto.Message):
         proto.MESSAGE,
         number=216159612,
         message="SecurityPolicy",
+    )
+
+
+class InsertOrganizationZoneVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for
+    OrganizationZoneVmExtensionPolicies.Insert. See the method
+    description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        organization (str):
+            Organization ID for this request.
+        request_id (str):
+            An optional request ID to identify requests.
+            Specify a unique request ID so that if you must
+            retry your request, the server will know to
+            ignore the request if it has already been
+            completed.
+
+            For example, consider a situation where you make
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
+            prevents clients from accidentally creating
+            duplicate commitments.
+
+            The request ID must be
+            a valid UUID with the exception that zero UUID
+            is not supported
+            (00000000-0000-0000-0000-000000000000).
+
+            This field is a member of `oneof`_ ``_request_id``.
+        vm_extension_policy_resource (google.cloud.compute_v1.types.VmExtensionPolicy):
+            The body resource for this request
+        zone (str):
+            Name of the zone for this request.
+    """
+
+    organization: str = proto.Field(
+        proto.STRING,
+        number=105180467,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=37109963,
+        optional=True,
+    )
+    vm_extension_policy_resource: "VmExtensionPolicy" = proto.Field(
+        proto.MESSAGE,
+        number=515669235,
+        message="VmExtensionPolicy",
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
     )
 
 
@@ -65424,17 +66958,8 @@ class InstanceFlexibilityPolicy(proto.Message):
 
     Attributes:
         instance_selections (MutableMapping[str, google.cloud.compute_v1.types.InstanceFlexibilityPolicyInstanceSelection]):
-            Specification of alternative, flexible
-            instance subsets. One of them will be selected
-            to create the instances based on various
-            criteria, like:
-
-            - ranks,
-            - location policy,
-            - current capacity,
-            - available reservations (you can specify
-              affinity in InstanceProperties),
-            - SWAN/GOOSE limitations.
+            Specifies named instance selections that
+            define properties for instances created in bulk.
             Key is an arbitrary, unique RFC1035 string that
             identifies the instance selection.
     """
@@ -67574,6 +69099,9 @@ class InstanceGroupManagerStatusAcceleratorTopology(proto.Message):
                 The accelerator topology is being activated.
             ACTIVE (314733318):
                 The accelerator topology is active.
+            ACTIVE_DEGRADED (471128135):
+                The accelerator topology is active but
+                operating in degraded mode.
             DEACTIVATING (57182257):
                 The accelerator topology is being
                 deactivated.
@@ -67591,6 +69119,7 @@ class InstanceGroupManagerStatusAcceleratorTopology(proto.Message):
         UNDEFINED_STATE = 0
         ACTIVATING = 378825968
         ACTIVE = 314733318
+        ACTIVE_DEGRADED = 471128135
         DEACTIVATING = 57182257
         FAILED = 455706685
         INCOMPLETE = 11941214
@@ -82575,6 +84104,294 @@ class ListFirewallsRequest(proto.Message):
     )
 
 
+class ListFolderGlobalVmExtensionPoliciesRequest(proto.Message):
+    r"""A request message for FolderGlobalVmExtensionPolicies.List.
+    See the method description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        filter (str):
+            A filter expression that filters resources listed in the
+            response. Most Compute resources support two types of filter
+            expressions: expressions that support regular expressions
+            and expressions that follow API improvement proposal
+            AIP-160. These two types of filter expressions cannot be
+            mixed in one request.
+
+            If you want to use AIP-160, your expression must specify the
+            field name, an operator, and the value that you want to use
+            for filtering. The value must be a string, a number, or a
+            boolean. The operator must be either ``=``, ``!=``, ``>``,
+            ``<``, ``<=``, ``>=`` or ``:``.
+
+            For example, if you are filtering Compute Engine instances,
+            you can exclude instances named ``example-instance`` by
+            specifying ``name != example-instance``.
+
+            The ``:*`` comparison can be used to test whether a key has
+            been defined. For example, to find all objects with
+            ``owner`` label use:
+
+            ::
+
+               labels.owner:*
+
+            You can also filter nested fields. For example, you could
+            specify ``scheduling.automaticRestart = false`` to include
+            instances only if they are not scheduled for automatic
+            restarts. You can use filtering on nested fields to filter
+            based onresource labels.
+
+            To filter on multiple expressions, provide each separate
+            expression within parentheses. For example:
+
+            ::
+
+               (scheduling.automaticRestart = true)
+               (cpuPlatform = "Intel Skylake")
+
+            By default, each expression is an ``AND`` expression.
+            However, you can include ``AND`` and ``OR`` expressions
+            explicitly. For example:
+
+            ::
+
+               (cpuPlatform = "Intel Skylake") OR
+               (cpuPlatform = "Intel Broadwell") AND
+               (scheduling.automaticRestart = true)
+
+            If you want to use a regular expression, use the ``eq``
+            (equal) or ``ne`` (not equal) operator against a single
+            un-parenthesized expression with or without quotes or
+            against multiple parenthesized expressions. Examples:
+
+            ``fieldname eq unquoted literal``
+            ``fieldname eq 'single quoted literal'``
+            ``fieldname eq "double quoted literal"``
+            ``(fieldname1 eq literal) (fieldname2 ne "literal")``
+
+            The literal value is interpreted as a regular expression
+            using GoogleRE2 library syntax. The literal value must match
+            the entire field.
+
+            For example, to filter for instances that do not end with
+            name "instance", you would use ``name ne .*instance``.
+
+            You cannot combine constraints on multiple fields using
+            regular expressions.
+
+            This field is a member of `oneof`_ ``_filter``.
+        folder (str):
+            Folder ID for this request.
+        max_results (int):
+            The maximum number of results per page that should be
+            returned. If the number of available results is larger than
+            ``maxResults``, Compute Engine returns a ``nextPageToken``
+            that can be used to get the next page of results in
+            subsequent list requests. Acceptable values are ``0`` to
+            ``500``, inclusive. (Default: ``500``)
+
+            This field is a member of `oneof`_ ``_max_results``.
+        order_by (str):
+            Sorts list results by a certain order. By default, results
+            are returned in alphanumerical order based on the resource
+            name.
+
+            You can also sort results in descending order based on the
+            creation timestamp using
+            ``orderBy="creationTimestamp desc"``. This sorts results
+            based on the ``creationTimestamp`` field in reverse
+            chronological order (newest result first). Use this to sort
+            resources like operations so that the newest operation is
+            returned first.
+
+            Currently, only sorting by ``name`` or
+            ``creationTimestamp desc`` is supported.
+
+            This field is a member of `oneof`_ ``_order_by``.
+        page_token (str):
+            Specifies a page token to use. Set ``pageToken`` to the
+            ``nextPageToken`` returned by a previous list request to get
+            the next page of results.
+
+            This field is a member of `oneof`_ ``_page_token``.
+    """
+
+    filter: str = proto.Field(
+        proto.STRING,
+        number=336120696,
+        optional=True,
+    )
+    folder: str = proto.Field(
+        proto.STRING,
+        number=341646446,
+    )
+    max_results: int = proto.Field(
+        proto.UINT32,
+        number=54715419,
+        optional=True,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=160562920,
+        optional=True,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=19994697,
+        optional=True,
+    )
+
+
+class ListFolderZoneVmExtensionPoliciesRequest(proto.Message):
+    r"""A request message for FolderZoneVmExtensionPolicies.List. See
+    the method description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        filter (str):
+            A filter expression that filters resources listed in the
+            response. Most Compute resources support two types of filter
+            expressions: expressions that support regular expressions
+            and expressions that follow API improvement proposal
+            AIP-160. These two types of filter expressions cannot be
+            mixed in one request.
+
+            If you want to use AIP-160, your expression must specify the
+            field name, an operator, and the value that you want to use
+            for filtering. The value must be a string, a number, or a
+            boolean. The operator must be either ``=``, ``!=``, ``>``,
+            ``<``, ``<=``, ``>=`` or ``:``.
+
+            For example, if you are filtering Compute Engine instances,
+            you can exclude instances named ``example-instance`` by
+            specifying ``name != example-instance``.
+
+            The ``:*`` comparison can be used to test whether a key has
+            been defined. For example, to find all objects with
+            ``owner`` label use:
+
+            ::
+
+               labels.owner:*
+
+            You can also filter nested fields. For example, you could
+            specify ``scheduling.automaticRestart = false`` to include
+            instances only if they are not scheduled for automatic
+            restarts. You can use filtering on nested fields to filter
+            based onresource labels.
+
+            To filter on multiple expressions, provide each separate
+            expression within parentheses. For example:
+
+            ::
+
+               (scheduling.automaticRestart = true)
+               (cpuPlatform = "Intel Skylake")
+
+            By default, each expression is an ``AND`` expression.
+            However, you can include ``AND`` and ``OR`` expressions
+            explicitly. For example:
+
+            ::
+
+               (cpuPlatform = "Intel Skylake") OR
+               (cpuPlatform = "Intel Broadwell") AND
+               (scheduling.automaticRestart = true)
+
+            If you want to use a regular expression, use the ``eq``
+            (equal) or ``ne`` (not equal) operator against a single
+            un-parenthesized expression with or without quotes or
+            against multiple parenthesized expressions. Examples:
+
+            ``fieldname eq unquoted literal``
+            ``fieldname eq 'single quoted literal'``
+            ``fieldname eq "double quoted literal"``
+            ``(fieldname1 eq literal) (fieldname2 ne "literal")``
+
+            The literal value is interpreted as a regular expression
+            using GoogleRE2 library syntax. The literal value must match
+            the entire field.
+
+            For example, to filter for instances that do not end with
+            name "instance", you would use ``name ne .*instance``.
+
+            You cannot combine constraints on multiple fields using
+            regular expressions.
+
+            This field is a member of `oneof`_ ``_filter``.
+        folder (str):
+            Folder ID for this request.
+        max_results (int):
+            The maximum number of results per page that should be
+            returned. If the number of available results is larger than
+            ``maxResults``, Compute Engine returns a ``nextPageToken``
+            that can be used to get the next page of results in
+            subsequent list requests. Acceptable values are ``0`` to
+            ``500``, inclusive. (Default: ``500``)
+
+            This field is a member of `oneof`_ ``_max_results``.
+        order_by (str):
+            Sorts list results by a certain order. By default, results
+            are returned in alphanumerical order based on the resource
+            name.
+
+            You can also sort results in descending order based on the
+            creation timestamp using
+            ``orderBy="creationTimestamp desc"``. This sorts results
+            based on the ``creationTimestamp`` field in reverse
+            chronological order (newest result first). Use this to sort
+            resources like operations so that the newest operation is
+            returned first.
+
+            Currently, only sorting by ``name`` or
+            ``creationTimestamp desc`` is supported.
+
+            This field is a member of `oneof`_ ``_order_by``.
+        page_token (str):
+            Specifies a page token to use. Set ``pageToken`` to the
+            ``nextPageToken`` returned by a previous list request to get
+            the next page of results.
+
+            This field is a member of `oneof`_ ``_page_token``.
+        zone (str):
+            Name of the zone for this request.
+    """
+
+    filter: str = proto.Field(
+        proto.STRING,
+        number=336120696,
+        optional=True,
+    )
+    folder: str = proto.Field(
+        proto.STRING,
+        number=341646446,
+    )
+    max_results: int = proto.Field(
+        proto.UINT32,
+        number=54715419,
+        optional=True,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=160562920,
+        optional=True,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=19994697,
+        optional=True,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
+    )
+
+
 class ListForwardingRulesRequest(proto.Message):
     r"""A request message for ForwardingRules.List. See the method
     description for details.
@@ -83008,6 +84825,147 @@ class ListGlobalAddressesRequest(proto.Message):
     project: str = proto.Field(
         proto.STRING,
         number=227560217,
+    )
+
+
+class ListGlobalFolderOperationsRequest(proto.Message):
+    r"""A request message for GlobalFolderOperations.List. See the
+    method description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        filter (str):
+            A filter expression that filters resources listed in the
+            response. Most Compute resources support two types of filter
+            expressions: expressions that support regular expressions
+            and expressions that follow API improvement proposal
+            AIP-160. These two types of filter expressions cannot be
+            mixed in one request.
+
+            If you want to use AIP-160, your expression must specify the
+            field name, an operator, and the value that you want to use
+            for filtering. The value must be a string, a number, or a
+            boolean. The operator must be either ``=``, ``!=``, ``>``,
+            ``<``, ``<=``, ``>=`` or ``:``.
+
+            For example, if you are filtering Compute Engine instances,
+            you can exclude instances named ``example-instance`` by
+            specifying ``name != example-instance``.
+
+            The ``:*`` comparison can be used to test whether a key has
+            been defined. For example, to find all objects with
+            ``owner`` label use:
+
+            ::
+
+               labels.owner:*
+
+            You can also filter nested fields. For example, you could
+            specify ``scheduling.automaticRestart = false`` to include
+            instances only if they are not scheduled for automatic
+            restarts. You can use filtering on nested fields to filter
+            based onresource labels.
+
+            To filter on multiple expressions, provide each separate
+            expression within parentheses. For example:
+
+            ::
+
+               (scheduling.automaticRestart = true)
+               (cpuPlatform = "Intel Skylake")
+
+            By default, each expression is an ``AND`` expression.
+            However, you can include ``AND`` and ``OR`` expressions
+            explicitly. For example:
+
+            ::
+
+               (cpuPlatform = "Intel Skylake") OR
+               (cpuPlatform = "Intel Broadwell") AND
+               (scheduling.automaticRestart = true)
+
+            If you want to use a regular expression, use the ``eq``
+            (equal) or ``ne`` (not equal) operator against a single
+            un-parenthesized expression with or without quotes or
+            against multiple parenthesized expressions. Examples:
+
+            ``fieldname eq unquoted literal``
+            ``fieldname eq 'single quoted literal'``
+            ``fieldname eq "double quoted literal"``
+            ``(fieldname1 eq literal) (fieldname2 ne "literal")``
+
+            The literal value is interpreted as a regular expression
+            using GoogleRE2 library syntax. The literal value must match
+            the entire field.
+
+            For example, to filter for instances that do not end with
+            name "instance", you would use ``name ne .*instance``.
+
+            You cannot combine constraints on multiple fields using
+            regular expressions.
+
+            This field is a member of `oneof`_ ``_filter``.
+        folder (str):
+            Folder ID for this request.
+        max_results (int):
+            The maximum number of results per page that should be
+            returned. If the number of available results is larger than
+            ``maxResults``, Compute Engine returns a ``nextPageToken``
+            that can be used to get the next page of results in
+            subsequent list requests. Acceptable values are ``0`` to
+            ``500``, inclusive. (Default: ``500``)
+
+            This field is a member of `oneof`_ ``_max_results``.
+        order_by (str):
+            Sorts list results by a certain order. By default, results
+            are returned in alphanumerical order based on the resource
+            name.
+
+            You can also sort results in descending order based on the
+            creation timestamp using
+            ``orderBy="creationTimestamp desc"``. This sorts results
+            based on the ``creationTimestamp`` field in reverse
+            chronological order (newest result first). Use this to sort
+            resources like operations so that the newest operation is
+            returned first.
+
+            Currently, only sorting by ``name`` or
+            ``creationTimestamp desc`` is supported.
+
+            This field is a member of `oneof`_ ``_order_by``.
+        page_token (str):
+            Specifies a page token to use. Set ``pageToken`` to the
+            ``nextPageToken`` returned by a previous list request to get
+            the next page of results.
+
+            This field is a member of `oneof`_ ``_page_token``.
+    """
+
+    filter: str = proto.Field(
+        proto.STRING,
+        number=336120696,
+        optional=True,
+    )
+    folder: str = proto.Field(
+        proto.STRING,
+        number=341646446,
+    )
+    max_results: int = proto.Field(
+        proto.UINT32,
+        number=54715419,
+        optional=True,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=160562920,
+        optional=True,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=19994697,
+        optional=True,
     )
 
 
@@ -89719,6 +91677,148 @@ class ListNodesNodeGroupsRequest(proto.Message):
     )
 
 
+class ListOrganizationGlobalVmExtensionPoliciesRequest(proto.Message):
+    r"""A request message for
+    OrganizationGlobalVmExtensionPolicies.List. See the method
+    description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        filter (str):
+            A filter expression that filters resources listed in the
+            response. Most Compute resources support two types of filter
+            expressions: expressions that support regular expressions
+            and expressions that follow API improvement proposal
+            AIP-160. These two types of filter expressions cannot be
+            mixed in one request.
+
+            If you want to use AIP-160, your expression must specify the
+            field name, an operator, and the value that you want to use
+            for filtering. The value must be a string, a number, or a
+            boolean. The operator must be either ``=``, ``!=``, ``>``,
+            ``<``, ``<=``, ``>=`` or ``:``.
+
+            For example, if you are filtering Compute Engine instances,
+            you can exclude instances named ``example-instance`` by
+            specifying ``name != example-instance``.
+
+            The ``:*`` comparison can be used to test whether a key has
+            been defined. For example, to find all objects with
+            ``owner`` label use:
+
+            ::
+
+               labels.owner:*
+
+            You can also filter nested fields. For example, you could
+            specify ``scheduling.automaticRestart = false`` to include
+            instances only if they are not scheduled for automatic
+            restarts. You can use filtering on nested fields to filter
+            based onresource labels.
+
+            To filter on multiple expressions, provide each separate
+            expression within parentheses. For example:
+
+            ::
+
+               (scheduling.automaticRestart = true)
+               (cpuPlatform = "Intel Skylake")
+
+            By default, each expression is an ``AND`` expression.
+            However, you can include ``AND`` and ``OR`` expressions
+            explicitly. For example:
+
+            ::
+
+               (cpuPlatform = "Intel Skylake") OR
+               (cpuPlatform = "Intel Broadwell") AND
+               (scheduling.automaticRestart = true)
+
+            If you want to use a regular expression, use the ``eq``
+            (equal) or ``ne`` (not equal) operator against a single
+            un-parenthesized expression with or without quotes or
+            against multiple parenthesized expressions. Examples:
+
+            ``fieldname eq unquoted literal``
+            ``fieldname eq 'single quoted literal'``
+            ``fieldname eq "double quoted literal"``
+            ``(fieldname1 eq literal) (fieldname2 ne "literal")``
+
+            The literal value is interpreted as a regular expression
+            using GoogleRE2 library syntax. The literal value must match
+            the entire field.
+
+            For example, to filter for instances that do not end with
+            name "instance", you would use ``name ne .*instance``.
+
+            You cannot combine constraints on multiple fields using
+            regular expressions.
+
+            This field is a member of `oneof`_ ``_filter``.
+        max_results (int):
+            The maximum number of results per page that should be
+            returned. If the number of available results is larger than
+            ``maxResults``, Compute Engine returns a ``nextPageToken``
+            that can be used to get the next page of results in
+            subsequent list requests. Acceptable values are ``0`` to
+            ``500``, inclusive. (Default: ``500``)
+
+            This field is a member of `oneof`_ ``_max_results``.
+        order_by (str):
+            Sorts list results by a certain order. By default, results
+            are returned in alphanumerical order based on the resource
+            name.
+
+            You can also sort results in descending order based on the
+            creation timestamp using
+            ``orderBy="creationTimestamp desc"``. This sorts results
+            based on the ``creationTimestamp`` field in reverse
+            chronological order (newest result first). Use this to sort
+            resources like operations so that the newest operation is
+            returned first.
+
+            Currently, only sorting by ``name`` or
+            ``creationTimestamp desc`` is supported.
+
+            This field is a member of `oneof`_ ``_order_by``.
+        organization (str):
+            Organization ID for this request.
+        page_token (str):
+            Specifies a page token to use. Set ``pageToken`` to the
+            ``nextPageToken`` returned by a previous list request to get
+            the next page of results.
+
+            This field is a member of `oneof`_ ``_page_token``.
+    """
+
+    filter: str = proto.Field(
+        proto.STRING,
+        number=336120696,
+        optional=True,
+    )
+    max_results: int = proto.Field(
+        proto.UINT32,
+        number=54715419,
+        optional=True,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=160562920,
+        optional=True,
+    )
+    organization: str = proto.Field(
+        proto.STRING,
+        number=105180467,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=19994697,
+        optional=True,
+    )
+
+
 class ListOrganizationSecurityPoliciesRequest(proto.Message):
     r"""A request message for OrganizationSecurityPolicies.List. See
     the method description for details.
@@ -89860,6 +91960,154 @@ class ListOrganizationSecurityPoliciesRequest(proto.Message):
         proto.STRING,
         number=459714768,
         optional=True,
+    )
+
+
+class ListOrganizationZoneVmExtensionPoliciesRequest(proto.Message):
+    r"""A request message for
+    OrganizationZoneVmExtensionPolicies.List. See the method
+    description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        filter (str):
+            A filter expression that filters resources listed in the
+            response. Most Compute resources support two types of filter
+            expressions: expressions that support regular expressions
+            and expressions that follow API improvement proposal
+            AIP-160. These two types of filter expressions cannot be
+            mixed in one request.
+
+            If you want to use AIP-160, your expression must specify the
+            field name, an operator, and the value that you want to use
+            for filtering. The value must be a string, a number, or a
+            boolean. The operator must be either ``=``, ``!=``, ``>``,
+            ``<``, ``<=``, ``>=`` or ``:``.
+
+            For example, if you are filtering Compute Engine instances,
+            you can exclude instances named ``example-instance`` by
+            specifying ``name != example-instance``.
+
+            The ``:*`` comparison can be used to test whether a key has
+            been defined. For example, to find all objects with
+            ``owner`` label use:
+
+            ::
+
+               labels.owner:*
+
+            You can also filter nested fields. For example, you could
+            specify ``scheduling.automaticRestart = false`` to include
+            instances only if they are not scheduled for automatic
+            restarts. You can use filtering on nested fields to filter
+            based onresource labels.
+
+            To filter on multiple expressions, provide each separate
+            expression within parentheses. For example:
+
+            ::
+
+               (scheduling.automaticRestart = true)
+               (cpuPlatform = "Intel Skylake")
+
+            By default, each expression is an ``AND`` expression.
+            However, you can include ``AND`` and ``OR`` expressions
+            explicitly. For example:
+
+            ::
+
+               (cpuPlatform = "Intel Skylake") OR
+               (cpuPlatform = "Intel Broadwell") AND
+               (scheduling.automaticRestart = true)
+
+            If you want to use a regular expression, use the ``eq``
+            (equal) or ``ne`` (not equal) operator against a single
+            un-parenthesized expression with or without quotes or
+            against multiple parenthesized expressions. Examples:
+
+            ``fieldname eq unquoted literal``
+            ``fieldname eq 'single quoted literal'``
+            ``fieldname eq "double quoted literal"``
+            ``(fieldname1 eq literal) (fieldname2 ne "literal")``
+
+            The literal value is interpreted as a regular expression
+            using GoogleRE2 library syntax. The literal value must match
+            the entire field.
+
+            For example, to filter for instances that do not end with
+            name "instance", you would use ``name ne .*instance``.
+
+            You cannot combine constraints on multiple fields using
+            regular expressions.
+
+            This field is a member of `oneof`_ ``_filter``.
+        max_results (int):
+            The maximum number of results per page that should be
+            returned. If the number of available results is larger than
+            ``maxResults``, Compute Engine returns a ``nextPageToken``
+            that can be used to get the next page of results in
+            subsequent list requests. Acceptable values are ``0`` to
+            ``500``, inclusive. (Default: ``500``)
+
+            This field is a member of `oneof`_ ``_max_results``.
+        order_by (str):
+            Sorts list results by a certain order. By default, results
+            are returned in alphanumerical order based on the resource
+            name.
+
+            You can also sort results in descending order based on the
+            creation timestamp using
+            ``orderBy="creationTimestamp desc"``. This sorts results
+            based on the ``creationTimestamp`` field in reverse
+            chronological order (newest result first). Use this to sort
+            resources like operations so that the newest operation is
+            returned first.
+
+            Currently, only sorting by ``name`` or
+            ``creationTimestamp desc`` is supported.
+
+            This field is a member of `oneof`_ ``_order_by``.
+        organization (str):
+            Organization ID for this request.
+        page_token (str):
+            Specifies a page token to use. Set ``pageToken`` to the
+            ``nextPageToken`` returned by a previous list request to get
+            the next page of results.
+
+            This field is a member of `oneof`_ ``_page_token``.
+        zone (str):
+            Name of the zone for this request.
+    """
+
+    filter: str = proto.Field(
+        proto.STRING,
+        number=336120696,
+        optional=True,
+    )
+    max_results: int = proto.Field(
+        proto.UINT32,
+        number=54715419,
+        optional=True,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=160562920,
+        optional=True,
+    )
+    organization: str = proto.Field(
+        proto.STRING,
+        number=105180467,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=19994697,
+        optional=True,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
     )
 
 
@@ -100792,6 +103040,976 @@ class ListUsableSubnetworksRequest(proto.Message):
     )
 
 
+class ListVmExtensionsFolderGlobalVmExtensionPoliciesRequest(proto.Message):
+    r"""A request message for
+    FolderGlobalVmExtensionPolicies.ListVmExtensions. See the method
+    description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        filter (str):
+            A filter expression that filters resources listed in the
+            response. Most Compute resources support two types of filter
+            expressions: expressions that support regular expressions
+            and expressions that follow API improvement proposal
+            AIP-160. These two types of filter expressions cannot be
+            mixed in one request.
+
+            If you want to use AIP-160, your expression must specify the
+            field name, an operator, and the value that you want to use
+            for filtering. The value must be a string, a number, or a
+            boolean. The operator must be either ``=``, ``!=``, ``>``,
+            ``<``, ``<=``, ``>=`` or ``:``.
+
+            For example, if you are filtering Compute Engine instances,
+            you can exclude instances named ``example-instance`` by
+            specifying ``name != example-instance``.
+
+            The ``:*`` comparison can be used to test whether a key has
+            been defined. For example, to find all objects with
+            ``owner`` label use:
+
+            ::
+
+               labels.owner:*
+
+            You can also filter nested fields. For example, you could
+            specify ``scheduling.automaticRestart = false`` to include
+            instances only if they are not scheduled for automatic
+            restarts. You can use filtering on nested fields to filter
+            based onresource labels.
+
+            To filter on multiple expressions, provide each separate
+            expression within parentheses. For example:
+
+            ::
+
+               (scheduling.automaticRestart = true)
+               (cpuPlatform = "Intel Skylake")
+
+            By default, each expression is an ``AND`` expression.
+            However, you can include ``AND`` and ``OR`` expressions
+            explicitly. For example:
+
+            ::
+
+               (cpuPlatform = "Intel Skylake") OR
+               (cpuPlatform = "Intel Broadwell") AND
+               (scheduling.automaticRestart = true)
+
+            If you want to use a regular expression, use the ``eq``
+            (equal) or ``ne`` (not equal) operator against a single
+            un-parenthesized expression with or without quotes or
+            against multiple parenthesized expressions. Examples:
+
+            ``fieldname eq unquoted literal``
+            ``fieldname eq 'single quoted literal'``
+            ``fieldname eq "double quoted literal"``
+            ``(fieldname1 eq literal) (fieldname2 ne "literal")``
+
+            The literal value is interpreted as a regular expression
+            using GoogleRE2 library syntax. The literal value must match
+            the entire field.
+
+            For example, to filter for instances that do not end with
+            name "instance", you would use ``name ne .*instance``.
+
+            You cannot combine constraints on multiple fields using
+            regular expressions.
+
+            This field is a member of `oneof`_ ``_filter``.
+        folder (str):
+            Required. Folder ID for this request.
+        max_results (int):
+            The maximum number of results per page that should be
+            returned. If the number of available results is larger than
+            ``maxResults``, Compute Engine returns a ``nextPageToken``
+            that can be used to get the next page of results in
+            subsequent list requests. Acceptable values are ``0`` to
+            ``500``, inclusive. (Default: ``500``)
+
+            This field is a member of `oneof`_ ``_max_results``.
+        order_by (str):
+            Sorts list results by a certain order. By default, results
+            are returned in alphanumerical order based on the resource
+            name.
+
+            You can also sort results in descending order based on the
+            creation timestamp using
+            ``orderBy="creationTimestamp desc"``. This sorts results
+            based on the ``creationTimestamp`` field in reverse
+            chronological order (newest result first). Use this to sort
+            resources like operations so that the newest operation is
+            returned first.
+
+            Currently, only sorting by ``name`` or
+            ``creationTimestamp desc`` is supported.
+
+            This field is a member of `oneof`_ ``_order_by``.
+        page_token (str):
+            Specifies a page token to use. Set ``pageToken`` to the
+            ``nextPageToken`` returned by a previous list request to get
+            the next page of results.
+
+            This field is a member of `oneof`_ ``_page_token``.
+    """
+
+    filter: str = proto.Field(
+        proto.STRING,
+        number=336120696,
+        optional=True,
+    )
+    folder: str = proto.Field(
+        proto.STRING,
+        number=341646446,
+    )
+    max_results: int = proto.Field(
+        proto.UINT32,
+        number=54715419,
+        optional=True,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=160562920,
+        optional=True,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=19994697,
+        optional=True,
+    )
+
+
+class ListVmExtensionsFolderZoneVmExtensionPoliciesRequest(proto.Message):
+    r"""A request message for
+    FolderZoneVmExtensionPolicies.ListVmExtensions. See the method
+    description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        filter (str):
+            A filter expression that filters resources listed in the
+            response. Most Compute resources support two types of filter
+            expressions: expressions that support regular expressions
+            and expressions that follow API improvement proposal
+            AIP-160. These two types of filter expressions cannot be
+            mixed in one request.
+
+            If you want to use AIP-160, your expression must specify the
+            field name, an operator, and the value that you want to use
+            for filtering. The value must be a string, a number, or a
+            boolean. The operator must be either ``=``, ``!=``, ``>``,
+            ``<``, ``<=``, ``>=`` or ``:``.
+
+            For example, if you are filtering Compute Engine instances,
+            you can exclude instances named ``example-instance`` by
+            specifying ``name != example-instance``.
+
+            The ``:*`` comparison can be used to test whether a key has
+            been defined. For example, to find all objects with
+            ``owner`` label use:
+
+            ::
+
+               labels.owner:*
+
+            You can also filter nested fields. For example, you could
+            specify ``scheduling.automaticRestart = false`` to include
+            instances only if they are not scheduled for automatic
+            restarts. You can use filtering on nested fields to filter
+            based onresource labels.
+
+            To filter on multiple expressions, provide each separate
+            expression within parentheses. For example:
+
+            ::
+
+               (scheduling.automaticRestart = true)
+               (cpuPlatform = "Intel Skylake")
+
+            By default, each expression is an ``AND`` expression.
+            However, you can include ``AND`` and ``OR`` expressions
+            explicitly. For example:
+
+            ::
+
+               (cpuPlatform = "Intel Skylake") OR
+               (cpuPlatform = "Intel Broadwell") AND
+               (scheduling.automaticRestart = true)
+
+            If you want to use a regular expression, use the ``eq``
+            (equal) or ``ne`` (not equal) operator against a single
+            un-parenthesized expression with or without quotes or
+            against multiple parenthesized expressions. Examples:
+
+            ``fieldname eq unquoted literal``
+            ``fieldname eq 'single quoted literal'``
+            ``fieldname eq "double quoted literal"``
+            ``(fieldname1 eq literal) (fieldname2 ne "literal")``
+
+            The literal value is interpreted as a regular expression
+            using GoogleRE2 library syntax. The literal value must match
+            the entire field.
+
+            For example, to filter for instances that do not end with
+            name "instance", you would use ``name ne .*instance``.
+
+            You cannot combine constraints on multiple fields using
+            regular expressions.
+
+            This field is a member of `oneof`_ ``_filter``.
+        folder (str):
+            Folder ID for this request.
+        max_results (int):
+            The maximum number of results per page that should be
+            returned. If the number of available results is larger than
+            ``maxResults``, Compute Engine returns a ``nextPageToken``
+            that can be used to get the next page of results in
+            subsequent list requests. Acceptable values are ``0`` to
+            ``500``, inclusive. (Default: ``500``)
+
+            This field is a member of `oneof`_ ``_max_results``.
+        order_by (str):
+            Sorts list results by a certain order. By default, results
+            are returned in alphanumerical order based on the resource
+            name.
+
+            You can also sort results in descending order based on the
+            creation timestamp using
+            ``orderBy="creationTimestamp desc"``. This sorts results
+            based on the ``creationTimestamp`` field in reverse
+            chronological order (newest result first). Use this to sort
+            resources like operations so that the newest operation is
+            returned first.
+
+            Currently, only sorting by ``name`` or
+            ``creationTimestamp desc`` is supported.
+
+            This field is a member of `oneof`_ ``_order_by``.
+        page_token (str):
+            Specifies a page token to use. Set ``pageToken`` to the
+            ``nextPageToken`` returned by a previous list request to get
+            the next page of results.
+
+            This field is a member of `oneof`_ ``_page_token``.
+        zone (str):
+            Name of the zone for this request.
+    """
+
+    filter: str = proto.Field(
+        proto.STRING,
+        number=336120696,
+        optional=True,
+    )
+    folder: str = proto.Field(
+        proto.STRING,
+        number=341646446,
+    )
+    max_results: int = proto.Field(
+        proto.UINT32,
+        number=54715419,
+        optional=True,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=160562920,
+        optional=True,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=19994697,
+        optional=True,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
+    )
+
+
+class ListVmExtensionsGlobalVmExtensionPoliciesRequest(proto.Message):
+    r"""A request message for
+    GlobalVmExtensionPolicies.ListVmExtensions. See the method
+    description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        filter (str):
+            A filter expression that filters resources listed in the
+            response. Most Compute resources support two types of filter
+            expressions: expressions that support regular expressions
+            and expressions that follow API improvement proposal
+            AIP-160. These two types of filter expressions cannot be
+            mixed in one request.
+
+            If you want to use AIP-160, your expression must specify the
+            field name, an operator, and the value that you want to use
+            for filtering. The value must be a string, a number, or a
+            boolean. The operator must be either ``=``, ``!=``, ``>``,
+            ``<``, ``<=``, ``>=`` or ``:``.
+
+            For example, if you are filtering Compute Engine instances,
+            you can exclude instances named ``example-instance`` by
+            specifying ``name != example-instance``.
+
+            The ``:*`` comparison can be used to test whether a key has
+            been defined. For example, to find all objects with
+            ``owner`` label use:
+
+            ::
+
+               labels.owner:*
+
+            You can also filter nested fields. For example, you could
+            specify ``scheduling.automaticRestart = false`` to include
+            instances only if they are not scheduled for automatic
+            restarts. You can use filtering on nested fields to filter
+            based onresource labels.
+
+            To filter on multiple expressions, provide each separate
+            expression within parentheses. For example:
+
+            ::
+
+               (scheduling.automaticRestart = true)
+               (cpuPlatform = "Intel Skylake")
+
+            By default, each expression is an ``AND`` expression.
+            However, you can include ``AND`` and ``OR`` expressions
+            explicitly. For example:
+
+            ::
+
+               (cpuPlatform = "Intel Skylake") OR
+               (cpuPlatform = "Intel Broadwell") AND
+               (scheduling.automaticRestart = true)
+
+            If you want to use a regular expression, use the ``eq``
+            (equal) or ``ne`` (not equal) operator against a single
+            un-parenthesized expression with or without quotes or
+            against multiple parenthesized expressions. Examples:
+
+            ``fieldname eq unquoted literal``
+            ``fieldname eq 'single quoted literal'``
+            ``fieldname eq "double quoted literal"``
+            ``(fieldname1 eq literal) (fieldname2 ne "literal")``
+
+            The literal value is interpreted as a regular expression
+            using GoogleRE2 library syntax. The literal value must match
+            the entire field.
+
+            For example, to filter for instances that do not end with
+            name "instance", you would use ``name ne .*instance``.
+
+            You cannot combine constraints on multiple fields using
+            regular expressions.
+
+            This field is a member of `oneof`_ ``_filter``.
+        max_results (int):
+            The maximum number of results per page that should be
+            returned. If the number of available results is larger than
+            ``maxResults``, Compute Engine returns a ``nextPageToken``
+            that can be used to get the next page of results in
+            subsequent list requests. Acceptable values are ``0`` to
+            ``500``, inclusive. (Default: ``500``)
+
+            This field is a member of `oneof`_ ``_max_results``.
+        order_by (str):
+            Sorts list results by a certain order. By default, results
+            are returned in alphanumerical order based on the resource
+            name.
+
+            You can also sort results in descending order based on the
+            creation timestamp using
+            ``orderBy="creationTimestamp desc"``. This sorts results
+            based on the ``creationTimestamp`` field in reverse
+            chronological order (newest result first). Use this to sort
+            resources like operations so that the newest operation is
+            returned first.
+
+            Currently, only sorting by ``name`` or
+            ``creationTimestamp desc`` is supported.
+
+            This field is a member of `oneof`_ ``_order_by``.
+        page_token (str):
+            Specifies a page token to use. Set ``pageToken`` to the
+            ``nextPageToken`` returned by a previous list request to get
+            the next page of results.
+
+            This field is a member of `oneof`_ ``_page_token``.
+        project (str):
+            Required. Project ID for this request.
+    """
+
+    filter: str = proto.Field(
+        proto.STRING,
+        number=336120696,
+        optional=True,
+    )
+    max_results: int = proto.Field(
+        proto.UINT32,
+        number=54715419,
+        optional=True,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=160562920,
+        optional=True,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=19994697,
+        optional=True,
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=227560217,
+    )
+
+
+class ListVmExtensionsOrganizationGlobalVmExtensionPoliciesRequest(proto.Message):
+    r"""A request message for
+    OrganizationGlobalVmExtensionPolicies.ListVmExtensions. See the
+    method description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        filter (str):
+            A filter expression that filters resources listed in the
+            response. Most Compute resources support two types of filter
+            expressions: expressions that support regular expressions
+            and expressions that follow API improvement proposal
+            AIP-160. These two types of filter expressions cannot be
+            mixed in one request.
+
+            If you want to use AIP-160, your expression must specify the
+            field name, an operator, and the value that you want to use
+            for filtering. The value must be a string, a number, or a
+            boolean. The operator must be either ``=``, ``!=``, ``>``,
+            ``<``, ``<=``, ``>=`` or ``:``.
+
+            For example, if you are filtering Compute Engine instances,
+            you can exclude instances named ``example-instance`` by
+            specifying ``name != example-instance``.
+
+            The ``:*`` comparison can be used to test whether a key has
+            been defined. For example, to find all objects with
+            ``owner`` label use:
+
+            ::
+
+               labels.owner:*
+
+            You can also filter nested fields. For example, you could
+            specify ``scheduling.automaticRestart = false`` to include
+            instances only if they are not scheduled for automatic
+            restarts. You can use filtering on nested fields to filter
+            based onresource labels.
+
+            To filter on multiple expressions, provide each separate
+            expression within parentheses. For example:
+
+            ::
+
+               (scheduling.automaticRestart = true)
+               (cpuPlatform = "Intel Skylake")
+
+            By default, each expression is an ``AND`` expression.
+            However, you can include ``AND`` and ``OR`` expressions
+            explicitly. For example:
+
+            ::
+
+               (cpuPlatform = "Intel Skylake") OR
+               (cpuPlatform = "Intel Broadwell") AND
+               (scheduling.automaticRestart = true)
+
+            If you want to use a regular expression, use the ``eq``
+            (equal) or ``ne`` (not equal) operator against a single
+            un-parenthesized expression with or without quotes or
+            against multiple parenthesized expressions. Examples:
+
+            ``fieldname eq unquoted literal``
+            ``fieldname eq 'single quoted literal'``
+            ``fieldname eq "double quoted literal"``
+            ``(fieldname1 eq literal) (fieldname2 ne "literal")``
+
+            The literal value is interpreted as a regular expression
+            using GoogleRE2 library syntax. The literal value must match
+            the entire field.
+
+            For example, to filter for instances that do not end with
+            name "instance", you would use ``name ne .*instance``.
+
+            You cannot combine constraints on multiple fields using
+            regular expressions.
+
+            This field is a member of `oneof`_ ``_filter``.
+        max_results (int):
+            The maximum number of results per page that should be
+            returned. If the number of available results is larger than
+            ``maxResults``, Compute Engine returns a ``nextPageToken``
+            that can be used to get the next page of results in
+            subsequent list requests. Acceptable values are ``0`` to
+            ``500``, inclusive. (Default: ``500``)
+
+            This field is a member of `oneof`_ ``_max_results``.
+        order_by (str):
+            Sorts list results by a certain order. By default, results
+            are returned in alphanumerical order based on the resource
+            name.
+
+            You can also sort results in descending order based on the
+            creation timestamp using
+            ``orderBy="creationTimestamp desc"``. This sorts results
+            based on the ``creationTimestamp`` field in reverse
+            chronological order (newest result first). Use this to sort
+            resources like operations so that the newest operation is
+            returned first.
+
+            Currently, only sorting by ``name`` or
+            ``creationTimestamp desc`` is supported.
+
+            This field is a member of `oneof`_ ``_order_by``.
+        organization (str):
+            Required. Organization ID for this request.
+        page_token (str):
+            Specifies a page token to use. Set ``pageToken`` to the
+            ``nextPageToken`` returned by a previous list request to get
+            the next page of results.
+
+            This field is a member of `oneof`_ ``_page_token``.
+    """
+
+    filter: str = proto.Field(
+        proto.STRING,
+        number=336120696,
+        optional=True,
+    )
+    max_results: int = proto.Field(
+        proto.UINT32,
+        number=54715419,
+        optional=True,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=160562920,
+        optional=True,
+    )
+    organization: str = proto.Field(
+        proto.STRING,
+        number=105180467,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=19994697,
+        optional=True,
+    )
+
+
+class ListVmExtensionsOrganizationZoneVmExtensionPoliciesRequest(proto.Message):
+    r"""A request message for
+    OrganizationZoneVmExtensionPolicies.ListVmExtensions. See the
+    method description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        filter (str):
+            A filter expression that filters resources listed in the
+            response. Most Compute resources support two types of filter
+            expressions: expressions that support regular expressions
+            and expressions that follow API improvement proposal
+            AIP-160. These two types of filter expressions cannot be
+            mixed in one request.
+
+            If you want to use AIP-160, your expression must specify the
+            field name, an operator, and the value that you want to use
+            for filtering. The value must be a string, a number, or a
+            boolean. The operator must be either ``=``, ``!=``, ``>``,
+            ``<``, ``<=``, ``>=`` or ``:``.
+
+            For example, if you are filtering Compute Engine instances,
+            you can exclude instances named ``example-instance`` by
+            specifying ``name != example-instance``.
+
+            The ``:*`` comparison can be used to test whether a key has
+            been defined. For example, to find all objects with
+            ``owner`` label use:
+
+            ::
+
+               labels.owner:*
+
+            You can also filter nested fields. For example, you could
+            specify ``scheduling.automaticRestart = false`` to include
+            instances only if they are not scheduled for automatic
+            restarts. You can use filtering on nested fields to filter
+            based onresource labels.
+
+            To filter on multiple expressions, provide each separate
+            expression within parentheses. For example:
+
+            ::
+
+               (scheduling.automaticRestart = true)
+               (cpuPlatform = "Intel Skylake")
+
+            By default, each expression is an ``AND`` expression.
+            However, you can include ``AND`` and ``OR`` expressions
+            explicitly. For example:
+
+            ::
+
+               (cpuPlatform = "Intel Skylake") OR
+               (cpuPlatform = "Intel Broadwell") AND
+               (scheduling.automaticRestart = true)
+
+            If you want to use a regular expression, use the ``eq``
+            (equal) or ``ne`` (not equal) operator against a single
+            un-parenthesized expression with or without quotes or
+            against multiple parenthesized expressions. Examples:
+
+            ``fieldname eq unquoted literal``
+            ``fieldname eq 'single quoted literal'``
+            ``fieldname eq "double quoted literal"``
+            ``(fieldname1 eq literal) (fieldname2 ne "literal")``
+
+            The literal value is interpreted as a regular expression
+            using GoogleRE2 library syntax. The literal value must match
+            the entire field.
+
+            For example, to filter for instances that do not end with
+            name "instance", you would use ``name ne .*instance``.
+
+            You cannot combine constraints on multiple fields using
+            regular expressions.
+
+            This field is a member of `oneof`_ ``_filter``.
+        max_results (int):
+            The maximum number of results per page that should be
+            returned. If the number of available results is larger than
+            ``maxResults``, Compute Engine returns a ``nextPageToken``
+            that can be used to get the next page of results in
+            subsequent list requests. Acceptable values are ``0`` to
+            ``500``, inclusive. (Default: ``500``)
+
+            This field is a member of `oneof`_ ``_max_results``.
+        order_by (str):
+            Sorts list results by a certain order. By default, results
+            are returned in alphanumerical order based on the resource
+            name.
+
+            You can also sort results in descending order based on the
+            creation timestamp using
+            ``orderBy="creationTimestamp desc"``. This sorts results
+            based on the ``creationTimestamp`` field in reverse
+            chronological order (newest result first). Use this to sort
+            resources like operations so that the newest operation is
+            returned first.
+
+            Currently, only sorting by ``name`` or
+            ``creationTimestamp desc`` is supported.
+
+            This field is a member of `oneof`_ ``_order_by``.
+        organization (str):
+            Organization ID for this request.
+        page_token (str):
+            Specifies a page token to use. Set ``pageToken`` to the
+            ``nextPageToken`` returned by a previous list request to get
+            the next page of results.
+
+            This field is a member of `oneof`_ ``_page_token``.
+        zone (str):
+            Name of the zone for this request.
+    """
+
+    filter: str = proto.Field(
+        proto.STRING,
+        number=336120696,
+        optional=True,
+    )
+    max_results: int = proto.Field(
+        proto.UINT32,
+        number=54715419,
+        optional=True,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=160562920,
+        optional=True,
+    )
+    organization: str = proto.Field(
+        proto.STRING,
+        number=105180467,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=19994697,
+        optional=True,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
+    )
+
+
+class ListVmExtensionsResponse(proto.Message):
+    r"""
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        etag (str):
+            Output only. Fingerprint of this resource. A
+            hash of the contents stored in this object. This
+            field is used in optimistic locking. This field
+            will be ignored when inserting a
+            VmExtensionPolicy. An up-to-date fingerprint
+            must be provided in order to update the
+            VmExtensionPolicy.
+
+            To see the latest value of the fingerprint, make
+            a get() request to retrieve a VmExtensionPolicy.
+
+            This field is a member of `oneof`_ ``_etag``.
+        id (str):
+            Output only. Unique identifier for the
+            resource; defined by the server.
+
+            This field is a member of `oneof`_ ``_id``.
+        items (MutableSequence[google.cloud.compute_v1.types.VmExtension]):
+            Output only. A list of VM extensions.
+        kind (str):
+            Output only. Type of resource.
+
+            This field is a member of `oneof`_ ``_kind``.
+        next_page_token (str):
+            Output only. This token allows you to get the
+            next page of results for list requests. If the
+            number of results is larger thanmaxResults, use
+            the nextPageToken as a value for the query
+            parameter pageToken in the next list request.
+            Subsequent list requests will have their own
+            nextPageToken to continue paging through the
+            results.
+
+            This field is a member of `oneof`_ ``_next_page_token``.
+        self_link (str):
+            Output only. Server-defined URL for this
+            resource.
+
+            This field is a member of `oneof`_ ``_self_link``.
+        unreachables (MutableSequence[str]):
+            Output only. Unreachable resources.
+        warning (google.cloud.compute_v1.types.Warning):
+            Output only. Informational warning message.
+
+            This field is a member of `oneof`_ ``_warning``.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    etag: str = proto.Field(
+        proto.STRING,
+        number=3123477,
+        optional=True,
+    )
+    id: str = proto.Field(
+        proto.STRING,
+        number=3355,
+        optional=True,
+    )
+    items: MutableSequence["VmExtension"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=100526016,
+        message="VmExtension",
+    )
+    kind: str = proto.Field(
+        proto.STRING,
+        number=3292052,
+        optional=True,
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=79797525,
+        optional=True,
+    )
+    self_link: str = proto.Field(
+        proto.STRING,
+        number=456214797,
+        optional=True,
+    )
+    unreachables: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=243372063,
+    )
+    warning: "Warning" = proto.Field(
+        proto.MESSAGE,
+        number=50704284,
+        optional=True,
+        message="Warning",
+    )
+
+
+class ListVmExtensionsZoneVmExtensionPoliciesRequest(proto.Message):
+    r"""A request message for
+    ZoneVmExtensionPolicies.ListVmExtensions. See the method
+    description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        filter (str):
+            A filter expression that filters resources listed in the
+            response. Most Compute resources support two types of filter
+            expressions: expressions that support regular expressions
+            and expressions that follow API improvement proposal
+            AIP-160. These two types of filter expressions cannot be
+            mixed in one request.
+
+            If you want to use AIP-160, your expression must specify the
+            field name, an operator, and the value that you want to use
+            for filtering. The value must be a string, a number, or a
+            boolean. The operator must be either ``=``, ``!=``, ``>``,
+            ``<``, ``<=``, ``>=`` or ``:``.
+
+            For example, if you are filtering Compute Engine instances,
+            you can exclude instances named ``example-instance`` by
+            specifying ``name != example-instance``.
+
+            The ``:*`` comparison can be used to test whether a key has
+            been defined. For example, to find all objects with
+            ``owner`` label use:
+
+            ::
+
+               labels.owner:*
+
+            You can also filter nested fields. For example, you could
+            specify ``scheduling.automaticRestart = false`` to include
+            instances only if they are not scheduled for automatic
+            restarts. You can use filtering on nested fields to filter
+            based onresource labels.
+
+            To filter on multiple expressions, provide each separate
+            expression within parentheses. For example:
+
+            ::
+
+               (scheduling.automaticRestart = true)
+               (cpuPlatform = "Intel Skylake")
+
+            By default, each expression is an ``AND`` expression.
+            However, you can include ``AND`` and ``OR`` expressions
+            explicitly. For example:
+
+            ::
+
+               (cpuPlatform = "Intel Skylake") OR
+               (cpuPlatform = "Intel Broadwell") AND
+               (scheduling.automaticRestart = true)
+
+            If you want to use a regular expression, use the ``eq``
+            (equal) or ``ne`` (not equal) operator against a single
+            un-parenthesized expression with or without quotes or
+            against multiple parenthesized expressions. Examples:
+
+            ``fieldname eq unquoted literal``
+            ``fieldname eq 'single quoted literal'``
+            ``fieldname eq "double quoted literal"``
+            ``(fieldname1 eq literal) (fieldname2 ne "literal")``
+
+            The literal value is interpreted as a regular expression
+            using GoogleRE2 library syntax. The literal value must match
+            the entire field.
+
+            For example, to filter for instances that do not end with
+            name "instance", you would use ``name ne .*instance``.
+
+            You cannot combine constraints on multiple fields using
+            regular expressions.
+
+            This field is a member of `oneof`_ ``_filter``.
+        max_results (int):
+            The maximum number of results per page that should be
+            returned. If the number of available results is larger than
+            ``maxResults``, Compute Engine returns a ``nextPageToken``
+            that can be used to get the next page of results in
+            subsequent list requests. Acceptable values are ``0`` to
+            ``500``, inclusive. (Default: ``500``)
+
+            This field is a member of `oneof`_ ``_max_results``.
+        order_by (str):
+            Sorts list results by a certain order. By default, results
+            are returned in alphanumerical order based on the resource
+            name.
+
+            You can also sort results in descending order based on the
+            creation timestamp using
+            ``orderBy="creationTimestamp desc"``. This sorts results
+            based on the ``creationTimestamp`` field in reverse
+            chronological order (newest result first). Use this to sort
+            resources like operations so that the newest operation is
+            returned first.
+
+            Currently, only sorting by ``name`` or
+            ``creationTimestamp desc`` is supported.
+
+            This field is a member of `oneof`_ ``_order_by``.
+        page_token (str):
+            Specifies a page token to use. Set ``pageToken`` to the
+            ``nextPageToken`` returned by a previous list request to get
+            the next page of results.
+
+            This field is a member of `oneof`_ ``_page_token``.
+        project (str):
+            Required. Project ID for this request.
+        zone (str):
+            Name of the zone for this request.
+    """
+
+    filter: str = proto.Field(
+        proto.STRING,
+        number=336120696,
+        optional=True,
+    )
+    max_results: int = proto.Field(
+        proto.UINT32,
+        number=54715419,
+        optional=True,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=160562920,
+        optional=True,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=19994697,
+        optional=True,
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=227560217,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
+    )
+
+
 class ListVpnGatewaysRequest(proto.Message):
     r"""A request message for VpnGateways.List. See the method
     description for details.
@@ -101383,6 +104601,153 @@ class ListXpnHostsProjectsRequest(proto.Message):
     )
 
 
+class ListZoneFolderOperationsRequest(proto.Message):
+    r"""A request message for ZoneFolderOperations.List. See the
+    method description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        filter (str):
+            A filter expression that filters resources listed in the
+            response. Most Compute resources support two types of filter
+            expressions: expressions that support regular expressions
+            and expressions that follow API improvement proposal
+            AIP-160. These two types of filter expressions cannot be
+            mixed in one request.
+
+            If you want to use AIP-160, your expression must specify the
+            field name, an operator, and the value that you want to use
+            for filtering. The value must be a string, a number, or a
+            boolean. The operator must be either ``=``, ``!=``, ``>``,
+            ``<``, ``<=``, ``>=`` or ``:``.
+
+            For example, if you are filtering Compute Engine instances,
+            you can exclude instances named ``example-instance`` by
+            specifying ``name != example-instance``.
+
+            The ``:*`` comparison can be used to test whether a key has
+            been defined. For example, to find all objects with
+            ``owner`` label use:
+
+            ::
+
+               labels.owner:*
+
+            You can also filter nested fields. For example, you could
+            specify ``scheduling.automaticRestart = false`` to include
+            instances only if they are not scheduled for automatic
+            restarts. You can use filtering on nested fields to filter
+            based onresource labels.
+
+            To filter on multiple expressions, provide each separate
+            expression within parentheses. For example:
+
+            ::
+
+               (scheduling.automaticRestart = true)
+               (cpuPlatform = "Intel Skylake")
+
+            By default, each expression is an ``AND`` expression.
+            However, you can include ``AND`` and ``OR`` expressions
+            explicitly. For example:
+
+            ::
+
+               (cpuPlatform = "Intel Skylake") OR
+               (cpuPlatform = "Intel Broadwell") AND
+               (scheduling.automaticRestart = true)
+
+            If you want to use a regular expression, use the ``eq``
+            (equal) or ``ne`` (not equal) operator against a single
+            un-parenthesized expression with or without quotes or
+            against multiple parenthesized expressions. Examples:
+
+            ``fieldname eq unquoted literal``
+            ``fieldname eq 'single quoted literal'``
+            ``fieldname eq "double quoted literal"``
+            ``(fieldname1 eq literal) (fieldname2 ne "literal")``
+
+            The literal value is interpreted as a regular expression
+            using GoogleRE2 library syntax. The literal value must match
+            the entire field.
+
+            For example, to filter for instances that do not end with
+            name "instance", you would use ``name ne .*instance``.
+
+            You cannot combine constraints on multiple fields using
+            regular expressions.
+
+            This field is a member of `oneof`_ ``_filter``.
+        folder (str):
+            Folder ID for this request.
+        max_results (int):
+            The maximum number of results per page that should be
+            returned. If the number of available results is larger than
+            ``maxResults``, Compute Engine returns a ``nextPageToken``
+            that can be used to get the next page of results in
+            subsequent list requests. Acceptable values are ``0`` to
+            ``500``, inclusive. (Default: ``500``)
+
+            This field is a member of `oneof`_ ``_max_results``.
+        order_by (str):
+            Sorts list results by a certain order. By default, results
+            are returned in alphanumerical order based on the resource
+            name.
+
+            You can also sort results in descending order based on the
+            creation timestamp using
+            ``orderBy="creationTimestamp desc"``. This sorts results
+            based on the ``creationTimestamp`` field in reverse
+            chronological order (newest result first). Use this to sort
+            resources like operations so that the newest operation is
+            returned first.
+
+            Currently, only sorting by ``name`` or
+            ``creationTimestamp desc`` is supported.
+
+            This field is a member of `oneof`_ ``_order_by``.
+        page_token (str):
+            Specifies a page token to use. Set ``pageToken`` to the
+            ``nextPageToken`` returned by a previous list request to get
+            the next page of results.
+
+            This field is a member of `oneof`_ ``_page_token``.
+        zone (str):
+            Name of the zone for request.
+    """
+
+    filter: str = proto.Field(
+        proto.STRING,
+        number=336120696,
+        optional=True,
+    )
+    folder: str = proto.Field(
+        proto.STRING,
+        number=341646446,
+    )
+    max_results: int = proto.Field(
+        proto.UINT32,
+        number=54715419,
+        optional=True,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=160562920,
+        optional=True,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=19994697,
+        optional=True,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
+    )
+
+
 class ListZoneOperationsRequest(proto.Message):
     r"""A request message for ZoneOperations.List. See the method
     description for details.
@@ -101523,6 +104888,153 @@ class ListZoneOperationsRequest(proto.Message):
     project: str = proto.Field(
         proto.STRING,
         number=227560217,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
+    )
+
+
+class ListZoneOrganizationOperationsRequest(proto.Message):
+    r"""A request message for ZoneOrganizationOperations.List. See
+    the method description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        filter (str):
+            A filter expression that filters resources listed in the
+            response. Most Compute resources support two types of filter
+            expressions: expressions that support regular expressions
+            and expressions that follow API improvement proposal
+            AIP-160. These two types of filter expressions cannot be
+            mixed in one request.
+
+            If you want to use AIP-160, your expression must specify the
+            field name, an operator, and the value that you want to use
+            for filtering. The value must be a string, a number, or a
+            boolean. The operator must be either ``=``, ``!=``, ``>``,
+            ``<``, ``<=``, ``>=`` or ``:``.
+
+            For example, if you are filtering Compute Engine instances,
+            you can exclude instances named ``example-instance`` by
+            specifying ``name != example-instance``.
+
+            The ``:*`` comparison can be used to test whether a key has
+            been defined. For example, to find all objects with
+            ``owner`` label use:
+
+            ::
+
+               labels.owner:*
+
+            You can also filter nested fields. For example, you could
+            specify ``scheduling.automaticRestart = false`` to include
+            instances only if they are not scheduled for automatic
+            restarts. You can use filtering on nested fields to filter
+            based onresource labels.
+
+            To filter on multiple expressions, provide each separate
+            expression within parentheses. For example:
+
+            ::
+
+               (scheduling.automaticRestart = true)
+               (cpuPlatform = "Intel Skylake")
+
+            By default, each expression is an ``AND`` expression.
+            However, you can include ``AND`` and ``OR`` expressions
+            explicitly. For example:
+
+            ::
+
+               (cpuPlatform = "Intel Skylake") OR
+               (cpuPlatform = "Intel Broadwell") AND
+               (scheduling.automaticRestart = true)
+
+            If you want to use a regular expression, use the ``eq``
+            (equal) or ``ne`` (not equal) operator against a single
+            un-parenthesized expression with or without quotes or
+            against multiple parenthesized expressions. Examples:
+
+            ``fieldname eq unquoted literal``
+            ``fieldname eq 'single quoted literal'``
+            ``fieldname eq "double quoted literal"``
+            ``(fieldname1 eq literal) (fieldname2 ne "literal")``
+
+            The literal value is interpreted as a regular expression
+            using GoogleRE2 library syntax. The literal value must match
+            the entire field.
+
+            For example, to filter for instances that do not end with
+            name "instance", you would use ``name ne .*instance``.
+
+            You cannot combine constraints on multiple fields using
+            regular expressions.
+
+            This field is a member of `oneof`_ ``_filter``.
+        max_results (int):
+            The maximum number of results per page that should be
+            returned. If the number of available results is larger than
+            ``maxResults``, Compute Engine returns a ``nextPageToken``
+            that can be used to get the next page of results in
+            subsequent list requests. Acceptable values are ``0`` to
+            ``500``, inclusive. (Default: ``500``)
+
+            This field is a member of `oneof`_ ``_max_results``.
+        order_by (str):
+            Sorts list results by a certain order. By default, results
+            are returned in alphanumerical order based on the resource
+            name.
+
+            You can also sort results in descending order based on the
+            creation timestamp using
+            ``orderBy="creationTimestamp desc"``. This sorts results
+            based on the ``creationTimestamp`` field in reverse
+            chronological order (newest result first). Use this to sort
+            resources like operations so that the newest operation is
+            returned first.
+
+            Currently, only sorting by ``name`` or
+            ``creationTimestamp desc`` is supported.
+
+            This field is a member of `oneof`_ ``_order_by``.
+        organization (str):
+            Organization ID for this request.
+        page_token (str):
+            Specifies a page token to use. Set ``pageToken`` to the
+            ``nextPageToken`` returned by a previous list request to get
+            the next page of results.
+
+            This field is a member of `oneof`_ ``_page_token``.
+        zone (str):
+            Name of the zone for request.
+    """
+
+    filter: str = proto.Field(
+        proto.STRING,
+        number=336120696,
+        optional=True,
+    )
+    max_results: int = proto.Field(
+        proto.UINT32,
+        number=54715419,
+        optional=True,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=160562920,
+        optional=True,
+    )
+    organization: str = proto.Field(
+        proto.STRING,
+        number=105180467,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=19994697,
+        optional=True,
     )
     zone: str = proto.Field(
         proto.STRING,
@@ -105070,6 +108582,9 @@ class NetworkAttachmentConnectedEndpoint(proto.Message):
             REJECTED (174130302):
                 The consumer prohibits traffic from the
                 producer to reach its VPC.
+            RESERVED (432241448):
+                There is no traffic flowing in this state,
+                only the address is reserved.
             STATUS_UNSPECIFIED (42133066):
                 No description available.
         """
@@ -105080,6 +108595,7 @@ class NetworkAttachmentConnectedEndpoint(proto.Message):
         NEEDS_ATTENTION = 344491452
         PENDING = 35394935
         REJECTED = 174130302
+        RESERVED = 432241448
         STATUS_UNSPECIFIED = 42133066
 
     ip_address: str = proto.Field(
@@ -109696,6 +113212,41 @@ class NetworksRequestRemovePeeringRequest(proto.Message):
     )
 
 
+class NetworksUpdateNetworkProfileRequest(proto.Message):
+    r"""
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        clear_network_profile (bool):
+            If true, clear the network profile from the
+            network.
+
+            This field is a member of `oneof`_ ``_clear_network_profile``.
+        network_profile (str):
+            A full or partial URL of the new network profile to apply to
+            this network. For example, the following are valid URLs:
+
+            ::
+
+               - https://www.googleapis.com/compute/{api_version}/projects/{project_id}/global/networkProfiles/{network_profile_name}
+               - projects/{project_id}/global/networkProfiles/{network_profile_name}
+
+            This field is a member of `oneof`_ ``_network_profile``.
+    """
+
+    clear_network_profile: bool = proto.Field(
+        proto.BOOL,
+        number=33836710,
+        optional=True,
+    )
+    network_profile: str = proto.Field(
+        proto.STRING,
+        number=173112472,
+        optional=True,
+    )
+
+
 class NetworksUpdatePeeringRequest(proto.Message):
     r"""
 
@@ -111852,6 +115403,11 @@ class Operation(proto.Message):
             is set when the operation is created.
 
             This field is a member of `oneof`_ ``_description``.
+        details (google.cloud.compute_v1.types.OperationDetails):
+            [Output Only] Extended details about the operation's
+            execution.
+
+            This field is a member of `oneof`_ ``_details``.
         end_time (str):
             [Output Only] The time that this operation was completed.
             This value is inRFC3339 text format.
@@ -112024,6 +115580,12 @@ class Operation(proto.Message):
         proto.STRING,
         number=422937596,
         optional=True,
+    )
+    details: "OperationDetails" = proto.Field(
+        proto.MESSAGE,
+        number=483979842,
+        optional=True,
+        message="OperationDetails",
     )
     end_time: str = proto.Field(
         proto.STRING,
@@ -112253,6 +115815,34 @@ class OperationAggregatedList(proto.Message):
     )
 
 
+class OperationDetails(proto.Message):
+    r"""
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        data (MutableMapping[str, google.protobuf.struct_pb2.Value]):
+            Machine readable data from the message.
+        message (str):
+            Human or AI readable details on execution of
+            the operation.
+
+            This field is a member of `oneof`_ ``_message``.
+    """
+
+    data: MutableMapping[str, struct_pb2.Value] = proto.MapField(
+        proto.STRING,
+        proto.MESSAGE,
+        number=3076010,
+        message=struct_pb2.Value,
+    )
+    message: str = proto.Field(
+        proto.STRING,
+        number=418054151,
+        optional=True,
+    )
+
+
 class OperationList(proto.Message):
     r"""Contains a list of Operation resources.
 
@@ -112381,6 +115971,98 @@ class OrganizationSecurityPoliciesListAssociationsResponse(proto.Message):
         proto.STRING,
         number=3292052,
         optional=True,
+    )
+
+
+class OrganizationVmExtensionPolicyAggregatedListResponse(proto.Message):
+    r"""
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        etag (str):
+
+            This field is a member of `oneof`_ ``_etag``.
+        id (str):
+            [Output Only] Unique identifier for the resource; defined by
+            the server.
+
+            This field is a member of `oneof`_ ``_id``.
+        items (MutableMapping[str, google.cloud.compute_v1.types.VmExtensionPoliciesScopedList]):
+            A list of VmExtensionPoliciesScopedList
+            resources.
+        kind (str):
+            Output only. [Output Only] Type of resource.
+            Alwayscompute#OrganizationVmExtensionPolicyAggregatedList
+            for lists of VmExtensionPolicies.
+
+            This field is a member of `oneof`_ ``_kind``.
+        next_page_token (str):
+            [Output Only] This token allows you to get the next page of
+            results for list requests. If the number of results is
+            larger thanmaxResults, use the nextPageToken as a value for
+            the query parameter pageToken in the next list request.
+            Subsequent list requests will have their own nextPageToken
+            to continue paging through the results.
+
+            This field is a member of `oneof`_ ``_next_page_token``.
+        self_link (str):
+            Output only. [Output Only] Server-defined URL for this
+            resource.
+
+            This field is a member of `oneof`_ ``_self_link``.
+        unreachables (MutableSequence[str]):
+            Output only. [Output Only] Unreachable resources.
+        warning (google.cloud.compute_v1.types.Warning):
+            [Output Only] Informational warning message.
+
+            This field is a member of `oneof`_ ``_warning``.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    etag: str = proto.Field(
+        proto.STRING,
+        number=3123477,
+        optional=True,
+    )
+    id: str = proto.Field(
+        proto.STRING,
+        number=3355,
+        optional=True,
+    )
+    items: MutableMapping[str, "VmExtensionPoliciesScopedList"] = proto.MapField(
+        proto.STRING,
+        proto.MESSAGE,
+        number=100526016,
+        message="VmExtensionPoliciesScopedList",
+    )
+    kind: str = proto.Field(
+        proto.STRING,
+        number=3292052,
+        optional=True,
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=79797525,
+        optional=True,
+    )
+    self_link: str = proto.Field(
+        proto.STRING,
+        number=456214797,
+        optional=True,
+    )
+    unreachables: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=243372063,
+    )
+    warning: "Warning" = proto.Field(
+        proto.MESSAGE,
+        number=50704284,
+        optional=True,
+        message="Warning",
     )
 
 
@@ -127815,6 +131497,13 @@ class ReservationSubBlocksReportFaultyRequestFaultReason(proto.Message):
             list of possible values.
 
             This field is a member of `oneof`_ ``_behavior``.
+        component_id (str):
+            The identifier of the specific faulty
+            sub-component (e.g., NVSwitch ID). Optional. If
+            not specified, all switches in the sub-block are
+            targeted for triage.
+
+            This field is a member of `oneof`_ ``_component_id``.
         description (str):
             The description of the fault experienced with
             the subBlock.
@@ -127864,6 +131553,11 @@ class ReservationSubBlocksReportFaultyRequestFaultReason(proto.Message):
     behavior: str = proto.Field(
         proto.STRING,
         number=437170770,
+        optional=True,
+    )
+    component_id: str = proto.Field(
+        proto.STRING,
+        number=37738397,
         optional=True,
     )
     description: str = proto.Field(
@@ -136320,10 +140014,15 @@ class Scheduling(proto.Message):
 
             This field is a member of `oneof`_ ``_provisioning_model``.
         skip_guest_os_shutdown (bool):
-            Default is false and there will be 120
+            Defines whether GCE ACPI G2 Soft
+            Off signal should be skipped during shutdown
+            operation of VM.
+
+            Default is false, meaning there will be 120
             seconds between GCE ACPI G2 Soft Off and ACPI G3
-            Mechanical Off for Standard VMs and 30 seconds
-            for Spot VMs.
+            Mechanical
+            Off for Standard VMs and 30 seconds for Spot
+            VMs.
 
             This field is a member of `oneof`_ ``_skip_guest_os_shutdown``.
         termination_time (str):
@@ -147580,6 +151279,28 @@ class SslCertificateSelfManagedSslCertificate(proto.Message):
     )
 
 
+class SslCertificatesFetchEncryptionKeyResponse(proto.Message):
+    r"""Response for ``SslCertificatesService.FetchEncryptionKey`` and
+    ``RegionSslCertificatesService.FetchEncryptionKey`` methods.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        public_keyset (str):
+            The Tink public keyset serialized in JSON
+            format.
+
+            This field is a member of `oneof`_ ``_public_keyset``.
+    """
+
+    public_keyset: str = proto.Field(
+        proto.STRING,
+        number=100663353,
+        optional=True,
+    )
+
+
 class SslCertificatesScopedList(proto.Message):
     r"""
 
@@ -153804,6 +157525,11 @@ class TargetInstance(proto.Message):
             the default network interface belongs to.
 
             This field is a member of `oneof`_ ``_network``.
+        params (google.cloud.compute_v1.types.TargetInstanceParams):
+            Input only. [Input Only] Additional params passed with the
+            request, but not persisted as part of resource payload.
+
+            This field is a member of `oneof`_ ``_params``.
         security_policy (str):
             [Output Only] The resource URL for the security policy
             associated with this target instance.
@@ -153877,6 +157603,12 @@ class TargetInstance(proto.Message):
         proto.STRING,
         number=232872494,
         optional=True,
+    )
+    params: "TargetInstanceParams" = proto.Field(
+        proto.MESSAGE,
+        number=78313862,
+        optional=True,
+        message="TargetInstanceParams",
     )
     security_policy: str = proto.Field(
         proto.STRING,
@@ -154050,6 +157782,37 @@ class TargetInstanceList(proto.Message):
     )
 
 
+class TargetInstanceParams(proto.Message):
+    r"""Additional target instance parameters.
+
+    Attributes:
+        resource_manager_tags (MutableMapping[str, str]):
+            Tag keys/values directly bound to this resource. Tag keys
+            and values have the same definition as resource manager
+            tags. The field is allowed for INSERT only. The keys/values
+            to set on the resource should be specified in either ID { :
+            } or Namespaced format { : }. For example the following are
+            valid inputs:
+
+            - {"tagKeys/333" : "tagValues/444", "tagKeys/123" :
+              "tagValues/456"}
+            - {"123/environment" : "production", "345/abc" : "xyz"}
+              Note:
+            - Invalid combinations of ID & namespaced format are not
+              supported. For instance: {"123/environment" :
+              "tagValues/444"} is invalid.
+            - Inconsistent format is not supported. For instance:
+              {"tagKeys/333" : "tagValues/444", "123/env" : "prod"} is
+              invalid.
+    """
+
+    resource_manager_tags: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=377671164,
+    )
+
+
 class TargetInstancesScopedList(proto.Message):
     r"""
 
@@ -154174,6 +157937,11 @@ class TargetPool(proto.Message):
             except the last character, which cannot be a dash.
 
             This field is a member of `oneof`_ ``_name``.
+        params (google.cloud.compute_v1.types.TargetPoolParams):
+            Input only. [Input Only] Additional params passed with the
+            request, but not persisted as part of resource payload.
+
+            This field is a member of `oneof`_ ``_params``.
         region (str):
             Output only. [Output Only] URL of the region where the
             target pool resides.
@@ -154319,6 +158087,12 @@ class TargetPool(proto.Message):
         proto.STRING,
         number=3373707,
         optional=True,
+    )
+    params: "TargetPoolParams" = proto.Field(
+        proto.MESSAGE,
+        number=78313862,
+        optional=True,
+        message="TargetPoolParams",
     )
     region: str = proto.Field(
         proto.STRING,
@@ -154525,6 +158299,37 @@ class TargetPoolList(proto.Message):
         number=50704284,
         optional=True,
         message="Warning",
+    )
+
+
+class TargetPoolParams(proto.Message):
+    r"""Additional target pool parameters.
+
+    Attributes:
+        resource_manager_tags (MutableMapping[str, str]):
+            Tag keys/values directly bound to this resource. Tag keys
+            and values have the same definition as resource manager
+            tags. The field is allowed for INSERT only. The keys/values
+            to set on the resource should be specified in either ID { :
+            } or Namespaced format { : }. For example the following are
+            valid inputs:
+
+            - {"tagKeys/333" : "tagValues/444", "tagKeys/123" :
+              "tagValues/456"}
+            - {"123/environment" : "production", "345/abc" : "xyz"}
+              Note:
+            - Invalid combinations of ID & namespaced format are not
+              supported. For instance: {"123/environment" :
+              "tagValues/444"} is invalid.
+            - Inconsistent format is not supported. For instance:
+              {"tagKeys/333" : "tagValues/444", "123/env" : "prod"} is
+              invalid.
+    """
+
+    resource_manager_tags: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=377671164,
     )
 
 
@@ -158531,6 +162336,130 @@ class UpdateFirewallRequest(proto.Message):
     )
 
 
+class UpdateFolderGlobalVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for FolderGlobalVmExtensionPolicies.Update.
+    See the method description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        folder (str):
+            Folder ID for this request.
+        global_vm_extension_policy (str):
+            Name of the global VM extension policy to
+            update.
+        global_vm_extension_policy_resource (google.cloud.compute_v1.types.GlobalVmExtensionPolicy):
+            The body resource for this request
+        request_id (str):
+            An optional request ID to identify requests.
+            Specify a unique request ID so that if you must
+            retry your request, the server will know to
+            ignore the request if it has already been
+            completed.
+
+            For example, consider a situation where you make
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
+            prevents clients from accidentally creating
+            duplicate commitments.
+
+            The request ID must be
+            a valid UUID with the exception that zero UUID
+            is not supported
+            (00000000-0000-0000-0000-000000000000).
+
+            This field is a member of `oneof`_ ``_request_id``.
+    """
+
+    folder: str = proto.Field(
+        proto.STRING,
+        number=341646446,
+    )
+    global_vm_extension_policy: str = proto.Field(
+        proto.STRING,
+        number=8334110,
+    )
+    global_vm_extension_policy_resource: "GlobalVmExtensionPolicy" = proto.Field(
+        proto.MESSAGE,
+        number=101542927,
+        message="GlobalVmExtensionPolicy",
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=37109963,
+        optional=True,
+    )
+
+
+class UpdateFolderZoneVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for FolderZoneVmExtensionPolicies.Update.
+    See the method description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        folder (str):
+            Folder ID for this request.
+        request_id (str):
+            An optional request ID to identify requests.
+            Specify a unique request ID so that if you must
+            retry your request, the server will know to
+            ignore the request if it has already been
+            completed.
+
+            For example, consider a situation where you make
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
+            prevents clients from accidentally creating
+            duplicate commitments.
+
+            The request ID must be
+            a valid UUID with the exception that zero UUID
+            is not supported
+            (00000000-0000-0000-0000-000000000000).
+
+            This field is a member of `oneof`_ ``_request_id``.
+        vm_extension_policy (str):
+            Name of the zone VM extension policy to
+            update.
+        vm_extension_policy_resource (google.cloud.compute_v1.types.VmExtensionPolicy):
+            The body resource for this request
+        zone (str):
+            Name of the zone for this request.
+    """
+
+    folder: str = proto.Field(
+        proto.STRING,
+        number=341646446,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=37109963,
+        optional=True,
+    )
+    vm_extension_policy: str = proto.Field(
+        proto.STRING,
+        number=331532730,
+    )
+    vm_extension_policy_resource: "VmExtensionPolicy" = proto.Field(
+        proto.MESSAGE,
+        number=515669235,
+        message="VmExtensionPolicy",
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
+    )
+
+
 class UpdateFutureReservationRequest(proto.Message):
     r"""A request message for FutureReservations.Update. See the
     method description for details.
@@ -158795,7 +162724,7 @@ class UpdateInstanceRequest(proto.Message):
         Engine acts based on the minimum action that the updated properties
         require. Additional supported values which may be not listed in the
         enum directly due to technical reasons: INVALID NO_EFFECT REFRESH
-        RESTART
+        RESTART RESTART_IN_PLACE
 
         Values:
             UNDEFINED_MINIMAL_ACTION (0):
@@ -158812,7 +162741,7 @@ class UpdateInstanceRequest(proto.Message):
         the instance update. Valid options from lowest to highest are
         NO_EFFECT, REFRESH, and RESTART. Additional supported values which
         may be not listed in the enum directly due to technical reasons:
-        INVALID NO_EFFECT REFRESH RESTART
+        INVALID NO_EFFECT REFRESH RESTART RESTART_IN_PLACE
 
         Values:
             UNDEFINED_MOST_DISRUPTIVE_ALLOWED_ACTION (0):
@@ -159315,6 +163244,191 @@ class UpdateNetworkInterfaceInstanceRequest(proto.Message):
         proto.STRING,
         number=37109963,
         optional=True,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=3744684,
+    )
+
+
+class UpdateNetworkProfileNetworkRequest(proto.Message):
+    r"""A request message for Networks.UpdateNetworkProfile. See the
+    method description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        network (str):
+            Name of the network resource to update the
+            network profile for.
+        networks_update_network_profile_request_resource (google.cloud.compute_v1.types.NetworksUpdateNetworkProfileRequest):
+            The body resource for this request
+        project (str):
+            Project ID for this request.
+        request_id (str):
+            An optional request ID to identify requests.
+            Specify a unique request ID so that if you must
+            retry your request, the server will know to
+            ignore the request if it has already been
+            completed.
+
+            For example, consider a situation where you make
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
+            prevents clients from accidentally creating
+            duplicate commitments.
+
+            The request ID must be
+            a valid UUID with the exception that zero UUID
+            is not supported
+            (00000000-0000-0000-0000-000000000000).
+
+            This field is a member of `oneof`_ ``_request_id``.
+    """
+
+    network: str = proto.Field(
+        proto.STRING,
+        number=232872494,
+    )
+    networks_update_network_profile_request_resource: "NetworksUpdateNetworkProfileRequest" = proto.Field(
+        proto.MESSAGE,
+        number=478661377,
+        message="NetworksUpdateNetworkProfileRequest",
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=227560217,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=37109963,
+        optional=True,
+    )
+
+
+class UpdateOrganizationGlobalVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for
+    OrganizationGlobalVmExtensionPolicies.Update. See the method
+    description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        global_vm_extension_policy (str):
+            Name of the global VM extension policy to
+            update.
+        global_vm_extension_policy_resource (google.cloud.compute_v1.types.GlobalVmExtensionPolicy):
+            The body resource for this request
+        organization (str):
+            Organization ID for this request.
+        request_id (str):
+            An optional request ID to identify requests.
+            Specify a unique request ID so that if you must
+            retry your request, the server will know to
+            ignore the request if it has already been
+            completed.
+
+            For example, consider a situation where you make
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
+            prevents clients from accidentally creating
+            duplicate commitments.
+
+            The request ID must be
+            a valid UUID with the exception that zero UUID
+            is not supported
+            (00000000-0000-0000-0000-000000000000).
+
+            This field is a member of `oneof`_ ``_request_id``.
+    """
+
+    global_vm_extension_policy: str = proto.Field(
+        proto.STRING,
+        number=8334110,
+    )
+    global_vm_extension_policy_resource: "GlobalVmExtensionPolicy" = proto.Field(
+        proto.MESSAGE,
+        number=101542927,
+        message="GlobalVmExtensionPolicy",
+    )
+    organization: str = proto.Field(
+        proto.STRING,
+        number=105180467,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=37109963,
+        optional=True,
+    )
+
+
+class UpdateOrganizationZoneVmExtensionPolicyRequest(proto.Message):
+    r"""A request message for
+    OrganizationZoneVmExtensionPolicies.Update. See the method
+    description for details.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        organization (str):
+            Organization ID for this request.
+        request_id (str):
+            An optional request ID to identify requests.
+            Specify a unique request ID so that if you must
+            retry your request, the server will know to
+            ignore the request if it has already been
+            completed.
+
+            For example, consider a situation where you make
+            an initial request and the request times out. If
+            you make the request again with the same request
+            ID, the server can check if original operation
+            with the same request ID was received, and if
+            so, will ignore the second request. This
+            prevents clients from accidentally creating
+            duplicate commitments.
+
+            The request ID must be
+            a valid UUID with the exception that zero UUID
+            is not supported
+            (00000000-0000-0000-0000-000000000000).
+
+            This field is a member of `oneof`_ ``_request_id``.
+        vm_extension_policy (str):
+            Name of the zone VM extension policy to
+            update.
+        vm_extension_policy_resource (google.cloud.compute_v1.types.VmExtensionPolicy):
+            The body resource for this request
+        zone (str):
+            Name of the zone for this request.
+    """
+
+    organization: str = proto.Field(
+        proto.STRING,
+        number=105180467,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=37109963,
+        optional=True,
+    )
+    vm_extension_policy: str = proto.Field(
+        proto.STRING,
+        number=331532730,
+    )
+    vm_extension_policy_resource: "VmExtensionPolicy" = proto.Field(
+        proto.MESSAGE,
+        number=515669235,
+        message="VmExtensionPolicy",
     )
     zone: str = proto.Field(
         proto.STRING,
@@ -162109,6 +166223,31 @@ class VmEndpointNatMappingsList(proto.Message):
     )
 
 
+class VmExtension(proto.Message):
+    r"""A VM extension that can be installed on a VM.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        name (str):
+            The name of the vm extension.
+
+            This field is a member of `oneof`_ ``_name``.
+        versions (MutableSequence[str]):
+            The latest 10 versions of the vm extension.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=3373707,
+        optional=True,
+    )
+    versions: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=162430619,
+    )
+
+
 class VmExtensionPoliciesScopedList(proto.Message):
     r"""
 
@@ -163448,6 +167587,18 @@ class VpnTunnel(proto.Message):
             Classic VPN tunnels.
 
             This field is a member of `oneof`_ ``_peer_ip``.
+        pqc_phase1 (google.cloud.compute_v1.types.VpnTunnelPqc):
+            User specified list of PQC key exchange
+            mechanisms (KEMs) to use for the phase 1 of the
+            IKE protocol.
+
+            This field is a member of `oneof`_ ``_pqc_phase1``.
+        pqc_phase2 (google.cloud.compute_v1.types.VpnTunnelPqc):
+            User specified list of PQC key exchange
+            mechanisms (KEMs) to use for the phase 2 of the
+            IKE protocol.
+
+            This field is a member of `oneof`_ ``_pqc_phase2``.
         region (str):
             [Output Only] URL of the region where the VPN tunnel
             resides. You must specify this field as part of the HTTP
@@ -163716,6 +167867,18 @@ class VpnTunnel(proto.Message):
         number=383249700,
         optional=True,
     )
+    pqc_phase1: "VpnTunnelPqc" = proto.Field(
+        proto.MESSAGE,
+        number=81853043,
+        optional=True,
+        message="VpnTunnelPqc",
+    )
+    pqc_phase2: "VpnTunnelPqc" = proto.Field(
+        proto.MESSAGE,
+        number=81853044,
+        optional=True,
+        message="VpnTunnelPqc",
+    )
     region: str = proto.Field(
         proto.STRING,
         number=138946292,
@@ -163764,6 +167927,161 @@ class VpnTunnel(proto.Message):
         proto.INT32,
         number=95979123,
         optional=True,
+    )
+
+
+class VpnTunnelAdditionalKeyExchanges(proto.Message):
+    r"""User specified list of PQC key exchanges.
+
+    Attributes:
+        ke1s (MutableSequence[str]):
+            Check the Ke1s enum for the list of possible
+            values.
+        ke2s (MutableSequence[str]):
+            Check the Ke2s enum for the list of possible
+            values.
+        ke3s (MutableSequence[str]):
+            Check the Ke3s enum for the list of possible
+            values.
+        ke4s (MutableSequence[str]):
+            Check the Ke4s enum for the list of possible
+            values.
+        ke5s (MutableSequence[str]):
+            Check the Ke5s enum for the list of possible
+            values.
+        ke6s (MutableSequence[str]):
+            Check the Ke6s enum for the list of possible
+            values.
+        ke7s (MutableSequence[str]):
+            Check the Ke7s enum for the list of possible
+            values.
+    """
+
+    class Ke1s(proto.Enum):
+        r"""Additional supported values which may be not listed in the enum
+        directly due to technical reasons:
+        KEY_ENCAPSULATION_MECHANISM_UNSPECIFIED KE_NONE ML_KEM_1024
+        ML_KEM_768
+
+        Values:
+            UNDEFINED_KE1S (0):
+                A value indicating that the enum field is not
+                set.
+        """
+
+        UNDEFINED_KE1S = 0
+
+    class Ke2s(proto.Enum):
+        r"""Additional supported values which may be not listed in the enum
+        directly due to technical reasons:
+        KEY_ENCAPSULATION_MECHANISM_UNSPECIFIED KE_NONE ML_KEM_1024
+        ML_KEM_768
+
+        Values:
+            UNDEFINED_KE2S (0):
+                A value indicating that the enum field is not
+                set.
+        """
+
+        UNDEFINED_KE2S = 0
+
+    class Ke3s(proto.Enum):
+        r"""Additional supported values which may be not listed in the enum
+        directly due to technical reasons:
+        KEY_ENCAPSULATION_MECHANISM_UNSPECIFIED KE_NONE ML_KEM_1024
+        ML_KEM_768
+
+        Values:
+            UNDEFINED_KE3S (0):
+                A value indicating that the enum field is not
+                set.
+        """
+
+        UNDEFINED_KE3S = 0
+
+    class Ke4s(proto.Enum):
+        r"""Additional supported values which may be not listed in the enum
+        directly due to technical reasons:
+        KEY_ENCAPSULATION_MECHANISM_UNSPECIFIED KE_NONE ML_KEM_1024
+        ML_KEM_768
+
+        Values:
+            UNDEFINED_KE4S (0):
+                A value indicating that the enum field is not
+                set.
+        """
+
+        UNDEFINED_KE4S = 0
+
+    class Ke5s(proto.Enum):
+        r"""Additional supported values which may be not listed in the enum
+        directly due to technical reasons:
+        KEY_ENCAPSULATION_MECHANISM_UNSPECIFIED KE_NONE ML_KEM_1024
+        ML_KEM_768
+
+        Values:
+            UNDEFINED_KE5S (0):
+                A value indicating that the enum field is not
+                set.
+        """
+
+        UNDEFINED_KE5S = 0
+
+    class Ke6s(proto.Enum):
+        r"""Additional supported values which may be not listed in the enum
+        directly due to technical reasons:
+        KEY_ENCAPSULATION_MECHANISM_UNSPECIFIED KE_NONE ML_KEM_1024
+        ML_KEM_768
+
+        Values:
+            UNDEFINED_KE6S (0):
+                A value indicating that the enum field is not
+                set.
+        """
+
+        UNDEFINED_KE6S = 0
+
+    class Ke7s(proto.Enum):
+        r"""Additional supported values which may be not listed in the enum
+        directly due to technical reasons:
+        KEY_ENCAPSULATION_MECHANISM_UNSPECIFIED KE_NONE ML_KEM_1024
+        ML_KEM_768
+
+        Values:
+            UNDEFINED_KE7S (0):
+                A value indicating that the enum field is not
+                set.
+        """
+
+        UNDEFINED_KE7S = 0
+
+    ke1s: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3286332,
+    )
+    ke2s: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3286363,
+    )
+    ke3s: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3286394,
+    )
+    ke4s: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3286425,
+    )
+    ke5s: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3286456,
+    )
+    ke6s: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3286487,
+    )
+    ke7s: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3286518,
     )
 
 
@@ -163856,9 +168174,11 @@ class VpnTunnelCipherSuite(proto.Message):
 
     Attributes:
         phase1 (google.cloud.compute_v1.types.VpnTunnelPhase1Algorithms):
+            Cipher algorithms for IKE phase 1.
 
             This field is a member of `oneof`_ ``_phase1``.
         phase2 (google.cloud.compute_v1.types.VpnTunnelPhase2Algorithms):
+            Cipher algorithms for IKE phase 2.
 
             This field is a member of `oneof`_ ``_phase2``.
     """
@@ -163988,13 +168308,14 @@ class VpnTunnelPhase1Algorithms(proto.Message):
 
     Attributes:
         dh (MutableSequence[str]):
-
+            Diffie-Hellman groups for IKE phase 1.
         encryption (MutableSequence[str]):
-
+            Encryption algorithms for IKE phase 1.
         integrity (MutableSequence[str]):
-
+            Integrity algorithms for IKE phase 1.
         prf (MutableSequence[str]):
-
+            Pseudo-random functions (PRF) for IKE phase
+            1.
     """
 
     dh: MutableSequence[str] = proto.RepeatedField(
@@ -164020,11 +168341,12 @@ class VpnTunnelPhase2Algorithms(proto.Message):
 
     Attributes:
         encryption (MutableSequence[str]):
-
+            Encryption algorithms for IKE phase 2.
         integrity (MutableSequence[str]):
-
+            Integrity algorithms for IKE phase 2.
         pfs (MutableSequence[str]):
-
+            Perfect Forward Secrecy (PFS) groups for IKE
+            phase 2.
     """
 
     encryption: MutableSequence[str] = proto.RepeatedField(
@@ -164038,6 +168360,55 @@ class VpnTunnelPhase2Algorithms(proto.Message):
     pfs: MutableSequence[str] = proto.RepeatedField(
         proto.STRING,
         number=110909,
+    )
+
+
+class VpnTunnelPqc(proto.Message):
+    r"""
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        keys (google.cloud.compute_v1.types.VpnTunnelAdditionalKeyExchanges):
+
+            This field is a member of `oneof`_ ``_keys``.
+        mode (str):
+            Check the Mode enum for the list of possible
+            values.
+
+            This field is a member of `oneof`_ ``_mode``.
+    """
+
+    class Mode(proto.Enum):
+        r"""
+
+        Values:
+            UNDEFINED_MODE (0):
+                A value indicating that the enum field is not
+                set.
+            DISABLED (516696700):
+                No description available.
+            ENABLED (182130465):
+                No description available.
+            PQC_MODE_UNSPECIFIED (215338680):
+                No description available.
+        """
+
+        UNDEFINED_MODE = 0
+        DISABLED = 516696700
+        ENABLED = 182130465
+        PQC_MODE_UNSPECIFIED = 215338680
+
+    keys: "VpnTunnelAdditionalKeyExchanges" = proto.Field(
+        proto.MESSAGE,
+        number=3288564,
+        optional=True,
+        message="VpnTunnelAdditionalKeyExchanges",
+    )
+    mode: str = proto.Field(
+        proto.STRING,
+        number=3357091,
+        optional=True,
     )
 
 
@@ -165377,7 +169748,32 @@ class WorkloadIdentityConfig(proto.Message):
         identity_certificate_enabled (bool):
 
             This field is a member of `oneof`_ ``_identity_certificate_enabled``.
+        identity_type (str):
+            Check the IdentityType enum for the list of
+            possible values.
+
+            This field is a member of `oneof`_ ``_identity_type``.
     """
+
+    class IdentityType(proto.Enum):
+        r"""
+
+        Values:
+            UNDEFINED_IDENTITY_TYPE (0):
+                A value indicating that the enum field is not
+                set.
+            AGENT_IDENTITY (71547096):
+                No description available.
+            IDENTITY_TYPE_UNSPECIFIED (157537011):
+                No description available.
+            SERVICE_ACCOUNT (178301539):
+                No description available.
+        """
+
+        UNDEFINED_IDENTITY_TYPE = 0
+        AGENT_IDENTITY = 71547096
+        IDENTITY_TYPE_UNSPECIFIED = 157537011
+        SERVICE_ACCOUNT = 178301539
 
     identity: str = proto.Field(
         proto.STRING,
@@ -165387,6 +169783,11 @@ class WorkloadIdentityConfig(proto.Message):
     identity_certificate_enabled: bool = proto.Field(
         proto.BOOL,
         number=342892440,
+        optional=True,
+    )
+    identity_type: str = proto.Field(
+        proto.STRING,
+        number=25665051,
         optional=True,
     )
 

@@ -17,13 +17,14 @@ import json  # type: ignore
 import re
 from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
+import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 from google.api_core import gapic_v1, path_template
 from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 from google.protobuf import json_format
 
+from google.cloud.discoveryengine_v1.types import serving_config, serving_config_service
 from google.cloud.discoveryengine_v1.types import serving_config as gcd_serving_config
-from google.cloud.discoveryengine_v1.types import serving_config_service
 
 from .base import DEFAULT_CLIENT_INFO, ServingConfigServiceTransport
 
@@ -89,6 +90,107 @@ class _BaseServingConfigServiceRestTransport(ServingConfigServiceTransport):
             always_use_jwt_access=always_use_jwt_access,
             api_audience=api_audience,
         )
+
+    class _BaseCreateServingConfig:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
+            "servingConfigId": "",
+        }
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=projects/*/locations/*/dataStores/*}/servingConfigs",
+                    "body": "serving_config",
+                },
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=projects/*/locations/*/collections/*/dataStores/*}/servingConfigs",
+                    "body": "serving_config",
+                },
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=projects/*/locations/*/collections/*/engines/*}/servingConfigs",
+                    "body": "serving_config",
+                },
+            ]
+            return http_options
+
+    class _BaseDeleteServingConfig:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "delete",
+                    "uri": "/v1/{name=projects/*/locations/*/dataStores/*/servingConfigs/*}",
+                },
+                {
+                    "method": "delete",
+                    "uri": "/v1/{name=projects/*/locations/*/collections/*/dataStores/*/servingConfigs/*}",
+                },
+                {
+                    "method": "delete",
+                    "uri": "/v1/{name=projects/*/locations/*/collections/*/engines/*/servingConfigs/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseGetServingConfig:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/dataStores/*/servingConfigs/*}",
+                },
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/collections/*/dataStores/*/servingConfigs/*}",
+                },
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/collections/*/engines/*/servingConfigs/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseListServingConfigs:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{parent=projects/*/locations/*/dataStores/*}/servingConfigs",
+                },
+                {
+                    "method": "get",
+                    "uri": "/v1/{parent=projects/*/locations/*/collections/*/dataStores/*}/servingConfigs",
+                },
+                {
+                    "method": "get",
+                    "uri": "/v1/{parent=projects/*/locations/*/collections/*/engines/*}/servingConfigs",
+                },
+            ]
+            return http_options
 
     class _BaseUpdateServingConfig:
         def __hash__(self):  # pragma: NO COVER
@@ -185,6 +287,10 @@ class _BaseServingConfigServiceRestTransport(ServingConfigServiceTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{name=projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine/targetSites/operations/*}",
+                },
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/collections/*/engines/*/assistants/*/agents/*/operations/*}",
                 },
                 {
                     "method": "get",

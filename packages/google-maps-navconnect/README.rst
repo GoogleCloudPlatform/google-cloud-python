@@ -3,7 +3,7 @@ Python Client for Navigation Connect
 
 |preview| |pypi| |versions|
 
-`Navigation Connect`_: Navigation Connect API.
+`Navigation Connect`_: Navigate and track trips seamlessly with Google Maps or Waze.
 
 - `Client Library Documentation`_
 - `Product Documentation`_

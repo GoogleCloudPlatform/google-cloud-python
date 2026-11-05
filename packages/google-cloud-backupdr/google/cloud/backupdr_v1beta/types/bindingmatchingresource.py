@@ -144,12 +144,12 @@ class BindingMatchingResource(proto.Message):
 
     Attributes:
         name (str):
-            Identifier. The resource name of the
+            Output only. Identifier. The resource name of the
             ``BindingMatchingResource``. Format:
             ``projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protection_policy}/bindings/{binding}/matchingResources/{matching_resource}``
         resource (str):
-            Required. Immutable. Resource name of the workload that
-            matches the criteria of the binding.
+            Output only. Resource name of the workload that matches the
+            criteria of the binding.
 
             The format can be either a relative resource name (e.g.,
             ``projects/my-project/zones/us-central1-a/instances/my-instance``)

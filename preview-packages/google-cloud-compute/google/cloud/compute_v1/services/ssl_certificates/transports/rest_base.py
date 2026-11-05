@@ -119,6 +119,22 @@ class _BaseSslCertificatesRestTransport(SslCertificatesTransport):
             ]
             return http_options
 
+    class _BaseFetchEncryptionKey:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/compute/v1/projects/{project}/global/sslCertificates/encryptionKey",
+                },
+            ]
+            return http_options
+
     class _BaseGet:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")

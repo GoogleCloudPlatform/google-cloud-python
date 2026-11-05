@@ -71,8 +71,12 @@ from google.apps.chat_v1.types import (
     attachment,
     audience,
     availability,
+    citation,
+    cited_source,
     contextual_addon,
     deletion_metadata,
+    elements,
+    elements_common,
     event_payload,
     group,
     history_state,
@@ -32354,6 +32358,20 @@ def test_create_message_rest_call_success(request_type):
         },
         "attached_gifs": [{"uri": "uri_value"}],
         "accessory_widgets": [{"button_list": {}}],
+        "elements": {
+            "cited_sources": [
+                {
+                    "title": "title_value",
+                    "uri": "uri_value",
+                    "snippet": {
+                        "text": "text_value",
+                        "image_preview": {"image_uri": "image_uri_value"},
+                    },
+                    "footer": {"text": "text_value"},
+                }
+            ],
+            "citations": [{"id": "id_value", "cited_sources": {}}],
+        },
         "markup_syntax": 1,
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
@@ -33598,6 +33616,20 @@ def test_update_message_rest_call_success(request_type):
         },
         "attached_gifs": [{"uri": "uri_value"}],
         "accessory_widgets": [{"button_list": {}}],
+        "elements": {
+            "cited_sources": [
+                {
+                    "title": "title_value",
+                    "uri": "uri_value",
+                    "snippet": {
+                        "text": "text_value",
+                        "image_preview": {"image_uri": "image_uri_value"},
+                    },
+                    "footer": {"text": "text_value"},
+                }
+            ],
+            "citations": [{"id": "id_value", "cited_sources": {}}],
+        },
         "markup_syntax": 1,
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.

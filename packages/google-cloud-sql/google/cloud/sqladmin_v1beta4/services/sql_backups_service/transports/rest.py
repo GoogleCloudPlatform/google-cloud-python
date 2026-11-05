@@ -361,6 +361,9 @@ class SqlBackupsServiceRestStub:
 class SqlBackupsServiceRestTransport(_BaseSqlBackupsServiceRestTransport):
     """REST backend synchronous transport for SqlBackupsService.
 
+    Service for managing database backups for Cloud SQL
+    instances.
+
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
     and call it.

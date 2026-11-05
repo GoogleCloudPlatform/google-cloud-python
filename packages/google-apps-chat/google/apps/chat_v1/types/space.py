@@ -354,7 +354,7 @@ class Space(proto.Message):
                 example, describe the space's discussion topic,
                 functional purpose, or participants.
 
-                Supports up to 150 characters.
+                Supports up to 4,096 characters.
             guidelines (str):
                 Optional. The space's rules, expectations,
                 and etiquette.

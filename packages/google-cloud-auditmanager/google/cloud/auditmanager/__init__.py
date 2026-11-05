@@ -58,6 +58,14 @@ from google.cloud.auditmanager_v1.types.auditmanager import (
     ScheduleState,
     UpdateAuditScheduleRequest,
 )
+from google.cloud.auditmanager_v1.types.parameters import (
+    CloudControlParameterStates,
+    Parameter,
+    ParameterOverrides,
+    ParameterState,
+    ParamValue,
+    StringList,
+)
 
 __all__ = (
     "AuditManagerClient",
@@ -94,4 +102,10 @@ __all__ = (
     "ComplianceState",
     "OperationState",
     "ScheduleState",
+    "CloudControlParameterStates",
+    "Parameter",
+    "ParameterOverrides",
+    "ParameterState",
+    "ParamValue",
+    "StringList",
 )

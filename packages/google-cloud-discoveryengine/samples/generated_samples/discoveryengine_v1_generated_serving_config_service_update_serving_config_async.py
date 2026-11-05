@@ -42,7 +42,7 @@ async def sample_update_serving_config():
     serving_config = discoveryengine_v1.ServingConfig()
     serving_config.media_config.content_watched_percentage_threshold = 0.3811
     serving_config.display_name = "display_name_value"
-    serving_config.solution_type = "SOLUTION_TYPE_GENERATIVE_CHAT"
+    serving_config.solution_type = "SOLUTION_TYPE_AI_MODE"
 
     request = discoveryengine_v1.UpdateServingConfigRequest(
         serving_config=serving_config,

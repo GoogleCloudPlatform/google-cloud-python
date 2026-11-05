@@ -118,6 +118,8 @@ class _LoggingClientAIOInterceptor(
 class SqlInstancesServiceGrpcAsyncIOTransport(SqlInstancesServiceTransport):
     """gRPC AsyncIO backend transport for SqlInstancesService.
 
+    Service to manage Cloud SQL instances.
+
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
     and call it.

@@ -37,6 +37,7 @@ from .services.secret_manager_service import (
     SecretManagerServiceClient,
 )
 from .types.resources import (
+    CloudSqlSingleUserCredentials,
     CustomerManagedEncryption,
     CustomerManagedEncryptionStatus,
     Replication,
@@ -72,6 +73,7 @@ __all__ = (
     "AccessSecretVersionRequest",
     "AccessSecretVersionResponse",
     "AddSecretVersionRequest",
+    "CloudSqlSingleUserCredentials",
     "CreateSecretRequest",
     "CustomerManagedEncryption",
     "CustomerManagedEncryptionStatus",

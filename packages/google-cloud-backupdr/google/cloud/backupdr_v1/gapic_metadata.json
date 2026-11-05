@@ -10,6 +10,16 @@
         "grpc": {
           "libraryClient": "BackupDRClient",
           "rpcs": {
+            "CreateAutoProtectionPolicy": {
+              "methods": [
+                "create_auto_protection_policy"
+              ]
+            },
+            "CreateAutoProtectionPolicyBinding": {
+              "methods": [
+                "create_auto_protection_policy_binding"
+              ]
+            },
             "CreateBackupPlan": {
               "methods": [
                 "create_backup_plan"
@@ -28,6 +38,26 @@
             "CreateManagementServer": {
               "methods": [
                 "create_management_server"
+              ]
+            },
+            "CreateRestoreTemplate": {
+              "methods": [
+                "create_restore_template"
+              ]
+            },
+            "CreateRestoreVerificationPlan": {
+              "methods": [
+                "create_restore_verification_plan"
+              ]
+            },
+            "CreateRestoreVerificationPlanAssociation": {
+              "methods": [
+                "create_restore_verification_plan_association"
+              ]
+            },
+            "DeleteAutoProtectionPolicy": {
+              "methods": [
+                "delete_auto_protection_policy"
               ]
             },
             "DeleteBackup": {
@@ -55,6 +85,21 @@
                 "delete_management_server"
               ]
             },
+            "DeleteRestoreTemplate": {
+              "methods": [
+                "delete_restore_template"
+              ]
+            },
+            "DeleteRestoreVerificationPlan": {
+              "methods": [
+                "delete_restore_verification_plan"
+              ]
+            },
+            "DeleteRestoreVerificationPlanAssociation": {
+              "methods": [
+                "delete_restore_verification_plan_association"
+              ]
+            },
             "FetchBackupPlanAssociationsForResourceType": {
               "methods": [
                 "fetch_backup_plan_associations_for_resource_type"
@@ -73,6 +118,16 @@
             "FetchUsableBackupVaults": {
               "methods": [
                 "fetch_usable_backup_vaults"
+              ]
+            },
+            "GetAutoProtectionPolicy": {
+              "methods": [
+                "get_auto_protection_policy"
+              ]
+            },
+            "GetAutoProtectionPolicyBinding": {
+              "methods": [
+                "get_auto_protection_policy_binding"
               ]
             },
             "GetBackup": {
@@ -115,9 +170,49 @@
                 "get_management_server"
               ]
             },
+            "GetRestoreTemplate": {
+              "methods": [
+                "get_restore_template"
+              ]
+            },
+            "GetRestoreTemplateExecution": {
+              "methods": [
+                "get_restore_template_execution"
+              ]
+            },
+            "GetRestoreVerificationPlan": {
+              "methods": [
+                "get_restore_verification_plan"
+              ]
+            },
+            "GetRestoreVerificationPlanAssociation": {
+              "methods": [
+                "get_restore_verification_plan_association"
+              ]
+            },
             "InitializeService": {
               "methods": [
                 "initialize_service"
+              ]
+            },
+            "InitiateDeleteAutoProtectionPolicyBinding": {
+              "methods": [
+                "initiate_delete_auto_protection_policy_binding"
+              ]
+            },
+            "ListAppliedAutoProtectionPolicies": {
+              "methods": [
+                "list_applied_auto_protection_policies"
+              ]
+            },
+            "ListAutoProtectionPolicies": {
+              "methods": [
+                "list_auto_protection_policies"
+              ]
+            },
+            "ListAutoProtectionPolicyBindings": {
+              "methods": [
+                "list_auto_protection_policy_bindings"
               ]
             },
             "ListBackupPlanAssociations": {
@@ -145,6 +240,11 @@
                 "list_backups"
               ]
             },
+            "ListBindingMatchingResources": {
+              "methods": [
+                "list_binding_matching_resources"
+              ]
+            },
             "ListDataSourceReferences": {
               "methods": [
                 "list_data_source_references"
@@ -160,14 +260,54 @@
                 "list_management_servers"
               ]
             },
+            "ListRestoreTemplateExecutions": {
+              "methods": [
+                "list_restore_template_executions"
+              ]
+            },
+            "ListRestoreTemplates": {
+              "methods": [
+                "list_restore_templates"
+              ]
+            },
+            "ListRestoreVerificationPlanAssociations": {
+              "methods": [
+                "list_restore_verification_plan_associations"
+              ]
+            },
+            "ListRestoreVerificationPlans": {
+              "methods": [
+                "list_restore_verification_plans"
+              ]
+            },
             "RestoreBackup": {
               "methods": [
                 "restore_backup"
               ]
             },
+            "RunRestoreTemplate": {
+              "methods": [
+                "run_restore_template"
+              ]
+            },
             "TriggerBackup": {
               "methods": [
                 "trigger_backup"
+              ]
+            },
+            "TriggerRestoreCleanup": {
+              "methods": [
+                "trigger_restore_cleanup"
+              ]
+            },
+            "TriggerRestoreVerification": {
+              "methods": [
+                "trigger_restore_verification"
+              ]
+            },
+            "UpdateAutoProtectionPolicy": {
+              "methods": [
+                "update_auto_protection_policy"
               ]
             },
             "UpdateBackup": {
@@ -193,6 +333,11 @@
             "UpdateDataSource": {
               "methods": [
                 "update_data_source"
+              ]
+            },
+            "UpdateRestoreTemplate": {
+              "methods": [
+                "update_restore_template"
               ]
             }
           }
@@ -200,6 +345,16 @@
         "grpc-async": {
           "libraryClient": "BackupDRAsyncClient",
           "rpcs": {
+            "CreateAutoProtectionPolicy": {
+              "methods": [
+                "create_auto_protection_policy"
+              ]
+            },
+            "CreateAutoProtectionPolicyBinding": {
+              "methods": [
+                "create_auto_protection_policy_binding"
+              ]
+            },
             "CreateBackupPlan": {
               "methods": [
                 "create_backup_plan"
@@ -218,6 +373,26 @@
             "CreateManagementServer": {
               "methods": [
                 "create_management_server"
+              ]
+            },
+            "CreateRestoreTemplate": {
+              "methods": [
+                "create_restore_template"
+              ]
+            },
+            "CreateRestoreVerificationPlan": {
+              "methods": [
+                "create_restore_verification_plan"
+              ]
+            },
+            "CreateRestoreVerificationPlanAssociation": {
+              "methods": [
+                "create_restore_verification_plan_association"
+              ]
+            },
+            "DeleteAutoProtectionPolicy": {
+              "methods": [
+                "delete_auto_protection_policy"
               ]
             },
             "DeleteBackup": {
@@ -245,6 +420,21 @@
                 "delete_management_server"
               ]
             },
+            "DeleteRestoreTemplate": {
+              "methods": [
+                "delete_restore_template"
+              ]
+            },
+            "DeleteRestoreVerificationPlan": {
+              "methods": [
+                "delete_restore_verification_plan"
+              ]
+            },
+            "DeleteRestoreVerificationPlanAssociation": {
+              "methods": [
+                "delete_restore_verification_plan_association"
+              ]
+            },
             "FetchBackupPlanAssociationsForResourceType": {
               "methods": [
                 "fetch_backup_plan_associations_for_resource_type"
@@ -263,6 +453,16 @@
             "FetchUsableBackupVaults": {
               "methods": [
                 "fetch_usable_backup_vaults"
+              ]
+            },
+            "GetAutoProtectionPolicy": {
+              "methods": [
+                "get_auto_protection_policy"
+              ]
+            },
+            "GetAutoProtectionPolicyBinding": {
+              "methods": [
+                "get_auto_protection_policy_binding"
               ]
             },
             "GetBackup": {
@@ -305,9 +505,49 @@
                 "get_management_server"
               ]
             },
+            "GetRestoreTemplate": {
+              "methods": [
+                "get_restore_template"
+              ]
+            },
+            "GetRestoreTemplateExecution": {
+              "methods": [
+                "get_restore_template_execution"
+              ]
+            },
+            "GetRestoreVerificationPlan": {
+              "methods": [
+                "get_restore_verification_plan"
+              ]
+            },
+            "GetRestoreVerificationPlanAssociation": {
+              "methods": [
+                "get_restore_verification_plan_association"
+              ]
+            },
             "InitializeService": {
               "methods": [
                 "initialize_service"
+              ]
+            },
+            "InitiateDeleteAutoProtectionPolicyBinding": {
+              "methods": [
+                "initiate_delete_auto_protection_policy_binding"
+              ]
+            },
+            "ListAppliedAutoProtectionPolicies": {
+              "methods": [
+                "list_applied_auto_protection_policies"
+              ]
+            },
+            "ListAutoProtectionPolicies": {
+              "methods": [
+                "list_auto_protection_policies"
+              ]
+            },
+            "ListAutoProtectionPolicyBindings": {
+              "methods": [
+                "list_auto_protection_policy_bindings"
               ]
             },
             "ListBackupPlanAssociations": {
@@ -335,6 +575,11 @@
                 "list_backups"
               ]
             },
+            "ListBindingMatchingResources": {
+              "methods": [
+                "list_binding_matching_resources"
+              ]
+            },
             "ListDataSourceReferences": {
               "methods": [
                 "list_data_source_references"
@@ -350,14 +595,54 @@
                 "list_management_servers"
               ]
             },
+            "ListRestoreTemplateExecutions": {
+              "methods": [
+                "list_restore_template_executions"
+              ]
+            },
+            "ListRestoreTemplates": {
+              "methods": [
+                "list_restore_templates"
+              ]
+            },
+            "ListRestoreVerificationPlanAssociations": {
+              "methods": [
+                "list_restore_verification_plan_associations"
+              ]
+            },
+            "ListRestoreVerificationPlans": {
+              "methods": [
+                "list_restore_verification_plans"
+              ]
+            },
             "RestoreBackup": {
               "methods": [
                 "restore_backup"
               ]
             },
+            "RunRestoreTemplate": {
+              "methods": [
+                "run_restore_template"
+              ]
+            },
             "TriggerBackup": {
               "methods": [
                 "trigger_backup"
+              ]
+            },
+            "TriggerRestoreCleanup": {
+              "methods": [
+                "trigger_restore_cleanup"
+              ]
+            },
+            "TriggerRestoreVerification": {
+              "methods": [
+                "trigger_restore_verification"
+              ]
+            },
+            "UpdateAutoProtectionPolicy": {
+              "methods": [
+                "update_auto_protection_policy"
               ]
             },
             "UpdateBackup": {
@@ -383,6 +668,11 @@
             "UpdateDataSource": {
               "methods": [
                 "update_data_source"
+              ]
+            },
+            "UpdateRestoreTemplate": {
+              "methods": [
+                "update_restore_template"
               ]
             }
           }
@@ -390,6 +680,16 @@
         "rest": {
           "libraryClient": "BackupDRClient",
           "rpcs": {
+            "CreateAutoProtectionPolicy": {
+              "methods": [
+                "create_auto_protection_policy"
+              ]
+            },
+            "CreateAutoProtectionPolicyBinding": {
+              "methods": [
+                "create_auto_protection_policy_binding"
+              ]
+            },
             "CreateBackupPlan": {
               "methods": [
                 "create_backup_plan"
@@ -408,6 +708,26 @@
             "CreateManagementServer": {
               "methods": [
                 "create_management_server"
+              ]
+            },
+            "CreateRestoreTemplate": {
+              "methods": [
+                "create_restore_template"
+              ]
+            },
+            "CreateRestoreVerificationPlan": {
+              "methods": [
+                "create_restore_verification_plan"
+              ]
+            },
+            "CreateRestoreVerificationPlanAssociation": {
+              "methods": [
+                "create_restore_verification_plan_association"
+              ]
+            },
+            "DeleteAutoProtectionPolicy": {
+              "methods": [
+                "delete_auto_protection_policy"
               ]
             },
             "DeleteBackup": {
@@ -435,6 +755,21 @@
                 "delete_management_server"
               ]
             },
+            "DeleteRestoreTemplate": {
+              "methods": [
+                "delete_restore_template"
+              ]
+            },
+            "DeleteRestoreVerificationPlan": {
+              "methods": [
+                "delete_restore_verification_plan"
+              ]
+            },
+            "DeleteRestoreVerificationPlanAssociation": {
+              "methods": [
+                "delete_restore_verification_plan_association"
+              ]
+            },
             "FetchBackupPlanAssociationsForResourceType": {
               "methods": [
                 "fetch_backup_plan_associations_for_resource_type"
@@ -453,6 +788,16 @@
             "FetchUsableBackupVaults": {
               "methods": [
                 "fetch_usable_backup_vaults"
+              ]
+            },
+            "GetAutoProtectionPolicy": {
+              "methods": [
+                "get_auto_protection_policy"
+              ]
+            },
+            "GetAutoProtectionPolicyBinding": {
+              "methods": [
+                "get_auto_protection_policy_binding"
               ]
             },
             "GetBackup": {
@@ -495,9 +840,49 @@
                 "get_management_server"
               ]
             },
+            "GetRestoreTemplate": {
+              "methods": [
+                "get_restore_template"
+              ]
+            },
+            "GetRestoreTemplateExecution": {
+              "methods": [
+                "get_restore_template_execution"
+              ]
+            },
+            "GetRestoreVerificationPlan": {
+              "methods": [
+                "get_restore_verification_plan"
+              ]
+            },
+            "GetRestoreVerificationPlanAssociation": {
+              "methods": [
+                "get_restore_verification_plan_association"
+              ]
+            },
             "InitializeService": {
               "methods": [
                 "initialize_service"
+              ]
+            },
+            "InitiateDeleteAutoProtectionPolicyBinding": {
+              "methods": [
+                "initiate_delete_auto_protection_policy_binding"
+              ]
+            },
+            "ListAppliedAutoProtectionPolicies": {
+              "methods": [
+                "list_applied_auto_protection_policies"
+              ]
+            },
+            "ListAutoProtectionPolicies": {
+              "methods": [
+                "list_auto_protection_policies"
+              ]
+            },
+            "ListAutoProtectionPolicyBindings": {
+              "methods": [
+                "list_auto_protection_policy_bindings"
               ]
             },
             "ListBackupPlanAssociations": {
@@ -525,6 +910,11 @@
                 "list_backups"
               ]
             },
+            "ListBindingMatchingResources": {
+              "methods": [
+                "list_binding_matching_resources"
+              ]
+            },
             "ListDataSourceReferences": {
               "methods": [
                 "list_data_source_references"
@@ -540,14 +930,54 @@
                 "list_management_servers"
               ]
             },
+            "ListRestoreTemplateExecutions": {
+              "methods": [
+                "list_restore_template_executions"
+              ]
+            },
+            "ListRestoreTemplates": {
+              "methods": [
+                "list_restore_templates"
+              ]
+            },
+            "ListRestoreVerificationPlanAssociations": {
+              "methods": [
+                "list_restore_verification_plan_associations"
+              ]
+            },
+            "ListRestoreVerificationPlans": {
+              "methods": [
+                "list_restore_verification_plans"
+              ]
+            },
             "RestoreBackup": {
               "methods": [
                 "restore_backup"
               ]
             },
+            "RunRestoreTemplate": {
+              "methods": [
+                "run_restore_template"
+              ]
+            },
             "TriggerBackup": {
               "methods": [
                 "trigger_backup"
+              ]
+            },
+            "TriggerRestoreCleanup": {
+              "methods": [
+                "trigger_restore_cleanup"
+              ]
+            },
+            "TriggerRestoreVerification": {
+              "methods": [
+                "trigger_restore_verification"
+              ]
+            },
+            "UpdateAutoProtectionPolicy": {
+              "methods": [
+                "update_auto_protection_policy"
               ]
             },
             "UpdateBackup": {
@@ -573,6 +1003,11 @@
             "UpdateDataSource": {
               "methods": [
                 "update_data_source"
+              ]
+            },
+            "UpdateRestoreTemplate": {
+              "methods": [
+                "update_restore_template"
               ]
             }
           }

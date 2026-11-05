@@ -65,6 +65,9 @@ from .iam import (
     UpdateRoleRequest,
     UploadServiceAccountKeyRequest,
 )
+from .workforce_pool_platform_logs import (
+    WorkforcePoolAttributeSyncEventLog,
+)
 
 __all__ = (
     "AuditData",
@@ -115,4 +118,5 @@ __all__ = (
     "ServiceAccountKeyOrigin",
     "ServiceAccountPrivateKeyType",
     "ServiceAccountPublicKeyType",
+    "WorkforcePoolAttributeSyncEventLog",
 )

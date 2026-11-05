@@ -25,6 +25,7 @@ from google.cloud.secretmanager_v1.services.secret_manager_service.client import
     SecretManagerServiceClient,
 )
 from google.cloud.secretmanager_v1.types.resources import (
+    CloudSqlSingleUserCredentials,
     CustomerManagedEncryption,
     CustomerManagedEncryptionStatus,
     Replication,
@@ -58,6 +59,7 @@ from google.cloud.secretmanager_v1.types.service import (
 __all__ = (
     "SecretManagerServiceClient",
     "SecretManagerServiceAsyncClient",
+    "CloudSqlSingleUserCredentials",
     "CustomerManagedEncryption",
     "CustomerManagedEncryptionStatus",
     "Replication",

@@ -40,6 +40,7 @@ except ImportError:  # pragma: NO COVER
 
 import google.auth
 import google.protobuf.struct_pb2 as struct_pb2  # type: ignore
+import google.type.latlng_pb2 as latlng_pb2  # type: ignore
 from google.api_core import (
     client_options,
     gapic_v1,

@@ -287,6 +287,11 @@ class DeveloperConnectTransport(abc.ABC):
                 default_timeout=60.0,
                 client_info=client_info,
             ),
+            self.open_git_repository_link_pull_request: gapic_v1.method.wrap_method(
+                self.open_git_repository_link_pull_request,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.fetch_linkable_git_repositories: gapic_v1.method.wrap_method(
                 self.fetch_linkable_git_repositories,
                 default_retry=retries.Retry(
@@ -317,6 +322,51 @@ class DeveloperConnectTransport(abc.ABC):
             ),
             self.fetch_git_refs: gapic_v1.method.wrap_method(
                 self.fetch_git_refs,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.diff_git_repository_link_commit: gapic_v1.method.wrap_method(
+                self.diff_git_repository_link_commit,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.fetch_git_repository_link_commit: gapic_v1.method.wrap_method(
+                self.fetch_git_repository_link_commit,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.fetch_git_repository_link_commit_list: gapic_v1.method.wrap_method(
+                self.fetch_git_repository_link_commit_list,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.fetch_git_repository_link_file_blame: gapic_v1.method.wrap_method(
+                self.fetch_git_repository_link_file_blame,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.fetch_git_repository_link_pull_request: gapic_v1.method.wrap_method(
+                self.fetch_git_repository_link_pull_request,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.add_git_repository_link_pull_request_comment: gapic_v1.method.wrap_method(
+                self.add_git_repository_link_pull_request_comment,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.add_git_repository_link_pull_request_review_comment: gapic_v1.method.wrap_method(
+                self.add_git_repository_link_pull_request_review_comment,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.modify_git_repository_link_pull_request: gapic_v1.method.wrap_method(
+                self.modify_git_repository_link_pull_request,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.fetch_git_repository_link_pull_request_list: gapic_v1.method.wrap_method(
+                self.fetch_git_repository_link_pull_request_list,
                 default_timeout=None,
                 client_info=client_info,
             ),
@@ -541,6 +591,15 @@ class DeveloperConnectTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def open_git_repository_link_pull_request(
+        self,
+    ) -> Callable[
+        [developer_connect.OpenGitRepositoryLinkPullRequestRequest],
+        Union[developer_connect.PullRequest, Awaitable[developer_connect.PullRequest]],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def fetch_linkable_git_repositories(
         self,
     ) -> Callable[
@@ -572,6 +631,108 @@ class DeveloperConnectTransport(abc.ABC):
         Union[
             developer_connect.FetchGitRefsResponse,
             Awaitable[developer_connect.FetchGitRefsResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def diff_git_repository_link_commit(
+        self,
+    ) -> Callable[
+        [developer_connect.DiffGitRepositoryLinkCommitRequest],
+        Union[
+            developer_connect.DiffGitRepositoryLinkCommitResponse,
+            Awaitable[developer_connect.DiffGitRepositoryLinkCommitResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def fetch_git_repository_link_commit(
+        self,
+    ) -> Callable[
+        [developer_connect.FetchGitRepositoryLinkCommitRequest],
+        Union[
+            developer_connect.FetchGitRepositoryLinkCommitResponse,
+            Awaitable[developer_connect.FetchGitRepositoryLinkCommitResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def fetch_git_repository_link_commit_list(
+        self,
+    ) -> Callable[
+        [developer_connect.FetchGitRepositoryLinkCommitListRequest],
+        Union[
+            developer_connect.FetchGitRepositoryLinkCommitListResponse,
+            Awaitable[developer_connect.FetchGitRepositoryLinkCommitListResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def fetch_git_repository_link_file_blame(
+        self,
+    ) -> Callable[
+        [developer_connect.FetchGitRepositoryLinkFileBlameRequest],
+        Union[
+            developer_connect.FetchGitRepositoryLinkFileBlameResponse,
+            Awaitable[developer_connect.FetchGitRepositoryLinkFileBlameResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def fetch_git_repository_link_pull_request(
+        self,
+    ) -> Callable[
+        [developer_connect.FetchGitRepositoryLinkPullRequestRequest],
+        Union[developer_connect.PullRequest, Awaitable[developer_connect.PullRequest]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def add_git_repository_link_pull_request_comment(
+        self,
+    ) -> Callable[
+        [developer_connect.AddGitRepositoryLinkPullRequestCommentRequest],
+        Union[
+            developer_connect.PullRequestComment,
+            Awaitable[developer_connect.PullRequestComment],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def add_git_repository_link_pull_request_review_comment(
+        self,
+    ) -> Callable[
+        [developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest],
+        Union[
+            developer_connect.PullRequestReviewComment,
+            Awaitable[developer_connect.PullRequestReviewComment],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def modify_git_repository_link_pull_request(
+        self,
+    ) -> Callable[
+        [developer_connect.ModifyGitRepositoryLinkPullRequestRequest],
+        Union[developer_connect.PullRequest, Awaitable[developer_connect.PullRequest]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def fetch_git_repository_link_pull_request_list(
+        self,
+    ) -> Callable[
+        [developer_connect.FetchGitRepositoryLinkPullRequestListRequest],
+        Union[
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse,
+            Awaitable[developer_connect.FetchGitRepositoryLinkPullRequestListResponse],
         ],
     ]:
         raise NotImplementedError()
