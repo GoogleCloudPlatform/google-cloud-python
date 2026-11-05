@@ -588,6 +588,10 @@ class BigQueryCompiler(vendored_postgresql.PGCompiler, SQLCompiler):
     def visit_mod_binary(self, binary, operator, **kw):
         return f"MOD({self.process(binary.left, **kw)}, {self.process(binary.right, **kw)})"
 
+    def visit_now_func(self, fn, **kw):
+        # BigQuery has no NOW() function, use CURRENT_TIMESTAMP instead.
+        return "CURRENT_TIMESTAMP"
+
     def visit_try_cast(self, cast: elements.Cast, **kwargs: Any) -> str:
         """Compile a ``SAFE_CAST`` / ``try_cast`` expression for BigQuery."""
         return "SAFE_CAST(%s AS %s)" % (

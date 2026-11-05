@@ -491,6 +491,13 @@ def test_float_literal_pyformat_bindparam():
     assert "%(param_1:FLOAT64)s" in str(compiled)
 
 
+def test_now_compiles_to_current_timestamp(faux_conn):
+    # BigQuery has no NOW() function.
+    stmt = sqlalchemy.select(sqlalchemy.func.now().label("ts"))
+    found_sql = stmt.compile(faux_conn).string
+    assert found_sql == "SELECT CURRENT_TIMESTAMP AS `ts`"
+
+
 SAFE_CAST_TYPE_CASES = [
     pytest.param(sqlalchemy.Integer, "INT64", id="integer_class"),
     pytest.param(sqlalchemy.Integer(), "INT64", id="integer_instance"),
