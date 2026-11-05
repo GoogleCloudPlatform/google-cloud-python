@@ -308,8 +308,10 @@ def test_value_w_large_readonly_view_of_bytearray_releases_buffer(_cext):
         pytest.param(lambda data: data, id="bytes"),
         pytest.param(lambda data: memoryview(data), id="memoryview"),
         pytest.param(lambda data: memoryview(data)[1:-1], id="slice"),
-        pytest.param(lambda buffer: buffer, id="bytearray"),
-        pytest.param(lambda buffer: memoryview(buffer).toreadonly(), id="readonly"),
+        pytest.param(lambda data: bytearray(data), id="bytearray"),
+        pytest.param(
+            lambda data: memoryview(bytearray(data)).toreadonly(), id="readonly"
+        ),
     ],
 )
 def test_value_releases_gil(_cext, factory):
