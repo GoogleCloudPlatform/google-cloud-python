@@ -484,7 +484,11 @@ def log_transport_attempt(
     if not client_logging.is_error_logging_enabled(client_options):
         return
 
-    norm_status = str(status_code) if status_code is not None else None
+    norm_status = (
+        getattr(status_code, "name", str(status_code))
+        if status_code is not None
+        else None
+    )
     if not _is_failed_attempt(norm_status, exc):
         return
 
@@ -865,20 +869,24 @@ class _GrpcAttemptLoggingInterceptor(
         with self._capture_attempt_exception(method_str):
             response = continuation(client_call_details, request)
 
-        exc_fn = getattr(response, "exception", None)
-        if callable(exc_fn):
-            resp_exc = exc_fn()
-            if resp_exc is not None:
-                code_fn = getattr(response, "code", None)
-                code = code_fn() if callable(code_fn) else None
-                code_name = getattr(code, "name", None) or str(code or "UNKNOWN")
-                log_transport_attempt(
-                    target=method_str,
-                    status_code=code_name,
-                    kind="grpc",
-                    exc=resp_exc,
-                    client_options=self._client_options,
-                )
+        try:
+            exc_fn = getattr(response, "exception", None)
+            if callable(exc_fn):
+                resp_exc = exc_fn()
+                if resp_exc is not None:
+                    code_fn = getattr(response, "code", None)
+                    code = code_fn() if callable(code_fn) else None
+                    code_name = getattr(code, "name", None) or str(code or "UNKNOWN")
+                    log_transport_attempt(
+                        target=method_str,
+                        status_code=code_name,
+                        kind="grpc",
+                        exc=resp_exc,
+                        client_options=self._client_options,
+                    )
+        except Exception:
+            # Fail-open: never disrupt the caller's RPC flow on post-dispatch inspection errors
+            pass
         return response
 
 
@@ -905,6 +913,8 @@ class _AsyncGrpcAttemptLoggingInterceptor(
         method_str = _decode_method_name(getattr(client_call_details, "method", None))
         with self._capture_attempt_exception(method_str):
             call = await continuation(client_call_details, request)
+
+        try:
             code_fn = getattr(call, "code", None)
             if callable(code_fn):
                 code = await code_fn()
@@ -920,7 +930,10 @@ class _AsyncGrpcAttemptLoggingInterceptor(
                         client_options=self._client_options,
                         status_message=details or None,
                     )
-            return call
+        except Exception:
+            # Fail-open: never disrupt the caller's RPC flow on post-dispatch inspection errors
+            pass
+        return call
 
 
 def _build_otel_grpc_hook_kwargs(

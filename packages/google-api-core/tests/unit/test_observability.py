@@ -2408,6 +2408,15 @@ def test_get_service_logger(method_name, target, expected_name):
         pytest.param(
             "true",
             {
+                "target": "/google.showcase.v1beta1.Echo/Echo",
+                "status_code": types.SimpleNamespace(name="OK"),
+                "kind": "grpc",
+            },
+            id="grpc_enum_ok_status",
+        ),
+        pytest.param(
+            "true",
+            {
                 "target": "https://example.com/v1/echo",
                 "status_code": 200,
                 "kind": "http",
@@ -2530,6 +2539,15 @@ def test_grpc_attempt_logging_interceptor_sync_responses(monkeypatch):
         assert mock_log.call_args[1]["target"] == "/google.showcase.v1beta1.Echo/Echo"
         assert mock_log.call_args[1]["status_code"] == "UNAVAILABLE"
 
+    cancelled_response = mock.Mock()
+    cancelled_response.exception.side_effect = RuntimeError("FutureCancelledError")
+    assert (
+        interceptor.intercept_unary_unary(
+            lambda d, r: cancelled_response, call_details, "req"
+        )
+        is cancelled_response
+    )
+
 
 class _FakeSyncRpcError(Exception):
     def code(self):
@@ -2608,6 +2626,15 @@ async def test_grpc_attempt_logging_interceptor_async(monkeypatch):
         assert mock_log.call_args[1]["target"] == "/google.showcase.v1beta1.Echo/Echo"
         assert mock_log.call_args[1]["status_code"] == "UNAVAILABLE"
         assert mock_log.call_args[1]["status_message"] == "backend unavailable"
+
+    broken_code_call = mock.AsyncMock()
+    broken_code_call.code.side_effect = RuntimeError("broken code inspection")
+    assert (
+        await interceptor.intercept_unary_unary(
+            mock.AsyncMock(return_value=broken_code_call), call_details, "req"
+        )
+        is broken_code_call
+    )
 
     class FakeAsyncError(Exception):
         def code(self):
