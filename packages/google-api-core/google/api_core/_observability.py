@@ -19,6 +19,7 @@
 from __future__ import annotations
 
 import contextlib
+import functools
 import traceback
 import urllib.parse
 from typing import TYPE_CHECKING, Any, Callable, Sequence
@@ -42,22 +43,19 @@ if TYPE_CHECKING:
     from google.api_core.grpc_helpers import ClientInterceptor  # noqa: F401
 
 _TRACER_PROVIDER = "tracer_provider"
-_HAS_OPENTELEMETRY: bool | None = None
 
 
+@functools.cache
 def has_opentelemetry() -> bool:
     """Checks once per process if opentelemetry-api is installed."""
-    global _HAS_OPENTELEMETRY
-    if _HAS_OPENTELEMETRY is None:
-        try:
-            # Ignored by mypy: Optional dependency only checked at runtime
-            # flake8: Imported only to verify package installation
-            import opentelemetry.trace  # type: ignore[import-not-found] # noqa: F401
+    try:
+        # Ignored by mypy: Optional dependency only checked at runtime
+        # flake8: Imported only to verify package installation
+        import opentelemetry.trace  # type: ignore[import-not-found] # noqa: F401
 
-            _HAS_OPENTELEMETRY = True
-        except ImportError:
-            _HAS_OPENTELEMETRY = False
-    return _HAS_OPENTELEMETRY
+        return True
+    except ImportError:
+        return False
 
 
 def is_otel_capabilities_enabled(
