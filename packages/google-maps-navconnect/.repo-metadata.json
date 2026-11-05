@@ -1,5 +1,5 @@
 {
-    "api_description": "Navigation Connect API.",
+    "api_description": "Navigate and track trips seamlessly with Google Maps or Waze.",
     "api_id": "navigationconnect.googleapis.com",
     "api_shortname": "navigationconnect",
     "client_documentation": "https://googleapis.dev/python/google-maps-navconnect/latest",

@@ -19,6 +19,7 @@ from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
@@ -28,8 +29,8 @@ from google.longrunning import operations_pb2  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
 from google.cloud.discoveryengine_v1 import gapic_version as package_version
+from google.cloud.discoveryengine_v1.types import serving_config, serving_config_service
 from google.cloud.discoveryengine_v1.types import serving_config as gcd_serving_config
-from google.cloud.discoveryengine_v1.types import serving_config_service
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
     gapic_version=package_version.__version__
@@ -40,7 +41,11 @@ DEFAULT_CLIENT_INFO.protobuf_runtime_version = google.protobuf.__version__
 class ServingConfigServiceTransport(abc.ABC):
     """Abstract transport class for ServingConfigService."""
 
-    AUTH_SCOPES = ("https://www.googleapis.com/auth/cloud-platform",)
+    AUTH_SCOPES = (
+        "https://www.googleapis.com/auth/cloud-platform",
+        "https://www.googleapis.com/auth/discoveryengine.readwrite",
+        "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+    )
 
     DEFAULT_HOST: str = "discoveryengine.googleapis.com"
 
@@ -143,8 +148,28 @@ class ServingConfigServiceTransport(abc.ABC):
     def _prep_wrapped_messages(self, client_info):
         # Precompute the wrapped methods.
         self._wrapped_methods = {
+            self.create_serving_config: gapic_v1.method.wrap_method(
+                self.create_serving_config,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.delete_serving_config: gapic_v1.method.wrap_method(
+                self.delete_serving_config,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.update_serving_config: gapic_v1.method.wrap_method(
                 self.update_serving_config,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_serving_config: gapic_v1.method.wrap_method(
+                self.get_serving_config,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.list_serving_configs: gapic_v1.method.wrap_method(
+                self.list_serving_configs,
                 default_timeout=None,
                 client_info=client_info,
             ),
@@ -175,6 +200,27 @@ class ServingConfigServiceTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def create_serving_config(
+        self,
+    ) -> Callable[
+        [serving_config_service.CreateServingConfigRequest],
+        Union[
+            gcd_serving_config.ServingConfig,
+            Awaitable[gcd_serving_config.ServingConfig],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def delete_serving_config(
+        self,
+    ) -> Callable[
+        [serving_config_service.DeleteServingConfigRequest],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def update_serving_config(
         self,
     ) -> Callable[
@@ -182,6 +228,27 @@ class ServingConfigServiceTransport(abc.ABC):
         Union[
             gcd_serving_config.ServingConfig,
             Awaitable[gcd_serving_config.ServingConfig],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_serving_config(
+        self,
+    ) -> Callable[
+        [serving_config_service.GetServingConfigRequest],
+        Union[serving_config.ServingConfig, Awaitable[serving_config.ServingConfig]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_serving_configs(
+        self,
+    ) -> Callable[
+        [serving_config_service.ListServingConfigsRequest],
+        Union[
+            serving_config_service.ListServingConfigsResponse,
+            Awaitable[serving_config_service.ListServingConfigsResponse],
         ],
     ]:
         raise NotImplementedError()

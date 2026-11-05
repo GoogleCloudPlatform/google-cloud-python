@@ -181,6 +181,17 @@ def test_direct_row_set_cell_with_integer_value():
     _set_cell_helper(value=value)
 
 
+def test_direct_row_set_cell_with_min_int64_value():
+    _set_cell_helper(value=-(2**63))
+
+
+@pytest.mark.parametrize("bool_val", [True, False])
+def test_direct_row_set_cell_with_bool_value(bool_val):
+    row = _make_direct_row(b"row_key", object())
+    with pytest.raises(TypeError):
+        row.set_cell("column_family_id", b"column", bool_val)
+
+
 def test_direct_row_set_cell_with_non_bytes_value():
     row_key = b"row_key"
     column = b"column"
@@ -258,6 +269,22 @@ def test_direct_row_delete_cells_non_iterable():
     columns = object()  # Not iterable
     with pytest.raises(TypeError):
         row.delete_cells(column_family_id, columns)
+
+
+@pytest.mark.parametrize("columns", ["col_abc", b"col_abc"])
+def test_direct_row_delete_cells_rejects_str_and_bytes(columns):
+    row = _make_direct_row(b"row_key", object())
+    with pytest.raises(TypeError, match="columns must be an iterable of column names"):
+        row.delete_cells("column_family_id", columns)
+    assert row._mutations == []
+
+
+@pytest.mark.parametrize("columns", ["col_abc", b"col_abc"])
+def test_conditional_row_delete_cells_rejects_str_and_bytes(columns):
+    row = _make_conditional_row(b"row_key", object(), filter_=object())
+    with pytest.raises(TypeError, match="columns must be an iterable of column names"):
+        row.delete_cells("column_family_id", columns, state=True)
+    assert row._true_pb_mutations == []
 
 
 def test_direct_row_delete_cells_all_columns():

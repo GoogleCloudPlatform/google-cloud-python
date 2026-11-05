@@ -50,11 +50,12 @@ class AutoProtectionPolicy(proto.Message):
 
     Attributes:
         name (str):
-            Identifier. The resource name of the AutoprotectionPolicy.
-            Format:
+            Output only. Identifier. The resource name of the
+            AutoprotectionPolicy. Format:
             ``projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protection_policy}``
         description (str):
-            Optional. A description of the policy.
+            Optional. A description of the policy. The
+            description must be at most 2048 characters.
         backup_plan_details (MutableSequence[google.cloud.backupdr_v1beta.types.BackupPlanDetail]):
             Required. The backup plan details for
             matching resources.
@@ -282,7 +283,7 @@ class KeyValuePair(proto.Message):
             Format:``[\p{Ll}\p{Lo}][\p{Ll}\p{Lo}\p{N}_-]{0,62}``.
         values (MutableSequence[str]):
             Required. The values of the label to match. There will be
-            explicit “OR” between values of array. Each value must be in
+            explicit "OR" between values of array. Each value must be in
             the format ``{label_value}``. The value must match the regex
             Format: ``[\\p{Ll}\\p{Lo}\\p{N}_-]{1,63}``.
     """
@@ -309,9 +310,24 @@ class CreateAutoProtectionPolicyRequest(proto.Message):
             Required. The ID to use for the policy.
             This will become the final component of the
             policy's resource name.
+
+            This value must start with a lowercase letter
+            followed by up to 62 lowercase letters, numbers,
+            or hyphens, and cannot end with a hyphen.
         auto_protection_policy (google.cloud.backupdr_v1beta.types.AutoProtectionPolicy):
             Required. The AutoProtectionPolicy resource
             to create.
+        request_id (str):
+            Optional. An optional request ID to identify
+            requests. Specify a unique request ID so that if
+            you must retry your request, the server will
+            know to ignore the request if it has already
+            been completed. The server will guarantee that
+            for at least 60 minutes since the first request.
+
+            The request ID must be a valid UUID with the
+            exception that zero UUID is not supported
+            (00000000-0000-0000-0000-000000000000).
     """
 
     parent: str = proto.Field(
@@ -326,6 +342,10 @@ class CreateAutoProtectionPolicyRequest(proto.Message):
         proto.MESSAGE,
         number=3,
         message="AutoProtectionPolicy",
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=4,
     )
 
 
@@ -351,12 +371,23 @@ class UpdateAutoProtectionPolicyRequest(proto.Message):
         auto_protection_policy (google.cloud.backupdr_v1beta.types.AutoProtectionPolicy):
             Required. The policy to update.
         update_mask (google.protobuf.field_mask_pb2.FieldMask):
-            Required. Field mask is used to specify the fields to be
+            Optional. Field mask is used to specify the fields to be
             overwritten in the AutoProtectionPolicy resource by the
             update. The fields specified in the update_mask are relative
             to the resource, not the full request. A field will be
             overwritten if it is in the mask. If the user does not
             provide a mask then all fields will be overwritten.
+        request_id (str):
+            Optional. An optional request ID to identify
+            requests. Specify a unique request ID so that if
+            you must retry your request, the server will
+            know to ignore the request if it has already
+            been completed. The server will guarantee that
+            for at least 60 minutes since the first request.
+
+            The request ID must be a valid UUID with the
+            exception that zero UUID is not supported
+            (00000000-0000-0000-0000-000000000000).
     """
 
     auto_protection_policy: "AutoProtectionPolicy" = proto.Field(
@@ -369,6 +400,10 @@ class UpdateAutoProtectionPolicyRequest(proto.Message):
         number=2,
         message=field_mask_pb2.FieldMask,
     )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
 
 
 class DeleteAutoProtectionPolicyRequest(proto.Message):
@@ -379,10 +414,22 @@ class DeleteAutoProtectionPolicyRequest(proto.Message):
             Required. The name of the policy to delete. Format:
             projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protection_policy}
         etag (str):
-            The current etag of the AutoProtectionPolicy.
-            If an etag is provided and does not match the
-            current etag of the connection, the request will
-            be rejected with an ABORTED error.
+            Optional. The current etag of the
+            AutoProtectionPolicy. If an etag is provided and
+            does not match the current etag of the
+            connection, the request will be rejected with an
+            ABORTED error.
+        request_id (str):
+            Optional. An optional request ID to identify
+            requests. Specify a unique request ID so that if
+            you must retry your request, the server will
+            know to ignore the request if it has already
+            been completed. The server will guarantee that
+            for at least 60 minutes since the first request.
+
+            The request ID must be a valid UUID with the
+            exception that zero UUID is not supported
+            (00000000-0000-0000-0000-000000000000).
     """
 
     name: str = proto.Field(
@@ -392,6 +439,10 @@ class DeleteAutoProtectionPolicyRequest(proto.Message):
     etag: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 
@@ -455,7 +506,8 @@ class ListAutoProtectionPoliciesResponse(proto.Message):
             next page. If this field is omitted, there are no subsequent
             pages.
         unreachable (MutableSequence[str]):
-            Locations that could not be reached.
+            Unordered list. Locations that could not be
+            reached.
     """
 
     @property

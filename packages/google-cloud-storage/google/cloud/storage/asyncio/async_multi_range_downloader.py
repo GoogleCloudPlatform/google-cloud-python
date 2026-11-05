@@ -15,9 +15,9 @@
 from __future__ import annotations
 
 import asyncio
+import inspect
 import logging
-from io import BytesIO
-from typing import Any, Dict, List, Optional, Tuple
+from typing import IO, Any, Dict, List, Optional, Tuple, Union
 
 from google.api_core import exceptions
 from google.api_core.retry_async import AsyncRetry
@@ -28,6 +28,11 @@ from google.cloud.storage.asyncio._stream_multiplexer import (
     _StreamEnd,
     _StreamError,
     _StreamMultiplexer,
+)
+from google.cloud.storage.asyncio._stream_pool import (
+    MultiStreamConfig,
+    _PooledStream,
+    _StreamPool,
 )
 from google.cloud.storage.asyncio.async_grpc_client import (
     AsyncGrpcClient,
@@ -40,12 +45,13 @@ from google.cloud.storage.asyncio.retry.bidi_stream_retry_manager import (
     _BidiStreamRetryManager,
 )
 from google.cloud.storage.asyncio.retry.reads_resumption_strategy import (
+    _CRC32C_MAX_PENDING,
     _DownloadState,
     _ReadResumptionStrategy,
 )
 from google.cloud.storage.exceptions import DataCorruption
 
-from ._utils import raise_if_no_fast_crc32c
+from ._utils import create_top_level_trace_span, raise_if_no_fast_crc32c
 
 _MAX_READ_RANGES_PER_BIDI_READ_REQUEST = 100
 _COMMON_READ_RETRYABLE_EXCEPTIONS = (
@@ -78,6 +84,61 @@ def _is_read_retryable(exc):
     )
 
 
+class _BytesWriter:
+    """Ensures a ``write()`` destination always receives ``bytes``."""
+
+    __slots__ = ("_buffer",)
+
+    def __init__(self, buffer):
+        self._buffer = buffer
+
+    def write(self, data):
+        return self._buffer.write(data if isinstance(data, bytes) else bytes(data))
+
+
+class _BufferWriter:
+    """Copies chunks directly into a writable buffer supporting the buffer protocol."""
+
+    __slots__ = ("_view", "_pos")
+
+    def __init__(self, buffer, length: int):
+        if length <= 0:
+            raise ValueError("A writable buffer destination requires bytes_to_read > 0")
+        view = memoryview(buffer)
+        try:
+            if view.readonly or not view.c_contiguous:
+                raise ValueError(
+                    "Buffer destination must be a writable, C-contiguous buffer"
+                )
+            nbytes = view.nbytes
+            if nbytes < length:
+                raise ValueError(
+                    f"Buffer destination ({nbytes} bytes) is smaller than "
+                    f"bytes_to_read ({length})"
+                )
+            self._view = view.cast("B")[:length]
+        finally:
+            view.release()
+        self._pos = 0
+
+    def write(self, data):
+        n = len(data)
+        end = self._pos + n
+        self._view[self._pos : end] = data
+        self._pos = end
+        return n
+
+    def close(self):
+        # Lets the caller resize the buffer again.
+        self._view.release()
+
+
+def _wrap_user_buffer(user_buffer, length: int, accepts_memoryview: bool = False):
+    if hasattr(user_buffer, "write"):
+        return user_buffer if accepts_memoryview else _BytesWriter(user_buffer)
+    return _BufferWriter(user_buffer, length)
+
+
 class AsyncMultiRangeDownloader:
     """Provides an interface for downloading multiple ranges of a GCS ``Object``
     concurrently.
@@ -90,7 +151,7 @@ class AsyncMultiRangeDownloader:
         mrd = await AsyncMultiRangeDownloader.create_mrd(
             client, bucket_name="chandrasiri-rs", object_name="test_open9"
         )
-        my_buff1 = open('my_fav_file.txt', 'wb')
+        my_buff1 = open("my_fav_file.txt", "wb")
         my_buff2 = BytesIO()
         my_buff3 = BytesIO()
         my_buff4 = any_object_which_provides_BytesIO_like_interface()
@@ -120,6 +181,7 @@ class AsyncMultiRangeDownloader:
         read_handle: Optional[_storage_v2.BidiReadHandle] = None,
         retry_policy: Optional[AsyncRetry] = None,
         metadata: Optional[List[Tuple[str, str]]] = None,
+        multi_stream_config: Optional[MultiStreamConfig] = None,
         **kwargs,
     ) -> AsyncMultiRangeDownloader:
         """Initializes a MultiRangeDownloader and opens the underlying bidi-gRPC
@@ -148,6 +210,11 @@ class AsyncMultiRangeDownloader:
         :type metadata: List[Tuple[str, str]]
         :param metadata: (Optional) The metadata to be sent with the ``open`` request.
 
+        :type multi_stream_config: Optional[MultiStreamConfig]
+        :param multi_stream_config: (Optional) Configuration dataclass grouping all multi-stream
+                              parameters. If None, multi-stream is disabled and a single
+                              stream is used.
+
         :rtype: :class:`~google.cloud.storage.asyncio.async_multi_range_downloader.AsyncMultiRangeDownloader`
         :returns: An initialized AsyncMultiRangeDownloader instance for reading.
         """
@@ -157,6 +224,7 @@ class AsyncMultiRangeDownloader:
             object_name,
             generation=generation,
             read_handle=read_handle,
+            multi_stream_config=multi_stream_config,
             **kwargs,
         )
         await mrd.open(retry_policy=retry_policy, metadata=metadata)
@@ -169,10 +237,11 @@ class AsyncMultiRangeDownloader:
         object_name: str,
         generation: Optional[int] = None,
         read_handle: Optional[_storage_v2.BidiReadHandle] = None,
+        multi_stream_config: Optional[MultiStreamConfig] = None,
         **kwargs,
     ) -> None:
-        """Constructor for AsyncMultiRangeDownloader, clients are not adviced to
-         use it directly. Instead it's adviced to use the classmethod `create_mrd`.
+        """Constructor for AsyncMultiRangeDownloader, clients are not advised to
+        use it directly. Instead it's advised to use the classmethod `create_mrd`.
 
         :type client: :class:`~google.cloud.storage.asyncio.async_grpc_client.AsyncGrpcClient`
         :param client: The asynchronous client to use for making API requests.
@@ -189,6 +258,11 @@ class AsyncMultiRangeDownloader:
 
         :type read_handle: _storage_v2.BidiReadHandle
         :param read_handle: (Optional) An existing read handle.
+
+        :type multi_stream_config: Optional[MultiStreamConfig]
+        :param multi_stream_config: (Optional) Configuration dataclass grouping all multi-stream
+                              parameters. If None, multi-stream is disabled and a single
+                              stream is used.
         """
         if "generation_number" in kwargs:
             if generation is not None:
@@ -215,6 +289,27 @@ class AsyncMultiRangeDownloader:
         self._open_retries: int = 0
         self.is_finalized: bool = False
         self.full_obj_server_crc32c: Optional[int] = None
+
+        self.multi_stream_config = multi_stream_config
+        self._pool: Optional[_StreamPool] = None
+        self._primary_stream: Optional[_PooledStream] = None
+        self._metadata: Optional[List[Tuple[str, str]]] = None
+        self._open_retry_policy: Optional[AsyncRetry] = None
+        self._user_open_on_error: Optional[Any] = None
+
+    def _trace_span(
+        self,
+        name: str,
+        attributes: Optional[Dict[str, Union[str, int]]] = None,
+    ):
+        """Creates a T2 OpenTelemetry span only for top-level public API calls."""
+        return create_top_level_trace_span(
+            self,
+            self.client,
+            self.bucket_name,
+            name,
+            attributes=attributes,
+        )
 
     async def __aenter__(self):
         """Opens the underlying bidi-gRPC connection to read from the object."""
@@ -244,85 +339,199 @@ class AsyncMultiRangeDownloader:
         if self._is_stream_open:
             raise ValueError("Underlying bidi-gRPC stream is already open")
 
-        if retry_policy is None:
-
-            def on_error_wrapper(exc):
-                self._open_retries += 1
-                self._on_open_error(exc)
-
-            retry_policy = AsyncRetry(
-                predicate=_is_open_retryable, on_error=on_error_wrapper
+        async with self._trace_span("Storage.AsyncMultiRangeDownloader.open"):
+            self._user_open_on_error = (
+                retry_policy._on_error if retry_policy is not None else None
             )
-        else:
-            original_on_error = retry_policy._on_error
+            if retry_policy is None:
 
-            def combined_on_error(exc):
-                self._open_retries += 1
-                self._on_open_error(exc)
-                if original_on_error:
-                    original_on_error(exc)
+                def on_error_wrapper(exc):
+                    self._open_retries += 1
+                    self._on_open_error(exc)
 
-            retry_policy = AsyncRetry(
-                predicate=_is_open_retryable,
-                initial=retry_policy._initial,
-                maximum=retry_policy._maximum,
-                multiplier=retry_policy._multiplier,
-                deadline=retry_policy._deadline,
-                on_error=combined_on_error,
-            )
+                retry_policy = AsyncRetry(
+                    predicate=_is_open_retryable, on_error=on_error_wrapper
+                )
+            else:
+                original_on_error = retry_policy._on_error
 
-        async def _do_open():
-            current_metadata = list(metadata) if metadata else []
+                def combined_on_error(exc):
+                    self._open_retries += 1
+                    self._on_open_error(exc)
+                    if original_on_error:
+                        original_on_error(exc)
 
-            # Cleanup stream from previous failed attempt, if any.
-            if self.read_obj_str:
-                if self.read_obj_str.is_stream_open:
-                    try:
-                        await self.read_obj_str.close()
-                    except exceptions.GoogleAPICallError as e:
-                        logger.warning(
-                            f"Failed to close existing stream during resumption: {e}"
+                retry_policy = AsyncRetry(
+                    predicate=_is_open_retryable,
+                    initial=retry_policy._initial,
+                    maximum=retry_policy._maximum,
+                    multiplier=retry_policy._multiplier,
+                    deadline=retry_policy._deadline,
+                    on_error=combined_on_error,
+                )
+
+            async def _do_open():
+                current_metadata = list(metadata) if metadata else []
+
+                # Cleanup stream from previous failed attempt, if any.
+                if self.read_obj_str:
+                    if self.read_obj_str.is_stream_open:
+                        try:
+                            await self.read_obj_str.close()
+                        except exceptions.GoogleAPICallError as e:
+                            logger.warning(
+                                f"Failed to close existing stream during resumption: {e}"
+                            )
+                    self.read_obj_str = None
+                    self._is_stream_open = False
+
+                self.read_obj_str = _AsyncReadObjectStream(
+                    client=self.client.grpc_client,
+                    bucket_name=self.bucket_name,
+                    object_name=self.object_name,
+                    generation_number=self.generation,
+                    read_handle=self.read_handle,
+                )
+
+                if self._routing_token:
+                    current_metadata.append(
+                        (
+                            "x-goog-request-params",
+                            f"routing_token={self._routing_token}",
                         )
-                self.read_obj_str = None
-                self._is_stream_open = False
+                    )
+                    self._routing_token = None
 
-            self.read_obj_str = _AsyncReadObjectStream(
+                await self.read_obj_str.open(
+                    metadata=current_metadata if current_metadata else None
+                )
+
+                if self.read_obj_str.generation_number:
+                    self.generation = self.read_obj_str.generation_number
+                if self.read_obj_str.read_handle:
+                    self.read_handle = self.read_obj_str.read_handle
+                if self.read_obj_str.persisted_size is not None:
+                    self.persisted_size = self.read_obj_str.persisted_size
+                self.is_finalized = self.read_obj_str.is_finalized
+                self.full_obj_server_crc32c = self.read_obj_str.full_obj_server_crc32c
+
+                self._is_stream_open = True
+
+            self._open_retry_policy = retry_policy
+            self._metadata = list(metadata) if metadata else []
+            await retry_policy(_do_open)()
+            self._multiplexer = _StreamMultiplexer(self.read_obj_str)
+            self._primary_stream = _PooledStream(self.read_obj_str, self._multiplexer)
+
+            if (
+                self.multi_stream_config is not None
+                and self.multi_stream_config.max_streams > 1
+            ):
+                self._pool = _StreamPool(
+                    stream_factory=self._create_pooled_stream,
+                    multi_stream_config=self.multi_stream_config,
+                )
+                await self._pool.add_stream(self._primary_stream)
+
+                if self.multi_stream_config.min_streams > 1:
+                    extra_streams = await asyncio.gather(
+                        *(
+                            self._create_pooled_stream()
+                            for _ in range(self.multi_stream_config.min_streams - 1)
+                        ),
+                        return_exceptions=True,
+                    )
+                    first_exc = next(
+                        (s for s in extra_streams if isinstance(s, BaseException)),
+                        None,
+                    )
+                    if first_exc is not None:
+                        for s in extra_streams:
+                            if not isinstance(s, BaseException):
+                                await s.close()
+                        await self._pool.close()
+                        self._pool = None
+                        self._multiplexer = None
+                        self.read_obj_str = None
+                        self._primary_stream = None
+                        self._is_stream_open = False
+                        raise first_exc
+
+                    for stream in extra_streams:
+                        await self._pool.add_stream(stream)
+            else:
+                self._pool = None
+
+    async def _create_pooled_stream(self) -> _PooledStream:
+        """Opens an additional pooled stream using current read_handle."""
+        stream: Optional[_AsyncReadObjectStream] = None
+        pooled_routing_token: Optional[str] = None
+        user_on_error = self._user_open_on_error
+
+        def _on_pooled_open_error(exc):
+            nonlocal pooled_routing_token
+            self._open_retries += 1
+            logger.warning(f"Error occurred while opening MRD: {exc}")
+            routing_token, read_handle = _handle_redirect(exc)
+            if routing_token:
+                pooled_routing_token = routing_token
+            if read_handle:
+                self.read_handle = read_handle
+            if user_on_error:
+                user_on_error(exc)
+
+        base_policy = self._open_retry_policy
+        pooled_retry_policy = AsyncRetry(
+            predicate=_is_open_retryable,
+            initial=base_policy._initial,
+            maximum=base_policy._maximum,
+            multiplier=base_policy._multiplier,
+            deadline=base_policy._deadline,
+            on_error=_on_pooled_open_error,
+        )
+
+        async def _do_open_pooled():
+            nonlocal stream, pooled_routing_token
+            if stream is not None and getattr(stream, "is_stream_open", False):
+                try:
+                    await stream.close()
+                except exceptions.GoogleAPICallError as e:
+                    logger.warning(
+                        f"Failed to close existing pooled stream during resumption: {e}"
+                    )
+
+            current_metadata = list(self._metadata) if self._metadata else []
+            if pooled_routing_token:
+                current_metadata.append(
+                    ("x-goog-request-params", f"routing_token={pooled_routing_token}")
+                )
+                pooled_routing_token = None
+
+            stream = _AsyncReadObjectStream(
                 client=self.client.grpc_client,
                 bucket_name=self.bucket_name,
                 object_name=self.object_name,
                 generation_number=self.generation,
                 read_handle=self.read_handle,
             )
+            await stream.open(metadata=current_metadata if current_metadata else None)
 
-            if self._routing_token:
-                current_metadata.append(
-                    ("x-goog-request-params", f"routing_token={self._routing_token}")
-                )
-                self._routing_token = None
+            if stream.generation_number:
+                self.generation = stream.generation_number
+            if stream.read_handle:
+                self.read_handle = stream.read_handle
 
-            await self.read_obj_str.open(
-                metadata=current_metadata if current_metadata else None
-            )
+        await pooled_retry_policy(_do_open_pooled)()
 
-            if self.read_obj_str.generation_number:
-                self.generation = self.read_obj_str.generation_number
-            if self.read_obj_str.read_handle:
-                self.read_handle = self.read_obj_str.read_handle
-            if self.read_obj_str.persisted_size is not None:
-                self.persisted_size = self.read_obj_str.persisted_size
-            self.is_finalized = self.read_obj_str.is_finalized
-            self.full_obj_server_crc32c = self.read_obj_str.full_obj_server_crc32c
+        mux = _StreamMultiplexer(stream)
+        return _PooledStream(stream, mux)
 
-            self._is_stream_open = True
-
-        await retry_policy(_do_open)()
-        self._multiplexer = _StreamMultiplexer(self.read_obj_str)
-
-    def _create_stream_factory(self, state, metadata):
+    def _create_stream_factory(self, state, metadata, pooled_stream=None):
         """Create a factory that opens a new stream with current routing state."""
+        target_stream = pooled_stream or self._primary_stream
 
         async def factory():
-            current_handle = state.get("read_handle")
+            current_handle = state.get("read_handle") or self.read_handle
             current_token = state.get("routing_token")
 
             stream = _AsyncReadObjectStream(
@@ -341,6 +550,7 @@ class AsyncMultiRangeDownloader:
                         f"routing_token={current_token}",
                     )
                 )
+                state["routing_token"] = None
 
             await stream.open(metadata=current_metadata if current_metadata else None)
 
@@ -348,59 +558,31 @@ class AsyncMultiRangeDownloader:
                 self.generation = stream.generation_number
             if stream.read_handle:
                 self.read_handle = stream.read_handle
-            self.is_finalized = stream.is_finalized
-            self.full_obj_server_crc32c = stream.full_obj_server_crc32c
-
-            self.read_obj_str = stream
+            if stream.object_metadata is not None:
+                self.is_finalized = stream.is_finalized
+                self.full_obj_server_crc32c = stream.full_obj_server_crc32c
+            if target_stream is not None:
+                target_stream.stream = stream
+            if target_stream is None or target_stream is self._primary_stream:
+                self.read_obj_str = stream
             self._is_stream_open = True
 
             return stream
 
         return factory
 
-    async def download_ranges(
+    async def _download_ranges_on_stream(
         self,
-        read_ranges: List[Tuple[int, int, BytesIO]],
-        lock: asyncio.Lock = None,
-        retry_policy: Optional[AsyncRetry] = None,
-        metadata: Optional[List[Tuple[str, str]]] = None,
-        enable_checksum: bool = True,
+        pooled_stream: _PooledStream,
+        read_ranges: List[Tuple[int, int, Union[IO[bytes], bytearray, memoryview]]],
+        retry_policy: AsyncRetry,
+        metadata: Optional[List[Tuple[str, str]]],
+        enable_checksum: bool,
+        accepts_memoryview: bool = False,
     ) -> None:
         """Downloads multiple byte ranges from the object into the buffers
-        provided by user with automatic retries.
-
-        :type read_ranges: List[Tuple[int, int, "BytesIO"]]
-        :param read_ranges: A list of tuples, where each tuple represents a
-            combination of byte_range and writeable buffer in format -
-            (`start_byte`, `bytes_to_read`, `writeable_buffer`). Buffer has
-            to be provided by the user, and user has to make sure appropriate
-            memory is available in the application to avoid out-of-memory crash.
-
-            Special cases:
-            if the value of `bytes_to_read` is 0, it'll be interpreted as
-            download all contents until the end of the file from `start_byte`.
-            Examples:
-                * (0, 0, buffer) : downloads 0 to end , i.e. entire object.
-                * (100, 0, buffer) : downloads from 100 to end.
-
-        :type lock: asyncio.Lock
-        :param lock: (Deprecated) This parameter is deprecated and has no effect.
-
-        :type retry_policy: :class:`~google.api_core.retry_async.AsyncRetry`
-        :param retry_policy: (Optional) The retry policy to use for the operation.
-
-        :type metadata: List[Tuple[str, str]]
-        :param metadata: (Optional) The metadata to be sent with the request.
-
-        :type enable_checksum: bool
-        :param enable_checksum: (Optional) If True, checksums are verified for downloaded data. Defaults to True.
-
-        :raises ValueError: if the underlying bidi-GRPC stream is not open.
-        :raises ValueError: if the length of read_ranges is more than 1000.
-        :raises DataCorruption: if a checksum mismatch is detected while reading data.
-
+        provided by user with automatic retries on a single pooled stream.
         """
-
         if len(read_ranges) > 1000:
             raise ValueError(
                 "Invalid input - length of read_ranges cannot be more than 1000"
@@ -417,38 +599,42 @@ class AsyncMultiRangeDownloader:
 
         # Initialize Global State for Retry Strategy
         download_states = {}
-        for read_range in read_ranges:
-            read_id = generate_random_56_bit_integer()
-            # Unpack tuple into self-documenting variable names to improve readability.
-            offset, length, user_buffer = read_range
-
-            # Heuristic to detect full object reads:
-            # - Implicit full object read: start offset is 0 and length is 0 (read all).
-            # - Explicit full object read: start offset is 0 and length matches the exact persisted size.
-            is_full_object_read = (offset == 0 and length == 0) or (
-                self.persisted_size is not None
-                and offset == 0
-                and length == self.persisted_size
-            )
-            download_states[read_id] = _DownloadState(
-                initial_offset=offset,
-                initial_length=length,
-                user_buffer=user_buffer,
-                is_full_object_read=is_full_object_read,
-            )
-
-        initial_state = {
-            "download_states": download_states,
-            "read_handle": self.read_handle,
-            "routing_token": None,
-            "enable_checksum": enable_checksum,
-            "full_obj_server_crc32c": self.full_obj_server_crc32c,
-        }
-
-        read_ids = set(download_states.keys())
-        queue = self._multiplexer.register(read_ids)
-
+        read_ids = set()
         try:
+            for read_range in read_ranges:
+                read_id = generate_random_56_bit_integer()
+                # Unpack tuple into self-documenting variable names to improve readability.
+                offset, length, user_buffer = read_range
+
+                # Heuristic to detect full object reads:
+                # - Implicit full object read: start offset is 0 and length is 0 (read all).
+                # - Explicit full object read: start offset is 0 and length matches the exact persisted size.
+                is_full_object_read = (offset == 0 and length == 0) or (
+                    self.persisted_size is not None
+                    and offset == 0
+                    and length == self.persisted_size
+                )
+                download_states[read_id] = _DownloadState(
+                    initial_offset=offset,
+                    initial_length=length,
+                    user_buffer=_wrap_user_buffer(
+                        user_buffer, length, accepts_memoryview
+                    ),
+                    is_full_object_read=is_full_object_read,
+                )
+
+            initial_state = {
+                "download_states": download_states,
+                "read_handle": self.read_handle,
+                "routing_token": None,
+                "enable_checksum": enable_checksum,
+                "full_obj_server_crc32c": self.full_obj_server_crc32c,
+            }
+
+            read_ids = set(download_states.keys())
+            queue = pooled_stream.multiplexer.register(read_ids)
+            strategy = _ReadResumptionStrategy()
+
             attempt_count = 0
             last_broken_generation = None
 
@@ -473,14 +659,16 @@ class AsyncMultiRangeDownloader:
                         broken_gen = (
                             last_broken_generation
                             if attempt_count > 1
-                            else self._multiplexer.stream_generation
+                            else pooled_stream.multiplexer.stream_generation
                         )
-                        stream_factory = self._create_stream_factory(state, metadata)
-                        await self._multiplexer.reopen_stream(
+                        stream_factory = self._create_stream_factory(
+                            state, metadata, pooled_stream=pooled_stream
+                        )
+                        await pooled_stream.multiplexer.reopen_stream(
                             broken_gen, stream_factory
                         )
 
-                    stream_generation = self._multiplexer.stream_generation
+                    stream_generation = pooled_stream.multiplexer.stream_generation
 
                     # Send Requests
                     pending_read_ids = {r.read_id for r in requests}
@@ -489,7 +677,7 @@ class AsyncMultiRangeDownloader:
                     ):
                         batch = requests[i : i + _MAX_READ_RANGES_PER_BIDI_READ_REQUEST]
                         try:
-                            await self._multiplexer.send(
+                            await pooled_stream.multiplexer.send(
                                 _storage_v2.BidiReadObjectRequest(read_ranges=batch)
                             )
                         except Exception:
@@ -522,26 +710,286 @@ class AsyncMultiRangeDownloader:
                                         data_range.read_range.read_id
                                     )
                         yield item
+                        # The strategy has consumed `item` by now: write the
+                        # chunks whose checksums are done, and keep the
+                        # backlog bounded.
+                        await strategy.verify_pending_checksums(
+                            state, _CRC32C_MAX_PENDING
+                        )
+
+                    # Write (or reject) every held chunk before the attempt
+                    # ends, so a mismatch is raised inside the retry loop,
+                    # as an inline one is.
+                    await strategy.verify_pending_checksums(state)
 
                 return generator()
 
-            strategy = _ReadResumptionStrategy()
             retry_manager = _BidiStreamRetryManager(
                 strategy, send_and_recv_via_multiplexer
             )
 
             try:
-                await retry_manager.execute(initial_state, retry_policy)
+                try:
+                    await retry_manager.execute(initial_state, retry_policy)
+                except DataCorruption:
+                    raise
+                except Exception:
+                    # Chunks received before the stream error still have
+                    # in-flight checksum futures in initial_state. Verify them
+                    # before raising the stream error so an earlier corrupt
+                    # chunk raises DataCorruption (matching inline verification)
+                    # and valid chunks already received are written.
+                    await strategy.verify_pending_checksums(initial_state)
+                    raise
+                await strategy.verify_pending_checksums(initial_state)
             except DataCorruption:
                 if self.is_stream_open:
                     await self.close()
                 raise
+            finally:
+                # Drop chunks still held, e.g. after cancellation.
+                strategy.discard_pending_checksums(initial_state)
 
             if initial_state.get("read_handle"):
                 self.read_handle = initial_state["read_handle"]
+
+            for download_state in download_states.values():
+                if (
+                    isinstance(download_state.user_buffer, _BufferWriter)
+                    and download_state.bytes_written != download_state.initial_length
+                ):
+                    raise BufferError(
+                        f"Buffer destination expected {download_state.initial_length} "
+                        f"bytes at offset {download_state.initial_offset}, got "
+                        f"{download_state.bytes_written}"
+                    )
         finally:
-            if self._multiplexer is not None:
-                self._multiplexer.unregister(read_ids)
+            if pooled_stream.multiplexer is not None:
+                pooled_stream.multiplexer.unregister(read_ids)
+            for download_state in download_states.values():
+                if isinstance(download_state.user_buffer, _BufferWriter):
+                    download_state.user_buffer.close()
+
+    async def download_ranges(
+        self,
+        read_ranges: List[Tuple[int, int, Union[IO[bytes], bytearray, memoryview]]],
+        lock: Optional[asyncio.Lock] = None,
+        retry_policy: Optional[AsyncRetry] = None,
+        metadata: Optional[List[Tuple[str, str]]] = None,
+        enable_checksum: bool = True,
+        accepts_memoryview: bool = False,
+    ) -> None:
+        """Downloads multiple byte ranges from the object into the buffers
+        provided by user with automatic retries across a managed multi-stream pool.
+
+        :type read_ranges: List[Tuple[int, int, Union[IO[bytes], bytearray, memoryview]]]
+        :param read_ranges: A list of tuples, where each tuple represents a
+            combination of byte_range and writeable buffer in format -
+            (`start_byte`, `bytes_to_read`, `writeable_buffer`). Buffer has
+            to be provided by the user, and user has to make sure appropriate
+            memory is available in the application to avoid out-of-memory crash.
+
+            If ``writeable_buffer`` has a ``write()`` method (e.g.
+            :class:`io.BytesIO`, an open file, or a custom stream), each
+            chunk is passed to ``writeable_buffer.write()`` as ``bytes``
+            (or as a ``memoryview`` when ``accepts_memoryview`` is True).
+            Otherwise, ``writeable_buffer`` must be a writable, C-contiguous
+            buffer supporting the buffer protocol (e.g. :class:`bytearray`
+            or a writable :class:`memoryview` slice) of at least
+            ``bytes_to_read`` bytes (with ``bytes_to_read > 0``), and the SDK
+            copies each chunk directly into it in place (straight from the
+            gRPC response buffer, without an intermediate ``bytes``, when the
+            zero-copy parser is enabled with
+            ``GCS_PYTHON_CLIENT_ZERO_COPY_BIDI_READ=1`` and the installed
+            ``google-crc32c`` accepts ``memoryview``). If fewer than
+            ``bytes_to_read`` bytes are available before end of object,
+            :exc:`BufferError` is raised.
+
+            Special cases:
+            if the value of `bytes_to_read` is 0, it'll be interpreted as
+            download all contents until the end of the file from `start_byte`
+            (requires a ``write()`` destination).
+            Examples:
+                * (0, 0, buffer) : downloads 0 to end , i.e. entire object.
+                * (100, 0, buffer) : downloads from 100 to end.
+
+        :type lock: Optional[asyncio.Lock]
+        :param lock: (Deprecated) This parameter is deprecated and has no effect.
+
+        :type retry_policy: :class:`~google.api_core.retry_async.AsyncRetry`
+        :param retry_policy: (Optional) The retry policy to use for the operation.
+
+        :type metadata: List[Tuple[str, str]]
+        :param metadata: (Optional) The metadata to be sent with the request.
+
+        :type enable_checksum: bool
+        :param enable_checksum: (Optional) If True, checksums are verified for downloaded data. Defaults to True.
+            Chunks of ``GCS_PYTHON_CLIENT_CRC32C_OFFLOAD_MIN_BYTES`` bytes or
+            more (default 1 MiB) are verified on a worker thread and written to
+            their buffer once the checksum matches; chunks still waiting are
+            discarded if the call is cancelled or a mismatch is found, and a
+            retry requests them again. Setting
+            ``GCS_PYTHON_CLIENT_CRC32C_OFFLOAD_MIN_BYTES=0`` verifies every
+            chunk inline.
+
+        :type accepts_memoryview: bool
+        :param accepts_memoryview: (Optional) If True, ``write()`` destinations
+            may receive each chunk as a read-only :class:`memoryview` of the
+            received gRPC message instead of ``bytes`` (only when the zero-copy
+            parser is enabled with ``GCS_PYTHON_CLIENT_ZERO_COPY_BIDI_READ=1``).
+            The view keeps that message (the whole response, which may also
+            carry other ranges' chunks) alive while the destination or the
+            SDK's most recently processed response references it; use
+            ``bytes(data)`` to keep the data without the message. Destinations
+            must still accept ``bytes``, which the generated parser produces.
+            Unlike buffer destinations (which raise :exc:`BufferError` on
+            short reads), ``write()`` destinations observe each chunk's length
+            and allow short reads clamped at end of object as well as
+            ``bytes_to_read=0``. No effect on buffer destinations. Defaults
+            to False.
+
+        :raises ValueError: if the underlying bidi-GRPC stream is not open.
+        :raises ValueError: if the length of read_ranges is more than 1000.
+        :raises ValueError: if a buffer destination is read-only, not
+            C-contiguous, smaller than ``bytes_to_read``, or used with
+            ``bytes_to_read <= 0``.
+        :raises BufferError: if fewer than ``bytes_to_read`` bytes are returned
+            for a buffer destination.
+        :raises DataCorruption: if a checksum mismatch is detected while reading data.
+
+        """
+
+        if len(read_ranges) > 1000:
+            raise ValueError(
+                "Invalid input - length of read_ranges cannot be more than 1000"
+            )
+
+        if enable_checksum:
+            raise_if_no_fast_crc32c()
+
+        if not self._is_stream_open:
+            raise ValueError("Underlying bidi-gRPC stream is not open")
+
+        if self.read_obj_str is None or self._multiplexer is None:
+            raise ValueError(
+                "Underlying bidi-gRPC stream or multiplexer is not initialized"
+            )
+
+        async with self._trace_span(
+            "Storage.AsyncMultiRangeDownloader.downloadRanges",
+            attributes={"gcp.storage.range.count": len(read_ranges)},
+        ):
+            if retry_policy is None:
+                retry_policy = AsyncRetry(predicate=_is_read_retryable)
+
+            if self._primary_stream is None:
+                self._primary_stream = _PooledStream(
+                    self.read_obj_str, self._multiplexer
+                )
+
+            if self._pool is not None:
+                pool = self._pool
+                persisted_size = self.persisted_size
+
+                async def _run_concurrently(awaitables) -> None:
+                    running = [asyncio.ensure_future(t) for t in awaitables]
+                    try:
+                        await asyncio.gather(*running)
+                    except BaseException:
+                        for t in running:
+                            t.cancel()
+                        await asyncio.gather(*running, return_exceptions=True)
+                        raise
+
+                async def _download_batch(
+                    stream: _PooledStream,
+                    batch: List[
+                        Tuple[int, int, Union[IO[bytes], bytearray, memoryview]]
+                    ],
+                ) -> None:
+                    batch_bytes = sum(
+                        pool.effective_range_bytes(offset, length, persisted_size)
+                        for offset, length, _ in batch
+                    )
+                    try:
+                        await self._download_ranges_on_stream(
+                            stream,
+                            batch,
+                            retry_policy,
+                            metadata,
+                            enable_checksum,
+                            accepts_memoryview=accepts_memoryview,
+                        )
+                    finally:
+                        pool.release_stream(stream, len(batch), batch_bytes)
+
+                async def _download_overflow() -> None:
+                    remaining_overflow = list(overflow)
+                    pending_scale_tasks = set(scale_tasks)
+                    overflow_tasks: List[asyncio.Task] = []
+                    try:
+                        while remaining_overflow and pending_scale_tasks:
+                            _, pending_scale_tasks = await asyncio.wait(
+                                pending_scale_tasks,
+                                return_when=asyncio.FIRST_COMPLETED,
+                            )
+                            if pool._closed:
+                                break
+                            if pending_scale_tasks:
+                                (
+                                    extra_assignments,
+                                    remaining_overflow,
+                                    _,
+                                ) = await pool.distribute_ranges(
+                                    remaining_overflow,
+                                    allow_scale_up=True,
+                                    persisted_size=persisted_size,
+                                )
+                                for s, b in extra_assignments.items():
+                                    overflow_tasks.append(
+                                        asyncio.create_task(_download_batch(s, b))
+                                    )
+
+                        if remaining_overflow and not pool._closed:
+                            extra_assignments, _, _ = await pool.distribute_ranges(
+                                remaining_overflow,
+                                allow_scale_up=False,
+                                persisted_size=persisted_size,
+                            )
+                            for s, b in extra_assignments.items():
+                                overflow_tasks.append(
+                                    asyncio.create_task(_download_batch(s, b))
+                                )
+
+                        await asyncio.gather(*overflow_tasks)
+                    except BaseException:
+                        for t in overflow_tasks:
+                            t.cancel()
+                        await asyncio.gather(*overflow_tasks, return_exceptions=True)
+                        raise
+
+                assignments, overflow, scale_tasks = await pool.distribute_ranges(
+                    read_ranges, persisted_size=persisted_size
+                )
+                tasks = [_download_batch(s, b) for s, b in assignments.items()]
+                if overflow:
+                    tasks.append(_download_overflow())
+
+                # Fast path: await directly to avoid asyncio.gather() Task wrapper overhead
+                # when all ranges fit onto a single stream without overflow.
+                if len(tasks) == 1:
+                    await tasks[0]
+                elif tasks:
+                    await _run_concurrently(tasks)
+            else:
+                await self._download_ranges_on_stream(
+                    self._primary_stream,
+                    read_ranges,
+                    retry_policy,
+                    metadata,
+                    enable_checksum,
+                    accepts_memoryview=accepts_memoryview,
+                )
 
     async def close(self):
         """
@@ -550,17 +998,30 @@ class AsyncMultiRangeDownloader:
         if not self._is_stream_open:
             raise ValueError("Underlying bidi-gRPC stream is not open")
 
-        if self._multiplexer:
-            await self._multiplexer.close()
-            self._multiplexer = None
+        async with self._trace_span("Storage.AsyncMultiRangeDownloader.close"):
+            if self._pool:
+                await self._pool.close()
+                self._pool = None
 
-        if self.read_obj_str:
-            try:
-                await self.read_obj_str.close()
-            except (asyncio.CancelledError, exceptions.GoogleAPICallError):
-                pass
-        self.read_obj_str = None
-        self._is_stream_open = False
+            if self._multiplexer:
+                await self._multiplexer.close()
+                self._multiplexer = None
+
+            if self.read_obj_str:
+                try:
+                    if getattr(self.read_obj_str, "is_stream_open", True):
+                        res = self.read_obj_str.close()
+                        if inspect.isawaitable(res):
+                            await res
+                except (
+                    ValueError,
+                    asyncio.CancelledError,
+                    exceptions.GoogleAPICallError,
+                ):
+                    pass
+            self.read_obj_str = None
+            self._primary_stream = None
+            self._is_stream_open = False
 
     @property
     def is_stream_open(self) -> bool:

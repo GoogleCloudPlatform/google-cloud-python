@@ -231,12 +231,12 @@ class SecretManagerServiceTransport(abc.ABC):
             ),
             self.enable_managed_rotation: gapic_v1.method.wrap_method(
                 self.enable_managed_rotation,
-                default_timeout=None,
+                default_timeout=60.0,
                 client_info=client_info,
             ),
             self.rotate_secret: gapic_v1.method.wrap_method(
                 self.rotate_secret,
-                default_timeout=None,
+                default_timeout=60.0,
                 client_info=client_info,
             ),
             self.get_location: gapic_v1.method.wrap_method(

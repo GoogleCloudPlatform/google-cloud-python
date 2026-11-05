@@ -115,7 +115,7 @@ class SqlFlagsServiceClientMeta(type):
 
 
 class SqlFlagsServiceClient(metaclass=SqlFlagsServiceClientMeta):
-    """"""
+    """Service to manage database flags for Cloud SQL instances."""
 
     # Note: DEFAULT_ENDPOINT is deprecated. Use _DEFAULT_ENDPOINT_TEMPLATE instead.
     DEFAULT_ENDPOINT = "sqladmin.googleapis.com"

@@ -115,10 +115,9 @@ class OptimizeToursUriRequest(proto.Message):
             Format:
 
             - ``projects/{project-id}``
-            - ``projects/{project-id}/locations/{location-id}``
+            - ``projects/{project-id}/locations/-``
 
-            If no location is specified, a region will be chosen
-            automatically.
+            Regional ``{location-id}`` values are not supported.
         input (google.maps.routeoptimization_v1.types.Uri):
             Required. The URI of the Cloud Storage object containing the
             ``OptimizeToursRequest``.
@@ -184,10 +183,9 @@ class BatchOptimizeToursRequest(proto.Message):
             Format:
 
             - ``projects/{project-id}``
-            - ``projects/{project-id}/locations/{location-id}``
+            - ``projects/{project-id}/locations/-``
 
-            If no location is specified, a region will be chosen
-            automatically.
+            Regional ``{location-id}`` values are not supported.
         model_configs (MutableSequence[google.maps.routeoptimization_v1.types.BatchOptimizeToursRequest.AsyncModelConfig]):
             Required. Input/Output information each
             purchase model, such as file paths and data
@@ -265,10 +263,9 @@ class OptimizeToursRequest(proto.Message):
             Format:
 
             - ``projects/{project-id}``
-            - ``projects/{project-id}/locations/{location-id}``
+            - ``projects/{project-id}/locations/-``
 
-            If no location is specified, a region will be chosen
-            automatically.
+            Regional ``{location-id}`` values are not supported.
         timeout (google.protobuf.duration_pb2.Duration):
             If this timeout is set, the server returns a
             response before the timeout period has elapsed
@@ -674,7 +671,10 @@ class OptimizeToursResponse(proto.Message):
                 [ShipmentRoute.metrics][google.maps.routeoptimization.v1.ShipmentRoute.metrics]
                 fields of the same name.
             skipped_mandatory_shipment_count (int):
-                Number of mandatory shipments skipped.
+                Number of high priority shipments skipped. High priority
+                shipments are those with an unset
+                [Shipment.penalty_cost][google.maps.routeoptimization.v1.Shipment.penalty_cost]
+                field.
             used_vehicle_count (int):
                 Number of vehicles used. Note: if a vehicle route is empty
                 and
@@ -1279,15 +1279,16 @@ class Shipment(proto.Message):
             not appear in the map, the corresponding load is considered
             as null.
         penalty_cost (float):
-            If the shipment is not completed, this penalty is added to
-            the overall cost of the routes. A shipment is considered
-            completed if one of its pickup and delivery alternatives is
-            visited. The cost may be expressed in the same unit used for
-            all other cost-related fields in the model and must be
-            positive.
+            Optional. If the shipment is not completed, this penalty is
+            added to the overall cost of the routes. A shipment is
+            considered completed if one of its pickup and delivery
+            alternatives is visited. The cost may be expressed in the
+            same unit used for all other cost-related fields in the
+            model and must be non-negative.
 
             *IMPORTANT*: If this penalty is not specified, it is
-            considered infinite, i.e. the shipment must be completed.
+            considered higher priority than shipments with a specified
+            ``penalty cost``.
 
             This field is a member of `oneof`_ ``_penalty_cost``.
         allowed_vehicle_indices (MutableSequence[int]):
@@ -2039,11 +2040,19 @@ class Vehicle(proto.Message):
             WALKING (2):
                 Travel mode corresponding to walking
                 directions.
+            TWO_WHEELER (5):
+                Two-wheeled, motorized vehicle. For example, motorcycle.
+                Note that this differs from the BICYCLING travel mode which
+                covers human-powered mode. This travel mode is supported
+                only in the countries listed at `Countries and regions
+                supported for two-wheeled
+                vehicles <https://developers.google.com/maps/documentation/routes/coverage-two-wheeled>`__.
         """
 
         TRAVEL_MODE_UNSPECIFIED = 0
         DRIVING = 1
         WALKING = 2
+        TWO_WHEELER = 5
 
     class UnloadingPolicy(proto.Enum):
         r"""Policy on how a vehicle can be unloaded. Applies only to shipments
@@ -2359,15 +2368,15 @@ class Vehicle(proto.Message):
                 duration. This cost adds up to other costs defined in the
                 model, with the same unit.
 
-                If defined, ``quadratic_soft_max_duration`` must be
-                nonnegative. If ``max_duration`` is also defined,
-                ``quadratic_soft_max_duration`` must be less than
-                ``max_duration``, and the difference must be no larger than
-                one day:
+                If ``quadratic_soft_max_duration`` is set, the following
+                conditions must be met:
 
-                ::
-
-                   `max_duration - quadratic_soft_max_duration <= 86400 seconds`
+                - It must be non-negative.
+                - ``max_duration`` must be defined.
+                - ``quadratic_soft_max_duration`` must be less than
+                  ``max_duration``.
+                - The difference must be no more than one day:
+                  ``max_duration - quadratic_soft_max_duration <= 86400 seconds``
             cost_per_square_hour_after_quadratic_soft_max (float):
                 Cost per square hour incurred if the
                 ``quadratic_soft_max_duration`` threshold is violated.
@@ -3295,7 +3304,29 @@ class ShipmentRoute(proto.Message):
                 for more details.
 
                 This field is a member of `oneof`_ ``_injected_solution_location_token``.
+            visit_type (google.maps.routeoptimization_v1.types.ShipmentRoute.Visit.VisitType):
+                Optional. Specifies the type of the visit. Overrides the
+                [Visit.is_pickup][google.maps.routeoptimization.v1.ShipmentRoute.Visit.is_pickup]
+                field.
         """
+
+        class VisitType(proto.Enum):
+            r"""Indicates whether the visit is a pickup, a delivery, or a visit to a
+            [Stop][google.maps.routeoptimization.v1.Stop]. Visits to a stop are
+            used only when multimodal optimization is enabled.
+
+            Values:
+                VISIT_TYPE_UNSPECIFIED (0):
+                    Unspecified visit type.
+                PICKUP_SHIPMENT (1):
+                    Visit corresponds to a shipment pickup.
+                DELIVER_SHIPMENT (2):
+                    Visit corresponds to a shipment delivery.
+            """
+
+            VISIT_TYPE_UNSPECIFIED = 0
+            PICKUP_SHIPMENT = 1
+            DELIVER_SHIPMENT = 2
 
         shipment_index: int = proto.Field(
             proto.INT32,
@@ -3337,6 +3368,11 @@ class ShipmentRoute(proto.Message):
             proto.INT32,
             number=13,
             optional=True,
+        )
+        visit_type: "ShipmentRoute.Visit.VisitType" = proto.Field(
+            proto.ENUM,
+            number=14,
+            enum="ShipmentRoute.Visit.VisitType",
         )
 
     class Transition(proto.Message):
@@ -3836,7 +3872,7 @@ class AggregatedMetrics(proto.Message):
     r"""Aggregated metrics for
     [ShipmentRoute][google.maps.routeoptimization.v1.ShipmentRoute]
     (resp. for
-    [OptimizeToursResponse][google.maps.routeoptimization.v1.OptimizeToursResponse]
+    [OptimizeToursResponse][google.maps.routeoptimization.v1.OptimizeToursResponse])
     over all
     [Transition][google.maps.routeoptimization.v1.ShipmentRoute.Transition]
     and/or [Visit][google.maps.routeoptimization.v1.ShipmentRoute.Visit]
@@ -3852,10 +3888,13 @@ class AggregatedMetrics(proto.Message):
             Number of shipments performed. Note that a
             pickup and delivery pair only counts once.
         performed_mandatory_shipment_count (int):
-            Number of mandatory shipments performed.
+            Number of high priority shipments performed. High priority
+            shipments are those with an unset
+            [Shipment.penalty_cost][google.maps.routeoptimization.v1.Shipment.penalty_cost]
+            field.
 
-            Experimental: This field's behavior or existence
-            may change in future.
+            Experimental: This field's behavior or existence may change
+            in future.
 
             This field is a member of `oneof`_ ``_performed_mandatory_shipment_count``.
         performed_shipment_penalty_cost_sum (float):

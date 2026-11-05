@@ -379,6 +379,91 @@ def test_extract_endpoint_attributes(client_options, expected_attrs):
     assert _observability._extract_endpoint_attributes(client_options) == expected_attrs
 
 
+@pytest.mark.parametrize(
+    "client_options,default_host,expected_attrs",
+    [
+        pytest.param(
+            None,
+            "localhost:7469",
+            {
+                "server.address": "localhost",
+                "server.port": 7469,
+                "url.domain": "googleapis.com",
+            },
+            id="none_options_uses_default_host",
+        ),
+        pytest.param(
+            {},
+            "localhost:7469",
+            {
+                "server.address": "localhost",
+                "server.port": 7469,
+                "url.domain": "googleapis.com",
+            },
+            id="empty_dict_uses_default_host",
+        ),
+        pytest.param(
+            ClientOptions(api_endpoint=None),
+            "localhost:7469",
+            {
+                "server.address": "localhost",
+                "server.port": 7469,
+                "url.domain": "googleapis.com",
+            },
+            id="client_options_without_endpoint_uses_default_host",
+        ),
+        pytest.param(
+            ClientOptions(api_endpoint="custom.example.com:8443"),
+            "localhost:7469",
+            {
+                "server.address": "custom.example.com",
+                "server.port": 8443,
+                "url.domain": "googleapis.com",
+            },
+            id="client_options_endpoint_overrides_default_host",
+        ),
+        pytest.param(
+            {"api_endpoint": "custom.example.com:8443"},
+            "localhost:7469",
+            {
+                "server.address": "custom.example.com",
+                "server.port": 8443,
+                "url.domain": "googleapis.com",
+            },
+            id="dict_endpoint_overrides_default_host",
+        ),
+        pytest.param(
+            ClientOptions(api_endpoint=""),
+            "",
+            {
+                "url.domain": "googleapis.com",
+            },
+            id="empty_string_endpoint_and_default_host",
+        ),
+        pytest.param(
+            ClientOptions(api_endpoint=""),
+            "localhost:7469",
+            {
+                "server.address": "localhost",
+                "server.port": 7469,
+                "url.domain": "googleapis.com",
+            },
+            id="empty_string_endpoint_falls_back_to_default_host",
+        ),
+    ],
+)
+def test_extract_endpoint_attributes_default_host(
+    client_options, default_host, expected_attrs
+):
+    """Proves that _extract_endpoint_attributes falls back to default_host when api_endpoint is not set."""
+    assert (
+        _observability._extract_endpoint_attributes(
+            client_options, default_host=default_host
+        )
+        == expected_attrs
+    )
+
+
 def test_grpc_client_request_hook():
     """Proves that _grpc_client_request_hook attaches extracted T4 attributes to recording spans,
     normalizes span names, sets fully qualified rpc.method, and allows legacy rpc.system to coexist.

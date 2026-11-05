@@ -176,6 +176,28 @@ class ProjectServiceClient(metaclass=ProjectServiceClientMeta):
         return self._transport
 
     @staticmethod
+    def content_policy_path(
+        organization: str,
+        location: str,
+        content_policy: str,
+    ) -> str:
+        """Returns a fully-qualified content_policy string."""
+        return "organizations/{organization}/locations/{location}/contentPolicies/{content_policy}".format(
+            organization=organization,
+            location=location,
+            content_policy=content_policy,
+        )
+
+    @staticmethod
+    def parse_content_policy_path(path: str) -> Dict[str, str]:
+        """Parses a content_policy path into its component segments."""
+        m = re.match(
+            r"^organizations/(?P<organization>.+?)/locations/(?P<location>.+?)/contentPolicies/(?P<content_policy>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
     def project_path(
         project: str,
     ) -> str:
@@ -188,6 +210,28 @@ class ProjectServiceClient(metaclass=ProjectServiceClientMeta):
     def parse_project_path(path: str) -> Dict[str, str]:
         """Parses a project path into its component segments."""
         m = re.match(r"^projects/(?P<project>.+?)$", path)
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def template_path(
+        project: str,
+        location: str,
+        template: str,
+    ) -> str:
+        """Returns a fully-qualified template string."""
+        return "projects/{project}/locations/{location}/templates/{template}".format(
+            project=project,
+            location=location,
+            template=template,
+        )
+
+    @staticmethod
+    def parse_template_path(path: str) -> Dict[str, str]:
+        """Parses a template path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/templates/(?P<template>.+?)$",
+            path,
+        )
         return m.groupdict() if m else {}
 
     @staticmethod

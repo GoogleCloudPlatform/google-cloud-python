@@ -22,11 +22,12 @@ from google.rpc import status_pb2
 
 from google.cloud._storage_v2.types import storage as storage_type
 from google.cloud._storage_v2.types.storage import BidiWriteObjectRedirectedError
-from google.cloud.storage import Blob
+from google.cloud.storage import Blob, Bucket
 from google.cloud.storage.asyncio.async_appendable_object_writer import (
     _DEFAULT_FLUSH_INTERVAL_BYTES,
     _MAX_CHUNK_SIZE_BYTES,
     AsyncAppendableObjectWriter,
+    Preconditions,
     _is_write_retryable,
 )
 
@@ -130,6 +131,20 @@ def mock_appendable_writer():
     stream_patcher.stop()
 
 
+def _make_grpc_client():
+    """Returns a client whose transport resolves `bidi_write_object`.
+
+    Use it with a patched `AsyncBidiRpc` to inspect the requests sent on open.
+    """
+    mock_client = mock.MagicMock()
+    transport = mock_client.grpc_client._client._transport
+    transport.bidi_write_object = mock.sentinel.bidi_write_object
+    transport._wrapped_methods = {
+        mock.sentinel.bidi_write_object: mock.sentinel.wrapped_bidi_write_object
+    }
+    return mock_client
+
+
 class TestAsyncAppendableObjectWriter:
     def _make_one(self, mock_client, **kwargs):
         return AsyncAppendableObjectWriter(mock_client, BUCKET, OBJECT, **kwargs)
@@ -173,6 +188,7 @@ class TestAsyncAppendableObjectWriter:
             write_handle=None,
             routing_token=None,
             storage_class=storage_class,
+            preconditions=None,
         )
         assert writer.write_obj_stream.storage_class == storage_class
 
@@ -272,8 +288,141 @@ class TestAsyncAppendableObjectWriter:
             write_handle=None,
             routing_token=None,
             storage_class=storage_class,
+            preconditions=None,
         )
         assert writer.write_obj_stream.storage_class == storage_class
+
+    @pytest.mark.parametrize(
+        "kwargs, error, match",
+        [
+            (
+                {"preconditions": {"if_generation_match": 0}},
+                TypeError,
+                "must be an instance of Preconditions",
+            ),
+            (
+                {
+                    "generation": 0,
+                    "preconditions": Preconditions(if_generation_match=456),
+                },
+                ValueError,
+                "require generation=None",
+            ),
+            (
+                {
+                    "generation": GENERATION,
+                    "preconditions": Preconditions(if_generation_not_match=456),
+                },
+                ValueError,
+                "require generation=None",
+            ),
+            (
+                {
+                    "write_handle": WRITE_HANDLE,
+                    "preconditions": Preconditions(if_metageneration_match=1),
+                },
+                ValueError,
+                "write_handle",
+            ),
+            (
+                {
+                    "write_handle": WRITE_HANDLE,
+                    "preconditions": Preconditions(if_metageneration_not_match=1),
+                },
+                ValueError,
+                "write_handle",
+            ),
+        ],
+    )
+    def test_init_rejects_invalid_preconditions(
+        self, mock_appendable_writer, kwargs, error, match
+    ):
+        with pytest.raises(error, match=match):
+            self._make_one(mock_appendable_writer["mock_client"], **kwargs)
+
+    @pytest.mark.parametrize(
+        "kwargs, match",
+        [
+            # blob.generation is used unless `generation` overrides it.
+            (
+                {"preconditions": Preconditions(if_generation_match=456)},
+                "require generation=None",
+            ),
+            (
+                {
+                    "write_handle": WRITE_HANDLE,
+                    "preconditions": Preconditions(if_metageneration_match=1),
+                },
+                "write_handle",
+            ),
+        ],
+    )
+    def test_from_blob_rejects_invalid_preconditions(
+        self, mock_appendable_writer, kwargs, match
+    ):
+        mock_blob = mock.Mock(spec=Blob)
+        mock_blob.name = OBJECT
+        mock_blob.bucket.name = BUCKET
+        mock_blob.generation = GENERATION
+        mock_blob.storage_class = None
+
+        with pytest.raises(ValueError, match=match):
+            AsyncAppendableObjectWriter.from_blob(
+                mock_appendable_writer["mock_client"], mock_blob, **kwargs
+            )
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "preconditions, field, value",
+        [
+            (
+                Preconditions(if_generation_match=GENERATION),
+                "if_generation_match",
+                GENERATION,
+            ),
+            (Preconditions(if_metageneration_match=4), "if_metageneration_match", 4),
+        ],
+    )
+    async def test_from_blob_generation_none_overwrites_fetched_blob(
+        self, preconditions, field, value
+    ):
+        kms_key = "projects/p/locations/l/keyRings/r/cryptoKeys/k"
+        # A Blob fetched from GCS carries its generation, metadata and, for CMEK
+        # objects, the key version used to encrypt it.
+        blob = Blob(OBJECT, bucket=Bucket(client=None, name=BUCKET))
+        blob._set_properties(
+            {
+                "name": OBJECT,
+                "generation": str(GENERATION),
+                "metageneration": "4",
+                "contentType": "text/plain",
+                "metadata": {"k": "v"},
+                "kmsKeyName": f"{kms_key}/cryptoKeyVersions/1",
+            }
+        )
+        writer = AsyncAppendableObjectWriter.from_blob(
+            _make_grpc_client(), blob, generation=None, preconditions=preconditions
+        )
+        open_resp = storage_type.BidiWriteObjectResponse(
+            resource=storage_type.Object(generation=456, size=0),
+            write_handle=storage_type.BidiWriteHandle(handle=b"wh"),
+        )
+
+        with mock.patch(
+            "google.cloud.storage.asyncio.async_write_object_stream.AsyncBidiRpc"
+        ) as mock_rpc_cls:
+            mock_rpc_cls.return_value.open = AsyncMock()
+            mock_rpc_cls.return_value.recv = AsyncMock(return_value=open_resp)
+            await writer.open()
+
+        request = mock_rpc_cls.call_args.kwargs["initial_request"]
+        assert "append_object_spec" not in request
+        spec = request.write_object_spec
+        assert getattr(spec, field) == value
+        assert spec.resource.content_type == "text/plain"
+        assert dict(spec.resource.metadata) == {"k": "v"}
+        # GCS rejects a key version when creating an object.
+        assert spec.resource.kms_key == kms_key
 
     # -------------------------------------------------------------------------
     # Stream Lifecycle Tests
@@ -311,6 +460,149 @@ class TestAsyncAppendableObjectWriter:
         mock_stream_cls = mock_appendable_writer["mock_stream_cls"]
         assert mock_stream_cls.call_args.kwargs["storage_class"] is None
         assert writer.write_obj_stream.storage_class is None
+
+    @pytest.mark.asyncio
+    async def test_open_failed_precondition_not_retried(self, mock_appendable_writer):
+        preconditions = Preconditions(if_generation_match=123)
+        writer = self._make_one(
+            mock_appendable_writer["mock_client"],
+            preconditions=preconditions,
+        )
+        mock_appendable_writer[
+            "mock_stream"
+        ].open.side_effect = exceptions.FailedPrecondition("precondition failed")
+
+        with pytest.raises(exceptions.FailedPrecondition):
+            await writer.open()
+
+        mock_appendable_writer["mock_stream"].open.assert_awaited_once()
+        assert not writer.is_stream_open
+
+    @pytest.mark.asyncio
+    async def test_open_redirect_without_generation_preserves_preconditions(self):
+        preconditions = Preconditions(
+            if_generation_match=123, if_metageneration_match=2
+        )
+        writer = self._make_one(_make_grpc_client(), preconditions=preconditions)
+
+        redirect = BidiWriteObjectRedirectedError(routing_token="rt-1")
+        redirect_exc = exceptions.Aborted("redirect", errors=[redirect])
+        open_resp = storage_type.BidiWriteObjectResponse(
+            resource=storage_type.Object(generation=888, size=0),
+            write_handle=storage_type.BidiWriteHandle(handle=b"wh-1"),
+        )
+
+        with mock.patch(
+            "google.cloud.storage.asyncio.async_write_object_stream.AsyncBidiRpc"
+        ) as mock_rpc_cls:
+            rpc_1 = mock.MagicMock()
+            rpc_1.open = AsyncMock(side_effect=redirect_exc)
+            rpc_2 = mock.MagicMock()
+            rpc_2.open = AsyncMock()
+            rpc_2.recv = AsyncMock(return_value=open_resp)
+            mock_rpc_cls.side_effect = [rpc_1, rpc_2]
+
+            await writer.open()
+
+        assert mock_rpc_cls.call_count == 2
+        for call in mock_rpc_cls.call_args_list:
+            spec = call.kwargs["initial_request"].write_object_spec
+            assert spec.appendable
+            assert "if_generation_match" in spec
+            assert spec.if_generation_match == 123
+            assert "if_metageneration_match" in spec
+            assert spec.if_metageneration_match == 2
+
+        second_meta = dict(mock_rpc_cls.call_args_list[1].kwargs["metadata"])
+        assert "routing_token=rt-1" in second_meta["x-goog-request-params"]
+        assert writer.generation == 888
+
+    @pytest.mark.asyncio
+    async def test_open_redirect_with_generation_switches_to_append_spec(self):
+        preconditions = Preconditions(
+            if_generation_match=123, if_metageneration_match=2
+        )
+        writer = self._make_one(_make_grpc_client(), preconditions=preconditions)
+
+        redirect = BidiWriteObjectRedirectedError(
+            routing_token="rt-2",
+            write_handle=storage_type.BidiWriteHandle(handle=b"wh-2"),
+            generation=777,
+        )
+        redirect_exc = exceptions.Aborted("redirect", errors=[redirect])
+        open_resp = storage_type.BidiWriteObjectResponse(
+            persisted_size=0,
+            write_handle=storage_type.BidiWriteHandle(handle=b"wh-2"),
+        )
+
+        with mock.patch(
+            "google.cloud.storage.asyncio.async_write_object_stream.AsyncBidiRpc"
+        ) as mock_rpc_cls:
+            rpc_1 = mock.MagicMock()
+            rpc_1.open = AsyncMock(side_effect=redirect_exc)
+            rpc_2 = mock.MagicMock()
+            rpc_2.open = AsyncMock()
+            rpc_2.recv = AsyncMock(return_value=open_resp)
+            mock_rpc_cls.side_effect = [rpc_1, rpc_2]
+
+            await writer.open()
+
+        assert mock_rpc_cls.call_count == 2
+        first_req = mock_rpc_cls.call_args_list[0].kwargs["initial_request"]
+        assert "write_object_spec" in first_req
+        assert "if_generation_match" in first_req.write_object_spec
+        assert first_req.write_object_spec.if_generation_match == 123
+
+        second_req = mock_rpc_cls.call_args_list[1].kwargs["initial_request"]
+        assert "append_object_spec" in second_req
+        assert second_req.append_object_spec.generation == 777
+        assert second_req.append_object_spec.routing_token == "rt-2"
+        # The metageneration precondition described the replaced object, not
+        # the generation created by this writer.
+        assert "if_metageneration_match" not in second_req.append_object_spec
+        assert writer.generation == 777
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "generation, preconditions, resent",
+        [
+            # The writer created the generation, so the precondition described
+            # the replaced object (the new generation starts at metageneration 1).
+            (
+                None,
+                Preconditions(if_generation_match=0, if_metageneration_match=1),
+                False,
+            ),
+            # The caller opened an existing generation, which it still describes.
+            (GENERATION, Preconditions(if_metageneration_match=1), True),
+        ],
+    )
+    async def test_reopen_resends_metageneration_only_in_append_mode(
+        self, generation, preconditions, resent
+    ):
+        writer = self._make_one(
+            _make_grpc_client(), generation=generation, preconditions=preconditions
+        )
+        open_resp = storage_type.BidiWriteObjectResponse(
+            resource=storage_type.Object(generation=GENERATION, size=0),
+            write_handle=storage_type.BidiWriteHandle(handle=b"wh"),
+        )
+
+        with mock.patch(
+            "google.cloud.storage.asyncio.async_write_object_stream.AsyncBidiRpc"
+        ) as mock_rpc_cls:
+            mock_rpc_cls.return_value.open = AsyncMock()
+            mock_rpc_cls.return_value.recv = AsyncMock(return_value=open_resp)
+            await writer.open()
+            # Simulate reconnect re-opening the writer
+            writer.write_obj_stream._is_stream_open = False
+            writer._is_stream_open = False
+            await writer.open()
+
+        assert mock_rpc_cls.call_count == 2
+        reopen_req = mock_rpc_cls.call_args_list[1].kwargs["initial_request"]
+        assert reopen_req.append_object_spec.generation == GENERATION
+        assert ("if_metageneration_match" in reopen_req.append_object_spec) == resent
 
     def test_on_open_error_redirection(self, mock_appendable_writer):
         """Verify redirect info is extracted from helper."""

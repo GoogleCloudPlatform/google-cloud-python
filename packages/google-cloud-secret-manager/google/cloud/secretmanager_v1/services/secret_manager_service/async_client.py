@@ -2152,7 +2152,7 @@ class SecretManagerServiceAsyncClient:
         *,
         parent: Optional[str] = None,
         cloud_sql_single_user_credentials: Optional[
-            service.EnableManagedRotationRequest.CloudSQLSingleUserCredentials
+            resources.CloudSqlSingleUserCredentials
         ] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: Union[float, object] = gapic_v1.method.DEFAULT,
@@ -2180,7 +2180,7 @@ class SecretManagerServiceAsyncClient:
                 client = secretmanager_v1.SecretManagerServiceAsyncClient()
 
                 # Initialize request argument(s)
-                cloud_sql_single_user_credentials = secretmanager_v1.CloudSQLSingleUserCredentials()
+                cloud_sql_single_user_credentials = secretmanager_v1.CloudSqlSingleUserCredentials()
                 cloud_sql_single_user_credentials.instance_id = "instance_id_value"
                 cloud_sql_single_user_credentials.username = "username_value"
 
@@ -2210,7 +2210,7 @@ class SecretManagerServiceAsyncClient:
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-            cloud_sql_single_user_credentials (:class:`google.cloud.secretmanager_v1.types.EnableManagedRotationRequest.CloudSQLSingleUserCredentials`):
+            cloud_sql_single_user_credentials (:class:`google.cloud.secretmanager_v1.types.CloudSqlSingleUserCredentials`):
                 Credentials required for Cloud SQL DB
                 for Single user Managed Rotation.
 

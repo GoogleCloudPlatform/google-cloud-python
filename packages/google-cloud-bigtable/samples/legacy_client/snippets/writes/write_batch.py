@@ -12,7 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# [START bigtable_writes_batch]
+# [START bigtable_writes_batch_legacy]
 from datetime import datetime, timezone
 
 from google.cloud import bigtable
@@ -43,4 +43,4 @@ def write_batch(project_id, instance_id, table_id):
     print("Successfully wrote 2 rows.")
 
 
-# [END bigtable_writes_batch]
+# [END bigtable_writes_batch_legacy]

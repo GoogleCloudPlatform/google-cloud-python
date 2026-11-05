@@ -29,7 +29,6 @@ from google.cloud.spanner_v1._async._helpers import _retry
 from google.cloud.spanner_v1._async.batch import _BatchBase
 from google.cloud.spanner_v1._async.snapshot import _SnapshotBase
 from google.cloud.spanner_v1._helpers import (
-    AtomicCounter,
     _check_rst_stream_error,
     _make_value_pb,
     _merge_client_context,
@@ -156,10 +155,10 @@ class Transaction(_SnapshotBase, _BatchBase):
                     session._database, "observability_options", None
                 ),
                 metadata=metadata,
-            ),
+            ) as span,
             MetricsCapture(self._resource_info),
         ):
-            method = functools.partial(method, request=request)
+            method = functools.partial(method, request=request, span=span)
             response = await _retry(
                 method,
                 allowed_exceptions={InternalServerError: _check_rst_stream_error},
@@ -202,25 +201,24 @@ class Transaction(_SnapshotBase, _BatchBase):
                 ) as span,
                 MetricsCapture(self._resource_info),
             ):
-                attempt = AtomicCounter(0)
+                attempt = 0
                 nth_request = database._next_nth_request
 
-                def wrapped_method(*args, **kwargs):
-                    attempt.increment()
+                async def wrapped_method():
+                    nonlocal attempt
+                    attempt += 1
                     call_metadata, error_augmenter = database.with_error_augmentation(
                         nth_request,
-                        attempt.value,
+                        attempt,
                         metadata,
                         span,
                     )
-                    rollback_method = functools.partial(
-                        api.rollback,
-                        session=session.name,
-                        transaction_id=self._transaction_id,
-                        metadata=call_metadata,
-                    )
                     with error_augmenter:
-                        return rollback_method(*args, **kwargs)
+                        return await api.rollback(
+                            session=session.name,
+                            transaction_id=self._transaction_id,
+                            metadata=call_metadata,
+                        )
 
                 await _retry(
                     wrapped_method,
@@ -236,7 +234,6 @@ class Transaction(_SnapshotBase, _BatchBase):
         self._execute_sql_request_count = 0
         await self.begin()
 
-    @CrossSync.convert
     @CrossSync.convert
     async def commit(
         self, return_commit_stats=False, request_options=None, max_commit_delay=None
@@ -323,11 +320,12 @@ class Transaction(_SnapshotBase, _BatchBase):
 
             add_span_event(span, "Starting Commit")
 
-            attempt = AtomicCounter(0)
+            attempt = 0
             nth_request = database._next_nth_request
 
-            async def wrapped_method(*args, **kwargs):
-                attempt.increment()
+            async def wrapped_method():
+                nonlocal attempt
+                attempt += 1
                 commit_request_args = {
                     "mutations": mutations,
                     **common_commit_request_args,
@@ -339,17 +337,15 @@ class Transaction(_SnapshotBase, _BatchBase):
 
                 call_metadata, error_augmenter = database.with_error_augmentation(
                     nth_request,
-                    attempt.value,
+                    attempt,
                     metadata,
                     span,
                 )
-                commit_method = functools.partial(
-                    api.commit,
-                    request=CommitRequest(**commit_request_args),
-                    metadata=call_metadata,
-                )
                 with error_augmenter:
-                    return await commit_method(*args, **kwargs)
+                    return await api.commit(
+                        request=CommitRequest(**commit_request_args),
+                        metadata=call_metadata,
+                    )
 
             commit_retry_event_name = "Transaction Commit Attempt Failed. Retrying"
 
@@ -556,22 +552,21 @@ class Transaction(_SnapshotBase, _BatchBase):
             )
 
             nth_request = database._next_nth_request
-            attempt = AtomicCounter(0)
+            attempt = 0
 
-            async def wrapped_method(*args, **kwargs):
-                attempt.increment()
+            async def wrapped_method(request=execute_sql_request, span=None):
+                nonlocal attempt
+                attempt += 1
                 call_metadata, error_augmenter = database.with_error_augmentation(
-                    nth_request, attempt.value, metadata
-                )
-                execute_sql_method = functools.partial(
-                    api.execute_sql,
-                    request=execute_sql_request,
-                    metadata=call_metadata,
-                    retry=retry,
-                    timeout=timeout,
+                    nth_request, attempt, metadata, span
                 )
                 with error_augmenter:
-                    return await execute_sql_method(*args, **kwargs)
+                    return await api.execute_sql(
+                        request=request,
+                        metadata=call_metadata,
+                        retry=retry,
+                        timeout=timeout,
+                    )
 
             result_set_pb: ResultSet = await self._execute_request(
                 wrapped_method,
@@ -712,22 +707,21 @@ class Transaction(_SnapshotBase, _BatchBase):
             )
 
             nth_request = database._next_nth_request
-            attempt = AtomicCounter(0)
+            attempt = 0
 
-            async def wrapped_method(*args, **kwargs):
-                attempt.increment()
+            async def wrapped_method(request=execute_batch_dml_request, span=None):
+                nonlocal attempt
+                attempt += 1
                 call_metadata, error_augmenter = database.with_error_augmentation(
-                    nth_request, attempt.value, metadata
-                )
-                execute_batch_dml_method = functools.partial(
-                    api.execute_batch_dml,
-                    request=execute_batch_dml_request,
-                    metadata=call_metadata,
-                    retry=retry,
-                    timeout=timeout,
+                    nth_request, attempt, metadata, span
                 )
                 with error_augmenter:
-                    return await execute_batch_dml_method(*args, **kwargs)
+                    return await api.execute_batch_dml(
+                        request=request,
+                        metadata=call_metadata,
+                        retry=retry,
+                        timeout=timeout,
+                    )
 
             response_pb: ExecuteBatchDmlResponse = await self._execute_request(
                 wrapped_method,

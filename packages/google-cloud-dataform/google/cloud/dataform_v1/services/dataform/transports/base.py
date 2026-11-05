@@ -432,6 +432,11 @@ class DataformTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.create_compilation_result_long_running: gapic_v1.method.wrap_method(
+                self.create_compilation_result_long_running,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.query_compilation_result_actions: gapic_v1.method.wrap_method(
                 self.query_compilation_result_actions,
                 default_timeout=None,
@@ -1135,6 +1140,15 @@ class DataformTransport(abc.ABC):
     ) -> Callable[
         [dataform.CreateCompilationResultRequest],
         Union[dataform.CompilationResult, Awaitable[dataform.CompilationResult]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_compilation_result_long_running(
+        self,
+    ) -> Callable[
+        [dataform.CreateCompilationResultRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
     ]:
         raise NotImplementedError()
 

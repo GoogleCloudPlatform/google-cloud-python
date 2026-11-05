@@ -165,6 +165,21 @@ class ZoneVmExtensionPoliciesTransport(abc.ABC):
                 default_timeout=600.0,
                 client_info=client_info,
             ),
+            self.get_vm_extension: gapic_v1.method.wrap_method(
+                self.get_vm_extension,
+                default_retry=retries.Retry(
+                    initial=0.1,
+                    maximum=60.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=600.0,
+                ),
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
             self.insert: gapic_v1.method.wrap_method(
                 self.insert,
                 default_timeout=600.0,
@@ -172,6 +187,21 @@ class ZoneVmExtensionPoliciesTransport(abc.ABC):
             ),
             self.list: gapic_v1.method.wrap_method(
                 self.list,
+                default_retry=retries.Retry(
+                    initial=0.1,
+                    maximum=60.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=600.0,
+                ),
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
+            self.list_vm_extensions: gapic_v1.method.wrap_method(
+                self.list_vm_extensions,
                 default_retry=retries.Retry(
                     initial=0.1,
                     maximum=60.0,
@@ -220,6 +250,15 @@ class ZoneVmExtensionPoliciesTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def get_vm_extension(
+        self,
+    ) -> Callable[
+        [compute.GetVmExtensionZoneVmExtensionPolicyRequest],
+        Union[compute.VmExtension, Awaitable[compute.VmExtension]],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def insert(
         self,
     ) -> Callable[
@@ -234,6 +273,18 @@ class ZoneVmExtensionPoliciesTransport(abc.ABC):
     ) -> Callable[
         [compute.ListZoneVmExtensionPoliciesRequest],
         Union[compute.VmExtensionPolicyList, Awaitable[compute.VmExtensionPolicyList]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_vm_extensions(
+        self,
+    ) -> Callable[
+        [compute.ListVmExtensionsZoneVmExtensionPoliciesRequest],
+        Union[
+            compute.ListVmExtensionsResponse,
+            Awaitable[compute.ListVmExtensionsResponse],
+        ],
     ]:
         raise NotImplementedError()
 

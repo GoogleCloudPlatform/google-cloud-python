@@ -285,6 +285,23 @@ class _BaseNetworksRestTransport(NetworksTransport):
             ]
             return http_options
 
+    class _BaseUpdateNetworkProfile:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/compute/v1/projects/{project}/global/networks/{network}/updateNetworkProfile",
+                    "body": "networks_update_network_profile_request_resource",
+                },
+            ]
+            return http_options
+
     class _BaseUpdatePeering:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")

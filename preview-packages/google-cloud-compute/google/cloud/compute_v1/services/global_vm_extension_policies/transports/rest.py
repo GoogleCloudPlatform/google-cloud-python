@@ -96,6 +96,14 @@ class GlobalVmExtensionPoliciesRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_get_vm_extension(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_get_vm_extension(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_insert(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -109,6 +117,14 @@ class GlobalVmExtensionPoliciesRestInterceptor:
                 return request, metadata
 
             def post_list(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_list_vm_extensions(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_vm_extensions(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -276,6 +292,55 @@ class GlobalVmExtensionPoliciesRestInterceptor:
         """
         return response, metadata
 
+    def pre_get_vm_extension(
+        self,
+        request: compute.GetVmExtensionGlobalVmExtensionPolicyRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        compute.GetVmExtensionGlobalVmExtensionPolicyRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for get_vm_extension
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the GlobalVmExtensionPolicies server.
+        """
+        return request, metadata
+
+    def post_get_vm_extension(
+        self, response: compute.GlobalVmExtension
+    ) -> compute.GlobalVmExtension:
+        """Post-rpc interceptor for get_vm_extension
+
+        DEPRECATED. Please use the `post_get_vm_extension_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the GlobalVmExtensionPolicies server but before
+        it is returned to user code. This `post_get_vm_extension` interceptor runs
+        before the `post_get_vm_extension_with_metadata` interceptor.
+        """
+        return response
+
+    def post_get_vm_extension_with_metadata(
+        self,
+        response: compute.GlobalVmExtension,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[compute.GlobalVmExtension, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for get_vm_extension
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the GlobalVmExtensionPolicies server but before it is returned to user code.
+
+        We recommend only using this `post_get_vm_extension_with_metadata`
+        interceptor in new development instead of the `post_get_vm_extension` interceptor.
+        When both interceptors are used, this `post_get_vm_extension_with_metadata` interceptor runs after the
+        `post_get_vm_extension` interceptor. The (possibly modified) response returned by
+        `post_get_vm_extension` will be passed to
+        `post_get_vm_extension_with_metadata`.
+        """
+        return response, metadata
+
     def pre_insert(
         self,
         request: compute.InsertGlobalVmExtensionPolicyRequest,
@@ -371,6 +436,57 @@ class GlobalVmExtensionPoliciesRestInterceptor:
         `post_list` interceptor. The (possibly modified) response returned by
         `post_list` will be passed to
         `post_list_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_list_vm_extensions(
+        self,
+        request: compute.ListVmExtensionsGlobalVmExtensionPoliciesRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        compute.ListVmExtensionsGlobalVmExtensionPoliciesRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for list_vm_extensions
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the GlobalVmExtensionPolicies server.
+        """
+        return request, metadata
+
+    def post_list_vm_extensions(
+        self, response: compute.GlobalListVmExtensionsResponse
+    ) -> compute.GlobalListVmExtensionsResponse:
+        """Post-rpc interceptor for list_vm_extensions
+
+        DEPRECATED. Please use the `post_list_vm_extensions_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the GlobalVmExtensionPolicies server but before
+        it is returned to user code. This `post_list_vm_extensions` interceptor runs
+        before the `post_list_vm_extensions_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_vm_extensions_with_metadata(
+        self,
+        response: compute.GlobalListVmExtensionsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        compute.GlobalListVmExtensionsResponse, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for list_vm_extensions
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the GlobalVmExtensionPolicies server but before it is returned to user code.
+
+        We recommend only using this `post_list_vm_extensions_with_metadata`
+        interceptor in new development instead of the `post_list_vm_extensions` interceptor.
+        When both interceptors are used, this `post_list_vm_extensions_with_metadata` interceptor runs after the
+        `post_list_vm_extensions` interceptor. The (possibly modified) response returned by
+        `post_list_vm_extensions` will be passed to
+        `post_list_vm_extensions_with_metadata`.
         """
         return response, metadata
 
@@ -999,6 +1115,156 @@ class GlobalVmExtensionPoliciesRestTransport(
                 )
             return resp
 
+    class _GetVmExtension(
+        _BaseGlobalVmExtensionPoliciesRestTransport._BaseGetVmExtension,
+        GlobalVmExtensionPoliciesRestStub,
+    ):
+        def __hash__(self):
+            return hash("GlobalVmExtensionPoliciesRestTransport.GetVmExtension")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: compute.GetVmExtensionGlobalVmExtensionPolicyRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> compute.GlobalVmExtension:
+            r"""Call the get vm extension method over HTTP.
+
+            Args:
+                request (~.compute.GetVmExtensionGlobalVmExtensionPolicyRequest):
+                    The request object. A request message for
+                GlobalVmExtensionPolicies.GetVmExtension.
+                See the method description for details.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.compute.GlobalVmExtension:
+
+            """
+
+            http_options = _BaseGlobalVmExtensionPoliciesRestTransport._BaseGetVmExtension._get_http_options()
+            request, metadata = self._interceptor.pre_get_vm_extension(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGlobalVmExtensionPoliciesRestTransport._BaseGetVmExtension,
+                    "_BaseGetVmExtension__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.compute_v1.GlobalVmExtensionPoliciesClient.GetVmExtension",
+                    extra={
+                        "serviceName": "google.cloud.compute.v1.GlobalVmExtensionPolicies",
+                        "rpcName": "GetVmExtension",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                GlobalVmExtensionPoliciesRestTransport._GetVmExtension._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = compute.GlobalVmExtension()
+            pb_resp = compute.GlobalVmExtension.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_get_vm_extension(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_get_vm_extension_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = compute.GlobalVmExtension.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.compute_v1.GlobalVmExtensionPoliciesClient.get_vm_extension",
+                    extra={
+                        "serviceName": "google.cloud.compute.v1.GlobalVmExtensionPolicies",
+                        "rpcName": "GetVmExtension",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _Insert(
         _BaseGlobalVmExtensionPoliciesRestTransport._BaseInsert,
         GlobalVmExtensionPoliciesRestStub,
@@ -1323,6 +1589,158 @@ class GlobalVmExtensionPoliciesRestTransport(
                 )
             return resp
 
+    class _ListVmExtensions(
+        _BaseGlobalVmExtensionPoliciesRestTransport._BaseListVmExtensions,
+        GlobalVmExtensionPoliciesRestStub,
+    ):
+        def __hash__(self):
+            return hash("GlobalVmExtensionPoliciesRestTransport.ListVmExtensions")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: compute.ListVmExtensionsGlobalVmExtensionPoliciesRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> compute.GlobalListVmExtensionsResponse:
+            r"""Call the list vm extensions method over HTTP.
+
+            Args:
+                request (~.compute.ListVmExtensionsGlobalVmExtensionPoliciesRequest):
+                    The request object. A request message for
+                GlobalVmExtensionPolicies.ListVmExtensions.
+                See the method description for details.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.compute.GlobalListVmExtensionsResponse:
+
+            """
+
+            http_options = _BaseGlobalVmExtensionPoliciesRestTransport._BaseListVmExtensions._get_http_options()
+            request, metadata = self._interceptor.pre_list_vm_extensions(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseGlobalVmExtensionPoliciesRestTransport._BaseListVmExtensions,
+                    "_BaseListVmExtensions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=False,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.compute_v1.GlobalVmExtensionPoliciesClient.ListVmExtensions",
+                    extra={
+                        "serviceName": "google.cloud.compute.v1.GlobalVmExtensionPolicies",
+                        "rpcName": "ListVmExtensions",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                GlobalVmExtensionPoliciesRestTransport._ListVmExtensions._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = compute.GlobalListVmExtensionsResponse()
+            pb_resp = compute.GlobalListVmExtensionsResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_vm_extensions(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_list_vm_extensions_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = compute.GlobalListVmExtensionsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.compute_v1.GlobalVmExtensionPoliciesClient.list_vm_extensions",
+                    extra={
+                        "serviceName": "google.cloud.compute.v1.GlobalVmExtensionPolicies",
+                        "rpcName": "ListVmExtensions",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _Update(
         _BaseGlobalVmExtensionPoliciesRestTransport._BaseUpdate,
         GlobalVmExtensionPoliciesRestStub,
@@ -1529,6 +1947,17 @@ class GlobalVmExtensionPoliciesRestTransport(
         return self._Get(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def get_vm_extension(
+        self,
+    ) -> Callable[
+        [compute.GetVmExtensionGlobalVmExtensionPolicyRequest],
+        compute.GlobalVmExtension,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GetVmExtension(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def insert(
         self,
     ) -> Callable[[compute.InsertGlobalVmExtensionPolicyRequest], compute.Operation]:
@@ -1546,6 +1975,17 @@ class GlobalVmExtensionPoliciesRestTransport(
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._List(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def list_vm_extensions(
+        self,
+    ) -> Callable[
+        [compute.ListVmExtensionsGlobalVmExtensionPoliciesRequest],
+        compute.GlobalListVmExtensionsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListVmExtensions(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def update(

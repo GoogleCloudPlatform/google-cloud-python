@@ -44,6 +44,17 @@ from google.cloud.backupdr_v1beta.types import (
     backupvault,
     bindingmatchingresource,
     datasourcereference,
+    restore_template,
+    restore_template_execution,
+    restore_verification_plan,
+    restore_verification_plan_association,
+)
+from google.cloud.backupdr_v1beta.types import restore_template as gcb_restore_template
+from google.cloud.backupdr_v1beta.types import (
+    restore_verification_plan as gcb_restore_verification_plan,
+)
+from google.cloud.backupdr_v1beta.types import (
+    restore_verification_plan_association as gcb_restore_verification_plan_association,
 )
 
 from .base import DEFAULT_CLIENT_INFO, BackupDRTransport
@@ -465,6 +476,576 @@ class BackupDRGrpcTransport(BackupDRTransport):
                 response_deserializer=operations_pb2.Operation.FromString,
             )
         return self._stubs["delete_management_server"]
+
+    @property
+    def create_restore_template(
+        self,
+    ) -> Callable[
+        [gcb_restore_template.CreateRestoreTemplateRequest], operations_pb2.Operation
+    ]:
+        r"""Return a callable for the create restore template method over gRPC.
+
+        Creates a new RestoreTemplate in a given project and
+        location.
+
+        Returns:
+            Callable[[~.CreateRestoreTemplateRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_restore_template" not in self._stubs:
+            self._stubs["create_restore_template"] = self._logged_channel.unary_unary(
+                "/google.cloud.backupdr.v1beta.BackupDR/CreateRestoreTemplate",
+                request_serializer=gcb_restore_template.CreateRestoreTemplateRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["create_restore_template"]
+
+    @property
+    def get_restore_template(
+        self,
+    ) -> Callable[
+        [restore_template.GetRestoreTemplateRequest], restore_template.RestoreTemplate
+    ]:
+        r"""Return a callable for the get restore template method over gRPC.
+
+        Gets details of a RestoreTemplate.
+
+        Returns:
+            Callable[[~.GetRestoreTemplateRequest],
+                    ~.RestoreTemplate]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_restore_template" not in self._stubs:
+            self._stubs["get_restore_template"] = self._logged_channel.unary_unary(
+                "/google.cloud.backupdr.v1beta.BackupDR/GetRestoreTemplate",
+                request_serializer=restore_template.GetRestoreTemplateRequest.serialize,
+                response_deserializer=restore_template.RestoreTemplate.deserialize,
+            )
+        return self._stubs["get_restore_template"]
+
+    @property
+    def list_restore_templates(
+        self,
+    ) -> Callable[
+        [restore_template.ListRestoreTemplatesRequest],
+        restore_template.ListRestoreTemplatesResponse,
+    ]:
+        r"""Return a callable for the list restore templates method over gRPC.
+
+        Lists RestoreTemplates in a given project and
+        location.
+
+        Returns:
+            Callable[[~.ListRestoreTemplatesRequest],
+                    ~.ListRestoreTemplatesResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_restore_templates" not in self._stubs:
+            self._stubs["list_restore_templates"] = self._logged_channel.unary_unary(
+                "/google.cloud.backupdr.v1beta.BackupDR/ListRestoreTemplates",
+                request_serializer=restore_template.ListRestoreTemplatesRequest.serialize,
+                response_deserializer=restore_template.ListRestoreTemplatesResponse.deserialize,
+            )
+        return self._stubs["list_restore_templates"]
+
+    @property
+    def update_restore_template(
+        self,
+    ) -> Callable[
+        [gcb_restore_template.UpdateRestoreTemplateRequest], operations_pb2.Operation
+    ]:
+        r"""Return a callable for the update restore template method over gRPC.
+
+        Updates the settings of a RestoreTemplate.
+
+        Returns:
+            Callable[[~.UpdateRestoreTemplateRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_restore_template" not in self._stubs:
+            self._stubs["update_restore_template"] = self._logged_channel.unary_unary(
+                "/google.cloud.backupdr.v1beta.BackupDR/UpdateRestoreTemplate",
+                request_serializer=gcb_restore_template.UpdateRestoreTemplateRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["update_restore_template"]
+
+    @property
+    def delete_restore_template(
+        self,
+    ) -> Callable[
+        [restore_template.DeleteRestoreTemplateRequest], operations_pb2.Operation
+    ]:
+        r"""Return a callable for the delete restore template method over gRPC.
+
+        Deletes a RestoreTemplate.
+
+        Returns:
+            Callable[[~.DeleteRestoreTemplateRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_restore_template" not in self._stubs:
+            self._stubs["delete_restore_template"] = self._logged_channel.unary_unary(
+                "/google.cloud.backupdr.v1beta.BackupDR/DeleteRestoreTemplate",
+                request_serializer=restore_template.DeleteRestoreTemplateRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["delete_restore_template"]
+
+    @property
+    def run_restore_template(
+        self,
+    ) -> Callable[
+        [restore_template.RunRestoreTemplateRequest], operations_pb2.Operation
+    ]:
+        r"""Return a callable for the run restore template method over gRPC.
+
+        Runs a RestoreTemplate.
+
+        Returns:
+            Callable[[~.RunRestoreTemplateRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "run_restore_template" not in self._stubs:
+            self._stubs["run_restore_template"] = self._logged_channel.unary_unary(
+                "/google.cloud.backupdr.v1beta.BackupDR/RunRestoreTemplate",
+                request_serializer=restore_template.RunRestoreTemplateRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["run_restore_template"]
+
+    @property
+    def get_restore_template_execution(
+        self,
+    ) -> Callable[
+        [restore_template_execution.GetRestoreTemplateExecutionRequest],
+        restore_template_execution.RestoreTemplateExecution,
+    ]:
+        r"""Return a callable for the get restore template execution method over gRPC.
+
+        Gets details of a RestoreTemplateExecution.
+
+        Returns:
+            Callable[[~.GetRestoreTemplateExecutionRequest],
+                    ~.RestoreTemplateExecution]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_restore_template_execution" not in self._stubs:
+            self._stubs["get_restore_template_execution"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1beta.BackupDR/GetRestoreTemplateExecution",
+                    request_serializer=restore_template_execution.GetRestoreTemplateExecutionRequest.serialize,
+                    response_deserializer=restore_template_execution.RestoreTemplateExecution.deserialize,
+                )
+            )
+        return self._stubs["get_restore_template_execution"]
+
+    @property
+    def list_restore_template_executions(
+        self,
+    ) -> Callable[
+        [restore_template_execution.ListRestoreTemplateExecutionsRequest],
+        restore_template_execution.ListRestoreTemplateExecutionsResponse,
+    ]:
+        r"""Return a callable for the list restore template
+        executions method over gRPC.
+
+        Lists RestoreTemplateExecutions in a given project,
+        location and restore template.
+
+        Returns:
+            Callable[[~.ListRestoreTemplateExecutionsRequest],
+                    ~.ListRestoreTemplateExecutionsResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_restore_template_executions" not in self._stubs:
+            self._stubs["list_restore_template_executions"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1beta.BackupDR/ListRestoreTemplateExecutions",
+                    request_serializer=restore_template_execution.ListRestoreTemplateExecutionsRequest.serialize,
+                    response_deserializer=restore_template_execution.ListRestoreTemplateExecutionsResponse.deserialize,
+                )
+            )
+        return self._stubs["list_restore_template_executions"]
+
+    @property
+    def trigger_restore_cleanup(
+        self,
+    ) -> Callable[
+        [restore_template_execution.TriggerRestoreCleanupRequest],
+        operations_pb2.Operation,
+    ]:
+        r"""Return a callable for the trigger restore cleanup method over gRPC.
+
+        Triggers cleanup of restored resources created during
+        execution.
+
+        Returns:
+            Callable[[~.TriggerRestoreCleanupRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "trigger_restore_cleanup" not in self._stubs:
+            self._stubs["trigger_restore_cleanup"] = self._logged_channel.unary_unary(
+                "/google.cloud.backupdr.v1beta.BackupDR/TriggerRestoreCleanup",
+                request_serializer=restore_template_execution.TriggerRestoreCleanupRequest.serialize,
+                response_deserializer=operations_pb2.Operation.FromString,
+            )
+        return self._stubs["trigger_restore_cleanup"]
+
+    @property
+    def create_restore_verification_plan(
+        self,
+    ) -> Callable[
+        [gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest],
+        operations_pb2.Operation,
+    ]:
+        r"""Return a callable for the create restore verification
+        plan method over gRPC.
+
+        Creates a new RestoreVerificationPlan in a given
+        project and location.
+
+        Returns:
+            Callable[[~.CreateRestoreVerificationPlanRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_restore_verification_plan" not in self._stubs:
+            self._stubs["create_restore_verification_plan"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1beta.BackupDR/CreateRestoreVerificationPlan",
+                    request_serializer=gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest.serialize,
+                    response_deserializer=operations_pb2.Operation.FromString,
+                )
+            )
+        return self._stubs["create_restore_verification_plan"]
+
+    @property
+    def create_restore_verification_plan_association(
+        self,
+    ) -> Callable[
+        [
+            gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest
+        ],
+        operations_pb2.Operation,
+    ]:
+        r"""Return a callable for the create restore verification
+        plan association method over gRPC.
+
+        Creates a new RestoreVerificationPlanAssociation in a
+        given RestoreVerificationPlan.
+
+        Returns:
+            Callable[[~.CreateRestoreVerificationPlanAssociationRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "create_restore_verification_plan_association" not in self._stubs:
+            self._stubs["create_restore_verification_plan_association"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1beta.BackupDR/CreateRestoreVerificationPlanAssociation",
+                    request_serializer=gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest.serialize,
+                    response_deserializer=operations_pb2.Operation.FromString,
+                )
+            )
+        return self._stubs["create_restore_verification_plan_association"]
+
+    @property
+    def get_restore_verification_plan_association(
+        self,
+    ) -> Callable[
+        [
+            restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest
+        ],
+        restore_verification_plan_association.RestoreVerificationPlanAssociation,
+    ]:
+        r"""Return a callable for the get restore verification plan
+        association method over gRPC.
+
+        Gets details of a single
+        RestoreVerificationPlanAssociation in a given
+        RestoreVerificationPlan.
+
+        Returns:
+            Callable[[~.GetRestoreVerificationPlanAssociationRequest],
+                    ~.RestoreVerificationPlanAssociation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_restore_verification_plan_association" not in self._stubs:
+            self._stubs["get_restore_verification_plan_association"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1beta.BackupDR/GetRestoreVerificationPlanAssociation",
+                    request_serializer=restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest.serialize,
+                    response_deserializer=restore_verification_plan_association.RestoreVerificationPlanAssociation.deserialize,
+                )
+            )
+        return self._stubs["get_restore_verification_plan_association"]
+
+    @property
+    def list_restore_verification_plan_associations(
+        self,
+    ) -> Callable[
+        [
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest
+        ],
+        restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse,
+    ]:
+        r"""Return a callable for the list restore verification plan
+        associations method over gRPC.
+
+        Lists RestoreVerificationPlanAssociations in a given
+        RestoreVerificationPlan.
+
+        Returns:
+            Callable[[~.ListRestoreVerificationPlanAssociationsRequest],
+                    ~.ListRestoreVerificationPlanAssociationsResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_restore_verification_plan_associations" not in self._stubs:
+            self._stubs["list_restore_verification_plan_associations"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1beta.BackupDR/ListRestoreVerificationPlanAssociations",
+                    request_serializer=restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest.serialize,
+                    response_deserializer=restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse.deserialize,
+                )
+            )
+        return self._stubs["list_restore_verification_plan_associations"]
+
+    @property
+    def delete_restore_verification_plan_association(
+        self,
+    ) -> Callable[
+        [
+            restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest
+        ],
+        operations_pb2.Operation,
+    ]:
+        r"""Return a callable for the delete restore verification
+        plan association method over gRPC.
+
+        Deletes a single RestoreVerificationPlanAssociation
+        in a given RestoreVerificationPlan.
+
+        Returns:
+            Callable[[~.DeleteRestoreVerificationPlanAssociationRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_restore_verification_plan_association" not in self._stubs:
+            self._stubs["delete_restore_verification_plan_association"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1beta.BackupDR/DeleteRestoreVerificationPlanAssociation",
+                    request_serializer=restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest.serialize,
+                    response_deserializer=operations_pb2.Operation.FromString,
+                )
+            )
+        return self._stubs["delete_restore_verification_plan_association"]
+
+    @property
+    def trigger_restore_verification(
+        self,
+    ) -> Callable[
+        [restore_verification_plan_association.TriggerRestoreVerificationRequest],
+        operations_pb2.Operation,
+    ]:
+        r"""Return a callable for the trigger restore verification method over gRPC.
+
+        Triggers a new Restore Verification for the
+        association in a given RestoreVerificationPlan.
+
+        Returns:
+            Callable[[~.TriggerRestoreVerificationRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "trigger_restore_verification" not in self._stubs:
+            self._stubs["trigger_restore_verification"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1beta.BackupDR/TriggerRestoreVerification",
+                    request_serializer=restore_verification_plan_association.TriggerRestoreVerificationRequest.serialize,
+                    response_deserializer=operations_pb2.Operation.FromString,
+                )
+            )
+        return self._stubs["trigger_restore_verification"]
+
+    @property
+    def get_restore_verification_plan(
+        self,
+    ) -> Callable[
+        [restore_verification_plan.GetRestoreVerificationPlanRequest],
+        restore_verification_plan.RestoreVerificationPlan,
+    ]:
+        r"""Return a callable for the get restore verification plan method over gRPC.
+
+        Gets details of a single RestoreVerificationPlan.
+        Returns the requested RestoreVerificationPlan.
+
+        Returns:
+            Callable[[~.GetRestoreVerificationPlanRequest],
+                    ~.RestoreVerificationPlan]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "get_restore_verification_plan" not in self._stubs:
+            self._stubs["get_restore_verification_plan"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1beta.BackupDR/GetRestoreVerificationPlan",
+                    request_serializer=restore_verification_plan.GetRestoreVerificationPlanRequest.serialize,
+                    response_deserializer=restore_verification_plan.RestoreVerificationPlan.deserialize,
+                )
+            )
+        return self._stubs["get_restore_verification_plan"]
+
+    @property
+    def list_restore_verification_plans(
+        self,
+    ) -> Callable[
+        [restore_verification_plan.ListRestoreVerificationPlansRequest],
+        restore_verification_plan.ListRestoreVerificationPlansResponse,
+    ]:
+        r"""Return a callable for the list restore verification
+        plans method over gRPC.
+
+        Lists RestoreVerificationPlans in a given project and
+        location.
+
+        Returns:
+            Callable[[~.ListRestoreVerificationPlansRequest],
+                    ~.ListRestoreVerificationPlansResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_restore_verification_plans" not in self._stubs:
+            self._stubs["list_restore_verification_plans"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1beta.BackupDR/ListRestoreVerificationPlans",
+                    request_serializer=restore_verification_plan.ListRestoreVerificationPlansRequest.serialize,
+                    response_deserializer=restore_verification_plan.ListRestoreVerificationPlansResponse.deserialize,
+                )
+            )
+        return self._stubs["list_restore_verification_plans"]
+
+    @property
+    def delete_restore_verification_plan(
+        self,
+    ) -> Callable[
+        [restore_verification_plan.DeleteRestoreVerificationPlanRequest],
+        operations_pb2.Operation,
+    ]:
+        r"""Return a callable for the delete restore verification
+        plan method over gRPC.
+
+        Deletes a single RestoreVerificationPlan. If the ``force`` flag
+        is set to ``true``, any RestoreVerificationPlanAssociations
+        linked to this RestoreVerificationPlan will also be deleted.
+
+        Returns:
+            Callable[[~.DeleteRestoreVerificationPlanRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_restore_verification_plan" not in self._stubs:
+            self._stubs["delete_restore_verification_plan"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.backupdr.v1beta.BackupDR/DeleteRestoreVerificationPlan",
+                    request_serializer=restore_verification_plan.DeleteRestoreVerificationPlanRequest.serialize,
+                    response_deserializer=operations_pb2.Operation.FromString,
+                )
+            )
+        return self._stubs["delete_restore_verification_plan"]
 
     @property
     def create_backup_vault(

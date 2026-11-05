@@ -5410,6 +5410,393 @@ async def test_fetch_read_token_flattened_error_async():
 @pytest.mark.parametrize(
     "request_type",
     [
+        developer_connect.OpenGitRepositoryLinkPullRequestRequest(),
+        {},
+    ],
+)
+def test_open_git_repository_link_pull_request(request_type, transport: str = "grpc"):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.open_git_repository_link_pull_request), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.PullRequest(
+            id="id_value",
+            title="title_value",
+            body="body_value",
+            head_ref="head_ref_value",
+            base_ref="base_ref_value",
+            author="author_value",
+            state=developer_connect.PullRequest.State.OPEN,
+            mergeability=developer_connect.PullRequest.Mergeability.MERGEABLE,
+            html_url="html_url_value",
+        )
+        response = client.open_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = developer_connect.OpenGitRepositoryLinkPullRequestRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.PullRequest)
+    assert response.id == "id_value"
+    assert response.title == "title_value"
+    assert response.body == "body_value"
+    assert response.head_ref == "head_ref_value"
+    assert response.base_ref == "base_ref_value"
+    assert response.author == "author_value"
+    assert response.state == developer_connect.PullRequest.State.OPEN
+    assert response.mergeability == developer_connect.PullRequest.Mergeability.MERGEABLE
+    assert response.html_url == "html_url_value"
+
+
+def test_open_git_repository_link_pull_request_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = developer_connect.OpenGitRepositoryLinkPullRequestRequest(
+        name="name_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.open_git_repository_link_pull_request), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.open_git_repository_link_pull_request(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.OpenGitRepositoryLinkPullRequestRequest(
+            name="name_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_open_git_repository_link_pull_request_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.open_git_repository_link_pull_request
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.open_git_repository_link_pull_request
+        ] = mock_rpc
+        request = {}
+        client.open_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.open_git_repository_link_pull_request(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_open_git_repository_link_pull_request_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = DeveloperConnectAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.open_git_repository_link_pull_request
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.open_git_repository_link_pull_request
+        ] = mock_rpc
+
+        request = {}
+        await client.open_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.open_git_repository_link_pull_request(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.OpenGitRepositoryLinkPullRequestRequest(),
+        {},
+    ],
+)
+async def test_open_git_repository_link_pull_request_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.open_git_repository_link_pull_request), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequest(
+                id="id_value",
+                title="title_value",
+                body="body_value",
+                head_ref="head_ref_value",
+                base_ref="base_ref_value",
+                author="author_value",
+                state=developer_connect.PullRequest.State.OPEN,
+                mergeability=developer_connect.PullRequest.Mergeability.MERGEABLE,
+                html_url="html_url_value",
+            )
+        )
+        response = await client.open_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = developer_connect.OpenGitRepositoryLinkPullRequestRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.PullRequest)
+    assert response.id == "id_value"
+    assert response.title == "title_value"
+    assert response.body == "body_value"
+    assert response.head_ref == "head_ref_value"
+    assert response.base_ref == "base_ref_value"
+    assert response.author == "author_value"
+    assert response.state == developer_connect.PullRequest.State.OPEN
+    assert response.mergeability == developer_connect.PullRequest.Mergeability.MERGEABLE
+    assert response.html_url == "html_url_value"
+
+
+def test_open_git_repository_link_pull_request_field_headers():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.OpenGitRepositoryLinkPullRequestRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.open_git_repository_link_pull_request), "__call__"
+    ) as call:
+        call.return_value = developer_connect.PullRequest()
+        client.open_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_open_git_repository_link_pull_request_field_headers_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.OpenGitRepositoryLinkPullRequestRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.open_git_repository_link_pull_request), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequest()
+        )
+        await client.open_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_open_git_repository_link_pull_request_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.open_git_repository_link_pull_request), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.PullRequest()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.open_git_repository_link_pull_request(
+            name="name_value",
+            pull_request=developer_connect.PullRequest(id="id_value"),
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].pull_request
+        mock_val = developer_connect.PullRequest(id="id_value")
+        assert arg == mock_val
+
+
+def test_open_git_repository_link_pull_request_flattened_error():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.open_git_repository_link_pull_request(
+            developer_connect.OpenGitRepositoryLinkPullRequestRequest(),
+            name="name_value",
+            pull_request=developer_connect.PullRequest(id="id_value"),
+        )
+
+
+@pytest.mark.asyncio
+async def test_open_git_repository_link_pull_request_flattened_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.open_git_repository_link_pull_request), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.PullRequest()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequest()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.open_git_repository_link_pull_request(
+            name="name_value",
+            pull_request=developer_connect.PullRequest(id="id_value"),
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].pull_request
+        mock_val = developer_connect.PullRequest(id="id_value")
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_open_git_repository_link_pull_request_flattened_error_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.open_git_repository_link_pull_request(
+            developer_connect.OpenGitRepositoryLinkPullRequestRequest(),
+            name="name_value",
+            pull_request=developer_connect.PullRequest(id="id_value"),
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
         developer_connect.FetchLinkableGitRepositoriesRequest(),
         {},
     ],
@@ -6834,6 +7221,3800 @@ async def test_fetch_git_refs_async_pages():
         )
         pages = []
         async for page_ in (await client.fetch_git_refs(request={})).pages:
+            pages.append(page_)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.DiffGitRepositoryLinkCommitRequest(),
+        {},
+    ],
+)
+def test_diff_git_repository_link_commit(request_type, transport: str = "grpc"):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.diff_git_repository_link_commit), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.DiffGitRepositoryLinkCommitResponse()
+        response = client.diff_git_repository_link_commit(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = developer_connect.DiffGitRepositoryLinkCommitRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.DiffGitRepositoryLinkCommitResponse)
+
+
+def test_diff_git_repository_link_commit_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = developer_connect.DiffGitRepositoryLinkCommitRequest(
+        name="name_value",
+        base_sha="base_sha_value",
+        head_sha="head_sha_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.diff_git_repository_link_commit), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.diff_git_repository_link_commit(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.DiffGitRepositoryLinkCommitRequest(
+            name="name_value",
+            base_sha="base_sha_value",
+            head_sha="head_sha_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_diff_git_repository_link_commit_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.diff_git_repository_link_commit
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.diff_git_repository_link_commit
+        ] = mock_rpc
+        request = {}
+        client.diff_git_repository_link_commit(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.diff_git_repository_link_commit(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_diff_git_repository_link_commit_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = DeveloperConnectAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.diff_git_repository_link_commit
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.diff_git_repository_link_commit
+        ] = mock_rpc
+
+        request = {}
+        await client.diff_git_repository_link_commit(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.diff_git_repository_link_commit(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.DiffGitRepositoryLinkCommitRequest(),
+        {},
+    ],
+)
+async def test_diff_git_repository_link_commit_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.diff_git_repository_link_commit), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.DiffGitRepositoryLinkCommitResponse()
+        )
+        response = await client.diff_git_repository_link_commit(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = developer_connect.DiffGitRepositoryLinkCommitRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.DiffGitRepositoryLinkCommitResponse)
+
+
+def test_diff_git_repository_link_commit_field_headers():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.DiffGitRepositoryLinkCommitRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.diff_git_repository_link_commit), "__call__"
+    ) as call:
+        call.return_value = developer_connect.DiffGitRepositoryLinkCommitResponse()
+        client.diff_git_repository_link_commit(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_diff_git_repository_link_commit_field_headers_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.DiffGitRepositoryLinkCommitRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.diff_git_repository_link_commit), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.DiffGitRepositoryLinkCommitResponse()
+        )
+        await client.diff_git_repository_link_commit(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_diff_git_repository_link_commit_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.diff_git_repository_link_commit), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.DiffGitRepositoryLinkCommitResponse()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.diff_git_repository_link_commit(
+            name="name_value",
+            base_sha="base_sha_value",
+            head_sha="head_sha_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].base_sha
+        mock_val = "base_sha_value"
+        assert arg == mock_val
+        arg = args[0].head_sha
+        mock_val = "head_sha_value"
+        assert arg == mock_val
+
+
+def test_diff_git_repository_link_commit_flattened_error():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.diff_git_repository_link_commit(
+            developer_connect.DiffGitRepositoryLinkCommitRequest(),
+            name="name_value",
+            base_sha="base_sha_value",
+            head_sha="head_sha_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_diff_git_repository_link_commit_flattened_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.diff_git_repository_link_commit), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.DiffGitRepositoryLinkCommitResponse()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.DiffGitRepositoryLinkCommitResponse()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.diff_git_repository_link_commit(
+            name="name_value",
+            base_sha="base_sha_value",
+            head_sha="head_sha_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].base_sha
+        mock_val = "base_sha_value"
+        assert arg == mock_val
+        arg = args[0].head_sha
+        mock_val = "head_sha_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_diff_git_repository_link_commit_flattened_error_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.diff_git_repository_link_commit(
+            developer_connect.DiffGitRepositoryLinkCommitRequest(),
+            name="name_value",
+            base_sha="base_sha_value",
+            head_sha="head_sha_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.FetchGitRepositoryLinkCommitRequest(),
+        {},
+    ],
+)
+def test_fetch_git_repository_link_commit(request_type, transport: str = "grpc"):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.FetchGitRepositoryLinkCommitResponse()
+        response = client.fetch_git_repository_link_commit(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = developer_connect.FetchGitRepositoryLinkCommitRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.FetchGitRepositoryLinkCommitResponse)
+
+
+def test_fetch_git_repository_link_commit_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = developer_connect.FetchGitRepositoryLinkCommitRequest(
+        name="name_value",
+        commit_sha="commit_sha_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.fetch_git_repository_link_commit(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkCommitRequest(
+            name="name_value",
+            commit_sha="commit_sha_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_fetch_git_repository_link_commit_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.fetch_git_repository_link_commit
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.fetch_git_repository_link_commit
+        ] = mock_rpc
+        request = {}
+        client.fetch_git_repository_link_commit(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.fetch_git_repository_link_commit(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_commit_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = DeveloperConnectAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.fetch_git_repository_link_commit
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.fetch_git_repository_link_commit
+        ] = mock_rpc
+
+        request = {}
+        await client.fetch_git_repository_link_commit(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.fetch_git_repository_link_commit(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.FetchGitRepositoryLinkCommitRequest(),
+        {},
+    ],
+)
+async def test_fetch_git_repository_link_commit_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.FetchGitRepositoryLinkCommitResponse()
+        )
+        response = await client.fetch_git_repository_link_commit(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = developer_connect.FetchGitRepositoryLinkCommitRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.FetchGitRepositoryLinkCommitResponse)
+
+
+def test_fetch_git_repository_link_commit_field_headers():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.FetchGitRepositoryLinkCommitRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit), "__call__"
+    ) as call:
+        call.return_value = developer_connect.FetchGitRepositoryLinkCommitResponse()
+        client.fetch_git_repository_link_commit(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_commit_field_headers_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.FetchGitRepositoryLinkCommitRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.FetchGitRepositoryLinkCommitResponse()
+        )
+        await client.fetch_git_repository_link_commit(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_fetch_git_repository_link_commit_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.FetchGitRepositoryLinkCommitResponse()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.fetch_git_repository_link_commit(
+            name="name_value",
+            commit_sha="commit_sha_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].commit_sha
+        mock_val = "commit_sha_value"
+        assert arg == mock_val
+
+
+def test_fetch_git_repository_link_commit_flattened_error():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.fetch_git_repository_link_commit(
+            developer_connect.FetchGitRepositoryLinkCommitRequest(),
+            name="name_value",
+            commit_sha="commit_sha_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_commit_flattened_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.FetchGitRepositoryLinkCommitResponse()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.FetchGitRepositoryLinkCommitResponse()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.fetch_git_repository_link_commit(
+            name="name_value",
+            commit_sha="commit_sha_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].commit_sha
+        mock_val = "commit_sha_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_commit_flattened_error_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.fetch_git_repository_link_commit(
+            developer_connect.FetchGitRepositoryLinkCommitRequest(),
+            name="name_value",
+            commit_sha="commit_sha_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.FetchGitRepositoryLinkCommitListRequest(),
+        {},
+    ],
+)
+def test_fetch_git_repository_link_commit_list(request_type, transport: str = "grpc"):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit_list), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.FetchGitRepositoryLinkCommitListResponse(
+            next_page_token="next_page_token_value",
+        )
+        response = client.fetch_git_repository_link_commit_list(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = developer_connect.FetchGitRepositoryLinkCommitListRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.FetchGitRepositoryLinkCommitListPager)
+    assert response.next_page_token == "next_page_token_value"
+
+
+def test_fetch_git_repository_link_commit_list_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = developer_connect.FetchGitRepositoryLinkCommitListRequest(
+        name="name_value",
+        ref="ref_value",
+        page_token="page_token_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit_list), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.fetch_git_repository_link_commit_list(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkCommitListRequest(
+            name="name_value",
+            ref="ref_value",
+            page_token="page_token_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_fetch_git_repository_link_commit_list_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.fetch_git_repository_link_commit_list
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.fetch_git_repository_link_commit_list
+        ] = mock_rpc
+        request = {}
+        client.fetch_git_repository_link_commit_list(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.fetch_git_repository_link_commit_list(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_commit_list_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = DeveloperConnectAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.fetch_git_repository_link_commit_list
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.fetch_git_repository_link_commit_list
+        ] = mock_rpc
+
+        request = {}
+        await client.fetch_git_repository_link_commit_list(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.fetch_git_repository_link_commit_list(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.FetchGitRepositoryLinkCommitListRequest(),
+        {},
+    ],
+)
+async def test_fetch_git_repository_link_commit_list_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit_list), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                next_page_token="next_page_token_value",
+            )
+        )
+        response = await client.fetch_git_repository_link_commit_list(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = developer_connect.FetchGitRepositoryLinkCommitListRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.FetchGitRepositoryLinkCommitListAsyncPager)
+    assert response.next_page_token == "next_page_token_value"
+
+
+def test_fetch_git_repository_link_commit_list_field_headers():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.FetchGitRepositoryLinkCommitListRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit_list), "__call__"
+    ) as call:
+        call.return_value = developer_connect.FetchGitRepositoryLinkCommitListResponse()
+        client.fetch_git_repository_link_commit_list(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_commit_list_field_headers_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.FetchGitRepositoryLinkCommitListRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit_list), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.FetchGitRepositoryLinkCommitListResponse()
+        )
+        await client.fetch_git_repository_link_commit_list(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_fetch_git_repository_link_commit_list_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit_list), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.FetchGitRepositoryLinkCommitListResponse()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.fetch_git_repository_link_commit_list(
+            name="name_value",
+            ref="ref_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].ref
+        mock_val = "ref_value"
+        assert arg == mock_val
+
+
+def test_fetch_git_repository_link_commit_list_flattened_error():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.fetch_git_repository_link_commit_list(
+            developer_connect.FetchGitRepositoryLinkCommitListRequest(),
+            name="name_value",
+            ref="ref_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_commit_list_flattened_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit_list), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.FetchGitRepositoryLinkCommitListResponse()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.FetchGitRepositoryLinkCommitListResponse()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.fetch_git_repository_link_commit_list(
+            name="name_value",
+            ref="ref_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].ref
+        mock_val = "ref_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_commit_list_flattened_error_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.fetch_git_repository_link_commit_list(
+            developer_connect.FetchGitRepositoryLinkCommitListRequest(),
+            name="name_value",
+            ref="ref_value",
+        )
+
+
+def test_fetch_git_repository_link_commit_list_pager(transport_name: str = "grpc"):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit_list), "__call__"
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[
+                    developer_connect.SCMCommit(),
+                    developer_connect.SCMCommit(),
+                    developer_connect.SCMCommit(),
+                ],
+                next_page_token="abc",
+            ),
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[],
+                next_page_token="def",
+            ),
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[
+                    developer_connect.SCMCommit(),
+                ],
+                next_page_token="ghi",
+            ),
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[
+                    developer_connect.SCMCommit(),
+                    developer_connect.SCMCommit(),
+                ],
+            ),
+            RuntimeError,
+        )
+
+        expected_metadata = ()
+        retry = retries.Retry()
+        timeout = 5
+        expected_metadata = tuple(expected_metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", ""),)),
+        )
+        pager = client.fetch_git_repository_link_commit_list(
+            request={}, retry=retry, timeout=timeout
+        )
+
+        assert pager._metadata == expected_metadata
+        assert pager._retry == retry
+        assert pager._timeout == timeout
+
+        assert pager.next_page_token == "abc"
+        assert str(pager).startswith(f"{pager.__class__.__name__}<")
+
+        results = list(pager)
+        assert len(results) == 6
+        assert all(isinstance(i, developer_connect.SCMCommit) for i in results)
+
+
+def test_fetch_git_repository_link_commit_list_pages(transport_name: str = "grpc"):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit_list), "__call__"
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[
+                    developer_connect.SCMCommit(),
+                    developer_connect.SCMCommit(),
+                    developer_connect.SCMCommit(),
+                ],
+                next_page_token="abc",
+            ),
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[],
+                next_page_token="def",
+            ),
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[
+                    developer_connect.SCMCommit(),
+                ],
+                next_page_token="ghi",
+            ),
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[
+                    developer_connect.SCMCommit(),
+                    developer_connect.SCMCommit(),
+                ],
+            ),
+            RuntimeError,
+        )
+        pages = list(client.fetch_git_repository_link_commit_list(request={}).pages)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_commit_list_async_pager():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit_list),
+        "__call__",
+        new_callable=mock.AsyncMock,
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[
+                    developer_connect.SCMCommit(),
+                    developer_connect.SCMCommit(),
+                    developer_connect.SCMCommit(),
+                ],
+                next_page_token="abc",
+            ),
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[],
+                next_page_token="def",
+            ),
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[
+                    developer_connect.SCMCommit(),
+                ],
+                next_page_token="ghi",
+            ),
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[
+                    developer_connect.SCMCommit(),
+                    developer_connect.SCMCommit(),
+                ],
+            ),
+            RuntimeError,
+        )
+        async_pager = await client.fetch_git_repository_link_commit_list(
+            request={},
+        )
+        assert async_pager.next_page_token == "abc"
+        assert str(async_pager).startswith(f"{async_pager.__class__.__name__}<")
+
+        responses = []
+        async for response in async_pager:  # pragma: no branch
+            responses.append(response)
+
+        assert len(responses) == 6
+        assert all(isinstance(i, developer_connect.SCMCommit) for i in responses)
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_commit_list_async_pages():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit_list),
+        "__call__",
+        new_callable=mock.AsyncMock,
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[
+                    developer_connect.SCMCommit(),
+                    developer_connect.SCMCommit(),
+                    developer_connect.SCMCommit(),
+                ],
+                next_page_token="abc",
+            ),
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[],
+                next_page_token="def",
+            ),
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[
+                    developer_connect.SCMCommit(),
+                ],
+                next_page_token="ghi",
+            ),
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[
+                    developer_connect.SCMCommit(),
+                    developer_connect.SCMCommit(),
+                ],
+            ),
+            RuntimeError,
+        )
+        pages = []
+        async for page_ in (
+            await client.fetch_git_repository_link_commit_list(request={})
+        ).pages:
+            pages.append(page_)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.FetchGitRepositoryLinkFileBlameRequest(),
+        {},
+    ],
+)
+def test_fetch_git_repository_link_file_blame(request_type, transport: str = "grpc"):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_file_blame), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.FetchGitRepositoryLinkFileBlameResponse()
+        response = client.fetch_git_repository_link_file_blame(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = developer_connect.FetchGitRepositoryLinkFileBlameRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response, developer_connect.FetchGitRepositoryLinkFileBlameResponse
+    )
+
+
+def test_fetch_git_repository_link_file_blame_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = developer_connect.FetchGitRepositoryLinkFileBlameRequest(
+        name="name_value",
+        ref="ref_value",
+        path="path_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_file_blame), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.fetch_git_repository_link_file_blame(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkFileBlameRequest(
+            name="name_value",
+            ref="ref_value",
+            path="path_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_fetch_git_repository_link_file_blame_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.fetch_git_repository_link_file_blame
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.fetch_git_repository_link_file_blame
+        ] = mock_rpc
+        request = {}
+        client.fetch_git_repository_link_file_blame(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.fetch_git_repository_link_file_blame(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_file_blame_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = DeveloperConnectAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.fetch_git_repository_link_file_blame
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.fetch_git_repository_link_file_blame
+        ] = mock_rpc
+
+        request = {}
+        await client.fetch_git_repository_link_file_blame(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.fetch_git_repository_link_file_blame(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.FetchGitRepositoryLinkFileBlameRequest(),
+        {},
+    ],
+)
+async def test_fetch_git_repository_link_file_blame_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_file_blame), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.FetchGitRepositoryLinkFileBlameResponse()
+        )
+        response = await client.fetch_git_repository_link_file_blame(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = developer_connect.FetchGitRepositoryLinkFileBlameRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response, developer_connect.FetchGitRepositoryLinkFileBlameResponse
+    )
+
+
+def test_fetch_git_repository_link_file_blame_field_headers():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.FetchGitRepositoryLinkFileBlameRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_file_blame), "__call__"
+    ) as call:
+        call.return_value = developer_connect.FetchGitRepositoryLinkFileBlameResponse()
+        client.fetch_git_repository_link_file_blame(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_file_blame_field_headers_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.FetchGitRepositoryLinkFileBlameRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_file_blame), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.FetchGitRepositoryLinkFileBlameResponse()
+        )
+        await client.fetch_git_repository_link_file_blame(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_fetch_git_repository_link_file_blame_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_file_blame), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.FetchGitRepositoryLinkFileBlameResponse()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.fetch_git_repository_link_file_blame(
+            name="name_value",
+            ref="ref_value",
+            path="path_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].ref
+        mock_val = "ref_value"
+        assert arg == mock_val
+        arg = args[0].path
+        mock_val = "path_value"
+        assert arg == mock_val
+
+
+def test_fetch_git_repository_link_file_blame_flattened_error():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.fetch_git_repository_link_file_blame(
+            developer_connect.FetchGitRepositoryLinkFileBlameRequest(),
+            name="name_value",
+            ref="ref_value",
+            path="path_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_file_blame_flattened_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_file_blame), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.FetchGitRepositoryLinkFileBlameResponse()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.FetchGitRepositoryLinkFileBlameResponse()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.fetch_git_repository_link_file_blame(
+            name="name_value",
+            ref="ref_value",
+            path="path_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].ref
+        mock_val = "ref_value"
+        assert arg == mock_val
+        arg = args[0].path
+        mock_val = "path_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_file_blame_flattened_error_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.fetch_git_repository_link_file_blame(
+            developer_connect.FetchGitRepositoryLinkFileBlameRequest(),
+            name="name_value",
+            ref="ref_value",
+            path="path_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.FetchGitRepositoryLinkPullRequestRequest(),
+        {},
+    ],
+)
+def test_fetch_git_repository_link_pull_request(request_type, transport: str = "grpc"):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.PullRequest(
+            id="id_value",
+            title="title_value",
+            body="body_value",
+            head_ref="head_ref_value",
+            base_ref="base_ref_value",
+            author="author_value",
+            state=developer_connect.PullRequest.State.OPEN,
+            mergeability=developer_connect.PullRequest.Mergeability.MERGEABLE,
+            html_url="html_url_value",
+        )
+        response = client.fetch_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = developer_connect.FetchGitRepositoryLinkPullRequestRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.PullRequest)
+    assert response.id == "id_value"
+    assert response.title == "title_value"
+    assert response.body == "body_value"
+    assert response.head_ref == "head_ref_value"
+    assert response.base_ref == "base_ref_value"
+    assert response.author == "author_value"
+    assert response.state == developer_connect.PullRequest.State.OPEN
+    assert response.mergeability == developer_connect.PullRequest.Mergeability.MERGEABLE
+    assert response.html_url == "html_url_value"
+
+
+def test_fetch_git_repository_link_pull_request_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = developer_connect.FetchGitRepositoryLinkPullRequestRequest(
+        name="name_value",
+        pull_request_id="pull_request_id_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.fetch_git_repository_link_pull_request(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkPullRequestRequest(
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_fetch_git_repository_link_pull_request_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.fetch_git_repository_link_pull_request
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.fetch_git_repository_link_pull_request
+        ] = mock_rpc
+        request = {}
+        client.fetch_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.fetch_git_repository_link_pull_request(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_pull_request_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = DeveloperConnectAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.fetch_git_repository_link_pull_request
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.fetch_git_repository_link_pull_request
+        ] = mock_rpc
+
+        request = {}
+        await client.fetch_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.fetch_git_repository_link_pull_request(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.FetchGitRepositoryLinkPullRequestRequest(),
+        {},
+    ],
+)
+async def test_fetch_git_repository_link_pull_request_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequest(
+                id="id_value",
+                title="title_value",
+                body="body_value",
+                head_ref="head_ref_value",
+                base_ref="base_ref_value",
+                author="author_value",
+                state=developer_connect.PullRequest.State.OPEN,
+                mergeability=developer_connect.PullRequest.Mergeability.MERGEABLE,
+                html_url="html_url_value",
+            )
+        )
+        response = await client.fetch_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = developer_connect.FetchGitRepositoryLinkPullRequestRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.PullRequest)
+    assert response.id == "id_value"
+    assert response.title == "title_value"
+    assert response.body == "body_value"
+    assert response.head_ref == "head_ref_value"
+    assert response.base_ref == "base_ref_value"
+    assert response.author == "author_value"
+    assert response.state == developer_connect.PullRequest.State.OPEN
+    assert response.mergeability == developer_connect.PullRequest.Mergeability.MERGEABLE
+    assert response.html_url == "html_url_value"
+
+
+def test_fetch_git_repository_link_pull_request_field_headers():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.FetchGitRepositoryLinkPullRequestRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request), "__call__"
+    ) as call:
+        call.return_value = developer_connect.PullRequest()
+        client.fetch_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_pull_request_field_headers_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.FetchGitRepositoryLinkPullRequestRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequest()
+        )
+        await client.fetch_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_fetch_git_repository_link_pull_request_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.PullRequest()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.fetch_git_repository_link_pull_request(
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].pull_request_id
+        mock_val = "pull_request_id_value"
+        assert arg == mock_val
+
+
+def test_fetch_git_repository_link_pull_request_flattened_error():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.fetch_git_repository_link_pull_request(
+            developer_connect.FetchGitRepositoryLinkPullRequestRequest(),
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_pull_request_flattened_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.PullRequest()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequest()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.fetch_git_repository_link_pull_request(
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].pull_request_id
+        mock_val = "pull_request_id_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_pull_request_flattened_error_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.fetch_git_repository_link_pull_request(
+            developer_connect.FetchGitRepositoryLinkPullRequestRequest(),
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.AddGitRepositoryLinkPullRequestCommentRequest(),
+        {},
+    ],
+)
+def test_add_git_repository_link_pull_request_comment(
+    request_type, transport: str = "grpc"
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_comment), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.PullRequestComment(
+            id="id_value",
+            body="body_value",
+            author="author_value",
+        )
+        response = client.add_git_repository_link_pull_request_comment(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = developer_connect.AddGitRepositoryLinkPullRequestCommentRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.PullRequestComment)
+    assert response.id == "id_value"
+    assert response.body == "body_value"
+    assert response.author == "author_value"
+
+
+def test_add_git_repository_link_pull_request_comment_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = developer_connect.AddGitRepositoryLinkPullRequestCommentRequest(
+        name="name_value",
+        pull_request_id="pull_request_id_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_comment), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.add_git_repository_link_pull_request_comment(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.AddGitRepositoryLinkPullRequestCommentRequest(
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_add_git_repository_link_pull_request_comment_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.add_git_repository_link_pull_request_comment
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.add_git_repository_link_pull_request_comment
+        ] = mock_rpc
+        request = {}
+        client.add_git_repository_link_pull_request_comment(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.add_git_repository_link_pull_request_comment(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_add_git_repository_link_pull_request_comment_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = DeveloperConnectAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.add_git_repository_link_pull_request_comment
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.add_git_repository_link_pull_request_comment
+        ] = mock_rpc
+
+        request = {}
+        await client.add_git_repository_link_pull_request_comment(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.add_git_repository_link_pull_request_comment(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.AddGitRepositoryLinkPullRequestCommentRequest(),
+        {},
+    ],
+)
+async def test_add_git_repository_link_pull_request_comment_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_comment), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequestComment(
+                id="id_value",
+                body="body_value",
+                author="author_value",
+            )
+        )
+        response = await client.add_git_repository_link_pull_request_comment(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = developer_connect.AddGitRepositoryLinkPullRequestCommentRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.PullRequestComment)
+    assert response.id == "id_value"
+    assert response.body == "body_value"
+    assert response.author == "author_value"
+
+
+def test_add_git_repository_link_pull_request_comment_field_headers():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.AddGitRepositoryLinkPullRequestCommentRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_comment), "__call__"
+    ) as call:
+        call.return_value = developer_connect.PullRequestComment()
+        client.add_git_repository_link_pull_request_comment(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_add_git_repository_link_pull_request_comment_field_headers_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.AddGitRepositoryLinkPullRequestCommentRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_comment), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequestComment()
+        )
+        await client.add_git_repository_link_pull_request_comment(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_add_git_repository_link_pull_request_comment_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_comment), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.PullRequestComment()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.add_git_repository_link_pull_request_comment(
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+            comment=developer_connect.PullRequestComment(id="id_value"),
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].pull_request_id
+        mock_val = "pull_request_id_value"
+        assert arg == mock_val
+        arg = args[0].comment
+        mock_val = developer_connect.PullRequestComment(id="id_value")
+        assert arg == mock_val
+
+
+def test_add_git_repository_link_pull_request_comment_flattened_error():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.add_git_repository_link_pull_request_comment(
+            developer_connect.AddGitRepositoryLinkPullRequestCommentRequest(),
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+            comment=developer_connect.PullRequestComment(id="id_value"),
+        )
+
+
+@pytest.mark.asyncio
+async def test_add_git_repository_link_pull_request_comment_flattened_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_comment), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.PullRequestComment()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequestComment()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.add_git_repository_link_pull_request_comment(
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+            comment=developer_connect.PullRequestComment(id="id_value"),
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].pull_request_id
+        mock_val = "pull_request_id_value"
+        assert arg == mock_val
+        arg = args[0].comment
+        mock_val = developer_connect.PullRequestComment(id="id_value")
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_add_git_repository_link_pull_request_comment_flattened_error_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.add_git_repository_link_pull_request_comment(
+            developer_connect.AddGitRepositoryLinkPullRequestCommentRequest(),
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+            comment=developer_connect.PullRequestComment(id="id_value"),
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest(),
+        {},
+    ],
+)
+def test_add_git_repository_link_pull_request_review_comment(
+    request_type, transport: str = "grpc"
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_review_comment),
+        "__call__",
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.PullRequestReviewComment(
+            id="id_value",
+            body="body_value",
+            path="path_value",
+            first_line=1071,
+            last_line=955,
+            side=developer_connect.PullRequestReviewComment.DiffSide.BASE,
+            author="author_value",
+            commit_id="commit_id_value",
+        )
+        response = client.add_git_repository_link_pull_request_review_comment(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = (
+            developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest()
+        )
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.PullRequestReviewComment)
+    assert response.id == "id_value"
+    assert response.body == "body_value"
+    assert response.path == "path_value"
+    assert response.first_line == 1071
+    assert response.last_line == 955
+    assert response.side == developer_connect.PullRequestReviewComment.DiffSide.BASE
+    assert response.author == "author_value"
+    assert response.commit_id == "commit_id_value"
+
+
+def test_add_git_repository_link_pull_request_review_comment_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest(
+        name="name_value",
+        pull_request_id="pull_request_id_value",
+        commit_id="commit_id_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_review_comment),
+        "__call__",
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.add_git_repository_link_pull_request_review_comment(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = (
+            developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest(
+                name="name_value",
+                pull_request_id="pull_request_id_value",
+                commit_id="commit_id_value",
+            )
+        )
+        assert args[0] == request_msg
+
+
+def test_add_git_repository_link_pull_request_review_comment_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.add_git_repository_link_pull_request_review_comment
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.add_git_repository_link_pull_request_review_comment
+        ] = mock_rpc
+        request = {}
+        client.add_git_repository_link_pull_request_review_comment(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.add_git_repository_link_pull_request_review_comment(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_add_git_repository_link_pull_request_review_comment_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = DeveloperConnectAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.add_git_repository_link_pull_request_review_comment
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.add_git_repository_link_pull_request_review_comment
+        ] = mock_rpc
+
+        request = {}
+        await client.add_git_repository_link_pull_request_review_comment(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.add_git_repository_link_pull_request_review_comment(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest(),
+        {},
+    ],
+)
+async def test_add_git_repository_link_pull_request_review_comment_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_review_comment),
+        "__call__",
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequestReviewComment(
+                id="id_value",
+                body="body_value",
+                path="path_value",
+                first_line=1071,
+                last_line=955,
+                side=developer_connect.PullRequestReviewComment.DiffSide.BASE,
+                author="author_value",
+                commit_id="commit_id_value",
+            )
+        )
+        response = await client.add_git_repository_link_pull_request_review_comment(
+            request
+        )
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = (
+            developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest()
+        )
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.PullRequestReviewComment)
+    assert response.id == "id_value"
+    assert response.body == "body_value"
+    assert response.path == "path_value"
+    assert response.first_line == 1071
+    assert response.last_line == 955
+    assert response.side == developer_connect.PullRequestReviewComment.DiffSide.BASE
+    assert response.author == "author_value"
+    assert response.commit_id == "commit_id_value"
+
+
+def test_add_git_repository_link_pull_request_review_comment_field_headers():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_review_comment),
+        "__call__",
+    ) as call:
+        call.return_value = developer_connect.PullRequestReviewComment()
+        client.add_git_repository_link_pull_request_review_comment(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_add_git_repository_link_pull_request_review_comment_field_headers_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_review_comment),
+        "__call__",
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequestReviewComment()
+        )
+        await client.add_git_repository_link_pull_request_review_comment(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_add_git_repository_link_pull_request_review_comment_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_review_comment),
+        "__call__",
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.PullRequestReviewComment()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.add_git_repository_link_pull_request_review_comment(
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+            comment=developer_connect.PullRequestReviewComment(id="id_value"),
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].pull_request_id
+        mock_val = "pull_request_id_value"
+        assert arg == mock_val
+        arg = args[0].comment
+        mock_val = developer_connect.PullRequestReviewComment(id="id_value")
+        assert arg == mock_val
+
+
+def test_add_git_repository_link_pull_request_review_comment_flattened_error():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.add_git_repository_link_pull_request_review_comment(
+            developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest(),
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+            comment=developer_connect.PullRequestReviewComment(id="id_value"),
+        )
+
+
+@pytest.mark.asyncio
+async def test_add_git_repository_link_pull_request_review_comment_flattened_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_review_comment),
+        "__call__",
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.PullRequestReviewComment()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequestReviewComment()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.add_git_repository_link_pull_request_review_comment(
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+            comment=developer_connect.PullRequestReviewComment(id="id_value"),
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].pull_request_id
+        mock_val = "pull_request_id_value"
+        assert arg == mock_val
+        arg = args[0].comment
+        mock_val = developer_connect.PullRequestReviewComment(id="id_value")
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_add_git_repository_link_pull_request_review_comment_flattened_error_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.add_git_repository_link_pull_request_review_comment(
+            developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest(),
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+            comment=developer_connect.PullRequestReviewComment(id="id_value"),
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.ModifyGitRepositoryLinkPullRequestRequest(),
+        {},
+    ],
+)
+def test_modify_git_repository_link_pull_request(request_type, transport: str = "grpc"):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.modify_git_repository_link_pull_request), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.PullRequest(
+            id="id_value",
+            title="title_value",
+            body="body_value",
+            head_ref="head_ref_value",
+            base_ref="base_ref_value",
+            author="author_value",
+            state=developer_connect.PullRequest.State.OPEN,
+            mergeability=developer_connect.PullRequest.Mergeability.MERGEABLE,
+            html_url="html_url_value",
+        )
+        response = client.modify_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = developer_connect.ModifyGitRepositoryLinkPullRequestRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.PullRequest)
+    assert response.id == "id_value"
+    assert response.title == "title_value"
+    assert response.body == "body_value"
+    assert response.head_ref == "head_ref_value"
+    assert response.base_ref == "base_ref_value"
+    assert response.author == "author_value"
+    assert response.state == developer_connect.PullRequest.State.OPEN
+    assert response.mergeability == developer_connect.PullRequest.Mergeability.MERGEABLE
+    assert response.html_url == "html_url_value"
+
+
+def test_modify_git_repository_link_pull_request_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = developer_connect.ModifyGitRepositoryLinkPullRequestRequest(
+        name="name_value",
+        pull_request_id="pull_request_id_value",
+        title="title_value",
+        body="body_value",
+        base_ref="base_ref_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.modify_git_repository_link_pull_request), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.modify_git_repository_link_pull_request(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.ModifyGitRepositoryLinkPullRequestRequest(
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+            title="title_value",
+            body="body_value",
+            base_ref="base_ref_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_modify_git_repository_link_pull_request_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.modify_git_repository_link_pull_request
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.modify_git_repository_link_pull_request
+        ] = mock_rpc
+        request = {}
+        client.modify_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.modify_git_repository_link_pull_request(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_modify_git_repository_link_pull_request_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = DeveloperConnectAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.modify_git_repository_link_pull_request
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.modify_git_repository_link_pull_request
+        ] = mock_rpc
+
+        request = {}
+        await client.modify_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.modify_git_repository_link_pull_request(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.ModifyGitRepositoryLinkPullRequestRequest(),
+        {},
+    ],
+)
+async def test_modify_git_repository_link_pull_request_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.modify_git_repository_link_pull_request), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequest(
+                id="id_value",
+                title="title_value",
+                body="body_value",
+                head_ref="head_ref_value",
+                base_ref="base_ref_value",
+                author="author_value",
+                state=developer_connect.PullRequest.State.OPEN,
+                mergeability=developer_connect.PullRequest.Mergeability.MERGEABLE,
+                html_url="html_url_value",
+            )
+        )
+        response = await client.modify_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = developer_connect.ModifyGitRepositoryLinkPullRequestRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.PullRequest)
+    assert response.id == "id_value"
+    assert response.title == "title_value"
+    assert response.body == "body_value"
+    assert response.head_ref == "head_ref_value"
+    assert response.base_ref == "base_ref_value"
+    assert response.author == "author_value"
+    assert response.state == developer_connect.PullRequest.State.OPEN
+    assert response.mergeability == developer_connect.PullRequest.Mergeability.MERGEABLE
+    assert response.html_url == "html_url_value"
+
+
+def test_modify_git_repository_link_pull_request_field_headers():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.ModifyGitRepositoryLinkPullRequestRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.modify_git_repository_link_pull_request), "__call__"
+    ) as call:
+        call.return_value = developer_connect.PullRequest()
+        client.modify_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_modify_git_repository_link_pull_request_field_headers_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.ModifyGitRepositoryLinkPullRequestRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.modify_git_repository_link_pull_request), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequest()
+        )
+        await client.modify_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_modify_git_repository_link_pull_request_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.modify_git_repository_link_pull_request), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.PullRequest()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.modify_git_repository_link_pull_request(
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].pull_request_id
+        mock_val = "pull_request_id_value"
+        assert arg == mock_val
+
+
+def test_modify_git_repository_link_pull_request_flattened_error():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.modify_git_repository_link_pull_request(
+            developer_connect.ModifyGitRepositoryLinkPullRequestRequest(),
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_modify_git_repository_link_pull_request_flattened_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.modify_git_repository_link_pull_request), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = developer_connect.PullRequest()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequest()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.modify_git_repository_link_pull_request(
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].pull_request_id
+        mock_val = "pull_request_id_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_modify_git_repository_link_pull_request_flattened_error_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.modify_git_repository_link_pull_request(
+            developer_connect.ModifyGitRepositoryLinkPullRequestRequest(),
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.FetchGitRepositoryLinkPullRequestListRequest(),
+        {},
+    ],
+)
+def test_fetch_git_repository_link_pull_request_list(
+    request_type, transport: str = "grpc"
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request_list), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = (
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                next_page_token="next_page_token_value",
+            )
+        )
+        response = client.fetch_git_repository_link_pull_request_list(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = developer_connect.FetchGitRepositoryLinkPullRequestListRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.FetchGitRepositoryLinkPullRequestListPager)
+    assert response.next_page_token == "next_page_token_value"
+
+
+def test_fetch_git_repository_link_pull_request_list_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = developer_connect.FetchGitRepositoryLinkPullRequestListRequest(
+        name="name_value",
+        filter="filter_value",
+        page_token="page_token_value",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request_list), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.fetch_git_repository_link_pull_request_list(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkPullRequestListRequest(
+            name="name_value",
+            filter="filter_value",
+            page_token="page_token_value",
+        )
+        assert args[0] == request_msg
+
+
+def test_fetch_git_repository_link_pull_request_list_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.fetch_git_repository_link_pull_request_list
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.fetch_git_repository_link_pull_request_list
+        ] = mock_rpc
+        request = {}
+        client.fetch_git_repository_link_pull_request_list(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.fetch_git_repository_link_pull_request_list(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_pull_request_list_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = DeveloperConnectAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.fetch_git_repository_link_pull_request_list
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.fetch_git_repository_link_pull_request_list
+        ] = mock_rpc
+
+        request = {}
+        await client.fetch_git_repository_link_pull_request_list(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.fetch_git_repository_link_pull_request_list(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.FetchGitRepositoryLinkPullRequestListRequest(),
+        {},
+    ],
+)
+async def test_fetch_git_repository_link_pull_request_list_async(
+    request_type, transport: str = "grpc_asyncio"
+):
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request_list), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                next_page_token="next_page_token_value",
+            )
+        )
+        response = await client.fetch_git_repository_link_pull_request_list(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = developer_connect.FetchGitRepositoryLinkPullRequestListRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.FetchGitRepositoryLinkPullRequestListAsyncPager)
+    assert response.next_page_token == "next_page_token_value"
+
+
+def test_fetch_git_repository_link_pull_request_list_field_headers():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.FetchGitRepositoryLinkPullRequestListRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request_list), "__call__"
+    ) as call:
+        call.return_value = (
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse()
+        )
+        client.fetch_git_repository_link_pull_request_list(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_pull_request_list_field_headers_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = developer_connect.FetchGitRepositoryLinkPullRequestListRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request_list), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse()
+        )
+        await client.fetch_git_repository_link_pull_request_list(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_fetch_git_repository_link_pull_request_list_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request_list), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = (
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.fetch_git_repository_link_pull_request_list(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+def test_fetch_git_repository_link_pull_request_list_flattened_error():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.fetch_git_repository_link_pull_request_list(
+            developer_connect.FetchGitRepositoryLinkPullRequestListRequest(),
+            name="name_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_pull_request_list_flattened_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request_list), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = (
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse()
+        )
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.fetch_git_repository_link_pull_request_list(
+            name="name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_pull_request_list_flattened_error_async():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.fetch_git_repository_link_pull_request_list(
+            developer_connect.FetchGitRepositoryLinkPullRequestListRequest(),
+            name="name_value",
+        )
+
+
+def test_fetch_git_repository_link_pull_request_list_pager(
+    transport_name: str = "grpc",
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request_list), "__call__"
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[
+                    developer_connect.PullRequest(),
+                    developer_connect.PullRequest(),
+                    developer_connect.PullRequest(),
+                ],
+                next_page_token="abc",
+            ),
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[],
+                next_page_token="def",
+            ),
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[
+                    developer_connect.PullRequest(),
+                ],
+                next_page_token="ghi",
+            ),
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[
+                    developer_connect.PullRequest(),
+                    developer_connect.PullRequest(),
+                ],
+            ),
+            RuntimeError,
+        )
+
+        expected_metadata = ()
+        retry = retries.Retry()
+        timeout = 5
+        expected_metadata = tuple(expected_metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", ""),)),
+        )
+        pager = client.fetch_git_repository_link_pull_request_list(
+            request={}, retry=retry, timeout=timeout
+        )
+
+        assert pager._metadata == expected_metadata
+        assert pager._retry == retry
+        assert pager._timeout == timeout
+
+        assert pager.next_page_token == "abc"
+        assert str(pager).startswith(f"{pager.__class__.__name__}<")
+
+        results = list(pager)
+        assert len(results) == 6
+        assert all(isinstance(i, developer_connect.PullRequest) for i in results)
+
+
+def test_fetch_git_repository_link_pull_request_list_pages(
+    transport_name: str = "grpc",
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport_name,
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request_list), "__call__"
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[
+                    developer_connect.PullRequest(),
+                    developer_connect.PullRequest(),
+                    developer_connect.PullRequest(),
+                ],
+                next_page_token="abc",
+            ),
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[],
+                next_page_token="def",
+            ),
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[
+                    developer_connect.PullRequest(),
+                ],
+                next_page_token="ghi",
+            ),
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[
+                    developer_connect.PullRequest(),
+                    developer_connect.PullRequest(),
+                ],
+            ),
+            RuntimeError,
+        )
+        pages = list(
+            client.fetch_git_repository_link_pull_request_list(request={}).pages
+        )
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_pull_request_list_async_pager():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request_list),
+        "__call__",
+        new_callable=mock.AsyncMock,
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[
+                    developer_connect.PullRequest(),
+                    developer_connect.PullRequest(),
+                    developer_connect.PullRequest(),
+                ],
+                next_page_token="abc",
+            ),
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[],
+                next_page_token="def",
+            ),
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[
+                    developer_connect.PullRequest(),
+                ],
+                next_page_token="ghi",
+            ),
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[
+                    developer_connect.PullRequest(),
+                    developer_connect.PullRequest(),
+                ],
+            ),
+            RuntimeError,
+        )
+        async_pager = await client.fetch_git_repository_link_pull_request_list(
+            request={},
+        )
+        assert async_pager.next_page_token == "abc"
+        assert str(async_pager).startswith(f"{async_pager.__class__.__name__}<")
+
+        responses = []
+        async for response in async_pager:  # pragma: no branch
+            responses.append(response)
+
+        assert len(responses) == 6
+        assert all(isinstance(i, developer_connect.PullRequest) for i in responses)
+
+
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_pull_request_list_async_pages():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request_list),
+        "__call__",
+        new_callable=mock.AsyncMock,
+    ) as call:
+        # Set the response to a series of pages.
+        call.side_effect = (
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[
+                    developer_connect.PullRequest(),
+                    developer_connect.PullRequest(),
+                    developer_connect.PullRequest(),
+                ],
+                next_page_token="abc",
+            ),
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[],
+                next_page_token="def",
+            ),
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[
+                    developer_connect.PullRequest(),
+                ],
+                next_page_token="ghi",
+            ),
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[
+                    developer_connect.PullRequest(),
+                    developer_connect.PullRequest(),
+                ],
+            ),
+            RuntimeError,
+        )
+        pages = []
+        async for page_ in (
+            await client.fetch_git_repository_link_pull_request_list(request={})
+        ).pages:
             pages.append(page_)
         for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
             assert page_.raw_page.next_page_token == token
@@ -13564,6 +17745,187 @@ def test_fetch_read_token_rest_flattened_error(transport: str = "rest"):
         )
 
 
+def test_open_git_repository_link_pull_request_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.open_git_repository_link_pull_request
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.open_git_repository_link_pull_request
+        ] = mock_rpc
+
+        request = {}
+        client.open_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.open_git_repository_link_pull_request(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_open_git_repository_link_pull_request_rest_required_fields(
+    request_type=developer_connect.OpenGitRepositoryLinkPullRequestRequest,
+):
+    transport_class = transports.DeveloperConnectRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseOpenGitRepositoryLinkPullRequest,
+        "_BaseOpenGitRepositoryLinkPullRequest__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["name"] = "name_value"
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = developer_connect.PullRequest()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = developer_connect.PullRequest.pb(return_value)
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.open_git_repository_link_pull_request(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_open_git_repository_link_pull_request_rest_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.PullRequest()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+            pull_request=developer_connect.PullRequest(id="id_value"),
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = developer_connect.PullRequest.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.open_git_repository_link_pull_request(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:openPullRequest"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_open_git_repository_link_pull_request_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.open_git_repository_link_pull_request(
+            developer_connect.OpenGitRepositoryLinkPullRequestRequest(),
+            name="name_value",
+            pull_request=developer_connect.PullRequest(id="id_value"),
+        )
+
+
 def test_fetch_linkable_git_repositories_rest_use_cached_wrapped_rpc():
     # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
     # instead of constructing them on each call
@@ -14251,6 +18613,1943 @@ def test_fetch_git_refs_rest_pager(transport: str = "rest"):
         assert all(isinstance(i, str) for i in results)
 
         pages = list(client.fetch_git_refs(request=sample_request).pages)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+def test_diff_git_repository_link_commit_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.diff_git_repository_link_commit
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.diff_git_repository_link_commit
+        ] = mock_rpc
+
+        request = {}
+        client.diff_git_repository_link_commit(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.diff_git_repository_link_commit(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_diff_git_repository_link_commit_rest_required_fields(
+    request_type=developer_connect.DiffGitRepositoryLinkCommitRequest,
+):
+    transport_class = transports.DeveloperConnectRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request_init["base_sha"] = ""
+    request_init["head_sha"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+    assert "baseSha" not in jsonified_request
+    assert "headSha" not in jsonified_request
+
+    default_values = getattr(
+        transport_class._BaseDiffGitRepositoryLinkCommit,
+        "_BaseDiffGitRepositoryLinkCommit__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+    assert "baseSha" in jsonified_request
+    assert jsonified_request["baseSha"] == request_init["base_sha"]
+    assert "headSha" in jsonified_request
+    assert jsonified_request["headSha"] == request_init["head_sha"]
+
+    jsonified_request["name"] = "name_value"
+    jsonified_request["baseSha"] = "base_sha_value"
+    jsonified_request["headSha"] = "head_sha_value"
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(
+        (
+            "baseSha",
+            "headSha",
+            "pathFilters",
+        )
+    )
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+    assert "baseSha" in jsonified_request
+    assert jsonified_request["baseSha"] == "base_sha_value"
+    assert "headSha" in jsonified_request
+    assert jsonified_request["headSha"] == "head_sha_value"
+
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = developer_connect.DiffGitRepositoryLinkCommitResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = developer_connect.DiffGitRepositoryLinkCommitResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.diff_git_repository_link_commit(request)
+
+            expected_params = [
+                (
+                    "baseSha",
+                    "",
+                ),
+                (
+                    "headSha",
+                    "",
+                ),
+                ("$alt", "json;enum-encoding=int"),
+            ]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_diff_git_repository_link_commit_rest_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.DiffGitRepositoryLinkCommitResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+            base_sha="base_sha_value",
+            head_sha="head_sha_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = developer_connect.DiffGitRepositoryLinkCommitResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.diff_git_repository_link_commit(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:diffCommit"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_diff_git_repository_link_commit_rest_flattened_error(transport: str = "rest"):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.diff_git_repository_link_commit(
+            developer_connect.DiffGitRepositoryLinkCommitRequest(),
+            name="name_value",
+            base_sha="base_sha_value",
+            head_sha="head_sha_value",
+        )
+
+
+def test_fetch_git_repository_link_commit_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.fetch_git_repository_link_commit
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.fetch_git_repository_link_commit
+        ] = mock_rpc
+
+        request = {}
+        client.fetch_git_repository_link_commit(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.fetch_git_repository_link_commit(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_fetch_git_repository_link_commit_rest_required_fields(
+    request_type=developer_connect.FetchGitRepositoryLinkCommitRequest,
+):
+    transport_class = transports.DeveloperConnectRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request_init["commit_sha"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+    assert "commitSha" not in jsonified_request
+
+    default_values = getattr(
+        transport_class._BaseFetchGitRepositoryLinkCommit,
+        "_BaseFetchGitRepositoryLinkCommit__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+    assert "commitSha" in jsonified_request
+    assert jsonified_request["commitSha"] == request_init["commit_sha"]
+
+    jsonified_request["name"] = "name_value"
+    jsonified_request["commitSha"] = "commit_sha_value"
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(
+        (
+            "commitSha",
+            "pathFilters",
+            "view",
+        )
+    )
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+    assert "commitSha" in jsonified_request
+    assert jsonified_request["commitSha"] == "commit_sha_value"
+
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = developer_connect.FetchGitRepositoryLinkCommitResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = developer_connect.FetchGitRepositoryLinkCommitResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.fetch_git_repository_link_commit(request)
+
+            expected_params = [
+                (
+                    "commitSha",
+                    "",
+                ),
+                ("$alt", "json;enum-encoding=int"),
+            ]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_fetch_git_repository_link_commit_rest_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.FetchGitRepositoryLinkCommitResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+            commit_sha="commit_sha_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = developer_connect.FetchGitRepositoryLinkCommitResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.fetch_git_repository_link_commit(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:fetchCommit"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_fetch_git_repository_link_commit_rest_flattened_error(transport: str = "rest"):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.fetch_git_repository_link_commit(
+            developer_connect.FetchGitRepositoryLinkCommitRequest(),
+            name="name_value",
+            commit_sha="commit_sha_value",
+        )
+
+
+def test_fetch_git_repository_link_commit_list_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.fetch_git_repository_link_commit_list
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.fetch_git_repository_link_commit_list
+        ] = mock_rpc
+
+        request = {}
+        client.fetch_git_repository_link_commit_list(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.fetch_git_repository_link_commit_list(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_fetch_git_repository_link_commit_list_rest_required_fields(
+    request_type=developer_connect.FetchGitRepositoryLinkCommitListRequest,
+):
+    transport_class = transports.DeveloperConnectRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseFetchGitRepositoryLinkCommitList,
+        "_BaseFetchGitRepositoryLinkCommitList__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["name"] = "name_value"
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(
+        (
+            "pageSize",
+            "pageToken",
+            "ref",
+            "view",
+        )
+    )
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = developer_connect.FetchGitRepositoryLinkCommitListResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = (
+                developer_connect.FetchGitRepositoryLinkCommitListResponse.pb(
+                    return_value
+                )
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.fetch_git_repository_link_commit_list(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_fetch_git_repository_link_commit_list_rest_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.FetchGitRepositoryLinkCommitListResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+            ref="ref_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = developer_connect.FetchGitRepositoryLinkCommitListResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.fetch_git_repository_link_commit_list(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:fetchCommitList"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_fetch_git_repository_link_commit_list_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.fetch_git_repository_link_commit_list(
+            developer_connect.FetchGitRepositoryLinkCommitListRequest(),
+            name="name_value",
+            ref="ref_value",
+        )
+
+
+def test_fetch_git_repository_link_commit_list_rest_pager(transport: str = "rest"):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # TODO(kbandes): remove this mock unless there's a good reason for it.
+        # with mock.patch.object(path_template, 'transcode') as transcode:
+        # Set the response as a series of pages
+        response = (
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[
+                    developer_connect.SCMCommit(),
+                    developer_connect.SCMCommit(),
+                    developer_connect.SCMCommit(),
+                ],
+                next_page_token="abc",
+            ),
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[],
+                next_page_token="def",
+            ),
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[
+                    developer_connect.SCMCommit(),
+                ],
+                next_page_token="ghi",
+            ),
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                commits=[
+                    developer_connect.SCMCommit(),
+                    developer_connect.SCMCommit(),
+                ],
+            ),
+        )
+        # Two responses for two calls
+        response = response + response
+
+        # Wrap the values into proper Response objs
+        response = tuple(
+            developer_connect.FetchGitRepositoryLinkCommitListResponse.to_json(x)
+            for x in response
+        )
+        return_values = tuple(Response() for i in response)
+        for return_val, response_val in zip(return_values, response):
+            return_val._content = response_val.encode("UTF-8")
+            return_val.status_code = 200
+        req.side_effect = return_values
+
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+        }
+
+        pager = client.fetch_git_repository_link_commit_list(request=sample_request)
+
+        assert pager.next_page_token == "abc"
+        assert str(pager).startswith(f"{pager.__class__.__name__}<")
+
+        results = list(pager)
+        assert len(results) == 6
+        assert all(isinstance(i, developer_connect.SCMCommit) for i in results)
+
+        pages = list(
+            client.fetch_git_repository_link_commit_list(request=sample_request).pages
+        )
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
+
+
+def test_fetch_git_repository_link_file_blame_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.fetch_git_repository_link_file_blame
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.fetch_git_repository_link_file_blame
+        ] = mock_rpc
+
+        request = {}
+        client.fetch_git_repository_link_file_blame(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.fetch_git_repository_link_file_blame(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_fetch_git_repository_link_file_blame_rest_required_fields(
+    request_type=developer_connect.FetchGitRepositoryLinkFileBlameRequest,
+):
+    transport_class = transports.DeveloperConnectRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request_init["ref"] = ""
+    request_init["path"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+    assert "ref" not in jsonified_request
+    assert "path" not in jsonified_request
+
+    default_values = getattr(
+        transport_class._BaseFetchGitRepositoryLinkFileBlame,
+        "_BaseFetchGitRepositoryLinkFileBlame__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+    assert "ref" in jsonified_request
+    assert jsonified_request["ref"] == request_init["ref"]
+    assert "path" in jsonified_request
+    assert jsonified_request["path"] == request_init["path"]
+
+    jsonified_request["name"] = "name_value"
+    jsonified_request["ref"] = "ref_value"
+    jsonified_request["path"] = "path_value"
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(
+        (
+            "firstLine",
+            "lastLine",
+            "path",
+            "ref",
+        )
+    )
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+    assert "ref" in jsonified_request
+    assert jsonified_request["ref"] == "ref_value"
+    assert "path" in jsonified_request
+    assert jsonified_request["path"] == "path_value"
+
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = developer_connect.FetchGitRepositoryLinkFileBlameResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = developer_connect.FetchGitRepositoryLinkFileBlameResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.fetch_git_repository_link_file_blame(request)
+
+            expected_params = [
+                (
+                    "ref",
+                    "",
+                ),
+                (
+                    "path",
+                    "",
+                ),
+                ("$alt", "json;enum-encoding=int"),
+            ]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_fetch_git_repository_link_file_blame_rest_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.FetchGitRepositoryLinkFileBlameResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+            ref="ref_value",
+            path="path_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = developer_connect.FetchGitRepositoryLinkFileBlameResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.fetch_git_repository_link_file_blame(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:fetchFileBlame"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_fetch_git_repository_link_file_blame_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.fetch_git_repository_link_file_blame(
+            developer_connect.FetchGitRepositoryLinkFileBlameRequest(),
+            name="name_value",
+            ref="ref_value",
+            path="path_value",
+        )
+
+
+def test_fetch_git_repository_link_pull_request_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.fetch_git_repository_link_pull_request
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.fetch_git_repository_link_pull_request
+        ] = mock_rpc
+
+        request = {}
+        client.fetch_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.fetch_git_repository_link_pull_request(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_fetch_git_repository_link_pull_request_rest_required_fields(
+    request_type=developer_connect.FetchGitRepositoryLinkPullRequestRequest,
+):
+    transport_class = transports.DeveloperConnectRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request_init["pull_request_id"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+    assert "pullRequestId" not in jsonified_request
+
+    default_values = getattr(
+        transport_class._BaseFetchGitRepositoryLinkPullRequest,
+        "_BaseFetchGitRepositoryLinkPullRequest__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+    assert "pullRequestId" in jsonified_request
+    assert jsonified_request["pullRequestId"] == request_init["pull_request_id"]
+
+    jsonified_request["name"] = "name_value"
+    jsonified_request["pullRequestId"] = "pull_request_id_value"
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(("pullRequestId",))
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+    assert "pullRequestId" in jsonified_request
+    assert jsonified_request["pullRequestId"] == "pull_request_id_value"
+
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = developer_connect.PullRequest()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = developer_connect.PullRequest.pb(return_value)
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.fetch_git_repository_link_pull_request(request)
+
+            expected_params = [
+                (
+                    "pullRequestId",
+                    "",
+                ),
+                ("$alt", "json;enum-encoding=int"),
+            ]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_fetch_git_repository_link_pull_request_rest_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.PullRequest()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = developer_connect.PullRequest.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.fetch_git_repository_link_pull_request(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:fetchPullRequest"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_fetch_git_repository_link_pull_request_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.fetch_git_repository_link_pull_request(
+            developer_connect.FetchGitRepositoryLinkPullRequestRequest(),
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+        )
+
+
+def test_add_git_repository_link_pull_request_comment_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.add_git_repository_link_pull_request_comment
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.add_git_repository_link_pull_request_comment
+        ] = mock_rpc
+
+        request = {}
+        client.add_git_repository_link_pull_request_comment(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.add_git_repository_link_pull_request_comment(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_add_git_repository_link_pull_request_comment_rest_required_fields(
+    request_type=developer_connect.AddGitRepositoryLinkPullRequestCommentRequest,
+):
+    transport_class = transports.DeveloperConnectRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request_init["pull_request_id"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseAddGitRepositoryLinkPullRequestComment,
+        "_BaseAddGitRepositoryLinkPullRequestComment__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["name"] = "name_value"
+    jsonified_request["pullRequestId"] = "pull_request_id_value"
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+    assert "pullRequestId" in jsonified_request
+    assert jsonified_request["pullRequestId"] == "pull_request_id_value"
+
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = developer_connect.PullRequestComment()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = developer_connect.PullRequestComment.pb(return_value)
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.add_git_repository_link_pull_request_comment(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_add_git_repository_link_pull_request_comment_rest_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.PullRequestComment()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+            comment=developer_connect.PullRequestComment(id="id_value"),
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = developer_connect.PullRequestComment.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.add_git_repository_link_pull_request_comment(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:addPullRequestComment"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_add_git_repository_link_pull_request_comment_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.add_git_repository_link_pull_request_comment(
+            developer_connect.AddGitRepositoryLinkPullRequestCommentRequest(),
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+            comment=developer_connect.PullRequestComment(id="id_value"),
+        )
+
+
+def test_add_git_repository_link_pull_request_review_comment_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.add_git_repository_link_pull_request_review_comment
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.add_git_repository_link_pull_request_review_comment
+        ] = mock_rpc
+
+        request = {}
+        client.add_git_repository_link_pull_request_review_comment(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.add_git_repository_link_pull_request_review_comment(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_add_git_repository_link_pull_request_review_comment_rest_required_fields(
+    request_type=developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest,
+):
+    transport_class = transports.DeveloperConnectRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request_init["pull_request_id"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseAddGitRepositoryLinkPullRequestReviewComment,
+        "_BaseAddGitRepositoryLinkPullRequestReviewComment__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["name"] = "name_value"
+    jsonified_request["pullRequestId"] = "pull_request_id_value"
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+    assert "pullRequestId" in jsonified_request
+    assert jsonified_request["pullRequestId"] == "pull_request_id_value"
+
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = developer_connect.PullRequestReviewComment()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = developer_connect.PullRequestReviewComment.pb(return_value)
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.add_git_repository_link_pull_request_review_comment(
+                request
+            )
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_add_git_repository_link_pull_request_review_comment_rest_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.PullRequestReviewComment()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+            comment=developer_connect.PullRequestReviewComment(id="id_value"),
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = developer_connect.PullRequestReviewComment.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.add_git_repository_link_pull_request_review_comment(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:addPullRequestReviewComment"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_add_git_repository_link_pull_request_review_comment_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.add_git_repository_link_pull_request_review_comment(
+            developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest(),
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+            comment=developer_connect.PullRequestReviewComment(id="id_value"),
+        )
+
+
+def test_modify_git_repository_link_pull_request_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.modify_git_repository_link_pull_request
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.modify_git_repository_link_pull_request
+        ] = mock_rpc
+
+        request = {}
+        client.modify_git_repository_link_pull_request(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.modify_git_repository_link_pull_request(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_modify_git_repository_link_pull_request_rest_required_fields(
+    request_type=developer_connect.ModifyGitRepositoryLinkPullRequestRequest,
+):
+    transport_class = transports.DeveloperConnectRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request_init["pull_request_id"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseModifyGitRepositoryLinkPullRequest,
+        "_BaseModifyGitRepositoryLinkPullRequest__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["name"] = "name_value"
+    jsonified_request["pullRequestId"] = "pull_request_id_value"
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+    assert "pullRequestId" in jsonified_request
+    assert jsonified_request["pullRequestId"] == "pull_request_id_value"
+
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = developer_connect.PullRequest()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = developer_connect.PullRequest.pb(return_value)
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.modify_git_repository_link_pull_request(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_modify_git_repository_link_pull_request_rest_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.PullRequest()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = developer_connect.PullRequest.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.modify_git_repository_link_pull_request(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:modifyPullRequest"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_modify_git_repository_link_pull_request_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.modify_git_repository_link_pull_request(
+            developer_connect.ModifyGitRepositoryLinkPullRequestRequest(),
+            name="name_value",
+            pull_request_id="pull_request_id_value",
+        )
+
+
+def test_fetch_git_repository_link_pull_request_list_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = DeveloperConnectClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.fetch_git_repository_link_pull_request_list
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.fetch_git_repository_link_pull_request_list
+        ] = mock_rpc
+
+        request = {}
+        client.fetch_git_repository_link_pull_request_list(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.fetch_git_repository_link_pull_request_list(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_fetch_git_repository_link_pull_request_list_rest_required_fields(
+    request_type=developer_connect.FetchGitRepositoryLinkPullRequestListRequest,
+):
+    transport_class = transports.DeveloperConnectRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseFetchGitRepositoryLinkPullRequestList,
+        "_BaseFetchGitRepositoryLinkPullRequestList__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["name"] = "name_value"
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(
+        (
+            "filter",
+            "pageSize",
+            "pageToken",
+        )
+    )
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = developer_connect.FetchGitRepositoryLinkPullRequestListResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "get",
+                "query_params": pb_request,
+            }
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = (
+                developer_connect.FetchGitRepositoryLinkPullRequestListResponse.pb(
+                    return_value
+                )
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.fetch_git_repository_link_pull_request_list(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_fetch_git_repository_link_pull_request_list_rest_flattened():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.FetchGitRepositoryLinkPullRequestListResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = (
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse.pb(
+                return_value
+            )
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.fetch_git_repository_link_pull_request_list(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{name=projects/*/locations/*/connections/*/gitRepositoryLinks/*}:fetchPullRequestList"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_fetch_git_repository_link_pull_request_list_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.fetch_git_repository_link_pull_request_list(
+            developer_connect.FetchGitRepositoryLinkPullRequestListRequest(),
+            name="name_value",
+        )
+
+
+def test_fetch_git_repository_link_pull_request_list_rest_pager(
+    transport: str = "rest",
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # TODO(kbandes): remove this mock unless there's a good reason for it.
+        # with mock.patch.object(path_template, 'transcode') as transcode:
+        # Set the response as a series of pages
+        response = (
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[
+                    developer_connect.PullRequest(),
+                    developer_connect.PullRequest(),
+                    developer_connect.PullRequest(),
+                ],
+                next_page_token="abc",
+            ),
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[],
+                next_page_token="def",
+            ),
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[
+                    developer_connect.PullRequest(),
+                ],
+                next_page_token="ghi",
+            ),
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                pull_requests=[
+                    developer_connect.PullRequest(),
+                    developer_connect.PullRequest(),
+                ],
+            ),
+        )
+        # Two responses for two calls
+        response = response + response
+
+        # Wrap the values into proper Response objs
+        response = tuple(
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse.to_json(x)
+            for x in response
+        )
+        return_values = tuple(Response() for i in response)
+        for return_val, response_val in zip(return_values, response):
+            return_val._content = response_val.encode("UTF-8")
+            return_val.status_code = 200
+        req.side_effect = return_values
+
+        sample_request = {
+            "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+        }
+
+        pager = client.fetch_git_repository_link_pull_request_list(
+            request=sample_request
+        )
+
+        assert pager.next_page_token == "abc"
+        assert str(pager).startswith(f"{pager.__class__.__name__}<")
+
+        results = list(pager)
+        assert len(results) == 6
+        assert all(isinstance(i, developer_connect.PullRequest) for i in results)
+
+        pages = list(
+            client.fetch_git_repository_link_pull_request_list(
+                request=sample_request
+            ).pages
+        )
         for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
             assert page_.raw_page.next_page_token == token
 
@@ -16910,6 +23209,28 @@ def test_fetch_read_token_empty_call_grpc():
 
 # This test is a coverage failsafe to make sure that totally empty calls,
 # i.e. request == None and no flattened fields passed, work.
+def test_open_git_repository_link_pull_request_empty_call_grpc():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.open_git_repository_link_pull_request), "__call__"
+    ) as call:
+        call.return_value = developer_connect.PullRequest()
+        client.open_git_repository_link_pull_request(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.OpenGitRepositoryLinkPullRequestRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
 def test_fetch_linkable_git_repositories_empty_call_grpc():
     client = DeveloperConnectClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -16969,6 +23290,209 @@ def test_fetch_git_refs_empty_call_grpc():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = developer_connect.FetchGitRefsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_diff_git_repository_link_commit_empty_call_grpc():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.diff_git_repository_link_commit), "__call__"
+    ) as call:
+        call.return_value = developer_connect.DiffGitRepositoryLinkCommitResponse()
+        client.diff_git_repository_link_commit(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.DiffGitRepositoryLinkCommitRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_fetch_git_repository_link_commit_empty_call_grpc():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit), "__call__"
+    ) as call:
+        call.return_value = developer_connect.FetchGitRepositoryLinkCommitResponse()
+        client.fetch_git_repository_link_commit(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkCommitRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_fetch_git_repository_link_commit_list_empty_call_grpc():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit_list), "__call__"
+    ) as call:
+        call.return_value = developer_connect.FetchGitRepositoryLinkCommitListResponse()
+        client.fetch_git_repository_link_commit_list(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkCommitListRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_fetch_git_repository_link_file_blame_empty_call_grpc():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_file_blame), "__call__"
+    ) as call:
+        call.return_value = developer_connect.FetchGitRepositoryLinkFileBlameResponse()
+        client.fetch_git_repository_link_file_blame(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkFileBlameRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_fetch_git_repository_link_pull_request_empty_call_grpc():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request), "__call__"
+    ) as call:
+        call.return_value = developer_connect.PullRequest()
+        client.fetch_git_repository_link_pull_request(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkPullRequestRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_add_git_repository_link_pull_request_comment_empty_call_grpc():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_comment), "__call__"
+    ) as call:
+        call.return_value = developer_connect.PullRequestComment()
+        client.add_git_repository_link_pull_request_comment(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.AddGitRepositoryLinkPullRequestCommentRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_add_git_repository_link_pull_request_review_comment_empty_call_grpc():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_review_comment),
+        "__call__",
+    ) as call:
+        call.return_value = developer_connect.PullRequestReviewComment()
+        client.add_git_repository_link_pull_request_review_comment(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = (
+            developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest()
+        )
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_modify_git_repository_link_pull_request_empty_call_grpc():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.modify_git_repository_link_pull_request), "__call__"
+    ) as call:
+        call.return_value = developer_connect.PullRequest()
+        client.modify_git_repository_link_pull_request(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.ModifyGitRepositoryLinkPullRequestRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_fetch_git_repository_link_pull_request_list_empty_call_grpc():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request_list), "__call__"
+    ) as call:
+        call.return_value = (
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse()
+        )
+        client.fetch_git_repository_link_pull_request_list(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkPullRequestListRequest()
         assert args[0] == request_msg
 
 
@@ -17547,6 +24071,42 @@ async def test_fetch_read_token_empty_call_grpc_asyncio():
 # This test is a coverage failsafe to make sure that totally empty calls,
 # i.e. request == None and no flattened fields passed, work.
 @pytest.mark.asyncio
+async def test_open_git_repository_link_pull_request_empty_call_grpc_asyncio():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.open_git_repository_link_pull_request), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequest(
+                id="id_value",
+                title="title_value",
+                body="body_value",
+                head_ref="head_ref_value",
+                base_ref="base_ref_value",
+                author="author_value",
+                state=developer_connect.PullRequest.State.OPEN,
+                mergeability=developer_connect.PullRequest.Mergeability.MERGEABLE,
+                html_url="html_url_value",
+            )
+        )
+        await client.open_git_repository_link_pull_request(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.OpenGitRepositoryLinkPullRequestRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
 async def test_fetch_linkable_git_repositories_empty_call_grpc_asyncio():
     client = DeveloperConnectAsyncClient(
         credentials=async_anonymous_credentials(),
@@ -17622,6 +24182,280 @@ async def test_fetch_git_refs_empty_call_grpc_asyncio():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = developer_connect.FetchGitRefsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_diff_git_repository_link_commit_empty_call_grpc_asyncio():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.diff_git_repository_link_commit), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.DiffGitRepositoryLinkCommitResponse()
+        )
+        await client.diff_git_repository_link_commit(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.DiffGitRepositoryLinkCommitRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_commit_empty_call_grpc_asyncio():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.FetchGitRepositoryLinkCommitResponse()
+        )
+        await client.fetch_git_repository_link_commit(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkCommitRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_commit_list_empty_call_grpc_asyncio():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit_list), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(
+                next_page_token="next_page_token_value",
+            )
+        )
+        await client.fetch_git_repository_link_commit_list(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkCommitListRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_file_blame_empty_call_grpc_asyncio():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_file_blame), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.FetchGitRepositoryLinkFileBlameResponse()
+        )
+        await client.fetch_git_repository_link_file_blame(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkFileBlameRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_pull_request_empty_call_grpc_asyncio():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequest(
+                id="id_value",
+                title="title_value",
+                body="body_value",
+                head_ref="head_ref_value",
+                base_ref="base_ref_value",
+                author="author_value",
+                state=developer_connect.PullRequest.State.OPEN,
+                mergeability=developer_connect.PullRequest.Mergeability.MERGEABLE,
+                html_url="html_url_value",
+            )
+        )
+        await client.fetch_git_repository_link_pull_request(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkPullRequestRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_add_git_repository_link_pull_request_comment_empty_call_grpc_asyncio():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_comment), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequestComment(
+                id="id_value",
+                body="body_value",
+                author="author_value",
+            )
+        )
+        await client.add_git_repository_link_pull_request_comment(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.AddGitRepositoryLinkPullRequestCommentRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_add_git_repository_link_pull_request_review_comment_empty_call_grpc_asyncio():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_review_comment),
+        "__call__",
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequestReviewComment(
+                id="id_value",
+                body="body_value",
+                path="path_value",
+                first_line=1071,
+                last_line=955,
+                side=developer_connect.PullRequestReviewComment.DiffSide.BASE,
+                author="author_value",
+                commit_id="commit_id_value",
+            )
+        )
+        await client.add_git_repository_link_pull_request_review_comment(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = (
+            developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest()
+        )
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_modify_git_repository_link_pull_request_empty_call_grpc_asyncio():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.modify_git_repository_link_pull_request), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.PullRequest(
+                id="id_value",
+                title="title_value",
+                body="body_value",
+                head_ref="head_ref_value",
+                base_ref="base_ref_value",
+                author="author_value",
+                state=developer_connect.PullRequest.State.OPEN,
+                mergeability=developer_connect.PullRequest.Mergeability.MERGEABLE,
+                html_url="html_url_value",
+            )
+        )
+        await client.modify_git_repository_link_pull_request(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.ModifyGitRepositoryLinkPullRequestRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_fetch_git_repository_link_pull_request_list_empty_call_grpc_asyncio():
+    client = DeveloperConnectAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request_list), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+                next_page_token="next_page_token_value",
+            )
+        )
+        await client.fetch_git_repository_link_pull_request_list(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkPullRequestListRequest()
         assert args[0] == request_msg
 
 
@@ -19843,6 +26677,161 @@ def test_fetch_read_token_rest_interceptors(null_interceptor):
         post_with_metadata.assert_called_once()
 
 
+def test_open_git_repository_link_pull_request_rest_bad_request(
+    request_type=developer_connect.OpenGitRepositoryLinkPullRequestRequest,
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.open_git_repository_link_pull_request(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.OpenGitRepositoryLinkPullRequestRequest,
+        dict,
+    ],
+)
+def test_open_git_repository_link_pull_request_rest_call_success(request_type):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.PullRequest(
+            id="id_value",
+            title="title_value",
+            body="body_value",
+            head_ref="head_ref_value",
+            base_ref="base_ref_value",
+            author="author_value",
+            state=developer_connect.PullRequest.State.OPEN,
+            mergeability=developer_connect.PullRequest.Mergeability.MERGEABLE,
+            html_url="html_url_value",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = developer_connect.PullRequest.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.open_git_repository_link_pull_request(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.PullRequest)
+    assert response.id == "id_value"
+    assert response.title == "title_value"
+    assert response.body == "body_value"
+    assert response.head_ref == "head_ref_value"
+    assert response.base_ref == "base_ref_value"
+    assert response.author == "author_value"
+    assert response.state == developer_connect.PullRequest.State.OPEN
+    assert response.mergeability == developer_connect.PullRequest.Mergeability.MERGEABLE
+    assert response.html_url == "html_url_value"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_open_git_repository_link_pull_request_rest_interceptors(null_interceptor):
+    transport = transports.DeveloperConnectRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.DeveloperConnectRestInterceptor(),
+    )
+    client = DeveloperConnectClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_open_git_repository_link_pull_request",
+        ) as post,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_open_git_repository_link_pull_request_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "pre_open_git_repository_link_pull_request",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = developer_connect.OpenGitRepositoryLinkPullRequestRequest.pb(
+            developer_connect.OpenGitRepositoryLinkPullRequestRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = developer_connect.PullRequest.to_json(
+            developer_connect.PullRequest()
+        )
+        req.return_value.content = return_value
+
+        request = developer_connect.OpenGitRepositoryLinkPullRequestRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = developer_connect.PullRequest()
+        post_with_metadata.return_value = developer_connect.PullRequest(), metadata
+
+        client.open_git_repository_link_pull_request(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
 def test_fetch_linkable_git_repositories_rest_bad_request(
     request_type=developer_connect.FetchLinkableGitRepositoriesRequest,
 ):
@@ -20258,6 +27247,1353 @@ def test_fetch_git_refs_rest_interceptors(null_interceptor):
         )
 
         client.fetch_git_refs(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_diff_git_repository_link_commit_rest_bad_request(
+    request_type=developer_connect.DiffGitRepositoryLinkCommitRequest,
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.diff_git_repository_link_commit(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.DiffGitRepositoryLinkCommitRequest,
+        dict,
+    ],
+)
+def test_diff_git_repository_link_commit_rest_call_success(request_type):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.DiffGitRepositoryLinkCommitResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = developer_connect.DiffGitRepositoryLinkCommitResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.diff_git_repository_link_commit(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.DiffGitRepositoryLinkCommitResponse)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_diff_git_repository_link_commit_rest_interceptors(null_interceptor):
+    transport = transports.DeveloperConnectRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.DeveloperConnectRestInterceptor(),
+    )
+    client = DeveloperConnectClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_diff_git_repository_link_commit",
+        ) as post,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_diff_git_repository_link_commit_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "pre_diff_git_repository_link_commit",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = developer_connect.DiffGitRepositoryLinkCommitRequest.pb(
+            developer_connect.DiffGitRepositoryLinkCommitRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = developer_connect.DiffGitRepositoryLinkCommitResponse.to_json(
+            developer_connect.DiffGitRepositoryLinkCommitResponse()
+        )
+        req.return_value.content = return_value
+
+        request = developer_connect.DiffGitRepositoryLinkCommitRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = developer_connect.DiffGitRepositoryLinkCommitResponse()
+        post_with_metadata.return_value = (
+            developer_connect.DiffGitRepositoryLinkCommitResponse(),
+            metadata,
+        )
+
+        client.diff_git_repository_link_commit(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_fetch_git_repository_link_commit_rest_bad_request(
+    request_type=developer_connect.FetchGitRepositoryLinkCommitRequest,
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.fetch_git_repository_link_commit(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.FetchGitRepositoryLinkCommitRequest,
+        dict,
+    ],
+)
+def test_fetch_git_repository_link_commit_rest_call_success(request_type):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.FetchGitRepositoryLinkCommitResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = developer_connect.FetchGitRepositoryLinkCommitResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.fetch_git_repository_link_commit(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.FetchGitRepositoryLinkCommitResponse)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_fetch_git_repository_link_commit_rest_interceptors(null_interceptor):
+    transport = transports.DeveloperConnectRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.DeveloperConnectRestInterceptor(),
+    )
+    client = DeveloperConnectClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_fetch_git_repository_link_commit",
+        ) as post,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_fetch_git_repository_link_commit_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "pre_fetch_git_repository_link_commit",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = developer_connect.FetchGitRepositoryLinkCommitRequest.pb(
+            developer_connect.FetchGitRepositoryLinkCommitRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = developer_connect.FetchGitRepositoryLinkCommitResponse.to_json(
+            developer_connect.FetchGitRepositoryLinkCommitResponse()
+        )
+        req.return_value.content = return_value
+
+        request = developer_connect.FetchGitRepositoryLinkCommitRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = developer_connect.FetchGitRepositoryLinkCommitResponse()
+        post_with_metadata.return_value = (
+            developer_connect.FetchGitRepositoryLinkCommitResponse(),
+            metadata,
+        )
+
+        client.fetch_git_repository_link_commit(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_fetch_git_repository_link_commit_list_rest_bad_request(
+    request_type=developer_connect.FetchGitRepositoryLinkCommitListRequest,
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.fetch_git_repository_link_commit_list(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.FetchGitRepositoryLinkCommitListRequest,
+        dict,
+    ],
+)
+def test_fetch_git_repository_link_commit_list_rest_call_success(request_type):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.FetchGitRepositoryLinkCommitListResponse(
+            next_page_token="next_page_token_value",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = developer_connect.FetchGitRepositoryLinkCommitListResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.fetch_git_repository_link_commit_list(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.FetchGitRepositoryLinkCommitListPager)
+    assert response.next_page_token == "next_page_token_value"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_fetch_git_repository_link_commit_list_rest_interceptors(null_interceptor):
+    transport = transports.DeveloperConnectRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.DeveloperConnectRestInterceptor(),
+    )
+    client = DeveloperConnectClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_fetch_git_repository_link_commit_list",
+        ) as post,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_fetch_git_repository_link_commit_list_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "pre_fetch_git_repository_link_commit_list",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = developer_connect.FetchGitRepositoryLinkCommitListRequest.pb(
+            developer_connect.FetchGitRepositoryLinkCommitListRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = (
+            developer_connect.FetchGitRepositoryLinkCommitListResponse.to_json(
+                developer_connect.FetchGitRepositoryLinkCommitListResponse()
+            )
+        )
+        req.return_value.content = return_value
+
+        request = developer_connect.FetchGitRepositoryLinkCommitListRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = developer_connect.FetchGitRepositoryLinkCommitListResponse()
+        post_with_metadata.return_value = (
+            developer_connect.FetchGitRepositoryLinkCommitListResponse(),
+            metadata,
+        )
+
+        client.fetch_git_repository_link_commit_list(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_fetch_git_repository_link_file_blame_rest_bad_request(
+    request_type=developer_connect.FetchGitRepositoryLinkFileBlameRequest,
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.fetch_git_repository_link_file_blame(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.FetchGitRepositoryLinkFileBlameRequest,
+        dict,
+    ],
+)
+def test_fetch_git_repository_link_file_blame_rest_call_success(request_type):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.FetchGitRepositoryLinkFileBlameResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = developer_connect.FetchGitRepositoryLinkFileBlameResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.fetch_git_repository_link_file_blame(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response, developer_connect.FetchGitRepositoryLinkFileBlameResponse
+    )
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_fetch_git_repository_link_file_blame_rest_interceptors(null_interceptor):
+    transport = transports.DeveloperConnectRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.DeveloperConnectRestInterceptor(),
+    )
+    client = DeveloperConnectClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_fetch_git_repository_link_file_blame",
+        ) as post,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_fetch_git_repository_link_file_blame_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "pre_fetch_git_repository_link_file_blame",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = developer_connect.FetchGitRepositoryLinkFileBlameRequest.pb(
+            developer_connect.FetchGitRepositoryLinkFileBlameRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = (
+            developer_connect.FetchGitRepositoryLinkFileBlameResponse.to_json(
+                developer_connect.FetchGitRepositoryLinkFileBlameResponse()
+            )
+        )
+        req.return_value.content = return_value
+
+        request = developer_connect.FetchGitRepositoryLinkFileBlameRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = developer_connect.FetchGitRepositoryLinkFileBlameResponse()
+        post_with_metadata.return_value = (
+            developer_connect.FetchGitRepositoryLinkFileBlameResponse(),
+            metadata,
+        )
+
+        client.fetch_git_repository_link_file_blame(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_fetch_git_repository_link_pull_request_rest_bad_request(
+    request_type=developer_connect.FetchGitRepositoryLinkPullRequestRequest,
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.fetch_git_repository_link_pull_request(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.FetchGitRepositoryLinkPullRequestRequest,
+        dict,
+    ],
+)
+def test_fetch_git_repository_link_pull_request_rest_call_success(request_type):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.PullRequest(
+            id="id_value",
+            title="title_value",
+            body="body_value",
+            head_ref="head_ref_value",
+            base_ref="base_ref_value",
+            author="author_value",
+            state=developer_connect.PullRequest.State.OPEN,
+            mergeability=developer_connect.PullRequest.Mergeability.MERGEABLE,
+            html_url="html_url_value",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = developer_connect.PullRequest.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.fetch_git_repository_link_pull_request(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.PullRequest)
+    assert response.id == "id_value"
+    assert response.title == "title_value"
+    assert response.body == "body_value"
+    assert response.head_ref == "head_ref_value"
+    assert response.base_ref == "base_ref_value"
+    assert response.author == "author_value"
+    assert response.state == developer_connect.PullRequest.State.OPEN
+    assert response.mergeability == developer_connect.PullRequest.Mergeability.MERGEABLE
+    assert response.html_url == "html_url_value"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_fetch_git_repository_link_pull_request_rest_interceptors(null_interceptor):
+    transport = transports.DeveloperConnectRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.DeveloperConnectRestInterceptor(),
+    )
+    client = DeveloperConnectClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_fetch_git_repository_link_pull_request",
+        ) as post,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_fetch_git_repository_link_pull_request_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "pre_fetch_git_repository_link_pull_request",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = developer_connect.FetchGitRepositoryLinkPullRequestRequest.pb(
+            developer_connect.FetchGitRepositoryLinkPullRequestRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = developer_connect.PullRequest.to_json(
+            developer_connect.PullRequest()
+        )
+        req.return_value.content = return_value
+
+        request = developer_connect.FetchGitRepositoryLinkPullRequestRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = developer_connect.PullRequest()
+        post_with_metadata.return_value = developer_connect.PullRequest(), metadata
+
+        client.fetch_git_repository_link_pull_request(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_add_git_repository_link_pull_request_comment_rest_bad_request(
+    request_type=developer_connect.AddGitRepositoryLinkPullRequestCommentRequest,
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.add_git_repository_link_pull_request_comment(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.AddGitRepositoryLinkPullRequestCommentRequest,
+        dict,
+    ],
+)
+def test_add_git_repository_link_pull_request_comment_rest_call_success(request_type):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.PullRequestComment(
+            id="id_value",
+            body="body_value",
+            author="author_value",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = developer_connect.PullRequestComment.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.add_git_repository_link_pull_request_comment(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.PullRequestComment)
+    assert response.id == "id_value"
+    assert response.body == "body_value"
+    assert response.author == "author_value"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_add_git_repository_link_pull_request_comment_rest_interceptors(
+    null_interceptor,
+):
+    transport = transports.DeveloperConnectRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.DeveloperConnectRestInterceptor(),
+    )
+    client = DeveloperConnectClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_add_git_repository_link_pull_request_comment",
+        ) as post,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_add_git_repository_link_pull_request_comment_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "pre_add_git_repository_link_pull_request_comment",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = developer_connect.AddGitRepositoryLinkPullRequestCommentRequest.pb(
+            developer_connect.AddGitRepositoryLinkPullRequestCommentRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = developer_connect.PullRequestComment.to_json(
+            developer_connect.PullRequestComment()
+        )
+        req.return_value.content = return_value
+
+        request = developer_connect.AddGitRepositoryLinkPullRequestCommentRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = developer_connect.PullRequestComment()
+        post_with_metadata.return_value = (
+            developer_connect.PullRequestComment(),
+            metadata,
+        )
+
+        client.add_git_repository_link_pull_request_comment(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_add_git_repository_link_pull_request_review_comment_rest_bad_request(
+    request_type=developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest,
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.add_git_repository_link_pull_request_review_comment(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest,
+        dict,
+    ],
+)
+def test_add_git_repository_link_pull_request_review_comment_rest_call_success(
+    request_type,
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.PullRequestReviewComment(
+            id="id_value",
+            body="body_value",
+            path="path_value",
+            first_line=1071,
+            last_line=955,
+            side=developer_connect.PullRequestReviewComment.DiffSide.BASE,
+            author="author_value",
+            commit_id="commit_id_value",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = developer_connect.PullRequestReviewComment.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.add_git_repository_link_pull_request_review_comment(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.PullRequestReviewComment)
+    assert response.id == "id_value"
+    assert response.body == "body_value"
+    assert response.path == "path_value"
+    assert response.first_line == 1071
+    assert response.last_line == 955
+    assert response.side == developer_connect.PullRequestReviewComment.DiffSide.BASE
+    assert response.author == "author_value"
+    assert response.commit_id == "commit_id_value"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_add_git_repository_link_pull_request_review_comment_rest_interceptors(
+    null_interceptor,
+):
+    transport = transports.DeveloperConnectRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.DeveloperConnectRestInterceptor(),
+    )
+    client = DeveloperConnectClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_add_git_repository_link_pull_request_review_comment",
+        ) as post,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_add_git_repository_link_pull_request_review_comment_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "pre_add_git_repository_link_pull_request_review_comment",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = (
+            developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest.pb(
+                developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest()
+            )
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = developer_connect.PullRequestReviewComment.to_json(
+            developer_connect.PullRequestReviewComment()
+        )
+        req.return_value.content = return_value
+
+        request = (
+            developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest()
+        )
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = developer_connect.PullRequestReviewComment()
+        post_with_metadata.return_value = (
+            developer_connect.PullRequestReviewComment(),
+            metadata,
+        )
+
+        client.add_git_repository_link_pull_request_review_comment(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_modify_git_repository_link_pull_request_rest_bad_request(
+    request_type=developer_connect.ModifyGitRepositoryLinkPullRequestRequest,
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.modify_git_repository_link_pull_request(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.ModifyGitRepositoryLinkPullRequestRequest,
+        dict,
+    ],
+)
+def test_modify_git_repository_link_pull_request_rest_call_success(request_type):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.PullRequest(
+            id="id_value",
+            title="title_value",
+            body="body_value",
+            head_ref="head_ref_value",
+            base_ref="base_ref_value",
+            author="author_value",
+            state=developer_connect.PullRequest.State.OPEN,
+            mergeability=developer_connect.PullRequest.Mergeability.MERGEABLE,
+            html_url="html_url_value",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = developer_connect.PullRequest.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.modify_git_repository_link_pull_request(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, developer_connect.PullRequest)
+    assert response.id == "id_value"
+    assert response.title == "title_value"
+    assert response.body == "body_value"
+    assert response.head_ref == "head_ref_value"
+    assert response.base_ref == "base_ref_value"
+    assert response.author == "author_value"
+    assert response.state == developer_connect.PullRequest.State.OPEN
+    assert response.mergeability == developer_connect.PullRequest.Mergeability.MERGEABLE
+    assert response.html_url == "html_url_value"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_modify_git_repository_link_pull_request_rest_interceptors(null_interceptor):
+    transport = transports.DeveloperConnectRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.DeveloperConnectRestInterceptor(),
+    )
+    client = DeveloperConnectClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_modify_git_repository_link_pull_request",
+        ) as post,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_modify_git_repository_link_pull_request_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "pre_modify_git_repository_link_pull_request",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = developer_connect.ModifyGitRepositoryLinkPullRequestRequest.pb(
+            developer_connect.ModifyGitRepositoryLinkPullRequestRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = developer_connect.PullRequest.to_json(
+            developer_connect.PullRequest()
+        )
+        req.return_value.content = return_value
+
+        request = developer_connect.ModifyGitRepositoryLinkPullRequestRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = developer_connect.PullRequest()
+        post_with_metadata.return_value = developer_connect.PullRequest(), metadata
+
+        client.modify_git_repository_link_pull_request(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_fetch_git_repository_link_pull_request_list_rest_bad_request(
+    request_type=developer_connect.FetchGitRepositoryLinkPullRequestListRequest,
+):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.fetch_git_repository_link_pull_request_list(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        developer_connect.FetchGitRepositoryLinkPullRequestListRequest,
+        dict,
+    ],
+)
+def test_fetch_git_repository_link_pull_request_list_rest_call_success(request_type):
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "name": "projects/sample1/locations/sample2/connections/sample3/gitRepositoryLinks/sample4"
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = developer_connect.FetchGitRepositoryLinkPullRequestListResponse(
+            next_page_token="next_page_token_value",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = (
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse.pb(
+                return_value
+            )
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.fetch_git_repository_link_pull_request_list(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, pagers.FetchGitRepositoryLinkPullRequestListPager)
+    assert response.next_page_token == "next_page_token_value"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_fetch_git_repository_link_pull_request_list_rest_interceptors(
+    null_interceptor,
+):
+    transport = transports.DeveloperConnectRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.DeveloperConnectRestInterceptor(),
+    )
+    client = DeveloperConnectClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_fetch_git_repository_link_pull_request_list",
+        ) as post,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "post_fetch_git_repository_link_pull_request_list_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.DeveloperConnectRestInterceptor,
+            "pre_fetch_git_repository_link_pull_request_list",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = developer_connect.FetchGitRepositoryLinkPullRequestListRequest.pb(
+            developer_connect.FetchGitRepositoryLinkPullRequestListRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = (
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse.to_json(
+                developer_connect.FetchGitRepositoryLinkPullRequestListResponse()
+            )
+        )
+        req.return_value.content = return_value
+
+        request = developer_connect.FetchGitRepositoryLinkPullRequestListRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = (
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse()
+        )
+        post_with_metadata.return_value = (
+            developer_connect.FetchGitRepositoryLinkPullRequestListResponse(),
+            metadata,
+        )
+
+        client.fetch_git_repository_link_pull_request_list(
             request,
             metadata=[
                 ("key", "val"),
@@ -22668,6 +31004,27 @@ def test_fetch_read_token_empty_call_rest():
 
 # This test is a coverage failsafe to make sure that totally empty calls,
 # i.e. request == None and no flattened fields passed, work.
+def test_open_git_repository_link_pull_request_empty_call_rest():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.open_git_repository_link_pull_request), "__call__"
+    ) as call:
+        client.open_git_repository_link_pull_request(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.OpenGitRepositoryLinkPullRequestRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
 def test_fetch_linkable_git_repositories_empty_call_rest():
     client = DeveloperConnectClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -22724,6 +31081,198 @@ def test_fetch_git_refs_empty_call_rest():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = developer_connect.FetchGitRefsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_diff_git_repository_link_commit_empty_call_rest():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.diff_git_repository_link_commit), "__call__"
+    ) as call:
+        client.diff_git_repository_link_commit(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.DiffGitRepositoryLinkCommitRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_fetch_git_repository_link_commit_empty_call_rest():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit), "__call__"
+    ) as call:
+        client.fetch_git_repository_link_commit(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkCommitRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_fetch_git_repository_link_commit_list_empty_call_rest():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_commit_list), "__call__"
+    ) as call:
+        client.fetch_git_repository_link_commit_list(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkCommitListRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_fetch_git_repository_link_file_blame_empty_call_rest():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_file_blame), "__call__"
+    ) as call:
+        client.fetch_git_repository_link_file_blame(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkFileBlameRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_fetch_git_repository_link_pull_request_empty_call_rest():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request), "__call__"
+    ) as call:
+        client.fetch_git_repository_link_pull_request(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkPullRequestRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_add_git_repository_link_pull_request_comment_empty_call_rest():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_comment), "__call__"
+    ) as call:
+        client.add_git_repository_link_pull_request_comment(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.AddGitRepositoryLinkPullRequestCommentRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_add_git_repository_link_pull_request_review_comment_empty_call_rest():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.add_git_repository_link_pull_request_review_comment),
+        "__call__",
+    ) as call:
+        client.add_git_repository_link_pull_request_review_comment(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = (
+            developer_connect.AddGitRepositoryLinkPullRequestReviewCommentRequest()
+        )
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_modify_git_repository_link_pull_request_empty_call_rest():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.modify_git_repository_link_pull_request), "__call__"
+    ) as call:
+        client.modify_git_repository_link_pull_request(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.ModifyGitRepositoryLinkPullRequestRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_fetch_git_repository_link_pull_request_list_empty_call_rest():
+    client = DeveloperConnectClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.fetch_git_repository_link_pull_request_list), "__call__"
+    ) as call:
+        client.fetch_git_repository_link_pull_request_list(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = developer_connect.FetchGitRepositoryLinkPullRequestListRequest()
         assert args[0] == request_msg
 
 
@@ -23028,9 +31577,19 @@ def test_developer_connect_base_transport():
         "get_git_repository_link",
         "fetch_read_write_token",
         "fetch_read_token",
+        "open_git_repository_link_pull_request",
         "fetch_linkable_git_repositories",
         "fetch_git_hub_installations",
         "fetch_git_refs",
+        "diff_git_repository_link_commit",
+        "fetch_git_repository_link_commit",
+        "fetch_git_repository_link_commit_list",
+        "fetch_git_repository_link_file_blame",
+        "fetch_git_repository_link_pull_request",
+        "add_git_repository_link_pull_request_comment",
+        "add_git_repository_link_pull_request_review_comment",
+        "modify_git_repository_link_pull_request",
+        "fetch_git_repository_link_pull_request_list",
         "list_account_connectors",
         "get_account_connector",
         "create_account_connector",
@@ -23352,6 +31911,9 @@ def test_developer_connect_client_transport_session_collision(transport_name):
     session1 = client1.transport.fetch_read_token._session
     session2 = client2.transport.fetch_read_token._session
     assert session1 != session2
+    session1 = client1.transport.open_git_repository_link_pull_request._session
+    session2 = client2.transport.open_git_repository_link_pull_request._session
+    assert session1 != session2
     session1 = client1.transport.fetch_linkable_git_repositories._session
     session2 = client2.transport.fetch_linkable_git_repositories._session
     assert session1 != session2
@@ -23360,6 +31922,37 @@ def test_developer_connect_client_transport_session_collision(transport_name):
     assert session1 != session2
     session1 = client1.transport.fetch_git_refs._session
     session2 = client2.transport.fetch_git_refs._session
+    assert session1 != session2
+    session1 = client1.transport.diff_git_repository_link_commit._session
+    session2 = client2.transport.diff_git_repository_link_commit._session
+    assert session1 != session2
+    session1 = client1.transport.fetch_git_repository_link_commit._session
+    session2 = client2.transport.fetch_git_repository_link_commit._session
+    assert session1 != session2
+    session1 = client1.transport.fetch_git_repository_link_commit_list._session
+    session2 = client2.transport.fetch_git_repository_link_commit_list._session
+    assert session1 != session2
+    session1 = client1.transport.fetch_git_repository_link_file_blame._session
+    session2 = client2.transport.fetch_git_repository_link_file_blame._session
+    assert session1 != session2
+    session1 = client1.transport.fetch_git_repository_link_pull_request._session
+    session2 = client2.transport.fetch_git_repository_link_pull_request._session
+    assert session1 != session2
+    session1 = client1.transport.add_git_repository_link_pull_request_comment._session
+    session2 = client2.transport.add_git_repository_link_pull_request_comment._session
+    assert session1 != session2
+    session1 = (
+        client1.transport.add_git_repository_link_pull_request_review_comment._session
+    )
+    session2 = (
+        client2.transport.add_git_repository_link_pull_request_review_comment._session
+    )
+    assert session1 != session2
+    session1 = client1.transport.modify_git_repository_link_pull_request._session
+    session2 = client2.transport.modify_git_repository_link_pull_request._session
+    assert session1 != session2
+    session1 = client1.transport.fetch_git_repository_link_pull_request_list._session
+    session2 = client2.transport.fetch_git_repository_link_pull_request_list._session
     assert session1 != session2
     session1 = client1.transport.list_account_connectors._session
     session2 = client2.transport.list_account_connectors._session

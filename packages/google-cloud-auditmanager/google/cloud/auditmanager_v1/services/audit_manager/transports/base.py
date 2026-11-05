@@ -157,7 +157,16 @@ class AuditManagerTransport(abc.ABC):
             ),
             self.get_audit_schedule: gapic_v1.method.wrap_method(
                 self.get_audit_schedule,
-                default_timeout=None,
+                default_retry=retries.Retry(
+                    initial=0.1,
+                    maximum=10.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        core_exceptions.ServiceUnavailable,
+                    ),
+                    deadline=60.0,
+                ),
+                default_timeout=60.0,
                 client_info=client_info,
             ),
             self.list_audit_schedules: gapic_v1.method.wrap_method(

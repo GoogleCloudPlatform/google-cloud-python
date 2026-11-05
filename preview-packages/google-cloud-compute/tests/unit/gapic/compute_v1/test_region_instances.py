@@ -1651,6 +1651,7 @@ def test_bulk_insert_rest_call_success(request_type):
             "workload_identity_config": {
                 "identity": "identity_value",
                 "identity_certificate_enabled": True,
+                "identity_type": "identity_type_value",
             },
         },
         "location_policy": {

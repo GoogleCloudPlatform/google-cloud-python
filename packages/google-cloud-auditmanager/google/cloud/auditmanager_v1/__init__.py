@@ -28,6 +28,7 @@ __version__ = package_version.__version__
 __lazy_modules__ = {
     "google.cloud.auditmanager_v1.services.audit_manager",
     "google.cloud.auditmanager_v1.types.auditmanager",
+    "google.cloud.auditmanager_v1.types.parameters",
 }
 
 
@@ -66,6 +67,14 @@ from .types.auditmanager import (
     ScheduleState,
     UpdateAuditScheduleRequest,
 )
+from .types.parameters import (
+    CloudControlParameterStates,
+    Parameter,
+    ParameterOverrides,
+    ParameterState,
+    ParamValue,
+    StringList,
+)
 
 __all__ = (
     "AuditManagerAsyncClient",
@@ -73,6 +82,7 @@ __all__ = (
     "AuditReport",
     "AuditSchedule",
     "AuditScopeReport",
+    "CloudControlParameterStates",
     "ComplianceState",
     "Control",
     "ControlDetails",
@@ -96,11 +106,16 @@ __all__ = (
     "ListResourceEnrollmentStatusesResponse",
     "OperationMetadata",
     "OperationState",
+    "ParamValue",
+    "Parameter",
+    "ParameterOverrides",
+    "ParameterState",
     "ReportGenerationProgress",
     "ReportSummary",
     "ResourceEnrollmentStatus",
     "ScheduleConfig",
     "ScheduleState",
+    "StringList",
     "UpdateAuditScheduleRequest",
 )
 

@@ -17,6 +17,7 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.type.latlng_pb2 as latlng_pb2  # type: ignore
 import proto  # type: ignore
 
 __protobuf__ = proto.module(
@@ -27,13 +28,18 @@ __protobuf__ = proto.module(
         "SearchUseCase",
         "SearchTier",
         "SearchAddOn",
+        "SubscriptionTier",
+        "SubscriptionTerm",
         "Interval",
         "CustomAttribute",
         "UserInfo",
         "DoubleList",
+        "IdpConfig",
         "Principal",
         "HealthcareFhirConfig",
         "SearchLinkPromotion",
+        "SessionConfig",
+        "DataProtectionPolicy",
     },
 )
 
@@ -78,6 +84,8 @@ class SolutionType(proto.Enum):
             It's used for Generative chat engine only, the associated
             data stores must enrolled with ``SOLUTION_TYPE_CHAT``
             solution.
+        SOLUTION_TYPE_AI_MODE (5):
+            Used for AI Mode.
     """
 
     SOLUTION_TYPE_UNSPECIFIED = 0
@@ -85,6 +93,7 @@ class SolutionType(proto.Enum):
     SOLUTION_TYPE_SEARCH = 2
     SOLUTION_TYPE_CHAT = 3
     SOLUTION_TYPE_GENERATIVE_CHAT = 4
+    SOLUTION_TYPE_AI_MODE = 5
 
 
 class SearchUseCase(proto.Enum):
@@ -141,6 +150,95 @@ class SearchAddOn(proto.Enum):
 
     SEARCH_ADD_ON_UNSPECIFIED = 0
     SEARCH_ADD_ON_LLM = 1
+
+
+class SubscriptionTier(proto.Enum):
+    r"""Subscription tier information.
+
+    Values:
+        SUBSCRIPTION_TIER_UNSPECIFIED (0):
+            Default value.
+        SUBSCRIPTION_TIER_SEARCH (1):
+            Search tier.
+            Search tier can access Vertex AI Search features
+            and NotebookLM features.
+        SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT (2):
+            Gemini Enterprise Plus tier.
+        SUBSCRIPTION_TIER_NOTEBOOK_LM (3):
+            NotebookLM tier.
+            NotebookLM is a subscription tier can only
+            access NotebookLM features.
+        SUBSCRIPTION_TIER_FRONTLINE_WORKER (4):
+            Gemini Frontline worker tier.
+        SUBSCRIPTION_TIER_AGENTSPACE_STARTER (10):
+            Gemini Business Starter tier.
+        SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS (6):
+            Gemini Business tier.
+        SUBSCRIPTION_TIER_ENTERPRISE (7):
+            Gemini Enterprise Standard tier.
+        SUBSCRIPTION_TIER_ENTERPRISE_EMERGING (15):
+            Gemini Enterprise Standard tier for emerging
+            markets.
+        SUBSCRIPTION_TIER_EDU (8):
+            Gemini Enterprise EDU tier.
+        SUBSCRIPTION_TIER_EDU_PRO (9):
+            Gemini Enterprise EDU Pro tier.
+        SUBSCRIPTION_TIER_EDU_EMERGING (11):
+            Gemini Enterprise EDU tier for emerging
+            market only.
+        SUBSCRIPTION_TIER_EDU_PRO_EMERGING (12):
+            Gemini Enterprise EDU Pro tier for emerging
+            market.
+        SUBSCRIPTION_TIER_FRONTLINE_STARTER (13):
+            Gemini Frontline Starter tier.
+        SUBSCRIPTION_TIER_CONSUMPTION_ONLY (16):
+            Represents the Gemini Enterprise
+            Consumption-only tier: $0 subscription billed
+            purely on usage (PAYG).
+        SUBSCRIPTION_TIER_EDU_GOV_EMERGING (17):
+            Gemini Enterprise EDU tier for government in
+            emerging markets.
+    """
+
+    SUBSCRIPTION_TIER_UNSPECIFIED = 0
+    SUBSCRIPTION_TIER_SEARCH = 1
+    SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT = 2
+    SUBSCRIPTION_TIER_NOTEBOOK_LM = 3
+    SUBSCRIPTION_TIER_FRONTLINE_WORKER = 4
+    SUBSCRIPTION_TIER_AGENTSPACE_STARTER = 10
+    SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS = 6
+    SUBSCRIPTION_TIER_ENTERPRISE = 7
+    SUBSCRIPTION_TIER_ENTERPRISE_EMERGING = 15
+    SUBSCRIPTION_TIER_EDU = 8
+    SUBSCRIPTION_TIER_EDU_PRO = 9
+    SUBSCRIPTION_TIER_EDU_EMERGING = 11
+    SUBSCRIPTION_TIER_EDU_PRO_EMERGING = 12
+    SUBSCRIPTION_TIER_FRONTLINE_STARTER = 13
+    SUBSCRIPTION_TIER_CONSUMPTION_ONLY = 16
+    SUBSCRIPTION_TIER_EDU_GOV_EMERGING = 17
+
+
+class SubscriptionTerm(proto.Enum):
+    r"""Subscription term.
+
+    Values:
+        SUBSCRIPTION_TERM_UNSPECIFIED (0):
+            Default value, do not use.
+        SUBSCRIPTION_TERM_ONE_MONTH (1):
+            1 month.
+        SUBSCRIPTION_TERM_ONE_YEAR (2):
+            1 year.
+        SUBSCRIPTION_TERM_THREE_YEARS (3):
+            3 years.
+        SUBSCRIPTION_TERM_CUSTOM (6):
+            Custom term. Must set the end_date.
+    """
+
+    SUBSCRIPTION_TERM_UNSPECIFIED = 0
+    SUBSCRIPTION_TERM_ONE_MONTH = 1
+    SUBSCRIPTION_TERM_ONE_YEAR = 2
+    SUBSCRIPTION_TERM_THREE_YEARS = 3
+    SUBSCRIPTION_TERM_CUSTOM = 6
 
 
 class Interval(proto.Message):
@@ -252,6 +350,11 @@ class UserInfo(proto.Message):
             The field must be a UTF-8 encoded string with a length limit
             of 128 characters. Otherwise, an ``INVALID_ARGUMENT`` error
             is returned.
+
+            Represents an opaque ID to the Search API. The Search API
+            doesn't interpret the value in any way. This field is used
+            to associate events with a user across sessions if the
+            events are being uploaded.
         user_agent (str):
             User agent as included in the HTTP header.
 
@@ -268,7 +371,48 @@ class UserInfo(proto.Message):
         time_zone (str):
             Optional. IANA time zone, e.g.
             Europe/Budapest.
+        precise_location (google.cloud.discoveryengine_v1.types.UserInfo.PreciseLocation):
+            Optional. Input only. Precise location of the
+            user. It is used in Custom Ranking to calculate
+            the distance between the user and the relevant
+            documents.
     """
+
+    class PreciseLocation(proto.Message):
+        r"""Precise location info with multiple representation options.
+
+        This message has `oneof`_ fields (mutually exclusive fields).
+        For each oneof, at most one member field can be set at the same time.
+        Setting any member of the oneof automatically clears all other
+        members.
+
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+        Attributes:
+            point (google.type.latlng_pb2.LatLng):
+                Optional. Location represented by a
+                latitude/longitude point.
+
+                This field is a member of `oneof`_ ``location``.
+            address (str):
+                Location represented by a natural language
+                address. Will later be geocoded and converted to
+                either a point or a polygon.
+
+                This field is a member of `oneof`_ ``location``.
+        """
+
+        point: latlng_pb2.LatLng = proto.Field(
+            proto.MESSAGE,
+            number=1,
+            oneof="location",
+            message=latlng_pb2.LatLng,
+        )
+        address: str = proto.Field(
+            proto.STRING,
+            number=2,
+            oneof="location",
+        )
 
     user_id: str = proto.Field(
         proto.STRING,
@@ -281,6 +425,11 @@ class UserInfo(proto.Message):
     time_zone: str = proto.Field(
         proto.STRING,
         number=3,
+    )
+    precise_location: PreciseLocation = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message=PreciseLocation,
     )
 
 
@@ -295,6 +444,58 @@ class DoubleList(proto.Message):
     values: MutableSequence[float] = proto.RepeatedField(
         proto.DOUBLE,
         number=1,
+    )
+
+
+class IdpConfig(proto.Message):
+    r"""Identity Provider Config.
+
+    Attributes:
+        idp_type (google.cloud.discoveryengine_v1.types.IdpConfig.IdpType):
+            Identity provider type configured.
+        external_idp_config (google.cloud.discoveryengine_v1.types.IdpConfig.ExternalIdpConfig):
+            External Identity provider config.
+    """
+
+    class IdpType(proto.Enum):
+        r"""Identity Provider Type.
+
+        Values:
+            IDP_TYPE_UNSPECIFIED (0):
+                Default value. ACL search not enabled.
+            GSUITE (1):
+                Google 1P provider.
+            THIRD_PARTY (2):
+                Third party provider.
+        """
+
+        IDP_TYPE_UNSPECIFIED = 0
+        GSUITE = 1
+        THIRD_PARTY = 2
+
+    class ExternalIdpConfig(proto.Message):
+        r"""Third party IDP Config.
+
+        Attributes:
+            workforce_pool_name (str):
+                Workforce pool name. Example:
+                "locations/global/workforcePools/pool_id".
+        """
+
+        workforce_pool_name: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+
+    idp_type: IdpType = proto.Field(
+        proto.ENUM,
+        number=1,
+        enum=IdpType,
+    )
+    external_idp_config: ExternalIdpConfig = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=ExternalIdpConfig,
     )
 
 
@@ -365,6 +566,13 @@ class HealthcareFhirConfig(proto.Message):
             If set to ``true``, the batch ingestion will be processed in
             a static indexing mode which is slower but more capable of
             handling larger volume.
+        initial_filter_groups (MutableSequence[str]):
+            Optional. Names of the Group resources to use as a basis for
+            the initial patient filter, in format
+            ``projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}/fhir/Group/{group_id}``.
+            The filter group must be a FHIR resource name of type Group,
+            and the filter will be constructed from the direct members
+            of the group which are Patient resources.
     """
 
     enable_configurable_schema: bool = proto.Field(
@@ -374,6 +582,10 @@ class HealthcareFhirConfig(proto.Message):
     enable_static_indexing_for_batch_ingestion: bool = proto.Field(
         proto.BOOL,
         number=2,
+    )
+    initial_filter_groups: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=4,
     )
 
 
@@ -431,6 +643,99 @@ class SearchLinkPromotion(proto.Message):
     enabled: bool = proto.Field(
         proto.BOOL,
         number=5,
+    )
+
+
+class SessionConfig(proto.Message):
+    r"""Configuration for the session.
+
+    Attributes:
+        session_management_policy (google.cloud.discoveryengine_v1.types.SessionConfig.SessionManagementPolicy):
+            Optional. Session management policy that
+            defines who will manage the session.
+        session_ttl (google.cloud.discoveryengine_v1.types.SessionConfig.SessionTtl):
+            Optional. The TTL for the session. If unset,
+            the default value is 60 days.
+    """
+
+    class SessionManagementPolicy(proto.Enum):
+        r"""Session management policy that defines who will manage the
+        session.
+
+        Values:
+            SESSION_MANAGEMENT_POLICY_UNSPECIFIED (0):
+                Default value.
+            NOT_MANAGED (1):
+                The session will be managed by the customer.
+            VERTEX_AI_MANAGED (2):
+                Sessions multi-tenancy will be controlled by
+                Google using 1P or 3P identity providers.
+        """
+
+        SESSION_MANAGEMENT_POLICY_UNSPECIFIED = 0
+        NOT_MANAGED = 1
+        VERTEX_AI_MANAGED = 2
+
+    class SessionTtl(proto.Message):
+        r"""Defines the TTL for sessions.
+
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+        Attributes:
+            days (int):
+                Defines the number of days for session TTL.
+
+                This field is a member of `oneof`_ ``time_info``.
+        """
+
+        days: int = proto.Field(
+            proto.INT32,
+            number=1,
+            oneof="time_info",
+        )
+
+    session_management_policy: SessionManagementPolicy = proto.Field(
+        proto.ENUM,
+        number=1,
+        enum=SessionManagementPolicy,
+    )
+    session_ttl: SessionTtl = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=SessionTtl,
+    )
+
+
+class DataProtectionPolicy(proto.Message):
+    r"""Contains the data protection policy config for a DataStore or
+    a connector.
+
+    Attributes:
+        sensitive_data_protection_policy (google.cloud.discoveryengine_v1.types.DataProtectionPolicy.SensitiveDataProtectionPolicy):
+            Optional. Specifies the sensitive data
+            protection policy for the connector source.
+    """
+
+    class SensitiveDataProtectionPolicy(proto.Message):
+        r"""Specifies a Sensitive Data Protection
+        (https://cloud.google.com/sensitive-data-protection/docs/sensitive-data-protection-overview)
+        policy.
+
+        Attributes:
+            policy (str):
+                Optional. Specifies the resource name of the
+                Sensitive Data Protection content policy.
+        """
+
+        policy: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+
+    sensitive_data_protection_policy: SensitiveDataProtectionPolicy = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=SensitiveDataProtectionPolicy,
     )
 
 

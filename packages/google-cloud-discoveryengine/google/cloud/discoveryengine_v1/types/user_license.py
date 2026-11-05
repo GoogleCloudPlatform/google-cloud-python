@@ -24,6 +24,7 @@ __protobuf__ = proto.module(
     package="google.cloud.discoveryengine.v1",
     manifest={
         "UserLicense",
+        "LicenseConfigUsageStats",
     },
 )
 
@@ -45,8 +46,8 @@ class UserLicense(proto.Message):
         license_assignment_state (google.cloud.discoveryengine_v1.types.UserLicense.LicenseAssignmentState):
             Output only. License assignment state of the
             user. If the user is assigned with a license
-            config, the user loggin will be assigned with
-            the license;
+            config, the user login will be assigned with the
+            license;
             If the user's license assignment state is
             unassigned or unspecified, no license config
             will be associated to the user;
@@ -83,6 +84,8 @@ class UserLicense(proto.Message):
                 but cannot get license assigned. Users already logged in but
                 cannot get license assigned will be assigned NO_LICENSE
                 state(License could be unassigned by admin).
+            BLOCKED (5):
+                User is blocked from assigning a license.
         """
 
         LICENSE_ASSIGNMENT_STATE_UNSPECIFIED = 0
@@ -90,6 +93,7 @@ class UserLicense(proto.Message):
         UNASSIGNED = 2
         NO_LICENSE = 3
         NO_LICENSE_ATTEMPTED_LOGIN = 4
+        BLOCKED = 5
 
     user_principal: str = proto.Field(
         proto.STRING,
@@ -122,6 +126,26 @@ class UserLicense(proto.Message):
         proto.MESSAGE,
         number=8,
         message=timestamp_pb2.Timestamp,
+    )
+
+
+class LicenseConfigUsageStats(proto.Message):
+    r"""Stats about users' licenses.
+
+    Attributes:
+        license_config (str):
+            Required. The LicenseConfig name.
+        used_license_count (int):
+            Required. The number of licenses used.
+    """
+
+    license_config: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    used_license_count: int = proto.Field(
+        proto.INT64,
+        number=2,
     )
 
 

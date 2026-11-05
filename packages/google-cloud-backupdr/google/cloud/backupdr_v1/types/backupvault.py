@@ -48,6 +48,7 @@ __protobuf__ = proto.module(
         "BackupApplianceLockInfo",
         "BackupLock",
         "Backup",
+        "VerificationSummary",
         "CreateBackupVaultRequest",
         "ListBackupVaultsRequest",
         "ListBackupVaultsResponse",
@@ -713,6 +714,11 @@ class GcpBackupConfig(proto.Message):
         backup_plan_revision_id (str):
             The user friendly id of the backup plan
             revision. E.g. v0, v1 etc.
+        auto_protection_policy_binding (str):
+            Output only. The resource name of the
+            ``AutoProtectionPolicyBinding`` that manages this
+            datasource, if any. Format:
+            ``projects/{project}/locations/{location}/autoProtectionPolicies/{policy}/bindings/{binding}``.
     """
 
     backup_plan: str = proto.Field(
@@ -738,6 +744,10 @@ class GcpBackupConfig(proto.Message):
     backup_plan_revision_id: str = proto.Field(
         proto.STRING,
         number=6,
+    )
+    auto_protection_policy_binding: str = proto.Field(
+        proto.STRING,
+        number=7,
     )
 
 
@@ -1197,6 +1207,9 @@ class Backup(proto.Message):
         kms_key_versions (MutableSequence[str]):
             Optional. Output only. The list of KMS key
             versions used to encrypt the backup.
+        verification_summary (google.cloud.backupdr_v1.types.VerificationSummary):
+            Output only. The restore verification status
+            of the backup.
     """
 
     class State(proto.Enum):
@@ -1427,6 +1440,59 @@ class Backup(proto.Message):
     kms_key_versions: MutableSequence[str] = proto.RepeatedField(
         proto.STRING,
         number=33,
+    )
+    verification_summary: "VerificationSummary" = proto.Field(
+        proto.MESSAGE,
+        number=37,
+        message="VerificationSummary",
+    )
+
+
+class VerificationSummary(proto.Message):
+    r"""VerificationSummary contains the status and timestamp of the
+    latest Automated Verification test.
+
+    Attributes:
+        last_verification_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The time when the backup was
+            last verified.
+        last_verification_state (google.cloud.backupdr_v1.types.VerificationSummary.LastVerificationState):
+            Output only. The state of the last
+            verification.
+        last_verification_execution (str):
+            Output only. The last verification execution.
+    """
+
+    class LastVerificationState(proto.Enum):
+        r"""LastVerificationState represents the state of the
+        verification.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                Verification state is unspecified.
+            SUCCEEDED (1):
+                Verification succeeded.
+            FAILED (2):
+                Verification failed.
+        """
+
+        STATE_UNSPECIFIED = 0
+        SUCCEEDED = 1
+        FAILED = 2
+
+    last_verification_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=timestamp_pb2.Timestamp,
+    )
+    last_verification_state: LastVerificationState = proto.Field(
+        proto.ENUM,
+        number=2,
+        enum=LastVerificationState,
+    )
+    last_verification_execution: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 

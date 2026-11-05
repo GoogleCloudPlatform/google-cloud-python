@@ -78,6 +78,7 @@ from google.longrunning import operations_pb2  # type: ignore
 
 from google.cloud.discoveryengine_v1.types import (
     common,
+    feedback,
     import_config,
     purge_config,
     user_event,

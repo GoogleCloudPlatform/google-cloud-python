@@ -379,6 +379,13 @@ class AnswerQueryRequest(proto.Message):
             ``projects/*/locations/global/collections/default_collection/engines/*/servingConfigs/default_serving_config``,
             or
             ``projects/*/locations/global/collections/default_collection/dataStores/*/servingConfigs/default_serving_config``.
+
+            Or the resource name of the agent engine serving config,
+            such as:
+            ``projects/*/locations/global/collections/default_collection/engines/*/servingConfigs/default_agent_answer``.
+            (use when ``enable_agent_invocation`` set to true, and you
+            have custom ``AI_MODE`` agent engine configured)
+
             This field is used to identify the serving configuration
             name, set of models used to make the search.
         query (google.cloud.discoveryengine_v1.types.Query):
@@ -1392,6 +1399,13 @@ class CreateSessionRequest(proto.Message):
             ``projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store_id}``
         session (google.cloud.discoveryengine_v1.types.Session):
             Required. The session to create.
+        session_id (str):
+            Optional. The ID to use for the session, which will become
+            the final component of the session's resource name.
+
+            This value should be 1-63 characters, and valid characters
+            are /[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/. If not specified, a
+            unique ID will be generated.
     """
 
     parent: str = proto.Field(
@@ -1402,6 +1416,10 @@ class CreateSessionRequest(proto.Message):
         proto.MESSAGE,
         number=2,
         message=gcd_session.Session,
+    )
+    session_id: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 
@@ -1487,7 +1505,9 @@ class ListSessionsRequest(proto.Message):
             call. Provide this to retrieve the subsequent page.
         filter (str):
             A comma-separated list of fields to filter by, in EBNF
-            grammar. The supported fields are:
+            grammar.
+
+            The supported fields are:
 
             - ``user_pseudo_id``
             - ``state``
@@ -1497,25 +1517,34 @@ class ListSessionsRequest(proto.Message):
             - ``labels``
             - ``create_time``
             - ``update_time``
+            - ``collaborative_project``
 
-            Examples: "user_pseudo_id = some_id" "display_name =
-            "some_name"" "starred = true" "is_pinned=true AND (NOT
-            labels:hidden)" "create_time > "1970-01-01T12:00:00Z"".
+            Examples:
+
+            - ``user_pseudo_id = some_id``
+            - ``display_name = "some_name"``
+            - ``starred = true``
+            - ``is_pinned=true AND (NOT labels:hidden)``
+            - ``create_time > "1970-01-01T12:00:00Z"``
+            - ``collaborative_project = "projects/123/locations/global/collections/default_collection/engines/" "default_engine/collaborative_projects/cp1"``
         order_by (str):
             A comma-separated list of fields to order by, sorted in
             ascending order. Use "desc" after a field name for
-            descending. Supported fields:
+            descending.
+
+            Supported fields:
 
             - ``update_time``
             - ``create_time``
             - ``session_name``
             - ``is_pinned``
+            - ``display_name``
 
             Example:
 
-            - "update_time desc"
-            - "create_time"
-            - "is_pinned desc,update_time desc": list sessions by
+            - ``update_time desc``
+            - ``create_time``
+            - ``is_pinned desc,update_time desc``: list sessions by
               is_pinned first, then by update_time.
     """
 

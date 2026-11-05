@@ -107,6 +107,9 @@ class Chunk(proto.Message):
                 Uri of the document.
             title (str):
                 Title of the document.
+            mime_type (str):
+                The mime type of the document.
+                https://www.iana.org/assignments/media-types/media-types.xhtml.
             struct_data (google.protobuf.struct_pb2.Struct):
                 Data representation. The structured JSON data for the
                 document. It should conform to the registered
@@ -121,6 +124,10 @@ class Chunk(proto.Message):
         title: str = proto.Field(
             proto.STRING,
             number=2,
+        )
+        mime_type: str = proto.Field(
+            proto.STRING,
+            number=4,
         )
         struct_data: struct_pb2.Struct = proto.Field(
             proto.MESSAGE,

@@ -46,30 +46,36 @@ async def main(project_id, instance_id, table_id):
     # [END bigtable_async_hw_connect]
 
     # [START bigtable_async_hw_create_table]
-    from google.cloud.bigtable import column_family
+    from google.api_core.exceptions import AlreadyExists
 
-    # the async client only supports the data API. Table creation as an admin operation
+    from google.cloud import bigtable_admin_v2
+
+    # the async client only supports the data API. Table creation is an admin operation
     # use admin client to create the table
     print("Creating the {} table.".format(table_id))
-    admin_client = bigtable.Client(project=project_id, admin=True)
-    admin_instance = admin_client.instance(instance_id)
-    admin_table = admin_instance.table(table_id)
-
     print("Creating column family cf1 with Max Version GC rule...")
     # Create a column family with GC policy : most recent N versions
     # Define the GC policy to retain only the most recent 2 versions
-    max_versions_rule = column_family.MaxVersionsGCRule(2)
-    column_family_id = b"cf1"
-    column_families = {column_family_id: max_versions_rule}
-    if not admin_table.exists():
-        admin_table.create(column_families=column_families)
-    else:
-        print("Table {} already exists.".format(table_id))
+    max_versions_rule = bigtable_admin_v2.GcRule(max_num_versions=2)
+    column_family_id = "cf1"
+    column_families = {
+        column_family_id: bigtable_admin_v2.ColumnFamily(gc_rule=max_versions_rule)
+    }
+    async with bigtable_admin_v2.BigtableTableAdminAsyncClient() as admin_client:
+        instance_path = admin_client.instance_path(project_id, instance_id)
+        try:
+            await admin_client.create_table(
+                parent=instance_path,
+                table_id=table_id,
+                table=bigtable_admin_v2.Table(column_families=column_families),
+            )
+        except AlreadyExists:
+            print("Table {} already exists.".format(table_id))
     # [END bigtable_async_hw_create_table]
 
     try:
         # let table creation complete
-        wait_for_table(admin_table)
+        wait_for_table(table)
         # [START bigtable_async_hw_write_rows]
         print("Writing some greetings to the table.")
         greetings = [b"Hello World!", b"Hello Cloud Bigtable!", b"Hello Python!"]
@@ -125,10 +131,15 @@ async def main(project_id, instance_id, table_id):
         # [END bigtable_async_hw_scan_with_filter]
     finally:
         # [START bigtable_async_hw_delete_table]
-        # the async client only supports the data API. Table deletion as an admin operation
-        # use admin client to create the table
-        print("Deleting the {} table.".format(table_id))
-        admin_table.delete()
+        from google.cloud import bigtable_admin_v2
+
+        # the async client only supports the data API. Table deletion is an admin operation
+        # use admin client to delete the table
+        async with bigtable_admin_v2.BigtableTableAdminAsyncClient() as admin_client:
+            table_path = admin_client.table_path(project_id, instance_id, table_id)
+
+            print("Deleting the {} table.".format(table_id))
+            await admin_client.delete_table(name=table_path)
         await table.close()
         await client.close()
         # [END bigtable_async_hw_delete_table]

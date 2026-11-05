@@ -220,6 +220,10 @@ class _SetDeleteRow(Row):
                 mutations.DeleteAllFromFamily(family_to_delete=column_family_id)
             )
         else:
+            if isinstance(columns, (str, bytes)):
+                raise TypeError(
+                    "columns must be an iterable of column names, not str or bytes"
+                )
             timestamps = time_range._to_dict() if time_range else {}
             start_timestamp_micros = timestamps.get("start_timestamp_micros")
             end_timestamp_micros = timestamps.get("end_timestamp_micros")

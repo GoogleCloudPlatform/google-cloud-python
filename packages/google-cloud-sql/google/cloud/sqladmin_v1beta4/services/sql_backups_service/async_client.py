@@ -69,7 +69,9 @@ _LOGGER = std_logging.getLogger(__name__)
 
 
 class SqlBackupsServiceAsyncClient:
-    """"""
+    """Service for managing database backups for Cloud SQL
+    instances.
+    """
 
     _client: SqlBackupsServiceClient
 

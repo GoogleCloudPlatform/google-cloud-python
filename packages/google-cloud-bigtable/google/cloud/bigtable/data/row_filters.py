@@ -144,7 +144,7 @@ class _RegexFilter(RowFilter, ABC):
         self.regex: bytes = _to_bytes(regex)
 
     def __eq__(self, other):
-        if not isinstance(other, self.__class__):
+        if type(other) is not type(self):
             return NotImplemented
         return other.regex == self.regex
 
@@ -302,21 +302,37 @@ class TimestampRange(object):
         return timestamp_range_kwargs
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}(start={self.start}, end={self.end})"
+        return f"{self.__class__.__name__}(start={self.start!r}, end={self.end!r})"
 
 
 class TimestampRangeFilter(RowFilter):
     """Row filter that limits cells to a range of time.
 
-    :type range_: :class:`TimestampRange`
-    :param range_: Range of time that cells should match against.
+    :type start: :class:`datetime.datetime` or :class:`TimestampRange`
+    :param start: (Optional) The (inclusive) lower bound of the timestamp
+                  range, or a :class:`TimestampRange` instance.
+
+    :type end: :class:`datetime.datetime`
+    :param end: (Optional) The (exclusive) upper bound of the timestamp
+                range.
     """
 
-    def __init__(self, start: "datetime" | None = None, end: "datetime" | None = None):
-        self.range_: TimestampRange = TimestampRange(start, end)
+    def __init__(
+        self,
+        start: "datetime" | TimestampRange | None = None,
+        end: "datetime" | None = None,
+    ):
+        if isinstance(start, TimestampRange):
+            if end is not None:
+                raise ValueError(
+                    "Cannot specify both a TimestampRange and an end datetime."
+                )
+            self.range_: TimestampRange = start
+        else:
+            self.range_ = TimestampRange(start, end)
 
     def __eq__(self, other):
-        if not isinstance(other, self.__class__):
+        if not isinstance(other, TimestampRangeFilter):
             return NotImplemented
         return other.range_ == self.range_
 
@@ -408,7 +424,7 @@ class ColumnRangeFilter(RowFilter):
         self.inclusive_end = inclusive_end
 
     def __eq__(self, other):
-        if not isinstance(other, self.__class__):
+        if not isinstance(other, ColumnRangeFilter):
             return NotImplemented
         return (
             other.family_id == self.family_id
@@ -946,7 +962,7 @@ class ConditionalRowFilter(RowFilter):
         self.false_filter = false_filter
 
     def __eq__(self, other):
-        if not isinstance(other, self.__class__):
+        if not isinstance(other, ConditionalRowFilter):
             return NotImplemented
         return (
             other.predicate_filter == self.predicate_filter

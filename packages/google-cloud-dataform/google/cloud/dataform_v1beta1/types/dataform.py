@@ -75,6 +75,8 @@ __protobuf__ = proto.module(
         "FetchFileGitStatusesResponse",
         "FetchGitAheadBehindRequest",
         "FetchGitAheadBehindResponse",
+        "FetchWorkspaceHistoryRequest",
+        "FetchWorkspaceHistoryResponse",
         "CommitWorkspaceChangesRequest",
         "CommitWorkspaceChangesResponse",
         "ResetWorkspaceChangesRequest",
@@ -127,6 +129,7 @@ __protobuf__ = proto.module(
         "ListCompilationResultsResponse",
         "GetCompilationResultRequest",
         "CreateCompilationResultRequest",
+        "CreateCompilationResultMetadata",
         "Target",
         "RelationDescriptor",
         "CompilationResultAction",
@@ -330,6 +333,12 @@ class Repository(proto.Message):
             ssh_authentication_config (google.cloud.dataform_v1beta1.types.Repository.GitRemoteSettings.SshAuthenticationConfig):
                 Optional. Authentication fields for remote
                 uris using SSH protocol.
+            account_connector (str):
+                Optional. Resource name for the Account Connector used for
+                personal authentication. Must be in the format
+                ``projects/*/locations/*/accountConnectors/*``
+
+                This field is a member of `oneof`_ ``_account_connector``.
             git_repository_link (str):
                 Optional. Resource name for the ``GitRepositoryLink`` used
                 for machine credentials. Must be in the format
@@ -408,6 +417,11 @@ class Repository(proto.Message):
             proto.MESSAGE,
             number=5,
             message="Repository.GitRemoteSettings.SshAuthenticationConfig",
+        )
+        account_connector: str = proto.Field(
+            proto.STRING,
+            number=6,
+            optional=True,
         )
         git_repository_link: str = proto.Field(
             proto.STRING,
@@ -1306,7 +1320,7 @@ class Workspace(proto.Message):
             Git repository will be created as a shallow
             clone with the given depth, otherwise a full
             clone will be performed. This field is available
-            only for GitHub, Gitlab and 1p repositories with
+            only for GitHub, GitLab and 1p repositories with
             enabled branch management.
         shallow (bool):
             Output only. If set to true, the workspace
@@ -1836,6 +1850,77 @@ class FetchGitAheadBehindResponse(proto.Message):
     )
 
 
+class FetchWorkspaceHistoryRequest(proto.Message):
+    r"""``FetchWorkspaceHistory`` request message.
+
+    Attributes:
+        name (str):
+            Required. The workspace's name.
+        page_size (int):
+            Optional. Maximum number of commits to
+            return. The server may return fewer items than
+            requested. If unspecified, the server will pick
+            an appropriate default.
+        page_token (str):
+            Optional. Page token received from a previous
+            ``FetchWorkspaceHistory`` call. Provide this to retrieve the
+            subsequent page.
+
+            When paginating, all other parameters provided to
+            ``FetchWorkspaceHistory``, with the exception of
+            ``page_size``, must match the call that provided the page
+            token.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=5,
+    )
+
+
+class FetchWorkspaceHistoryResponse(proto.Message):
+    r"""``FetchWorkspaceHistory`` response message.
+
+    Attributes:
+        commits (MutableSequence[google.cloud.dataform_v1beta1.types.CommitLogEntry]):
+            A list of commit logs, ordered by 'git log'
+            default order.
+        next_page_token (str):
+            Optional. A token, which can be sent as ``page_token`` to
+            retrieve the next page. If this field is omitted, there are
+            no subsequent pages.
+        reaches_shallow_boundary (bool):
+            Whether this response reaches the shallow
+            boundary of the repository.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    commits: MutableSequence["CommitLogEntry"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="CommitLogEntry",
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    reaches_shallow_boundary: bool = proto.Field(
+        proto.BOOL,
+        number=3,
+    )
+
+
 class CommitWorkspaceChangesRequest(proto.Message):
     r"""``CommitWorkspaceChanges`` request message.
 
@@ -2204,7 +2289,7 @@ class FileSearchResult(proto.Message):
 
     Attributes:
         path (str):
-            File system path relative to the workspace
+            File system path relative to the file tree
             root.
     """
 
@@ -3457,6 +3542,68 @@ class CreateCompilationResultRequest(proto.Message):
     )
 
 
+class CreateCompilationResultMetadata(proto.Message):
+    r"""Represents the metadata of the
+    ``CreateCompilationResultLongRunning`` operation.
+
+    Attributes:
+        id (str):
+            Output only. The ID of the LRO.
+        target (str):
+            Output only. Server-defined resource path for
+            the target of the operation.
+        state (google.cloud.dataform_v1beta1.types.CreateCompilationResultMetadata.State):
+            Output only. The state of the LRO.
+        create_compilation_result_request (google.cloud.dataform_v1beta1.types.CreateCompilationResultRequest):
+            Output only. The CreateCompilationResult
+            requested.
+    """
+
+    class State(proto.Enum):
+        r"""State of the LRO.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                The state is unspecified.
+            CREATED (1):
+                The LRO has been created.
+            RUNNING (2):
+                The LRO is in progress.
+            FINISHED (3):
+                The RPC call has finished.
+            SUCCEEDED (4):
+                The LRO has succeeded.
+            FAILED (5):
+                The LRO has failed.
+        """
+
+        STATE_UNSPECIFIED = 0
+        CREATED = 1
+        RUNNING = 2
+        FINISHED = 3
+        SUCCEEDED = 4
+        FAILED = 5
+
+    id: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    target: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=3,
+        enum=State,
+    )
+    create_compilation_result_request: "CreateCompilationResultRequest" = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message="CreateCompilationResultRequest",
+    )
+
+
 class Target(proto.Message):
     r"""Represents an action identifier. If the action writes output,
     the output will be written to the referenced database object.
@@ -3579,6 +3726,10 @@ class CompilationResultAction(proto.Message):
             This field is a member of `oneof`_ ``compiled_object``.
         data_preparation (google.cloud.dataform_v1beta1.types.CompilationResultAction.DataPreparation):
             The data preparation executed by this action.
+
+            This field is a member of `oneof`_ ``compiled_object``.
+        bigquery_unit_test (google.cloud.dataform_v1beta1.types.CompilationResultAction.BigQueryUnitTest):
+            The unit test executed by this action.
 
             This field is a member of `oneof`_ ``compiled_object``.
         target (google.cloud.dataform_v1beta1.types.Target):
@@ -4115,6 +4266,53 @@ class CompilationResultAction(proto.Message):
             number=4,
         )
 
+    class BigQueryUnitTest(proto.Message):
+        r"""Represents a BigQuery unit test.
+
+        Attributes:
+            dependency_targets (MutableSequence[google.cloud.dataform_v1beta1.types.Target]):
+                A list of actions that this action depends
+                on.
+            disabled (bool):
+                Whether this action is disabled (i.e. should
+                not be run).
+            tags (MutableSequence[str]):
+                Arbitrary, user-defined tags on this action.
+            display_name (str):
+                The name of the unit test.
+            test_query (str):
+                Test query to execute.
+            expected_output_query (str):
+                Expected output query to compare against the
+                test query.
+        """
+
+        dependency_targets: MutableSequence["Target"] = proto.RepeatedField(
+            proto.MESSAGE,
+            number=1,
+            message="Target",
+        )
+        disabled: bool = proto.Field(
+            proto.BOOL,
+            number=2,
+        )
+        tags: MutableSequence[str] = proto.RepeatedField(
+            proto.STRING,
+            number=3,
+        )
+        display_name: str = proto.Field(
+            proto.STRING,
+            number=4,
+        )
+        test_query: str = proto.Field(
+            proto.STRING,
+            number=5,
+        )
+        expected_output_query: str = proto.Field(
+            proto.STRING,
+            number=6,
+        )
+
     class LoadConfig(proto.Message):
         r"""Simplified load configuration for actions
 
@@ -4223,6 +4421,12 @@ class CompilationResultAction(proto.Message):
         number=9,
         oneof="compiled_object",
         message=DataPreparation,
+    )
+    bigquery_unit_test: BigQueryUnitTest = proto.Field(
+        proto.MESSAGE,
+        number=11,
+        oneof="compiled_object",
+        message=BigQueryUnitTest,
     )
     target: "Target" = proto.Field(
         proto.MESSAGE,
@@ -4497,9 +4701,8 @@ class InvocationConfig(proto.Message):
             Optional. The service account to run workflow
             invocations under.
         end_user_auth_config (google.cloud.dataform_v1beta1.types.InvocationConfig.EndUserAuthenticationConfig):
-            Optional. Configuration for end user authentication. Note
-            that this should not be set when ``service_account`` is
-            used.
+            Optional. Configuration for end user authentication. Do not
+            set if ``service_account`` is used.
         query_priority (google.cloud.dataform_v1beta1.types.InvocationConfig.QueryPriority):
             Optional. Specifies the priority for query
             execution in BigQuery. More information can be
@@ -4507,6 +4710,14 @@ class InvocationConfig(proto.Message):
             https://cloud.google.com/bigquery/docs/running-queries#queries.
 
             This field is a member of `oneof`_ ``_query_priority``.
+        concurrent_actions_limit (int):
+            Optional. Maximum number of actions that can
+            be executed concurrently.
+
+            This field is a member of `oneof`_ ``_concurrent_actions_limit``.
+        execution_mode (google.cloud.dataform_v1beta1.types.InvocationConfig.ExecutionMode):
+            Optional. Specifies the execution mode for
+            the workflow invocation.
     """
 
     class QueryPriority(proto.Enum):
@@ -4529,6 +4740,27 @@ class InvocationConfig(proto.Message):
         QUERY_PRIORITY_UNSPECIFIED = 0
         INTERACTIVE = 1
         BATCH = 2
+
+    class ExecutionMode(proto.Enum):
+        r"""Execution mode for the workflow invocation.
+        Determines whether to run actions or unit tests.
+
+        Values:
+            EXECUTION_MODE_UNSPECIFIED (0):
+                Default value.
+            DEFAULT (1):
+                Default execution mode, which runs all actions except unit
+                tests. Same as ALL_EXCEPT_UNIT_TESTS.
+            ALL_EXCEPT_UNIT_TESTS (2):
+                Run all actions except unit tests.
+            UNIT_TESTS_ONLY (3):
+                Run unit tests only.
+        """
+
+        EXECUTION_MODE_UNSPECIFIED = 0
+        DEFAULT = 1
+        ALL_EXCEPT_UNIT_TESTS = 2
+        UNIT_TESTS_ONLY = 3
 
     class EndUserAuthenticationConfig(proto.Message):
         r"""Includes configuration options for end user authentication.
@@ -4587,6 +4819,16 @@ class InvocationConfig(proto.Message):
         number=9,
         optional=True,
         enum=QueryPriority,
+    )
+    concurrent_actions_limit: int = proto.Field(
+        proto.INT32,
+        number=10,
+        optional=True,
+    )
+    execution_mode: ExecutionMode = proto.Field(
+        proto.ENUM,
+        number=16,
+        enum=ExecutionMode,
     )
 
 
@@ -5072,6 +5314,11 @@ class WorkflowInvocationAction(proto.Message):
             preparation action details.
 
             This field is a member of `oneof`_ ``action``.
+        bigquery_unit_test_action (google.cloud.dataform_v1beta1.types.WorkflowInvocationAction.BigQueryUnitTestAction):
+            Output only. The workflow action's unit test
+            details.
+
+            This field is a member of `oneof`_ ``action``.
         target (google.cloud.dataform_v1beta1.types.Target):
             Output only. This action's identifier. Unique
             within the workflow invocation.
@@ -5122,6 +5369,9 @@ class WorkflowInvocationAction(proto.Message):
                 The action was cancelled. A terminal state.
             FAILED (6):
                 The action failed. A terminal state.
+            QUEUED (7):
+                Execution of the action was queued waiting
+                for an available concurrency slot.
         """
 
         PENDING = 0
@@ -5131,6 +5381,7 @@ class WorkflowInvocationAction(proto.Message):
         SUCCEEDED = 4
         CANCELLED = 5
         FAILED = 6
+        QUEUED = 7
 
     class BigQueryAction(proto.Message):
         r"""Represents a workflow action that will run against BigQuery.
@@ -5362,6 +5613,56 @@ class WorkflowInvocationAction(proto.Message):
             number=4,
         )
 
+    class BigQueryUnitTestAction(proto.Message):
+        r"""Represents a workflow action that will run a BigQuery unit
+        test.
+
+        Attributes:
+            actual_results_job_id (str):
+                Output only. Job ID for the actual results.
+            actual_results_sql_script (str):
+                Output only. SQL script for the actual
+                results.
+            expected_results_job_id (str):
+                Output only. Job ID for the expected results.
+            expected_results_sql_script (str):
+                Output only. SQL script for the expected
+                results.
+            total_processed_bytes (int):
+                Output only. Total bytes processed for this
+                action. Combined total for actual and expected
+                jobs.
+            total_billed_bytes (int):
+                Output only. Total bytes billed for this
+                action. Combined total for actual and expected
+                jobs.
+        """
+
+        actual_results_job_id: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+        actual_results_sql_script: str = proto.Field(
+            proto.STRING,
+            number=2,
+        )
+        expected_results_job_id: str = proto.Field(
+            proto.STRING,
+            number=3,
+        )
+        expected_results_sql_script: str = proto.Field(
+            proto.STRING,
+            number=4,
+        )
+        total_processed_bytes: int = proto.Field(
+            proto.INT64,
+            number=5,
+        )
+        total_billed_bytes: int = proto.Field(
+            proto.INT64,
+            number=6,
+        )
+
     bigquery_action: BigQueryAction = proto.Field(
         proto.MESSAGE,
         number=6,
@@ -5379,6 +5680,12 @@ class WorkflowInvocationAction(proto.Message):
         number=9,
         oneof="action",
         message=DataPreparationAction,
+    )
+    bigquery_unit_test_action: BigQueryUnitTestAction = proto.Field(
+        proto.MESSAGE,
+        number=12,
+        oneof="action",
+        message=BigQueryUnitTestAction,
     )
     target: "Target" = proto.Field(
         proto.MESSAGE,

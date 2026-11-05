@@ -35,6 +35,11 @@
                 "create_compilation_result"
               ]
             },
+            "CreateCompilationResultLongRunning": {
+              "methods": [
+                "create_compilation_result_long_running"
+              ]
+            },
             "CreateFolder": {
               "methods": [
                 "create_folder"
@@ -405,6 +410,11 @@
                 "create_compilation_result"
               ]
             },
+            "CreateCompilationResultLongRunning": {
+              "methods": [
+                "create_compilation_result_long_running"
+              ]
+            },
             "CreateFolder": {
               "methods": [
                 "create_folder"
@@ -773,6 +783,11 @@
             "CreateCompilationResult": {
               "methods": [
                 "create_compilation_result"
+              ]
+            },
+            "CreateCompilationResultLongRunning": {
+              "methods": [
+                "create_compilation_result_long_running"
               ]
             },
             "CreateFolder": {

@@ -1898,6 +1898,7 @@ def test_capacity_rest_call_success(request_type):
         "instance_properties": {
             "scheduling": {"provisioning_model": "provisioning_model_value"}
         },
+        "session_id": "session_id_value",
         "size": 443,
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.

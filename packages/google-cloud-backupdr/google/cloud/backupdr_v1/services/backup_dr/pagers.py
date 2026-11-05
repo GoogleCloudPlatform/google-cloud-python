@@ -39,11 +39,19 @@ except AttributeError:  # pragma: NO COVER
     OptionalAsyncRetry = Union[retries_async.AsyncRetry, object, None]  # type: ignore
 
 from google.cloud.backupdr_v1.types import (
+    appliedautoprotectionpolicy,
+    autoprotectionpolicy,
+    autoprotectionpolicybinding,
     backupdr,
     backupplan,
     backupplanassociation,
     backupvault,
+    bindingmatchingresource,
     datasourcereference,
+    restore_template,
+    restore_template_execution,
+    restore_verification_plan,
+    restore_verification_plan_association,
 )
 
 
@@ -1966,6 +1974,1384 @@ class FetchDataSourceReferencesForResourceTypeAsyncPager:
         async def async_generator():
             async for page in self.pages:
                 for response in page.data_source_references:
+                    yield response
+
+        return async_generator()
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListAutoProtectionPoliciesPager:
+    """A pager for iterating through ``list_auto_protection_policies`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.backupdr_v1.types.ListAutoProtectionPoliciesResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``auto_protection_policies`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``ListAutoProtectionPolicies`` requests and continue to iterate
+    through the ``auto_protection_policies`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.backupdr_v1.types.ListAutoProtectionPoliciesResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[..., autoprotectionpolicy.ListAutoProtectionPoliciesResponse],
+        request: autoprotectionpolicy.ListAutoProtectionPoliciesRequest,
+        response: autoprotectionpolicy.ListAutoProtectionPoliciesResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.backupdr_v1.types.ListAutoProtectionPoliciesRequest):
+                The initial request object.
+            response (google.cloud.backupdr_v1.types.ListAutoProtectionPoliciesResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = autoprotectionpolicy.ListAutoProtectionPoliciesRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(
+        self,
+    ) -> Iterator[autoprotectionpolicy.ListAutoProtectionPoliciesResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(self) -> Iterator[autoprotectionpolicy.AutoProtectionPolicy]:
+        for page in self.pages:
+            yield from page.auto_protection_policies
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListAutoProtectionPoliciesAsyncPager:
+    """A pager for iterating through ``list_auto_protection_policies`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.backupdr_v1.types.ListAutoProtectionPoliciesResponse` object, and
+    provides an ``__aiter__`` method to iterate through its
+    ``auto_protection_policies`` field.
+
+    If there are more pages, the ``__aiter__`` method will make additional
+    ``ListAutoProtectionPolicies`` requests and continue to iterate
+    through the ``auto_protection_policies`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.backupdr_v1.types.ListAutoProtectionPoliciesResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ..., Awaitable[autoprotectionpolicy.ListAutoProtectionPoliciesResponse]
+        ],
+        request: autoprotectionpolicy.ListAutoProtectionPoliciesRequest,
+        response: autoprotectionpolicy.ListAutoProtectionPoliciesResponse,
+        *,
+        retry: OptionalAsyncRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiates the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.backupdr_v1.types.ListAutoProtectionPoliciesRequest):
+                The initial request object.
+            response (google.cloud.backupdr_v1.types.ListAutoProtectionPoliciesResponse):
+                The initial response object.
+            retry (google.api_core.retry.AsyncRetry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = autoprotectionpolicy.ListAutoProtectionPoliciesRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    async def pages(
+        self,
+    ) -> AsyncIterator[autoprotectionpolicy.ListAutoProtectionPoliciesResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = await self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __aiter__(self) -> AsyncIterator[autoprotectionpolicy.AutoProtectionPolicy]:
+        async def async_generator():
+            async for page in self.pages:
+                for response in page.auto_protection_policies:
+                    yield response
+
+        return async_generator()
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListAutoProtectionPolicyBindingsPager:
+    """A pager for iterating through ``list_auto_protection_policy_bindings`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.backupdr_v1.types.ListAutoProtectionPolicyBindingsResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``auto_protection_policy_bindings`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``ListAutoProtectionPolicyBindings`` requests and continue to iterate
+    through the ``auto_protection_policy_bindings`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.backupdr_v1.types.ListAutoProtectionPolicyBindingsResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ..., autoprotectionpolicybinding.ListAutoProtectionPolicyBindingsResponse
+        ],
+        request: autoprotectionpolicybinding.ListAutoProtectionPolicyBindingsRequest,
+        response: autoprotectionpolicybinding.ListAutoProtectionPolicyBindingsResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.backupdr_v1.types.ListAutoProtectionPolicyBindingsRequest):
+                The initial request object.
+            response (google.cloud.backupdr_v1.types.ListAutoProtectionPolicyBindingsResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = (
+            autoprotectionpolicybinding.ListAutoProtectionPolicyBindingsRequest(request)
+        )
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(
+        self,
+    ) -> Iterator[autoprotectionpolicybinding.ListAutoProtectionPolicyBindingsResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(
+        self,
+    ) -> Iterator[autoprotectionpolicybinding.AutoProtectionPolicyBinding]:
+        for page in self.pages:
+            yield from page.auto_protection_policy_bindings
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListAutoProtectionPolicyBindingsAsyncPager:
+    """A pager for iterating through ``list_auto_protection_policy_bindings`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.backupdr_v1.types.ListAutoProtectionPolicyBindingsResponse` object, and
+    provides an ``__aiter__`` method to iterate through its
+    ``auto_protection_policy_bindings`` field.
+
+    If there are more pages, the ``__aiter__`` method will make additional
+    ``ListAutoProtectionPolicyBindings`` requests and continue to iterate
+    through the ``auto_protection_policy_bindings`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.backupdr_v1.types.ListAutoProtectionPolicyBindingsResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ...,
+            Awaitable[
+                autoprotectionpolicybinding.ListAutoProtectionPolicyBindingsResponse
+            ],
+        ],
+        request: autoprotectionpolicybinding.ListAutoProtectionPolicyBindingsRequest,
+        response: autoprotectionpolicybinding.ListAutoProtectionPolicyBindingsResponse,
+        *,
+        retry: OptionalAsyncRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiates the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.backupdr_v1.types.ListAutoProtectionPolicyBindingsRequest):
+                The initial request object.
+            response (google.cloud.backupdr_v1.types.ListAutoProtectionPolicyBindingsResponse):
+                The initial response object.
+            retry (google.api_core.retry.AsyncRetry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = (
+            autoprotectionpolicybinding.ListAutoProtectionPolicyBindingsRequest(request)
+        )
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    async def pages(
+        self,
+    ) -> AsyncIterator[
+        autoprotectionpolicybinding.ListAutoProtectionPolicyBindingsResponse
+    ]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = await self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __aiter__(
+        self,
+    ) -> AsyncIterator[autoprotectionpolicybinding.AutoProtectionPolicyBinding]:
+        async def async_generator():
+            async for page in self.pages:
+                for response in page.auto_protection_policy_bindings:
+                    yield response
+
+        return async_generator()
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListAppliedAutoProtectionPoliciesPager:
+    """A pager for iterating through ``list_applied_auto_protection_policies`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.backupdr_v1.types.ListAppliedAutoProtectionPoliciesResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``applied_auto_protection_policies`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``ListAppliedAutoProtectionPolicies`` requests and continue to iterate
+    through the ``applied_auto_protection_policies`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.backupdr_v1.types.ListAppliedAutoProtectionPoliciesResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ..., appliedautoprotectionpolicy.ListAppliedAutoProtectionPoliciesResponse
+        ],
+        request: appliedautoprotectionpolicy.ListAppliedAutoProtectionPoliciesRequest,
+        response: appliedautoprotectionpolicy.ListAppliedAutoProtectionPoliciesResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.backupdr_v1.types.ListAppliedAutoProtectionPoliciesRequest):
+                The initial request object.
+            response (google.cloud.backupdr_v1.types.ListAppliedAutoProtectionPoliciesResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = (
+            appliedautoprotectionpolicy.ListAppliedAutoProtectionPoliciesRequest(
+                request
+            )
+        )
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(
+        self,
+    ) -> Iterator[
+        appliedautoprotectionpolicy.ListAppliedAutoProtectionPoliciesResponse
+    ]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(
+        self,
+    ) -> Iterator[appliedautoprotectionpolicy.AppliedAutoProtectionPolicy]:
+        for page in self.pages:
+            yield from page.applied_auto_protection_policies
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListAppliedAutoProtectionPoliciesAsyncPager:
+    """A pager for iterating through ``list_applied_auto_protection_policies`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.backupdr_v1.types.ListAppliedAutoProtectionPoliciesResponse` object, and
+    provides an ``__aiter__`` method to iterate through its
+    ``applied_auto_protection_policies`` field.
+
+    If there are more pages, the ``__aiter__`` method will make additional
+    ``ListAppliedAutoProtectionPolicies`` requests and continue to iterate
+    through the ``applied_auto_protection_policies`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.backupdr_v1.types.ListAppliedAutoProtectionPoliciesResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ...,
+            Awaitable[
+                appliedautoprotectionpolicy.ListAppliedAutoProtectionPoliciesResponse
+            ],
+        ],
+        request: appliedautoprotectionpolicy.ListAppliedAutoProtectionPoliciesRequest,
+        response: appliedautoprotectionpolicy.ListAppliedAutoProtectionPoliciesResponse,
+        *,
+        retry: OptionalAsyncRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiates the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.backupdr_v1.types.ListAppliedAutoProtectionPoliciesRequest):
+                The initial request object.
+            response (google.cloud.backupdr_v1.types.ListAppliedAutoProtectionPoliciesResponse):
+                The initial response object.
+            retry (google.api_core.retry.AsyncRetry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = (
+            appliedautoprotectionpolicy.ListAppliedAutoProtectionPoliciesRequest(
+                request
+            )
+        )
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    async def pages(
+        self,
+    ) -> AsyncIterator[
+        appliedautoprotectionpolicy.ListAppliedAutoProtectionPoliciesResponse
+    ]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = await self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __aiter__(
+        self,
+    ) -> AsyncIterator[appliedautoprotectionpolicy.AppliedAutoProtectionPolicy]:
+        async def async_generator():
+            async for page in self.pages:
+                for response in page.applied_auto_protection_policies:
+                    yield response
+
+        return async_generator()
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListBindingMatchingResourcesPager:
+    """A pager for iterating through ``list_binding_matching_resources`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.backupdr_v1.types.ListBindingMatchingResourcesResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``matching_resources`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``ListBindingMatchingResources`` requests and continue to iterate
+    through the ``matching_resources`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.backupdr_v1.types.ListBindingMatchingResourcesResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ..., bindingmatchingresource.ListBindingMatchingResourcesResponse
+        ],
+        request: bindingmatchingresource.ListBindingMatchingResourcesRequest,
+        response: bindingmatchingresource.ListBindingMatchingResourcesResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.backupdr_v1.types.ListBindingMatchingResourcesRequest):
+                The initial request object.
+            response (google.cloud.backupdr_v1.types.ListBindingMatchingResourcesResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = bindingmatchingresource.ListBindingMatchingResourcesRequest(
+            request
+        )
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(
+        self,
+    ) -> Iterator[bindingmatchingresource.ListBindingMatchingResourcesResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(self) -> Iterator[bindingmatchingresource.BindingMatchingResource]:
+        for page in self.pages:
+            yield from page.matching_resources
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListBindingMatchingResourcesAsyncPager:
+    """A pager for iterating through ``list_binding_matching_resources`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.backupdr_v1.types.ListBindingMatchingResourcesResponse` object, and
+    provides an ``__aiter__`` method to iterate through its
+    ``matching_resources`` field.
+
+    If there are more pages, the ``__aiter__`` method will make additional
+    ``ListBindingMatchingResources`` requests and continue to iterate
+    through the ``matching_resources`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.backupdr_v1.types.ListBindingMatchingResourcesResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ..., Awaitable[bindingmatchingresource.ListBindingMatchingResourcesResponse]
+        ],
+        request: bindingmatchingresource.ListBindingMatchingResourcesRequest,
+        response: bindingmatchingresource.ListBindingMatchingResourcesResponse,
+        *,
+        retry: OptionalAsyncRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiates the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.backupdr_v1.types.ListBindingMatchingResourcesRequest):
+                The initial request object.
+            response (google.cloud.backupdr_v1.types.ListBindingMatchingResourcesResponse):
+                The initial response object.
+            retry (google.api_core.retry.AsyncRetry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = bindingmatchingresource.ListBindingMatchingResourcesRequest(
+            request
+        )
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    async def pages(
+        self,
+    ) -> AsyncIterator[bindingmatchingresource.ListBindingMatchingResourcesResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = await self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __aiter__(
+        self,
+    ) -> AsyncIterator[bindingmatchingresource.BindingMatchingResource]:
+        async def async_generator():
+            async for page in self.pages:
+                for response in page.matching_resources:
+                    yield response
+
+        return async_generator()
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListRestoreTemplatesPager:
+    """A pager for iterating through ``list_restore_templates`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.backupdr_v1.types.ListRestoreTemplatesResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``restore_templates`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``ListRestoreTemplates`` requests and continue to iterate
+    through the ``restore_templates`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.backupdr_v1.types.ListRestoreTemplatesResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[..., restore_template.ListRestoreTemplatesResponse],
+        request: restore_template.ListRestoreTemplatesRequest,
+        response: restore_template.ListRestoreTemplatesResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.backupdr_v1.types.ListRestoreTemplatesRequest):
+                The initial request object.
+            response (google.cloud.backupdr_v1.types.ListRestoreTemplatesResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = restore_template.ListRestoreTemplatesRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(self) -> Iterator[restore_template.ListRestoreTemplatesResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(self) -> Iterator[restore_template.RestoreTemplate]:
+        for page in self.pages:
+            yield from page.restore_templates
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListRestoreTemplatesAsyncPager:
+    """A pager for iterating through ``list_restore_templates`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.backupdr_v1.types.ListRestoreTemplatesResponse` object, and
+    provides an ``__aiter__`` method to iterate through its
+    ``restore_templates`` field.
+
+    If there are more pages, the ``__aiter__`` method will make additional
+    ``ListRestoreTemplates`` requests and continue to iterate
+    through the ``restore_templates`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.backupdr_v1.types.ListRestoreTemplatesResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[..., Awaitable[restore_template.ListRestoreTemplatesResponse]],
+        request: restore_template.ListRestoreTemplatesRequest,
+        response: restore_template.ListRestoreTemplatesResponse,
+        *,
+        retry: OptionalAsyncRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiates the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.backupdr_v1.types.ListRestoreTemplatesRequest):
+                The initial request object.
+            response (google.cloud.backupdr_v1.types.ListRestoreTemplatesResponse):
+                The initial response object.
+            retry (google.api_core.retry.AsyncRetry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = restore_template.ListRestoreTemplatesRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    async def pages(
+        self,
+    ) -> AsyncIterator[restore_template.ListRestoreTemplatesResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = await self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __aiter__(self) -> AsyncIterator[restore_template.RestoreTemplate]:
+        async def async_generator():
+            async for page in self.pages:
+                for response in page.restore_templates:
+                    yield response
+
+        return async_generator()
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListRestoreTemplateExecutionsPager:
+    """A pager for iterating through ``list_restore_template_executions`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.backupdr_v1.types.ListRestoreTemplateExecutionsResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``restore_template_executions`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``ListRestoreTemplateExecutions`` requests and continue to iterate
+    through the ``restore_template_executions`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.backupdr_v1.types.ListRestoreTemplateExecutionsResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ..., restore_template_execution.ListRestoreTemplateExecutionsResponse
+        ],
+        request: restore_template_execution.ListRestoreTemplateExecutionsRequest,
+        response: restore_template_execution.ListRestoreTemplateExecutionsResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.backupdr_v1.types.ListRestoreTemplateExecutionsRequest):
+                The initial request object.
+            response (google.cloud.backupdr_v1.types.ListRestoreTemplateExecutionsResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = restore_template_execution.ListRestoreTemplateExecutionsRequest(
+            request
+        )
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(
+        self,
+    ) -> Iterator[restore_template_execution.ListRestoreTemplateExecutionsResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(self) -> Iterator[restore_template_execution.RestoreTemplateExecution]:
+        for page in self.pages:
+            yield from page.restore_template_executions
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListRestoreTemplateExecutionsAsyncPager:
+    """A pager for iterating through ``list_restore_template_executions`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.backupdr_v1.types.ListRestoreTemplateExecutionsResponse` object, and
+    provides an ``__aiter__`` method to iterate through its
+    ``restore_template_executions`` field.
+
+    If there are more pages, the ``__aiter__`` method will make additional
+    ``ListRestoreTemplateExecutions`` requests and continue to iterate
+    through the ``restore_template_executions`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.backupdr_v1.types.ListRestoreTemplateExecutionsResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ...,
+            Awaitable[restore_template_execution.ListRestoreTemplateExecutionsResponse],
+        ],
+        request: restore_template_execution.ListRestoreTemplateExecutionsRequest,
+        response: restore_template_execution.ListRestoreTemplateExecutionsResponse,
+        *,
+        retry: OptionalAsyncRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiates the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.backupdr_v1.types.ListRestoreTemplateExecutionsRequest):
+                The initial request object.
+            response (google.cloud.backupdr_v1.types.ListRestoreTemplateExecutionsResponse):
+                The initial response object.
+            retry (google.api_core.retry.AsyncRetry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = restore_template_execution.ListRestoreTemplateExecutionsRequest(
+            request
+        )
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    async def pages(
+        self,
+    ) -> AsyncIterator[
+        restore_template_execution.ListRestoreTemplateExecutionsResponse
+    ]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = await self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __aiter__(
+        self,
+    ) -> AsyncIterator[restore_template_execution.RestoreTemplateExecution]:
+        async def async_generator():
+            async for page in self.pages:
+                for response in page.restore_template_executions:
+                    yield response
+
+        return async_generator()
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListRestoreVerificationPlanAssociationsPager:
+    """A pager for iterating through ``list_restore_verification_plan_associations`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.backupdr_v1.types.ListRestoreVerificationPlanAssociationsResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``restore_verification_plan_associations`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``ListRestoreVerificationPlanAssociations`` requests and continue to iterate
+    through the ``restore_verification_plan_associations`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.backupdr_v1.types.ListRestoreVerificationPlanAssociationsResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ...,
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse,
+        ],
+        request: restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest,
+        response: restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.backupdr_v1.types.ListRestoreVerificationPlanAssociationsRequest):
+                The initial request object.
+            response (google.cloud.backupdr_v1.types.ListRestoreVerificationPlanAssociationsResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest(
+            request
+        )
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(
+        self,
+    ) -> Iterator[
+        restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse
+    ]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(
+        self,
+    ) -> Iterator[
+        restore_verification_plan_association.RestoreVerificationPlanAssociation
+    ]:
+        for page in self.pages:
+            yield from page.restore_verification_plan_associations
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListRestoreVerificationPlanAssociationsAsyncPager:
+    """A pager for iterating through ``list_restore_verification_plan_associations`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.backupdr_v1.types.ListRestoreVerificationPlanAssociationsResponse` object, and
+    provides an ``__aiter__`` method to iterate through its
+    ``restore_verification_plan_associations`` field.
+
+    If there are more pages, the ``__aiter__`` method will make additional
+    ``ListRestoreVerificationPlanAssociations`` requests and continue to iterate
+    through the ``restore_verification_plan_associations`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.backupdr_v1.types.ListRestoreVerificationPlanAssociationsResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ...,
+            Awaitable[
+                restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse
+            ],
+        ],
+        request: restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest,
+        response: restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse,
+        *,
+        retry: OptionalAsyncRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiates the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.backupdr_v1.types.ListRestoreVerificationPlanAssociationsRequest):
+                The initial request object.
+            response (google.cloud.backupdr_v1.types.ListRestoreVerificationPlanAssociationsResponse):
+                The initial response object.
+            retry (google.api_core.retry.AsyncRetry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest(
+            request
+        )
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    async def pages(
+        self,
+    ) -> AsyncIterator[
+        restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse
+    ]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = await self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __aiter__(
+        self,
+    ) -> AsyncIterator[
+        restore_verification_plan_association.RestoreVerificationPlanAssociation
+    ]:
+        async def async_generator():
+            async for page in self.pages:
+                for response in page.restore_verification_plan_associations:
+                    yield response
+
+        return async_generator()
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListRestoreVerificationPlansPager:
+    """A pager for iterating through ``list_restore_verification_plans`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.backupdr_v1.types.ListRestoreVerificationPlansResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``restore_verification_plans`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``ListRestoreVerificationPlans`` requests and continue to iterate
+    through the ``restore_verification_plans`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.backupdr_v1.types.ListRestoreVerificationPlansResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ..., restore_verification_plan.ListRestoreVerificationPlansResponse
+        ],
+        request: restore_verification_plan.ListRestoreVerificationPlansRequest,
+        response: restore_verification_plan.ListRestoreVerificationPlansResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.backupdr_v1.types.ListRestoreVerificationPlansRequest):
+                The initial request object.
+            response (google.cloud.backupdr_v1.types.ListRestoreVerificationPlansResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = restore_verification_plan.ListRestoreVerificationPlansRequest(
+            request
+        )
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(
+        self,
+    ) -> Iterator[restore_verification_plan.ListRestoreVerificationPlansResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(self) -> Iterator[restore_verification_plan.RestoreVerificationPlan]:
+        for page in self.pages:
+            yield from page.restore_verification_plans
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListRestoreVerificationPlansAsyncPager:
+    """A pager for iterating through ``list_restore_verification_plans`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.backupdr_v1.types.ListRestoreVerificationPlansResponse` object, and
+    provides an ``__aiter__`` method to iterate through its
+    ``restore_verification_plans`` field.
+
+    If there are more pages, the ``__aiter__`` method will make additional
+    ``ListRestoreVerificationPlans`` requests and continue to iterate
+    through the ``restore_verification_plans`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.backupdr_v1.types.ListRestoreVerificationPlansResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ...,
+            Awaitable[restore_verification_plan.ListRestoreVerificationPlansResponse],
+        ],
+        request: restore_verification_plan.ListRestoreVerificationPlansRequest,
+        response: restore_verification_plan.ListRestoreVerificationPlansResponse,
+        *,
+        retry: OptionalAsyncRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiates the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.backupdr_v1.types.ListRestoreVerificationPlansRequest):
+                The initial request object.
+            response (google.cloud.backupdr_v1.types.ListRestoreVerificationPlansResponse):
+                The initial response object.
+            retry (google.api_core.retry.AsyncRetry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = restore_verification_plan.ListRestoreVerificationPlansRequest(
+            request
+        )
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    async def pages(
+        self,
+    ) -> AsyncIterator[restore_verification_plan.ListRestoreVerificationPlansResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = await self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __aiter__(
+        self,
+    ) -> AsyncIterator[restore_verification_plan.RestoreVerificationPlan]:
+        async def async_generator():
+            async for page in self.pages:
+                for response in page.restore_verification_plans:
                     yield response
 
         return async_generator()

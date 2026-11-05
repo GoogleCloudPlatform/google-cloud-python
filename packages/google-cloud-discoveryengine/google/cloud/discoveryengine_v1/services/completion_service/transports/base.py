@@ -43,7 +43,13 @@ DEFAULT_CLIENT_INFO.protobuf_runtime_version = google.protobuf.__version__
 class CompletionServiceTransport(abc.ABC):
     """Abstract transport class for CompletionService."""
 
-    AUTH_SCOPES = ("https://www.googleapis.com/auth/cloud-platform",)
+    AUTH_SCOPES = (
+        "https://www.googleapis.com/auth/cloud-platform",
+        "https://www.googleapis.com/auth/cloud_search.query",
+        "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
+        "https://www.googleapis.com/auth/discoveryengine.readwrite",
+        "https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
+    )
 
     DEFAULT_HOST: str = "discoveryengine.googleapis.com"
 
@@ -151,6 +157,11 @@ class CompletionServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.advanced_complete_query: gapic_v1.method.wrap_method(
+                self.advanced_complete_query,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.import_suggestion_deny_list_entries: gapic_v1.method.wrap_method(
                 self.import_suggestion_deny_list_entries,
                 default_timeout=None,
@@ -210,6 +221,18 @@ class CompletionServiceTransport(abc.ABC):
         Union[
             completion_service.CompleteQueryResponse,
             Awaitable[completion_service.CompleteQueryResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def advanced_complete_query(
+        self,
+    ) -> Callable[
+        [completion_service.AdvancedCompleteQueryRequest],
+        Union[
+            completion_service.AdvancedCompleteQueryResponse,
+            Awaitable[completion_service.AdvancedCompleteQueryResponse],
         ],
     ]:
         raise NotImplementedError()

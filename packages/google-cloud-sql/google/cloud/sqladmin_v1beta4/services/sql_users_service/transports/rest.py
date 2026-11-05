@@ -371,6 +371,8 @@ class SqlUsersServiceRestStub:
 class SqlUsersServiceRestTransport(_BaseSqlUsersServiceRestTransport):
     """REST backend synchronous transport for SqlUsersService.
 
+    Cloud SQL users service.
+
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
     and call it.

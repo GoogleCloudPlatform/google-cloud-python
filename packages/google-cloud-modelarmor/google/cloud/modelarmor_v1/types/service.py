@@ -50,6 +50,7 @@ __protobuf__ = proto.module(
         "GetFloorSettingRequest",
         "UpdateFloorSettingRequest",
         "FilterConfig",
+        "CsamFilterSettings",
         "PiAndJailbreakFilterSettings",
         "MaliciousUriFilterSettings",
         "RaiFilterSettings",
@@ -1100,7 +1101,10 @@ class FilterConfig(proto.Message):
         filter_rule_settings (google.cloud.modelarmor_v1.types.FilterRuleSettings):
             Optional. Settings for customizing filter
             rules. Note: This field is not supported in
-            FloorSetting and Streaming Sanitization APIs.
+            FloorSetting.
+        csam_filter_settings (google.cloud.modelarmor_v1.types.CsamFilterSettings):
+            Optional. Child sexual abuse material (CSAM)
+            filter settings.
     """
 
     rai_settings: "RaiFilterSettings" = proto.Field(
@@ -1127,6 +1131,62 @@ class FilterConfig(proto.Message):
         proto.MESSAGE,
         number=7,
         message="FilterRuleSettings",
+    )
+    csam_filter_settings: "CsamFilterSettings" = proto.Field(
+        proto.MESSAGE,
+        number=9,
+        message="CsamFilterSettings",
+    )
+
+
+class CsamFilterSettings(proto.Message):
+    r"""Child sexual abuse material (CSAM) filter settings.
+
+    Attributes:
+        filter_enforcement (google.cloud.modelarmor_v1.types.CsamFilterSettings.CsamFilterEnforcement):
+            Optional. Specifies whether the CSAM filter
+            is enabled or disabled.
+        confidence_level (google.cloud.modelarmor_v1.types.DetectionConfidenceLevel):
+            Optional. Confidence level for this CSAM
+            filter. This field is used to determine the
+            threshold for the filter. If detection
+            confidence is greater than or equal to the
+            specified level, a positive match is reported.
+            Confidence level will only be used if the filter
+            is enabled.
+    """
+
+    class CsamFilterEnforcement(proto.Enum):
+        r"""Option to specify the enforcement state for the CSAM filter.
+
+        Values:
+            CSAM_FILTER_ENFORCEMENT_UNSPECIFIED (0):
+                Unused. Default value. If unspecified,
+                defaults to ENABLED (with HIGH confidence),
+                except for Data Residency (DRZ) compliant
+                resources in regions where CSAM detection is
+                unsupported, where it defaults to DISABLED.
+            ENABLED (1):
+                Enables CSAM detection filtering for user
+                prompts and model responses.
+            DISABLED (2):
+                Disables CSAM detection filtering for user
+                prompts and model responses.
+        """
+
+        CSAM_FILTER_ENFORCEMENT_UNSPECIFIED = 0
+        ENABLED = 1
+        DISABLED = 2
+
+    filter_enforcement: CsamFilterEnforcement = proto.Field(
+        proto.ENUM,
+        number=1,
+        enum=CsamFilterEnforcement,
+    )
+    confidence_level: "DetectionConfidenceLevel" = proto.Field(
+        proto.ENUM,
+        number=2,
+        enum="DetectionConfidenceLevel",
     )
 
 

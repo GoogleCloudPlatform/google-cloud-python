@@ -45,6 +45,17 @@ from google.cloud.backupdr_v1beta.types import (
     backupvault,
     bindingmatchingresource,
     datasourcereference,
+    restore_template,
+    restore_template_execution,
+    restore_verification_plan,
+    restore_verification_plan_association,
+)
+from google.cloud.backupdr_v1beta.types import restore_template as gcb_restore_template
+from google.cloud.backupdr_v1beta.types import (
+    restore_verification_plan as gcb_restore_verification_plan,
+)
+from google.cloud.backupdr_v1beta.types import (
+    restore_verification_plan_association as gcb_restore_verification_plan_association,
 )
 
 from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
@@ -136,6 +147,30 @@ class BackupDRRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_create_restore_template(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_create_restore_template(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_create_restore_verification_plan(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_create_restore_verification_plan(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_create_restore_verification_plan_association(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_create_restore_verification_plan_association(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_delete_auto_protection_policy(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -181,6 +216,30 @@ class BackupDRRestInterceptor:
                 return request, metadata
 
             def post_delete_management_server(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_delete_restore_template(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_delete_restore_template(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_delete_restore_verification_plan(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_delete_restore_verification_plan(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_delete_restore_verification_plan_association(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_delete_restore_verification_plan_association(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -304,6 +363,38 @@ class BackupDRRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_get_restore_template(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_get_restore_template(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_get_restore_template_execution(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_get_restore_template_execution(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_get_restore_verification_plan(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_get_restore_verification_plan(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_get_restore_verification_plan_association(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_get_restore_verification_plan_association(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_initialize_service(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -416,6 +507,38 @@ class BackupDRRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_list_restore_template_executions(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_restore_template_executions(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_list_restore_templates(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_restore_templates(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_list_restore_verification_plan_associations(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_restore_verification_plan_associations(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_list_restore_verification_plans(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_restore_verification_plans(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_restore_backup(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -424,11 +547,35 @@ class BackupDRRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_run_restore_template(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_run_restore_template(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_trigger_backup(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
 
             def post_trigger_backup(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_trigger_restore_cleanup(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_trigger_restore_cleanup(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_trigger_restore_verification(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_trigger_restore_verification(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -477,6 +624,14 @@ class BackupDRRestInterceptor:
                 return request, metadata
 
             def post_update_data_source(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_restore_template(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_restore_template(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -777,6 +932,153 @@ class BackupDRRestInterceptor:
         """
         return response, metadata
 
+    def pre_create_restore_template(
+        self,
+        request: gcb_restore_template.CreateRestoreTemplateRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        gcb_restore_template.CreateRestoreTemplateRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for create_restore_template
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the BackupDR server.
+        """
+        return request, metadata
+
+    def post_create_restore_template(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for create_restore_template
+
+        DEPRECATED. Please use the `post_create_restore_template_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the BackupDR server but before
+        it is returned to user code. This `post_create_restore_template` interceptor runs
+        before the `post_create_restore_template_with_metadata` interceptor.
+        """
+        return response
+
+    def post_create_restore_template_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for create_restore_template
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the BackupDR server but before it is returned to user code.
+
+        We recommend only using this `post_create_restore_template_with_metadata`
+        interceptor in new development instead of the `post_create_restore_template` interceptor.
+        When both interceptors are used, this `post_create_restore_template_with_metadata` interceptor runs after the
+        `post_create_restore_template` interceptor. The (possibly modified) response returned by
+        `post_create_restore_template` will be passed to
+        `post_create_restore_template_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_create_restore_verification_plan(
+        self,
+        request: gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for create_restore_verification_plan
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the BackupDR server.
+        """
+        return request, metadata
+
+    def post_create_restore_verification_plan(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for create_restore_verification_plan
+
+        DEPRECATED. Please use the `post_create_restore_verification_plan_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the BackupDR server but before
+        it is returned to user code. This `post_create_restore_verification_plan` interceptor runs
+        before the `post_create_restore_verification_plan_with_metadata` interceptor.
+        """
+        return response
+
+    def post_create_restore_verification_plan_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for create_restore_verification_plan
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the BackupDR server but before it is returned to user code.
+
+        We recommend only using this `post_create_restore_verification_plan_with_metadata`
+        interceptor in new development instead of the `post_create_restore_verification_plan` interceptor.
+        When both interceptors are used, this `post_create_restore_verification_plan_with_metadata` interceptor runs after the
+        `post_create_restore_verification_plan` interceptor. The (possibly modified) response returned by
+        `post_create_restore_verification_plan` will be passed to
+        `post_create_restore_verification_plan_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_create_restore_verification_plan_association(
+        self,
+        request: gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for create_restore_verification_plan_association
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the BackupDR server.
+        """
+        return request, metadata
+
+    def post_create_restore_verification_plan_association(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for create_restore_verification_plan_association
+
+        DEPRECATED. Please use the `post_create_restore_verification_plan_association_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the BackupDR server but before
+        it is returned to user code. This `post_create_restore_verification_plan_association` interceptor runs
+        before the `post_create_restore_verification_plan_association_with_metadata` interceptor.
+        """
+        return response
+
+    def post_create_restore_verification_plan_association_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for create_restore_verification_plan_association
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the BackupDR server but before it is returned to user code.
+
+        We recommend only using this `post_create_restore_verification_plan_association_with_metadata`
+        interceptor in new development instead of the `post_create_restore_verification_plan_association` interceptor.
+        When both interceptors are used, this `post_create_restore_verification_plan_association_with_metadata` interceptor runs after the
+        `post_create_restore_verification_plan_association` interceptor. The (possibly modified) response returned by
+        `post_create_restore_verification_plan_association` will be passed to
+        `post_create_restore_verification_plan_association_with_metadata`.
+        """
+        return response, metadata
+
     def pre_delete_auto_protection_policy(
         self,
         request: autoprotectionpolicy.DeleteAutoProtectionPolicyRequest,
@@ -1064,6 +1366,153 @@ class BackupDRRestInterceptor:
         `post_delete_management_server` interceptor. The (possibly modified) response returned by
         `post_delete_management_server` will be passed to
         `post_delete_management_server_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_delete_restore_template(
+        self,
+        request: restore_template.DeleteRestoreTemplateRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_template.DeleteRestoreTemplateRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for delete_restore_template
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the BackupDR server.
+        """
+        return request, metadata
+
+    def post_delete_restore_template(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for delete_restore_template
+
+        DEPRECATED. Please use the `post_delete_restore_template_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the BackupDR server but before
+        it is returned to user code. This `post_delete_restore_template` interceptor runs
+        before the `post_delete_restore_template_with_metadata` interceptor.
+        """
+        return response
+
+    def post_delete_restore_template_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for delete_restore_template
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the BackupDR server but before it is returned to user code.
+
+        We recommend only using this `post_delete_restore_template_with_metadata`
+        interceptor in new development instead of the `post_delete_restore_template` interceptor.
+        When both interceptors are used, this `post_delete_restore_template_with_metadata` interceptor runs after the
+        `post_delete_restore_template` interceptor. The (possibly modified) response returned by
+        `post_delete_restore_template` will be passed to
+        `post_delete_restore_template_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_delete_restore_verification_plan(
+        self,
+        request: restore_verification_plan.DeleteRestoreVerificationPlanRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_verification_plan.DeleteRestoreVerificationPlanRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for delete_restore_verification_plan
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the BackupDR server.
+        """
+        return request, metadata
+
+    def post_delete_restore_verification_plan(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for delete_restore_verification_plan
+
+        DEPRECATED. Please use the `post_delete_restore_verification_plan_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the BackupDR server but before
+        it is returned to user code. This `post_delete_restore_verification_plan` interceptor runs
+        before the `post_delete_restore_verification_plan_with_metadata` interceptor.
+        """
+        return response
+
+    def post_delete_restore_verification_plan_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for delete_restore_verification_plan
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the BackupDR server but before it is returned to user code.
+
+        We recommend only using this `post_delete_restore_verification_plan_with_metadata`
+        interceptor in new development instead of the `post_delete_restore_verification_plan` interceptor.
+        When both interceptors are used, this `post_delete_restore_verification_plan_with_metadata` interceptor runs after the
+        `post_delete_restore_verification_plan` interceptor. The (possibly modified) response returned by
+        `post_delete_restore_verification_plan` will be passed to
+        `post_delete_restore_verification_plan_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_delete_restore_verification_plan_association(
+        self,
+        request: restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for delete_restore_verification_plan_association
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the BackupDR server.
+        """
+        return request, metadata
+
+    def post_delete_restore_verification_plan_association(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for delete_restore_verification_plan_association
+
+        DEPRECATED. Please use the `post_delete_restore_verification_plan_association_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the BackupDR server but before
+        it is returned to user code. This `post_delete_restore_verification_plan_association` interceptor runs
+        before the `post_delete_restore_verification_plan_association_with_metadata` interceptor.
+        """
+        return response
+
+    def post_delete_restore_verification_plan_association_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for delete_restore_verification_plan_association
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the BackupDR server but before it is returned to user code.
+
+        We recommend only using this `post_delete_restore_verification_plan_association_with_metadata`
+        interceptor in new development instead of the `post_delete_restore_verification_plan_association` interceptor.
+        When both interceptors are used, this `post_delete_restore_verification_plan_association_with_metadata` interceptor runs after the
+        `post_delete_restore_verification_plan_association` interceptor. The (possibly modified) response returned by
+        `post_delete_restore_verification_plan_association` will be passed to
+        `post_delete_restore_verification_plan_association_with_metadata`.
         """
         return response, metadata
 
@@ -1820,6 +2269,214 @@ class BackupDRRestInterceptor:
         """
         return response, metadata
 
+    def pre_get_restore_template(
+        self,
+        request: restore_template.GetRestoreTemplateRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_template.GetRestoreTemplateRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for get_restore_template
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the BackupDR server.
+        """
+        return request, metadata
+
+    def post_get_restore_template(
+        self, response: restore_template.RestoreTemplate
+    ) -> restore_template.RestoreTemplate:
+        """Post-rpc interceptor for get_restore_template
+
+        DEPRECATED. Please use the `post_get_restore_template_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the BackupDR server but before
+        it is returned to user code. This `post_get_restore_template` interceptor runs
+        before the `post_get_restore_template_with_metadata` interceptor.
+        """
+        return response
+
+    def post_get_restore_template_with_metadata(
+        self,
+        response: restore_template.RestoreTemplate,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_template.RestoreTemplate, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for get_restore_template
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the BackupDR server but before it is returned to user code.
+
+        We recommend only using this `post_get_restore_template_with_metadata`
+        interceptor in new development instead of the `post_get_restore_template` interceptor.
+        When both interceptors are used, this `post_get_restore_template_with_metadata` interceptor runs after the
+        `post_get_restore_template` interceptor. The (possibly modified) response returned by
+        `post_get_restore_template` will be passed to
+        `post_get_restore_template_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_get_restore_template_execution(
+        self,
+        request: restore_template_execution.GetRestoreTemplateExecutionRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_template_execution.GetRestoreTemplateExecutionRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for get_restore_template_execution
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the BackupDR server.
+        """
+        return request, metadata
+
+    def post_get_restore_template_execution(
+        self, response: restore_template_execution.RestoreTemplateExecution
+    ) -> restore_template_execution.RestoreTemplateExecution:
+        """Post-rpc interceptor for get_restore_template_execution
+
+        DEPRECATED. Please use the `post_get_restore_template_execution_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the BackupDR server but before
+        it is returned to user code. This `post_get_restore_template_execution` interceptor runs
+        before the `post_get_restore_template_execution_with_metadata` interceptor.
+        """
+        return response
+
+    def post_get_restore_template_execution_with_metadata(
+        self,
+        response: restore_template_execution.RestoreTemplateExecution,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_template_execution.RestoreTemplateExecution,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for get_restore_template_execution
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the BackupDR server but before it is returned to user code.
+
+        We recommend only using this `post_get_restore_template_execution_with_metadata`
+        interceptor in new development instead of the `post_get_restore_template_execution` interceptor.
+        When both interceptors are used, this `post_get_restore_template_execution_with_metadata` interceptor runs after the
+        `post_get_restore_template_execution` interceptor. The (possibly modified) response returned by
+        `post_get_restore_template_execution` will be passed to
+        `post_get_restore_template_execution_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_get_restore_verification_plan(
+        self,
+        request: restore_verification_plan.GetRestoreVerificationPlanRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_verification_plan.GetRestoreVerificationPlanRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for get_restore_verification_plan
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the BackupDR server.
+        """
+        return request, metadata
+
+    def post_get_restore_verification_plan(
+        self, response: restore_verification_plan.RestoreVerificationPlan
+    ) -> restore_verification_plan.RestoreVerificationPlan:
+        """Post-rpc interceptor for get_restore_verification_plan
+
+        DEPRECATED. Please use the `post_get_restore_verification_plan_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the BackupDR server but before
+        it is returned to user code. This `post_get_restore_verification_plan` interceptor runs
+        before the `post_get_restore_verification_plan_with_metadata` interceptor.
+        """
+        return response
+
+    def post_get_restore_verification_plan_with_metadata(
+        self,
+        response: restore_verification_plan.RestoreVerificationPlan,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_verification_plan.RestoreVerificationPlan,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for get_restore_verification_plan
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the BackupDR server but before it is returned to user code.
+
+        We recommend only using this `post_get_restore_verification_plan_with_metadata`
+        interceptor in new development instead of the `post_get_restore_verification_plan` interceptor.
+        When both interceptors are used, this `post_get_restore_verification_plan_with_metadata` interceptor runs after the
+        `post_get_restore_verification_plan` interceptor. The (possibly modified) response returned by
+        `post_get_restore_verification_plan` will be passed to
+        `post_get_restore_verification_plan_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_get_restore_verification_plan_association(
+        self,
+        request: restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for get_restore_verification_plan_association
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the BackupDR server.
+        """
+        return request, metadata
+
+    def post_get_restore_verification_plan_association(
+        self,
+        response: restore_verification_plan_association.RestoreVerificationPlanAssociation,
+    ) -> restore_verification_plan_association.RestoreVerificationPlanAssociation:
+        """Post-rpc interceptor for get_restore_verification_plan_association
+
+        DEPRECATED. Please use the `post_get_restore_verification_plan_association_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the BackupDR server but before
+        it is returned to user code. This `post_get_restore_verification_plan_association` interceptor runs
+        before the `post_get_restore_verification_plan_association_with_metadata` interceptor.
+        """
+        return response
+
+    def post_get_restore_verification_plan_association_with_metadata(
+        self,
+        response: restore_verification_plan_association.RestoreVerificationPlanAssociation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_verification_plan_association.RestoreVerificationPlanAssociation,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for get_restore_verification_plan_association
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the BackupDR server but before it is returned to user code.
+
+        We recommend only using this `post_get_restore_verification_plan_association_with_metadata`
+        interceptor in new development instead of the `post_get_restore_verification_plan_association` interceptor.
+        When both interceptors are used, this `post_get_restore_verification_plan_association_with_metadata` interceptor runs after the
+        `post_get_restore_verification_plan_association` interceptor. The (possibly modified) response returned by
+        `post_get_restore_verification_plan_association` will be passed to
+        `post_get_restore_verification_plan_association_with_metadata`.
+        """
+        return response, metadata
+
     def pre_initialize_service(
         self,
         request: backupdr.InitializeServiceRequest,
@@ -2531,6 +3188,215 @@ class BackupDRRestInterceptor:
         """
         return response, metadata
 
+    def pre_list_restore_template_executions(
+        self,
+        request: restore_template_execution.ListRestoreTemplateExecutionsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_template_execution.ListRestoreTemplateExecutionsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for list_restore_template_executions
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the BackupDR server.
+        """
+        return request, metadata
+
+    def post_list_restore_template_executions(
+        self, response: restore_template_execution.ListRestoreTemplateExecutionsResponse
+    ) -> restore_template_execution.ListRestoreTemplateExecutionsResponse:
+        """Post-rpc interceptor for list_restore_template_executions
+
+        DEPRECATED. Please use the `post_list_restore_template_executions_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the BackupDR server but before
+        it is returned to user code. This `post_list_restore_template_executions` interceptor runs
+        before the `post_list_restore_template_executions_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_restore_template_executions_with_metadata(
+        self,
+        response: restore_template_execution.ListRestoreTemplateExecutionsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_template_execution.ListRestoreTemplateExecutionsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for list_restore_template_executions
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the BackupDR server but before it is returned to user code.
+
+        We recommend only using this `post_list_restore_template_executions_with_metadata`
+        interceptor in new development instead of the `post_list_restore_template_executions` interceptor.
+        When both interceptors are used, this `post_list_restore_template_executions_with_metadata` interceptor runs after the
+        `post_list_restore_template_executions` interceptor. The (possibly modified) response returned by
+        `post_list_restore_template_executions` will be passed to
+        `post_list_restore_template_executions_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_list_restore_templates(
+        self,
+        request: restore_template.ListRestoreTemplatesRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_template.ListRestoreTemplatesRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for list_restore_templates
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the BackupDR server.
+        """
+        return request, metadata
+
+    def post_list_restore_templates(
+        self, response: restore_template.ListRestoreTemplatesResponse
+    ) -> restore_template.ListRestoreTemplatesResponse:
+        """Post-rpc interceptor for list_restore_templates
+
+        DEPRECATED. Please use the `post_list_restore_templates_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the BackupDR server but before
+        it is returned to user code. This `post_list_restore_templates` interceptor runs
+        before the `post_list_restore_templates_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_restore_templates_with_metadata(
+        self,
+        response: restore_template.ListRestoreTemplatesResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_template.ListRestoreTemplatesResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for list_restore_templates
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the BackupDR server but before it is returned to user code.
+
+        We recommend only using this `post_list_restore_templates_with_metadata`
+        interceptor in new development instead of the `post_list_restore_templates` interceptor.
+        When both interceptors are used, this `post_list_restore_templates_with_metadata` interceptor runs after the
+        `post_list_restore_templates` interceptor. The (possibly modified) response returned by
+        `post_list_restore_templates` will be passed to
+        `post_list_restore_templates_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_list_restore_verification_plan_associations(
+        self,
+        request: restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for list_restore_verification_plan_associations
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the BackupDR server.
+        """
+        return request, metadata
+
+    def post_list_restore_verification_plan_associations(
+        self,
+        response: restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse,
+    ) -> restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse:
+        """Post-rpc interceptor for list_restore_verification_plan_associations
+
+        DEPRECATED. Please use the `post_list_restore_verification_plan_associations_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the BackupDR server but before
+        it is returned to user code. This `post_list_restore_verification_plan_associations` interceptor runs
+        before the `post_list_restore_verification_plan_associations_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_restore_verification_plan_associations_with_metadata(
+        self,
+        response: restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for list_restore_verification_plan_associations
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the BackupDR server but before it is returned to user code.
+
+        We recommend only using this `post_list_restore_verification_plan_associations_with_metadata`
+        interceptor in new development instead of the `post_list_restore_verification_plan_associations` interceptor.
+        When both interceptors are used, this `post_list_restore_verification_plan_associations_with_metadata` interceptor runs after the
+        `post_list_restore_verification_plan_associations` interceptor. The (possibly modified) response returned by
+        `post_list_restore_verification_plan_associations` will be passed to
+        `post_list_restore_verification_plan_associations_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_list_restore_verification_plans(
+        self,
+        request: restore_verification_plan.ListRestoreVerificationPlansRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_verification_plan.ListRestoreVerificationPlansRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for list_restore_verification_plans
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the BackupDR server.
+        """
+        return request, metadata
+
+    def post_list_restore_verification_plans(
+        self, response: restore_verification_plan.ListRestoreVerificationPlansResponse
+    ) -> restore_verification_plan.ListRestoreVerificationPlansResponse:
+        """Post-rpc interceptor for list_restore_verification_plans
+
+        DEPRECATED. Please use the `post_list_restore_verification_plans_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the BackupDR server but before
+        it is returned to user code. This `post_list_restore_verification_plans` interceptor runs
+        before the `post_list_restore_verification_plans_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_restore_verification_plans_with_metadata(
+        self,
+        response: restore_verification_plan.ListRestoreVerificationPlansResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_verification_plan.ListRestoreVerificationPlansResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for list_restore_verification_plans
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the BackupDR server but before it is returned to user code.
+
+        We recommend only using this `post_list_restore_verification_plans_with_metadata`
+        interceptor in new development instead of the `post_list_restore_verification_plans` interceptor.
+        When both interceptors are used, this `post_list_restore_verification_plans_with_metadata` interceptor runs after the
+        `post_list_restore_verification_plans` interceptor. The (possibly modified) response returned by
+        `post_list_restore_verification_plans` will be passed to
+        `post_list_restore_verification_plans_with_metadata`.
+        """
+        return response, metadata
+
     def pre_restore_backup(
         self,
         request: backupvault.RestoreBackupRequest,
@@ -2576,6 +3442,55 @@ class BackupDRRestInterceptor:
         `post_restore_backup` interceptor. The (possibly modified) response returned by
         `post_restore_backup` will be passed to
         `post_restore_backup_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_run_restore_template(
+        self,
+        request: restore_template.RunRestoreTemplateRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_template.RunRestoreTemplateRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for run_restore_template
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the BackupDR server.
+        """
+        return request, metadata
+
+    def post_run_restore_template(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for run_restore_template
+
+        DEPRECATED. Please use the `post_run_restore_template_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the BackupDR server but before
+        it is returned to user code. This `post_run_restore_template` interceptor runs
+        before the `post_run_restore_template_with_metadata` interceptor.
+        """
+        return response
+
+    def post_run_restore_template_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for run_restore_template
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the BackupDR server but before it is returned to user code.
+
+        We recommend only using this `post_run_restore_template_with_metadata`
+        interceptor in new development instead of the `post_run_restore_template` interceptor.
+        When both interceptors are used, this `post_run_restore_template_with_metadata` interceptor runs after the
+        `post_run_restore_template` interceptor. The (possibly modified) response returned by
+        `post_run_restore_template` will be passed to
+        `post_run_restore_template_with_metadata`.
         """
         return response, metadata
 
@@ -2625,6 +3540,104 @@ class BackupDRRestInterceptor:
         `post_trigger_backup` interceptor. The (possibly modified) response returned by
         `post_trigger_backup` will be passed to
         `post_trigger_backup_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_trigger_restore_cleanup(
+        self,
+        request: restore_template_execution.TriggerRestoreCleanupRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_template_execution.TriggerRestoreCleanupRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for trigger_restore_cleanup
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the BackupDR server.
+        """
+        return request, metadata
+
+    def post_trigger_restore_cleanup(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for trigger_restore_cleanup
+
+        DEPRECATED. Please use the `post_trigger_restore_cleanup_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the BackupDR server but before
+        it is returned to user code. This `post_trigger_restore_cleanup` interceptor runs
+        before the `post_trigger_restore_cleanup_with_metadata` interceptor.
+        """
+        return response
+
+    def post_trigger_restore_cleanup_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for trigger_restore_cleanup
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the BackupDR server but before it is returned to user code.
+
+        We recommend only using this `post_trigger_restore_cleanup_with_metadata`
+        interceptor in new development instead of the `post_trigger_restore_cleanup` interceptor.
+        When both interceptors are used, this `post_trigger_restore_cleanup_with_metadata` interceptor runs after the
+        `post_trigger_restore_cleanup` interceptor. The (possibly modified) response returned by
+        `post_trigger_restore_cleanup` will be passed to
+        `post_trigger_restore_cleanup_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_trigger_restore_verification(
+        self,
+        request: restore_verification_plan_association.TriggerRestoreVerificationRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        restore_verification_plan_association.TriggerRestoreVerificationRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for trigger_restore_verification
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the BackupDR server.
+        """
+        return request, metadata
+
+    def post_trigger_restore_verification(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for trigger_restore_verification
+
+        DEPRECATED. Please use the `post_trigger_restore_verification_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the BackupDR server but before
+        it is returned to user code. This `post_trigger_restore_verification` interceptor runs
+        before the `post_trigger_restore_verification_with_metadata` interceptor.
+        """
+        return response
+
+    def post_trigger_restore_verification_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for trigger_restore_verification
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the BackupDR server but before it is returned to user code.
+
+        We recommend only using this `post_trigger_restore_verification_with_metadata`
+        interceptor in new development instead of the `post_trigger_restore_verification` interceptor.
+        When both interceptors are used, this `post_trigger_restore_verification_with_metadata` interceptor runs after the
+        `post_trigger_restore_verification` interceptor. The (possibly modified) response returned by
+        `post_trigger_restore_verification` will be passed to
+        `post_trigger_restore_verification_with_metadata`.
         """
         return response, metadata
 
@@ -2915,6 +3928,55 @@ class BackupDRRestInterceptor:
         `post_update_data_source` interceptor. The (possibly modified) response returned by
         `post_update_data_source` will be passed to
         `post_update_data_source_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_restore_template(
+        self,
+        request: gcb_restore_template.UpdateRestoreTemplateRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        gcb_restore_template.UpdateRestoreTemplateRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for update_restore_template
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the BackupDR server.
+        """
+        return request, metadata
+
+    def post_update_restore_template(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for update_restore_template
+
+        DEPRECATED. Please use the `post_update_restore_template_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the BackupDR server but before
+        it is returned to user code. This `post_update_restore_template` interceptor runs
+        before the `post_update_restore_template_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_restore_template_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_restore_template
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the BackupDR server but before it is returned to user code.
+
+        We recommend only using this `post_update_restore_template_with_metadata`
+        interceptor in new development instead of the `post_update_restore_template` interceptor.
+        When both interceptors are used, this `post_update_restore_template_with_metadata` interceptor runs after the
+        `post_update_restore_template` interceptor. The (possibly modified) response returned by
+        `post_update_restore_template` will be passed to
+        `post_update_restore_template_with_metadata`.
         """
         return response, metadata
 
@@ -4194,6 +5256,468 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 )
             return resp
 
+    class _CreateRestoreTemplate(
+        _BaseBackupDRRestTransport._BaseCreateRestoreTemplate, BackupDRRestStub
+    ):
+        def __hash__(self):
+            return hash("BackupDRRestTransport.CreateRestoreTemplate")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: gcb_restore_template.CreateRestoreTemplateRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the create restore template method over HTTP.
+
+            Args:
+                request (~.gcb_restore_template.CreateRestoreTemplateRequest):
+                    The request object. Request message for creating a
+                RestoreTemplate instance.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = _BaseBackupDRRestTransport._BaseCreateRestoreTemplate._get_http_options()
+            request, metadata = self._interceptor.pre_create_restore_template(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupDRRestTransport._BaseCreateRestoreTemplate,
+                    "_BaseCreateRestoreTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.backupdr_v1beta.BackupDRClient.CreateRestoreTemplate",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "CreateRestoreTemplate",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = BackupDRRestTransport._CreateRestoreTemplate._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_create_restore_template(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_create_restore_template_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.backupdr_v1beta.BackupDRClient.create_restore_template",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "CreateRestoreTemplate",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _CreateRestoreVerificationPlan(
+        _BaseBackupDRRestTransport._BaseCreateRestoreVerificationPlan, BackupDRRestStub
+    ):
+        def __hash__(self):
+            return hash("BackupDRRestTransport.CreateRestoreVerificationPlan")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the create restore
+            verification plan method over HTTP.
+
+                Args:
+                    request (~.gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest):
+                        The request object. The request message for creating a
+                    ``RestoreVerificationPlan``.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.operations_pb2.Operation:
+                        This resource represents a
+                    long-running operation that is the
+                    result of a network API call.
+
+            """
+
+            http_options = _BaseBackupDRRestTransport._BaseCreateRestoreVerificationPlan._get_http_options()
+            request, metadata = self._interceptor.pre_create_restore_verification_plan(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupDRRestTransport._BaseCreateRestoreVerificationPlan,
+                    "_BaseCreateRestoreVerificationPlan__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.backupdr_v1beta.BackupDRClient.CreateRestoreVerificationPlan",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "CreateRestoreVerificationPlan",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                BackupDRRestTransport._CreateRestoreVerificationPlan._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                    body,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_create_restore_verification_plan(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_create_restore_verification_plan_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.backupdr_v1beta.BackupDRClient.create_restore_verification_plan",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "CreateRestoreVerificationPlan",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _CreateRestoreVerificationPlanAssociation(
+        _BaseBackupDRRestTransport._BaseCreateRestoreVerificationPlanAssociation,
+        BackupDRRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "BackupDRRestTransport.CreateRestoreVerificationPlanAssociation"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the create restore
+            verification plan association method over HTTP.
+
+                Args:
+                    request (~.gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest):
+                        The request object. Request message for
+                    CreateRestoreVerificationPlanAssociation.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.operations_pb2.Operation:
+                        This resource represents a
+                    long-running operation that is the
+                    result of a network API call.
+
+            """
+
+            http_options = _BaseBackupDRRestTransport._BaseCreateRestoreVerificationPlanAssociation._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_create_restore_verification_plan_association(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupDRRestTransport._BaseCreateRestoreVerificationPlanAssociation,
+                    "_BaseCreateRestoreVerificationPlanAssociation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.backupdr_v1beta.BackupDRClient.CreateRestoreVerificationPlanAssociation",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "CreateRestoreVerificationPlanAssociation",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = BackupDRRestTransport._CreateRestoreVerificationPlanAssociation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_create_restore_verification_plan_association(
+                resp
+            )
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_create_restore_verification_plan_association_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.backupdr_v1beta.BackupDRClient.create_restore_verification_plan_association",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "CreateRestoreVerificationPlanAssociation",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _DeleteAutoProtectionPolicy(
         _BaseBackupDRRestTransport._BaseDeleteAutoProtectionPolicy, BackupDRRestStub
     ):
@@ -5075,6 +6599,462 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                     extra={
                         "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
                         "rpcName": "DeleteManagementServer",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _DeleteRestoreTemplate(
+        _BaseBackupDRRestTransport._BaseDeleteRestoreTemplate, BackupDRRestStub
+    ):
+        def __hash__(self):
+            return hash("BackupDRRestTransport.DeleteRestoreTemplate")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: restore_template.DeleteRestoreTemplateRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the delete restore template method over HTTP.
+
+            Args:
+                request (~.restore_template.DeleteRestoreTemplateRequest):
+                    The request object. Request message for deleting a
+                RestoreTemplate instance.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = _BaseBackupDRRestTransport._BaseDeleteRestoreTemplate._get_http_options()
+            request, metadata = self._interceptor.pre_delete_restore_template(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupDRRestTransport._BaseDeleteRestoreTemplate,
+                    "_BaseDeleteRestoreTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.backupdr_v1beta.BackupDRClient.DeleteRestoreTemplate",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "DeleteRestoreTemplate",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = BackupDRRestTransport._DeleteRestoreTemplate._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_delete_restore_template(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_delete_restore_template_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.backupdr_v1beta.BackupDRClient.delete_restore_template",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "DeleteRestoreTemplate",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _DeleteRestoreVerificationPlan(
+        _BaseBackupDRRestTransport._BaseDeleteRestoreVerificationPlan, BackupDRRestStub
+    ):
+        def __hash__(self):
+            return hash("BackupDRRestTransport.DeleteRestoreVerificationPlan")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: restore_verification_plan.DeleteRestoreVerificationPlanRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the delete restore
+            verification plan method over HTTP.
+
+                Args:
+                    request (~.restore_verification_plan.DeleteRestoreVerificationPlanRequest):
+                        The request object. The request message for deleting a
+                    ``RestoreVerificationPlan``.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.operations_pb2.Operation:
+                        This resource represents a
+                    long-running operation that is the
+                    result of a network API call.
+
+            """
+
+            http_options = _BaseBackupDRRestTransport._BaseDeleteRestoreVerificationPlan._get_http_options()
+            request, metadata = self._interceptor.pre_delete_restore_verification_plan(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupDRRestTransport._BaseDeleteRestoreVerificationPlan,
+                    "_BaseDeleteRestoreVerificationPlan__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.backupdr_v1beta.BackupDRClient.DeleteRestoreVerificationPlan",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "DeleteRestoreVerificationPlan",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                BackupDRRestTransport._DeleteRestoreVerificationPlan._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_delete_restore_verification_plan(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_delete_restore_verification_plan_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.backupdr_v1beta.BackupDRClient.delete_restore_verification_plan",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "DeleteRestoreVerificationPlan",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _DeleteRestoreVerificationPlanAssociation(
+        _BaseBackupDRRestTransport._BaseDeleteRestoreVerificationPlanAssociation,
+        BackupDRRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "BackupDRRestTransport.DeleteRestoreVerificationPlanAssociation"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the delete restore
+            verification plan association method over HTTP.
+
+                Args:
+                    request (~.restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest):
+                        The request object. Request message for
+                    DeleteRestoreVerificationPlanAssociation.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.operations_pb2.Operation:
+                        This resource represents a
+                    long-running operation that is the
+                    result of a network API call.
+
+            """
+
+            http_options = _BaseBackupDRRestTransport._BaseDeleteRestoreVerificationPlanAssociation._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_delete_restore_verification_plan_association(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupDRRestTransport._BaseDeleteRestoreVerificationPlanAssociation,
+                    "_BaseDeleteRestoreVerificationPlanAssociation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.backupdr_v1beta.BackupDRClient.DeleteRestoreVerificationPlanAssociation",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "DeleteRestoreVerificationPlanAssociation",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = BackupDRRestTransport._DeleteRestoreVerificationPlanAssociation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_delete_restore_verification_plan_association(
+                resp
+            )
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_delete_restore_verification_plan_association_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.backupdr_v1beta.BackupDRClient.delete_restore_verification_plan_association",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "DeleteRestoreVerificationPlanAssociation",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -7390,6 +9370,632 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 )
             return resp
 
+    class _GetRestoreTemplate(
+        _BaseBackupDRRestTransport._BaseGetRestoreTemplate, BackupDRRestStub
+    ):
+        def __hash__(self):
+            return hash("BackupDRRestTransport.GetRestoreTemplate")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: restore_template.GetRestoreTemplateRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> restore_template.RestoreTemplate:
+            r"""Call the get restore template method over HTTP.
+
+            Args:
+                request (~.restore_template.GetRestoreTemplateRequest):
+                    The request object. Request message for getting a
+                RestoreTemplate instance.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.restore_template.RestoreTemplate:
+                    A ``RestoreTemplate`` encapsulates DR readiness
+                configurations for validating backups.
+
+            """
+
+            http_options = (
+                _BaseBackupDRRestTransport._BaseGetRestoreTemplate._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_get_restore_template(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupDRRestTransport._BaseGetRestoreTemplate,
+                    "_BaseGetRestoreTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.backupdr_v1beta.BackupDRClient.GetRestoreTemplate",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "GetRestoreTemplate",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = BackupDRRestTransport._GetRestoreTemplate._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = restore_template.RestoreTemplate()
+            pb_resp = restore_template.RestoreTemplate.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_get_restore_template(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_get_restore_template_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = restore_template.RestoreTemplate.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.backupdr_v1beta.BackupDRClient.get_restore_template",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "GetRestoreTemplate",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _GetRestoreTemplateExecution(
+        _BaseBackupDRRestTransport._BaseGetRestoreTemplateExecution, BackupDRRestStub
+    ):
+        def __hash__(self):
+            return hash("BackupDRRestTransport.GetRestoreTemplateExecution")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: restore_template_execution.GetRestoreTemplateExecutionRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> restore_template_execution.RestoreTemplateExecution:
+            r"""Call the get restore template
+            execution method over HTTP.
+
+                Args:
+                    request (~.restore_template_execution.GetRestoreTemplateExecutionRequest):
+                        The request object. Request message for getting a
+                    RestoreTemplateExecution instance.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.restore_template_execution.RestoreTemplateExecution:
+                        A ``RestoreTemplateExecution`` represents a single
+                    historical or active execution run.
+
+            """
+
+            http_options = _BaseBackupDRRestTransport._BaseGetRestoreTemplateExecution._get_http_options()
+            request, metadata = self._interceptor.pre_get_restore_template_execution(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupDRRestTransport._BaseGetRestoreTemplateExecution,
+                    "_BaseGetRestoreTemplateExecution__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.backupdr_v1beta.BackupDRClient.GetRestoreTemplateExecution",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "GetRestoreTemplateExecution",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = BackupDRRestTransport._GetRestoreTemplateExecution._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = restore_template_execution.RestoreTemplateExecution()
+            pb_resp = restore_template_execution.RestoreTemplateExecution.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_get_restore_template_execution(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_get_restore_template_execution_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        restore_template_execution.RestoreTemplateExecution.to_json(
+                            response
+                        )
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.backupdr_v1beta.BackupDRClient.get_restore_template_execution",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "GetRestoreTemplateExecution",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _GetRestoreVerificationPlan(
+        _BaseBackupDRRestTransport._BaseGetRestoreVerificationPlan, BackupDRRestStub
+    ):
+        def __hash__(self):
+            return hash("BackupDRRestTransport.GetRestoreVerificationPlan")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: restore_verification_plan.GetRestoreVerificationPlanRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> restore_verification_plan.RestoreVerificationPlan:
+            r"""Call the get restore verification
+            plan method over HTTP.
+
+                Args:
+                    request (~.restore_verification_plan.GetRestoreVerificationPlanRequest):
+                        The request object. The request message for getting a
+                    ``RestoreVerificationPlan``.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.restore_verification_plan.RestoreVerificationPlan:
+                        A ``RestoreVerificationPlan`` specifies the scheduling
+                    and clean-up template for automated restore
+                    verification. It contains a ``schedule`` to dictate when
+                    the verifications should run, and a
+                    ``RestoreVerificationCleanupRule`` for post-verification
+                    resource deletion.
+
+            """
+
+            http_options = _BaseBackupDRRestTransport._BaseGetRestoreVerificationPlan._get_http_options()
+            request, metadata = self._interceptor.pre_get_restore_verification_plan(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupDRRestTransport._BaseGetRestoreVerificationPlan,
+                    "_BaseGetRestoreVerificationPlan__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.backupdr_v1beta.BackupDRClient.GetRestoreVerificationPlan",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "GetRestoreVerificationPlan",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = BackupDRRestTransport._GetRestoreVerificationPlan._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = restore_verification_plan.RestoreVerificationPlan()
+            pb_resp = restore_verification_plan.RestoreVerificationPlan.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_get_restore_verification_plan(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_get_restore_verification_plan_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        restore_verification_plan.RestoreVerificationPlan.to_json(
+                            response
+                        )
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.backupdr_v1beta.BackupDRClient.get_restore_verification_plan",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "GetRestoreVerificationPlan",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _GetRestoreVerificationPlanAssociation(
+        _BaseBackupDRRestTransport._BaseGetRestoreVerificationPlanAssociation,
+        BackupDRRestStub,
+    ):
+        def __hash__(self):
+            return hash("BackupDRRestTransport.GetRestoreVerificationPlanAssociation")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> restore_verification_plan_association.RestoreVerificationPlanAssociation:
+            r"""Call the get restore verification
+            plan association method over HTTP.
+
+                Args:
+                    request (~.restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest):
+                        The request object. Request message for
+                    GetRestoreVerificationPlanAssociation.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.restore_verification_plan_association.RestoreVerificationPlanAssociation:
+                        A ``RestoreVerificationPlanAssociation`` binds a
+                    specific workload to a ``RestoreVerificationPlan``.
+
+            """
+
+            http_options = _BaseBackupDRRestTransport._BaseGetRestoreVerificationPlanAssociation._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_get_restore_verification_plan_association(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupDRRestTransport._BaseGetRestoreVerificationPlanAssociation,
+                    "_BaseGetRestoreVerificationPlanAssociation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.backupdr_v1beta.BackupDRClient.GetRestoreVerificationPlanAssociation",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "GetRestoreVerificationPlanAssociation",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = BackupDRRestTransport._GetRestoreVerificationPlanAssociation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = restore_verification_plan_association.RestoreVerificationPlanAssociation()
+            pb_resp = restore_verification_plan_association.RestoreVerificationPlanAssociation.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_get_restore_verification_plan_association(
+                resp
+            )
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_get_restore_verification_plan_association_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = restore_verification_plan_association.RestoreVerificationPlanAssociation.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.backupdr_v1beta.BackupDRClient.get_restore_verification_plan_association",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "GetRestoreVerificationPlanAssociation",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _InitializeService(
         _BaseBackupDRRestTransport._BaseInitializeService, BackupDRRestStub
     ):
@@ -9545,6 +12151,634 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 )
             return resp
 
+    class _ListRestoreTemplateExecutions(
+        _BaseBackupDRRestTransport._BaseListRestoreTemplateExecutions, BackupDRRestStub
+    ):
+        def __hash__(self):
+            return hash("BackupDRRestTransport.ListRestoreTemplateExecutions")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: restore_template_execution.ListRestoreTemplateExecutionsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> restore_template_execution.ListRestoreTemplateExecutionsResponse:
+            r"""Call the list restore template
+            executions method over HTTP.
+
+                Args:
+                    request (~.restore_template_execution.ListRestoreTemplateExecutionsRequest):
+                        The request object. Request message for listing
+                    RestoreTemplateExecutions.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.restore_template_execution.ListRestoreTemplateExecutionsResponse:
+                        Response message for listing
+                    RestoreTemplateExecutions.
+
+            """
+
+            http_options = _BaseBackupDRRestTransport._BaseListRestoreTemplateExecutions._get_http_options()
+            request, metadata = self._interceptor.pre_list_restore_template_executions(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupDRRestTransport._BaseListRestoreTemplateExecutions,
+                    "_BaseListRestoreTemplateExecutions__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.backupdr_v1beta.BackupDRClient.ListRestoreTemplateExecutions",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "ListRestoreTemplateExecutions",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                BackupDRRestTransport._ListRestoreTemplateExecutions._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = restore_template_execution.ListRestoreTemplateExecutionsResponse()
+            pb_resp = (
+                restore_template_execution.ListRestoreTemplateExecutionsResponse.pb(
+                    resp
+                )
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_restore_template_executions(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_list_restore_template_executions_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = restore_template_execution.ListRestoreTemplateExecutionsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.backupdr_v1beta.BackupDRClient.list_restore_template_executions",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "ListRestoreTemplateExecutions",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _ListRestoreTemplates(
+        _BaseBackupDRRestTransport._BaseListRestoreTemplates, BackupDRRestStub
+    ):
+        def __hash__(self):
+            return hash("BackupDRRestTransport.ListRestoreTemplates")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: restore_template.ListRestoreTemplatesRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> restore_template.ListRestoreTemplatesResponse:
+            r"""Call the list restore templates method over HTTP.
+
+            Args:
+                request (~.restore_template.ListRestoreTemplatesRequest):
+                    The request object. Request message for listing
+                RestoreTemplates.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.restore_template.ListRestoreTemplatesResponse:
+                    Response message for listing
+                RestoreTemplates.
+
+            """
+
+            http_options = (
+                _BaseBackupDRRestTransport._BaseListRestoreTemplates._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_list_restore_templates(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupDRRestTransport._BaseListRestoreTemplates,
+                    "_BaseListRestoreTemplates__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.backupdr_v1beta.BackupDRClient.ListRestoreTemplates",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "ListRestoreTemplates",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = BackupDRRestTransport._ListRestoreTemplates._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = restore_template.ListRestoreTemplatesResponse()
+            pb_resp = restore_template.ListRestoreTemplatesResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_restore_templates(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_list_restore_templates_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        restore_template.ListRestoreTemplatesResponse.to_json(response)
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.backupdr_v1beta.BackupDRClient.list_restore_templates",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "ListRestoreTemplates",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _ListRestoreVerificationPlanAssociations(
+        _BaseBackupDRRestTransport._BaseListRestoreVerificationPlanAssociations,
+        BackupDRRestStub,
+    ):
+        def __hash__(self):
+            return hash("BackupDRRestTransport.ListRestoreVerificationPlanAssociations")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse:
+            r"""Call the list restore verification
+            plan associations method over HTTP.
+
+                Args:
+                    request (~.restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest):
+                        The request object. Request message for
+                    ListRestoreVerificationPlanAssociations.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse:
+                        Response message for
+                    ListRestoreVerificationPlanAssociations.
+
+            """
+
+            http_options = _BaseBackupDRRestTransport._BaseListRestoreVerificationPlanAssociations._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_list_restore_verification_plan_associations(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupDRRestTransport._BaseListRestoreVerificationPlanAssociations,
+                    "_BaseListRestoreVerificationPlanAssociations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.backupdr_v1beta.BackupDRClient.ListRestoreVerificationPlanAssociations",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "ListRestoreVerificationPlanAssociations",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = BackupDRRestTransport._ListRestoreVerificationPlanAssociations._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse()
+            pb_resp = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_restore_verification_plan_associations(
+                resp
+            )
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_list_restore_verification_plan_associations_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.backupdr_v1beta.BackupDRClient.list_restore_verification_plan_associations",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "ListRestoreVerificationPlanAssociations",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _ListRestoreVerificationPlans(
+        _BaseBackupDRRestTransport._BaseListRestoreVerificationPlans, BackupDRRestStub
+    ):
+        def __hash__(self):
+            return hash("BackupDRRestTransport.ListRestoreVerificationPlans")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: restore_verification_plan.ListRestoreVerificationPlansRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> restore_verification_plan.ListRestoreVerificationPlansResponse:
+            r"""Call the list restore verification
+            plans method over HTTP.
+
+                Args:
+                    request (~.restore_verification_plan.ListRestoreVerificationPlansRequest):
+                        The request object. The request message for getting a list of
+                    ``RestoreVerificationPlans``.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.restore_verification_plan.ListRestoreVerificationPlansResponse:
+                        The response message for getting a list of
+                    ``RestoreVerificationPlans``.
+
+            """
+
+            http_options = _BaseBackupDRRestTransport._BaseListRestoreVerificationPlans._get_http_options()
+            request, metadata = self._interceptor.pre_list_restore_verification_plans(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupDRRestTransport._BaseListRestoreVerificationPlans,
+                    "_BaseListRestoreVerificationPlans__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.backupdr_v1beta.BackupDRClient.ListRestoreVerificationPlans",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "ListRestoreVerificationPlans",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                BackupDRRestTransport._ListRestoreVerificationPlans._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = restore_verification_plan.ListRestoreVerificationPlansResponse()
+            pb_resp = restore_verification_plan.ListRestoreVerificationPlansResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_restore_verification_plans(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_list_restore_verification_plans_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = restore_verification_plan.ListRestoreVerificationPlansResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.backupdr_v1beta.BackupDRClient.list_restore_verification_plans",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "ListRestoreVerificationPlans",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _RestoreBackup(
         _BaseBackupDRRestTransport._BaseRestoreBackup, BackupDRRestStub
     ):
@@ -9694,6 +12928,157 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 )
             return resp
 
+    class _RunRestoreTemplate(
+        _BaseBackupDRRestTransport._BaseRunRestoreTemplate, BackupDRRestStub
+    ):
+        def __hash__(self):
+            return hash("BackupDRRestTransport.RunRestoreTemplate")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: restore_template.RunRestoreTemplateRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the run restore template method over HTTP.
+
+            Args:
+                request (~.restore_template.RunRestoreTemplateRequest):
+                    The request object. Request message for running a
+                RestoreTemplate.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = (
+                _BaseBackupDRRestTransport._BaseRunRestoreTemplate._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_run_restore_template(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupDRRestTransport._BaseRunRestoreTemplate,
+                    "_BaseRunRestoreTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.backupdr_v1beta.BackupDRClient.RunRestoreTemplate",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "RunRestoreTemplate",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = BackupDRRestTransport._RunRestoreTemplate._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_run_restore_template(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_run_restore_template_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.backupdr_v1beta.BackupDRClient.run_restore_template",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "RunRestoreTemplate",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _TriggerBackup(
         _BaseBackupDRRestTransport._BaseTriggerBackup, BackupDRRestStub
     ):
@@ -9837,6 +13222,305 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                     extra={
                         "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
                         "rpcName": "TriggerBackup",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _TriggerRestoreCleanup(
+        _BaseBackupDRRestTransport._BaseTriggerRestoreCleanup, BackupDRRestStub
+    ):
+        def __hash__(self):
+            return hash("BackupDRRestTransport.TriggerRestoreCleanup")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: restore_template_execution.TriggerRestoreCleanupRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the trigger restore cleanup method over HTTP.
+
+            Args:
+                request (~.restore_template_execution.TriggerRestoreCleanupRequest):
+                    The request object. Request message for triggering a
+                restore cleanup.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = _BaseBackupDRRestTransport._BaseTriggerRestoreCleanup._get_http_options()
+            request, metadata = self._interceptor.pre_trigger_restore_cleanup(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupDRRestTransport._BaseTriggerRestoreCleanup,
+                    "_BaseTriggerRestoreCleanup__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.backupdr_v1beta.BackupDRClient.TriggerRestoreCleanup",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "TriggerRestoreCleanup",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = BackupDRRestTransport._TriggerRestoreCleanup._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_trigger_restore_cleanup(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_trigger_restore_cleanup_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.backupdr_v1beta.BackupDRClient.trigger_restore_cleanup",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "TriggerRestoreCleanup",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _TriggerRestoreVerification(
+        _BaseBackupDRRestTransport._BaseTriggerRestoreVerification, BackupDRRestStub
+    ):
+        def __hash__(self):
+            return hash("BackupDRRestTransport.TriggerRestoreVerification")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: restore_verification_plan_association.TriggerRestoreVerificationRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the trigger restore
+            verification method over HTTP.
+
+                Args:
+                    request (~.restore_verification_plan_association.TriggerRestoreVerificationRequest):
+                        The request object. Request message for
+                    TriggerRestoreVerification.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.operations_pb2.Operation:
+                        This resource represents a
+                    long-running operation that is the
+                    result of a network API call.
+
+            """
+
+            http_options = _BaseBackupDRRestTransport._BaseTriggerRestoreVerification._get_http_options()
+            request, metadata = self._interceptor.pre_trigger_restore_verification(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupDRRestTransport._BaseTriggerRestoreVerification,
+                    "_BaseTriggerRestoreVerification__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.backupdr_v1beta.BackupDRClient.TriggerRestoreVerification",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "TriggerRestoreVerification",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = BackupDRRestTransport._TriggerRestoreVerification._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_trigger_restore_verification(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_trigger_restore_verification_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.backupdr_v1beta.BackupDRClient.trigger_restore_verification",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "TriggerRestoreVerification",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -10747,6 +14431,155 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
                 )
             return resp
 
+    class _UpdateRestoreTemplate(
+        _BaseBackupDRRestTransport._BaseUpdateRestoreTemplate, BackupDRRestStub
+    ):
+        def __hash__(self):
+            return hash("BackupDRRestTransport.UpdateRestoreTemplate")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: gcb_restore_template.UpdateRestoreTemplateRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the update restore template method over HTTP.
+
+            Args:
+                request (~.gcb_restore_template.UpdateRestoreTemplateRequest):
+                    The request object. Request message for updating a
+                RestoreTemplate instance.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = _BaseBackupDRRestTransport._BaseUpdateRestoreTemplate._get_http_options()
+            request, metadata = self._interceptor.pre_update_restore_template(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseBackupDRRestTransport._BaseUpdateRestoreTemplate,
+                    "_BaseUpdateRestoreTemplate__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.backupdr_v1beta.BackupDRClient.UpdateRestoreTemplate",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "UpdateRestoreTemplate",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = BackupDRRestTransport._UpdateRestoreTemplate._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_restore_template(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_restore_template_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.backupdr_v1beta.BackupDRClient.update_restore_template",
+                    extra={
+                        "serviceName": "google.cloud.backupdr.v1beta.BackupDR",
+                        "rpcName": "UpdateRestoreTemplate",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     @property
     def create_auto_protection_policy(
         self,
@@ -10813,6 +14646,44 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         )  # type: ignore
 
     @property
+    def create_restore_template(
+        self,
+    ) -> Callable[
+        [gcb_restore_template.CreateRestoreTemplateRequest], operations_pb2.Operation
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._CreateRestoreTemplate(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def create_restore_verification_plan(
+        self,
+    ) -> Callable[
+        [gcb_restore_verification_plan.CreateRestoreVerificationPlanRequest],
+        operations_pb2.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._CreateRestoreVerificationPlan(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def create_restore_verification_plan_association(
+        self,
+    ) -> Callable[
+        [
+            gcb_restore_verification_plan_association.CreateRestoreVerificationPlanAssociationRequest
+        ],
+        operations_pb2.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._CreateRestoreVerificationPlanAssociation(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
     def delete_auto_protection_policy(
         self,
     ) -> Callable[
@@ -10869,6 +14740,44 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._DeleteManagementServer(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def delete_restore_template(
+        self,
+    ) -> Callable[
+        [restore_template.DeleteRestoreTemplateRequest], operations_pb2.Operation
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._DeleteRestoreTemplate(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def delete_restore_verification_plan(
+        self,
+    ) -> Callable[
+        [restore_verification_plan.DeleteRestoreVerificationPlanRequest],
+        operations_pb2.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._DeleteRestoreVerificationPlan(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def delete_restore_verification_plan_association(
+        self,
+    ) -> Callable[
+        [
+            restore_verification_plan_association.DeleteRestoreVerificationPlanAssociationRequest
+        ],
+        operations_pb2.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._DeleteRestoreVerificationPlanAssociation(
             self._session, self._host, self._interceptor
         )  # type: ignore
 
@@ -11040,6 +14949,57 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         return self._GetManagementServer(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def get_restore_template(
+        self,
+    ) -> Callable[
+        [restore_template.GetRestoreTemplateRequest], restore_template.RestoreTemplate
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GetRestoreTemplate(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def get_restore_template_execution(
+        self,
+    ) -> Callable[
+        [restore_template_execution.GetRestoreTemplateExecutionRequest],
+        restore_template_execution.RestoreTemplateExecution,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GetRestoreTemplateExecution(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def get_restore_verification_plan(
+        self,
+    ) -> Callable[
+        [restore_verification_plan.GetRestoreVerificationPlanRequest],
+        restore_verification_plan.RestoreVerificationPlan,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GetRestoreVerificationPlan(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def get_restore_verification_plan_association(
+        self,
+    ) -> Callable[
+        [
+            restore_verification_plan_association.GetRestoreVerificationPlanAssociationRequest
+        ],
+        restore_verification_plan_association.RestoreVerificationPlanAssociation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GetRestoreVerificationPlanAssociation(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
     def initialize_service(
         self,
     ) -> Callable[[backupdr.InitializeServiceRequest], operations_pb2.Operation]:
@@ -11200,12 +15160,74 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         return self._ListManagementServers(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def list_restore_template_executions(
+        self,
+    ) -> Callable[
+        [restore_template_execution.ListRestoreTemplateExecutionsRequest],
+        restore_template_execution.ListRestoreTemplateExecutionsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListRestoreTemplateExecutions(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def list_restore_templates(
+        self,
+    ) -> Callable[
+        [restore_template.ListRestoreTemplatesRequest],
+        restore_template.ListRestoreTemplatesResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListRestoreTemplates(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def list_restore_verification_plan_associations(
+        self,
+    ) -> Callable[
+        [
+            restore_verification_plan_association.ListRestoreVerificationPlanAssociationsRequest
+        ],
+        restore_verification_plan_association.ListRestoreVerificationPlanAssociationsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListRestoreVerificationPlanAssociations(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def list_restore_verification_plans(
+        self,
+    ) -> Callable[
+        [restore_verification_plan.ListRestoreVerificationPlansRequest],
+        restore_verification_plan.ListRestoreVerificationPlansResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListRestoreVerificationPlans(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
     def restore_backup(
         self,
     ) -> Callable[[backupvault.RestoreBackupRequest], operations_pb2.Operation]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._RestoreBackup(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def run_restore_template(
+        self,
+    ) -> Callable[
+        [restore_template.RunRestoreTemplateRequest], operations_pb2.Operation
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._RunRestoreTemplate(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def trigger_backup(
@@ -11216,6 +15238,30 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._TriggerBackup(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def trigger_restore_cleanup(
+        self,
+    ) -> Callable[
+        [restore_template_execution.TriggerRestoreCleanupRequest],
+        operations_pb2.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._TriggerRestoreCleanup(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def trigger_restore_verification(
+        self,
+    ) -> Callable[
+        [restore_verification_plan_association.TriggerRestoreVerificationRequest],
+        operations_pb2.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._TriggerRestoreVerification(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
 
     @property
     def update_auto_protection_policy(
@@ -11274,6 +15320,16 @@ class BackupDRRestTransport(_BaseBackupDRRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._UpdateDataSource(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def update_restore_template(
+        self,
+    ) -> Callable[
+        [gcb_restore_template.UpdateRestoreTemplateRequest], operations_pb2.Operation
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateRestoreTemplate(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def get_location(self):

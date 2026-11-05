@@ -22,6 +22,7 @@ import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
 
 from google.cloud.discoveryengine_v1.types import common
+from google.cloud.discoveryengine_v1.types import feedback as gcd_feedback
 
 __protobuf__ = proto.module(
     package="google.cloud.discoveryengine.v1",
@@ -56,7 +57,6 @@ class UserEvent(proto.Message):
             - ``view-home-page``: View of the home page.
             - ``view-category-page``: View of a category page, e.g. Home
               > Men > Jeans
-            - ``add-feedback``: Add a user feedback.
 
             Retail-related values:
 
@@ -193,9 +193,9 @@ class UserEvent(proto.Message):
             [RecommendResponse.attribution_token][google.cloud.discoveryengine.v1.RecommendResponse.attribution_token]
             to this field.
         filter (str):
-            The filter syntax consists of an expression language for
-            constructing a predicate from one or more fields of the
-            documents being filtered.
+            Optional. The filter syntax consists of an expression
+            language for constructing a predicate from one or more
+            fields of the documents being filtered.
 
             One example is for ``search`` events, the associated
             [SearchRequest][google.cloud.discoveryengine.v1.SearchRequest]
@@ -262,10 +262,10 @@ class UserEvent(proto.Message):
             associated with promotions. Currently, this
             field is restricted to at most one ID.
         attributes (MutableMapping[str, google.cloud.discoveryengine_v1.types.CustomAttribute]):
-            Extra user event features to include in the recommendation
-            model. These attributes must NOT contain data that needs to
-            be parsed or processed further, e.g. JSON or other
-            encodings.
+            Optional. Extra user event features to include in the
+            recommendation model. These attributes must NOT contain data
+            that needs to be parsed or processed further, e.g. JSON or
+            other encodings.
 
             If you provide custom attributes for ingested user events,
             also include them in the user events that you associate with
@@ -295,6 +295,16 @@ class UserEvent(proto.Message):
         panels (MutableSequence[google.cloud.discoveryengine_v1.types.PanelInfo]):
             Optional. List of panels associated with this
             event. Used for page-level impression data.
+        feedback (google.cloud.discoveryengine_v1.types.Feedback):
+            Optional. This field is optional except for the
+            ``add-feedback`` event types.
+        entity (str):
+            Optional. Represents the entity for customers that may run
+            multiple different entities, domains, sites or regions, for
+            example, ``Google US``, ``Google Ads``, ``Waymo``,
+            ``google.com``, ``youtube.com``, etc. We recommend that you
+            set ``entity`` to get better per-entity search, completion,
+            and prediction results.
     """
 
     event_type: str = proto.Field(
@@ -397,6 +407,15 @@ class UserEvent(proto.Message):
         number=22,
         message="PanelInfo",
     )
+    feedback: gcd_feedback.Feedback = proto.Field(
+        proto.MESSAGE,
+        number=23,
+        message=gcd_feedback.Feedback,
+    )
+    entity: str = proto.Field(
+        proto.STRING,
+        number=25,
+    )
 
 
 class PageInfo(proto.Message):
@@ -473,7 +492,7 @@ class SearchInfo(proto.Message):
 
     Attributes:
         search_query (str):
-            The user's search query.
+            Optional. The user's search query.
 
             See
             [SearchRequest.query][google.cloud.discoveryengine.v1.SearchRequest.query]
@@ -544,7 +563,7 @@ class CompletionInfo(proto.Message):
 
     Attributes:
         selected_suggestion (str):
-            End user selected
+            Optional. End user selected
             [CompleteQueryResponse.QuerySuggestion.suggestion][google.cloud.discoveryengine.v1.CompleteQueryResponse.QuerySuggestion.suggestion].
         selected_position (int):
             End user selected

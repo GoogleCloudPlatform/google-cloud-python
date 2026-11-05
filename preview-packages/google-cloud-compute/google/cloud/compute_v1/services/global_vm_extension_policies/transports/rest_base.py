@@ -136,6 +136,22 @@ class _BaseGlobalVmExtensionPoliciesRestTransport(GlobalVmExtensionPoliciesTrans
             ]
             return http_options
 
+    class _BaseGetVmExtension:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/compute/v1/projects/{project}/global/vmExtensions/{extension_name}",
+                },
+            ]
+            return http_options
+
     class _BaseInsert:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -165,6 +181,22 @@ class _BaseGlobalVmExtensionPoliciesRestTransport(GlobalVmExtensionPoliciesTrans
                 {
                     "method": "get",
                     "uri": "/compute/v1/projects/{project}/global/vmExtensionPolicies",
+                },
+            ]
+            return http_options
+
+    class _BaseListVmExtensions:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/compute/v1/projects/{project}/global/vmExtensions",
                 },
             ]
             return http_options

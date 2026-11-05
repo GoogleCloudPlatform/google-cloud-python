@@ -198,6 +198,10 @@ class _BaseGroundedGenerationServiceRestTransport(GroundedGenerationServiceTrans
                 },
                 {
                     "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/collections/*/engines/*/assistants/*/agents/*/operations/*}",
+                },
+                {
+                    "method": "get",
                     "uri": "/v1/{name=projects/*/locations/*/collections/*/engines/*/operations/*}",
                 },
                 {

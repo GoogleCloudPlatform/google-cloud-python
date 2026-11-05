@@ -49,7 +49,32 @@ class ProvisionProjectRequest(proto.Message):
 
             Acceptable version is ``2022-11-23``, and this may change
             over time.
+        saas_params (google.cloud.discoveryengine_v1.types.ProvisionProjectRequest.SaasParams):
+            Optional. Parameters for Agentspace.
     """
+
+    class SaasParams(proto.Message):
+        r"""Parameters for Agentspace.
+
+        Attributes:
+            accept_biz_qos (bool):
+                Optional. Set to ``true`` to specify that caller has read
+                and would like to give consent to the [Terms for Agent Space
+                quality of service].
+            is_biz (bool):
+                Optional. Indicates if the current request is
+                for Biz edition (= true) or not
+                (= false).
+        """
+
+        accept_biz_qos: bool = proto.Field(
+            proto.BOOL,
+            number=1,
+        )
+        is_biz: bool = proto.Field(
+            proto.BOOL,
+            number=2,
+        )
 
     name: str = proto.Field(
         proto.STRING,
@@ -62,6 +87,11 @@ class ProvisionProjectRequest(proto.Message):
     data_use_terms_version: str = proto.Field(
         proto.STRING,
         number=3,
+    )
+    saas_params: SaasParams = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message=SaasParams,
     )
 
 

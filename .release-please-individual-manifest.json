@@ -2,7 +2,7 @@
   "packages/bigquery-magics": "0.15.2",
   "packages/db-dtypes": "1.9.0",
   "packages/django-google-spanner": "5.2.0",
-  "packages/google-auth": "2.62.0",
+  "packages/google-auth": "2.62.1",
   "packages/google-cloud-bigquery": "3.47.0",
   "packages/google-cloud-bigquery-storage": "2.43.0",
   "packages/google-cloud-bigtable": "2.50.2",

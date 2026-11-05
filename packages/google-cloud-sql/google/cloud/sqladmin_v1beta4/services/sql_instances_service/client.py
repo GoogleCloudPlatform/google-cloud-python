@@ -119,7 +119,7 @@ class SqlInstancesServiceClientMeta(type):
 
 
 class SqlInstancesServiceClient(metaclass=SqlInstancesServiceClientMeta):
-    """"""
+    """Service to manage Cloud SQL instances."""
 
     # Note: DEFAULT_ENDPOINT is deprecated. Use _DEFAULT_ENDPOINT_TEMPLATE instead.
     DEFAULT_ENDPOINT = "sqladmin.googleapis.com"

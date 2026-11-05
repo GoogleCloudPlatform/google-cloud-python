@@ -20,6 +20,7 @@ on :mod:`google.api_core`, including both HTTP and gRPC clients.
 
 from __future__ import absolute_import, unicode_literals
 
+import http
 import http.client
 import warnings
 from typing import Dict, Optional
@@ -92,6 +93,12 @@ class RetryError(GoogleAPIError):
 
     def __str__(self):
         return "{}, last exception: {}".format(self.message, self.cause)
+
+    def __reduce__(self):
+        # ``cause`` is a required constructor argument that isn't stored in
+        # ``self.args``, so the default ``BaseException.__reduce__`` can't
+        # rebuild the exception (e.g. when it's pickled across processes).
+        return (self.__class__, (self.message, self._cause), self.__dict__)
 
 
 class _GoogleAPICallErrorMeta(type):
@@ -171,7 +178,11 @@ class GoogleAPICallError(GoogleAPIError, metaclass=_GoogleAPICallErrorMeta):
         Returns:
             Union[str, None]: An optional string containing reason of the error.
         """
-        return self._error_info.reason if self._error_info else None
+        if not self._error_info:
+            return None
+        if isinstance(self._error_info, dict):
+            return self._error_info.get("reason")
+        return self._error_info.reason
 
     @property
     def domain(self):
@@ -183,7 +194,11 @@ class GoogleAPICallError(GoogleAPIError, metaclass=_GoogleAPICallErrorMeta):
         Returns:
             Union[str, None]: An optional string containing a logical grouping to which the "reason" belongs.
         """
-        return self._error_info.domain if self._error_info else None
+        if not self._error_info:
+            return None
+        if isinstance(self._error_info, dict):
+            return self._error_info.get("domain")
+        return self._error_info.domain
 
     @property
     def metadata(self):
@@ -195,7 +210,11 @@ class GoogleAPICallError(GoogleAPIError, metaclass=_GoogleAPICallErrorMeta):
         Returns:
             Union[Dict[str, str], None]: An optional object containing structured details about the error.
         """
-        return self._error_info.metadata if self._error_info else None
+        if not self._error_info:
+            return None
+        if isinstance(self._error_info, dict):
+            return self._error_info.get("metadata")
+        return self._error_info.metadata
 
     @property
     def errors(self):
@@ -629,6 +648,62 @@ def from_grpc_status(status_code, message, **kwargs):
         error.grpc_status_code = status_code
 
     return error
+
+
+def _extract_status_code(exc: BaseException | None, default: str | None = None) -> str:
+    """Extract canonical status code name string from an exception.
+
+    Status code name strings are resolved by inspecting the following:
+    * Chained exceptions: Unwraps RetryError or __cause__ to the root error.
+    * Enum & code attributes: Inspects .grpc_status_code on GoogleAPICallError
+      or .code on gRPC/HTTP errors.
+    * Integer status codes: Maps raw gRPC integer status codes or HTTP status
+      codes to canonical enum names.
+    * Fallback: Uses ``default`` if provided, otherwise defaults to the
+      exception class name.
+
+    Args:
+        exc (BaseException | None): The exception to extract the status code
+            name from.
+        default (str | None): Optional fallback status code string when
+            ``exc`` carries no status code.
+
+    Returns:
+        str: The canonical status code name (e.g. "NOT_FOUND", "UNAVAILABLE",
+            "BAD_REQUEST") or class name.
+    """
+    if exc is None:
+        return default or ""
+
+    # 1. Unwrap chained exceptions: unwrap RetryError or __cause__ to the root failure
+    target = getattr(exc, "cause", None) or getattr(exc, "__cause__", None) or exc
+
+    # 2. Check enum & code attributes: .grpc_status_code enum or callable/non-callable .code
+    status = getattr(target, "grpc_status_code", None)
+    if status is None and hasattr(target, "code"):
+        try:
+            status = target.code() if callable(target.code) else target.code
+        # Defensive fallback: observability status extraction must never raise
+        # if a third-party or mock exception implements a failing .code() method.
+        except Exception:
+            status = None
+
+    name = getattr(status, "name", None)
+    if name:
+        return str(name)
+
+    # 3. Check integer status codes: map raw gRPC integer codes or HTTP status codes to canonical names
+    if isinstance(status, int):
+        if status in _INT_TO_GRPC_CODE:
+            grpc_code = _INT_TO_GRPC_CODE[status]
+            return getattr(grpc_code, "name", str(grpc_code))
+        try:
+            return http.HTTPStatus(status).name
+        except ValueError:
+            return str(status)
+
+    # 4. Fallback: default to explicit default or exception class name for standard Python errors
+    return default or target.__class__.__name__
 
 
 def _is_informative_grpc_error(rpc_exc):

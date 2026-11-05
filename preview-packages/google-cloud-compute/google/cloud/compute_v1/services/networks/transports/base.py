@@ -245,6 +245,11 @@ class NetworksTransport(abc.ABC):
                 default_timeout=600.0,
                 client_info=client_info,
             ),
+            self.update_network_profile: gapic_v1.method.wrap_method(
+                self.update_network_profile,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
             self.update_peering: gapic_v1.method.wrap_method(
                 self.update_peering,
                 default_timeout=600.0,
@@ -370,6 +375,15 @@ class NetworksTransport(abc.ABC):
         self,
     ) -> Callable[
         [compute.SwitchToCustomModeNetworkRequest],
+        Union[compute.Operation, Awaitable[compute.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_network_profile(
+        self,
+    ) -> Callable[
+        [compute.UpdateNetworkProfileNetworkRequest],
         Union[compute.Operation, Awaitable[compute.Operation]],
     ]:
         raise NotImplementedError()

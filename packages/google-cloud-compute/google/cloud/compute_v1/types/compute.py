@@ -21218,6 +21218,9 @@ class BackendServiceHAPolicy(proto.Message):
                Advertisement(RA) packet (IPv6).  Google Cloud immediately but
                temporarily associates the forwarding rule IP address with that VM, and
                both new and in-flight packets are quickly delivered to that VM.
+               - HA_CONTROLLER: The Backend Service is managed by a High Availability
+               Controller. Failover and leader election are exclusively managed by the
+               HA Controller service.
 
             Note the important properties of the Fast IP Move
             functionality:
@@ -21319,6 +21322,9 @@ class BackendServiceHAPolicy(proto.Message):
            Advertisement(RA) packet (IPv6).  Google Cloud immediately but
            temporarily associates the forwarding rule IP address with that VM, and
            both new and in-flight packets are quickly delivered to that VM.
+           - HA_CONTROLLER: The Backend Service is managed by a High Availability
+           Controller. Failover and leader election are exclusively managed by the
+           HA Controller service.
 
         Note the important properties of the Fast IP Move functionality:
 
@@ -23440,8 +23446,14 @@ class BulkInsertInstanceResource(proto.Message):
 
             This field is a member of `oneof`_ ``_count``.
         instance_flexibility_policy (google.cloud.compute_v1.types.InstanceFlexibilityPolicy):
-            A flexible specification of machine type of
-            instances to create.
+            A specification of alternative machine types
+            to use when creating instances. A single
+            bulkInsert request can create instances with
+            multiple different machine types based on
+            capacity and quota availability. This field is
+            supported only for regional bulkInsert requests.
+            For more information, see About
+            instance flexibility for VMs created in bulk.
 
             This field is a member of `oneof`_ ``_instance_flexibility_policy``.
         instance_properties (google.cloud.compute_v1.types.InstanceProperties):
@@ -23952,9 +23964,11 @@ class CacheInvalidationRule(proto.Message):
             Up to 10 tags can be specified in a single invalidation
             request.
         host (str):
-            If set, this invalidation rule will only
-            apply to requests with a Host header matching
-            host.
+            If set, this invalidation rule will only apply to requests
+            with a Host header matching host. This field also accepts
+            wildcards (\*) to replace the leftmost (or first) label of a
+            hostname. For example, \*.example.com will match
+            www.example.com, but not sub1.dev.example.com.
 
             This field is a member of `oneof`_ ``_host``.
         path (str):
@@ -26385,6 +26399,12 @@ class Commitment(proto.Message):
                 No description available.
             MEMORY_OPTIMIZED_M4 (276301373):
                 No description available.
+            MEMORY_OPTIMIZED_M4N (512278961):
+                CUD bucket for M4N machines with less than
+                6TB of memory.
+            MEMORY_OPTIMIZED_M4N_6TB (69895574):
+                CUD bucket for M4N machines with 6TB of
+                memory.
             MEMORY_OPTIMIZED_M4_6TB (210543650):
                 No description available.
             MEMORY_OPTIMIZED_X4_1440_24T (206669823):
@@ -26466,6 +26486,8 @@ class Commitment(proto.Message):
         MEMORY_OPTIMIZED = 281753417
         MEMORY_OPTIMIZED_M3 = 276301372
         MEMORY_OPTIMIZED_M4 = 276301373
+        MEMORY_OPTIMIZED_M4N = 512278961
+        MEMORY_OPTIMIZED_M4N_6TB = 69895574
         MEMORY_OPTIMIZED_M4_6TB = 210543650
         MEMORY_OPTIMIZED_X4_1440_24T = 206669823
         MEMORY_OPTIMIZED_X4_16TB = 183089120
@@ -62609,17 +62631,8 @@ class InstanceFlexibilityPolicy(proto.Message):
 
     Attributes:
         instance_selections (MutableMapping[str, google.cloud.compute_v1.types.InstanceFlexibilityPolicyInstanceSelection]):
-            Specification of alternative, flexible
-            instance subsets. One of them will be selected
-            to create the instances based on various
-            criteria, like:
-
-            - ranks,
-            - location policy,
-            - current capacity,
-            - available reservations (you can specify
-              affinity in InstanceProperties),
-            - SWAN/GOOSE limitations.
+            Specifies named instance selections that
+            define properties for instances created in bulk.
             Key is an arbitrary, unique RFC1035 string that
             identifies the instance selection.
     """
@@ -132518,10 +132531,15 @@ class Scheduling(proto.Message):
 
             This field is a member of `oneof`_ ``_provisioning_model``.
         skip_guest_os_shutdown (bool):
-            Default is false and there will be 120
+            Defines whether GCE ACPI G2 Soft
+            Off signal should be skipped during shutdown
+            operation of VM.
+
+            Default is false, meaning there will be 120
             seconds between GCE ACPI G2 Soft Off and ACPI G3
-            Mechanical Off for Standard VMs and 30 seconds
-            for Spot VMs.
+            Mechanical
+            Off for Standard VMs and 30 seconds for Spot
+            VMs.
 
             This field is a member of `oneof`_ ``_skip_guest_os_shutdown``.
         termination_time (str):
@@ -159953,9 +159971,11 @@ class VpnTunnelCipherSuite(proto.Message):
 
     Attributes:
         phase1 (google.cloud.compute_v1.types.VpnTunnelPhase1Algorithms):
+            Cipher algorithms for IKE phase 1.
 
             This field is a member of `oneof`_ ``_phase1``.
         phase2 (google.cloud.compute_v1.types.VpnTunnelPhase2Algorithms):
+            Cipher algorithms for IKE phase 2.
 
             This field is a member of `oneof`_ ``_phase2``.
     """
@@ -160085,13 +160105,14 @@ class VpnTunnelPhase1Algorithms(proto.Message):
 
     Attributes:
         dh (MutableSequence[str]):
-
+            Diffie-Hellman groups for IKE phase 1.
         encryption (MutableSequence[str]):
-
+            Encryption algorithms for IKE phase 1.
         integrity (MutableSequence[str]):
-
+            Integrity algorithms for IKE phase 1.
         prf (MutableSequence[str]):
-
+            Pseudo-random functions (PRF) for IKE phase
+            1.
     """
 
     dh: MutableSequence[str] = proto.RepeatedField(
@@ -160117,11 +160138,12 @@ class VpnTunnelPhase2Algorithms(proto.Message):
 
     Attributes:
         encryption (MutableSequence[str]):
-
+            Encryption algorithms for IKE phase 2.
         integrity (MutableSequence[str]):
-
+            Integrity algorithms for IKE phase 2.
         pfs (MutableSequence[str]):
-
+            Perfect Forward Secrecy (PFS) groups for IKE
+            phase 2.
     """
 
     encryption: MutableSequence[str] = proto.RepeatedField(

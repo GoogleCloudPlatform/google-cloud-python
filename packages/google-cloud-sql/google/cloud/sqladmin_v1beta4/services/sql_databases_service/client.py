@@ -116,7 +116,7 @@ class SqlDatabasesServiceClientMeta(type):
 
 
 class SqlDatabasesServiceClient(metaclass=SqlDatabasesServiceClientMeta):
-    """"""
+    """Service to manage databases."""
 
     # Note: DEFAULT_ENDPOINT is deprecated. Use _DEFAULT_ENDPOINT_TEMPLATE instead.
     DEFAULT_ENDPOINT = "sqladmin.googleapis.com"
