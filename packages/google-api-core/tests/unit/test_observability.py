@@ -1669,18 +1669,10 @@ def test_has_opentelemetry_caching(monkeypatch):
 @pytest.mark.parametrize(
     "trace_flags,expected_sampled",
     [
-        pytest.param(
-            types.SimpleNamespace(sampled=True), True, id="flag_obj_sampled_true"
-        ),
-        pytest.param(
-            types.SimpleNamespace(sampled=False),
-            False,
-            id="flag_obj_sampled_false",
-        ),
-        pytest.param(1, True, id="int_bitmask_sampled_true"),
-        pytest.param(0, False, id="int_bitmask_sampled_false"),
-        pytest.param(2, False, id="int_bitmask_other_bit_unsampled"),
-        pytest.param(None, False, id="none_trace_flags"),
+        pytest.param(0x01, True, id="int_bitmask_sampled_true"),
+        pytest.param(0x00, False, id="int_bitmask_sampled_false"),
+        pytest.param(0x02, False, id="int_bitmask_other_bit_unsampled"),
+        pytest.param(0x03, True, id="int_bitmask_multiple_bits_sampled"),
     ],
 )
 def test_extract_trace_context_explicit_span_flags(trace_flags, expected_sampled):
@@ -1729,7 +1721,7 @@ def test_extract_trace_context_ambient_fallback(monkeypatch, mock_otel):
         is_valid=True,
         trace_id=0x0123456789ABCDEF0123456789ABCDEF,
         span_id=0x0123456789ABCDEF,
-        trace_flags=types.SimpleNamespace(sampled=True),
+        trace_flags=0x01,
     )
 
     res = _observability.extract_trace_context(None)
