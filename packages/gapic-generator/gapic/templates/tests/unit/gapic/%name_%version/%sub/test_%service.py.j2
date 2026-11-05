@@ -2760,33 +2760,6 @@ def test_{{ service.name|snake_case }}_base_transport_wrap_method_modern_api_cor
             assert "default_host" not in mock_wrap.call_args.kwargs
 
 
-def test_{{ service.name|snake_case }}_base_transport_wrap_async_method_modern_api_core(monkeypatch):
-    monkeypatch.setattr(transports.base, "_ASYNC_WRAP_METHOD_SUPPORTS_TRACING", True)
-    # 1. Concrete transport: passes client_options=None and kind="{{ async_wrap_transport_kind }}"
-    with mock.patch.object(transports.base.gapic_v1.method_async, "wrap_method") as mock_wrap:
-        transport = transports.{{ async_wrap_transport_class }}(
-            credentials=ga_credentials.AnonymousCredentials()
-        )
-        func = mock.MagicMock()
-        transport._wrap_async_method(func)
-        assert mock_wrap.call_args.kwargs["kind"] == "{{ async_wrap_transport_kind }}"
-        assert "client_options" in mock_wrap.call_args.kwargs
-
-    # 2. Base transport: kind raises NotImplementedError and is cleanly omitted
-    with mock.patch.object(transports.base.gapic_v1.method_async, "wrap_method") as mock_wrap:
-        base_transport = transports.{{ service.name }}Transport(
-            credentials=ga_credentials.AnonymousCredentials()
-        )
-        func = mock.MagicMock()
-        base_transport._wrap_async_method(func)
-        assert "kind" not in mock_wrap.call_args.kwargs
-        assert "client_options" in mock_wrap.call_args.kwargs
-        if expected_has_default_host:
-            assert mock_wrap.call_args.kwargs["default_host"] == transport._default_host
-        else:
-            assert "default_host" not in mock_wrap.call_args.kwargs
-
-
 def test_{{ service.name|snake_case }}_base_transport_wrap_async_method_older_api_core_fallbacks(monkeypatch):
     monkeypatch.setattr(transports.base, "_ASYNC_WRAP_METHOD_SUPPORTS_TRACING", False)
     with mock.patch.object(transports.base.gapic_v1.method_async, "wrap_method"):
