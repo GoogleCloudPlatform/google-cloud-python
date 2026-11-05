@@ -25,8 +25,5 @@ py -%PYTHON_VERSION%-64 -m pip install --no-index --find-links=wheels google-crc
 
 py -%PYTHON_VERSION%-64 ./scripts/check_crc32c_extension.py
 
-@rem pyreadline is removed here because pytest will opportunistically use it if
-@rem available, but the installed version is too old to work.
-py -%PYTHON_VERSION%-64 -m pip uninstall -y pyreadline
 py -%PYTHON_VERSION%-64 -m pip install pytest
 py -%PYTHON_VERSION%-64 -m pytest tests --junitxml=%PYTHON_VERSION%_sponge_log.xml

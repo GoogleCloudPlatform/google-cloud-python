@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+from collections.abc import Mapping
 from typing import List, Optional
 
 _LOGGING_INITIALIZED = False
@@ -10,6 +11,7 @@ _BASE_LOGGER_NAME = "google"
 #
 # TODO(https://github.com/googleapis/python-api-core/issues/761): Update this list to support additional logging fields.
 _recognized_logging_fields = [
+    # Application payload debugging fields:
     "httpRequest",
     "rpcName",
     "serviceName",
@@ -21,7 +23,30 @@ _recognized_logging_fields = [
     "metadata",
     "retryAttempt",
     "httpResponse",
+    # Diagnostic error and trace correlation fields:
+    "url.full",
+    "rpc.method",
+    "exception.type",
+    "exception.message",
+    "exception.stacktrace",
+    "rpc.system.name",
+    "rpc.response.status_code",
+    "error.type",
+    "status.message",
+    "gcp.errors.domain",
+    "gcp.errors.metadata",
+    "trace_id",
+    "span_id",
+    "logging.googleapis.com/trace",
+    "logging.googleapis.com/spanId",
+    "logging.googleapis.com/trace_sampled",
+    # Dynamic metadata prefixes:
+    "gcp.errors.metadata.*",
 ]  # Additional fields to be Logged.
+
+# Pre-compiled allowlists for O(1) exact lookups and C-level prefix matching.
+_EXACT_FIELDS = frozenset(f for f in _recognized_logging_fields if not f.endswith("*"))
+_PREFIX_FIELDS = tuple(f[:-1] for f in _recognized_logging_fields if f.endswith("*"))
 
 
 def logger_configured(logger) -> bool:
@@ -136,8 +161,22 @@ class StructuredLogFormatter(logging.Formatter):
             "message": record.getMessage(),
         }
 
-        for field_name in _recognized_logging_fields:
-            value = getattr(record, field_name, None)
+        # Extract exact allowed fields via getattr() (supports @property and class-level attributes)
+        for key in _EXACT_FIELDS:
+            value = getattr(record, key, None)
             if value is not None:
-                log_obj[field_name] = value
+                log_obj[key] = value
+
+        # Extract dynamic wildcard prefix fields (e.g. gcp.errors.metadata.*) from instance __dict__
+        for key, value in vars(record).items():
+            if value is not None and key.startswith(_PREFIX_FIELDS):
+                log_obj[key] = value
+
+        # Unpack record.json_fields last so explicit user-provided structured fields
+        # take precedence over default LogRecord attributes (consistent with google-cloud-logging).
+        json_fields = getattr(record, "json_fields", None)
+        if isinstance(json_fields, Mapping):
+            for key, value in json_fields.items():
+                if value is not None:
+                    log_obj[key] = value
         return json.dumps(log_obj)

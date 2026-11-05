@@ -18,8 +18,7 @@ set -eo pipefail
 REPO_ROOT="${REPO_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 
 # This script runs as a container entrypoint in quay.io/pypa/manylinux2014_x86_64.
-# The venv is load-bearing: `releasetool publish-reporter-script` emits bash that
-# hardcodes `python3`, which does not exist in this image outside a venv.
+# Run twine check inside an isolated Python 3.12 virtual environment.
 PYTHON_BIN="/opt/python/cp312-cp312/bin/python"
 if [[ ! -x "${PYTHON_BIN}" ]]; then
     echo "ERROR: ${PYTHON_BIN} not found; run this inside manylinux2014_x86_64." >&2
@@ -56,16 +55,4 @@ for VER in ${VERSIONS_TO_CHECK}; do
 done
 
 python -m twine check "${REPO_ROOT}/wheels/"*
-
-if [[ "${PUBLISH_WHEELS}" == "true" ]]; then
-    # Start the releasetool reporter
-    python -m pip install --upgrade gcp-releasetool
-    python -m releasetool publish-reporter-script > /tmp/publisher-script; source /tmp/publisher-script
-
-    # Disable logging
-    set +x
-    TWINE_PASSWORD=$(cat "${KOKORO_KEYSTORE_DIR}/73713_google-cloud-pypi-token-keystore-3")
-    python -m twine upload --skip-existing --username __token__ --password "${TWINE_PASSWORD}" "${REPO_ROOT}/wheels/"*
-else
-    echo "PUBLISH_WHEELS is not 'true'; skipping PyPI upload after twine check."
-fi
+echo "Linux wheels are ready for Kokoro / OSS Exit Gate aggregation."
