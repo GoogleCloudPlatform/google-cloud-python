@@ -1446,6 +1446,17 @@ def test_{{ service.name|snake_case }}_base_transport_with_adc():
         adc.assert_called_once()
 
 
+    # Test _ignore_credentials=True skips ADC and host without port defaults to :443.
+    class IgnoreCredsTransport(transports.{{ service.name }}Transport):
+        _ignore_credentials = True
+
+    with mock.patch.object(google.auth, 'default', autospec=True) as adc:
+        transport = IgnoreCredsTransport(host="squid.clam.whelk")
+        adc.assert_not_called()
+        assert transport._credentials is None
+        assert transport.host == "squid.clam.whelk:443"
+
+
 def test_{{ service.name|snake_case }}_auth_adc():
     # If no credentials are provided, we should use ADC credentials.
     with mock.patch.object(google.auth, 'default', autospec=True) as adc:
@@ -1483,6 +1494,7 @@ def test_{{ service.name|snake_case }}_transport_auth_adc(transport_class):
                 {%- endfor %}),
             quota_project_id="octopus",
         )
+{% endif %}
 
 
 {% if 'grpc' in opts.transport and 'rest' in opts.transport %}
@@ -1525,6 +1537,7 @@ def test_{{ service.name|snake_case }}_transport_auth_gdch_credentials(transport
             )
 
 
+{% if 'grpc' in opts.transport %}
 @pytest.mark.parametrize(
     "transport_class,grpc_helpers",
     [
@@ -2001,6 +2014,7 @@ async def test_{{ service.name|snake_case }}_{{ method.name|snake_case }}_grpc_a
         ) in str(exc_info.value)
 {% endfor %}
 {% endif %}
+{% endif %}
 
 {% if service.has_resumable_upload_methods and 'rest' in opts.transport %}
 {% for method in service.methods.values() if method.is_resumable_upload %}
@@ -2244,6 +2258,7 @@ async def test_{{ service.name|snake_case }}_{{ method.name|snake_case }}_rest_a
 {% endif %}
 
 
+{% if 'grpc' in opts.transport %}
 # Remove this test when deprecated arguments (api_mtls_endpoint, client_cert_source) are
 # removed from grpc/grpc_asyncio transport constructor.
 @pytest.mark.filterwarnings("ignore::FutureWarning")
@@ -2696,7 +2711,6 @@ def test_{{ service.name|snake_case }}_base_transport_wrap_method_older_api_core
         assert "is_streaming" not in kwargs
 
 
-{% if 'grpc' in opts.transport %}
 @pytest.mark.parametrize(
     "supports_default_host,is_concrete,expected_kind,expected_has_default_host",
     [
@@ -2745,10 +2759,12 @@ def test_{{ service.name|snake_case }}_base_transport_wrap_async_method_modern_a
             assert "default_host" not in mock_wrap.call_args.kwargs
 
 
+{% set async_wrap_transport_class = service.grpc_asyncio_transport_name if 'grpc' in opts.transport else service.name ~ opts.transport[0].capitalize() ~ 'Transport' %}
+{% set async_wrap_transport_kind = 'grpc_asyncio' if 'grpc' in opts.transport else opts.transport[0] %}
 def test_{{ service.name|snake_case }}_base_transport_wrap_async_method_older_api_core_fallbacks(monkeypatch):
     monkeypatch.setattr(transports.base, "_ASYNC_WRAP_METHOD_SUPPORTS_TRACING", False)
     with mock.patch.object(transports.base.gapic_v1.method_async, "wrap_method"):
-        transport = transports.{{ service.grpc_asyncio_transport_name }}(
+        transport = transports.{{ async_wrap_transport_class }}(
             credentials=ga_credentials.AnonymousCredentials()
         )
 
@@ -2796,7 +2812,7 @@ def test_{{ service.name|snake_case }}_base_transport_wrap_async_method_older_ap
             is_streaming=False,
         )
         kwargs = mock_wrap.call_args.kwargs
-        assert kwargs.get("kind") == "grpc_asyncio"
+        assert kwargs.get("kind") == "{{ async_wrap_transport_kind }}"
         assert "client_options" not in kwargs
         assert "method_name" not in kwargs
         assert "is_streaming" not in kwargs
@@ -2817,6 +2833,5 @@ def test_{{ service.name|snake_case }}_base_transport_wrap_async_method_older_ap
         assert "client_options" not in kwargs
         assert "method_name" not in kwargs
         assert "is_streaming" not in kwargs
-{% endif %}
 
 {% endblock %}
