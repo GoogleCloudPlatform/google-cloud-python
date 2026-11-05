@@ -2710,14 +2710,15 @@ def test_{{ service.name|snake_case }}_base_transport_wrap_method_older_api_core
         assert "is_streaming" not in kwargs
 
 
-{% if 'grpc' in opts.transport %}
+{% set async_wrap_transport_class = service.grpc_asyncio_transport_name if 'grpc' in opts.transport else service.name ~ opts.transport[0].capitalize() ~ 'Transport' %}
+{% set async_wrap_transport_kind = 'grpc_asyncio' if 'grpc' in opts.transport else opts.transport[0] %}
 @pytest.mark.parametrize(
     "supports_default_host,is_concrete,expected_kind,expected_has_default_host",
     [
         pytest.param(
             True,
             True,
-            "grpc_asyncio",
+            "{{ opts.transport[0] }}",
             True,
             id="concrete_transport_supports_default_host",
         ),
@@ -2730,37 +2731,35 @@ def test_{{ service.name|snake_case }}_base_transport_wrap_method_older_api_core
         ),
     ],
 )
-def test_{{ service.name|snake_case }}_base_transport_wrap_async_method_modern_api_core(
+def test_{{ service.name|snake_case }}_base_transport_wrap_method_modern_api_core(
     monkeypatch,
     supports_default_host,
     is_concrete,
     expected_kind,
     expected_has_default_host,
 ):
-    monkeypatch.setattr(transports.base, "_ASYNC_WRAP_METHOD_SUPPORTS_TRACING", True)
+    monkeypatch.setattr(transports.base, "_WRAP_METHOD_SUPPORTS_TRACING", True)
     monkeypatch.setattr(transports.base, "_SUPPORTS_DEFAULT_HOST", supports_default_host)
     transport_cls = (
-        transports.{{ service.grpc_asyncio_transport_name }}
+        transports.{{ service.name }}{{ opts.transport[0].capitalize() }}Transport
         if is_concrete
         else transports.{{ service.name }}Transport
     )
-    with mock.patch.object(transports.base.gapic_v1.method_async, "wrap_method") as mock_wrap:
+    with mock.patch.object(transports.base.gapic_v1.method, "wrap_method") as mock_wrap:
         transport = transport_cls(credentials=ga_credentials.AnonymousCredentials())
         func = mock.MagicMock()
-        transport._wrap_async_method(func)
+        transport._wrap_method(func)
         if expected_kind:
             assert mock_wrap.call_args.kwargs["kind"] == expected_kind
         else:
             assert "kind" not in mock_wrap.call_args.kwargs
-            assert "client_options" in mock_wrap.call_args.kwargs
+        assert "client_options" in mock_wrap.call_args.kwargs
         if expected_has_default_host:
             assert mock_wrap.call_args.kwargs["default_host"] == transport._default_host
         else:
             assert "default_host" not in mock_wrap.call_args.kwargs
 
 
-{% set async_wrap_transport_class = service.grpc_asyncio_transport_name if 'grpc' in opts.transport else service.name ~ opts.transport[0].capitalize() ~ 'Transport' %}
-{% set async_wrap_transport_kind = 'grpc_asyncio' if 'grpc' in opts.transport else opts.transport[0] %}
 def test_{{ service.name|snake_case }}_base_transport_wrap_async_method_modern_api_core(monkeypatch):
     monkeypatch.setattr(transports.base, "_ASYNC_WRAP_METHOD_SUPPORTS_TRACING", True)
     # 1. Concrete transport: passes client_options=None and kind="{{ async_wrap_transport_kind }}"
