@@ -238,18 +238,25 @@ def build_telemetry_error_attributes(
             "status.message": status_message or f"HTTP {code_str}",
         }
 
-    # Unwrap chained exceptions once and resolve the canonical status code
+    # Unwrap chained wrapper exceptions (e.g. RetryError) by one level to reach
+    # the enriched GoogleAPICallError without unwrapping past it to the raw
+    # transport error.
     target_exc = getattr(exc, "cause", None) or getattr(exc, "__cause__", None) or exc
     resolved_code = exceptions._extract_status_code(target_exc, default=status_code)
     domain, reason, metadata = _extract_error_info_fields(target_exc)
 
-    # Identify HTTP transport responses (excluding gRPC Call objects)
+    # GoogleAPICallError.response holds either an HTTP Response or a gRPC Call
+    # (which has trailing_metadata). Validate once up front so http_response is
+    # only retained when it is an actual HTTP response with an integer status code.
     http_response = getattr(target_exc, "response", None)
     http_status = (
         getattr(http_response, "status_code", getattr(http_response, "status", None))
         if http_response is not None and not hasattr(http_response, "trailing_metadata")
         else None
     )
+    if not isinstance(http_status, int) or isinstance(http_status, bool):
+        http_status = None
+        http_response = None
 
     # Populate OpenTelemetry semantic error attributes and ErrorInfo metadata
     attrs: dict[str, Any] = {"rpc.response.status_code": resolved_code}
@@ -257,37 +264,27 @@ def build_telemetry_error_attributes(
         attrs["gcp.errors.domain"] = domain
     if reason:
         attrs["error.type"] = reason
-    elif (
-        http_status is not None
-        and not isinstance(http_status, bool)
-        and str(http_status).isdigit()
-    ):
+    elif http_status is not None:
         attrs["error.type"] = str(http_status)
     else:
         # Every failed span or log records a low-cardinality error.type; reuse
         # the resolved canonical status code name or exception class name.
         attrs["error.type"] = resolved_code
 
-    if metadata and hasattr(metadata, "items"):
-        for k, v in metadata.items():
-            attrs[f"gcp.errors.metadata.{k}"] = str(v)
+    if metadata:
+        attrs.update({f"gcp.errors.metadata.{k}": str(v) for k, v in metadata.items()})
 
     # Extract human-readable error description for cross-language parity
-    message = _extract_error_message(
-        target_exc,
-        http_response if http_status is not None else None,
-        status_message,
-    )
+    message = _extract_error_message(target_exc, http_response, status_message)
     if message:
         attrs["status.message"] = message
 
-    # Populate exception.* diagnostic fields for structured logs when requested
-    if include_exception and isinstance(exc, BaseException):
+    # Populate exception.* diagnostic fields for the terminal exception raised to
+    # the caller when structured logging is enabled
+    if include_exception:
         attrs["exception.type"] = exc.__class__.__name__
         attrs["exception.message"] = str(exc)
-        attrs["exception.stacktrace"] = "".join(
-            traceback.format_exception(type(exc), exc, exc.__traceback__)
-        )
+        attrs["exception.stacktrace"] = "".join(traceback.format_exception(exc))
 
     return attrs
 
