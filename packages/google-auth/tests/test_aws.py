@@ -1668,6 +1668,166 @@ class TestCredentials(object):
         assert not request.called
 
     @mock.patch("google.auth._helpers.utcnow")
+    @mock.patch.dict(
+        os.environ,
+        {
+            environment_vars.AWS_REGION: AWS_REGION,
+            environment_vars.AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: "/credentials",
+        },
+    )
+    def test_retrieve_subject_token_success_from_container_relative_uri(self, utcnow):
+        utcnow.return_value = datetime.datetime.strptime(
+            self.AWS_SIGNATURE_TIME, "%Y-%m-%dT%H:%M:%SZ"
+        )
+        request = self.make_mock_request(
+            security_credentials_status=http_client.OK,
+            security_credentials_data=self.AWS_SECURITY_CREDENTIALS_RESPONSE,
+        )
+        credentials = self.make_credentials(
+            credential_source=self.CREDENTIAL_SOURCE.copy()
+        )
+
+        subject_token = credentials.retrieve_subject_token(request)
+        assert subject_token == self.make_serialized_aws_signed_request(
+            aws.AwsSecurityCredentials(ACCESS_KEY_ID, SECRET_ACCESS_KEY, TOKEN)
+        )
+        # Assert container token request.
+        self.assert_aws_metadata_request_kwargs(
+            request.call_args_list[0][1],
+            aws._ECS_CONTAINER_CREDENTIALS_BASE + "/credentials",
+            None,
+            "GET",
+        )
+
+    @mock.patch("google.auth._helpers.utcnow")
+    @mock.patch.dict(
+        os.environ,
+        {
+            environment_vars.AWS_REGION: AWS_REGION,
+            environment_vars.AWS_CONTAINER_CREDENTIALS_FULL_URI: "http://127.0.0.1:8080/credentials",
+        },
+    )
+    def test_retrieve_subject_token_success_from_container_full_uri(self, utcnow):
+        utcnow.return_value = datetime.datetime.strptime(
+            self.AWS_SIGNATURE_TIME, "%Y-%m-%dT%H:%M:%SZ"
+        )
+        request = self.make_mock_request(
+            security_credentials_status=http_client.OK,
+            security_credentials_data=self.AWS_SECURITY_CREDENTIALS_RESPONSE,
+        )
+        credentials = self.make_credentials(
+            credential_source=self.CREDENTIAL_SOURCE.copy()
+        )
+
+        subject_token = credentials.retrieve_subject_token(request)
+        assert subject_token == self.make_serialized_aws_signed_request(
+            aws.AwsSecurityCredentials(ACCESS_KEY_ID, SECRET_ACCESS_KEY, TOKEN)
+        )
+        # Assert container token request.
+        self.assert_aws_metadata_request_kwargs(
+            request.call_args_list[0][1],
+            # we expect it to use the full uri direction from the environment variable
+            os.environ[environment_vars.AWS_CONTAINER_CREDENTIALS_FULL_URI],
+            None,
+            "GET",
+        )
+
+    @mock.patch("google.auth._helpers.utcnow")
+    @mock.patch.dict(
+        os.environ,
+        {
+            environment_vars.AWS_REGION: AWS_REGION,
+            environment_vars.AWS_CONTAINER_CREDENTIALS_FULL_URI: "http://127.0.0.1:8080/credentials",
+            environment_vars.AWS_CONTAINER_AUTHORIZATION_TOKEN: "Bearer test",
+        },
+    )
+    def test_retrieve_subject_token_success_from_container_full_uri_with_authorization_token(self, utcnow):
+        utcnow.return_value = datetime.datetime.strptime(
+            self.AWS_SIGNATURE_TIME, "%Y-%m-%dT%H:%M:%SZ"
+        )
+        request = self.make_mock_request(
+            security_credentials_status=http_client.OK,
+            security_credentials_data=self.AWS_SECURITY_CREDENTIALS_RESPONSE,
+        )
+        credentials = self.make_credentials(
+            credential_source=self.CREDENTIAL_SOURCE.copy()
+        )
+
+        credentials.retrieve_subject_token(request)
+        # Assert container token request with the authorization token header.
+        self.assert_aws_metadata_request_kwargs(
+            request.call_args_list[0][1],
+            # we expect it to use the full uri direction from the environment variable
+            os.environ[environment_vars.AWS_CONTAINER_CREDENTIALS_FULL_URI],
+            {'Authorization': os.environ[environment_vars.AWS_CONTAINER_AUTHORIZATION_TOKEN]},
+            "GET",
+        )
+
+    @mock.patch("google.auth._helpers.utcnow")
+    @mock.patch.dict(
+        os.environ,
+        {
+            environment_vars.AWS_REGION: AWS_REGION,
+            environment_vars.AWS_CONTAINER_CREDENTIALS_FULL_URI: "http://127.0.0.1:8080/credentials",
+        },
+    )
+    def test_retrieve_subject_token_success_from_container_full_uri_with_authorization_token_file(self, utcnow, tmp_path):
+        token_file = tmp_path / "token.txt"
+        auth_header = 'Bearer from-file'
+        with open(token_file, "w") as f:
+            f.write(auth_header)
+
+        utcnow.return_value = datetime.datetime.strptime(
+            self.AWS_SIGNATURE_TIME, "%Y-%m-%dT%H:%M:%SZ"
+        )
+        request = self.make_mock_request(
+            security_credentials_status=http_client.OK,
+            security_credentials_data=self.AWS_SECURITY_CREDENTIALS_RESPONSE,
+        )
+        credentials = self.make_credentials(
+            credential_source=self.CREDENTIAL_SOURCE.copy()
+        )
+
+        with mock.patch.dict(
+            os.environ,
+            {environment_vars.AWS_CONTAINER_AUTHORIZATION_TOKEN_FILE: str(token_file)},
+        ):
+            credentials.retrieve_subject_token(request)
+
+        # Assert container token request with the authorization token header.
+        self.assert_aws_metadata_request_kwargs(
+            request.call_args_list[0][1],
+            os.environ[environment_vars.AWS_CONTAINER_CREDENTIALS_FULL_URI],
+            {'Authorization': auth_header},
+            "GET",
+        )
+
+    @mock.patch("google.auth._helpers.utcnow")
+    @mock.patch.dict(
+        os.environ,
+        {
+            environment_vars.AWS_REGION: AWS_REGION,
+            environment_vars.AWS_CONTAINER_CREDENTIALS_FULL_URI: "http://127.0.0.1:8080/credentials",
+        },
+    )
+    def test_retrieve_subject_token_error_from_container_full_uri(self, utcnow):
+        utcnow.return_value = datetime.datetime.strptime(
+            self.AWS_SIGNATURE_TIME, "%Y-%m-%dT%H:%M:%SZ"
+        )
+        request = self.make_mock_request(
+            security_credentials_status=http_client.UNAUTHORIZED,
+            security_credentials_data='{"erorr":true}'
+        )
+        credentials = self.make_credentials(
+            credential_source=self.CREDENTIAL_SOURCE.copy()
+        )
+
+        with pytest.raises(exceptions.RefreshError) as excinfo:
+            credentials.retrieve_subject_token(request)
+
+        assert excinfo.match(r"Unable to retrieve AWS security credentials from container credentials")
+
+    @mock.patch("google.auth._helpers.utcnow")
     def test_retrieve_subject_token_success_ipv6(self, utcnow):
         utcnow.return_value = datetime.datetime.strptime(
             self.AWS_SIGNATURE_TIME, "%Y-%m-%dT%H:%M:%SZ"
