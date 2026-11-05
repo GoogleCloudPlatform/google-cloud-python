@@ -377,12 +377,10 @@ intersphinx_mapping = {
 # (warnings as errors) in CI, an external network failure or upstream
 # outage on docs.python.org or docs.sqlalchemy.org would otherwise treat
 # the missing inventory as a fatal error and fail the build.
-suppress_warnings = []
-
 try:
     with urllib.request.urlopen("https://docs.python.org/3/objects.inv", timeout=2):
         intersphinx_mapping["python"] = (
-            "https://python.readthedocs.org/en/latest/",
+            "https://docs.python.org/3/",
             None,
         )
 except (urllib.error.URLError, TimeoutError, OSError):
