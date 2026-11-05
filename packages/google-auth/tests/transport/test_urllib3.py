@@ -14,6 +14,7 @@
 
 import http.client as http_client
 import os
+import threading
 from unittest import mock
 
 import pytest  # type: ignore
@@ -124,6 +125,14 @@ class TestAuthorizedHttp(object):
 
         assert authed_http.credentials == mock.sentinel.credentials
         assert isinstance(authed_http.http, urllib3.PoolManager)
+        assert not authed_http.is_mtls
+
+    def test_is_mtls_property(self):
+        credentials = mock.Mock(spec=google.auth.credentials.Credentials)
+        http_obj = google.auth.transport.urllib3.AuthorizedHttp(credentials)
+        assert http_obj.is_mtls is False
+        http_obj._is_mtls = True
+        assert http_obj.is_mtls is True
 
     def test_urlopen_no_refresh(self):
         credentials = mock.Mock(wraps=CredentialsStub())
@@ -602,7 +611,12 @@ class TestAuthorizedHttp(object):
 
     def test_cert_rotation_check_params_fails(self):
         credentials = mock.Mock(wraps=CredentialsStub())
-        http = HttpStub([ResponseStub(status=http_client.UNAUTHORIZED)])
+        http = HttpStub(
+            [
+                ResponseStub(status=http_client.UNAUTHORIZED),
+                ResponseStub(status=http_client.OK),
+            ]
+        )
 
         authed_http = google.auth.transport.urllib3.AuthorizedHttp(
             credentials, http=http
@@ -614,11 +628,13 @@ class TestAuthorizedHttp(object):
             "google.auth.transport.urllib3._mtls_helper.check_parameters_for_unauthorized_response",
             side_effect=Exception("check_params failed"),
         ) as mock_check_params:
-            with pytest.raises(Exception, match="check_params failed"):
-                authed_http.urlopen("GET", "http://example.mtls.googleapis.com")
+            result = authed_http.urlopen("GET", "http://example.mtls.googleapis.com")
 
+            # A failure to check the certificate must not prevent the token
+            # refresh and retry.
             mock_check_params.assert_called_once()
-            credentials.refresh.assert_not_called()
+            credentials.refresh.assert_called_once()
+            assert result.status == http_client.OK
 
     def test_cert_rotation_logic_skipped_on_other_refresh_status_codes(self):
         """
@@ -799,3 +815,210 @@ class TestAuthorizedHttp(object):
         assert not is_mtls
         assert not authed_http._is_mtls
         assert isinstance(authed_http.http, urllib3.PoolManager)
+
+    def test_reauth_lock_acquired_on_unauthorized(self):
+        credentials = mock.Mock(spec=google.auth.credentials.Credentials)
+        http_obj = google.auth.transport.urllib3.AuthorizedHttp(credentials)
+        http_obj._is_mtls = True
+
+        mock_response_unauth = mock.Mock()
+        mock_response_unauth.status = http_client.UNAUTHORIZED
+        mock_response_ok = mock.Mock()
+        mock_response_ok.status = http_client.OK
+
+        lock_held_during_call = {"held": False}
+
+        def mock_configure_mtls_channel(client_cert_callback=None):
+            lock_held_during_call["held"] = http_obj._mtls_reauth_lock.locked()
+
+        http_obj.configure_mtls_channel = mock.Mock(
+            side_effect=mock_configure_mtls_channel
+        )
+        http_obj.http.urlopen = mock.Mock(
+            side_effect=[mock_response_unauth, mock_response_ok]
+        )
+
+        with mock.patch.object(
+            google.auth.transport.urllib3._mtls_helper,
+            "check_parameters_for_unauthorized_response",
+            return_value=(b"cert", b"key", "old_fp", "new_fp"),
+        ):
+            http_obj.request("GET", "https://example.mtls.googleapis.com/")
+
+        http_obj.configure_mtls_channel.assert_called_once()
+        assert lock_held_during_call["held"] is True
+        assert not http_obj._mtls_reauth_lock.locked()
+
+    def test_unauthorized_cert_discovery_exception_proceeds_to_token_refresh(self):
+        credentials = mock.Mock(spec=google.auth.credentials.Credentials)
+        http_obj = google.auth.transport.urllib3.AuthorizedHttp(credentials)
+        http_obj._is_mtls = True
+
+        mock_response_unauth = mock.Mock()
+        mock_response_unauth.status = http_client.UNAUTHORIZED
+        mock_response_ok = mock.Mock()
+        mock_response_ok.status = http_client.OK
+
+        http_obj.http.urlopen = mock.Mock(
+            side_effect=[mock_response_unauth, mock_response_ok]
+        )
+
+        # Simulate discovery failure (e.g. Enterprise cert provider error or file missing)
+        with mock.patch.object(
+            google.auth.transport.urllib3._mtls_helper,
+            "check_parameters_for_unauthorized_response",
+            side_effect=Exception("Certificate discovery failed"),
+        ):
+            http_obj.request("GET", "https://example.mtls.googleapis.com/")
+
+        # Token refresh should still be called despite discovery failure
+        credentials.refresh.assert_called_once()
+        assert not http_obj._mtls_reauth_lock.locked()
+
+    def test_cert_check_skipped_when_cert_rotated_during_request(self):
+        """
+        Tests that a request that receives a 401 response does not read the
+        client certificate again if another thread has already rotated it
+        while the request was in flight.
+        """
+        credentials = mock.Mock(wraps=CredentialsStub())
+        http = HttpStub(
+            [
+                ResponseStub(status=http_client.UNAUTHORIZED),
+                ResponseStub(status=http_client.OK),
+            ]
+        )
+        authed_http = google.auth.transport.urllib3.AuthorizedHttp(
+            credentials, http=http
+        )
+        authed_http._is_mtls = True
+        authed_http._cached_cert = b"old_cert"
+        send_request = http.urlopen
+
+        def send_request_and_rotate_cert(*args, **kwargs):
+            # Simulate another thread rotating the client certificate while
+            # this request is in flight.
+            authed_http._cached_cert = b"new_cert"
+            return send_request(*args, **kwargs)
+
+        http.urlopen = send_request_and_rotate_cert
+
+        with mock.patch.object(
+            google.auth.transport._mtls_helper,
+            "check_parameters_for_unauthorized_response",
+        ) as mock_check_params:
+            with mock.patch.object(
+                authed_http, "configure_mtls_channel"
+            ) as mock_configure_mtls_channel:
+                result = authed_http.urlopen(
+                    "GET", "https://example.mtls.googleapis.com"
+                )
+
+        assert result.status == http_client.OK
+        mock_check_params.assert_not_called()
+        mock_configure_mtls_channel.assert_not_called()
+        credentials.refresh.assert_called_once()
+
+    def test_reconfigure_mtls_channel_skipped_if_mtls_disabled(self):
+        """
+        Tests that the client certificate is not checked if another thread
+        disabled mTLS while this thread was waiting for the lock.
+        """
+        authed_http = google.auth.transport.urllib3.AuthorizedHttp(
+            mock.sentinel.credentials
+        )
+        authed_http._is_mtls = False
+
+        with mock.patch.object(
+            google.auth.transport._mtls_helper,
+            "check_parameters_for_unauthorized_response",
+        ) as mock_check_params:
+            authed_http._reconfigure_mtls_channel_if_cert_changed(b"old_cert")
+
+        mock_check_params.assert_not_called()
+        assert not authed_http._mtls_reauth_lock.locked()
+
+    @mock.patch.object(urllib3.PoolManager, "urlopen", autospec=True)
+    def test_concurrent_unauthorized_responses_reconfigure_mtls_channel_once(
+        self, mock_urlopen
+    ):
+        """
+        Tests that when several threads that share an AuthorizedHttp receive a
+        401 response at the same time, the client certificate is read and the
+        real mTLS channel reconfiguration runs only once, and every request is
+        retried successfully through the new mTLS pool manager.
+        """
+        num_threads = 8
+        old_cert = b"old_cert"
+        all_requests_sent = threading.Barrier(num_threads)
+
+        authed_http = google.auth.transport.urllib3.AuthorizedHttp(CredentialsStub())
+        authed_http._is_mtls = True
+        authed_http._cached_cert = old_cert
+        old_http = authed_http.http
+
+        def urlopen(pool_manager, method, url, body=None, headers=None, **kwargs):
+            if "ssl_context" in pool_manager.connection_pool_kw:
+                # Pool manager created by _make_mutual_tls_http().
+                return ResponseStub(status=http_client.OK)
+            # Wait until every thread has sent its request through the old
+            # pool manager, so that all of them receive a 401 response.
+            all_requests_sent.wait(timeout=30)
+            return ResponseStub(status=http_client.UNAUTHORIZED)
+
+        mock_urlopen.side_effect = urlopen
+
+        def check_parameters_for_unauthorized_response(cached_cert):
+            cached_fingerprint = "old_fp" if cached_cert == old_cert else "new_fp"
+            return (
+                pytest.public_cert_bytes,
+                pytest.private_key_bytes,
+                cached_fingerprint,
+                "new_fp",
+            )
+
+        results = []
+        errors = []
+
+        def make_request():
+            try:
+                results.append(
+                    authed_http.urlopen("GET", "https://example.mtls.googleapis.com")
+                )
+            except Exception as exc:  # pragma: NO COVER
+                errors.append(exc)
+
+        with (
+            mock.patch.dict(
+                os.environ, {environment_vars.GOOGLE_API_USE_CLIENT_CERTIFICATE: "true"}
+            ),
+            mock.patch.object(
+                google.auth.transport._mtls_helper,
+                "check_parameters_for_unauthorized_response",
+                side_effect=check_parameters_for_unauthorized_response,
+            ) as mock_check_params,
+            mock.patch.object(
+                authed_http,
+                "configure_mtls_channel",
+                wraps=authed_http.configure_mtls_channel,
+            ) as spy_configure_mtls_channel,
+        ):
+            threads = [
+                threading.Thread(target=make_request) for _ in range(num_threads)
+            ]
+            for thread in threads:
+                thread.start()
+            for thread in threads:
+                thread.join(timeout=60)
+
+        assert errors == []
+        assert [r.status for r in results] == [http_client.OK] * num_threads
+        mock_check_params.assert_called_once()
+        spy_configure_mtls_channel.assert_called_once()
+        assert authed_http.is_mtls
+        assert authed_http._cached_cert == pytest.public_cert_bytes
+        assert authed_http.http is not old_http
+        assert "ssl_context" in authed_http.http.connection_pool_kw
+        # Token refreshes use the new pool manager too.
+        assert authed_http._request.http is authed_http.http
+        assert not authed_http._mtls_reauth_lock.locked()
