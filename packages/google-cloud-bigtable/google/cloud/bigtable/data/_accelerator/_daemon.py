@@ -289,6 +289,14 @@ class AcceleratorDaemon:
         env = None
         if self._extra_env:
             env = {**os.environ, **self._extra_env}
+        # Isolate the daemon from terminal Ctrl+C (SIGINT / CTRL_BREAK_EVENT)
+        # sent to the parent Python process group so in-flight RPCs can finish
+        # draining before Table.close() closes the daemon's stdin pipe.
+        popen_session_kwargs: dict[str, Any] = (
+            {"creationflags": getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)}
+            if _IS_WINDOWS
+            else {"start_new_session": True}
+        )
         try:
             log_file = open(self._log_path, "wb")
             self._proc = subprocess.Popen(
@@ -298,6 +306,7 @@ class AcceleratorDaemon:
                 stderr=subprocess.STDOUT,
                 close_fds=True,
                 env=env,
+                **popen_session_kwargs,
             )
         except OSError as exc:
             self._cleanup_tempdir()

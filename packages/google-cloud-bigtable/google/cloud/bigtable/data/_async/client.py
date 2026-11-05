@@ -2368,6 +2368,10 @@ class _DataApiTargetAsync(abc.ABC):
         """
         Called to close the Table instance and release any resources held by it.
         """
+        # Trip the breaker first so no new RPCs are routed to the accelerator
+        # while it is being torn down, and any in-flight RPCs interrupted by
+        # shutdown do not log a false dead-daemon warning.
+        self._accelerator_breaker.trip()
         # Accelerator teardown goes first, so that nothing that can raise runs
         # ahead of it and strands the daemon subprocess. Within it, the monitor
         # stops before the channel it probes over goes away.

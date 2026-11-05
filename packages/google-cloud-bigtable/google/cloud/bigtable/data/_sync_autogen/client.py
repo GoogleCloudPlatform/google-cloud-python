@@ -1934,6 +1934,7 @@ class _DataApiTarget(abc.ABC):
 
     def close(self):
         """Called to close the Table instance and release any resources held by it."""
+        self._accelerator_breaker.trip()
         if self._accelerator_health is not None:
             try:
                 self._accelerator_health.close()
