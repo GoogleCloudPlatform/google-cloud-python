@@ -28,20 +28,25 @@ steps:
       - 'TEST_ALL_PACKAGES=${_TEST_ALL_PACKAGES}'
       - 'ENABLED_PACKAGES=${_ENABLED_PACKAGES}'
       - 'PACKAGE_WEIGHTS=${_PACKAGE_WEIGHTS}'
-      # Specify the nox session consumed by ci/run_conditional_tests.sh.
+      # Specify the nox session consumed by ci/run_conditional_tests.sh and ci/run_single_test.sh.
       - 'NOX_SESSION=${_NOX_SESSION}'
+      - 'TEST_TYPE=${_NOX_SESSION}'
     script: |
       #!/usr/bin/env bash
       set -eo pipefail
 
-      # Fetch target branch history so git diff in ci/get_package_shards.py can detect modified packages.
-      git fetch origin "${TARGET_BRANCH}" --depth=50 || true
+      # Derive PY_VERSION (e.g. "3.12" from "system-3.12") required by ci/run_single_test.sh.
+      export PY_VERSION="${NOX_SESSION#system-}"
+
+      # Deepen both HEAD and target branch history so git diff in ci/get_package_shards.py
+      # can find the merge base in Cloud Build's shallow checkout.
+      git fetch --no-tags origin "+refs/heads/${TARGET_BRANCH}:refs/remotes/origin/${TARGET_BRANCH}" --depth=200 || true
+      git fetch --no-tags origin HEAD --depth=200 || true
 
       # Import ci/get_package_shards.py without modifying the script on disk.
       # Filter get_packages() in memory to _ENABLED_PACKAGES so unmigrated packages are ignored.
       PACKAGE_LIST=$(python3 -c '
-      import io, json, os, sys
-      from contextlib import redirect_stdout
+      import os, sys
 
       sys.path.insert(0, "ci")
       import get_package_shards as gps
@@ -53,19 +58,17 @@ steps:
       }
       if enabled:
           orig_get_packages = gps.get_packages
-          gps.get_packages = lambda: [p for p in orig_get_packages() if p in enabled]
+          def filtered_get_packages(*args, **kwargs):
+              pkgs = {}
+              for name, paths in orig_get_packages(*args, **kwargs).items():
+                  kept = [p for p in paths if p in enabled]
+                  if kept:
+                      pkgs[name] = kept
+              return pkgs
+          gps.get_packages = filtered_get_packages
 
-      buf = io.StringIO()
-      with redirect_stdout(buf):
-          if hasattr(gps, "main"):
-              gps.main()
-          else:
-              import runpy
-              runpy.run_path("ci/get_package_shards.py", run_name="__main__")
-
-      lines = [l for l in buf.getvalue().splitlines() if l.strip()]
-      data = json.loads(lines[-1]) if lines else []
-      shards = data.get("include", data) if isinstance(data, dict) else data
+      packages = gps.get_packages_to_test()
+      shards = gps.group_packages(packages)
 
       idx = int(os.environ.get("SHARD_INDEX", "0"))
       print(shards[idx].get("packages", "") if idx < len(shards) else "")
@@ -88,7 +91,7 @@ steps:
           os.environ.pop("GOOGLE_APPLICATION_CREDENTIALS", None)
       EOF
         export GOOGLE_APPLICATION_CREDENTIALS="CLOUD_BUILD_ADC"
-        export PYTHONPATH="/tmp/cb_pytest_shim:${PYTHONPATH:-}"
+        export PYTHONPATH="/tmp/cb_pytest_shim${PYTHONPATH:+:${PYTHONPATH}}"
         export PYTEST_ADDOPTS="-p cb_adc_shim ${PYTEST_ADDOPTS:-}"
       fi
 
