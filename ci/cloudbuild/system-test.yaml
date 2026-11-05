@@ -59,6 +59,11 @@ steps:
       sys.path.insert(0, "ci")
       import get_package_shards as gps
 
+      # Only run system tests for packages directly modified in the PR (unless
+      # TEST_ALL_PACKAGES=true on postsubmit), ignoring .github/, ci/, or core package changes.
+      gps.CI_INFRASTRUCTURE_DIRS = set()
+      gps.CORE_PACKAGES = set()
+
       enabled = {
           p.strip().rstrip("/") + "/"
           for p in os.environ.get("ENABLED_PACKAGES", "").replace(",", " ").split()
