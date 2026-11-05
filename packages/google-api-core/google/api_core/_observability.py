@@ -305,7 +305,7 @@ def _decode_method_name(method: str | bytes | None) -> str:
     """
     if isinstance(method, bytes):
         return method.decode("utf-8", errors="replace")
-    return str(method or "")
+    return method or ""
 
 
 def extract_rpc_identity(
@@ -334,7 +334,7 @@ def _resolve_rpc_system(kind: str | None = "grpc") -> str:
     Returns:
         str: "http" for REST/HTTP transports, or "grpc" otherwise.
     """
-    if isinstance(kind, str) and kind.startswith(("rest", "http")):
+    if kind and kind.startswith(("rest", "http")):
         return "http"
     return "grpc"
 
@@ -345,12 +345,12 @@ def _get_service_logger(
 ) -> logging.Logger:
     """Resolves a service-scoped logger matching GOOGLE_SDK_PYTHON_LOGGING_SCOPE.
 
-    1. If `target` has a `__module__` starting with `google.` (excluding `google.api_core`),
-       returns `logging.getLogger(target.__module__)`.
-    2. Otherwise, if `method_name` is a full gRPC method path (e.g.
-       `/google.cloud.secretmanager.v1.SecretManagerService/GetSecret`), extracts
-       the service package prefix (`google.cloud.secretmanager.v1`).
-    3. Falls back to `logging.getLogger("google.api_core._observability")`.
+    - If `target` has a `__module__` starting with `google.` (excluding `google.api_core`),
+      returns `logging.getLogger(target.__module__)`.
+    - Otherwise, if `method_name` is a full gRPC method path (e.g.
+      `/google.cloud.secretmanager.v1.SecretManagerService/GetSecret`), extracts
+      the service package prefix (`google.cloud.secretmanager.v1`).
+    - Falls back to `logging.getLogger("google.api_core._observability")`.
 
     Args:
         method_name (str | bytes | None): Full gRPC method path.
@@ -395,7 +395,7 @@ def _is_failed_attempt(
         return True
     if norm_status is None or norm_status == "OK":
         return False
-    return not (norm_status.isdigit() and int(norm_status) < 400)
+    return not (norm_status.isdecimal() and int(norm_status) < 400)
 
 
 def _build_attempt_log_extra(
@@ -445,14 +445,16 @@ def _build_attempt_log_extra(
             "status": (
                 int(status_code)
                 if isinstance(status_code, int)
-                or (isinstance(status_code, str) and status_code.isdigit())
+                or (isinstance(status_code, str) and status_code.isdecimal())
                 else status_code
             ),
         }
     else:
         extra_payload["rpc.method"] = target
 
-    extra_payload["json_fields"] = dict(extra_payload)
+    # Take a shallow copy before assigning json_fields so json_fields does not
+    # reference extra_payload itself and cause a circular reference in json.dumps.
+    extra_payload["json_fields"] = extra_payload.copy()
     return extra_payload, resolved_status
 
 
@@ -1339,6 +1341,8 @@ class _TraceContext:
                 client_options=self._client_options,
                 status_message=status_message,
             )
+        # Intentionally catch broad Exception so telemetry logging fails open
+        # and never disrupts the caller's RPC flow.
         except Exception:
             pass
 
@@ -1361,6 +1365,8 @@ class _TraceContext:
                     self._log_http_attempt(
                         status_code=code_int, status_message=error_msg
                     )
+            # Intentionally catch broad Exception so telemetry extraction/logging
+            # fails open and never disrupts the caller's RPC flow.
             except Exception:
                 pass
 
@@ -1394,13 +1400,10 @@ class _TraceContext:
                     )
                 except (ValueError, TypeError):
                     pass
-            elif hasattr(response, "_content") and response._content is not None:
-                try:
-                    span.set_attribute(
-                        "http.response.body.size", len(response._content)
-                    )
-                except Exception:
-                    pass
+            elif getattr(response, "_content", None) is not None:
+                span.set_attribute("http.response.body.size", len(response._content))
+        # Intentionally catch broad Exception so telemetry span enrichment
+        # fails open and never disrupts the caller's RPC flow.
         except Exception:
             pass
 
@@ -1435,15 +1438,16 @@ class _TraceContext:
             return
 
         try:
-            if hasattr(span, "set_attribute"):
-                if status_code:
-                    span.set_attribute("error.type", str(status_code))
-                else:
-                    span.set_attribute("error.type", exc.__class__.__name__)
-                msg = str(exc)
-                if msg:
-                    span.set_attribute("status.message", msg)
-        except Exception:  # Fail-open on error attribute extraction failure
+            if status_code:
+                span.set_attribute("error.type", str(status_code))
+            else:
+                span.set_attribute("error.type", exc.__class__.__name__)
+            msg = str(exc)
+            if msg:
+                span.set_attribute("status.message", msg)
+        # Intentionally catch broad Exception so telemetry span enrichment
+        # fails open and never disrupts the caller's RPC flow.
+        except Exception:
             pass
 
     # Alias for method name parity with Daniel's suggested convention

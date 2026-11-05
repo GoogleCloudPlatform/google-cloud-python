@@ -917,7 +917,7 @@ def test_gapic_callable_report_method_error_and_logging(monkeypatch):
 
     cancel_logger = mock.Mock()
     wrapped_fail._report_method_error(
-        exceptions.Cancelled("Call cancelled"), span=mock_span, logger=cancel_logger
+        exceptions.Cancelled("Call cancelled"), span=None, logger=cancel_logger
     )
     cancel_logger.log.assert_called_once()
     c_args, c_kwargs = cancel_logger.log.call_args

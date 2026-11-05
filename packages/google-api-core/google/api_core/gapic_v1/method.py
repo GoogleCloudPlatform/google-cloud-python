@@ -297,7 +297,9 @@ class _GapicCallable(object):
                 **error_attrs,
                 **_observability.extract_trace_context(span),
             }
-            extra_payload["json_fields"] = dict(extra_payload)
+            # Take a shallow copy before assigning json_fields so json_fields does not
+            # reference extra_payload itself and cause a circular reference in json.dumps.
+            extra_payload["json_fields"] = extra_payload.copy()
 
             log_target = logger or _observability._get_service_logger(
                 self._method_name, self._target
@@ -315,6 +317,8 @@ class _GapicCallable(object):
                 exc_info=not is_cancelled,
                 extra=extra_payload,
             )
+        # Intentionally catch broad Exception so telemetry logging fails open
+        # and never disrupts the caller's RPC flow.
         except Exception:
             pass
 
@@ -347,16 +351,18 @@ class _GapicCallable(object):
         if is_cancelled:
             error_attrs["rpc.response.status_code"] = "CANCELLED"
 
-        # 1. Enrich active Tier 3 method span
-        if span is not None and hasattr(span, "set_attribute"):
+        # Enrich active Tier 3 method span
+        if span is not None:
             try:
                 for k, v in error_attrs.items():
                     if not k.startswith("exception."):
                         span.set_attribute(k, v)
+            # Intentionally catch broad Exception so telemetry span enrichment
+            # fails open and never disrupts the caller's RPC flow.
             except Exception:
                 pass
 
-        # 2. Emit L2/L3 Terminal Method Error Log
+        # Emit L2/L3 Terminal Method Error Log
         if error_logging_enabled:
             self._emit_method_error_log(
                 exc, span, error_attrs, is_cancelled, logger=logger
