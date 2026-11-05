@@ -5,28 +5,13 @@
 /* The minimum buffer size in bytes (1MB) required to justify the overhead of releasing the GIL. */
 static const Py_ssize_t gil_threshold = 1024 * 1024;
 
-static int
-_should_release_gil(const Py_buffer *chunk)
-{
-    /* Release the GIL only for chunks of at least gil_threshold bytes backed
-     * by an immutable bytes object (a bytes instance or a memoryview of one). */
-    PyObject *owner = chunk->obj;
-
-    if (chunk->len < gil_threshold || owner == NULL) {
-        return 0;
-    }
-    if (PyMemoryView_Check(owner)) {
-        owner = PyMemoryView_GET_BASE(owner);
-    }
-    return owner != NULL && PyBytes_Check(owner);
-}
-
 static uint32_t
 _extend_buffer(uint32_t crc, const Py_buffer *chunk)
 {
     PyThreadState *save = NULL;
 
-    if (_should_release_gil(chunk)) {
+    /* Release the GIL only for chunks of at least gil_threshold bytes */
+    if (chunk->len >= gil_threshold) {
         save = PyEval_SaveThread();
     }
 
