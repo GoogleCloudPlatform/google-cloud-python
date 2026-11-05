@@ -91,10 +91,9 @@ steps:
       # Create runtime shims in /tmp/cloudbuild_shims so tracked repo files remain unmodified:
       # - cloudbuild_pytest_plugin.py: Unsets the placeholder GOOGLE_APPLICATION_CREDENTIALS
       #   value ("CLOUD_BUILD_ADC" satisfies noxfile.py's env check) so google.auth.default()
-      #   uses Cloud Build VM ADC, and flushes per-test results so `py.test --quiet` logs live.
+      #   uses Cloud Build VM ADC, and enables verbose mode so `py.test --quiet` logs each test line.
       # - nox wrapper: Streams [package]-prefixed output to fd 3 in real time across parallel
-      #   workers, and only writes to stdout on failure so run_conditional_tests.sh does not
-      #   print passing logs twice.
+      #   workers, and on failure outputs only the FAILURES summary to stdout for run_conditional_tests.sh.
       mkdir -p /tmp/cloudbuild_shims
       cat << 'EOF' > /tmp/cloudbuild_shims/cloudbuild_pytest_plugin.py
       import os
@@ -103,14 +102,9 @@ steps:
           os.environ.pop("GOOGLE_APPLICATION_CREDENTIALS", None)
 
 
-      def pytest_runtest_logreport(report):
-          if report.when == "call" or (
-              report.when in ("setup", "teardown") and report.failed
-          ):
-              print(
-                  f"{report.outcome.upper()} {report.nodeid} ({report.duration:.1f}s)",
-                  flush=True,
-              )
+      def pytest_configure(config):
+          config.option.quiet = 0
+          config.option.verbose = max(config.option.verbose, 1)
       EOF
 
       cat << 'EOF' > /tmp/cloudbuild_shims/nox
@@ -125,7 +119,7 @@ steps:
       }'
       RET=${PIPESTATUS[0]}
       if [[ ${RET} -ne 0 ]]; then
-        cat "${TMP_LOG}"
+        sed -n '/=== FAILURES ===/,$p' "${TMP_LOG}"
       fi
       rm -f "${TMP_LOG}"
       exit ${RET}
