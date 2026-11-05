@@ -1636,34 +1636,45 @@ def test_suppressing_interceptors_define_slots():
     assert "__dict__" not in _observability._AsyncSuppressingClientInterceptor.__dict__
 
 
-def test_has_opentelemetry_caching(monkeypatch):
-    """Proves has_opentelemetry caches True and False states across calls."""
-    monkeypatch.setattr(_observability, "_HAS_OPENTELEMETRY", None)
-    monkeypatch.setitem(sys.modules, "opentelemetry", types.ModuleType("opentelemetry"))
-    monkeypatch.setitem(
-        sys.modules,
-        "opentelemetry.trace",
-        types.ModuleType("opentelemetry.trace"),
-    )
+def test_has_opentelemetry_installed_and_cached(monkeypatch):
+    """When installed, returns True and caches the result across calls."""
+    _observability.has_opentelemetry.cache_clear()
+    try:
+        monkeypatch.setitem(
+            sys.modules, "opentelemetry", types.ModuleType("opentelemetry")
+        )
+        monkeypatch.setitem(
+            sys.modules,
+            "opentelemetry.trace",
+            types.ModuleType("opentelemetry.trace"),
+        )
 
-    assert _observability.has_opentelemetry() is True
-    assert _observability._HAS_OPENTELEMETRY is True
-    # Cached call returns True even if sys.modules changes
-    monkeypatch.setitem(sys.modules, "opentelemetry.trace", None)
-    assert _observability.has_opentelemetry() is True
+        assert _observability.has_opentelemetry() is True
+        # Cached call returns True even if sys.modules changes
+        monkeypatch.setitem(sys.modules, "opentelemetry.trace", None)
+        assert _observability.has_opentelemetry() is True
+        assert _observability.has_opentelemetry.cache_info().hits == 1
+    finally:
+        _observability.has_opentelemetry.cache_clear()
 
-    # Reset sentinel and test when ImportError occurs
-    monkeypatch.setattr(_observability, "_HAS_OPENTELEMETRY", None)
-    assert _observability.has_opentelemetry() is False
-    assert _observability._HAS_OPENTELEMETRY is False
 
-    # Cached call returns False even if opentelemetry.trace becomes available
-    monkeypatch.setitem(
-        sys.modules,
-        "opentelemetry.trace",
-        types.ModuleType("opentelemetry.trace"),
-    )
-    assert _observability.has_opentelemetry() is False
+def test_has_opentelemetry_missing_and_cached(monkeypatch):
+    """When missing, returns False and caches the negative result across calls."""
+    _observability.has_opentelemetry.cache_clear()
+    try:
+        monkeypatch.setitem(sys.modules, "opentelemetry.trace", None)
+
+        assert _observability.has_opentelemetry() is False
+        # Cached call returns False even if opentelemetry.trace becomes available
+        monkeypatch.setitem(
+            sys.modules,
+            "opentelemetry.trace",
+            types.ModuleType("opentelemetry.trace"),
+        )
+        assert _observability.has_opentelemetry() is False
+        assert _observability.has_opentelemetry.cache_info().hits == 1
+    finally:
+        _observability.has_opentelemetry.cache_clear()
 
 
 @pytest.mark.parametrize(
@@ -1716,7 +1727,7 @@ def test_extract_trace_context_invalid_or_broken_span():
 
 def test_extract_trace_context_ambient_fallback(monkeypatch, mock_otel):
     """Proves extract_trace_context falls back to get_current_span()."""
-    monkeypatch.setattr(_observability, "_HAS_OPENTELEMETRY", True)
+    monkeypatch.setattr(_observability, "has_opentelemetry", lambda: True)
     mock_otel.span.get_span_context.return_value = types.SimpleNamespace(
         is_valid=True,
         trace_id=0x0123456789ABCDEF0123456789ABCDEF,
@@ -1733,7 +1744,7 @@ def test_extract_trace_context_ambient_fallback(monkeypatch, mock_otel):
     assert _observability.extract_trace_context(None) == {}
 
     # OTel not installed returns {}
-    monkeypatch.setattr(_observability, "_HAS_OPENTELEMETRY", False)
+    monkeypatch.setattr(_observability, "has_opentelemetry", lambda: False)
     assert _observability.extract_trace_context(None) == {}
 
 
