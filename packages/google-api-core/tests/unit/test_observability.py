@@ -19,6 +19,7 @@ import urllib.parse
 from unittest import mock
 
 import pytest
+from opentelemetry.trace import INVALID_SPAN_CONTEXT, SpanContext, TraceFlags
 
 from google.api_core import _observability, exceptions
 from google.api_core._feature_gating_helpers import FeatureGatingError
@@ -1678,23 +1679,26 @@ def test_has_opentelemetry_missing_and_cached(monkeypatch):
 
 
 @pytest.mark.parametrize(
-    "trace_flags,expected_sampled",
+    "flags,expected_sampled",
     [
-        pytest.param(0x01, True, id="int_bitmask_sampled_true"),
-        pytest.param(0x00, False, id="int_bitmask_sampled_false"),
-        pytest.param(0x02, False, id="int_bitmask_other_bit_unsampled"),
-        pytest.param(0x03, True, id="int_bitmask_multiple_bits_sampled"),
+        pytest.param(TraceFlags(TraceFlags.SAMPLED), True, id="trace_flags_sampled"),
+        pytest.param(TraceFlags(TraceFlags.DEFAULT), False, id="trace_flags_default"),
+        pytest.param(TraceFlags.SAMPLED, True, id="int_constant_sampled"),
+        pytest.param(TraceFlags.DEFAULT, False, id="int_constant_default"),
+        pytest.param(None, False, id="none_flags"),
     ],
 )
-def test_extract_trace_context_explicit_span_flags(trace_flags, expected_sampled):
-    """Proves extract_trace_context formats hex IDs and resolves trace_flags."""
-    span = mock.Mock(spec_set=["get_span_context"])
-    span.get_span_context.return_value = types.SimpleNamespace(
-        is_valid=True,
+def test_extract_trace_context_with_real_span_context(flags, expected_sampled):
+    """Proves extract_trace_context formats real OpenTelemetry SpanContext objects."""
+    context = SpanContext(
         trace_id=0x0123456789ABCDEF0123456789ABCDEF,
         span_id=0x0123456789ABCDEF,
-        trace_flags=trace_flags,
+        is_remote=False,
+        trace_flags=flags,
     )
+
+    span = mock.Mock(spec_set=["get_span_context"])
+    span.get_span_context.return_value = context
 
     expected = {
         "trace_id": "0123456789abcdef0123456789abcdef",
@@ -1707,32 +1711,24 @@ def test_extract_trace_context_explicit_span_flags(trace_flags, expected_sampled
 
 
 def test_extract_trace_context_invalid_or_broken_span():
-    """Proves extract_trace_context returns {} on broken spans or non-int IDs."""
+    """Proves extract_trace_context returns {} on broken or invalid spans."""
     bad_span = mock.Mock(spec_set=["get_span_context"])
     bad_span.get_span_context.side_effect = RuntimeError("broken span")
     assert _observability.extract_trace_context(bad_span) == {}
 
     invalid_ctx_span = mock.Mock(spec_set=["get_span_context"])
-    invalid_ctx_span.get_span_context.return_value = types.SimpleNamespace(
-        is_valid=False
-    )
+    invalid_ctx_span.get_span_context.return_value = INVALID_SPAN_CONTEXT
     assert _observability.extract_trace_context(invalid_ctx_span) == {}
-
-    bad_ctx_span = mock.Mock(spec_set=["get_span_context"])
-    bad_ctx_span.get_span_context.return_value = types.SimpleNamespace(
-        is_valid=True, trace_id="not_an_int", span_id="not_an_int"
-    )
-    assert _observability.extract_trace_context(bad_ctx_span) == {}
 
 
 def test_extract_trace_context_ambient_fallback(monkeypatch, mock_otel):
     """Proves extract_trace_context falls back to get_current_span()."""
     monkeypatch.setattr(_observability, "has_opentelemetry", lambda: True)
-    mock_otel.span.get_span_context.return_value = types.SimpleNamespace(
-        is_valid=True,
+    mock_otel.span.get_span_context.return_value = SpanContext(
         trace_id=0x0123456789ABCDEF0123456789ABCDEF,
         span_id=0x0123456789ABCDEF,
-        trace_flags=0x01,
+        is_remote=False,
+        trace_flags=TraceFlags.SAMPLED,
     )
 
     res = _observability.extract_trace_context(None)

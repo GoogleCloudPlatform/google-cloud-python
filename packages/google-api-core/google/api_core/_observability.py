@@ -122,8 +122,9 @@ def extract_trace_context(span: Any = None) -> dict[str, Any]:
         # that uses bits as configuration flags; the least-significant (last) bit
         # (0x01) indicates whether the span is sampled (True: recorded/exported,
         # allowing Cloud Logging to link the log entry to Cloud Trace) or not
-        # (False: not recorded).
-        sampled = bool(getattr(ctx, "trace_flags", 0) & 0x01)
+        # (False: not recorded). Using bitmask (& 0x01) handles both TraceFlags(0x01)
+        # instances and raw TraceFlags.SAMPLED (int) constants passed to SpanContext.
+        sampled = bool(ctx.trace_flags & 0x01)
 
         return {
             "trace_id": trace_id_hex,
