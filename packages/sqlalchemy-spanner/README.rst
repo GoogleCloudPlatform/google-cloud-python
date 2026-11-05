@@ -61,7 +61,7 @@ During setup the dialect will be registered with entry points.
 Samples
 -------------
 
-The `samples directory <https://github.com/googleapis/google-cloud-python/blob/-/samples/README.md>`__
+The `samples directory <https://github.com/googleapis/google-cloud-python/blob/main/packages/sqlalchemy-spanner/samples/README.md>`__
 contains multiple examples for how to configure and use common Spanner features.
 
 
@@ -83,7 +83,7 @@ on this step in a dialect prefix part:
    # for SQLAlchemy 1.4 and 2.0:
    spanner+spanner:///projects/project-id/instances/instance-id/databases/database-id
 
-To pass your custom client object directly to be be used, create engine as following:
+To pass your custom client object directly to be used, create engine as following:
 
 .. code:: python
 
@@ -200,7 +200,7 @@ Interleaved tables
 | Cloud Spanner dialect includes two dialect-specific arguments for
   ``Table`` constructor, which help to define interleave relations:
   ``spanner_interleave_in`` - a parent table name
-  ``spanner_inverleave_on_delete_cascade`` - a flag specifying if
+  ``spanner_interleave_on_delete_cascade`` - a flag specifying if
   ``ON DELETE CASCADE`` statement must be used for the interleave
   relation
 | An example of interleave relations definition:
