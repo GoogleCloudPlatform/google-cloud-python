@@ -62,14 +62,12 @@ steps:
       sys.path.insert(0, "ci")
       import get_package_shards
 
-      # Only run system tests for packages directly modified in the pull request
-      # (unless TEST_ALL_PACKAGES=true on postsubmit), ignoring changes to .github/,
-      # ci/, or core dependency packages.
-      get_package_shards.CI_INFRASTRUCTURE_DIRS = set()
-      get_package_shards.CORE_PACKAGES = set()
-
       # Normalize enabled package paths to include a trailing slash so they match
       # the directory format ("packages/<name>/") returned by get_package_shards.get_packages().
+      # When CI infrastructure (ci/, .github/) or core dependencies change,
+      # get_package_shards.get_packages_to_test() automatically selects all packages
+      # returned by get_packages(). Passing handwritten_only=False to original_get_packages
+      # ensures every package explicitly listed in _ENABLED_PACKAGES is included.
       enabled_packages = {
           package_path.strip().rstrip("/") + "/"
           for package_path in os.environ.get("ENABLED_PACKAGES", "").replace(",", " ").split()
@@ -80,7 +78,9 @@ steps:
 
           def filtered_get_packages(*args, **kwargs):
               filtered_packages = {}
-              for package_name, package_paths in original_get_packages(*args, **kwargs).items():
+              for package_name, package_paths in original_get_packages(
+                  handwritten_only=False
+              ).items():
                   kept_paths = [
                       path for path in package_paths if path in enabled_packages
                   ]
