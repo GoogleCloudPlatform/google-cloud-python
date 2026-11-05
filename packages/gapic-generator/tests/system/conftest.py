@@ -248,6 +248,7 @@ def construct_client(
     credentials=ga_credentials.AnonymousCredentials(),
     transport_endpoint="localhost:7469",
     client_options=None,
+    channel=None,
 ):
     if use_mtls:
         with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}):
@@ -267,10 +268,10 @@ def construct_client(
         transport_cls = client_class.get_transport_class(transport_name)
         if transport_name in ["grpc", "grpc_asyncio"]:
             # TODO(gapic-generator-python/issues/1914): Need to test grpc transports without a channel_creator
-            assert channel_creator
+            assert channel or channel_creator
             transport_kwargs = {
                 "credentials": credentials,
-                "channel": channel_creator(transport_endpoint),
+                "channel": channel or channel_creator(transport_endpoint),
                 "client_options": client_options,
             }
             transport = transport_cls(**transport_kwargs)

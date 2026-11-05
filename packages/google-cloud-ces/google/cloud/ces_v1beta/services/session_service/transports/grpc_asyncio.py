@@ -493,6 +493,106 @@ class SessionServiceGrpcAsyncIOTransport(SessionServiceTransport):
             )
         return self._stubs["bidi_run_session"]
 
+    @property
+    def stream_chat_ai_assistant(
+        self,
+    ) -> Callable[
+        [session_service.StreamChatAiAssistantRequest],
+        Awaitable[session_service.StreamChatAiAssistantResponse],
+    ]:
+        r"""Return a callable for the stream chat ai assistant method over gRPC.
+
+        Runs Arc, the AI assistant, for the specified
+        assistant session in a streaming fashion.
+
+        Returns:
+            Callable[[~.StreamChatAiAssistantRequest],
+                    Awaitable[~.StreamChatAiAssistantResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "stream_chat_ai_assistant" not in self._stubs:
+            self._stubs["stream_chat_ai_assistant"] = self._logged_channel.unary_stream(
+                "/google.cloud.ces.v1beta.SessionService/StreamChatAiAssistant",
+                request_serializer=session_service.StreamChatAiAssistantRequest.serialize,
+                response_deserializer=session_service.StreamChatAiAssistantResponse.deserialize,
+            )
+        return self._stubs["stream_chat_ai_assistant"]
+
+    @property
+    def cancel_assistant_turn(
+        self,
+    ) -> Callable[
+        [session_service.CancelAssistantTurnRequest],
+        Awaitable[session_service.CancelAssistantTurnResponse],
+    ]:
+        r"""Return a callable for the cancel assistant turn method over gRPC.
+
+        Cancels the assistant session's in-flight turn, if
+        any: the explicit user stop for a turn running detached
+        from any stream. A cancel landing on a task that does
+        not host the turn preempts it through the session turn
+        epoch instead, ending it within one lease renewal.
+
+        Returns:
+            Callable[[~.CancelAssistantTurnRequest],
+                    Awaitable[~.CancelAssistantTurnResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "cancel_assistant_turn" not in self._stubs:
+            self._stubs["cancel_assistant_turn"] = self._logged_channel.unary_unary(
+                "/google.cloud.ces.v1beta.SessionService/CancelAssistantTurn",
+                request_serializer=session_service.CancelAssistantTurnRequest.serialize,
+                response_deserializer=session_service.CancelAssistantTurnResponse.deserialize,
+            )
+        return self._stubs["cancel_assistant_turn"]
+
+    @property
+    def generate_onboarding_suggestions(
+        self,
+    ) -> Callable[
+        [session_service.GenerateOnboardingSuggestionsRequest],
+        Awaitable[session_service.GenerateOnboardingSuggestionsResponse],
+    ]:
+        r"""Return a callable for the generate onboarding
+        suggestions method over gRPC.
+
+        Generates personalized onboarding suggestions for the
+        Arc zero state: classifies the requesting user (new /
+        exploring / returning) from their assistant-session
+        history in the app and returns suggestion chips (resume
+        a session, continue work, or start something new) to
+        render before any message is sent.
+
+        Returns:
+            Callable[[~.GenerateOnboardingSuggestionsRequest],
+                    Awaitable[~.GenerateOnboardingSuggestionsResponse]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "generate_onboarding_suggestions" not in self._stubs:
+            self._stubs["generate_onboarding_suggestions"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.ces.v1beta.SessionService/GenerateOnboardingSuggestions",
+                    request_serializer=session_service.GenerateOnboardingSuggestionsRequest.serialize,
+                    response_deserializer=session_service.GenerateOnboardingSuggestionsResponse.deserialize,
+                )
+            )
+        return self._stubs["generate_onboarding_suggestions"]
+
     def _prep_wrapped_messages(self, client_info):
         """Precompute the wrapped methods, overriding the base class method to use async wrappers."""
         self._wrapped_methods = {
@@ -523,6 +623,28 @@ class SessionServiceGrpcAsyncIOTransport(SessionServiceTransport):
                     deadline=3600.0,
                 ),
                 default_timeout=3600.0,
+                client_info=client_info,
+            ),
+            self.stream_chat_ai_assistant: self._wrap_method(
+                self.stream_chat_ai_assistant,
+                default_retry=retries.AsyncRetry(
+                    initial=0.1,
+                    maximum=60.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(),
+                    deadline=3600.0,
+                ),
+                default_timeout=3600.0,
+                client_info=client_info,
+            ),
+            self.cancel_assistant_turn: self._wrap_method(
+                self.cancel_assistant_turn,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.generate_onboarding_suggestions: self._wrap_method(
+                self.generate_onboarding_suggestions,
+                default_timeout=None,
                 client_info=client_info,
             ),
             self.get_location: self._wrap_method(

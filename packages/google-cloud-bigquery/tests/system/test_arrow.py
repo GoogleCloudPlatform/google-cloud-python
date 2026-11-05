@@ -669,7 +669,7 @@ def test_query_and_wait_arrow_extreme_values(
     [
         (None, 100, 1000, 0),
         # The results are too large to return inline, so the cached jobs.query
-        # response has no rows and totalRows is 0.
+        # response has no rows and no totalRows.
         (None, None, 20000, 1024),
         (enums.QueryPriority.INTERACTIVE, 100, 1000, 0),
     ],

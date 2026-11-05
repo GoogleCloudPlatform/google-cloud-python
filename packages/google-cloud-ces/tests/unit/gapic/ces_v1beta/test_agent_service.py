@@ -3419,6 +3419,8 @@ def test_import_app_non_empty_request_with_auto_populated_field():
     # if they meet the requirements of AIP 4235.
     request = agent_service.ImportAppRequest(
         gcs_uri="gcs_uri_value",
+        json_patch_content="json_patch_content_value",
+        json_patch_gcs_uri="json_patch_gcs_uri_value",
         parent="parent_value",
         display_name="display_name_value",
         app_id="app_id_value",
@@ -3434,6 +3436,8 @@ def test_import_app_non_empty_request_with_auto_populated_field():
         _, args, _ = call.mock_calls[0]
         request_msg = agent_service.ImportAppRequest(
             gcs_uri="gcs_uri_value",
+            json_patch_content="json_patch_content_value",
+            json_patch_gcs_uri="json_patch_gcs_uri_value",
             parent="parent_value",
             display_name="display_name_value",
             app_id="app_id_value",
@@ -8798,6 +8802,7 @@ def test_get_tool(request_type, transport: str = "grpc"):
             execution_type=common.ExecutionType.SYNCHRONOUS,
             etag="etag_value",
             generated_summary="generated_summary_value",
+            read_only=True,
         )
         response = client.get_tool(request)
 
@@ -8814,6 +8819,7 @@ def test_get_tool(request_type, transport: str = "grpc"):
     assert response.execution_type == common.ExecutionType.SYNCHRONOUS
     assert response.etag == "etag_value"
     assert response.generated_summary == "generated_summary_value"
+    assert response.read_only is True
 
 
 def test_get_tool_non_empty_request_with_auto_populated_field():
@@ -8948,6 +8954,7 @@ async def test_get_tool_async(request_type, transport: str = "grpc_asyncio"):
                 execution_type=common.ExecutionType.SYNCHRONOUS,
                 etag="etag_value",
                 generated_summary="generated_summary_value",
+                read_only=True,
             )
         )
         response = await client.get_tool(request)
@@ -8965,6 +8972,7 @@ async def test_get_tool_async(request_type, transport: str = "grpc_asyncio"):
     assert response.execution_type == common.ExecutionType.SYNCHRONOUS
     assert response.etag == "etag_value"
     assert response.generated_summary == "generated_summary_value"
+    assert response.read_only is True
 
 
 def test_get_tool_field_headers():
@@ -10718,6 +10726,7 @@ def test_create_tool(request_type, transport: str = "grpc"):
             execution_type=common.ExecutionType.SYNCHRONOUS,
             etag="etag_value",
             generated_summary="generated_summary_value",
+            read_only=True,
         )
         response = client.create_tool(request)
 
@@ -10734,6 +10743,7 @@ def test_create_tool(request_type, transport: str = "grpc"):
     assert response.execution_type == common.ExecutionType.SYNCHRONOUS
     assert response.etag == "etag_value"
     assert response.generated_summary == "generated_summary_value"
+    assert response.read_only is True
 
 
 def test_create_tool_non_empty_request_with_auto_populated_field():
@@ -10872,6 +10882,7 @@ async def test_create_tool_async(request_type, transport: str = "grpc_asyncio"):
                 execution_type=common.ExecutionType.SYNCHRONOUS,
                 etag="etag_value",
                 generated_summary="generated_summary_value",
+                read_only=True,
             )
         )
         response = await client.create_tool(request)
@@ -10889,6 +10900,7 @@ async def test_create_tool_async(request_type, transport: str = "grpc_asyncio"):
     assert response.execution_type == common.ExecutionType.SYNCHRONOUS
     assert response.etag == "etag_value"
     assert response.generated_summary == "generated_summary_value"
+    assert response.read_only is True
 
 
 def test_create_tool_field_headers():
@@ -11088,6 +11100,7 @@ def test_update_tool(request_type, transport: str = "grpc"):
             execution_type=common.ExecutionType.SYNCHRONOUS,
             etag="etag_value",
             generated_summary="generated_summary_value",
+            read_only=True,
         )
         response = client.update_tool(request)
 
@@ -11104,6 +11117,7 @@ def test_update_tool(request_type, transport: str = "grpc"):
     assert response.execution_type == common.ExecutionType.SYNCHRONOUS
     assert response.etag == "etag_value"
     assert response.generated_summary == "generated_summary_value"
+    assert response.read_only is True
 
 
 def test_update_tool_non_empty_request_with_auto_populated_field():
@@ -11236,6 +11250,7 @@ async def test_update_tool_async(request_type, transport: str = "grpc_asyncio"):
                 execution_type=common.ExecutionType.SYNCHRONOUS,
                 etag="etag_value",
                 generated_summary="generated_summary_value",
+                read_only=True,
             )
         )
         response = await client.update_tool(request)
@@ -11253,6 +11268,7 @@ async def test_update_tool_async(request_type, transport: str = "grpc_asyncio"):
     assert response.execution_type == common.ExecutionType.SYNCHRONOUS
     assert response.etag == "etag_value"
     assert response.generated_summary == "generated_summary_value"
+    assert response.read_only is True
 
 
 def test_update_tool_field_headers():
@@ -14217,6 +14233,7 @@ def test_get_deployment(request_type, transport: str = "grpc"):
             display_name="display_name_value",
             app_version="app_version_value",
             etag="etag_value",
+            modality=deployment.Deployment.Modality.MODALITY_TEXT,
         )
         response = client.get_deployment(request)
 
@@ -14232,6 +14249,7 @@ def test_get_deployment(request_type, transport: str = "grpc"):
     assert response.display_name == "display_name_value"
     assert response.app_version == "app_version_value"
     assert response.etag == "etag_value"
+    assert response.modality == deployment.Deployment.Modality.MODALITY_TEXT
 
 
 def test_get_deployment_non_empty_request_with_auto_populated_field():
@@ -14367,6 +14385,7 @@ async def test_get_deployment_async(request_type, transport: str = "grpc_asyncio
                 display_name="display_name_value",
                 app_version="app_version_value",
                 etag="etag_value",
+                modality=deployment.Deployment.Modality.MODALITY_TEXT,
             )
         )
         response = await client.get_deployment(request)
@@ -14383,6 +14402,7 @@ async def test_get_deployment_async(request_type, transport: str = "grpc_asyncio
     assert response.display_name == "display_name_value"
     assert response.app_version == "app_version_value"
     assert response.etag == "etag_value"
+    assert response.modality == deployment.Deployment.Modality.MODALITY_TEXT
 
 
 def test_get_deployment_field_headers():
@@ -14555,6 +14575,7 @@ def test_create_deployment(request_type, transport: str = "grpc"):
             display_name="display_name_value",
             app_version="app_version_value",
             etag="etag_value",
+            modality=gcc_deployment.Deployment.Modality.MODALITY_TEXT,
         )
         response = client.create_deployment(request)
 
@@ -14570,6 +14591,7 @@ def test_create_deployment(request_type, transport: str = "grpc"):
     assert response.display_name == "display_name_value"
     assert response.app_version == "app_version_value"
     assert response.etag == "etag_value"
+    assert response.modality == gcc_deployment.Deployment.Modality.MODALITY_TEXT
 
 
 def test_create_deployment_non_empty_request_with_auto_populated_field():
@@ -14713,6 +14735,7 @@ async def test_create_deployment_async(request_type, transport: str = "grpc_asyn
                 display_name="display_name_value",
                 app_version="app_version_value",
                 etag="etag_value",
+                modality=gcc_deployment.Deployment.Modality.MODALITY_TEXT,
             )
         )
         response = await client.create_deployment(request)
@@ -14729,6 +14752,7 @@ async def test_create_deployment_async(request_type, transport: str = "grpc_asyn
     assert response.display_name == "display_name_value"
     assert response.app_version == "app_version_value"
     assert response.etag == "etag_value"
+    assert response.modality == gcc_deployment.Deployment.Modality.MODALITY_TEXT
 
 
 def test_create_deployment_field_headers():
@@ -14929,6 +14953,7 @@ def test_update_deployment(request_type, transport: str = "grpc"):
             display_name="display_name_value",
             app_version="app_version_value",
             etag="etag_value",
+            modality=gcc_deployment.Deployment.Modality.MODALITY_TEXT,
         )
         response = client.update_deployment(request)
 
@@ -14944,6 +14969,7 @@ def test_update_deployment(request_type, transport: str = "grpc"):
     assert response.display_name == "display_name_value"
     assert response.app_version == "app_version_value"
     assert response.etag == "etag_value"
+    assert response.modality == gcc_deployment.Deployment.Modality.MODALITY_TEXT
 
 
 def test_update_deployment_non_empty_request_with_auto_populated_field():
@@ -15081,6 +15107,7 @@ async def test_update_deployment_async(request_type, transport: str = "grpc_asyn
                 display_name="display_name_value",
                 app_version="app_version_value",
                 etag="etag_value",
+                modality=gcc_deployment.Deployment.Modality.MODALITY_TEXT,
             )
         )
         response = await client.update_deployment(request)
@@ -15097,6 +15124,7 @@ async def test_update_deployment_async(request_type, transport: str = "grpc_asyn
     assert response.display_name == "display_name_value"
     assert response.app_version == "app_version_value"
     assert response.etag == "etag_value"
+    assert response.modality == gcc_deployment.Deployment.Modality.MODALITY_TEXT
 
 
 def test_update_deployment_field_headers():
@@ -18771,6 +18799,370 @@ async def test_create_app_version_flattened_error_async():
             parent="parent_value",
             app_version=gcc_app_version.AppVersion(name="name_value"),
             app_version_id="app_version_id_value",
+        )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        agent_service.UpdateAppVersionRequest(),
+        {},
+    ],
+)
+def test_update_app_version(request_type, transport: str = "grpc"):
+    client = AgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_app_version), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = gcc_app_version.AppVersion(
+            name="name_value",
+            display_name="display_name_value",
+            description="description_value",
+            creator="creator_value",
+            etag="etag_value",
+        )
+        response = client.update_app_version(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        request = agent_service.UpdateAppVersionRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, gcc_app_version.AppVersion)
+    assert response.name == "name_value"
+    assert response.display_name == "display_name_value"
+    assert response.description == "description_value"
+    assert response.creator == "creator_value"
+    assert response.etag == "etag_value"
+
+
+def test_update_app_version_non_empty_request_with_auto_populated_field():
+    # This test is a coverage failsafe to make sure that UUID4 fields are
+    # automatically populated, according to AIP-4235, with non-empty requests.
+    client = AgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Populate all string fields in the request which are not UUID4
+    # since we want to check that UUID4 are populated automatically
+    # if they meet the requirements of AIP 4235.
+    request = agent_service.UpdateAppVersionRequest()
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_app_version), "__call__"
+    ) as call:
+        call.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client.update_app_version(request=request)
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = agent_service.UpdateAppVersionRequest()
+        assert args[0] == request_msg
+
+
+def test_update_app_version_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = AgentServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="grpc",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.update_app_version in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.update_app_version] = (
+            mock_rpc
+        )
+        request = {}
+        client.update_app_version(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.update_app_version(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_update_app_version_async_use_cached_wrapped_rpc(
+    transport: str = "grpc_asyncio",
+):
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method_async.wrap_method") as wrapper_fn:
+        client = AgentServiceAsyncClient(
+            credentials=async_anonymous_credentials(),
+            transport=transport,
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._client._transport.update_app_version
+            in client._client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.AsyncMock()
+        mock_rpc.return_value = mock.Mock()
+        client._client._transport._wrapped_methods[
+            client._client._transport.update_app_version
+        ] = mock_rpc
+
+        request = {}
+        await client.update_app_version(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        await client.update_app_version(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        agent_service.UpdateAppVersionRequest(),
+        {},
+    ],
+)
+async def test_update_app_version_async(request_type, transport: str = "grpc_asyncio"):
+    client = AgentServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_app_version), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            gcc_app_version.AppVersion(
+                name="name_value",
+                display_name="display_name_value",
+                description="description_value",
+                creator="creator_value",
+                etag="etag_value",
+            )
+        )
+        response = await client.update_app_version(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        request = agent_service.UpdateAppVersionRequest()
+        assert args[0] == request
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, gcc_app_version.AppVersion)
+    assert response.name == "name_value"
+    assert response.display_name == "display_name_value"
+    assert response.description == "description_value"
+    assert response.creator == "creator_value"
+    assert response.etag == "etag_value"
+
+
+def test_update_app_version_field_headers():
+    client = AgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = agent_service.UpdateAppVersionRequest()
+
+    request.app_version.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_app_version), "__call__"
+    ) as call:
+        call.return_value = gcc_app_version.AppVersion()
+        client.update_app_version(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "app_version.name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_update_app_version_field_headers_async():
+    client = AgentServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = agent_service.UpdateAppVersionRequest()
+
+    request.app_version.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_app_version), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            gcc_app_version.AppVersion()
+        )
+        await client.update_app_version(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "app_version.name=name_value",
+    ) in kw["metadata"]
+
+
+def test_update_app_version_flattened():
+    client = AgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_app_version), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = gcc_app_version.AppVersion()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.update_app_version(
+            app_version=gcc_app_version.AppVersion(name="name_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].app_version
+        mock_val = gcc_app_version.AppVersion(name="name_value")
+        assert arg == mock_val
+        arg = args[0].update_mask
+        mock_val = field_mask_pb2.FieldMask(paths=["paths_value"])
+        assert arg == mock_val
+
+
+def test_update_app_version_flattened_error():
+    client = AgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.update_app_version(
+            agent_service.UpdateAppVersionRequest(),
+            app_version=gcc_app_version.AppVersion(name="name_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+
+
+@pytest.mark.asyncio
+async def test_update_app_version_flattened_async():
+    client = AgentServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_app_version), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = gcc_app_version.AppVersion()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            gcc_app_version.AppVersion()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.update_app_version(
+            app_version=gcc_app_version.AppVersion(name="name_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].app_version
+        mock_val = gcc_app_version.AppVersion(name="name_value")
+        assert arg == mock_val
+        arg = args[0].update_mask
+        mock_val = field_mask_pb2.FieldMask(paths=["paths_value"])
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_update_app_version_flattened_error_async():
+    client = AgentServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.update_app_version(
+            agent_service.UpdateAppVersionRequest(),
+            app_version=gcc_app_version.AppVersion(name="name_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
         )
 
 
@@ -29325,6 +29717,184 @@ def test_create_app_version_rest_flattened_error(transport: str = "rest"):
         )
 
 
+def test_update_app_version_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = AgentServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.update_app_version in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.update_app_version] = (
+            mock_rpc
+        )
+
+        request = {}
+        client.update_app_version(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.update_app_version(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_update_app_version_rest_required_fields(
+    request_type=agent_service.UpdateAppVersionRequest,
+):
+    transport_class = transports.AgentServiceRestTransport
+
+    request_init = {}
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseUpdateAppVersion,
+        "_BaseUpdateAppVersion__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(("updateMask",))
+
+    # verify required fields with non-default values are left alone
+
+    client = AgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = gcc_app_version.AppVersion()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "patch",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = gcc_app_version.AppVersion.pb(return_value)
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.update_app_version(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_update_app_version_rest_flattened():
+    client = AgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = gcc_app_version.AppVersion()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "app_version": {
+                "name": "projects/sample1/locations/sample2/apps/sample3/versions/sample4"
+            }
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            app_version=gcc_app_version.AppVersion(name="name_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = gcc_app_version.AppVersion.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.update_app_version(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1beta/{app_version.name=projects/*/locations/*/apps/*/versions/*}"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_update_app_version_rest_flattened_error(transport: str = "rest"):
+    client = AgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.update_app_version(
+            agent_service.UpdateAppVersionRequest(),
+            app_version=gcc_app_version.AppVersion(name="name_value"),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+
+
 def test_delete_app_version_rest_use_cached_wrapped_rpc():
     # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
     # instead of constructing them on each call
@@ -31311,6 +31881,28 @@ def test_create_app_version_empty_call_grpc():
 
 # This test is a coverage failsafe to make sure that totally empty calls,
 # i.e. request == None and no flattened fields passed, work.
+def test_update_app_version_empty_call_grpc():
+    client = AgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_app_version), "__call__"
+    ) as call:
+        call.return_value = gcc_app_version.AppVersion()
+        client.update_app_version(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = agent_service.UpdateAppVersionRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
 def test_delete_app_version_empty_call_grpc():
     client = AgentServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -32023,6 +32615,7 @@ async def test_get_tool_empty_call_grpc_asyncio():
                 execution_type=common.ExecutionType.SYNCHRONOUS,
                 etag="etag_value",
                 generated_summary="generated_summary_value",
+                read_only=True,
             )
         )
         await client.get_tool(request=None)
@@ -32165,6 +32758,7 @@ async def test_create_tool_empty_call_grpc_asyncio():
                 execution_type=common.ExecutionType.SYNCHRONOUS,
                 etag="etag_value",
                 generated_summary="generated_summary_value",
+                read_only=True,
             )
         )
         await client.create_tool(request=None)
@@ -32195,6 +32789,7 @@ async def test_update_tool_empty_call_grpc_asyncio():
                 execution_type=common.ExecutionType.SYNCHRONOUS,
                 etag="etag_value",
                 generated_summary="generated_summary_value",
+                read_only=True,
             )
         )
         await client.update_tool(request=None)
@@ -32410,6 +33005,7 @@ async def test_get_deployment_empty_call_grpc_asyncio():
                 display_name="display_name_value",
                 app_version="app_version_value",
                 etag="etag_value",
+                modality=deployment.Deployment.Modality.MODALITY_TEXT,
             )
         )
         await client.get_deployment(request=None)
@@ -32441,6 +33037,7 @@ async def test_create_deployment_empty_call_grpc_asyncio():
                 display_name="display_name_value",
                 app_version="app_version_value",
                 etag="etag_value",
+                modality=gcc_deployment.Deployment.Modality.MODALITY_TEXT,
             )
         )
         await client.create_deployment(request=None)
@@ -32472,6 +33069,7 @@ async def test_update_deployment_empty_call_grpc_asyncio():
                 display_name="display_name_value",
                 app_version="app_version_value",
                 etag="etag_value",
+                modality=gcc_deployment.Deployment.Modality.MODALITY_TEXT,
             )
         )
         await client.update_deployment(request=None)
@@ -32732,6 +33330,38 @@ async def test_create_app_version_empty_call_grpc_asyncio():
         call.assert_called()
         _, args, _ = call.mock_calls[0]
         request_msg = agent_service.CreateAppVersionRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+@pytest.mark.asyncio
+async def test_update_app_version_empty_call_grpc_asyncio():
+    client = AgentServiceAsyncClient(
+        credentials=async_anonymous_credentials(),
+        transport="grpc_asyncio",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_app_version), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            gcc_app_version.AppVersion(
+                name="name_value",
+                display_name="display_name_value",
+                description="description_value",
+                creator="creator_value",
+                etag="etag_value",
+            )
+        )
+        await client.update_app_version(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = agent_service.UpdateAppVersionRequest()
         assert args[0] == request_msg
 
 
@@ -33217,6 +33847,18 @@ def test_create_app_rest_call_success(request_type):
                 "prebuilt_ambient_sound": "prebuilt_ambient_sound_value",
                 "volume_gain_db": 0.1467,
             },
+            "custom_voice_samples": [
+                {
+                    "name": "name_value",
+                    "voice_sample_gcs_uri": "voice_sample_gcs_uri_value",
+                    "consent_audio_gcs_uri": "consent_audio_gcs_uri_value",
+                    "voice_instruction": "voice_instruction_value",
+                    "preview_audio_content": b"preview_audio_content_blob",
+                    "preview_text": "preview_text_value",
+                    "warnings": [{"message": "message_value", "type_": 1}],
+                    "voice_instruction_mode": 1,
+                }
+            ],
         },
         "logging_settings": {
             "redaction_config": {
@@ -33242,6 +33884,7 @@ def test_create_app_rest_call_success(request_type):
             },
             "evaluation_audio_recording_config": {},
             "metric_analysis_settings": {"llm_metrics_opted_out": True},
+            "required_recording_consent": True,
         },
         "error_handling_settings": {
             "error_handling_strategy": 1,
@@ -33251,7 +33894,11 @@ def test_create_app_rest_call_success(request_type):
             },
             "end_session_config": {"escalate_session": True},
         },
-        "model_settings": {"model": "model_value", "temperature": 0.1198},
+        "model_settings": {
+            "model": "model_value",
+            "temperature": 0.1198,
+            "thinking_level": 1,
+        },
         "tool_execution_mode": 1,
         "evaluation_metrics_thresholds": {
             "golden_evaluation_metrics_thresholds": {
@@ -33398,6 +34045,7 @@ def test_create_app_rest_call_success(request_type):
             "evaluation_run_caching_settings": {"run_caching_mode": 1},
         },
         "validation_errors": ["validation_errors_value1", "validation_errors_value2"],
+        "dashboard_settings": {"default_dashboard": "default_dashboard_value"},
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -33613,6 +34261,18 @@ def test_update_app_rest_call_success(request_type):
                 "prebuilt_ambient_sound": "prebuilt_ambient_sound_value",
                 "volume_gain_db": 0.1467,
             },
+            "custom_voice_samples": [
+                {
+                    "name": "name_value",
+                    "voice_sample_gcs_uri": "voice_sample_gcs_uri_value",
+                    "consent_audio_gcs_uri": "consent_audio_gcs_uri_value",
+                    "voice_instruction": "voice_instruction_value",
+                    "preview_audio_content": b"preview_audio_content_blob",
+                    "preview_text": "preview_text_value",
+                    "warnings": [{"message": "message_value", "type_": 1}],
+                    "voice_instruction_mode": 1,
+                }
+            ],
         },
         "logging_settings": {
             "redaction_config": {
@@ -33638,6 +34298,7 @@ def test_update_app_rest_call_success(request_type):
             },
             "evaluation_audio_recording_config": {},
             "metric_analysis_settings": {"llm_metrics_opted_out": True},
+            "required_recording_consent": True,
         },
         "error_handling_settings": {
             "error_handling_strategy": 1,
@@ -33647,7 +34308,11 @@ def test_update_app_rest_call_success(request_type):
             },
             "end_session_config": {"escalate_session": True},
         },
-        "model_settings": {"model": "model_value", "temperature": 0.1198},
+        "model_settings": {
+            "model": "model_value",
+            "temperature": 0.1198,
+            "thinking_level": 1,
+        },
         "tool_execution_mode": 1,
         "evaluation_metrics_thresholds": {
             "golden_evaluation_metrics_thresholds": {
@@ -33794,6 +34459,7 @@ def test_update_app_rest_call_success(request_type):
             "evaluation_run_caching_settings": {"run_caching_mode": 1},
         },
         "validation_errors": ["validation_errors_value1", "validation_errors_value2"],
+        "dashboard_settings": {"default_dashboard": "default_dashboard_value"},
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -35022,10 +35688,70 @@ def test_create_agent_rest_call_success(request_type):
             "respect_response_interruption_settings": True,
             "language_code_variable": "language_code_variable_value",
         },
+        "remote_a2a_agent": {
+            "a2a_config": {
+                "agent_card": {
+                    "name": "name_value",
+                    "description": "description_value",
+                    "supported_interfaces": [
+                        {
+                            "url": "url_value",
+                            "protocol_binding": "protocol_binding_value",
+                            "tenant": "tenant_value",
+                            "protocol_version": "protocol_version_value",
+                        }
+                    ],
+                    "version": "version_value",
+                    "skills": [
+                        {
+                            "id": "id_value",
+                            "name": "name_value",
+                            "description": "description_value",
+                            "tags": ["tags_value1", "tags_value2"],
+                            "examples": ["examples_value1", "examples_value2"],
+                            "input_modes": ["input_modes_value1", "input_modes_value2"],
+                            "output_modes": [
+                                "output_modes_value1",
+                                "output_modes_value2",
+                            ],
+                        }
+                    ],
+                },
+                "agent_registry": "agent_registry_value",
+                "api_authentication": {
+                    "api_key_config": {
+                        "key_name": "key_name_value",
+                        "api_key_secret_version": "api_key_secret_version_value",
+                        "request_location": 1,
+                    },
+                    "oauth_config": {
+                        "oauth_grant_type": 1,
+                        "client_id": "client_id_value",
+                        "client_secret_version": "client_secret_version_value",
+                        "token_endpoint": "token_endpoint_value",
+                        "scopes": ["scopes_value1", "scopes_value2"],
+                    },
+                    "service_agent_id_token_auth_config": {},
+                    "service_account_auth_config": {
+                        "service_account": "service_account_value",
+                        "scopes": ["scopes_value1", "scopes_value2"],
+                    },
+                    "bearer_token_config": {"token": "token_value"},
+                },
+                "input_variable_mapping": {},
+                "output_variable_mapping": {},
+                "streaming_enabled": True,
+                "context_id": "context_id_value",
+            }
+        },
         "name": "name_value",
         "display_name": "display_name_value",
         "description": "description_value",
-        "model_settings": {"model": "model_value", "temperature": 0.1198},
+        "model_settings": {
+            "model": "model_value",
+            "temperature": 0.1198,
+            "thinking_level": 1,
+        },
         "instruction": "instruction_value",
         "tools": ["tools_value1", "tools_value2"],
         "child_agents": ["child_agents_value1", "child_agents_value2"],
@@ -35298,10 +36024,70 @@ def test_update_agent_rest_call_success(request_type):
             "respect_response_interruption_settings": True,
             "language_code_variable": "language_code_variable_value",
         },
+        "remote_a2a_agent": {
+            "a2a_config": {
+                "agent_card": {
+                    "name": "name_value",
+                    "description": "description_value",
+                    "supported_interfaces": [
+                        {
+                            "url": "url_value",
+                            "protocol_binding": "protocol_binding_value",
+                            "tenant": "tenant_value",
+                            "protocol_version": "protocol_version_value",
+                        }
+                    ],
+                    "version": "version_value",
+                    "skills": [
+                        {
+                            "id": "id_value",
+                            "name": "name_value",
+                            "description": "description_value",
+                            "tags": ["tags_value1", "tags_value2"],
+                            "examples": ["examples_value1", "examples_value2"],
+                            "input_modes": ["input_modes_value1", "input_modes_value2"],
+                            "output_modes": [
+                                "output_modes_value1",
+                                "output_modes_value2",
+                            ],
+                        }
+                    ],
+                },
+                "agent_registry": "agent_registry_value",
+                "api_authentication": {
+                    "api_key_config": {
+                        "key_name": "key_name_value",
+                        "api_key_secret_version": "api_key_secret_version_value",
+                        "request_location": 1,
+                    },
+                    "oauth_config": {
+                        "oauth_grant_type": 1,
+                        "client_id": "client_id_value",
+                        "client_secret_version": "client_secret_version_value",
+                        "token_endpoint": "token_endpoint_value",
+                        "scopes": ["scopes_value1", "scopes_value2"],
+                    },
+                    "service_agent_id_token_auth_config": {},
+                    "service_account_auth_config": {
+                        "service_account": "service_account_value",
+                        "scopes": ["scopes_value1", "scopes_value2"],
+                    },
+                    "bearer_token_config": {"token": "token_value"},
+                },
+                "input_variable_mapping": {},
+                "output_variable_mapping": {},
+                "streaming_enabled": True,
+                "context_id": "context_id_value",
+            }
+        },
         "name": "projects/sample1/locations/sample2/apps/sample3/agents/sample4",
         "display_name": "display_name_value",
         "description": "description_value",
-        "model_settings": {"model": "model_value", "temperature": 0.1198},
+        "model_settings": {
+            "model": "model_value",
+            "temperature": 0.1198,
+            "thinking_level": 1,
+        },
         "instruction": "instruction_value",
         "tools": ["tools_value1", "tools_value2"],
         "child_agents": ["child_agents_value1", "child_agents_value2"],
@@ -35955,7 +36741,11 @@ def test_create_example_rest_call_success(request_type):
                         "transcript": "transcript_value",
                         "blob": {"mime_type": "mime_type_value", "data": b"data_blob"},
                         "payload": {"fields": {}},
-                        "image": {"mime_type": "mime_type_value", "data": b"data_blob"},
+                        "image": {
+                            "mime_type": "mime_type_value",
+                            "data": b"data_blob",
+                            "alt_text": "alt_text_value",
+                        },
                         "tool_call": {
                             "tool": "tool_value",
                             "toolset_tool": {
@@ -35965,6 +36755,8 @@ def test_create_example_rest_call_success(request_type):
                             "id": "id_value",
                             "display_name": "display_name_value",
                             "args": {},
+                            "parent_tool_call_id": "parent_tool_call_id_value",
+                            "agent_name": "agent_name_value",
                         },
                         "tool_response": {
                             "tool": "tool_value",
@@ -35972,6 +36764,8 @@ def test_create_example_rest_call_success(request_type):
                             "id": "id_value",
                             "display_name": "display_name_value",
                             "response": {},
+                            "parent_tool_call_id": "parent_tool_call_id_value",
+                            "agent_name": "agent_name_value",
                         },
                         "agent_transfer": {
                             "target_agent": "target_agent_value",
@@ -36218,7 +37012,11 @@ def test_update_example_rest_call_success(request_type):
                         "transcript": "transcript_value",
                         "blob": {"mime_type": "mime_type_value", "data": b"data_blob"},
                         "payload": {"fields": {}},
-                        "image": {"mime_type": "mime_type_value", "data": b"data_blob"},
+                        "image": {
+                            "mime_type": "mime_type_value",
+                            "data": b"data_blob",
+                            "alt_text": "alt_text_value",
+                        },
                         "tool_call": {
                             "tool": "tool_value",
                             "toolset_tool": {
@@ -36228,6 +37026,8 @@ def test_update_example_rest_call_success(request_type):
                             "id": "id_value",
                             "display_name": "display_name_value",
                             "args": {},
+                            "parent_tool_call_id": "parent_tool_call_id_value",
+                            "agent_name": "agent_name_value",
                         },
                         "tool_response": {
                             "tool": "tool_value",
@@ -36235,6 +37035,8 @@ def test_update_example_rest_call_success(request_type):
                             "id": "id_value",
                             "display_name": "display_name_value",
                             "response": {},
+                            "parent_tool_call_id": "parent_tool_call_id_value",
+                            "agent_name": "agent_name_value",
                         },
                         "agent_transfer": {
                             "target_agent": "target_agent_value",
@@ -36714,6 +37516,7 @@ def test_get_tool_rest_call_success(request_type):
             execution_type=common.ExecutionType.SYNCHRONOUS,
             etag="etag_value",
             generated_summary="generated_summary_value",
+            read_only=True,
         )
 
         # Wrap the value into a proper Response obj
@@ -36735,6 +37538,7 @@ def test_get_tool_rest_call_success(request_type):
     assert response.execution_type == common.ExecutionType.SYNCHRONOUS
     assert response.etag == "etag_value"
     assert response.generated_summary == "generated_summary_value"
+    assert response.read_only is True
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -37520,6 +38324,7 @@ def test_create_tool_rest_call_success(request_type):
                         "model_settings": {
                             "model": "model_value",
                             "temperature": 0.1198,
+                            "thinking_level": 1,
                         },
                         "prompt": "prompt_value",
                         "disabled": True,
@@ -37533,6 +38338,7 @@ def test_create_tool_rest_call_success(request_type):
                         "grounding_level": 0.16040000000000001,
                         "disabled": True,
                     },
+                    "snippets_config": {"enable_snippets": True, "max_snippets": 1307},
                 }
             ],
             "filter_parameter_behavior": 2,
@@ -37614,6 +38420,10 @@ def test_create_tool_rest_call_success(request_type):
                     }
                 ],
             },
+            "api_authentication": {},
+            "stateful_agent": True,
+            "input_variable_mapping": {},
+            "output_variable_mapping": {},
         },
         "name": "name_value",
         "display_name": "display_name_value",
@@ -37627,6 +38437,7 @@ def test_create_tool_rest_call_success(request_type):
             "code_block": {"python_code": "python_code_value"},
             "enable_fake_mode": True,
         },
+        "read_only": True,
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -37706,6 +38517,7 @@ def test_create_tool_rest_call_success(request_type):
             execution_type=common.ExecutionType.SYNCHRONOUS,
             etag="etag_value",
             generated_summary="generated_summary_value",
+            read_only=True,
         )
 
         # Wrap the value into a proper Response obj
@@ -37727,6 +38539,7 @@ def test_create_tool_rest_call_success(request_type):
     assert response.execution_type == common.ExecutionType.SYNCHRONOUS
     assert response.etag == "etag_value"
     assert response.generated_summary == "generated_summary_value"
+    assert response.read_only is True
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -37995,6 +38808,7 @@ def test_update_tool_rest_call_success(request_type):
                         "model_settings": {
                             "model": "model_value",
                             "temperature": 0.1198,
+                            "thinking_level": 1,
                         },
                         "prompt": "prompt_value",
                         "disabled": True,
@@ -38008,6 +38822,7 @@ def test_update_tool_rest_call_success(request_type):
                         "grounding_level": 0.16040000000000001,
                         "disabled": True,
                     },
+                    "snippets_config": {"enable_snippets": True, "max_snippets": 1307},
                 }
             ],
             "filter_parameter_behavior": 2,
@@ -38089,6 +38904,10 @@ def test_update_tool_rest_call_success(request_type):
                     }
                 ],
             },
+            "api_authentication": {},
+            "stateful_agent": True,
+            "input_variable_mapping": {},
+            "output_variable_mapping": {},
         },
         "name": "projects/sample1/locations/sample2/apps/sample3/tools/sample4",
         "display_name": "display_name_value",
@@ -38102,6 +38921,7 @@ def test_update_tool_rest_call_success(request_type):
             "code_block": {"python_code": "python_code_value"},
             "enable_fake_mode": True,
         },
+        "read_only": True,
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -38181,6 +39001,7 @@ def test_update_tool_rest_call_success(request_type):
             execution_type=common.ExecutionType.SYNCHRONOUS,
             etag="etag_value",
             generated_summary="generated_summary_value",
+            read_only=True,
         )
 
         # Wrap the value into a proper Response obj
@@ -38202,6 +39023,7 @@ def test_update_tool_rest_call_success(request_type):
     assert response.execution_type == common.ExecutionType.SYNCHRONOUS
     assert response.etag == "etag_value"
     assert response.generated_summary == "generated_summary_value"
+    assert response.read_only is True
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -38708,6 +39530,10 @@ def test_create_guardrail_rest_call_success(request_type):
             ],
             "match_type": 1,
             "disregard_diacritics": True,
+            "sensitive_words_exemptions": [
+                "sensitive_words_exemptions_value1",
+                "sensitive_words_exemptions_value2",
+            ],
         },
         "llm_prompt_security": {
             "default_settings": {
@@ -38715,7 +39541,11 @@ def test_create_guardrail_rest_call_success(request_type):
             },
             "custom_policy": {
                 "max_conversation_messages": 2679,
-                "model_settings": {"model": "model_value", "temperature": 0.1198},
+                "model_settings": {
+                    "model": "model_value",
+                    "temperature": 0.1198,
+                    "thinking_level": 1,
+                },
                 "prompt": "prompt_value",
                 "policy_scope": 1,
                 "fail_open": True,
@@ -38736,6 +39566,7 @@ def test_create_guardrail_rest_call_success(request_type):
             "before_model_callback": {},
             "after_model_callback": {},
         },
+        "supervisor": {"type_": 1, "detection_mode": 1},
         "name": "name_value",
         "display_name": "display_name_value",
         "description": "description_value",
@@ -38978,6 +39809,10 @@ def test_update_guardrail_rest_call_success(request_type):
             ],
             "match_type": 1,
             "disregard_diacritics": True,
+            "sensitive_words_exemptions": [
+                "sensitive_words_exemptions_value1",
+                "sensitive_words_exemptions_value2",
+            ],
         },
         "llm_prompt_security": {
             "default_settings": {
@@ -38985,7 +39820,11 @@ def test_update_guardrail_rest_call_success(request_type):
             },
             "custom_policy": {
                 "max_conversation_messages": 2679,
-                "model_settings": {"model": "model_value", "temperature": 0.1198},
+                "model_settings": {
+                    "model": "model_value",
+                    "temperature": 0.1198,
+                    "thinking_level": 1,
+                },
                 "prompt": "prompt_value",
                 "policy_scope": 1,
                 "fail_open": True,
@@ -39006,6 +39845,7 @@ def test_update_guardrail_rest_call_success(request_type):
             "before_model_callback": {},
             "after_model_callback": {},
         },
+        "supervisor": {"type_": 1, "detection_mode": 1},
         "name": "projects/sample1/locations/sample2/apps/sample3/guardrails/sample4",
         "display_name": "display_name_value",
         "description": "description_value",
@@ -39491,6 +40331,7 @@ def test_get_deployment_rest_call_success(request_type):
             display_name="display_name_value",
             app_version="app_version_value",
             etag="etag_value",
+            modality=deployment.Deployment.Modality.MODALITY_TEXT,
         )
 
         # Wrap the value into a proper Response obj
@@ -39511,6 +40352,7 @@ def test_get_deployment_rest_call_success(request_type):
     assert response.display_name == "display_name_value"
     assert response.app_version == "app_version_value"
     assert response.etag == "etag_value"
+    assert response.modality == deployment.Deployment.Modality.MODALITY_TEXT
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -39684,6 +40526,15 @@ def test_create_deployment_rest_call_success(request_type):
             "auth_code": "auth_code_value",
             "conversation_profile_id": "conversation_profile_id_value",
         },
+        "model_settings": {
+            "model": "model_value",
+            "temperature": 0.1198,
+            "thinking_level": 1,
+        },
+        "modality": 1,
+        "agent_registry_deployment": {
+            "agent_registry_service_name": "agent_registry_service_name_value"
+        },
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -39762,6 +40613,7 @@ def test_create_deployment_rest_call_success(request_type):
             display_name="display_name_value",
             app_version="app_version_value",
             etag="etag_value",
+            modality=gcc_deployment.Deployment.Modality.MODALITY_TEXT,
         )
 
         # Wrap the value into a proper Response obj
@@ -39782,6 +40634,7 @@ def test_create_deployment_rest_call_success(request_type):
     assert response.display_name == "display_name_value"
     assert response.app_version == "app_version_value"
     assert response.etag == "etag_value"
+    assert response.modality == gcc_deployment.Deployment.Modality.MODALITY_TEXT
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -39964,6 +40817,15 @@ def test_update_deployment_rest_call_success(request_type):
             "auth_code": "auth_code_value",
             "conversation_profile_id": "conversation_profile_id_value",
         },
+        "model_settings": {
+            "model": "model_value",
+            "temperature": 0.1198,
+            "thinking_level": 1,
+        },
+        "modality": 1,
+        "agent_registry_deployment": {
+            "agent_registry_service_name": "agent_registry_service_name_value"
+        },
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -40042,6 +40904,7 @@ def test_update_deployment_rest_call_success(request_type):
             display_name="display_name_value",
             app_version="app_version_value",
             etag="etag_value",
+            modality=gcc_deployment.Deployment.Modality.MODALITY_TEXT,
         )
 
         # Wrap the value into a proper Response obj
@@ -40062,6 +40925,7 @@ def test_update_deployment_rest_call_success(request_type):
     assert response.display_name == "display_name_value"
     assert response.app_version == "app_version_value"
     assert response.etag == "etag_value"
+    assert response.modality == gcc_deployment.Deployment.Modality.MODALITY_TEXT
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -41595,6 +42459,7 @@ def test_create_app_version_rest_call_success(request_type):
         "description": "description_value",
         "creator": "creator_value",
         "create_time": {"seconds": 751, "nanos": 543},
+        "update_time": {},
         "snapshot": {
             "app": {
                 "name": "name_value",
@@ -41625,6 +42490,18 @@ def test_create_app_version_rest_call_success(request_type):
                         "prebuilt_ambient_sound": "prebuilt_ambient_sound_value",
                         "volume_gain_db": 0.1467,
                     },
+                    "custom_voice_samples": [
+                        {
+                            "name": "name_value",
+                            "voice_sample_gcs_uri": "voice_sample_gcs_uri_value",
+                            "consent_audio_gcs_uri": "consent_audio_gcs_uri_value",
+                            "voice_instruction": "voice_instruction_value",
+                            "preview_audio_content": b"preview_audio_content_blob",
+                            "preview_text": "preview_text_value",
+                            "warnings": [{"message": "message_value", "type_": 1}],
+                            "voice_instruction_mode": 1,
+                        }
+                    ],
                 },
                 "logging_settings": {
                     "redaction_config": {
@@ -41650,6 +42527,7 @@ def test_create_app_version_rest_call_success(request_type):
                     },
                     "evaluation_audio_recording_config": {},
                     "metric_analysis_settings": {"llm_metrics_opted_out": True},
+                    "required_recording_consent": True,
                 },
                 "error_handling_settings": {
                     "error_handling_strategy": 1,
@@ -41659,7 +42537,11 @@ def test_create_app_version_rest_call_success(request_type):
                     },
                     "end_session_config": {"escalate_session": True},
                 },
-                "model_settings": {"model": "model_value", "temperature": 0.1198},
+                "model_settings": {
+                    "model": "model_value",
+                    "temperature": 0.1198,
+                    "thinking_level": 1,
+                },
                 "tool_execution_mode": 1,
                 "evaluation_metrics_thresholds": {
                     "golden_evaluation_metrics_thresholds": {
@@ -41814,6 +42696,7 @@ def test_create_app_version_rest_call_success(request_type):
                     "validation_errors_value1",
                     "validation_errors_value2",
                 ],
+                "dashboard_settings": {"default_dashboard": "default_dashboard_value"},
             },
             "agents": [
                 {
@@ -41826,6 +42709,68 @@ def test_create_app_version_rest_call_success(request_type):
                         "output_variable_mapping": {},
                         "respect_response_interruption_settings": True,
                         "language_code_variable": "language_code_variable_value",
+                    },
+                    "remote_a2a_agent": {
+                        "a2a_config": {
+                            "agent_card": {
+                                "name": "name_value",
+                                "description": "description_value",
+                                "supported_interfaces": [
+                                    {
+                                        "url": "url_value",
+                                        "protocol_binding": "protocol_binding_value",
+                                        "tenant": "tenant_value",
+                                        "protocol_version": "protocol_version_value",
+                                    }
+                                ],
+                                "version": "version_value",
+                                "skills": [
+                                    {
+                                        "id": "id_value",
+                                        "name": "name_value",
+                                        "description": "description_value",
+                                        "tags": ["tags_value1", "tags_value2"],
+                                        "examples": [
+                                            "examples_value1",
+                                            "examples_value2",
+                                        ],
+                                        "input_modes": [
+                                            "input_modes_value1",
+                                            "input_modes_value2",
+                                        ],
+                                        "output_modes": [
+                                            "output_modes_value1",
+                                            "output_modes_value2",
+                                        ],
+                                    }
+                                ],
+                            },
+                            "agent_registry": "agent_registry_value",
+                            "api_authentication": {
+                                "api_key_config": {
+                                    "key_name": "key_name_value",
+                                    "api_key_secret_version": "api_key_secret_version_value",
+                                    "request_location": 1,
+                                },
+                                "oauth_config": {
+                                    "oauth_grant_type": 1,
+                                    "client_id": "client_id_value",
+                                    "client_secret_version": "client_secret_version_value",
+                                    "token_endpoint": "token_endpoint_value",
+                                    "scopes": ["scopes_value1", "scopes_value2"],
+                                },
+                                "service_agent_id_token_auth_config": {},
+                                "service_account_auth_config": {
+                                    "service_account": "service_account_value",
+                                    "scopes": ["scopes_value1", "scopes_value2"],
+                                },
+                                "bearer_token_config": {"token": "token_value"},
+                            },
+                            "input_variable_mapping": {},
+                            "output_variable_mapping": {},
+                            "streaming_enabled": True,
+                            "context_id": "context_id_value",
+                        }
                     },
                     "name": "name_value",
                     "display_name": "display_name_value",
@@ -41891,26 +42836,7 @@ def test_create_app_version_rest_call_success(request_type):
                         "open_api_schema": "open_api_schema_value",
                         "name": "name_value",
                         "description": "description_value",
-                        "api_authentication": {
-                            "api_key_config": {
-                                "key_name": "key_name_value",
-                                "api_key_secret_version": "api_key_secret_version_value",
-                                "request_location": 1,
-                            },
-                            "oauth_config": {
-                                "oauth_grant_type": 1,
-                                "client_id": "client_id_value",
-                                "client_secret_version": "client_secret_version_value",
-                                "token_endpoint": "token_endpoint_value",
-                                "scopes": ["scopes_value1", "scopes_value2"],
-                            },
-                            "service_agent_id_token_auth_config": {},
-                            "service_account_auth_config": {
-                                "service_account": "service_account_value",
-                                "scopes": ["scopes_value1", "scopes_value2"],
-                            },
-                            "bearer_token_config": {"token": "token_value"},
-                        },
+                        "api_authentication": {},
                         "tls_config": {
                             "ca_certs": [
                                 {
@@ -42039,6 +42965,10 @@ def test_create_app_version_rest_call_success(request_type):
                                     "grounding_level": 0.16040000000000001,
                                     "disabled": True,
                                 },
+                                "snippets_config": {
+                                    "enable_snippets": True,
+                                    "max_snippets": 1307,
+                                },
                             }
                         ],
                         "filter_parameter_behavior": 2,
@@ -42099,36 +43029,11 @@ def test_create_app_version_rest_call_success(request_type):
                     "remote_agent_tool": {
                         "name": "name_value",
                         "description": "description_value",
-                        "agent_card": {
-                            "name": "name_value",
-                            "description": "description_value",
-                            "supported_interfaces": [
-                                {
-                                    "url": "url_value",
-                                    "protocol_binding": "protocol_binding_value",
-                                    "tenant": "tenant_value",
-                                    "protocol_version": "protocol_version_value",
-                                }
-                            ],
-                            "version": "version_value",
-                            "skills": [
-                                {
-                                    "id": "id_value",
-                                    "name": "name_value",
-                                    "description": "description_value",
-                                    "tags": ["tags_value1", "tags_value2"],
-                                    "examples": ["examples_value1", "examples_value2"],
-                                    "input_modes": [
-                                        "input_modes_value1",
-                                        "input_modes_value2",
-                                    ],
-                                    "output_modes": [
-                                        "output_modes_value1",
-                                        "output_modes_value2",
-                                    ],
-                                }
-                            ],
-                        },
+                        "agent_card": {},
+                        "api_authentication": {},
+                        "stateful_agent": True,
+                        "input_variable_mapping": {},
+                        "output_variable_mapping": {},
                     },
                     "name": "name_value",
                     "display_name": "display_name_value",
@@ -42142,6 +43047,7 @@ def test_create_app_version_rest_call_success(request_type):
                         "code_block": {"python_code": "python_code_value"},
                         "enable_fake_mode": True,
                     },
+                    "read_only": True,
                 }
             ],
             "examples": [
@@ -42165,6 +43071,7 @@ def test_create_app_version_rest_call_success(request_type):
                                     "image": {
                                         "mime_type": "mime_type_value",
                                         "data": b"data_blob",
+                                        "alt_text": "alt_text_value",
                                     },
                                     "tool_call": {
                                         "tool": "tool_value",
@@ -42175,6 +43082,8 @@ def test_create_app_version_rest_call_success(request_type):
                                         "id": "id_value",
                                         "display_name": "display_name_value",
                                         "args": {},
+                                        "parent_tool_call_id": "parent_tool_call_id_value",
+                                        "agent_name": "agent_name_value",
                                     },
                                     "tool_response": {
                                         "tool": "tool_value",
@@ -42182,6 +43091,8 @@ def test_create_app_version_rest_call_success(request_type):
                                         "id": "id_value",
                                         "display_name": "display_name_value",
                                         "response": {},
+                                        "parent_tool_call_id": "parent_tool_call_id_value",
+                                        "agent_name": "agent_name_value",
                                     },
                                     "agent_transfer": {
                                         "target_agent": "target_agent_value",
@@ -42217,6 +43128,10 @@ def test_create_app_version_rest_call_success(request_type):
                         ],
                         "match_type": 1,
                         "disregard_diacritics": True,
+                        "sensitive_words_exemptions": [
+                            "sensitive_words_exemptions_value1",
+                            "sensitive_words_exemptions_value2",
+                        ],
                     },
                     "llm_prompt_security": {
                         "default_settings": {
@@ -42242,6 +43157,7 @@ def test_create_app_version_rest_call_success(request_type):
                         "before_model_callback": {},
                         "after_model_callback": {},
                     },
+                    "supervisor": {"type_": 1, "detection_mode": 1},
                     "name": "name_value",
                     "display_name": "display_name_value",
                     "description": "description_value",
@@ -42460,6 +43376,989 @@ def test_create_app_version_rest_interceptors(null_interceptor):
         post_with_metadata.return_value = gcc_app_version.AppVersion(), metadata
 
         client.create_app_version(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_update_app_version_rest_bad_request(
+    request_type=agent_service.UpdateAppVersionRequest,
+):
+    client = AgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "app_version": {
+            "name": "projects/sample1/locations/sample2/apps/sample3/versions/sample4"
+        }
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.update_app_version(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        agent_service.UpdateAppVersionRequest,
+        dict,
+    ],
+)
+def test_update_app_version_rest_call_success(request_type):
+    client = AgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "app_version": {
+            "name": "projects/sample1/locations/sample2/apps/sample3/versions/sample4"
+        }
+    }
+    request_init["app_version"] = {
+        "name": "projects/sample1/locations/sample2/apps/sample3/versions/sample4",
+        "display_name": "display_name_value",
+        "description": "description_value",
+        "creator": "creator_value",
+        "create_time": {"seconds": 751, "nanos": 543},
+        "update_time": {},
+        "snapshot": {
+            "app": {
+                "name": "name_value",
+                "display_name": "display_name_value",
+                "description": "description_value",
+                "pinned": True,
+                "root_agent": "root_agent_value",
+                "language_settings": {
+                    "default_language_code": "default_language_code_value",
+                    "supported_language_codes": [
+                        "supported_language_codes_value1",
+                        "supported_language_codes_value2",
+                    ],
+                    "enable_multilingual_support": True,
+                    "fallback_action": "fallback_action_value",
+                },
+                "time_zone_settings": {"time_zone": "time_zone_value"},
+                "audio_processing_config": {
+                    "synthesize_speech_configs": {},
+                    "barge_in_config": {
+                        "disable_barge_in": True,
+                        "barge_in_awareness": True,
+                    },
+                    "inactivity_timeout": {"seconds": 751, "nanos": 543},
+                    "ambient_sound_config": {
+                        "prebuilt_ambient_noise": 1,
+                        "gcs_uri": "gcs_uri_value",
+                        "prebuilt_ambient_sound": "prebuilt_ambient_sound_value",
+                        "volume_gain_db": 0.1467,
+                    },
+                    "custom_voice_samples": [
+                        {
+                            "name": "name_value",
+                            "voice_sample_gcs_uri": "voice_sample_gcs_uri_value",
+                            "consent_audio_gcs_uri": "consent_audio_gcs_uri_value",
+                            "voice_instruction": "voice_instruction_value",
+                            "preview_audio_content": b"preview_audio_content_blob",
+                            "preview_text": "preview_text_value",
+                            "warnings": [{"message": "message_value", "type_": 1}],
+                            "voice_instruction_mode": 1,
+                        }
+                    ],
+                },
+                "logging_settings": {
+                    "redaction_config": {
+                        "enable_redaction": True,
+                        "inspect_template": "inspect_template_value",
+                        "deidentify_template": "deidentify_template_value",
+                    },
+                    "audio_recording_config": {
+                        "gcs_bucket": "gcs_bucket_value",
+                        "gcs_path_prefix": "gcs_path_prefix_value",
+                    },
+                    "unredacted_audio_recording_config": {},
+                    "bigquery_export_settings": {
+                        "enabled": True,
+                        "project": "project_value",
+                        "dataset": "dataset_value",
+                    },
+                    "unredacted_bigquery_export_settings": {},
+                    "cloud_logging_settings": {"enable_cloud_logging": True},
+                    "conversation_logging_settings": {
+                        "disable_conversation_logging": True,
+                        "retention_window": {},
+                    },
+                    "evaluation_audio_recording_config": {},
+                    "metric_analysis_settings": {"llm_metrics_opted_out": True},
+                    "required_recording_consent": True,
+                },
+                "error_handling_settings": {
+                    "error_handling_strategy": 1,
+                    "fallback_response_config": {
+                        "custom_fallback_messages": {},
+                        "max_fallback_attempts": 2214,
+                    },
+                    "end_session_config": {"escalate_session": True},
+                },
+                "model_settings": {
+                    "model": "model_value",
+                    "temperature": 0.1198,
+                    "thinking_level": 1,
+                },
+                "tool_execution_mode": 1,
+                "evaluation_metrics_thresholds": {
+                    "golden_evaluation_metrics_thresholds": {
+                        "turn_level_metrics_thresholds": {
+                            "semantic_similarity_success_threshold": 3966,
+                            "overall_tool_invocation_correctness_threshold": 0.4833,
+                            "semantic_similarity_channel": 1,
+                        },
+                        "expectation_level_metrics_thresholds": {
+                            "tool_invocation_parameter_correctness_threshold": 0.5037
+                        },
+                        "tool_matching_settings": {"extra_tool_call_behavior": 1},
+                    },
+                    "hallucination_metric_behavior": 1,
+                    "golden_hallucination_metric_behavior": 1,
+                    "scenario_hallucination_metric_behavior": 1,
+                },
+                "variable_declarations": [
+                    {
+                        "name": "name_value",
+                        "description": "description_value",
+                        "schema": {
+                            "type_": 1,
+                            "properties": {},
+                            "required": ["required_value1", "required_value2"],
+                            "description": "description_value",
+                            "items": {},
+                            "nullable": True,
+                            "unique_items": True,
+                            "prefix_items": {},
+                            "additional_properties": {},
+                            "any_of": {},
+                            "enum": ["enum_value1", "enum_value2"],
+                            "default": {
+                                "null_value": 0,
+                                "number_value": 0.1285,
+                                "string_value": "string_value_value",
+                                "bool_value": True,
+                                "struct_value": {"fields": {}},
+                                "list_value": {"values": {}},
+                            },
+                            "ref": "ref_value",
+                            "defs": {},
+                            "title": "title_value",
+                            "min_items": 965,
+                            "max_items": 967,
+                            "minimum": 0.764,
+                            "maximum": 0.766,
+                        },
+                    }
+                ],
+                "predefined_variable_declarations": {},
+                "global_instruction": "global_instruction_value",
+                "guardrails": ["guardrails_value1", "guardrails_value2"],
+                "data_store_settings": {
+                    "engines": [{"name": "name_value", "type_": 1}]
+                },
+                "default_channel_profile": {
+                    "profile_id": "profile_id_value",
+                    "channel_type": 2,
+                    "persona_property": {"persona": 1},
+                    "disable_dtmf": True,
+                    "disable_barge_in_control": True,
+                    "web_widget_config": {
+                        "modality": 1,
+                        "theme": 1,
+                        "web_widget_title": "web_widget_title_value",
+                        "security_settings": {
+                            "enable_public_access": True,
+                            "enable_origin_check": True,
+                            "allowed_origins": [
+                                "allowed_origins_value1",
+                                "allowed_origins_value2",
+                            ],
+                            "enable_recaptcha": True,
+                        },
+                    },
+                    "noise_suppression_level": "noise_suppression_level_value",
+                    "whatsapp_config": {
+                        "waba_id": "waba_id_value",
+                        "phone_number_id": "phone_number_id_value",
+                        "phone_number": "phone_number_value",
+                        "display_name": "display_name_value",
+                        "thumbnail_url": "thumbnail_url_value",
+                        "description": "description_value",
+                    },
+                    "instagram_config": {
+                        "instagram_account_id": "instagram_account_id_value",
+                        "display_name": "display_name_value",
+                        "thumbnail_url": "thumbnail_url_value",
+                        "description": "description_value",
+                    },
+                },
+                "metadata": {},
+                "create_time": {},
+                "update_time": {},
+                "etag": "etag_value",
+                "deployment_count": 1737,
+                "client_certificate_settings": {
+                    "tls_certificate": "tls_certificate_value",
+                    "private_key": "private_key_value",
+                    "passphrase": "passphrase_value",
+                },
+                "vpc_sc_settings": {
+                    "allowed_origins": [
+                        "allowed_origins_value1",
+                        "allowed_origins_value2",
+                    ]
+                },
+                "locked": True,
+                "evaluation_personas": [
+                    {
+                        "name": "name_value",
+                        "description": "description_value",
+                        "display_name": "display_name_value",
+                        "personality": "personality_value",
+                        "speech_config": {
+                            "speaking_rate": 0.1373,
+                            "environment": 3,
+                            "voice_id": "voice_id_value",
+                        },
+                    }
+                ],
+                "evaluation_settings": {
+                    "scenario_conversation_initiator": 1,
+                    "golden_run_method": 1,
+                    "golden_evaluation_tool_call_behaviour": 1,
+                    "scenario_evaluation_tool_call_behaviour": 1,
+                    "metrics_config": {
+                        "golden_metrics_config": {
+                            "semantic_similarity_metrics_config": {
+                                "enable_semantic_similarity_metrics": True
+                            },
+                            "tool_correctness_metrics_config": {
+                                "enable_tool_correctness_metrics": True
+                            },
+                            "step_tool_correctness_metrics_config": {},
+                        },
+                        "scenario_metrics_config": {
+                            "user_goal_met_metrics_config": {
+                                "enable_user_goal_met_metrics": True
+                            },
+                            "expectations_met_metrics_config": {
+                                "enable_expectations_met_metrics": True
+                            },
+                        },
+                    },
+                    "scenario_execution_mode": 1,
+                    "evaluation_run_caching_settings": {"run_caching_mode": 1},
+                },
+                "validation_errors": [
+                    "validation_errors_value1",
+                    "validation_errors_value2",
+                ],
+                "dashboard_settings": {"default_dashboard": "default_dashboard_value"},
+            },
+            "agents": [
+                {
+                    "llm_agent": {},
+                    "remote_dialogflow_agent": {
+                        "agent": "agent_value",
+                        "flow_id": "flow_id_value",
+                        "environment_id": "environment_id_value",
+                        "input_variable_mapping": {},
+                        "output_variable_mapping": {},
+                        "respect_response_interruption_settings": True,
+                        "language_code_variable": "language_code_variable_value",
+                    },
+                    "remote_a2a_agent": {
+                        "a2a_config": {
+                            "agent_card": {
+                                "name": "name_value",
+                                "description": "description_value",
+                                "supported_interfaces": [
+                                    {
+                                        "url": "url_value",
+                                        "protocol_binding": "protocol_binding_value",
+                                        "tenant": "tenant_value",
+                                        "protocol_version": "protocol_version_value",
+                                    }
+                                ],
+                                "version": "version_value",
+                                "skills": [
+                                    {
+                                        "id": "id_value",
+                                        "name": "name_value",
+                                        "description": "description_value",
+                                        "tags": ["tags_value1", "tags_value2"],
+                                        "examples": [
+                                            "examples_value1",
+                                            "examples_value2",
+                                        ],
+                                        "input_modes": [
+                                            "input_modes_value1",
+                                            "input_modes_value2",
+                                        ],
+                                        "output_modes": [
+                                            "output_modes_value1",
+                                            "output_modes_value2",
+                                        ],
+                                    }
+                                ],
+                            },
+                            "agent_registry": "agent_registry_value",
+                            "api_authentication": {
+                                "api_key_config": {
+                                    "key_name": "key_name_value",
+                                    "api_key_secret_version": "api_key_secret_version_value",
+                                    "request_location": 1,
+                                },
+                                "oauth_config": {
+                                    "oauth_grant_type": 1,
+                                    "client_id": "client_id_value",
+                                    "client_secret_version": "client_secret_version_value",
+                                    "token_endpoint": "token_endpoint_value",
+                                    "scopes": ["scopes_value1", "scopes_value2"],
+                                },
+                                "service_agent_id_token_auth_config": {},
+                                "service_account_auth_config": {
+                                    "service_account": "service_account_value",
+                                    "scopes": ["scopes_value1", "scopes_value2"],
+                                },
+                                "bearer_token_config": {"token": "token_value"},
+                            },
+                            "input_variable_mapping": {},
+                            "output_variable_mapping": {},
+                            "streaming_enabled": True,
+                            "context_id": "context_id_value",
+                        }
+                    },
+                    "name": "name_value",
+                    "display_name": "display_name_value",
+                    "description": "description_value",
+                    "model_settings": {},
+                    "instruction": "instruction_value",
+                    "tools": ["tools_value1", "tools_value2"],
+                    "child_agents": ["child_agents_value1", "child_agents_value2"],
+                    "before_agent_callbacks": [
+                        {
+                            "python_code": "python_code_value",
+                            "description": "description_value",
+                            "disabled": True,
+                            "proactive_execution_enabled": True,
+                        }
+                    ],
+                    "after_agent_callbacks": {},
+                    "before_model_callbacks": {},
+                    "after_model_callbacks": {},
+                    "before_tool_callbacks": {},
+                    "after_tool_callbacks": {},
+                    "create_time": {},
+                    "update_time": {},
+                    "guardrails": ["guardrails_value1", "guardrails_value2"],
+                    "etag": "etag_value",
+                    "toolsets": [
+                        {
+                            "toolset": "toolset_value",
+                            "tool_ids": ["tool_ids_value1", "tool_ids_value2"],
+                        }
+                    ],
+                    "generated_summary": "generated_summary_value",
+                    "transfer_rules": [
+                        {
+                            "deterministic_transfer": {
+                                "expression_condition": {
+                                    "expression": "expression_value"
+                                },
+                                "python_code_condition": {
+                                    "python_code": "python_code_value"
+                                },
+                            },
+                            "disable_planner_transfer": {"expression_condition": {}},
+                            "child_agent": "child_agent_value",
+                            "direction": 1,
+                        }
+                    ],
+                    "validation_errors": [
+                        "validation_errors_value1",
+                        "validation_errors_value2",
+                    ],
+                }
+            ],
+            "tools": [
+                {
+                    "client_function": {
+                        "name": "name_value",
+                        "description": "description_value",
+                        "parameters": {},
+                        "response": {},
+                    },
+                    "open_api_tool": {
+                        "open_api_schema": "open_api_schema_value",
+                        "name": "name_value",
+                        "description": "description_value",
+                        "api_authentication": {},
+                        "tls_config": {
+                            "ca_certs": [
+                                {
+                                    "display_name": "display_name_value",
+                                    "cert": b"cert_blob",
+                                }
+                            ]
+                        },
+                        "service_directory_config": {"service": "service_value"},
+                        "ignore_unknown_fields_": True,
+                        "url": "url_value",
+                    },
+                    "google_search_tool": {
+                        "name": "name_value",
+                        "description": "description_value",
+                        "context_urls": ["context_urls_value1", "context_urls_value2"],
+                        "preferred_domains": [
+                            "preferred_domains_value1",
+                            "preferred_domains_value2",
+                        ],
+                        "exclude_domains": [
+                            "exclude_domains_value1",
+                            "exclude_domains_value2",
+                        ],
+                        "prompt_config": {
+                            "text_prompt": "text_prompt_value",
+                            "voice_prompt": "voice_prompt_value",
+                        },
+                    },
+                    "connector_tool": {
+                        "connection": "connection_value",
+                        "action": {
+                            "connection_action_id": "connection_action_id_value",
+                            "entity_operation": {
+                                "entity_id": "entity_id_value",
+                                "operation": 1,
+                            },
+                            "input_fields": [
+                                "input_fields_value1",
+                                "input_fields_value2",
+                            ],
+                            "output_fields": [
+                                "output_fields_value1",
+                                "output_fields_value2",
+                            ],
+                        },
+                        "auth_config": {
+                            "oauth2_auth_code_config": {
+                                "oauth_token": "oauth_token_value"
+                            },
+                            "oauth2_jwt_bearer_config": {
+                                "issuer": "issuer_value",
+                                "subject": "subject_value",
+                                "client_key": "client_key_value",
+                            },
+                        },
+                        "name": "name_value",
+                        "description": "description_value",
+                    },
+                    "data_store_tool": {
+                        "data_store_source": {
+                            "filter": "filter_value",
+                            "data_store": {
+                                "name": "name_value",
+                                "type_": 1,
+                                "document_processing_mode": 1,
+                                "display_name": "display_name_value",
+                                "create_time": {},
+                                "connector_config": {
+                                    "collection": "collection_value",
+                                    "collection_display_name": "collection_display_name_value",
+                                    "data_source": "data_source_value",
+                                },
+                            },
+                        },
+                        "engine_source": {
+                            "engine": "engine_value",
+                            "data_store_sources": {},
+                            "filter": "filter_value",
+                        },
+                        "name": "name_value",
+                        "description": "description_value",
+                        "boost_specs": [
+                            {
+                                "data_stores": [
+                                    "data_stores_value1",
+                                    "data_stores_value2",
+                                ],
+                                "spec": [
+                                    {
+                                        "condition_boost_specs": [
+                                            {
+                                                "condition": "condition_value",
+                                                "boost": 0.551,
+                                                "boost_control_spec": {
+                                                    "field_name": "field_name_value",
+                                                    "attribute_type": 1,
+                                                    "interpolation_type": 1,
+                                                    "control_points": [
+                                                        {
+                                                            "attribute_value": "attribute_value_value",
+                                                            "boost_amount": 0.1306,
+                                                        }
+                                                    ],
+                                                },
+                                            }
+                                        ]
+                                    }
+                                ],
+                            }
+                        ],
+                        "modality_configs": [
+                            {
+                                "modality_type": 1,
+                                "rewriter_config": {
+                                    "model_settings": {},
+                                    "prompt": "prompt_value",
+                                    "disabled": True,
+                                },
+                                "summarization_config": {
+                                    "model_settings": {},
+                                    "prompt": "prompt_value",
+                                    "disabled": True,
+                                },
+                                "grounding_config": {
+                                    "grounding_level": 0.16040000000000001,
+                                    "disabled": True,
+                                },
+                                "snippets_config": {
+                                    "enable_snippets": True,
+                                    "max_snippets": 1307,
+                                },
+                            }
+                        ],
+                        "filter_parameter_behavior": 2,
+                    },
+                    "python_function": {
+                        "name": "name_value",
+                        "python_code": "python_code_value",
+                        "description": "description_value",
+                        "service_directory_config": {},
+                    },
+                    "mcp_tool": {
+                        "name": "name_value",
+                        "name_override": "name_override_value",
+                        "description": "description_value",
+                        "input_schema": {},
+                        "output_schema": {},
+                        "server_address": "server_address_value",
+                        "api_authentication": {},
+                        "tls_config": {},
+                        "service_directory_config": {},
+                        "custom_headers": {},
+                        "state": 1,
+                    },
+                    "file_search_tool": {
+                        "corpus_type": 1,
+                        "name": "name_value",
+                        "description": "description_value",
+                        "file_corpus": "file_corpus_value",
+                    },
+                    "system_tool": {
+                        "name": "name_value",
+                        "description": "description_value",
+                    },
+                    "agent_tool": {
+                        "name": "name_value",
+                        "description": "description_value",
+                        "agent": "agent_value",
+                    },
+                    "widget_tool": {
+                        "parameters": {},
+                        "name": "name_value",
+                        "description": "description_value",
+                        "widget_type": 1,
+                        "ui_config": {},
+                        "data_mapping": {
+                            "source_tool_name": "source_tool_name_value",
+                            "field_mappings": {},
+                            "python_function": {},
+                            "mode": 1,
+                            "python_script": "python_script_value",
+                        },
+                        "text_response_config": {
+                            "type_": 1,
+                            "static_text": "static_text_value",
+                            "text_response_instruction": "text_response_instruction_value",
+                        },
+                    },
+                    "remote_agent_tool": {
+                        "name": "name_value",
+                        "description": "description_value",
+                        "agent_card": {},
+                        "api_authentication": {},
+                        "stateful_agent": True,
+                        "input_variable_mapping": {},
+                        "output_variable_mapping": {},
+                    },
+                    "name": "name_value",
+                    "display_name": "display_name_value",
+                    "execution_type": 1,
+                    "timeout": {},
+                    "create_time": {},
+                    "update_time": {},
+                    "etag": "etag_value",
+                    "generated_summary": "generated_summary_value",
+                    "tool_fake_config": {
+                        "code_block": {"python_code": "python_code_value"},
+                        "enable_fake_mode": True,
+                    },
+                    "read_only": True,
+                }
+            ],
+            "examples": [
+                {
+                    "name": "name_value",
+                    "display_name": "display_name_value",
+                    "description": "description_value",
+                    "entry_agent": "entry_agent_value",
+                    "messages": [
+                        {
+                            "role": "role_value",
+                            "chunks": [
+                                {
+                                    "text": "text_value",
+                                    "transcript": "transcript_value",
+                                    "blob": {
+                                        "mime_type": "mime_type_value",
+                                        "data": b"data_blob",
+                                    },
+                                    "payload": {},
+                                    "image": {
+                                        "mime_type": "mime_type_value",
+                                        "data": b"data_blob",
+                                        "alt_text": "alt_text_value",
+                                    },
+                                    "tool_call": {
+                                        "tool": "tool_value",
+                                        "toolset_tool": {
+                                            "toolset": "toolset_value",
+                                            "tool_id": "tool_id_value",
+                                        },
+                                        "id": "id_value",
+                                        "display_name": "display_name_value",
+                                        "args": {},
+                                        "parent_tool_call_id": "parent_tool_call_id_value",
+                                        "agent_name": "agent_name_value",
+                                    },
+                                    "tool_response": {
+                                        "tool": "tool_value",
+                                        "toolset_tool": {},
+                                        "id": "id_value",
+                                        "display_name": "display_name_value",
+                                        "response": {},
+                                        "parent_tool_call_id": "parent_tool_call_id_value",
+                                        "agent_name": "agent_name_value",
+                                    },
+                                    "agent_transfer": {
+                                        "target_agent": "target_agent_value",
+                                        "display_name": "display_name_value",
+                                    },
+                                    "updated_variables": {},
+                                    "default_variables": {},
+                                }
+                            ],
+                            "event_time": {},
+                        }
+                    ],
+                    "create_time": {},
+                    "update_time": {},
+                    "invalid": True,
+                    "etag": "etag_value",
+                }
+            ],
+            "guardrails": [
+                {
+                    "content_filter": {
+                        "banned_contents": [
+                            "banned_contents_value1",
+                            "banned_contents_value2",
+                        ],
+                        "banned_contents_in_user_input": [
+                            "banned_contents_in_user_input_value1",
+                            "banned_contents_in_user_input_value2",
+                        ],
+                        "banned_contents_in_agent_response": [
+                            "banned_contents_in_agent_response_value1",
+                            "banned_contents_in_agent_response_value2",
+                        ],
+                        "match_type": 1,
+                        "disregard_diacritics": True,
+                        "sensitive_words_exemptions": [
+                            "sensitive_words_exemptions_value1",
+                            "sensitive_words_exemptions_value2",
+                        ],
+                    },
+                    "llm_prompt_security": {
+                        "default_settings": {
+                            "default_prompt_template": "default_prompt_template_value"
+                        },
+                        "custom_policy": {
+                            "max_conversation_messages": 2679,
+                            "model_settings": {},
+                            "prompt": "prompt_value",
+                            "policy_scope": 1,
+                            "fail_open": True,
+                            "allow_short_utterance": True,
+                        },
+                        "fail_open": True,
+                    },
+                    "llm_policy": {},
+                    "model_safety": {
+                        "safety_settings": [{"category": 1, "threshold": 1}]
+                    },
+                    "code_callback": {
+                        "before_agent_callback": {},
+                        "after_agent_callback": {},
+                        "before_model_callback": {},
+                        "after_model_callback": {},
+                    },
+                    "supervisor": {"type_": 1, "detection_mode": 1},
+                    "name": "name_value",
+                    "display_name": "display_name_value",
+                    "description": "description_value",
+                    "enabled": True,
+                    "action": {
+                        "respond_immediately": {
+                            "responses": [{"text": "text_value", "disabled": True}]
+                        },
+                        "transfer_agent": {"agent": "agent_value"},
+                        "generative_answer": {"prompt": "prompt_value"},
+                    },
+                    "create_time": {},
+                    "update_time": {},
+                    "etag": "etag_value",
+                }
+            ],
+            "toolsets": [
+                {
+                    "mcp_toolset": {
+                        "server_address": "server_address_value",
+                        "api_authentication": {},
+                        "service_directory_config": {},
+                        "tls_config": {},
+                        "custom_headers": {},
+                        "tool_overrides": [
+                            {
+                                "tool": "tool_value",
+                                "name_override": "name_override_value",
+                                "description_override": "description_override_value",
+                                "snapshot": {
+                                    "description": "description_value",
+                                    "input_schema": {},
+                                    "output_schema": {},
+                                },
+                            }
+                        ],
+                    },
+                    "open_api_toolset": {
+                        "open_api_schema": "open_api_schema_value",
+                        "api_authentication": {},
+                        "tls_config": {},
+                        "service_directory_config": {},
+                        "ignore_unknown_fields_": True,
+                        "url": "url_value",
+                    },
+                    "connector_toolset": {
+                        "connection": "connection_value",
+                        "auth_config": {},
+                        "connector_actions": {},
+                    },
+                    "name": "name_value",
+                    "display_name": "display_name_value",
+                    "description": "description_value",
+                    "timeout": {},
+                    "create_time": {},
+                    "update_time": {},
+                    "etag": "etag_value",
+                    "execution_type": 1,
+                    "tool_fake_config": {},
+                }
+            ],
+        },
+        "etag": "etag_value",
+    }
+    # The version of a generated dependency at test runtime may differ from the version used during generation.
+    # Delete any fields which are not present in the current runtime dependency
+    # See https://github.com/googleapis/gapic-generator-python/issues/1748
+
+    # Determine if the message type is proto-plus or protobuf
+    test_field = agent_service.UpdateAppVersionRequest.meta.fields["app_version"]
+
+    def get_message_fields(field):
+        # Given a field which is a message (composite type), return a list with
+        # all the fields of the message.
+        # If the field is not a composite type, return an empty list.
+        message_fields = []
+
+        if hasattr(field, "message") and field.message:
+            is_field_type_proto_plus_type = not hasattr(field.message, "DESCRIPTOR")
+
+            if is_field_type_proto_plus_type:
+                message_fields = field.message.meta.fields.values()
+            # Add `# pragma: NO COVER` because there may not be any `*_pb2` field types
+            else:  # pragma: NO COVER
+                message_fields = field.message.DESCRIPTOR.fields
+        return message_fields
+
+    runtime_nested_fields = [
+        (field.name, nested_field.name)
+        for field in get_message_fields(test_field)
+        for nested_field in get_message_fields(field)
+    ]
+
+    subfields_not_in_runtime = []
+
+    # For each item in the sample request, create a list of sub fields which are not present at runtime
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for field, value in request_init["app_version"].items():  # pragma: NO COVER
+        result = None
+        is_repeated = False
+        # For repeated fields
+        if isinstance(value, list) and len(value):
+            is_repeated = True
+            result = value[0]
+        # For fields where the type is another message
+        if isinstance(value, dict):
+            result = value
+
+        if result and hasattr(result, "keys"):
+            for subfield in result.keys():
+                if (field, subfield) not in runtime_nested_fields:
+                    subfields_not_in_runtime.append(
+                        {
+                            "field": field,
+                            "subfield": subfield,
+                            "is_repeated": is_repeated,
+                        }
+                    )
+
+    # Remove fields from the sample request which are not present in the runtime version of the dependency
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for subfield_to_delete in subfields_not_in_runtime:  # pragma: NO COVER
+        field = subfield_to_delete.get("field")
+        field_repeated = subfield_to_delete.get("is_repeated")
+        subfield = subfield_to_delete.get("subfield")
+        if subfield:
+            if field_repeated:
+                for i in range(0, len(request_init["app_version"][field])):
+                    del request_init["app_version"][field][i][subfield]
+            else:
+                del request_init["app_version"][field][subfield]
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = gcc_app_version.AppVersion(
+            name="name_value",
+            display_name="display_name_value",
+            description="description_value",
+            creator="creator_value",
+            etag="etag_value",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = gcc_app_version.AppVersion.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.update_app_version(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, gcc_app_version.AppVersion)
+    assert response.name == "name_value"
+    assert response.display_name == "display_name_value"
+    assert response.description == "description_value"
+    assert response.creator == "creator_value"
+    assert response.etag == "etag_value"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_update_app_version_rest_interceptors(null_interceptor):
+    transport = transports.AgentServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.AgentServiceRestInterceptor(),
+    )
+    client = AgentServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.AgentServiceRestInterceptor, "post_update_app_version"
+        ) as post,
+        mock.patch.object(
+            transports.AgentServiceRestInterceptor,
+            "post_update_app_version_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.AgentServiceRestInterceptor, "pre_update_app_version"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = agent_service.UpdateAppVersionRequest.pb(
+            agent_service.UpdateAppVersionRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = gcc_app_version.AppVersion.to_json(gcc_app_version.AppVersion())
+        req.return_value.content = return_value
+
+        request = agent_service.UpdateAppVersionRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = gcc_app_version.AppVersion()
+        post_with_metadata.return_value = gcc_app_version.AppVersion(), metadata
+
+        client.update_app_version(
             request,
             metadata=[
                 ("key", "val"),
@@ -44400,6 +46299,27 @@ def test_create_app_version_empty_call_rest():
 
 # This test is a coverage failsafe to make sure that totally empty calls,
 # i.e. request == None and no flattened fields passed, work.
+def test_update_app_version_empty_call_rest():
+    client = AgentServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_app_version), "__call__"
+    ) as call:
+        client.update_app_version(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = agent_service.UpdateAppVersionRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
 def test_delete_app_version_empty_call_rest():
     client = AgentServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -44595,6 +46515,7 @@ def test_agent_service_base_transport():
         "list_app_versions",
         "get_app_version",
         "create_app_version",
+        "update_app_version",
         "delete_app_version",
         "restore_app_version",
         "generate_app_resource",
@@ -45021,6 +46942,9 @@ def test_agent_service_client_transport_session_collision(transport_name):
     session1 = client1.transport.create_app_version._session
     session2 = client2.transport.create_app_version._session
     assert session1 != session2
+    session1 = client1.transport.update_app_version._session
+    session2 = client2.transport.update_app_version._session
+    assert session1 != session2
     session1 = client1.transport.delete_app_version._session
     session2 = client2.transport.delete_app_version._session
     assert session1 != session2
@@ -45222,10 +47146,36 @@ def test_parse_agent_path():
     assert expected == actual
 
 
-def test_app_path():
+def test_agent_registry_service_path():
     project = "winkle"
     location = "nautilus"
-    app = "scallop"
+    service = "scallop"
+    expected = "projects/{project}/locations/{location}/services/{service}".format(
+        project=project,
+        location=location,
+        service=service,
+    )
+    actual = AgentServiceClient.agent_registry_service_path(project, location, service)
+    assert expected == actual
+
+
+def test_parse_agent_registry_service_path():
+    expected = {
+        "project": "abalone",
+        "location": "squid",
+        "service": "clam",
+    }
+    path = AgentServiceClient.agent_registry_service_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = AgentServiceClient.parse_agent_registry_service_path(path)
+    assert expected == actual
+
+
+def test_app_path():
+    project = "whelk"
+    location = "octopus"
+    app = "oyster"
     expected = "projects/{project}/locations/{location}/apps/{app}".format(
         project=project,
         location=location,
@@ -45237,9 +47187,9 @@ def test_app_path():
 
 def test_parse_app_path():
     expected = {
-        "project": "abalone",
-        "location": "squid",
-        "app": "clam",
+        "project": "nudibranch",
+        "location": "cuttlefish",
+        "app": "mussel",
     }
     path = AgentServiceClient.app_path(**expected)
 
@@ -45249,10 +47199,10 @@ def test_parse_app_path():
 
 
 def test_app_version_path():
-    project = "whelk"
-    location = "octopus"
-    app = "oyster"
-    version = "nudibranch"
+    project = "winkle"
+    location = "nautilus"
+    app = "scallop"
+    version = "abalone"
     expected = (
         "projects/{project}/locations/{location}/apps/{app}/versions/{version}".format(
             project=project,
@@ -45267,10 +47217,10 @@ def test_app_version_path():
 
 def test_parse_app_version_path():
     expected = {
-        "project": "cuttlefish",
-        "location": "mussel",
-        "app": "winkle",
-        "version": "nautilus",
+        "project": "squid",
+        "location": "clam",
+        "app": "whelk",
+        "version": "octopus",
     }
     path = AgentServiceClient.app_version_path(**expected)
 
@@ -45280,10 +47230,10 @@ def test_parse_app_version_path():
 
 
 def test_changelog_path():
-    project = "scallop"
-    location = "abalone"
-    app = "squid"
-    changelog = "clam"
+    project = "oyster"
+    location = "nudibranch"
+    app = "cuttlefish"
+    changelog = "mussel"
     expected = "projects/{project}/locations/{location}/apps/{app}/changelogs/{changelog}".format(
         project=project,
         location=location,
@@ -45296,10 +47246,10 @@ def test_changelog_path():
 
 def test_parse_changelog_path():
     expected = {
-        "project": "whelk",
-        "location": "octopus",
-        "app": "oyster",
-        "changelog": "nudibranch",
+        "project": "winkle",
+        "location": "nautilus",
+        "app": "scallop",
+        "changelog": "abalone",
     }
     path = AgentServiceClient.changelog_path(**expected)
 
@@ -45309,10 +47259,10 @@ def test_parse_changelog_path():
 
 
 def test_conversation_path():
-    project = "cuttlefish"
-    location = "mussel"
-    app = "winkle"
-    conversation = "nautilus"
+    project = "squid"
+    location = "clam"
+    app = "whelk"
+    conversation = "octopus"
     expected = "projects/{project}/locations/{location}/apps/{app}/conversations/{conversation}".format(
         project=project,
         location=location,
@@ -45325,15 +47275,41 @@ def test_conversation_path():
 
 def test_parse_conversation_path():
     expected = {
-        "project": "scallop",
-        "location": "abalone",
-        "app": "squid",
-        "conversation": "clam",
+        "project": "oyster",
+        "location": "nudibranch",
+        "app": "cuttlefish",
+        "conversation": "mussel",
     }
     path = AgentServiceClient.conversation_path(**expected)
 
     # Check that the path construction is reversible.
     actual = AgentServiceClient.parse_conversation_path(path)
+    assert expected == actual
+
+
+def test_dashboard_path():
+    project = "winkle"
+    location = "nautilus"
+    dashboard = "scallop"
+    expected = "projects/{project}/locations/{location}/dashboards/{dashboard}".format(
+        project=project,
+        location=location,
+        dashboard=dashboard,
+    )
+    actual = AgentServiceClient.dashboard_path(project, location, dashboard)
+    assert expected == actual
+
+
+def test_parse_dashboard_path():
+    expected = {
+        "project": "abalone",
+        "location": "squid",
+        "dashboard": "clam",
+    }
+    path = AgentServiceClient.dashboard_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = AgentServiceClient.parse_dashboard_path(path)
     assert expected == actual
 
 

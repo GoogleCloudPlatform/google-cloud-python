@@ -114,14 +114,6 @@ def serialization_options(
     }
 
 
-def reached_max_results(response: Dict[str, Any], max_results: Optional[int]) -> bool:
-    """Return True if an ``ARROW`` ``jobs.query`` response's first page
-    already holds ``max_results`` rows."""
-    return (
-        max_results is not None and int(response.get("pageRowCount", 0)) >= max_results
-    )
-
-
 def _slice_batch(
     batch: "pyarrow.RecordBatch", remaining: Optional[int]
 ) -> Tuple["pyarrow.RecordBatch", Optional[int]]:
@@ -295,8 +287,8 @@ def download_arrow_from_job(
 
     # Step 2: Return early if all results were delivered in the first page
     # response, or if the first page already reached max_results. Only a
-    # pageToken says rows remain: totalRows is 0 when cached results are too
-    # large to return inline.
+    # pageToken says rows remain: BigQuery leaves out totalRows when cached
+    # results are too large to return inline.
     if (job_complete and page_token is None) or remaining == 0:
         if not yielded:
             yield _empty_batch(pa_schema, row_iterator._schema)
