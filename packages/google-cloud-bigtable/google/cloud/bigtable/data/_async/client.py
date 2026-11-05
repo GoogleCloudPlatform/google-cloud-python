@@ -1702,9 +1702,7 @@ class _DataApiTargetAsync(abc.ABC):
             retryable_exceptions=(),
         )
         try:
-            stream = await client.read_rows(
-                row_merger.request, timeout=operation_timeout
-            )
+            stream = client.read_rows(row_merger.request, timeout=operation_timeout)
             chunked_stream = row_merger.chunk_stream(stream)
             results = [a async for a in row_merger.merge_rows(chunked_stream)]
         except Exception as exc:
