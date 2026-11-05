@@ -8,7 +8,7 @@
     ],
     "language": "PYTHON",
     "name": "google-cloud-compute-v1beta",
-    "version": "0.12.9"
+    "version": "0.12.10"
   },
   "snippets": [
     {

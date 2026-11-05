@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/gapic-generator/#history
 
+## [1.44.2](https://github.com/googleapis/google-cloud-python/compare/gapic-generator-v1.44.1...gapic-generator-v1.44.2) (2026-11-05)
+
+
+### Bug Fixes
+
+* **gapic-generator:** default client_options.api_endpoint to transport host for OpenTelemetry spans ([#18869](https://github.com/googleapis/google-cloud-python/issues/18869)) ([10cdc90](https://github.com/googleapis/google-cloud-python/commit/10cdc908c0fbd146ebdb7c170ad5df474344529e))
+
 ## [1.44.1](https://github.com/googleapis/google-cloud-python/compare/gapic-generator-v1.44.0...gapic-generator-v1.44.1) (2026-10-29)
 
 
