@@ -165,6 +165,27 @@ steps:
       echo "[${PACKAGE_NAME}] ${BUDGET_MESSAGE}" >&3
       echo "${BUDGET_MESSAGE}"
 
+      # Compare actual runtime in minutes against the configured weight in PACKAGE_WEIGHTS
+      # (defaulting to 1). Only propose an adjustment when the difference is at least 3 minutes
+      # (>= 15% of the 20-minute budget) to avoid noise from normal test runtime variance.
+      PROPOSED_WEIGHT=$(( (ELAPSED_SECONDS + 30) / 60 ))
+      if [[ ${PROPOSED_WEIGHT} -lt 1 ]]; then
+        PROPOSED_WEIGHT=1
+      fi
+      CONFIGURED_WEIGHT=$(echo "${PACKAGE_WEIGHTS:-}" | tr ' ' '\n' | awk -F: -v package_name="${PACKAGE_NAME}" '
+        $1 == package_name { gsub(/[[:space:]]/, "", $2); if ($2 != "") print $2 }
+      ' | tail -n 1)
+      CONFIGURED_WEIGHT="${CONFIGURED_WEIGHT:-1}"
+      WEIGHT_DIFFERENCE=$(( PROPOSED_WEIGHT - CONFIGURED_WEIGHT ))
+      if [[ ${WEIGHT_DIFFERENCE} -lt 0 ]]; then
+        WEIGHT_DIFFERENCE=$(( -WEIGHT_DIFFERENCE ))
+      fi
+      if [[ ${WEIGHT_DIFFERENCE} -ge 3 ]]; then
+        WEIGHT_MESSAGE="Weight adjustment needed for ${PACKAGE_NAME}: configured=${CONFIGURED_WEIGHT}, proposed=${PROPOSED_WEIGHT} (${PACKAGE_NAME}:${PROPOSED_WEIGHT})"
+        echo "[${PACKAGE_NAME}] ${WEIGHT_MESSAGE}" >&3
+        echo "${WEIGHT_MESSAGE}"
+      fi
+
       # Emit failure details to stdout (captured by run_conditional_tests.sh) only when tests fail
       # so passing runs do not print their logs a second time.
       if [[ ${EXIT_CODE} -ne 0 ]]; then
@@ -207,10 +228,19 @@ substitutions:
   _BUILD_TYPE: 'presubmit'
   _BASE_BRANCH: 'main'
   _TEST_ALL_PACKAGES: 'false'
-  _ENABLED_PACKAGES: 'packages/google-cloud-bigquery-storage'
+  _ENABLED_PACKAGES: >-
+    packages/bigquery-magics
+    packages/google-cloud-bigquery-storage
+    packages/google-cloud-compute
+    packages/google-cloud-datastore
+    packages/google-cloud-dns
+    packages/google-cloud-error-reporting
+    packages/google-cloud-logging
+    packages/google-resumable-media
+    packages/pandas-gbq
+    packages/sqlalchemy-bigquery
   _NOX_SESSION: 'system-3.12'
-  _PACKAGE_WEIGHTS: >-
-    google-cloud-bigquery-storage:5
+  _PACKAGE_WEIGHTS: ''
 
 options:
   machineType: 'E2_HIGHCPU_8'
