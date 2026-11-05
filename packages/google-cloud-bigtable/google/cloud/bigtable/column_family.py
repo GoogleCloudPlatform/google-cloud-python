@@ -14,7 +14,6 @@
 
 """User friendly container for Google Cloud Bigtable Column Family."""
 
-import warnings
 
 from google.api_core.gapic_v1.method import DEFAULT
 
@@ -292,13 +291,6 @@ class ColumnFamily(object):
             :dedent: 4
 
         """
-        warnings.warn(
-            "ColumnFamily.create is deprecated. Use "
-            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
-            "modify_column_families instead.",
-            DeprecationWarning,
-            stacklevel=2,
-        )
         column_family = self.to_pb()
         modification = table_admin_v2_pb2.ModifyColumnFamiliesRequest.Modification(
             id=self.column_family_id, create=column_family
@@ -332,13 +324,6 @@ class ColumnFamily(object):
             Only the GC rule can be updated. By changing the column family ID,
             you will simply be referring to a different column family.
         """
-        warnings.warn(
-            "ColumnFamily.update is deprecated. Use "
-            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
-            "modify_column_families instead.",
-            DeprecationWarning,
-            stacklevel=2,
-        )
         column_family = self.to_pb()
         modification = table_admin_v2_pb2.ModifyColumnFamiliesRequest.Modification(
             id=self.column_family_id, update=column_family
@@ -368,13 +353,6 @@ class ColumnFamily(object):
             :dedent: 4
 
         """
-        warnings.warn(
-            "ColumnFamily.delete is deprecated. Use "
-            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
-            "modify_column_families instead.",
-            DeprecationWarning,
-            stacklevel=2,
-        )
         modification = table_admin_v2_pb2.ModifyColumnFamiliesRequest.Modification(
             id=self.column_family_id, drop=True
         )
