@@ -4,9 +4,7 @@ Python Client for Transcoder
 |stable| |pypi| |versions|
 
 `Transcoder`_: This API converts video files into formats suitable for consumer
-distribution. For more information, see the <a
-href="https://cloud.google.com/transcoder/docs/concepts/overview">Transcoder
-API overview</a>.
+distribution.
 
 - `Client Library Documentation`_
 - `Product Documentation`_

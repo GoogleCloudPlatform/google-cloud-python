@@ -89,6 +89,40 @@ class _BaseCloudRedisClusterRestTransport(CloudRedisClusterTransport):
             api_audience=api_audience,
         )
 
+    class _BaseAddAuthToken:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1beta1/{token_auth_user=projects/*/locations/*/clusters/*/tokenAuthUsers/*}:addAuthToken",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseAddTokenAuthUser:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1beta1/{cluster=projects/*/locations/*/clusters/*}:addTokenAuthUser",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
     class _BaseBackupCluster:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -160,6 +194,22 @@ class _BaseCloudRedisClusterRestTransport(CloudRedisClusterTransport):
             ]
             return http_options
 
+    class _BaseDeleteAuthToken:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "delete",
+                    "uri": "/v1beta1/{name=projects/*/locations/*/clusters/*/tokenAuthUsers/*/authTokens/*}",
+                },
+            ]
+            return http_options
+
     class _BaseDeleteBackup:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -188,6 +238,22 @@ class _BaseCloudRedisClusterRestTransport(CloudRedisClusterTransport):
                 {
                     "method": "delete",
                     "uri": "/v1beta1/{name=projects/*/locations/*/clusters/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseDeleteTokenAuthUser:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "delete",
+                    "uri": "/v1beta1/{name=projects/*/locations/*/clusters/*/tokenAuthUsers/*}",
                 },
             ]
             return http_options
@@ -237,6 +303,22 @@ class _BaseCloudRedisClusterRestTransport(CloudRedisClusterTransport):
                 {
                     "method": "get",
                     "uri": "/v1beta1/{name=projects/*/locations/*/aclPolicies/*/revisions/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseGetAuthToken:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1beta1/{name=projects/*/locations/*/clusters/*/tokenAuthUsers/*/authTokens/*}",
                 },
             ]
             return http_options
@@ -321,6 +403,22 @@ class _BaseCloudRedisClusterRestTransport(CloudRedisClusterTransport):
             ]
             return http_options
 
+    class _BaseGetTokenAuthUser:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1beta1/{name=projects/*/locations/*/clusters/*/tokenAuthUsers/*}",
+                },
+            ]
+            return http_options
+
     class _BaseListAclPolicies:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -349,6 +447,22 @@ class _BaseCloudRedisClusterRestTransport(CloudRedisClusterTransport):
                 {
                     "method": "get",
                     "uri": "/v1beta1/{parent=projects/*/locations/*/aclPolicies/*}/revisions",
+                },
+            ]
+            return http_options
+
+    class _BaseListAuthTokens:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1beta1/{parent=projects/*/locations/*/clusters/*/tokenAuthUsers/*}/authTokens",
                 },
             ]
             return http_options
@@ -397,6 +511,22 @@ class _BaseCloudRedisClusterRestTransport(CloudRedisClusterTransport):
                 {
                     "method": "get",
                     "uri": "/v1beta1/{parent=projects/*/locations/*}/clusters",
+                },
+            ]
+            return http_options
+
+    class _BaseListTokenAuthUsers:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1beta1/{parent=projects/*/locations/*/clusters/*}/tokenAuthUsers",
                 },
             ]
             return http_options

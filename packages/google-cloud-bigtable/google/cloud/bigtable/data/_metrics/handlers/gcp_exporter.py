@@ -24,7 +24,11 @@ from google.api.metric_pb2 import Metric as GMetric
 from google.api.metric_pb2 import MetricDescriptor
 from google.api.monitored_resource_pb2 import MonitoredResource
 from google.api_core import gapic_v1
-from google.api_core.exceptions import PermissionDenied, Unauthenticated
+from google.api_core.exceptions import (
+    FailedPrecondition,
+    PermissionDenied,
+    Unauthenticated,
+)
 from google.cloud.monitoring_v3 import (
     CreateTimeSeriesRequest,
     MetricServiceClient,
@@ -201,6 +205,7 @@ class GoogleCloudMetricsHandler(OpenTelemetryMetricsHandler):
         super().__init__(*args, instruments=otel, **kwargs)
 
     def close(self):
+        self._exporter.shutting_down = True
         self.meter_provider.shutdown()
 
 
@@ -228,6 +233,7 @@ class BigtableMetricsExporter(MetricExporter):
         # Once disabled, exports are skipped instead of failing (and logging)
         # on every export interval
         self._disabled = False
+        self.shutting_down = False
 
     def export(
         self, metrics_data: MetricsData, timeout_millis: float = 10_000, **kwargs
@@ -310,9 +316,14 @@ class BigtableMetricsExporter(MetricExporter):
             _LOGGER.debug("Client-side metrics export failure details:", exc_info=True)
             return MetricExportResult.FAILURE
         except Exception as e:
-            _LOGGER.warning(
-                "Failed to export metrics to Cloud Monitoring: %s", e, exc_info=True
-            )
+            if self.shutting_down and isinstance(e, FailedPrecondition):
+                # the final export on shutdown usually falls inside the sampling
+                # period of the previous one, and is rejected. This is expected
+                _LOGGER.debug("Final metrics export on shutdown rejected: %s", e)
+            else:
+                _LOGGER.warning(
+                    "Failed to export metrics to Cloud Monitoring: %s", e, exc_info=True
+                )
             return MetricExportResult.FAILURE
 
     def _batch_write(

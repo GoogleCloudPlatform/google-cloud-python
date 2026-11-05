@@ -12,4 +12,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-__version__ = "1.8.0"  # pragma: NO COVER
+__version__ = "1.9.0"  # pragma: NO COVER

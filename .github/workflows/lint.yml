@@ -48,9 +48,9 @@ jobs:
           echo "is_full_run=false" >> $GITHUB_OUTPUT
         fi
     - name: Setup Python
-      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
       with:
-        python-version: "3.10"
+        python-version: "3.15"
     - name: Get package shards
       id: set-matrix
       env:
@@ -83,9 +83,9 @@ jobs:
           echo "is_full_run=false" >> $GITHUB_OUTPUT
         fi
     - name: Setup Python
-      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
       with:
-        python-version: "3.14"
+        python-version: "3.15"
     - name: Install nox
       run: |
         python -m pip install --upgrade setuptools pip wheel build twine
@@ -140,9 +140,9 @@ jobs:
         fetch-depth: 2
         persist-credentials: false
     - name: Setup Python
-      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
       with:
-        python-version: "3.14"
+        python-version: "3.15"
     - name: Install nox
       run: |
         python -m pip install --upgrade setuptools pip wheel

@@ -400,10 +400,11 @@ async def test_wrap_method_async_otel_tracing_enabled_success(
     assert result == "async_success"
     mock_otel.tracer.start_as_current_span.assert_called_once_with(
         "google.cloud.secretmanager.v1.SecretManagerService/ListSecrets",
-        kind="CLIENT",
+        kind="INTERNAL",
         attributes={
             "rpc.system.name": expected_rpc_system,
             "rpc.method": "google.cloud.secretmanager.v1.SecretManagerService/ListSecrets",
+            "url.domain": "googleapis.com",
         },
     )
     mock_otel.span.set_attribute.assert_called_with("rpc.response.status_code", "OK")
@@ -466,6 +467,33 @@ async def test_wrap_method_async_otel_tracing_client_options(
 
     assert result == "success"
     mock_provider.get_tracer.assert_called_once_with("google.api_core")
+
+
+@pytest.mark.asyncio
+async def test_wrap_method_async_otel_tracing_default_host(mock_otel):
+    """Proves that async wrap_method falls back to default_host when api_endpoint is unset."""
+    mock_target = mock.AsyncMock(return_value="success")
+
+    wrapped = gapic_v1.method_async.wrap_method(
+        mock_target,
+        client_options=client_options_lib.ClientOptions(),
+        method_name="/google.showcase.v1beta1.Echo/Echo",
+        default_host="localhost:7469",
+    )
+    result = await wrapped()
+
+    assert result == "success"
+    mock_otel.tracer.start_as_current_span.assert_called_once_with(
+        "google.showcase.v1beta1.Echo/Echo",
+        kind="INTERNAL",
+        attributes={
+            "rpc.system.name": "grpc",
+            "rpc.method": "google.showcase.v1beta1.Echo/Echo",
+            "url.domain": "googleapis.com",
+            "server.address": "localhost",
+            "server.port": 7469,
+        },
+    )
 
 
 @pytest.mark.asyncio

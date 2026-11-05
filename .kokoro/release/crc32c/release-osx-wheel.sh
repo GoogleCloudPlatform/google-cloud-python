@@ -18,7 +18,5 @@ set -eo pipefail
 export REPO_ROOT=$(pwd)/github/google-cloud-python/packages/google-crc32c
 cd "${REPO_ROOT}"
 
-export PUBLISH_WHEELS="${PUBLISH_WHEELS:-true}"
-
-# Build and publish OSX wheels
+# Build OSX wheels
 ./scripts/osx/build.sh

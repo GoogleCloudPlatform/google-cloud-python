@@ -127,6 +127,12 @@ class AgentServiceAsyncClient:
 
     agent_path = staticmethod(AgentServiceClient.agent_path)
     parse_agent_path = staticmethod(AgentServiceClient.parse_agent_path)
+    agent_registry_service_path = staticmethod(
+        AgentServiceClient.agent_registry_service_path
+    )
+    parse_agent_registry_service_path = staticmethod(
+        AgentServiceClient.parse_agent_registry_service_path
+    )
     app_path = staticmethod(AgentServiceClient.app_path)
     parse_app_path = staticmethod(AgentServiceClient.parse_app_path)
     app_version_path = staticmethod(AgentServiceClient.app_version_path)
@@ -135,6 +141,8 @@ class AgentServiceAsyncClient:
     parse_changelog_path = staticmethod(AgentServiceClient.parse_changelog_path)
     conversation_path = staticmethod(AgentServiceClient.conversation_path)
     parse_conversation_path = staticmethod(AgentServiceClient.parse_conversation_path)
+    dashboard_path = staticmethod(AgentServiceClient.dashboard_path)
+    parse_dashboard_path = staticmethod(AgentServiceClient.parse_dashboard_path)
     dataset_path = staticmethod(AgentServiceClient.dataset_path)
     parse_dataset_path = staticmethod(AgentServiceClient.parse_dataset_path)
     deidentify_template_path = staticmethod(AgentServiceClient.deidentify_template_path)
@@ -1216,6 +1224,7 @@ class AgentServiceAsyncClient:
                 # Initialize request argument(s)
                 request = ces_v1beta.ImportAppRequest(
                     gcs_uri="gcs_uri_value",
+                    json_patch_content="json_patch_content_value",
                     parent="parent_value",
                 )
 
@@ -4125,7 +4134,7 @@ class AgentServiceAsyncClient:
 
                 # Initialize request argument(s)
                 guardrail = ces_v1beta.Guardrail()
-                guardrail.content_filter.match_type = "REGEXP_MATCH"
+                guardrail.content_filter.match_type = "SENSITIVE_WORDS"
                 guardrail.display_name = "display_name_value"
 
                 request = ces_v1beta.CreateGuardrailRequest(
@@ -4263,7 +4272,7 @@ class AgentServiceAsyncClient:
 
                 # Initialize request argument(s)
                 guardrail = ces_v1beta.Guardrail()
-                guardrail.content_filter.match_type = "REGEXP_MATCH"
+                guardrail.content_filter.match_type = "SENSITIVE_WORDS"
                 guardrail.display_name = "display_name_value"
 
                 request = ces_v1beta.UpdateGuardrailRequest(
@@ -6026,6 +6035,129 @@ class AgentServiceAsyncClient:
         # add these here.
         metadata = tuple(metadata) + (
             gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def update_app_version(
+        self,
+        request: Optional[Union[agent_service.UpdateAppVersionRequest, dict]] = None,
+        *,
+        app_version: Optional[gcc_app_version.AppVersion] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> gcc_app_version.AppVersion:
+        r"""Updates the specified app version.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import ces_v1beta
+
+            async def sample_update_app_version():
+                # Create a client
+                client = ces_v1beta.AgentServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = ces_v1beta.UpdateAppVersionRequest(
+                )
+
+                # Make the request
+                response = await client.update_app_version(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.ces_v1beta.types.UpdateAppVersionRequest, dict]]):
+                The request object. Request message for
+                [AgentService.UpdateAppVersion][google.cloud.ces.v1beta.AgentService.UpdateAppVersion].
+            app_version (:class:`google.cloud.ces_v1beta.types.AppVersion`):
+                Required. The app version to update.
+                This corresponds to the ``app_version`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Optional. The list of fields to update. If empty, fields
+                ``display_name`` and ``description`` will be updated.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.ces_v1beta.types.AppVersion:
+                In Customer Engagement Suite (CES),
+                an app version is a snapshot of the app
+                at a specific point in time. It is
+                immutable and cannot be modified once
+                created.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [app_version, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, agent_service.UpdateAppVersionRequest):
+            request = agent_service.UpdateAppVersionRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if app_version is not None:
+            request.app_version = app_version
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_app_version
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("app_version.name", request.app_version.name),)
+            ),
         )
 
         # Validate the universe domain.

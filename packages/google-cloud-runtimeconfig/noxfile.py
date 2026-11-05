@@ -31,6 +31,11 @@ FLAKE8_VERSION = "flake8==6.1.0"
 BLACK_VERSION = "black[jupyter]==23.7.0"
 RUFF_VERSION = "ruff==0.14.14"
 ISORT_VERSION = "isort==5.11.0"
+# Temporarily pin pytest<9.2 because pytest 9.2.0 applies filterwarnings=error
+# before pytest_configure hooks run, turning pytest-asyncio's unset
+# asyncio_default_fixture_loop_scope warning into an error. Remove once
+# pytest 9.2+ warning and fixture scope deprecations are resolved.
+PYTEST_VERSION = "pytest<9.2"
 LINT_PATHS = ["docs", "google", "tests", "noxfile.py", "setup.py"]
 
 DEFAULT_PYTHON_VERSION = "3.14"
@@ -46,7 +51,7 @@ UNIT_TEST_PYTHON_VERSIONS: List[str] = [
 UNIT_TEST_STANDARD_DEPENDENCIES = [
     "mock",
     "asyncmock",
-    "pytest",
+    PYTEST_VERSION,
     "pytest-cov",
     "pytest-asyncio",
 ]
@@ -59,7 +64,7 @@ UNIT_TEST_EXTRAS_BY_PYTHON: Dict[str, List[str]] = {}
 SYSTEM_TEST_PYTHON_VERSIONS: List[str] = ["3.12"]
 SYSTEM_TEST_STANDARD_DEPENDENCIES: List[str] = [
     "mock",
-    "pytest",
+    PYTEST_VERSION,
     "google-cloud-testutils",
 ]
 SYSTEM_TEST_EXTERNAL_DEPENDENCIES: List[str] = []

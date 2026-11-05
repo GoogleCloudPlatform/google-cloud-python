@@ -22,7 +22,7 @@ from setuptools import find_namespace_packages
 
 name = "google-cloud-access-context-manager"
 description = "Google Cloud Access Context Manager Protobufs"
-version = "0.6.1"
+version = "0.6.2"
 # Should be one of:
 # 'Development Status :: 3 - Alpha'
 # 'Development Status :: 4 - Beta'

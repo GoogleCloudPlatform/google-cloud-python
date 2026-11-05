@@ -41,6 +41,7 @@ def sample_import_app():
     # Initialize request argument(s)
     request = ces_v1beta.ImportAppRequest(
         gcs_uri="gcs_uri_value",
+        json_patch_content="json_patch_content_value",
         parent="parent_value",
     )
 

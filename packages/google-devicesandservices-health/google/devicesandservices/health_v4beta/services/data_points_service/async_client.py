@@ -355,6 +355,18 @@ class DataPointsServiceAsyncClient:
                 Format:
                 ``users/{user}/dataTypes/{data_type}/dataPoints/{data_point}``
 
+                Examples:
+                ---------
+
+                ``users/me/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef``
+
+                ``users/1234567890/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef``
+
+                The ``{user}`` can be either the alias ``me`` or the
+                authenticated user's numeric Health User ID (retrieved
+                via
+                [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]).
+
                 See
                 [DataPoint.name][google.devicesandservices.health.v4beta.DataPoint.name]
                 for examples and possible values.
@@ -467,10 +479,17 @@ class DataPointsServiceAsyncClient:
             parent (:class:`str`):
                 Required. Parent data type of the Data Point collection.
 
-                Format: ``users/me/dataTypes/{data_type}``, e.g.:
+                Format: ``users/{user}/dataTypes/{data_type}``, e.g.:
 
                 - ``users/me/dataTypes/steps``
+                - ``users/1234567890/dataTypes/steps``
                 - ``users/me/dataTypes/weight``
+                - ``users/1234567890/dataTypes/weight``
+
+                The ``{user}`` can be either the alias ``me`` or the
+                authenticated user's numeric Health User ID (retrieved
+                via
+                [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]).
 
                 For a list of the supported data types see the
                 [DataPoint
@@ -605,8 +624,17 @@ class DataPointsServiceAsyncClient:
                 data point.
             parent (:class:`str`):
                 Required. The parent resource name where the data point
-                will be created. Format:
-                ``users/{user}/dataTypes/{data_type}``
+                will be created.
+
+                Format: ``users/{user}/dataTypes/{data_type}``, e.g.:
+
+                - ``users/me/dataTypes/steps``
+                - ``users/1234567890/dataTypes/steps``
+
+                The ``{user}`` can be either the alias ``me`` or the
+                authenticated user's numeric Health User ID (retrieved
+                via
+                [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]).
 
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -745,6 +773,18 @@ class DataPointsServiceAsyncClient:
 
                 Format:
                 ``users/{user}/dataTypes/{data_type}/dataPoints/{data_point}``
+
+                Examples:
+                ---------
+
+                ``users/me/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef``
+
+                ``users/1234567890/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef``
+
+                The ``{user}`` can be either the alias ``me`` or the
+                authenticated user's numeric Health User ID (retrieved
+                via
+                [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]).
 
                 This corresponds to the ``data_point`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -1138,7 +1178,7 @@ class DataPointsServiceAsyncClient:
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: Union[float, object] = gapic_v1.method.DEFAULT,
         metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
-    ) -> data_points.DailyRollUpDataPointsResponse:
+    ) -> pagers.DailyRollUpDataPointsAsyncPager:
         r"""Roll up data points over civil time intervals for
         supported data types.
 
@@ -1163,10 +1203,11 @@ class DataPointsServiceAsyncClient:
                 )
 
                 # Make the request
-                response = await client.daily_roll_up_data_points(request=request)
+                page_result = client.daily_roll_up_data_points(request=request)
 
                 # Handle the response
-                print(response)
+                async for response in page_result:
+                    print(response)
 
         Args:
             request (Optional[Union[google.devicesandservices.health_v4beta.types.DailyRollUpDataPointsRequest, dict]]):
@@ -1181,9 +1222,12 @@ class DataPointsServiceAsyncClient:
                 be of type `bytes`.
 
         Returns:
-            google.devicesandservices.health_v4beta.types.DailyRollUpDataPointsResponse:
+            google.devicesandservices.health_v4beta.services.data_points_service.pagers.DailyRollUpDataPointsAsyncPager:
                 Response containing the list of
                 rolled up data points.
+                Iterating over this object will yield
+                results and resolve additional pages
+                automatically.
 
         """
         # Create or coerce a protobuf request object.
@@ -1215,6 +1259,17 @@ class DataPointsServiceAsyncClient:
             metadata=metadata,
         )
 
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__aiter__` convenience method.
+        response = pagers.DailyRollUpDataPointsAsyncPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
         # Done; return the response.
         return response
 
@@ -1232,8 +1287,12 @@ class DataPointsServiceAsyncClient:
         **IMPORTANT:** HTTP clients must append ``?alt=media`` to the
         request URL to download the raw TCX file.
 
-        Example:
+        Examples:
+        ---------
+
         ``https://health.googleapis.com/v4/users/me/dataTypes/exercise/dataPoints/EXERCISE_ID:exportExerciseTcx?alt=media``
+
+        ``https://health.googleapis.com/v4/users/1234567890/dataTypes/exercise/dataPoints/EXERCISE_ID:exportExerciseTcx?alt=media``
 
         Without ``alt=media``, the server returns a JSON response
         (``ExportExerciseTcxResponse``) which is intended primarily for
@@ -1282,12 +1341,18 @@ class DataPointsServiceAsyncClient:
 
                 Format:
                 ``users/{user}/dataTypes/exercise/dataPoints/{data_point}``
-                Example:
-                ``users/me/dataTypes/exercise/dataPoints/2026443605080188808``
 
-                The ``{user}`` is the alias ``"me"`` currently. Future
-                versions may support user IDs. The ``{data_point}`` ID
-                maps to the exercise ID, which is a long integer.
+                Examples:
+
+                - ``users/me/dataTypes/exercise/dataPoints/2026443605080188808``
+                - ``users/1234567890/dataTypes/exercise/dataPoints/2026443605080188808``
+
+                The ``{user}`` can be either the alias ``me`` or the
+                authenticated user's numeric Health User ID (retrieved
+                via
+                [GetIdentity][google.devicesandservices.health.v4beta.HealthProfileService.GetIdentity]).
+                The ``{data_point}`` ID maps to the exercise ID, which
+                is a long integer.
 
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this

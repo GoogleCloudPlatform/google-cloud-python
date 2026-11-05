@@ -12,6 +12,6 @@ sphinxcontrib-devhelp==2.0.0
 sphinxcontrib-htmlhelp==2.1.0
 sphinxcontrib-qthelp==2.0.0
 sphinxcontrib-serializinghtml==2.0.0
-sphinx==9.1.0
+sphinx==9.2.0
 alabaster
 recommonmark

@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-cloud-dialogflow/#history
 
+## [2.54.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-dialogflow-v2.53.0...google-cloud-dialogflow-v2.54.0) (2026-10-22)
+
+
+### Features
+
+* update API sources and regenerate ([#18797](https://github.com/googleapis/google-cloud-python/issues/18797)) ([be4d954](https://github.com/googleapis/google-cloud-python/commit/be4d954baf9a27cad04637183047b156afa4784a))
+
 ## [2.53.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-dialogflow-v2.52.0...google-cloud-dialogflow-v2.53.0) (2026-10-08)
 
 

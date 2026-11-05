@@ -44,10 +44,11 @@ def sample_daily_roll_up_data_points():
     )
 
     # Make the request
-    response = client.daily_roll_up_data_points(request=request)
+    page_result = client.daily_roll_up_data_points(request=request)
 
     # Handle the response
-    print(response)
+    for response in page_result:
+        print(response)
 
 
 # [END health_v4beta_generated_DataPointsService_DailyRollUpDataPoints_sync]

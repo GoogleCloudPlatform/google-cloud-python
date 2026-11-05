@@ -20,6 +20,7 @@ from google.api_core.bidi_async import AsyncBidiRpc
 
 from google.cloud import _storage_v2
 from google.cloud.storage import _opentelemetry_metrics
+from google.cloud.storage.asyncio import _utils, _zero_copy_bidi_read
 from google.cloud.storage.asyncio.async_abstract_object_stream import (
     _AsyncAbstractObjectStream,
 )
@@ -87,9 +88,10 @@ class _AsyncReadObjectStream(_AsyncAbstractObjectStream):
 
         self._full_bucket_name = f"projects/_/buckets/{self.bucket_name}"
 
-        self.rpc = self.client._client._transport._wrapped_methods[
-            self.client._client._transport.bidi_read_object
-        ]
+        transport = self.client._client._transport
+        self.rpc = _zero_copy_bidi_read.wrapped_rpc(transport)
+        if self.rpc is None:
+            self.rpc = transport._wrapped_methods[transport.bidi_read_object]
         self.metadata = (("x-goog-request-params", f"bucket={self._full_bucket_name}"),)
         self.socket_like_rpc: Optional[AsyncBidiRpc] = None
         self._is_stream_open: bool = False
@@ -135,6 +137,7 @@ class _AsyncReadObjectStream(_AsyncAbstractObjectStream):
 
         current_metadata = other_metadata
         current_metadata.append(("x-goog-request-params", "&".join(request_params)))
+        current_metadata = _utils.inject_traceparent_to_metadata(current_metadata)
 
         self.socket_like_rpc = AsyncBidiRpc(
             self.rpc,

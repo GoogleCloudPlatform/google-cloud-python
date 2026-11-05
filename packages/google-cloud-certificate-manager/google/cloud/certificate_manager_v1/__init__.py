@@ -44,6 +44,7 @@ from .types.certificate_issuance_config import (
     GetCertificateIssuanceConfigRequest,
     ListCertificateIssuanceConfigsRequest,
     ListCertificateIssuanceConfigsResponse,
+    UpdateCertificateIssuanceConfigRequest,
 )
 from .types.certificate_manager import (
     Certificate,
@@ -128,6 +129,7 @@ __all__ = (
     "OperationMetadata",
     "ServingState",
     "TrustConfig",
+    "UpdateCertificateIssuanceConfigRequest",
     "UpdateCertificateMapEntryRequest",
     "UpdateCertificateMapRequest",
     "UpdateCertificateRequest",

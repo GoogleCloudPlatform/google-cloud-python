@@ -1,4 +1,4 @@
 google-cloud-bigquery-storage==2.43.0
-google-cloud-bigquery==3.44.0
+google-cloud-bigquery==3.46.2
 pyarrow==26.0.0
 pytest==9.1.1

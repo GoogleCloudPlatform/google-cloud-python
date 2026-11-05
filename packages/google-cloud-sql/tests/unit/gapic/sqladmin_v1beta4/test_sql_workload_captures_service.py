@@ -1126,7 +1126,7 @@ def test_sql_workload_captures_service_client_create_channel_credentials_file(
 @pytest.mark.parametrize(
     "request_type",
     [
-        cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest(),
+        cloud_sql_workload_captures.WorkloadCapturesStartRequest(),
         {},
     ],
 )
@@ -1159,7 +1159,7 @@ def test_start(request_type, transport: str = "grpc"):
         # Establish that the underlying gRPC stub method was called.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
-        request = cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest()
+        request = cloud_sql_workload_captures.WorkloadCapturesStartRequest()
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -1188,7 +1188,7 @@ def test_start_non_empty_request_with_auto_populated_field():
     # Populate all string fields in the request which are not UUID4
     # since we want to check that UUID4 are populated automatically
     # if they meet the requirements of AIP 4235.
-    request = cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest(
+    request = cloud_sql_workload_captures.WorkloadCapturesStartRequest(
         project="project_value",
         instance="instance_value",
     )
@@ -1201,7 +1201,7 @@ def test_start_non_empty_request_with_auto_populated_field():
         client.start(request=request)
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        request_msg = cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest(
+        request_msg = cloud_sql_workload_captures.WorkloadCapturesStartRequest(
             project="project_value",
             instance="instance_value",
         )
@@ -1287,7 +1287,7 @@ async def test_start_async_use_cached_wrapped_rpc(transport: str = "grpc_asyncio
 @pytest.mark.parametrize(
     "request_type",
     [
-        cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest(),
+        cloud_sql_workload_captures.WorkloadCapturesStartRequest(),
         {},
     ],
 )
@@ -1322,7 +1322,7 @@ async def test_start_async(request_type, transport: str = "grpc_asyncio"):
         # Establish that the underlying gRPC stub method was called.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
-        request = cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest()
+        request = cloud_sql_workload_captures.WorkloadCapturesStartRequest()
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -1347,7 +1347,7 @@ def test_start_field_headers():
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
-    request = cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest()
+    request = cloud_sql_workload_captures.WorkloadCapturesStartRequest()
 
     request.project = "project_value"
     request.instance = "instance_value"
@@ -1378,7 +1378,7 @@ async def test_start_field_headers_async():
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
-    request = cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest()
+    request = cloud_sql_workload_captures.WorkloadCapturesStartRequest()
 
     request.project = "project_value"
     request.instance = "instance_value"
@@ -1406,7 +1406,7 @@ async def test_start_field_headers_async():
 @pytest.mark.parametrize(
     "request_type",
     [
-        cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest(),
+        cloud_sql_workload_captures.WorkloadCapturesStopRequest(),
         {},
     ],
 )
@@ -1439,7 +1439,7 @@ def test_stop(request_type, transport: str = "grpc"):
         # Establish that the underlying gRPC stub method was called.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
-        request = cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest()
+        request = cloud_sql_workload_captures.WorkloadCapturesStopRequest()
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -1468,7 +1468,7 @@ def test_stop_non_empty_request_with_auto_populated_field():
     # Populate all string fields in the request which are not UUID4
     # since we want to check that UUID4 are populated automatically
     # if they meet the requirements of AIP 4235.
-    request = cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest(
+    request = cloud_sql_workload_captures.WorkloadCapturesStopRequest(
         project="project_value",
         instance="instance_value",
     )
@@ -1481,7 +1481,7 @@ def test_stop_non_empty_request_with_auto_populated_field():
         client.stop(request=request)
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        request_msg = cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest(
+        request_msg = cloud_sql_workload_captures.WorkloadCapturesStopRequest(
             project="project_value",
             instance="instance_value",
         )
@@ -1566,7 +1566,7 @@ async def test_stop_async_use_cached_wrapped_rpc(transport: str = "grpc_asyncio"
 @pytest.mark.parametrize(
     "request_type",
     [
-        cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest(),
+        cloud_sql_workload_captures.WorkloadCapturesStopRequest(),
         {},
     ],
 )
@@ -1601,7 +1601,7 @@ async def test_stop_async(request_type, transport: str = "grpc_asyncio"):
         # Establish that the underlying gRPC stub method was called.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
-        request = cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest()
+        request = cloud_sql_workload_captures.WorkloadCapturesStopRequest()
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -1626,7 +1626,7 @@ def test_stop_field_headers():
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
-    request = cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest()
+    request = cloud_sql_workload_captures.WorkloadCapturesStopRequest()
 
     request.project = "project_value"
     request.instance = "instance_value"
@@ -1657,7 +1657,7 @@ async def test_stop_field_headers_async():
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
-    request = cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest()
+    request = cloud_sql_workload_captures.WorkloadCapturesStopRequest()
 
     request.project = "project_value"
     request.instance = "instance_value"
@@ -1685,7 +1685,7 @@ async def test_stop_field_headers_async():
 @pytest.mark.parametrize(
     "request_type",
     [
-        cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest(),
+        cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest(),
         {},
     ],
 )
@@ -1718,7 +1718,7 @@ def test_start_replay(request_type, transport: str = "grpc"):
         # Establish that the underlying gRPC stub method was called.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
-        request = cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest()
+        request = cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest()
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -1747,7 +1747,7 @@ def test_start_replay_non_empty_request_with_auto_populated_field():
     # Populate all string fields in the request which are not UUID4
     # since we want to check that UUID4 are populated automatically
     # if they meet the requirements of AIP 4235.
-    request = cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest(
+    request = cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest(
         project="project_value",
         instance="instance_value",
         workload_id="workload_id_value",
@@ -1761,7 +1761,7 @@ def test_start_replay_non_empty_request_with_auto_populated_field():
         client.start_replay(request=request)
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        request_msg = cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest(
+        request_msg = cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest(
             project="project_value",
             instance="instance_value",
             workload_id="workload_id_value",
@@ -1850,7 +1850,7 @@ async def test_start_replay_async_use_cached_wrapped_rpc(
 @pytest.mark.parametrize(
     "request_type",
     [
-        cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest(),
+        cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest(),
         {},
     ],
 )
@@ -1885,7 +1885,7 @@ async def test_start_replay_async(request_type, transport: str = "grpc_asyncio")
         # Establish that the underlying gRPC stub method was called.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
-        request = cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest()
+        request = cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest()
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -1910,7 +1910,7 @@ def test_start_replay_field_headers():
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
-    request = cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest()
+    request = cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest()
 
     request.project = "project_value"
     request.instance = "instance_value"
@@ -1942,7 +1942,7 @@ async def test_start_replay_field_headers_async():
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
-    request = cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest()
+    request = cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest()
 
     request.project = "project_value"
     request.instance = "instance_value"
@@ -1971,7 +1971,7 @@ async def test_start_replay_field_headers_async():
 @pytest.mark.parametrize(
     "request_type",
     [
-        cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest(),
+        cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest(),
         {},
     ],
 )
@@ -2004,7 +2004,7 @@ def test_stop_replay(request_type, transport: str = "grpc"):
         # Establish that the underlying gRPC stub method was called.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
-        request = cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest()
+        request = cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest()
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -2033,7 +2033,7 @@ def test_stop_replay_non_empty_request_with_auto_populated_field():
     # Populate all string fields in the request which are not UUID4
     # since we want to check that UUID4 are populated automatically
     # if they meet the requirements of AIP 4235.
-    request = cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest(
+    request = cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest(
         project="project_value",
         instance="instance_value",
     )
@@ -2046,7 +2046,7 @@ def test_stop_replay_non_empty_request_with_auto_populated_field():
         client.stop_replay(request=request)
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        request_msg = cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest(
+        request_msg = cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest(
             project="project_value",
             instance="instance_value",
         )
@@ -2134,7 +2134,7 @@ async def test_stop_replay_async_use_cached_wrapped_rpc(
 @pytest.mark.parametrize(
     "request_type",
     [
-        cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest(),
+        cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest(),
         {},
     ],
 )
@@ -2169,7 +2169,7 @@ async def test_stop_replay_async(request_type, transport: str = "grpc_asyncio"):
         # Establish that the underlying gRPC stub method was called.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
-        request = cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest()
+        request = cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest()
         assert args[0] == request
 
     # Establish that the response is the type that we expect.
@@ -2194,7 +2194,7 @@ def test_stop_replay_field_headers():
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
-    request = cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest()
+    request = cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest()
 
     request.project = "project_value"
     request.instance = "instance_value"
@@ -2225,7 +2225,7 @@ async def test_stop_replay_field_headers_async():
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
-    request = cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest()
+    request = cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest()
 
     request.project = "project_value"
     request.instance = "instance_value"
@@ -2534,7 +2534,7 @@ def test_start_rest_use_cached_wrapped_rpc():
 
 
 def test_start_rest_required_fields(
-    request_type=cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest,
+    request_type=cloud_sql_workload_captures.WorkloadCapturesStartRequest,
 ):
     transport_class = transports.SqlWorkloadCapturesServiceRestTransport
 
@@ -2650,7 +2650,7 @@ def test_stop_rest_use_cached_wrapped_rpc():
 
 
 def test_stop_rest_required_fields(
-    request_type=cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest,
+    request_type=cloud_sql_workload_captures.WorkloadCapturesStopRequest,
 ):
     transport_class = transports.SqlWorkloadCapturesServiceRestTransport
 
@@ -2766,7 +2766,7 @@ def test_start_replay_rest_use_cached_wrapped_rpc():
 
 
 def test_start_replay_rest_required_fields(
-    request_type=cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest,
+    request_type=cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest,
 ):
     transport_class = transports.SqlWorkloadCapturesServiceRestTransport
 
@@ -2886,7 +2886,7 @@ def test_stop_replay_rest_use_cached_wrapped_rpc():
 
 
 def test_stop_replay_rest_required_fields(
-    request_type=cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest,
+    request_type=cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest,
 ):
     transport_class = transports.SqlWorkloadCapturesServiceRestTransport
 
@@ -3204,7 +3204,7 @@ def test_start_empty_call_grpc():
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        request_msg = cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest()
+        request_msg = cloud_sql_workload_captures.WorkloadCapturesStartRequest()
         assert args[0] == request_msg
 
 
@@ -3224,7 +3224,7 @@ def test_stop_empty_call_grpc():
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        request_msg = cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest()
+        request_msg = cloud_sql_workload_captures.WorkloadCapturesStopRequest()
         assert args[0] == request_msg
 
 
@@ -3244,9 +3244,7 @@ def test_start_replay_empty_call_grpc():
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        request_msg = (
-            cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest()
-        )
+        request_msg = cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest()
         assert args[0] == request_msg
 
 
@@ -3266,7 +3264,7 @@ def test_stop_replay_empty_call_grpc():
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        request_msg = cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest()
+        request_msg = cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest()
         assert args[0] == request_msg
 
 
@@ -3334,7 +3332,7 @@ async def test_start_empty_call_grpc_asyncio():
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        request_msg = cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest()
+        request_msg = cloud_sql_workload_captures.WorkloadCapturesStartRequest()
         assert args[0] == request_msg
 
 
@@ -3368,7 +3366,7 @@ async def test_stop_empty_call_grpc_asyncio():
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        request_msg = cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest()
+        request_msg = cloud_sql_workload_captures.WorkloadCapturesStopRequest()
         assert args[0] == request_msg
 
 
@@ -3402,9 +3400,7 @@ async def test_start_replay_empty_call_grpc_asyncio():
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        request_msg = (
-            cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest()
-        )
+        request_msg = cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest()
         assert args[0] == request_msg
 
 
@@ -3438,7 +3434,7 @@ async def test_stop_replay_empty_call_grpc_asyncio():
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        request_msg = cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest()
+        request_msg = cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest()
         assert args[0] == request_msg
 
 
@@ -3476,7 +3472,7 @@ def test_transport_kind_rest():
 
 
 def test_start_rest_bad_request(
-    request_type=cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest,
+    request_type=cloud_sql_workload_captures.WorkloadCapturesStartRequest,
 ):
     client = SqlWorkloadCapturesServiceClient(
         credentials=ga_credentials.AnonymousCredentials(), transport="rest"
@@ -3504,7 +3500,7 @@ def test_start_rest_bad_request(
 @pytest.mark.parametrize(
     "request_type",
     [
-        cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest,
+        cloud_sql_workload_captures.WorkloadCapturesStartRequest,
         dict,
     ],
 )
@@ -3586,8 +3582,8 @@ def test_start_rest_interceptors(null_interceptor):
         pre.assert_not_called()
         post.assert_not_called()
         post_with_metadata.assert_not_called()
-        pb_message = cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest.pb(
-            cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest()
+        pb_message = cloud_sql_workload_captures.WorkloadCapturesStartRequest.pb(
+            cloud_sql_workload_captures.WorkloadCapturesStartRequest()
         )
         transcode.return_value = {
             "method": "post",
@@ -3604,7 +3600,7 @@ def test_start_rest_interceptors(null_interceptor):
         )
         req.return_value.content = return_value
 
-        request = cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest()
+        request = cloud_sql_workload_captures.WorkloadCapturesStartRequest()
         metadata = [
             ("key", "val"),
             ("cephalopod", "squid"),
@@ -3627,7 +3623,7 @@ def test_start_rest_interceptors(null_interceptor):
 
 
 def test_stop_rest_bad_request(
-    request_type=cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest,
+    request_type=cloud_sql_workload_captures.WorkloadCapturesStopRequest,
 ):
     client = SqlWorkloadCapturesServiceClient(
         credentials=ga_credentials.AnonymousCredentials(), transport="rest"
@@ -3655,7 +3651,7 @@ def test_stop_rest_bad_request(
 @pytest.mark.parametrize(
     "request_type",
     [
-        cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest,
+        cloud_sql_workload_captures.WorkloadCapturesStopRequest,
         dict,
     ],
 )
@@ -3737,8 +3733,8 @@ def test_stop_rest_interceptors(null_interceptor):
         pre.assert_not_called()
         post.assert_not_called()
         post_with_metadata.assert_not_called()
-        pb_message = cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest.pb(
-            cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest()
+        pb_message = cloud_sql_workload_captures.WorkloadCapturesStopRequest.pb(
+            cloud_sql_workload_captures.WorkloadCapturesStopRequest()
         )
         transcode.return_value = {
             "method": "post",
@@ -3755,7 +3751,7 @@ def test_stop_rest_interceptors(null_interceptor):
         )
         req.return_value.content = return_value
 
-        request = cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest()
+        request = cloud_sql_workload_captures.WorkloadCapturesStopRequest()
         metadata = [
             ("key", "val"),
             ("cephalopod", "squid"),
@@ -3778,7 +3774,7 @@ def test_stop_rest_interceptors(null_interceptor):
 
 
 def test_start_replay_rest_bad_request(
-    request_type=cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest,
+    request_type=cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest,
 ):
     client = SqlWorkloadCapturesServiceClient(
         credentials=ga_credentials.AnonymousCredentials(), transport="rest"
@@ -3810,7 +3806,7 @@ def test_start_replay_rest_bad_request(
 @pytest.mark.parametrize(
     "request_type",
     [
-        cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest,
+        cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest,
         dict,
     ],
 )
@@ -3896,10 +3892,8 @@ def test_start_replay_rest_interceptors(null_interceptor):
         pre.assert_not_called()
         post.assert_not_called()
         post_with_metadata.assert_not_called()
-        pb_message = (
-            cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest.pb(
-                cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest()
-            )
+        pb_message = cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest.pb(
+            cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest()
         )
         transcode.return_value = {
             "method": "post",
@@ -3916,7 +3910,7 @@ def test_start_replay_rest_interceptors(null_interceptor):
         )
         req.return_value.content = return_value
 
-        request = cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest()
+        request = cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest()
         metadata = [
             ("key", "val"),
             ("cephalopod", "squid"),
@@ -3939,7 +3933,7 @@ def test_start_replay_rest_interceptors(null_interceptor):
 
 
 def test_stop_replay_rest_bad_request(
-    request_type=cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest,
+    request_type=cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest,
 ):
     client = SqlWorkloadCapturesServiceClient(
         credentials=ga_credentials.AnonymousCredentials(), transport="rest"
@@ -3967,7 +3961,7 @@ def test_stop_replay_rest_bad_request(
 @pytest.mark.parametrize(
     "request_type",
     [
-        cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest,
+        cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest,
         dict,
     ],
 )
@@ -4049,10 +4043,8 @@ def test_stop_replay_rest_interceptors(null_interceptor):
         pre.assert_not_called()
         post.assert_not_called()
         post_with_metadata.assert_not_called()
-        pb_message = (
-            cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest.pb(
-                cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest()
-            )
+        pb_message = cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest.pb(
+            cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest()
         )
         transcode.return_value = {
             "method": "post",
@@ -4069,7 +4061,7 @@ def test_stop_replay_rest_interceptors(null_interceptor):
         )
         req.return_value.content = return_value
 
-        request = cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest()
+        request = cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest()
         metadata = [
             ("key", "val"),
             ("cephalopod", "squid"),
@@ -4253,7 +4245,7 @@ def test_start_empty_call_rest():
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        request_msg = cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest()
+        request_msg = cloud_sql_workload_captures.WorkloadCapturesStartRequest()
         assert args[0] == request_msg
 
 
@@ -4272,7 +4264,7 @@ def test_stop_empty_call_rest():
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        request_msg = cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest()
+        request_msg = cloud_sql_workload_captures.WorkloadCapturesStopRequest()
         assert args[0] == request_msg
 
 
@@ -4291,9 +4283,7 @@ def test_start_replay_empty_call_rest():
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        request_msg = (
-            cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest()
-        )
+        request_msg = cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest()
         assert args[0] == request_msg
 
 
@@ -4312,7 +4302,7 @@ def test_stop_replay_empty_call_rest():
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        request_msg = cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest()
+        request_msg = cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest()
         assert args[0] == request_msg
 
 
@@ -4800,8 +4790,31 @@ def test_sql_workload_captures_service_transport_channel_mtls_with_adc(transport
             assert transport.grpc_channel == mock_grpc_channel
 
 
+def test_instance_path():
+    project = "squid"
+    instance = "clam"
+    expected = "projects/{project}/instances/{instance}".format(
+        project=project,
+        instance=instance,
+    )
+    actual = SqlWorkloadCapturesServiceClient.instance_path(project, instance)
+    assert expected == actual
+
+
+def test_parse_instance_path():
+    expected = {
+        "project": "whelk",
+        "instance": "octopus",
+    }
+    path = SqlWorkloadCapturesServiceClient.instance_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = SqlWorkloadCapturesServiceClient.parse_instance_path(path)
+    assert expected == actual
+
+
 def test_common_billing_account_path():
-    billing_account = "squid"
+    billing_account = "oyster"
     expected = "billingAccounts/{billing_account}".format(
         billing_account=billing_account,
     )
@@ -4813,7 +4826,7 @@ def test_common_billing_account_path():
 
 def test_parse_common_billing_account_path():
     expected = {
-        "billing_account": "clam",
+        "billing_account": "nudibranch",
     }
     path = SqlWorkloadCapturesServiceClient.common_billing_account_path(**expected)
 
@@ -4823,7 +4836,7 @@ def test_parse_common_billing_account_path():
 
 
 def test_common_folder_path():
-    folder = "whelk"
+    folder = "cuttlefish"
     expected = "folders/{folder}".format(
         folder=folder,
     )
@@ -4833,7 +4846,7 @@ def test_common_folder_path():
 
 def test_parse_common_folder_path():
     expected = {
-        "folder": "octopus",
+        "folder": "mussel",
     }
     path = SqlWorkloadCapturesServiceClient.common_folder_path(**expected)
 
@@ -4843,7 +4856,7 @@ def test_parse_common_folder_path():
 
 
 def test_common_organization_path():
-    organization = "oyster"
+    organization = "winkle"
     expected = "organizations/{organization}".format(
         organization=organization,
     )
@@ -4853,7 +4866,7 @@ def test_common_organization_path():
 
 def test_parse_common_organization_path():
     expected = {
-        "organization": "nudibranch",
+        "organization": "nautilus",
     }
     path = SqlWorkloadCapturesServiceClient.common_organization_path(**expected)
 
@@ -4863,7 +4876,7 @@ def test_parse_common_organization_path():
 
 
 def test_common_project_path():
-    project = "cuttlefish"
+    project = "scallop"
     expected = "projects/{project}".format(
         project=project,
     )
@@ -4873,7 +4886,7 @@ def test_common_project_path():
 
 def test_parse_common_project_path():
     expected = {
-        "project": "mussel",
+        "project": "abalone",
     }
     path = SqlWorkloadCapturesServiceClient.common_project_path(**expected)
 
@@ -4883,8 +4896,8 @@ def test_parse_common_project_path():
 
 
 def test_common_location_path():
-    project = "winkle"
-    location = "nautilus"
+    project = "squid"
+    location = "clam"
     expected = "projects/{project}/locations/{location}".format(
         project=project,
         location=location,
@@ -4895,8 +4908,8 @@ def test_common_location_path():
 
 def test_parse_common_location_path():
     expected = {
-        "project": "scallop",
-        "location": "abalone",
+        "project": "whelk",
+        "location": "octopus",
     }
     path = SqlWorkloadCapturesServiceClient.common_location_path(**expected)
 

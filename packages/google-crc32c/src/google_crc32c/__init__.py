@@ -34,7 +34,14 @@ except ImportError:
 
 extend = impl.extend
 value = impl.value
+GIL_RELEASE_THRESHOLD = impl.GIL_RELEASE_THRESHOLD
 
 Checksum = impl.Checksum
 
-__all__ = ["extend", "value", "Checksum", "implementation"]
+__all__ = [
+    "extend",
+    "value",
+    "Checksum",
+    "GIL_RELEASE_THRESHOLD",
+    "implementation",
+]

@@ -143,6 +143,10 @@ class Tool(proto.Message):
         tool_fake_config (google.cloud.ces_v1beta.types.ToolFakeConfig):
             Optional. Configuration for tool behavior in
             fake mode.
+        read_only (bool):
+            Output only. Indicates whether the tool is
+            read-only. If true, the tool cannot be modified
+            by the user.
     """
 
     client_function: gcc_client_function.ClientFunction = proto.Field(
@@ -257,6 +261,10 @@ class Tool(proto.Message):
         proto.MESSAGE,
         number=20,
         message=fakes.ToolFakeConfig,
+    )
+    read_only: bool = proto.Field(
+        proto.BOOL,
+        number=29,
     )
 
 

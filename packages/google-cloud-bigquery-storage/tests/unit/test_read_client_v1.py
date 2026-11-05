@@ -222,3 +222,50 @@ def test_init_default_client_info(module_under_test):
             client_info = call.kwargs.get("client_info")
             assert client_info is not None
             assert expected_client_info in client_info.to_user_agent()
+
+
+_KEEPALIVE_OPTIONS = [
+    ("grpc.keepalive_time_ms", 60 * 1000),
+    ("grpc.keepalive_timeout_ms", 60 * 1000),
+]
+
+
+@pytest.mark.parametrize("transport", [None, "grpc"])
+def test_constructor_default_transport_sends_keepalive(transport):
+    from google.cloud import bigquery_storage
+
+    kwargs = {} if transport is None else {"transport": transport}
+    with mock.patch(
+        "google.api_core.grpc_helpers.create_channel", autospec=True
+    ) as create_channel:
+        client = bigquery_storage.BigQueryReadClient(
+            credentials=credentials.AnonymousCredentials(), **kwargs
+        )
+
+    create_channel.assert_called_once()
+    options = create_channel.call_args.kwargs["options"]
+    for option in _KEEPALIVE_OPTIONS:
+        assert option in options
+    # The transport's own channel options are kept.
+    assert ("grpc.max_receive_message_length", -1) in options
+    assert client._transport.grpc_channel is create_channel.return_value
+
+
+def test_constructor_keeps_given_transport(mock_transport):
+    from google.cloud import bigquery_storage
+
+    client = bigquery_storage.BigQueryReadClient(transport=mock_transport)
+
+    assert client._transport is mock_transport
+
+
+def test_constructor_keeps_given_transport_callable(mock_transport):
+    from google.cloud import bigquery_storage
+
+    create_transport = mock.Mock(return_value=mock_transport)
+    client = bigquery_storage.BigQueryReadClient(
+        credentials=credentials.AnonymousCredentials(), transport=create_transport
+    )
+
+    create_transport.assert_called_once()
+    assert client._transport is mock_transport

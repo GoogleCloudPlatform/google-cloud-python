@@ -831,6 +831,18 @@ def test_value_regex_filter___repr__():
     assert eval(repr(row_filter)) == row_filter
 
 
+def test_value_regex_filter_not_equal_to_literal_value_filter():
+    from google.cloud.bigtable.data.row_filters import (
+        LiteralValueFilter,
+        ValueRegexFilter,
+    )
+
+    vrf = ValueRegexFilter(b"abc")
+    lvf = LiteralValueFilter(b"abc")
+    assert vrf != lvf
+    assert lvf != vrf
+
+
 def test_literal_value_filter_to_pb_w_bytes():
     from google.cloud.bigtable.data.row_filters import LiteralValueFilter
 

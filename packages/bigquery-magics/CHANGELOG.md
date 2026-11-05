@@ -4,6 +4,19 @@
 
 [1]: https://pypi.org/project/bigquery-magics/#history
 
+## [0.15.2](https://github.com/googleapis/google-cloud-python/compare/bigquery-magics-v0.15.1...bigquery-magics-v0.15.2) (2026-10-23)
+
+
+### Features
+
+* support Python 3.15 ([8fceef4](https://github.com/googleapis/google-cloud-python/commit/8fceef49c523bcc8989abf3b6b82bcf143332d50))
+
+
+### Bug Fixes
+
+* **bigquery-magics:** wait for graph server startup before returning from init ([#18763](https://github.com/googleapis/google-cloud-python/issues/18763)) ([77e4d66](https://github.com/googleapis/google-cloud-python/commit/77e4d661b6d060a55f1b0eb6af58f848cc5e714d))
+* validate Host header in graph_server request handlers ([#17932](https://github.com/googleapis/google-cloud-python/issues/17932)) ([ea7299f](https://github.com/googleapis/google-cloud-python/commit/ea7299fe071149fe42b2ebd63f58fc97e43ad5ec))
+
 ## [0.15.1](https://github.com/googleapis/google-cloud-python/compare/bigquery-magics-v0.15.0...bigquery-magics-v0.15.1) (2026-08-06)
 
 

@@ -15,6 +15,7 @@
 #
 """A compatibility module for older versions of google-api-core."""
 
+import inspect
 import os
 import json
 import uuid
@@ -93,6 +94,14 @@ else:  # pragma: NO COVER
 # >= 2.29.0, this check and the corresponding fallback in base transports can be safely removed.
 ASYNC_WRAP_METHOD_SUPPORTS_KIND = WRAP_METHOD_SUPPORTS_TRACING or hasattr(
     gapic_v1.method_async, "_DEFAULT_ASYNC_TRANSPORT_KIND"
+)
+
+# The `default_host` parameter in gapic_v1.method.wrap_method,
+# gapic_v1.method_async.wrap_method, _observability.get_otel_interceptor, and
+# _observability.apply_otel_async_channel_interceptors allows transports to pass
+# their resolved default host without mutating caller-owned client_options.
+SUPPORTS_DEFAULT_HOST = (
+    "default_host" in inspect.signature(gapic_v1.method.wrap_method).parameters
 )
 
 try:

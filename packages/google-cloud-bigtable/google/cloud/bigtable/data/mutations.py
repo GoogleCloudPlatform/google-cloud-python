@@ -22,7 +22,10 @@ from typing import Any
 
 import google.cloud.bigtable_v2.types.bigtable as types_pb
 import google.cloud.bigtable_v2.types.data as data_pb
-from google.cloud.bigtable.data.read_modify_write_rules import _MAX_INCREMENT_VALUE
+from google.cloud.bigtable.data.read_modify_write_rules import (
+    _MAX_INCREMENT_VALUE,
+    _MIN_INCREMENT_VALUE,
+)
 
 # special value for SetCell mutation timestamps. If set, server will assign a timestamp
 _SERVER_SIDE_TIMESTAMP = -1
@@ -169,12 +172,14 @@ class SetCell(Mutation):
         qualifier = qualifier.encode() if isinstance(qualifier, str) else qualifier
         if not isinstance(qualifier, bytes):
             raise TypeError("qualifier must be bytes or str")
+        if isinstance(new_value, bool):
+            raise TypeError("new_value must be bytes, str, or int")
         if isinstance(new_value, str):
             new_value = new_value.encode()
         elif isinstance(new_value, int):
-            if abs(new_value) > _MAX_INCREMENT_VALUE:
+            if not (_MIN_INCREMENT_VALUE <= new_value <= _MAX_INCREMENT_VALUE):
                 raise ValueError(
-                    "int values must be between -2**63 and 2**63 (64-bit signed int)"
+                    "int values must be between -2**63 and 2**63 - 1 (64-bit signed int)"
                 )
             new_value = new_value.to_bytes(8, "big", signed=True)
         if not isinstance(new_value, bytes):
@@ -223,13 +228,17 @@ class DeleteRangeFromColumn(Mutation):
     """
 
     family: str
-    qualifier: bytes
+    qualifier: bytes | str
     # None represents 0
     start_timestamp_micros: int | None = None
     # None represents infinity
     end_timestamp_micros: int | None = None
 
     def __post_init__(self):
+        if isinstance(self.qualifier, str):
+            self.qualifier = self.qualifier.encode()
+        if not isinstance(self.qualifier, bytes):
+            raise TypeError("qualifier must be bytes or str")
         if (
             self.start_timestamp_micros is not None
             and self.end_timestamp_micros is not None
@@ -321,13 +330,13 @@ class AddToCell(Mutation):
         qualifier = qualifier.encode() if isinstance(qualifier, str) else qualifier
         if not isinstance(qualifier, bytes):
             raise TypeError("qualifier must be bytes or str")
-        if not isinstance(value, int):
+        if isinstance(value, bool) or not isinstance(value, int):
             raise TypeError("value must be int")
-        if not isinstance(timestamp_micros, int):
+        if isinstance(timestamp_micros, bool) or not isinstance(timestamp_micros, int):
             raise TypeError("timestamp_micros must be int")
-        if abs(value) > _MAX_INCREMENT_VALUE:
+        if not (_MIN_INCREMENT_VALUE <= value <= _MAX_INCREMENT_VALUE):
             raise ValueError(
-                "int values must be between -2**63 and 2**63 (64-bit signed int)"
+                "int values must be between -2**63 and 2**63 - 1 (64-bit signed int)"
             )
 
         if timestamp_micros < 0:

@@ -177,10 +177,10 @@ class SqlWorkloadCapturesServiceRestInterceptor:
 
     def pre_start(
         self,
-        request: cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest,
+        request: cloud_sql_workload_captures.WorkloadCapturesStartRequest,
         metadata: Sequence[Tuple[str, Union[str, bytes]]],
     ) -> Tuple[
-        cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest,
+        cloud_sql_workload_captures.WorkloadCapturesStartRequest,
         Sequence[Tuple[str, Union[str, bytes]]],
     ]:
         """Pre-rpc interceptor for start
@@ -226,10 +226,10 @@ class SqlWorkloadCapturesServiceRestInterceptor:
 
     def pre_start_replay(
         self,
-        request: cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest,
+        request: cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest,
         metadata: Sequence[Tuple[str, Union[str, bytes]]],
     ) -> Tuple[
-        cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest,
+        cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest,
         Sequence[Tuple[str, Union[str, bytes]]],
     ]:
         """Pre-rpc interceptor for start_replay
@@ -275,10 +275,10 @@ class SqlWorkloadCapturesServiceRestInterceptor:
 
     def pre_stop(
         self,
-        request: cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest,
+        request: cloud_sql_workload_captures.WorkloadCapturesStopRequest,
         metadata: Sequence[Tuple[str, Union[str, bytes]]],
     ) -> Tuple[
-        cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest,
+        cloud_sql_workload_captures.WorkloadCapturesStopRequest,
         Sequence[Tuple[str, Union[str, bytes]]],
     ]:
         """Pre-rpc interceptor for stop
@@ -324,10 +324,10 @@ class SqlWorkloadCapturesServiceRestInterceptor:
 
     def pre_stop_replay(
         self,
-        request: cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest,
+        request: cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest,
         metadata: Sequence[Tuple[str, Union[str, bytes]]],
     ) -> Tuple[
-        cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest,
+        cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest,
         Sequence[Tuple[str, Union[str, bytes]]],
     ]:
         """Pre-rpc interceptor for stop_replay
@@ -646,7 +646,7 @@ class SqlWorkloadCapturesServiceRestTransport(
 
         def __call__(
             self,
-            request: cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest,
+            request: cloud_sql_workload_captures.WorkloadCapturesStartRequest,
             *,
             retry: OptionalRetry = gapic_v1.method.DEFAULT,
             timeout: Optional[float] = None,
@@ -655,7 +655,7 @@ class SqlWorkloadCapturesServiceRestTransport(
             r"""Call the start method over HTTP.
 
             Args:
-                request (~.cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest):
+                request (~.cloud_sql_workload_captures.WorkloadCapturesStartRequest):
                     The request object. Request to start recording traffic
                 from the primary instance (captured
                 workload).
@@ -799,7 +799,7 @@ class SqlWorkloadCapturesServiceRestTransport(
 
         def __call__(
             self,
-            request: cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest,
+            request: cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest,
             *,
             retry: OptionalRetry = gapic_v1.method.DEFAULT,
             timeout: Optional[float] = None,
@@ -808,7 +808,7 @@ class SqlWorkloadCapturesServiceRestTransport(
             r"""Call the start replay method over HTTP.
 
             Args:
-                request (~.cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest):
+                request (~.cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest):
                     The request object. Request to start executing a captured
                 workload on a replay instance (the Cloud
                 SQL instance where the recorded SQL
@@ -955,7 +955,7 @@ class SqlWorkloadCapturesServiceRestTransport(
 
         def __call__(
             self,
-            request: cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest,
+            request: cloud_sql_workload_captures.WorkloadCapturesStopRequest,
             *,
             retry: OptionalRetry = gapic_v1.method.DEFAULT,
             timeout: Optional[float] = None,
@@ -964,7 +964,7 @@ class SqlWorkloadCapturesServiceRestTransport(
             r"""Call the stop method over HTTP.
 
             Args:
-                request (~.cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest):
+                request (~.cloud_sql_workload_captures.WorkloadCapturesStopRequest):
                     The request object. Request to stop recording traffic
                 from the primary instance.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
@@ -1105,7 +1105,7 @@ class SqlWorkloadCapturesServiceRestTransport(
 
         def __call__(
             self,
-            request: cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest,
+            request: cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest,
             *,
             retry: OptionalRetry = gapic_v1.method.DEFAULT,
             timeout: Optional[float] = None,
@@ -1114,7 +1114,7 @@ class SqlWorkloadCapturesServiceRestTransport(
             r"""Call the stop replay method over HTTP.
 
             Args:
-                request (~.cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest):
+                request (~.cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest):
                     The request object. Request to stop an active workload
                 replay on a target Cloud SQL replay
                 instance.
@@ -1243,7 +1243,7 @@ class SqlWorkloadCapturesServiceRestTransport(
     def start(
         self,
     ) -> Callable[
-        [cloud_sql_workload_captures.SqlWorkloadCapturesStartRequest],
+        [cloud_sql_workload_captures.WorkloadCapturesStartRequest],
         cloud_sql_resources.Operation,
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
@@ -1254,7 +1254,7 @@ class SqlWorkloadCapturesServiceRestTransport(
     def start_replay(
         self,
     ) -> Callable[
-        [cloud_sql_workload_captures.SqlWorkloadCapturesStartReplayRequest],
+        [cloud_sql_workload_captures.WorkloadCapturesStartReplayRequest],
         cloud_sql_resources.Operation,
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
@@ -1265,7 +1265,7 @@ class SqlWorkloadCapturesServiceRestTransport(
     def stop(
         self,
     ) -> Callable[
-        [cloud_sql_workload_captures.SqlWorkloadCapturesStopRequest],
+        [cloud_sql_workload_captures.WorkloadCapturesStopRequest],
         cloud_sql_resources.Operation,
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
@@ -1276,7 +1276,7 @@ class SqlWorkloadCapturesServiceRestTransport(
     def stop_replay(
         self,
     ) -> Callable[
-        [cloud_sql_workload_captures.SqlWorkloadCapturesStopReplayRequest],
+        [cloud_sql_workload_captures.WorkloadCapturesStopReplayRequest],
         cloud_sql_resources.Operation,
     ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.

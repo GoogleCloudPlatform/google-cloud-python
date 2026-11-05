@@ -520,9 +520,11 @@ class SummarizationSection(proto.Message):
                 cancellation. "N/A" otherwise. Section name:
                 "reason_for_cancellation".
             CUSTOMER_SATISFACTION (5):
-                "Unsatisfied" or "Satisfied" depending on the customer's
-                feelings at the end of the conversation. Section name:
-                "customer_satisfaction".
+                Customer satisfaction derived from the text transcript only
+                (not audio). Categorized based on customer statements by the
+                end of the conversation. ``D`` for dissatisfied and ``N``
+                for neutral or satisfied (default). Section name:
+                ``customer_satisfaction``.
             ENTITIES (6):
                 Key entities extracted from the conversation,
                 such as ticket number, order number, dollar

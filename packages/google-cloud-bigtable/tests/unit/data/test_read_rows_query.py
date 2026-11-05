@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from unittest import mock
+
 import pytest
 
 TEST_ROWS = [
@@ -586,3 +588,148 @@ class TestReadRowsQuery:
         """Empty strings should be treated as keys inputs"""
         query = self._make_one(row_keys="")
         assert query.row_keys == [b""]
+
+    def test_add_range_does_not_materialize_row_ranges(self):
+        """
+        Verify that add_range deduplicates in O(1) time without accessing the
+        row_ranges property list.
+        """
+        from google.cloud.bigtable.data.read_rows_query import RowRange
+
+        query = self._make_one()
+
+        with mock.patch.object(
+            type(query), "row_ranges", new_callable=mock.PropertyMock
+        ) as row_ranges:
+            for i in range(100):
+                query.add_range(RowRange(f"k{i:03d}", f"k{i + 1:03d}"))
+            row_ranges.assert_not_called()
+        assert len(query.row_ranges) == 100
+
+    def test_add_key_does_not_materialize_row_keys(self):
+        """
+        Verify that ReadRowsQuery deduplicates row_keys in __init__ and add_key
+        in O(1) time without materializing the row_keys property list.
+        """
+        query = self._make_one(row_keys=["k0", b"k0"])
+        assert query.row_keys == [b"k0"]
+
+        with mock.patch.object(
+            type(query), "row_keys", new_callable=mock.PropertyMock
+        ) as row_keys_prop:
+            query.add_key(b"k0")
+            query.add_key("k0")
+            row_keys_prop.assert_not_called()
+
+        assert query.row_keys == [b"k0"]
+
+    def test_query_equality_does_not_materialize_row_keys_or_ranges(self):
+        """
+        Verify that ReadRowsQuery.__eq__ compares keys and ranges in order-independent
+        O(N) time using internal sets without materializing row_keys or row_ranges lists.
+        """
+        from google.cloud.bigtable.data.read_rows_query import RowRange
+
+        q1 = self._make_one(
+            row_keys=[f"k{i}" for i in range(50)],
+            row_ranges=[RowRange(f"a{i}", f"b{i}") for i in range(50)],
+        )
+        q2 = self._make_one(
+            row_keys=[f"k{i}" for i in reversed(range(50))],
+            row_ranges=[RowRange(f"a{i}", f"b{i}") for i in reversed(range(50))],
+        )
+        with (
+            mock.patch.object(
+                type(q1), "row_keys", new_callable=mock.PropertyMock
+            ) as mock_keys,
+            mock.patch.object(
+                type(q1), "row_ranges", new_callable=mock.PropertyMock
+            ) as mock_ranges,
+        ):
+            assert q1 == q2
+            mock_keys.assert_not_called()
+            mock_ranges.assert_not_called()
+
+    def test_add_range_deduplication_behavior(self):
+        """Assert that identical ranges are deduplicated, but distinct ranges are kept."""
+        from google.cloud.bigtable.data.read_rows_query import RowRange
+
+        r1 = RowRange(start_key="a", end_key="b")
+        r2 = RowRange(start_key="a", end_key="b")
+
+        r3 = RowRange(start_key="c", end_key="d")
+
+        query = self._make_one(row_ranges=[r1])
+        query.add_range(r2)
+        query.add_range(r3)
+        query.add_range(RowRange(start_key="c", end_key="d"))
+
+        assert len(query.row_ranges) == 2
+        assert query.row_ranges[0] == r1
+        assert query.row_ranges[1] == r3
+
+    def test_row_range_hash_matches_legacy(self):
+        """
+        Verify that base RowRange and legacy row_set.RowRange instances representing
+        the same range compare equal, produce identical hashes, and deduplicate
+        properly when combined in a ReadRowsQuery.
+        """
+        from google.cloud.bigtable.data.read_rows_query import RowRange
+        from google.cloud.bigtable.row_set import RowRange as LegacyRowRange
+
+        base_range = RowRange(b"a", b"b")
+        legacy_range = LegacyRowRange(b"a", b"b")
+        assert base_range == legacy_range
+        assert LegacyRowRange._key is RowRange._key
+        assert LegacyRowRange.__hash__ is RowRange.__hash__
+        assert hash(base_range) == hash(legacy_range)
+        query = self._make_one(row_ranges=[base_range])
+        query.add_range(legacy_range)
+        assert len(query.row_ranges) == 1
+
+    def test_read_rows_query_enforces_slots(self):
+        """
+        Verify that ReadRowsQuery enforces __slots__ so instances do not allocate
+        a dynamic __dict__ or permit undeclared attributes.
+        """
+        from google.cloud.bigtable.data.read_rows_query import RowRange
+
+        query = self._make_one(
+            row_keys=[b"k1"],
+            row_ranges=[RowRange(start_key=b"a", end_key=b"b")],
+        )
+        assert not hasattr(query, "__dict__")
+        with pytest.raises(AttributeError):
+            query._undeclared_attribute = "invalid"
+
+    def test_copy_query_preserves_deduplication_isolation(self):
+        """
+        Verify that shallow-copying a ReadRowsQuery produces independent
+        deduplication tracking sets so mutations on the copy do not affect the
+        original query, and existing items remain deduplicated on the copy.
+        """
+        import copy
+
+        from google.cloud.bigtable.data.read_rows_query import RowRange
+
+        r1 = RowRange(start_key="a", end_key="b")
+        r2 = RowRange(start_key="c", end_key="d")
+
+        original = self._make_one(row_keys=[b"k1"], row_ranges=[r1])
+        copied = copy.copy(original)
+
+        copied.add_key(b"k1")
+        copied.add_range(r1)
+        assert copied.row_keys == [b"k1"]
+        assert copied.row_ranges == [r1]
+
+        copied.add_key(b"k2")
+        copied.add_range(r2)
+        assert original.row_keys == [b"k1"]
+        assert original.row_ranges == [r1]
+
+        original.add_key(b"k2")
+        original.add_range(r2)
+
+        assert original.row_keys == [b"k1", b"k2"]
+        assert original.row_ranges == [r1, r2]

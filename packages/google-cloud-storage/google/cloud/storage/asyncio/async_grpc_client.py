@@ -29,6 +29,9 @@ from google.cloud._storage_v2.services.storage.transports.base import (
     DEFAULT_CLIENT_INFO,
 )
 from google.cloud.storage import __version__, _opentelemetry_metrics
+from google.cloud.storage._bucket_metadata_cache import BucketMetadataCache
+from google.cloud.storage._helpers import create_trace_span_helper
+from google.cloud.storage.asyncio import _utils
 from google.cloud.storage.grpc_client import (
     _DEFAULT_HOST,
     _resolve_direct_path_interconnect,
@@ -291,6 +294,16 @@ def _mark_call_closing_cleanly(call: Any) -> None:
             isinstance(inst_dict, dict) and "_closing_cleanly" in inst_dict
         ):
             current._closing_cleanly = True
+
+
+def _record_call_exception(call: Any, exc: BaseException) -> bool:
+    """Records ``exc`` on any wrapped ``_TrackedCallBase`` before stream teardown."""
+    recorded = False
+    for current in _iter_wrapped_calls(call):
+        if isinstance(current, _TrackedCallBase):
+            current._record_from_exception(exc)
+            recorded = True
+    return recorded
 
 
 def _bind_call_to_operation(
@@ -906,6 +919,8 @@ class AsyncGrpcClient:
         self._debug_metrics_enabled = _opentelemetry_metrics.is_debug_metrics_enabled(
             enable_debug_metrics
         )
+        self._is_async_grpc_client = True
+        self._bucket_metadata_cache = BucketMetadataCache(self)
 
         api_endpoint = None
         if isinstance(client_options, dict):
@@ -1132,24 +1147,31 @@ class AsyncGrpcClient:
             rpc_method="google.storage.v2.Storage/DeleteObject",
         ):
             _validate_metadata(metadata)
-            # The gRPC API requires the bucket name to be in the format "projects/_/buckets/bucket_name"
-            bucket_path = f"projects/_/buckets/{bucket_name}"
-            request = storage_v2.DeleteObjectRequest(
-                bucket=bucket_path,
-                object=object_name,
-                generation=generation,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                **kwargs,
-            )
-            await self._grpc_client.delete_object(
-                request=request,
-                metadata=metadata,
-                timeout=timeout,
-                retry=retry,
-            )
+            async with create_trace_span_helper(
+                self,
+                bucket_name,
+                "Storage.AsyncGrpcClient.deleteObject",
+                rpc_system="grpc",
+            ):
+                # The gRPC API requires the bucket name to be in the format "projects/_/buckets/bucket_name"
+                bucket_path = f"projects/_/buckets/{bucket_name}"
+                request = storage_v2.DeleteObjectRequest(
+                    bucket=bucket_path,
+                    object=object_name,
+                    generation=generation,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    **kwargs,
+                )
+                final_metadata = _utils.inject_traceparent_to_metadata(metadata)
+                await self._grpc_client.delete_object(
+                    request=request,
+                    metadata=final_metadata,
+                    timeout=timeout,
+                    retry=retry,
+                )
 
     async def get_object(
         self,
@@ -1219,24 +1241,31 @@ class AsyncGrpcClient:
             rpc_method="google.storage.v2.Storage/GetObject",
         ):
             _validate_metadata(metadata)
-            bucket_path = f"projects/_/buckets/{bucket_name}"
+            async with create_trace_span_helper(
+                self,
+                bucket_name,
+                "Storage.AsyncGrpcClient.getObject",
+                rpc_system="grpc",
+            ):
+                bucket_path = f"projects/_/buckets/{bucket_name}"
 
-            request = storage_v2.GetObjectRequest(
-                bucket=bucket_path,
-                object=object_name,
-                generation=generation,
-                if_generation_match=if_generation_match,
-                if_generation_not_match=if_generation_not_match,
-                if_metageneration_match=if_metageneration_match,
-                if_metageneration_not_match=if_metageneration_not_match,
-                soft_deleted=soft_deleted or False,
-                **kwargs,
-            )
+                request = storage_v2.GetObjectRequest(
+                    bucket=bucket_path,
+                    object=object_name,
+                    generation=generation,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=if_generation_not_match,
+                    if_metageneration_match=if_metageneration_match,
+                    if_metageneration_not_match=if_metageneration_not_match,
+                    soft_deleted=soft_deleted or False,
+                    **kwargs,
+                )
 
-            # Calls the underlying GAPIC StorageAsyncClient.get_object method
-            return await self._grpc_client.get_object(
-                request=request,
-                metadata=metadata,
-                timeout=timeout,
-                retry=retry,
-            )
+                final_metadata = _utils.inject_traceparent_to_metadata(metadata)
+                # Calls the underlying GAPIC StorageAsyncClient.get_object method
+                return await self._grpc_client.get_object(
+                    request=request,
+                    metadata=final_metadata,
+                    timeout=timeout,
+                    retry=retry,
+                )

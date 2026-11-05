@@ -1279,6 +1279,42 @@ class TestQueryJob(_Base):
             timeout=DEFAULT_GET_JOB_TIMEOUT,
         )
 
+    def test_result_with_done_jobs_query_response_keeps_arrow_first_page(self):
+        """An ARROW response from jobs.query is kept as the first page, like
+        rows are, so the stream can continue after it.
+        """
+        job_resource = self._make_resource(started=True, ended=True, location="EU")
+        conn = make_connection(job_resource)
+        client = _make_client(self.PROJECT, connection=conn)
+        query_resource_done = {
+            "jobComplete": True,
+            "jobReference": {"projectId": self.PROJECT, "jobId": self.JOB_ID},
+            "arrowSchema": {"serializedSchema": "c2NoZW1h"},
+            "arrowRecordBatch": {"serializedRecordBatch": "YmF0Y2g="},
+            "pageRowCount": "1",
+            "totalRows": "2",
+        }
+        job = google.cloud.bigquery._job_helpers._to_query_job(
+            client,
+            "SELECT 1",
+            request_config=None,
+            query_response=query_resource_done,
+        )
+
+        result = job.result(page_size=0)
+
+        self.assertEqual(
+            result._first_page_response["arrowRecordBatch"],
+            query_resource_done["arrowRecordBatch"],
+        )
+        # Only jobs.get, no jobs.getQueryResults.
+        conn.api_request.assert_called_once_with(
+            method="GET",
+            path=f"/projects/{self.PROJECT}/jobs/{self.JOB_ID}",
+            query_params={"projection": "full"},
+            timeout=DEFAULT_GET_JOB_TIMEOUT,
+        )
+
     def test_result_with_none_timeout(self):
         # Verifies that with an intentional None timeout, get job uses None
         # instead of the default timeout.

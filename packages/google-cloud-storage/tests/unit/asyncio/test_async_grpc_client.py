@@ -1464,3 +1464,13 @@ class TestAsyncGrpcClient:
             async_grpc_client._mark_call_closing_cleanly(tracked_healthy)
             tracked_healthy.cancel()
         assert recorder.rpc_call_duration.record.call_args.args[0] >= 100.0
+        assert (
+            async_grpc_client._record_call_exception(None, ValueError("unwrapped"))
+            is False
+        )
+        assert (
+            async_grpc_client._record_call_exception(
+                tracked_healthy, ValueError("wrapped")
+            )
+            is True
+        )

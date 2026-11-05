@@ -242,6 +242,19 @@ class InstanceConfig(proto.Message):
             Output only. Describes whether free instances
             are available to be created in this instance
             configuration.
+        allowed_processing_units (MutableSequence[google.cloud.spanner_admin_instance_v1.types.InstanceConfig.AllowedProcessingUnits]):
+            Output only. Defines the ranges of allowed processing units
+            supported by this instance configuration. If multiple ranges
+            are specified, an instance using this configuration may use
+            a valid increment in any of the given ranges. For example,
+            an allowed_processing_units specification of
+            ``[{min_processing_units:100, max_processing_units:900, processing_unit_increment:100}, {min_processing_units:1000, processing_unit_increment:1000}]``
+            specifies that the instance configuration supports instances
+            with quantities of processing units in multiples of 100
+            processing units (100, 200, 300 and so on) up to and
+            including 900 processing units and quantities that are at
+            least 1000 processing units and multiples of 1000 processing
+            units (1000, 2000, 3000 and so on).
         quorum_type (google.cloud.spanner_admin_instance_v1.types.InstanceConfig.QuorumType):
             Output only. The ``QuorumType`` of the instance
             configuration.
@@ -342,6 +355,38 @@ class InstanceConfig(proto.Message):
         DUAL_REGION = 2
         MULTI_REGION = 3
 
+    class AllowedProcessingUnits(proto.Message):
+        r"""Defines a range of processing units supported by an instance
+        configuration.
+
+        Attributes:
+            min_processing_units (int):
+                The minimum value of processing units
+                applicable to this interval, inclusive.
+            max_processing_units (int):
+                The maximum value of processing units
+                applicable to this interval, inclusive. If
+                unset, there is no predefined limit to the
+                supported number of processing units, although
+                project quota limits still apply.
+            processing_unit_increment (int):
+                Allowed increments of processing units
+                between “min” and “max”.
+        """
+
+        min_processing_units: int = proto.Field(
+            proto.INT32,
+            number=1,
+        )
+        max_processing_units: int = proto.Field(
+            proto.INT32,
+            number=2,
+        )
+        processing_unit_increment: int = proto.Field(
+            proto.INT32,
+            number=3,
+        )
+
     name: str = proto.Field(
         proto.STRING,
         number=1,
@@ -395,6 +440,13 @@ class InstanceConfig(proto.Message):
         proto.ENUM,
         number=12,
         enum=FreeInstanceAvailability,
+    )
+    allowed_processing_units: MutableSequence[AllowedProcessingUnits] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=13,
+            message=AllowedProcessingUnits,
+        )
     )
     quorum_type: QuorumType = proto.Field(
         proto.ENUM,

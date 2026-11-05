@@ -44,20 +44,20 @@ class ListTrustConfigsRequest(proto.Message):
             TrustConfigs should be listed, specified in the format
             ``projects/*/locations/*``.
         page_size (int):
-            Maximum number of TrustConfigs to return per
-            call.
+            Optional. Maximum number of TrustConfigs to
+            return per call.
         page_token (str):
-            The value returned by the last ``ListTrustConfigsResponse``.
-            Indicates that this is a continuation of a prior
-            ``ListTrustConfigs`` call, and that the system should return
-            the next page of data.
+            Optional. The value returned by the last
+            ``ListTrustConfigsResponse``. Indicates that this is a
+            continuation of a prior ``ListTrustConfigs`` call, and that
+            the system should return the next page of data.
         filter (str):
-            Filter expression to restrict the
+            Optional. Filter expression to restrict the
             TrustConfigs returned.
         order_by (str):
-            A list of TrustConfig field names used to specify the order
-            of the returned results. The default sorting order is
-            ascending. To specify descending order for a field, add a
+            Optional. A list of TrustConfig field names used to specify
+            the order of the returned results. The default sorting order
+            is ascending. To specify descending order for a field, add a
             suffix ``" desc"``.
     """
 
@@ -196,10 +196,11 @@ class DeleteTrustConfigRequest(proto.Message):
             Required. A name of the TrustConfig to delete. Must be in
             the format ``projects/*/locations/*/trustConfigs/*``.
         etag (str):
-            The current etag of the TrustConfig.
-            If an etag is provided and does not match the
-            current etag of the resource, deletion will be
-            blocked and an ABORTED error will be returned.
+            Optional. The current etag of the
+            TrustConfig. If an etag is provided and does not
+            match the current etag of the resource, deletion
+            will be blocked and an ABORTED error will be
+            returned.
     """
 
     name: str = proto.Field(
@@ -217,8 +218,8 @@ class TrustConfig(proto.Message):
 
     Attributes:
         name (str):
-            A user-defined name of the trust config. TrustConfig names
-            must be unique globally and match pattern
+            Identifier. A user-defined name of the trust config.
+            TrustConfig names must be unique globally and match pattern
             ``projects/*/locations/*/trustConfigs/*``.
         create_time (google.protobuf.timestamp_pb2.Timestamp):
             Output only. The creation timestamp of a
@@ -227,24 +228,43 @@ class TrustConfig(proto.Message):
             Output only. The last update timestamp of a
             TrustConfig.
         labels (MutableMapping[str, str]):
-            Set of labels associated with a TrustConfig.
+            Optional. Set of labels associated with a
+            TrustConfig.
         description (str):
-            One or more paragraphs of text description of
-            a TrustConfig.
+            Optional. One or more paragraphs of text
+            description of a TrustConfig.
         etag (str):
             This checksum is computed by the server based
             on the value of other fields, and may be sent on
             update and delete requests to ensure the client
             has an up-to-date value before proceeding.
+        spiffe_trust_stores (MutableMapping[str, google.cloud.certificate_manager_v1.types.TrustConfig.TrustStore]):
+            Optional. Defines a mapping from a trust
+            domain to a TrustStore. This is used for SPIFFE
+            certificate validation.
         trust_stores (MutableSequence[google.cloud.certificate_manager_v1.types.TrustConfig.TrustStore]):
-            Set of trust stores to perform validation
-            against.
+            Optional. Set of trust stores to perform
+            validation against.
             This field is supported when TrustConfig is
             configured with Load Balancers, currently not
             supported for SPIFFE certificate validation.
 
             Only one TrustStore specified is currently
             allowed.
+        allowlisted_certificates (MutableSequence[google.cloud.certificate_manager_v1.types.TrustConfig.AllowlistedCertificate]):
+            Optional. A certificate matching an
+            allowlisted certificate is always considered
+            valid as long as the certificate is parseable,
+            proof of private key possession is established,
+            and constraints on the certificate's SAN field
+            are met.
+        tags (MutableMapping[str, str]):
+            Optional. Input only. Immutable. Tag
+            keys/values directly bound to this resource. For
+            example:
+
+              "123/environment": "production",
+              "123/costCenter": "marketing".
     """
 
     class TrustAnchor(proto.Message):
@@ -295,12 +315,13 @@ class TrustConfig(proto.Message):
 
         Attributes:
             trust_anchors (MutableSequence[google.cloud.certificate_manager_v1.types.TrustConfig.TrustAnchor]):
-                List of Trust Anchors to be used while
-                performing validation against a given
+                Optional. List of Trust Anchors to be used
+                while performing validation against a given
                 TrustStore.
             intermediate_cas (MutableSequence[google.cloud.certificate_manager_v1.types.TrustConfig.IntermediateCA]):
-                Set of intermediate CA certificates used for
-                the path building phase of chain validation.
+                Optional. Set of intermediate CA certificates
+                used for the path building phase of chain
+                validation.
 
                 The field is currently not supported if
                 TrustConfig is used for the workload certificate
@@ -318,6 +339,22 @@ class TrustConfig(proto.Message):
                 number=2,
                 message="TrustConfig.IntermediateCA",
             )
+        )
+
+    class AllowlistedCertificate(proto.Message):
+        r"""Defines an allowlisted certificate.
+
+        Attributes:
+            pem_certificate (str):
+                Required. PEM certificate that is
+                allowlisted. The certificate can be up to 5k
+                bytes, and must be a parseable X.509
+                certificate.
+        """
+
+        pem_certificate: str = proto.Field(
+            proto.STRING,
+            number=1,
         )
 
     name: str = proto.Field(
@@ -347,10 +384,28 @@ class TrustConfig(proto.Message):
         proto.STRING,
         number=6,
     )
+    spiffe_trust_stores: MutableMapping[str, TrustStore] = proto.MapField(
+        proto.STRING,
+        proto.MESSAGE,
+        number=7,
+        message=TrustStore,
+    )
     trust_stores: MutableSequence[TrustStore] = proto.RepeatedField(
         proto.MESSAGE,
         number=8,
         message=TrustStore,
+    )
+    allowlisted_certificates: MutableSequence[AllowlistedCertificate] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=9,
+            message=AllowlistedCertificate,
+        )
+    )
+    tags: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=10,
     )
 
 

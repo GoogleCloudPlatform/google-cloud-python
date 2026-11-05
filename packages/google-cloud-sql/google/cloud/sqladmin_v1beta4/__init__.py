@@ -354,12 +354,12 @@ from .types.cloud_sql_users import (
 )
 from .types.cloud_sql_workload_captures import (
     SqlWorkloadCapturesListRequest,
-    SqlWorkloadCapturesStartReplayRequest,
-    SqlWorkloadCapturesStartRequest,
-    SqlWorkloadCapturesStopReplayRequest,
-    SqlWorkloadCapturesStopRequest,
     WorkloadCapture,
     WorkloadCapturesListResponse,
+    WorkloadCapturesStartReplayRequest,
+    WorkloadCapturesStartRequest,
+    WorkloadCapturesStopReplayRequest,
+    WorkloadCapturesStopRequest,
 )
 
 __all__ = (
@@ -605,10 +605,6 @@ __all__ = (
     "SqlUsersUpdateRequest",
     "SqlWorkloadCapturesListRequest",
     "SqlWorkloadCapturesServiceClient",
-    "SqlWorkloadCapturesStartReplayRequest",
-    "SqlWorkloadCapturesStartRequest",
-    "SqlWorkloadCapturesStopReplayRequest",
-    "SqlWorkloadCapturesStopRequest",
     "SslCert",
     "SslCertDetail",
     "SslCertsCreateEphemeralRequest",
@@ -635,6 +631,10 @@ __all__ = (
     "Value",
     "WorkloadCapture",
     "WorkloadCapturesListResponse",
+    "WorkloadCapturesStartReplayRequest",
+    "WorkloadCapturesStartRequest",
+    "WorkloadCapturesStopReplayRequest",
+    "WorkloadCapturesStopRequest",
 )
 
 api_core.check_python_version("google.cloud.sqladmin_v1beta4")

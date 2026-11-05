@@ -10056,6 +10056,18 @@ def test_create_data_agent_rest_call_success(request_type):
                                 "property_graph_id": "property_graph_id_value",
                             }
                         ],
+                        "search_scope": {
+                            "include_project_ids": [
+                                "include_project_ids_value1",
+                                "include_project_ids_value2",
+                            ],
+                            "include_dataset_references": [
+                                {
+                                    "project_id": "project_id_value",
+                                    "dataset_id": "dataset_id_value",
+                                }
+                            ],
+                        },
                     },
                     "studio": {
                         "studio_references": [{"datasource_id": "datasource_id_value"}]
@@ -10421,6 +10433,18 @@ def test_create_data_agent_sync_rest_call_success(request_type):
                                 "property_graph_id": "property_graph_id_value",
                             }
                         ],
+                        "search_scope": {
+                            "include_project_ids": [
+                                "include_project_ids_value1",
+                                "include_project_ids_value2",
+                            ],
+                            "include_dataset_references": [
+                                {
+                                    "project_id": "project_id_value",
+                                    "dataset_id": "dataset_id_value",
+                                }
+                            ],
+                        },
                     },
                     "studio": {
                         "studio_references": [{"datasource_id": "datasource_id_value"}]
@@ -10803,6 +10827,18 @@ def test_update_data_agent_rest_call_success(request_type):
                                 "property_graph_id": "property_graph_id_value",
                             }
                         ],
+                        "search_scope": {
+                            "include_project_ids": [
+                                "include_project_ids_value1",
+                                "include_project_ids_value2",
+                            ],
+                            "include_dataset_references": [
+                                {
+                                    "project_id": "project_id_value",
+                                    "dataset_id": "dataset_id_value",
+                                }
+                            ],
+                        },
                     },
                     "studio": {
                         "studio_references": [{"datasource_id": "datasource_id_value"}]
@@ -11172,6 +11208,18 @@ def test_update_data_agent_sync_rest_call_success(request_type):
                                 "property_graph_id": "property_graph_id_value",
                             }
                         ],
+                        "search_scope": {
+                            "include_project_ids": [
+                                "include_project_ids_value1",
+                                "include_project_ids_value2",
+                            ],
+                            "include_dataset_references": [
+                                {
+                                    "project_id": "project_id_value",
+                                    "dataset_id": "dataset_id_value",
+                                }
+                            ],
+                        },
                     },
                     "studio": {
                         "studio_references": [{"datasource_id": "datasource_id_value"}]

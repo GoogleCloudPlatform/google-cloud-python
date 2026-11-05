@@ -834,6 +834,63 @@ def test_del_does_not_cancel_twice_or_after_completion(
     completed.cancel.assert_not_called()
 
 
+def test_del_does_not_call_cancel_after_completion(class_under_test, mock_gapic_client):
+    mock_gapic_client.read_rows.return_value = iter(
+        [types.ReadRowsResponse(row_count=1)]
+    )
+    reader = class_under_test(mock_gapic_client, "teststream", 0, {})
+    assert len(list(reader)) == 1
+
+    with mock.patch.object(class_under_test, "cancel", autospec=True) as cancel:
+        del reader
+
+    cancel.assert_not_called()
+
+
+def test_context_manager_cancels_unfinished_stream(class_under_test, mock_gapic_client):
+    wrapped = mock.MagicMock()
+    wrapped.__iter__.return_value = iter(
+        [types.ReadRowsResponse(row_count=1), types.ReadRowsResponse(row_count=1)]
+    )
+    mock_gapic_client.read_rows.return_value = wrapped
+    reader = class_under_test(mock_gapic_client, "teststream", 0, {})
+
+    with reader as stream:
+        assert stream is reader
+        next(iter(stream))
+
+    wrapped.cancel.assert_called_once_with()
+
+
+def test_context_manager_does_not_cancel_finished_stream(
+    class_under_test, mock_gapic_client
+):
+    mock_gapic_client.read_rows.return_value = iter(
+        [types.ReadRowsResponse(row_count=1)]
+    )
+
+    with mock.patch.object(class_under_test, "cancel", autospec=True) as cancel:
+        with class_under_test(mock_gapic_client, "teststream", 0, {}) as stream:
+            assert len(list(stream)) == 1
+
+    cancel.assert_not_called()
+
+
+def test_context_manager_cancels_and_reraises_on_error(
+    class_under_test, mock_gapic_client
+):
+    wrapped = mock.MagicMock()
+    mock_gapic_client.read_rows.return_value = wrapped
+    reader = class_under_test(mock_gapic_client, "teststream", 0, {})
+
+    with pytest.raises(ValueError, match="stop reading"):
+        with reader:
+            reader._reconnect()
+            raise ValueError("stop reading")
+
+    wrapped.cancel.assert_called_once_with()
+
+
 def test_request_template_not_mutated_across_reconnects(
     class_under_test, mock_gapic_client
 ):

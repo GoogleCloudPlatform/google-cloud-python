@@ -1577,6 +1577,32 @@ class AgentServiceGrpcTransport(AgentServiceTransport):
         return self._stubs["create_app_version"]
 
     @property
+    def update_app_version(
+        self,
+    ) -> Callable[[agent_service.UpdateAppVersionRequest], gcc_app_version.AppVersion]:
+        r"""Return a callable for the update app version method over gRPC.
+
+        Updates the specified app version.
+
+        Returns:
+            Callable[[~.UpdateAppVersionRequest],
+                    ~.AppVersion]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_app_version" not in self._stubs:
+            self._stubs["update_app_version"] = self._logged_channel.unary_unary(
+                "/google.cloud.ces.v1beta.AgentService/UpdateAppVersion",
+                request_serializer=agent_service.UpdateAppVersionRequest.serialize,
+                response_deserializer=gcc_app_version.AppVersion.deserialize,
+            )
+        return self._stubs["update_app_version"]
+
+    @property
     def delete_app_version(
         self,
     ) -> Callable[[agent_service.DeleteAppVersionRequest], empty_pb2.Empty]:

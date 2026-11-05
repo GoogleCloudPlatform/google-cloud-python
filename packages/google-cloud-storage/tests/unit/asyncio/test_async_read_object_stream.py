@@ -117,6 +117,59 @@ def test_init_with_bucket_object_generation(mock_client, mock_async_bidi_rpc):
 @mock.patch(
     "google.cloud.storage.asyncio.async_grpc_client.AsyncGrpcClient.grpc_client"
 )
+@mock.patch(
+    "google.cloud.storage.asyncio.async_read_object_stream._zero_copy_bidi_read.wrapped_rpc"
+)
+def test_init_prefers_zero_copy_rpc(mock_wrapped_rpc, mock_client, mock_async_bidi_rpc):
+    # Arrange
+    mock_wrapped_rpc.return_value = mock.sentinel.zero_copy_rpc
+    mock_client._client._transport._wrapped_methods = {}
+
+    # Act
+    read_obj_stream = _AsyncReadObjectStream(
+        client=mock_client,
+        bucket_name=_TEST_BUCKET_NAME,
+        object_name=_TEST_OBJECT_NAME,
+    )
+
+    # Assert
+    assert read_obj_stream.rpc is mock.sentinel.zero_copy_rpc
+    mock_wrapped_rpc.assert_called_once_with(mock_client._client._transport)
+
+
+@mock.patch("google.cloud.storage.asyncio.async_read_object_stream.AsyncBidiRpc")
+@mock.patch(
+    "google.cloud.storage.asyncio.async_grpc_client.AsyncGrpcClient.grpc_client"
+)
+@mock.patch(
+    "google.cloud.storage.asyncio.async_read_object_stream._zero_copy_bidi_read.wrapped_rpc"
+)
+def test_init_falls_back_to_generated_rpc(
+    mock_wrapped_rpc, mock_client, mock_async_bidi_rpc
+):
+    # Arrange
+    mock_wrapped_rpc.return_value = None
+    rpc_sentinel = mock.sentinel.A
+    mock_client._client._transport.bidi_read_object = "bidi_read_object_rpc"
+    mock_client._client._transport._wrapped_methods = {
+        "bidi_read_object_rpc": rpc_sentinel,
+    }
+
+    # Act
+    read_obj_stream = _AsyncReadObjectStream(
+        client=mock_client,
+        bucket_name=_TEST_BUCKET_NAME,
+        object_name=_TEST_OBJECT_NAME,
+    )
+
+    # Assert
+    assert read_obj_stream.rpc is rpc_sentinel
+
+
+@mock.patch("google.cloud.storage.asyncio.async_read_object_stream.AsyncBidiRpc")
+@mock.patch(
+    "google.cloud.storage.asyncio.async_grpc_client.AsyncGrpcClient.grpc_client"
+)
 @pytest.mark.asyncio
 async def test_open(mock_client, mock_cls_async_bidi_rpc):
     # arrange

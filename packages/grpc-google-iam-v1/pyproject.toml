@@ -18,7 +18,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "grpc-google-iam-v1"
-version = "0.14.5"
+version = "0.14.6"
 authors = [{ name = "Google LLC", email = "googleapis-packages@google.com" }]
 license = { text = "Apache 2.0" }
 requires-python = ">=3.10"

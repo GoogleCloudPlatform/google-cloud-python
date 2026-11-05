@@ -86,6 +86,10 @@ class CloudVmCluster(proto.Message):
             Optional. The name of the backup OdbSubnet associated with
             the VM Cluster. Format:
             projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
+        odb_dns_zone (str):
+            Optional. Immutable. The name of the OdbDnsZone for using
+            custom domain name for the VM Cluster. Format:
+            projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbDnsZones/{odb_dns_zone}
         identity_connector (google.cloud.oracledatabase_v1.types.IdentityConnector):
             Output only. The identity connector details
             which will allow OCI to securely access the
@@ -150,6 +154,10 @@ class CloudVmCluster(proto.Message):
     backup_odb_subnet: str = proto.Field(
         proto.STRING,
         number=15,
+    )
+    odb_dns_zone: str = proto.Field(
+        proto.STRING,
+        number=18,
     )
     identity_connector: common.IdentityConnector = proto.Field(
         proto.MESSAGE,

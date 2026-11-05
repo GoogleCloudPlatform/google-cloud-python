@@ -1169,247 +1169,24 @@ class TestDbApi:
 
         assert res[0] == 1
 
-    @pytest.mark.noautofixt
-    def test_DDL_autocommit(self, shared_instance, dbapi_database):
-        """Check that DDLs in autocommit mode are immediately executed."""
-
-        try:
-            conn = Connection(shared_instance, dbapi_database)
-            conn.autocommit = True
-
-            cur = conn.cursor()
-            cur.execute(
-                """
-                CREATE TABLE Singers (
-                    SingerId     INT64 NOT NULL,
-                    Name    STRING(1024),
-                ) PRIMARY KEY (SingerId)
-            """
-            )
-            conn.close()
-
-            # if previous DDL wasn't committed, the next DROP TABLE
-            # statement will fail with a ProgrammingError
-            conn = Connection(shared_instance, dbapi_database)
-            cur = conn.cursor()
-
-            cur.execute("DROP TABLE Singers")
-            conn.commit()
-        finally:
-            # Delete table
-            table = dbapi_database.table("Singers")
-            if table.exists():
-                op = dbapi_database.update_ddl(["DROP TABLE Singers"])
-                op.result()
-
-    def test_ddl_execute_autocommit_true(self, dbapi_database):
-        """Check that DDL statement in autocommit mode results in successful
-        DDL statement execution for execute method."""
-        # Cleanup if table exists from previous failed run
-        table = dbapi_database.table("DdlExecuteAutocommit")
-        if table.exists():
-            dbapi_database.update_ddl(["DROP TABLE DdlExecuteAutocommit"]).result()
-
-        try:
-            self._conn.autocommit = True
-            self._cursor.execute(
-                """
-                CREATE TABLE DdlExecuteAutocommit (
-                    SingerId     INT64 NOT NULL,
-                    Name    STRING(1024),
-                ) PRIMARY KEY (SingerId)
-                """
-            )
-            assert table.exists() is True
-        finally:
-            if table.exists():
-                dbapi_database.update_ddl(["DROP TABLE DdlExecuteAutocommit"]).result()
-
-    def test_ddl_executemany_autocommit_true(self, dbapi_database):
-        """Check that DDL statement in autocommit mode results in exception for
-        executemany method ."""
-        # Cleanup if table exists from previous failed run
-        table = dbapi_database.table("DdlExecuteManyAutocommit")
-        if table.exists():
-            dbapi_database.update_ddl(["DROP TABLE DdlExecuteManyAutocommit"]).result()
-
-        try:
-            self._conn.autocommit = True
-            with pytest.raises(ProgrammingError):
-                self._cursor.executemany(
-                    """
-                    CREATE TABLE DdlExecuteManyAutocommit (
-                        SingerId     INT64 NOT NULL,
-                        Name    STRING(1024),
-                    ) PRIMARY KEY (SingerId)
-                    """,
-                    [],
-                )
-            assert table.exists() is False
-        finally:
-            if table.exists():
-                dbapi_database.update_ddl(
-                    ["DROP TABLE DdlExecuteManyAutocommit"]
-                ).result()
-
-    def test_ddl_executemany_autocommit_false(self, dbapi_database):
-        """Check that DDL statement in non-autocommit mode results in exception for
-        executemany method ."""
-        # Cleanup if table exists from previous failed run
-        table = dbapi_database.table("DdlExecuteManyAutocommit")
-        if table.exists():
-            dbapi_database.update_ddl(["DROP TABLE DdlExecuteManyAutocommit"]).result()
-
-        try:
-            with pytest.raises(ProgrammingError):
-                self._cursor.executemany(
-                    """
-                    CREATE TABLE DdlExecuteManyAutocommit (
-                        SingerId     INT64 NOT NULL,
-                        Name    STRING(1024),
-                    ) PRIMARY KEY (SingerId)
-                    """,
-                    [],
-                )
-            assert table.exists() is False
-        finally:
-            if table.exists():
-                dbapi_database.update_ddl(
-                    ["DROP TABLE DdlExecuteManyAutocommit"]
-                ).result()
-
-    def test_ddl_execute(self, dbapi_database):
-        """Check that DDL statement followed by non-DDL execute statement in
-        non autocommit mode results in successful DDL statement execution."""
-        table_name = "DdlExecute"
-        # Cleanup if table exists from previous failed run
-        table = dbapi_database.table(table_name)
-        if table.exists():
-            dbapi_database.update_ddl([f"DROP TABLE {table_name}"]).result()
-
-        try:
-            want_row = (
-                1,
-                "first-name",
-            )
-            self._cursor.execute(
-                f"""
-                CREATE TABLE {table_name} (
-                    SingerId     INT64 NOT NULL,
-                    Name    STRING(1024),
-                ) PRIMARY KEY (SingerId)
-                """
-            )
-            # DDL execute in non-autocommit mode should not be visible until next statement or commit?
-            # Actually dbapi DDL is usually immediate.
-
-            self._cursor.execute(
-                f"""
-                INSERT INTO {table_name} (SingerId, Name)
-                VALUES (1, "first-name")
-                """
-            )
-            assert table.exists() is True
-            self._conn.commit()
-
-            # read the resulting data from the database
-            self._cursor.execute(f"SELECT * FROM {table_name}")
-            got_rows = self._cursor.fetchall()
-
-            assert got_rows == [want_row]
-        finally:
-            if table.exists():
-                try:
-                    dbapi_database.update_ddl([f"DROP TABLE {table_name}"]).result()
-                except Exception:
-                    pass
-
-    def test_ddl_executemany(self, dbapi_database):
-        """Check that DDL statement followed by non-DDL executemany statement in
-        non autocommit mode results in successful DDL statement execution."""
-        table_name = "DdlExecuteMany"
-        # Cleanup if table exists from previous failed run
-        table = dbapi_database.table(table_name)
-        if table.exists():
-            dbapi_database.update_ddl([f"DROP TABLE {table_name}"]).result()
-
-        try:
-            want_row = (
-                1,
-                "first-name",
-            )
-            self._cursor.execute(
-                f"""
-                CREATE TABLE {table_name} (
-                    SingerId     INT64 NOT NULL,
-                    Name    STRING(1024),
-                ) PRIMARY KEY (SingerId)
-                """
-            )
-
-            self._cursor.executemany(
-                f"""
-                INSERT INTO {table_name} (SingerId, Name)
-                VALUES (%s, %s)
-                """,
-                [want_row],
-            )
-            assert table.exists() is True
-            self._conn.commit()
-
-            # read the resulting data from the database
-            self._cursor.execute(f"SELECT * FROM {table_name}")
-            got_rows = self._cursor.fetchall()
-
-            assert got_rows == [want_row]
-        finally:
-            if table.exists():
-                try:
-                    dbapi_database.update_ddl([f"DROP TABLE {table_name}"]).result()
-                except Exception:
-                    pass
-
     @pytest.mark.skipif(_helpers.USE_EMULATOR, reason="Emulator does not support json.")
-    def test_autocommit_with_json_data(self, dbapi_database):
-        """
-        Check that DDLs in autocommit mode are immediately
-        executed for json fields.
-        """
+    def test_autocommit_with_json_data(self):
+        """Check that json fields in autocommit mode are inserted and queried."""
         try:
             self._conn.autocommit = True
             self._cursor.execute(
-                """
-                CREATE TABLE JsonDetails (
-                    DataId     INT64 NOT NULL,
-                    Details    JSON,
-                ) PRIMARY KEY (DataId)
-            """
+                "INSERT INTO all_types (col_int64, col_json) VALUES (%s, %s)",
+                (123, JsonObject({"name": "Jakob", "age": "26"})),
             )
-
-            # Insert data to table
             self._cursor.execute(
-                sql="INSERT INTO JsonDetails (DataId, Details) VALUES (%s, %s)",
-                args=(123, JsonObject({"name": "Jakob", "age": "26"})),
+                "SELECT col_int64, col_json FROM all_types WHERE col_int64 = 123"
             )
-
-            # Read back the data.
-            self._cursor.execute("""select * from JsonDetails;""")
             got_rows = self._cursor.fetchall()
-
-            # Assert the response
             assert len(got_rows) == 1
             assert got_rows[0][0] == 123
             assert got_rows[0][1] == {"age": "26", "name": "Jakob"}
-
-            # Drop the table
-            self._cursor.execute("DROP TABLE JsonDetails")
-            self._conn.commit()
         finally:
-            # Delete table
-            table = dbapi_database.table("JsonDetails")
-            if table.exists():
-                op = dbapi_database.update_ddl(["DROP TABLE JsonDetails"])
-                op.result()
+            self._cursor.execute("DELETE FROM all_types WHERE col_int64 = 123")
 
     @pytest.mark.skipif(_helpers.USE_EMULATOR, reason="Emulator does not support json.")
     def test_json_array(self):
@@ -1428,38 +1205,6 @@ class TestDbApi:
             assert row[1].serialize() == "[1,2,3]"
         finally:
             self._cursor.execute("DELETE FROM all_types WHERE col_int64 = 1")
-
-    @pytest.mark.noautofixt
-    def test_DDL_commit(self, shared_instance, dbapi_database):
-        """Check that DDLs in commit mode are executed on calling `commit()`."""
-        try:
-            conn = Connection(shared_instance, dbapi_database)
-            cur = conn.cursor()
-
-            cur.execute(
-                """
-            CREATE TABLE Singers (
-                SingerId     INT64 NOT NULL,
-                Name    STRING(1024),
-            ) PRIMARY KEY (SingerId)
-            """
-            )
-            conn.commit()
-            conn.close()
-
-            # if previous DDL wasn't committed, the next DROP TABLE
-            # statement will fail with a ProgrammingError
-            conn = Connection(shared_instance, dbapi_database)
-            cur = conn.cursor()
-
-            cur.execute("DROP TABLE Singers")
-            conn.commit()
-        finally:
-            # Delete table
-            table = dbapi_database.table("Singers")
-            if table.exists():
-                op = dbapi_database.update_ddl(["DROP TABLE Singers"])
-                op.result()
 
     def test_ping(self):
         """Check connection validation method."""

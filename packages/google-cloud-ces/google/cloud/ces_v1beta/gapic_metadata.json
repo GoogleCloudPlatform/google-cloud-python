@@ -235,6 +235,11 @@
                 "update_app"
               ]
             },
+            "UpdateAppVersion": {
+              "methods": [
+                "update_app_version"
+              ]
+            },
             "UpdateDeployment": {
               "methods": [
                 "update_deployment"
@@ -493,6 +498,11 @@
             "UpdateApp": {
               "methods": [
                 "update_app"
+              ]
+            },
+            "UpdateAppVersion": {
+              "methods": [
+                "update_app_version"
               ]
             },
             "UpdateDeployment": {
@@ -755,6 +765,11 @@
                 "update_app"
               ]
             },
+            "UpdateAppVersion": {
+              "methods": [
+                "update_app_version"
+              ]
+            },
             "UpdateDeployment": {
               "methods": [
                 "update_deployment"
@@ -783,6 +798,115 @@
             "UpdateToolset": {
               "methods": [
                 "update_toolset"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "AssistantService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AssistantServiceClient",
+          "rpcs": {
+            "ChatAiAssistant": {
+              "methods": [
+                "chat_ai_assistant"
+              ]
+            },
+            "CreateAssistantSession": {
+              "methods": [
+                "create_assistant_session"
+              ]
+            },
+            "DeleteAssistantSession": {
+              "methods": [
+                "delete_assistant_session"
+              ]
+            },
+            "GetAssistantSession": {
+              "methods": [
+                "get_assistant_session"
+              ]
+            },
+            "ListAssistantSessions": {
+              "methods": [
+                "list_assistant_sessions"
+              ]
+            },
+            "RunAssistant": {
+              "methods": [
+                "run_assistant"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "AssistantServiceAsyncClient",
+          "rpcs": {
+            "ChatAiAssistant": {
+              "methods": [
+                "chat_ai_assistant"
+              ]
+            },
+            "CreateAssistantSession": {
+              "methods": [
+                "create_assistant_session"
+              ]
+            },
+            "DeleteAssistantSession": {
+              "methods": [
+                "delete_assistant_session"
+              ]
+            },
+            "GetAssistantSession": {
+              "methods": [
+                "get_assistant_session"
+              ]
+            },
+            "ListAssistantSessions": {
+              "methods": [
+                "list_assistant_sessions"
+              ]
+            },
+            "RunAssistant": {
+              "methods": [
+                "run_assistant"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "AssistantServiceClient",
+          "rpcs": {
+            "ChatAiAssistant": {
+              "methods": [
+                "chat_ai_assistant"
+              ]
+            },
+            "CreateAssistantSession": {
+              "methods": [
+                "create_assistant_session"
+              ]
+            },
+            "DeleteAssistantSession": {
+              "methods": [
+                "delete_assistant_session"
+              ]
+            },
+            "GetAssistantSession": {
+              "methods": [
+                "get_assistant_session"
+              ]
+            },
+            "ListAssistantSessions": {
+              "methods": [
+                "list_assistant_sessions"
+              ]
+            },
+            "RunAssistant": {
+              "methods": [
+                "run_assistant"
               ]
             }
           }
@@ -1343,9 +1467,24 @@
                 "bidi_run_session"
               ]
             },
+            "CancelAssistantTurn": {
+              "methods": [
+                "cancel_assistant_turn"
+              ]
+            },
+            "GenerateOnboardingSuggestions": {
+              "methods": [
+                "generate_onboarding_suggestions"
+              ]
+            },
             "RunSession": {
               "methods": [
                 "run_session"
+              ]
+            },
+            "StreamChatAiAssistant": {
+              "methods": [
+                "stream_chat_ai_assistant"
               ]
             },
             "StreamRunSession": {
@@ -1363,9 +1502,24 @@
                 "bidi_run_session"
               ]
             },
+            "CancelAssistantTurn": {
+              "methods": [
+                "cancel_assistant_turn"
+              ]
+            },
+            "GenerateOnboardingSuggestions": {
+              "methods": [
+                "generate_onboarding_suggestions"
+              ]
+            },
             "RunSession": {
               "methods": [
                 "run_session"
+              ]
+            },
+            "StreamChatAiAssistant": {
+              "methods": [
+                "stream_chat_ai_assistant"
               ]
             },
             "StreamRunSession": {
@@ -1383,9 +1537,24 @@
                 "bidi_run_session"
               ]
             },
+            "CancelAssistantTurn": {
+              "methods": [
+                "cancel_assistant_turn"
+              ]
+            },
+            "GenerateOnboardingSuggestions": {
+              "methods": [
+                "generate_onboarding_suggestions"
+              ]
+            },
             "RunSession": {
               "methods": [
                 "run_session"
+              ]
+            },
+            "StreamChatAiAssistant": {
+              "methods": [
+                "stream_chat_ai_assistant"
               ]
             },
             "StreamRunSession": {

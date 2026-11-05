@@ -42,7 +42,7 @@ from ._types import (
     TIME,
     TIMESTAMP,
 )
-from .base import BigQueryDialect, dialect
+from .base import BigQueryDialect, SafeCast, dialect, safe_cast
 from .version import __version__
 
 # Now that support for Python 3.7, 3.8 and 3.9 has been removed, we don't expect the
@@ -77,8 +77,10 @@ __all__ = [
     "RECORD",
     "STRING",
     "STRUCT",
+    "SafeCast",
     "TIME",
     "TIMESTAMP",
+    "safe_cast",
 ]
 
 try:

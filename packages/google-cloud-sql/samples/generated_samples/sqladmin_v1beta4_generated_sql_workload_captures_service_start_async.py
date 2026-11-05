@@ -39,7 +39,7 @@ async def sample_start():
     client = sqladmin_v1beta4.SqlWorkloadCapturesServiceAsyncClient()
 
     # Initialize request argument(s)
-    request = sqladmin_v1beta4.SqlWorkloadCapturesStartRequest(
+    request = sqladmin_v1beta4.WorkloadCapturesStartRequest(
         project="project_value",
         instance="instance_value",
     )

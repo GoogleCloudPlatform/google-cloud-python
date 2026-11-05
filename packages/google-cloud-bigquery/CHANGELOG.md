@@ -4,6 +4,30 @@
 
 [1]: https://pypi.org/project/google-cloud-bigquery/#history
 
+## [3.47.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-v3.46.2...google-cloud-bigquery-v3.47.0) (2026-10-29)
+
+
+### Features
+
+* **bigquery:** add column data policies to SchemaField ([#18710](https://github.com/googleapis/google-cloud-python/issues/18710)) ([157efe4](https://github.com/googleapis/google-cloud-python/commit/157efe49183632f1d93043a7ae6e59d8f48f9523))
+* **bigquery:** add timestamp_precision for Arrow query results ([#18649](https://github.com/googleapis/google-cloud-python/issues/18649)) ([a29d384](https://github.com/googleapis/google-cloud-python/commit/a29d3845606829575a14e654ffa6950aed9834b6))
+* **bigquery:** read Arrow results from explicit destinations ([#18654](https://github.com/googleapis/google-cloud-python/issues/18654)) ([8ac01b9](https://github.com/googleapis/google-cloud-python/commit/8ac01b9ad3e000aec30d50cce9e14f83cf354ae4))
+* **bigquery:** share one BigQuery Storage client per Client ([#18652](https://github.com/googleapis/google-cloud-python/issues/18652)) ([89cbc50](https://github.com/googleapis/google-cloud-python/commit/89cbc50ad0ee039149c370bb4004d34f3393d46d))
+* **bigquery:** skip job creation for ARROW query_and_wait results ([#18799](https://github.com/googleapis/google-cloud-python/issues/18799)) ([ca24f26](https://github.com/googleapis/google-cloud-python/commit/ca24f265c80eb95c4a005d5497a491cb4425d236))
+* **bigquery:** validate Arrow queries before sending them ([#18645](https://github.com/googleapis/google-cloud-python/issues/18645)) ([1ac51ce](https://github.com/googleapis/google-cloud-python/commit/1ac51ce2bbd5b0bc14addd829d537f716baba7ce))
+* support Python 3.15 ([8fceef4](https://github.com/googleapis/google-cloud-python/commit/8fceef49c523bcc8989abf3b6b82bcf143332d50))
+
+
+### Bug Fixes
+
+* **bigquery:** apply max_results to the whole Arrow result ([#18651](https://github.com/googleapis/google-cloud-python/issues/18651)) ([48c022c](https://github.com/googleapis/google-cloud-python/commit/48c022c4bf65eabbd564f94dfedaf67c24e1cc28))
+* **bigquery:** keep the Arrow first page and wait without rows ([#18650](https://github.com/googleapis/google-cloud-python/issues/18650)) ([4eb0e71](https://github.com/googleapis/google-cloud-python/commit/4eb0e7199847417d945749ccb00cb59877de362b))
+* **bigquery:** keep the Arrow schema for empty results ([#18655](https://github.com/googleapis/google-cloud-python/issues/18655)) ([3ccf5ac](https://github.com/googleapis/google-cloud-python/commit/3ccf5ac962fd3d9d4cb72ac3becd374e6bea41f8))
+* **bigquery:** pass universe_domain to the BigQuery Storage client ([#18783](https://github.com/googleapis/google-cloud-python/issues/18783)) ([6ab4063](https://github.com/googleapis/google-cloud-python/commit/6ab4063bf4f00966122658a3a19a02ac4ee4ad57))
+* **bigquery:** raise when an Arrow batch arrives before its schema ([#18791](https://github.com/googleapis/google-cloud-python/issues/18791)) ([7944a4c](https://github.com/googleapis/google-cloud-python/commit/7944a4c0716a7b4518f54e95baebb1e639ec60eb))
+* **bigquery:** require bqstorage 2.43.0 ([#18780](https://github.com/googleapis/google-cloud-python/issues/18780)) ([3cd40ce](https://github.com/googleapis/google-cloud-python/commit/3cd40ce0118b4d8b3ef1f1ec73d88779dc947e2a))
+* **bigquery:** send the same Arrow options on jobs.query and ReadRows ([#18646](https://github.com/googleapis/google-cloud-python/issues/18646)) ([d7a2d27](https://github.com/googleapis/google-cloud-python/commit/d7a2d27077f1fab8a9feba6a57c7fe6f94612e36))
+
 ## [3.46.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-bigquery-v3.46.1...google-cloud-bigquery-v3.46.2) (2026-10-15)
 
 

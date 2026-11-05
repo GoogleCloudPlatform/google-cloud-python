@@ -103,6 +103,11 @@ async def test_read_row_range(table):
 
 
 @pytest.mark.asyncio
+async def test_read_row_ranges(table):
+    await data_snippets.read_row_ranges(table)
+
+
+@pytest.mark.asyncio
 async def test_read_with_prefix(table):
     await data_snippets.read_with_prefix(table)
 

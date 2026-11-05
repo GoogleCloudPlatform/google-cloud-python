@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import asyncio
-from typing import Any, List, Optional, Tuple
+from typing import TYPE_CHECKING, Any, List, Optional, Tuple
 
 import grpc
 from google.api_core.bidi_async import AsyncBidiRpc
@@ -29,6 +29,11 @@ from google.cloud.storage.asyncio.async_grpc_client import (
     _mark_call_closing_cleanly,
     _resolve_network_path,
 )
+
+if TYPE_CHECKING:
+    from google.cloud.storage.asyncio.async_appendable_object_writer import (
+        Preconditions,
+    )
 
 
 class _AsyncWriteObjectStream(_AsyncAbstractObjectStream):
@@ -56,7 +61,8 @@ class _AsyncWriteObjectStream(_AsyncAbstractObjectStream):
         object doesn't exist in the bucket (useful for not accidentally
         overwriting existing objects).
 
-        Warning: If `None`, a new object is created. If an object with the
+        Warning: If `None` and no generation precondition is set in
+        `preconditions`, a new object is created. If an object with the
         same name already exists, it will be overwritten the moment
         `writer.open()` is called.
 
@@ -66,6 +72,12 @@ class _AsyncWriteObjectStream(_AsyncAbstractObjectStream):
 
     :type storage_class: Optional[str]
     :param storage_class: (Optional) The storage class of the object.
+
+    :type preconditions: Optional[:class:`~google.cloud.storage.asyncio.async_appendable_object_writer.Preconditions`]
+    :param preconditions: (Optional) Preconditions for the write operation.
+        Generation preconditions apply only when creating or overwriting an
+        object (``generation_number`` is ``None`` or ``0``); metageneration
+        preconditions apply to both creating/overwriting and appending.
     """
 
     def __init__(
@@ -78,6 +90,7 @@ class _AsyncWriteObjectStream(_AsyncAbstractObjectStream):
         routing_token: Optional[str] = None,
         blob: Optional[Blob] = None,
         storage_class: Optional[str] = None,
+        preconditions: Optional["Preconditions"] = None,
         metrics_recorder: Optional[Any] = None,
     ) -> None:
         if client is None:
@@ -97,6 +110,7 @@ class _AsyncWriteObjectStream(_AsyncAbstractObjectStream):
         self.routing_token: Optional[str] = routing_token
         self.blob: Optional[Blob] = blob
         self.storage_class: Optional[str] = storage_class
+        self.preconditions: Optional["Preconditions"] = preconditions
         self._metrics_recorder = (
             metrics_recorder
             if metrics_recorder is not None
@@ -125,7 +139,8 @@ class _AsyncWriteObjectStream(_AsyncAbstractObjectStream):
         :rtype: None
         :raises ValueError: If the stream is already open.
         :raises google.api_core.exceptions.FailedPrecondition:
-            if `generation_number` is 0 and object already exists.
+            If a precondition in `preconditions` (or `generation_number=0`) is
+            not met.
         """
         if self._is_stream_open:
             raise ValueError("Stream is already open")
@@ -144,11 +159,32 @@ class _AsyncWriteObjectStream(_AsyncAbstractObjectStream):
                     bucket=self._full_bucket_name,
                     storage_class=self.storage_class,
                 )
+            if_generation_match = (
+                self.preconditions.if_generation_match
+                if self.preconditions
+                and self.preconditions.if_generation_match is not None
+                else self.generation_number
+            )
             self.first_bidi_write_req = _storage_v2.BidiWriteObjectRequest(
                 write_object_spec=_storage_v2.WriteObjectSpec(
                     resource=resource,
                     appendable=True,
-                    if_generation_match=self.generation_number,
+                    if_generation_match=if_generation_match,
+                    if_generation_not_match=(
+                        self.preconditions.if_generation_not_match
+                        if self.preconditions
+                        else None
+                    ),
+                    if_metageneration_match=(
+                        self.preconditions.if_metageneration_match
+                        if self.preconditions
+                        else None
+                    ),
+                    if_metageneration_not_match=(
+                        self.preconditions.if_metageneration_not_match
+                        if self.preconditions
+                        else None
+                    ),
                 ),
             )
         else:
@@ -159,6 +195,16 @@ class _AsyncWriteObjectStream(_AsyncAbstractObjectStream):
                     generation=self.generation_number,
                     write_handle=self.write_handle if self.write_handle else None,
                     routing_token=self.routing_token if self.routing_token else None,
+                    if_metageneration_match=(
+                        self.preconditions.if_metageneration_match
+                        if self.preconditions
+                        else None
+                    ),
+                    if_metageneration_not_match=(
+                        self.preconditions.if_metageneration_not_match
+                        if self.preconditions
+                        else None
+                    ),
                 ),
             )
 
@@ -172,6 +218,7 @@ class _AsyncWriteObjectStream(_AsyncAbstractObjectStream):
                     final_metadata.append((key, value))
 
         final_metadata.append(("x-goog-request-params", "&".join(request_param_values)))
+        final_metadata = _utils.inject_traceparent_to_metadata(final_metadata)
 
         self.socket_like_rpc = AsyncBidiRpc(
             self.rpc,

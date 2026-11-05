@@ -1282,6 +1282,8 @@ class StorageControlClient(metaclass=StorageControlClientMeta):
                 gapic_v1.routing_header.to_grpc_metadata(header_params),
             )
 
+        setup_request_id(request, "request_id", False)
+
         # Validate the universe domain.
         self._validate_universe_domain()
 
@@ -2336,6 +2338,8 @@ class StorageControlClient(metaclass=StorageControlClientMeta):
                 gapic_v1.routing_header.to_grpc_metadata(header_params),
             )
 
+        setup_request_id(request, "request_id", False)
+
         # Validate the universe domain.
         self._validate_universe_domain()
 
@@ -3373,6 +3377,8 @@ class StorageControlClient(metaclass=StorageControlClientMeta):
                 gapic_v1.routing_header.to_grpc_metadata(header_params),
             )
 
+        setup_request_id(request, "request_id", False)
+
         # Validate the universe domain.
         self._validate_universe_domain()
 
@@ -3519,6 +3525,8 @@ class StorageControlClient(metaclass=StorageControlClientMeta):
                 gapic_v1.routing_header.to_grpc_metadata(header_params),
             )
 
+        setup_request_id(request, "request_id", False)
+
         # Validate the universe domain.
         self._validate_universe_domain()
 
@@ -3650,6 +3658,8 @@ class StorageControlClient(metaclass=StorageControlClientMeta):
                 gapic_v1.routing_header.to_grpc_metadata(header_params),
             )
 
+        setup_request_id(request, "request_id", False)
+
         # Validate the universe domain.
         self._validate_universe_domain()
 
@@ -3771,6 +3781,8 @@ class StorageControlClient(metaclass=StorageControlClientMeta):
                 gapic_v1.routing_header.to_grpc_metadata(header_params),
             )
 
+        setup_request_id(request, "request_id", False)
+
         # Validate the universe domain.
         self._validate_universe_domain()
 
@@ -3887,6 +3899,8 @@ class StorageControlClient(metaclass=StorageControlClientMeta):
             metadata = tuple(metadata) + (
                 gapic_v1.routing_header.to_grpc_metadata(header_params),
             )
+
+        setup_request_id(request, "request_id", False)
 
         # Validate the universe domain.
         self._validate_universe_domain()
@@ -4143,6 +4157,8 @@ class StorageControlClient(metaclass=StorageControlClientMeta):
             ),
         )
 
+        setup_request_id(request, "request_id", False)
+
         # Validate the universe domain.
         self._validate_universe_domain()
 
@@ -4386,6 +4402,8 @@ class StorageControlClient(metaclass=StorageControlClientMeta):
                 (("intelligence_config.name", request.intelligence_config.name),)
             ),
         )
+
+        setup_request_id(request, "request_id", False)
 
         # Validate the universe domain.
         self._validate_universe_domain()
@@ -4634,6 +4652,8 @@ class StorageControlClient(metaclass=StorageControlClientMeta):
                 (("intelligence_config.name", request.intelligence_config.name),)
             ),
         )
+
+        setup_request_id(request, "request_id", False)
 
         # Validate the universe domain.
         self._validate_universe_domain()

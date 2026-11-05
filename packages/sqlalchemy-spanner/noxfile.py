@@ -132,7 +132,7 @@ ALL_PYTHON = list(UNIT_TEST_PYTHON_VERSIONS)
 SYSTEM_TEST_PYTHON_VERSIONS = ["3.12"]
 SYSTEM_COMPLIANCE_MIGRATION_TEST_PYTHON_VERSIONS = ["3.12", "3.14"]
 DEFAULT_PYTHON_VERSION = "3.14"
-DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20 = "3.14"
+DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20 = "3.15"
 
 
 nox.options.sessions = [
@@ -144,7 +144,7 @@ nox.options.sessions = [
 ]
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20)
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def lint(session):
     """Run linters.
 
@@ -181,7 +181,7 @@ def lint(session):
     )
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20)
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def lint_setup_py(session):
     """Verify that setup.py is valid (including RST check)."""
     session.install("docutils", "pygments", "setuptools")
@@ -429,7 +429,9 @@ def unit(session, test_type):
         test_type == "mockserver"
         and session.python != DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20
     ):
-        session.skip("mockserver tests only run on python 3.14")
+        session.skip(
+            f"mockserver tests only run on python {DEFAULT_PYTHON_VERSION_FOR_SQLALCHEMY_20}"
+        )
 
     if test_type == "mockserver":
         mockserver(session)

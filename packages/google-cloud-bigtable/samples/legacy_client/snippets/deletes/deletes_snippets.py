@@ -14,7 +14,7 @@
 # limitations under the License.
 
 
-# [START bigtable_delete_from_column]
+# [START bigtable_delete_from_column_legacy]
 def delete_from_column(project_id, instance_id, table_id):
     from google.cloud.bigtable import Client
 
@@ -26,10 +26,10 @@ def delete_from_column(project_id, instance_id, table_id):
     row.commit()
 
 
-# [END bigtable_delete_from_column]
+# [END bigtable_delete_from_column_legacy]
 
 
-# [START bigtable_delete_from_column_family]
+# [START bigtable_delete_from_column_family_legacy]
 def delete_from_column_family(project_id, instance_id, table_id):
     from google.cloud.bigtable import Client
 
@@ -41,10 +41,10 @@ def delete_from_column_family(project_id, instance_id, table_id):
     row.commit()
 
 
-# [END bigtable_delete_from_column_family]
+# [END bigtable_delete_from_column_family_legacy]
 
 
-# [START bigtable_delete_from_row]
+# [START bigtable_delete_from_row_legacy]
 def delete_from_row(project_id, instance_id, table_id):
     from google.cloud.bigtable import Client
 
@@ -56,10 +56,10 @@ def delete_from_row(project_id, instance_id, table_id):
     row.commit()
 
 
-# [END bigtable_delete_from_row]
+# [END bigtable_delete_from_row_legacy]
 
 
-# [START bigtable_streaming_and_batching]
+# [START bigtable_streaming_and_batching_legacy]
 def streaming_and_batching(project_id, instance_id, table_id):
     from google.cloud.bigtable import Client
 
@@ -75,10 +75,10 @@ def streaming_and_batching(project_id, instance_id, table_id):
             batcher.mutate(direct_row)
 
 
-# [END bigtable_streaming_and_batching]
+# [END bigtable_streaming_and_batching_legacy]
 
 
-# [START bigtable_check_and_mutate]
+# [START bigtable_check_and_mutate_legacy]
 def check_and_mutate(project_id, instance_id, table_id):
     from google.cloud.bigtable import Client
 
@@ -91,10 +91,10 @@ def check_and_mutate(project_id, instance_id, table_id):
     row.commit()
 
 
-# [END bigtable_check_and_mutate]
+# [END bigtable_check_and_mutate_legacy]
 
 
-# [START bigtable_drop_row_range]
+# [START bigtable_drop_row_range_legacy]
 def drop_row_range(project_id, instance_id, table_id):
     from google.cloud.bigtable import Client
 
@@ -105,10 +105,10 @@ def drop_row_range(project_id, instance_id, table_id):
     table.drop_by_prefix(row_key_prefix, timeout=200)
 
 
-# [END bigtable_drop_row_range]
+# [END bigtable_drop_row_range_legacy]
 
 
-# [START bigtable_delete_column_family]
+# [START bigtable_delete_column_family_legacy]
 def delete_column_family(project_id, instance_id, table_id):
     from google.cloud.bigtable import Client
 
@@ -120,10 +120,10 @@ def delete_column_family(project_id, instance_id, table_id):
     column_family_obj.delete()
 
 
-# [END bigtable_delete_column_family]
+# [END bigtable_delete_column_family_legacy]
 
 
-# [START bigtable_delete_table]
+# [START bigtable_delete_table_legacy]
 def delete_table(project_id, instance_id, table_id):
     from google.cloud.bigtable import Client
 
@@ -133,4 +133,4 @@ def delete_table(project_id, instance_id, table_id):
     table.delete()
 
 
-# [END bigtable_delete_table]
+# [END bigtable_delete_table_legacy]

@@ -23,11 +23,15 @@ Rather than hardcoding dozens of repetitive test functions with fragile assertio
 operates as a data-driven test engine governed by a Single Source of Truth (SSOT):
 `telemetry_requirements_matrix.csv`.
 
+The matrix adheres strictly to Tidy Data guidelines:
+- Each row defines a single test evaluating a single target span (identified by `Tier` and `Attempt`).
+- Each column holds a single atomic variable (no multi-tier or multi-attempt cell grammars).
+
 The engine operates across five distinct phases:
 
 1. Specification Matrix (`telemetry_requirements_matrix.csv`):
-   Defines the contract for all 22 required observability features across transports (gRPC, REST),
-   span tiers (T3 Logical Client vs. T4 Wire Attempt), error scenarios, and retry sequences.
+   Defines the contract for observability test rows across transports (gRPC, REST),
+   span tiers (T3 Logical Client vs. T4 Wire Attempt), attempt indices, error scenarios, and retries.
 
 2. Scenario Execution & Span Capture (`execute_scenario`):
    Instantiates isolated Showcase clients configured with in-memory OpenTelemetry tracer
@@ -38,13 +42,12 @@ The engine operates across five distinct phases:
    Partitions captured finished spans by parentage:
    - Root Spans (parent is None): Represents the outer logical RPC call (T3 Tier).
    - Child Spans (parent is not None): Represents physical wire attempts (T4 Tier).
-   Enforces the hierarchical invariant that all T4 spans must link directly to the T3 span ID.
+   Selects the span under test using the row's `Tier` and `Attempt` index.
 
-4. Cell Grammar Parser & Sub-Validators (`resolve_expected_value`, `assert_span_matches_row`):
-   Parses matrix cell expressions (supporting static values, positional sequences across attempts
-   such as '503 | 200', and tier-partitioned expressions such as 'T3: OK | T4: NOT SET').
-   Validates span names, kinds, status codes, string attributes (with wildcard support),
-   integer attributes, substring status messages, and protocol-specific resend counts.
+4. Validators (`assert_span_matches_row`):
+   Validates each cell against the target span, checking:
+   span names, kinds, status codes, string attributes (with wildcard prefix support),
+   integer attributes, substring status messages, resend counts, and parent-child span linkage.
 
 5. Diagnostic Archival (`RAW_SPANS_CATALOG` & `dump_raw_spans` fixture):
    Serializes every captured span in full JSON format to `raw_spans_output.json`, enabling
@@ -56,9 +59,12 @@ from __future__ import annotations
 import contextlib
 import csv
 import json
+import time
+from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import Any
 
+import grpc
 import pytest
 
 try:
@@ -88,10 +94,12 @@ if not HAS_TIER3_TRACING:
         allow_module_level=True,
     )
 
+import requests.exceptions
 from google import showcase
 from google.api_core import exceptions
 from google.api_core import retry as retries
 from google.api_core.client_options import ClientOptions
+from google.protobuf import duration_pb2
 from google.rpc import code_pb2, status_pb2
 from google.showcase import (
     AttemptSequenceRequest,
@@ -115,15 +123,24 @@ except (ImportError, ValueError):
 # while production defaults use exponential backoffs and multi-second retry windows,
 # test scenarios require ultra-fast, deterministic execution to keep the CI suite snappy
 # without flaking under high concurrency.
-SHORT_CLIENT_TIMEOUT_SECONDS = 0.2
+# Use a negative deadline (-1.0s) for gRPC so C-core immediately expires the call
+# locally with DEADLINE_EXCEEDED without writing a near-zero `grpc-timeout` header
+# to the wire (which can race with the Go Showcase server sending HTTP/2 RST_STREAM CANCEL).
+GRPC_CLIENT_TIMEOUT_SECONDS = -1.0
+REST_CLIENT_TIMEOUT_SECONDS = 0.2
+CLIENT_TIMEOUT_SECONDS = {
+    "grpc": GRPC_CLIENT_TIMEOUT_SECONDS,
+    "rest": REST_CLIENT_TIMEOUT_SECONDS,
+}
+SERVER_BLOCK_DELAY_SECONDS = 2
 FAST_RETRY_BACKOFF_SECONDS = 0.01
 # Setting multiplier to 1.0 enforces constant/linear polling intervals, bypassing
 # exponential backoff delay calculation during retry loops:
 CONSTANT_BACKOFF_MULTIPLIER = 1.0
-FAST_EXHAUSTION_DEADLINE_SECONDS = 0.05
+EXHAUSTION_DEADLINE_SECONDS = 0.1
 GENEROUS_RECOVERY_DEADLINE_SECONDS = 5.0
-# Queue depth buffer configured on Showcase server for retry exhaustion tests:
-SHOWCASE_EXHAUSTION_QUEUE_BUFFER = 20
+# Deterministic number of wire attempts executed for retry exhaustion scenarios:
+EXHAUSTED_RETRY_ATTEMPTS = 2
 
 
 # ---------------------------------------------------------------------------
@@ -137,8 +154,8 @@ def load_feature_matrix() -> dict[str, dict[str, str]]:
     """Loads and indexes the Single Source of Truth CSV requirements matrix.
 
     Returns:
-        A dictionary mapping Feature ID (e.g. 'grpc_happy_path') to its dictionary
-        of column names and raw string specifications.
+        A dictionary mapping Feature ID (e.g. 'F1.2', 'F3.1b') to its dictionary
+        of column names and string specifications.
     """
     with open(CSV_PATH, mode="r", encoding="utf-8") as f:
         return {r["Feature ID"]: r for r in csv.DictReader(f)}
@@ -185,6 +202,18 @@ def span_exporter(monkeypatch):
 # ---------------------------------------------------------------------------
 
 
+def _insecure_channel_factory(host: str, **kwargs: Any) -> Any:
+    """Callable channel factory for local Showcase gRPC daemon testing.
+
+    Passing a callable factory instead of a pre-constructed ``grpc.Channel``
+    instance ensures ``EchoGrpcTransport`` resolves ``self._host`` from its
+    ``DEFAULT_HOST`` ("localhost:7469") through the standard host-managed path
+    (``self._grpc_channel`` created from ``self._host``) while still creating an
+    insecure channel to the local Showcase server.
+    """
+    return grpc.insecure_channel(host)
+
+
 def construct_observability_client(
     client_class,
     transport: str,
@@ -198,9 +227,9 @@ def construct_observability_client(
     transport configuration and OpenTelemetry client_options.
 
     Design Note:
-        Rather than modifying the shared system test fixture helper (`conftest.construct_client`),
-        wrapping it locally insulates this compliance suite with zero blast radius on existing
-        Showcase tests.
+        Wrapping the shared system test fixture helper (`conftest.construct_client`)
+        supplies observability test defaults (`use_mtls=False` and `_insecure_channel_factory`
+        for host-managed gRPC channels) without altering defaults for other Showcase tests.
 
     Args:
         client_class: The GAPIC client class to instantiate (e.g. EchoClient).
@@ -211,27 +240,33 @@ def construct_observability_client(
     Returns:
         An instantiated, ready-to-call Showcase client instance.
     """
+    channel = (
+        _insecure_channel_factory if (transport == "grpc" and not use_mtls) else None
+    )
     return conftest.construct_client(
         client_class,
         use_mtls=use_mtls,
         transport_name=transport,
         client_options=client_options,
+        channel=channel,
     )
 
 
-def run_echo_call(client: EchoClient, scenario: str):
+def run_echo_call(client: EchoClient, scenario: str, transport: str) -> None:
     """Executes unary RPC requests against an injected EchoClient.
 
     This runner exercises the three standard unary RPC lifecycle scenarios:
     - 'Happy Path' / 'Tracing Off': Dispatches a successful unary EchoRequest.
     - 'Server Failure': Injects a non-retryable INVALID_ARGUMENT gRPC status on the
       Showcase server, expecting an immediate InvalidArgument or BadRequest exception.
-    - 'Client Timeout': Enforces a tight client-side timeout (`SHORT_CLIENT_TIMEOUT_SECONDS`)
-      with retries disabled, expecting a DeadlineExceeded or GatewayTimeout exception.
+    - 'Client Timeout': Enforces a transport-appropriate client-side timeout
+      (`CLIENT_TIMEOUT_SECONDS[transport]`) with retries disabled, expecting a
+      DeadlineExceeded or Timeout exception.
 
     Args:
         client: The instantiated EchoClient (injected by `execute_scenario`).
         scenario: The scenario name string from the CSV matrix row.
+        transport: Normalized transport string ('grpc' or 'rest') derived from the CSV matrix row.
     """
     if scenario in ("Happy Path", "Tracing Off"):
         client.echo(showcase.EchoRequest(content="hello"))
@@ -246,15 +281,19 @@ def run_echo_call(client: EchoClient, scenario: str):
                 )
             )
     elif scenario == "Client Timeout":
-        with pytest.raises((exceptions.DeadlineExceeded, exceptions.GatewayTimeout)):
-            client.echo(
-                showcase.EchoRequest(
-                    error=status_pb2.Status(
-                        code=code_pb2.DEADLINE_EXCEEDED,
-                        message="Client deadline exceeded",
-                    )
+        with pytest.raises(
+            (
+                exceptions.DeadlineExceeded,
+                requests.exceptions.Timeout,
+            )
+        ):
+            client.block(
+                showcase.BlockRequest(
+                    response_delay=duration_pb2.Duration(
+                        seconds=SERVER_BLOCK_DELAY_SECONDS
+                    ),
                 ),
-                timeout=SHORT_CLIENT_TIMEOUT_SECONDS,
+                timeout=CLIENT_TIMEOUT_SECONDS[transport],
                 retry=None,
             )
 
@@ -270,21 +309,18 @@ def run_sequence_retry_call(
     responses that return sequentially across consecutive attempt RPCs.
 
     Execution Flow:
-    1. Pre-programs the server-side sequence queue via `create_sequence`:
-       - 'Retries Exhausted': Configures an array of UNAVAILABLE ('Persistent outage') responses
-         and a tight deadline (`FAST_EXHAUSTION_DEADLINE_SECONDS`).
-       - 'Retry with Recovery': Configures one UNAVAILABLE ('Temporary glitch') response
-         followed by an OK response, and a generous deadline (`GENEROUS_RECOVERY_DEADLINE_SECONDS`).
+    1. Pre-programs a deterministic 2-response sequence queue via `create_sequence`:
+       - 'Retries Exhausted': Configures 2 UNAVAILABLE ('Persistent outage') responses
+         and an `on_error` hook that sleeps past `EXHAUSTION_DEADLINE_SECONDS` upon the
+         2nd failure, guaranteeing that `Retry` genuinely raises `exceptions.RetryError`
+         (`RetryFailureReason.TIMEOUT`) after exactly 2 wire attempts.
+       - 'Retry Recovery': Configures 1 UNAVAILABLE ('Temporary glitch') response
+         followed by 1 OK response, guaranteeing 2 wire attempts that recover.
     2. Flushes the in-memory span exporter (`exporter.clear()`).
        CRITICAL: The `create_sequence` setup call emits its own OpenTelemetry spans!
        Purging the exporter ensures that downstream assertions strictly evaluate spans emitted
        by the target `attempt_sequence` call.
-    3. Invokes `attempt_sequence` with a custom fast Retry policy.
-       Uses `contextlib.nullcontext()` as a "do-nothing" placeholder so we can run the test
-       call using a single `with expectation:` block. If we expect the call to fail, `expectation`
-       is `pytest.raises(...)` to catch the error. If we expect it to succeed, `expectation` is
-       `nullcontext()`, which just lets the code run normally. This saves us from having to
-       write out the client call twice!
+    3. Invokes `attempt_sequence` with a fast Retry policy.
 
     Args:
         client: The instantiated SequenceServiceClient (injected by `execute_scenario`).
@@ -301,11 +337,17 @@ def run_sequence_retry_call(
                     message="Persistent outage",
                 )
             )
-        ] * SHOWCASE_EXHAUSTION_QUEUE_BUFFER
-        deadline = FAST_EXHAUSTION_DEADLINE_SECONDS
-        expectation = pytest.raises(
-            (exceptions.RetryError, exceptions.ServiceUnavailable)
-        )
+        ] * EXHAUSTED_RETRY_ATTEMPTS
+        attempts_seen = 0
+
+        def on_error(_exc: Exception) -> None:
+            nonlocal attempts_seen
+            attempts_seen += 1
+            if attempts_seen >= EXHAUSTED_RETRY_ATTEMPTS:
+                time.sleep(EXHAUSTION_DEADLINE_SECONDS)
+
+        deadline = EXHAUSTION_DEADLINE_SECONDS
+        expectation = pytest.raises(exceptions.RetryError)
     else:
         responses = [
             Sequence.Response(
@@ -316,6 +358,7 @@ def run_sequence_retry_call(
             ),
             Sequence.Response(status=status_pb2.Status(code=code_pb2.OK)),
         ]
+        on_error = None
         deadline = GENEROUS_RECOVERY_DEADLINE_SECONDS
         expectation = contextlib.nullcontext()
 
@@ -334,6 +377,7 @@ def run_sequence_retry_call(
         maximum=FAST_RETRY_BACKOFF_SECONDS,
         multiplier=CONSTANT_BACKOFF_MULTIPLIER,
         deadline=deadline,
+        on_error=on_error,
     )
 
     with expectation:
@@ -361,7 +405,7 @@ def execute_scenario(
 
     Args:
         scenario: The scenario column value from the CSV matrix row.
-        transport_str: The transport column value ('gRPC' or 'REST').
+        transport_str: The transport column value ('gRPC' or 'HTTP/REST').
         provider: The active OpenTelemetry TracerProvider.
         exporter: The active InMemorySpanExporter.
         monkeypatch: Pytest monkeypatch fixture for environment variable scoping.
@@ -375,7 +419,7 @@ def execute_scenario(
 
     if scenario in ("Happy Path", "Server Failure", "Client Timeout", "Tracing Off"):
         client = construct_observability_client(EchoClient, transport, client_options)
-        run_echo_call(client, scenario)
+        run_echo_call(client, scenario, transport)
     else:
         client = construct_observability_client(
             SequenceServiceClient, transport, client_options
@@ -384,88 +428,8 @@ def execute_scenario(
 
 
 # ---------------------------------------------------------------------------
-# Universal Matrix-Driven Cell Parser & Assertion Engine
+# Validators & Assertion Engine
 # ---------------------------------------------------------------------------
-
-
-def resolve_expected_value(
-    raw_val: str | None, target_tier: str, attempt_idx: int = 0
-) -> str:
-    """Resolves the expected value from a CSV cell using the matrix mini-grammar.
-
-    The CSV requirements matrix uses a compact domain-specific language (DSL) to encode
-    expectations across different span tiers (T3 vs T4) and retry attempt sequences
-    without exploding the number of columns.
-
-    Supported Syntax Patterns:
-    --------------------------
-    1. Static Values:
-       - '200', 'POST', 'INTERNAL', 'NOT SET', 'N/A'
-       - Directly returns the string literal when the expected value is identical everywhere.
-
-    2. Positional Sequences (Across Retry Attempts):
-       - '503 | 200'
-       - 'ERROR | OK'
-       - When a call retries, each try (attempt 0, attempt 1, etc.) can produce a different result.
-         For example, the first try might fail with 503, but the second try succeeds with 200.
-       - The pipe ('|') separates what we expect on each consecutive try:
-         * Attempt 0 checks the 1st item ('503').
-         * Attempt 1 checks the 2nd item ('200').
-       - If there are more attempts than values listed (like a loop that keeps failing 20 times),
-         it holds onto the last item in the list.
-
-    3. Tier-Partitioned Expressions (Per-Layer Rules):
-       - 'T3: OK | T4: NOT SET'
-       - 'T3: UNSET | T4: ERROR | OK'
-       - A single row in our matrix often checks an attribute that behaves differently depending
-         on which layer of the software we look at:
-         * Tier 3 (T3): The outer, overall operation span.
-         * Tier 4 (T4): The inner, individual network attempt spans.
-       - We label each tier with 'T3:' or 'T4:', followed by the value (or positional sequence)
-         for that tier:
-         * 'T3: OK | T4: NOT SET' means: "The outer T3 span should be OK, but every inner T4
-           attempt span should NOT have this attribute set."
-         * 'T3: UNSET | T4: ERROR | OK' means: "The outer T3 span should be UNSET, while the T4
-           spans will see an ERROR on the 1st try and OK on the 2nd try."
-       - If a tier is not mentioned in the cell, it returns 'N/A' (meaning that tier doesn't care
-         about this attribute in this test).
-
-    Args:
-        raw_val: Raw string content from the CSV cell (or None if empty).
-        target_tier: The span tier currently being evaluated ('T3' or 'T4').
-        attempt_idx: Zero-based attempt index for child T4 spans (defaults to 0 for T3).
-
-    Returns:
-        The resolved expected string value (e.g. 'OK', 'NOT SET', 'N/A').
-    """
-    if raw_val is None:
-        return "N/A"
-    raw = raw_val.strip()
-    if not raw or raw == "N/A":
-        return "N/A"
-
-    # Step 1: Check for tier partitioning (T3: ... | T4: ...)
-    tier_content = raw
-    if "T3:" in raw or "T4:" in raw:
-        if target_tier == "T3":
-            if "T3:" in raw:
-                after_t3 = raw.split("T3:")[1]
-                tier_content = after_t3.split("| T4:")[0].strip()
-            else:
-                return "N/A"
-        elif target_tier == "T4":
-            if "T4:" in raw:
-                tier_content = raw.split("T4:")[1].strip()
-            else:
-                return "N/A"
-
-    # Step 2: Handle positional sequence across attempts (e.g. '503 | 200')
-    if "|" in tier_content:
-        parts = [p.strip() for p in tier_content.split("|")]
-        return parts[attempt_idx] if attempt_idx < len(parts) else parts[-1]
-
-    return tier_content.strip()
-
 
 # OpenTelemetry attributes validated as strings
 STRING_ATTRIBUTES = [
@@ -487,12 +451,25 @@ INTEGER_ATTRIBUTES = [
 ]
 
 
+def _clean_cell(raw_val: str | None) -> str:
+    """Normalizes a raw CSV cell string into a trimmed value or 'N/A'."""
+    if raw_val is None:
+        return "N/A"
+    cleaned = raw_val.strip()
+    return cleaned if cleaned else "N/A"
+
+
+def _match_int(attr: str, actual: Any, expected: str):
+    """Validates that an attribute matches the expected integer value."""
+    assert actual == int(expected), (
+        f"Attribute {attr}: expected {expected}, got {actual}"
+    )
+
+
 def _assert_attribute(
     span,
     attr: str,
     raw_expected: str | None,
-    target_tier: str,
-    attempt_idx: int = 0,
     comparator=None,
 ):
     """Universal triage helper for single-attribute validation against a matrix cell.
@@ -508,46 +485,35 @@ def _assert_attribute(
         span: The OpenTelemetry ReadableSpan instance being evaluated.
         attr: The attribute name key (e.g. 'rpc.system.name').
         raw_expected: The raw string value from the CSV row cell.
-        target_tier: The span tier being evaluated ('T3' or 'T4').
-        attempt_idx: Zero-based attempt index for child spans (0 for root).
-        comparator: Optional callable `comparator(actual, expected)` for custom validation.
+        comparator: Optional callable `comparator(attr, actual, expected)` for custom validation.
     """
-    expected = resolve_expected_value(raw_expected, target_tier, attempt_idx)
+    expected = _clean_cell(raw_expected)
     if expected == "N/A":
         return
 
     if expected == "NOT SET":
         assert attr not in span.attributes, (
-            f"Attribute {attr} should NOT be set on {target_tier} attempt {attempt_idx}, "
-            f"found: {span.attributes.get(attr)}"
+            f"Attribute {attr} should NOT be set, found: {span.attributes.get(attr)}"
         )
         return
 
     actual = span.attributes.get(attr)
-    assert actual is not None, (
-        f"Attribute {attr} missing on {target_tier} attempt {attempt_idx}, "
-        f"expected '{expected}'"
-    )
+    assert actual is not None, f"Attribute {attr} missing, expected '{expected}'"
 
     if comparator:
-        comparator(actual, expected)
+        comparator(attr, actual, expected)
     else:
         assert actual == expected, (
-            f"Attribute {attr} on {target_tier} attempt {attempt_idx}: "
-            f"expected '{expected}', got '{actual}'"
+            f"Attribute {attr}: expected '{expected}', got '{actual}'"
         )
 
 
-def _assert_span_metadata(
-    span, row: dict[str, str], target_tier: str, attempt_idx: int
-):
+def _assert_span_metadata(span, row: dict[str, str]):
     """Validates top-level span header fields (Name, Kind, and Status Code).
 
     Args:
         span: The OpenTelemetry ReadableSpan being validated.
         row: The CSV requirements dictionary for this feature.
-        target_tier: 'T3' (root operation) or 'T4' (child attempt).
-        attempt_idx: Zero-based attempt index.
     """
     metadata_fields = (
         ("Span Name", span.name, "Span name"),
@@ -555,17 +521,14 @@ def _assert_span_metadata(
         ("Span Status", span.status.status_code.name, "Span status"),
     )
     for col, actual, label in metadata_fields:
-        expected = resolve_expected_value(row.get(col), target_tier, attempt_idx)
+        expected = _clean_cell(row.get(col))
         if expected != "N/A":
             assert actual == expected, (
-                f"{label} mismatch on {target_tier} attempt {attempt_idx}: "
-                f"expected '{expected}', got '{actual}'"
+                f"{label} mismatch: expected '{expected}', got '{actual}'"
             )
 
 
-def _assert_string_attributes(
-    span, row: dict[str, str], target_tier: str, attempt_idx: int
-):
+def _assert_string_attributes(span, row: dict[str, str]):
     """Validates string OpenTelemetry attributes with wildcard prefix support.
 
     Supports wildcard templates in the matrix (e.g. 'http://localhost:7469/v1beta1/echo:echo/*')
@@ -574,33 +537,29 @@ def _assert_string_attributes(
     Args:
         span: The OpenTelemetry ReadableSpan being validated.
         row: The CSV requirements dictionary for this feature.
-        target_tier: 'T3' or 'T4'.
-        attempt_idx: Zero-based attempt index.
     """
 
-    def _match_string(actual: Any, expected: str):
+    def _match_string(attr: str, actual: Any, expected: str):
         if expected.endswith("/*"):
             prefix = expected[:-1]
             assert str(actual).startswith(prefix), (
-                f"Expected attribute to start with '{prefix}', got '{actual}'"
+                f"Attribute {attr}: expected prefix '{prefix}', got '{actual}'"
             )
         else:
-            assert actual == expected, f"Expected '{expected}', got '{actual}'"
+            assert actual == expected, (
+                f"Attribute {attr}: expected '{expected}', got '{actual}'"
+            )
 
     for attr in STRING_ATTRIBUTES:
         _assert_attribute(
             span,
             attr,
             row.get(attr),
-            target_tier,
-            attempt_idx,
             comparator=_match_string,
         )
 
 
-def _assert_integer_attributes(
-    span, row: dict[str, str], target_tier: str, attempt_idx: int
-):
+def _assert_integer_attributes(span, row: dict[str, str]):
     """Validates integer OpenTelemetry attributes (e.g. status codes, ports).
 
     Enforces strict integer type conversion to prevent false positives where string
@@ -609,135 +568,175 @@ def _assert_integer_attributes(
     Args:
         span: The OpenTelemetry ReadableSpan being validated.
         row: The CSV requirements dictionary for this feature.
-        target_tier: 'T3' or 'T4'.
-        attempt_idx: Zero-based attempt index.
     """
-
-    def _match_int(actual: Any, expected: str):
-        assert actual == int(expected), f"Expected {expected}, got {actual}"
-
     for attr in INTEGER_ATTRIBUTES:
         _assert_attribute(
             span,
             attr,
             row.get(attr),
-            target_tier,
-            attempt_idx,
             comparator=_match_int,
         )
 
 
-def _assert_status_message(
-    span, row: dict[str, str], target_tier: str, attempt_idx: int
-):
-    """Validates status.message via substring containment matching.
-
-    Because gRPC and REST backends format error message payloads slightly differently,
-    the matrix specifies key error phrases (e.g. 'Persistent outage') that must appear
-    inside the captured `status.message` attribute.
+def _assert_status_message(span, row: dict[str, str]):
+    """Validates status.message via exact string equality.
 
     Args:
         span: The OpenTelemetry ReadableSpan being validated.
         row: The CSV requirements dictionary for this feature.
-        target_tier: 'T3' or 'T4'.
-        attempt_idx: Zero-based attempt index.
     """
 
-    def _match_message(actual: Any, expected: str):
-        assert expected in str(actual), (
-            f"Expected '{expected}' in status.message '{actual}'"
+    def _match_message(attr: str, actual: Any, expected: str):
+        assert str(actual) == expected, (
+            f"Attribute {attr}: expected '{expected}', got '{actual}'"
         )
 
     _assert_attribute(
         span,
         "status.message",
         row.get("status.message"),
-        target_tier,
-        attempt_idx,
         comparator=_match_message,
     )
 
 
-def _assert_resend_count(span, row: dict[str, str], target_tier: str, attempt_idx: int):
+def _assert_resend_count(span, row: dict[str, str]):
     """Validates retry resend counts across HTTP and gRPC attribute variations.
 
     Protocol Discrepancies Handled:
     - HTTP / REST spans record resend counts under `http.request.resend_count`.
     - gRPC spans record resend counts under `gcp.grpc.resend_count`.
 
-    Dynamic Index Token ('attempt_index'):
-    - Attempt 0 (initial request): Resend count must be NOT SET (initial call is not a retry).
-    - Attempt N (N > 0): Resend count must equal integer N.
+    Args:
+        span: The OpenTelemetry ReadableSpan being validated.
+        row: The CSV requirements dictionary for this feature.
+    """
+    attr = (
+        "gcp.grpc.resend_count"
+        if "grpc" in row["Transport"].lower()
+        else "http.request.resend_count"
+    )
+    _assert_attribute(span, attr, row.get("resend_count"), comparator=_match_int)
+
+
+def _assert_parent_span_id(span, row: dict[str, str], t3_spans: list[Any]):
+    """Validates span parentage against the `parent_span_id` column.
+
+    Supported Values:
+    - 'None (Root)': Verifies the span is a root span (`span.parent is None`).
+    - 'T3.span_id': Verifies the child span links directly to the captured T3 root span ID.
 
     Args:
         span: The OpenTelemetry ReadableSpan being validated.
         row: The CSV requirements dictionary for this feature.
-        target_tier: 'T3' or 'T4'.
-        attempt_idx: Zero-based attempt index.
+        t3_spans: List of captured root (T3) spans in the current trace.
     """
-    expected_resend = resolve_expected_value(
-        row.get("resend_count"), target_tier, attempt_idx
-    )
-    if expected_resend == "attempt_index":
-        expected_resend = "NOT SET" if attempt_idx == 0 else str(attempt_idx)
+    expected_parent = _clean_cell(row.get("parent_span_id"))
+    if expected_parent == "None (Root)":
+        assert span.parent is None, (
+            f"Expected root span (parent=None), got parent={span.parent}"
+        )
+    elif expected_parent == "T3.span_id":
+        assert len(t3_spans) == 1, (
+            f"Expected 1 T3 root span for parent linkage check, got {len(t3_spans)}"
+        )
+        assert span.parent is not None, "Expected child span to have a parent"
+        assert span.parent.span_id == t3_spans[0].context.span_id, (
+            f"Parent span_id mismatch: expected {t3_spans[0].context.span_id}, "
+            f"got {span.parent.span_id}"
+        )
+    elif expected_parent != "N/A":
+        pytest.fail(f"Unsupported parent_span_id value in matrix: {expected_parent!r}")
 
-    if expected_resend == "NOT SET":
-        assert "http.request.resend_count" not in span.attributes
-        assert "gcp.grpc.resend_count" not in span.attributes
-    elif expected_resend != "N/A":
-        actual_resend = span.attributes.get(
-            "http.request.resend_count"
-        ) or span.attributes.get("gcp.grpc.resend_count")
-        assert actual_resend is not None, (
-            f"Resend count missing on {target_tier} attempt {attempt_idx}, "
-            f"expected {expected_resend}"
+
+def _assert_t3_t4_inheritance(span, row: Mapping[str, str], t4_spans: Sequence[Any]):
+    """Validates cross-tier attribute inheritance from child T4 spans to the parent T3 span.
+
+    Enforces Test Plan requirements:
+    - `url.template` on HTTP T3 is populated from the first T4 span (`T4_1`).
+    - `http.response.status_code`, `error.type`, and `status.message` on HTTP T3 are
+      consistent with / inherited from the last T4 span when present on that T4 span.
+
+    Args:
+        span: The OpenTelemetry ReadableSpan being validated.
+        row: The CSV requirements dictionary for this feature.
+        t4_spans: List of captured child (T4) spans in the current trace.
+    """
+    if row.get("Tier") != "T3" or not t4_spans:
+        return
+
+    first_t4 = t4_spans[0]
+    if "url.template" in first_t4.attributes:
+        assert span.attributes.get("url.template") == first_t4.attributes.get(
+            "url.template"
+        ), (
+            "T3 url.template must be inherited from the first T4 span: T3="
+            f"{span.attributes.get('url.template')!r} != "
+            f"T4_1={first_t4.attributes.get('url.template')!r}"
         )
-        assert actual_resend == int(expected_resend), (
-            f"Resend count on {target_tier} attempt {attempt_idx}: "
-            f"expected {expected_resend}, got {actual_resend}"
-        )
+
+    last_t4 = t4_spans[-1]
+    for inherited_attr in ("http.response.status_code", "error.type", "status.message"):
+        if inherited_attr in last_t4.attributes:
+            assert span.attributes.get(inherited_attr) == last_t4.attributes.get(
+                inherited_attr
+            ), (
+                f"T3 {inherited_attr} must match the last T4 span: T3="
+                f"{span.attributes.get(inherited_attr)!r} != "
+                f"T4_last={last_t4.attributes.get(inherited_attr)!r}"
+            )
 
 
 def assert_span_matches_row(
-    span, row: dict[str, str], target_tier: str, attempt_idx: int = 0
+    span,
+    row: Mapping[str, str],
+    t3_spans: Sequence[Any],
+    t4_spans: Sequence[Any] | None = None,
 ):
-    """Master validator delegating span verification across specialized sub-validators.
+    """Master validator delegating single-span verification across specialized sub-validators.
 
     Coordinates verification of:
     1. Top-level Span Metadata (Name, Kind, Status)
     2. String Attributes (System, Method, URL, Error Type)
     3. Integer Attributes (HTTP / gRPC Status Codes, Port)
-    4. Status Error Message (Substring containment)
+    4. Status Error Message (Exact string equality)
     5. Retry Resend Count (Protocol-aware retry progression)
+    6. Parent Span ID Hierarchy Invariant
+    7. Cross-tier T3/T4 Attribute Inheritance
 
     Args:
         span: The OpenTelemetry ReadableSpan instance being checked.
         row: The CSV requirements dictionary for this feature.
-        target_tier: 'T3' (logical operation) or 'T4' (wire attempt).
-        attempt_idx: Zero-based attempt index (defaults to 0).
+        t3_spans: Captured T3 root spans used to validate parent-child linkage.
+        t4_spans: Captured T4 child spans used to validate cross-tier inheritance.
     """
-    _assert_span_metadata(span, row, target_tier, attempt_idx)
-    _assert_string_attributes(span, row, target_tier, attempt_idx)
-    _assert_integer_attributes(span, row, target_tier, attempt_idx)
-    _assert_status_message(span, row, target_tier, attempt_idx)
-    _assert_resend_count(span, row, target_tier, attempt_idx)
+    _assert_span_metadata(span, row)
+    _assert_string_attributes(span, row)
+    _assert_integer_attributes(span, row)
+    _assert_status_message(span, row)
+    _assert_resend_count(span, row)
+    _assert_parent_span_id(span, row, t3_spans)
+    if t4_spans is not None:
+        _assert_t3_t4_inheritance(span, row, t4_spans)
 
 
 # ---------------------------------------------------------------------------
-# Parametrized Test Runner (22 Features)
+# Parametrized Test Runner (Tidy Matrix: 1 Row = 1 Span Assertion)
 # ---------------------------------------------------------------------------
 
 
 @pytest.mark.parametrize(
-    "feature_id",
-    list(FEATURE_MATRIX.keys()),
-    ids=[
-        f"{fid}_{FEATURE_MATRIX[fid]['Feature Name'].replace(' ', '_')}"
-        for fid in FEATURE_MATRIX
+    ("feature_id", "row"),
+    [
+        pytest.param(
+            fid,
+            row,
+            id=f"{fid}_{row['Feature Name'].replace(' ', '_')}",
+        )
+        for fid, row in FEATURE_MATRIX.items()
     ],
 )
-def test_feature(feature_id: str, span_exporter, monkeypatch):
-    """Executes a single observability scenario and validates 1-to-1 against matrix specifications.
+def test_feature(feature_id: str, row: dict[str, str], span_exporter, monkeypatch):
+    """Executes a single observability scenario and validates its target span against a tidy matrix row.
 
     Test Lifecycle:
     ---------------
@@ -748,22 +747,19 @@ def test_feature(feature_id: str, span_exporter, monkeypatch):
        `RAW_SPANS_CATALOG` for diagnostic output.
     3. Handle 'Tracing Off':
        If the row specifies 'Span Count = 0', asserts that zero spans were produced.
-    4. Span Partitioning:
+    4. Span Partitioning & Target Selection:
        Partitions captured spans into root spans (`parent is None`, representing T3)
-       and child spans (`parent is not None`, representing T4).
-    5. Evaluate T3 Root Span:
-       Verifies that exactly 1 root span was emitted (if required by Tier) and validates
-       its metadata and attributes.
-    6. Evaluate T4 Child Spans:
-       Verifies child span cardinality, evaluates each attempt sequentially against
-       positional expectations, and validates the parent-child span ID linkage invariant.
+       and child spans (`parent is not None`, representing T4), verifies the expected
+       tier span count, and selects the single target span at `Attempt`.
+    5. Evaluate Target Span:
+       Validates the target span's metadata, attributes, and parentage against the row.
 
     Args:
-        feature_id: Unique matrix identifier (e.g. 'grpc_happy_path', 'rest_retry_recovery').
+        feature_id: Unique matrix identifier (e.g. 'F1.2', 'F3.1b').
+        row: The CSV requirements dictionary for this feature.
         span_exporter: Isolated test fixture yielding (exporter, provider).
         monkeypatch: Pytest environment variable isolation fixture.
     """
-    row = FEATURE_MATRIX[feature_id]
     exporter, provider = span_exporter
 
     # Phase 1: Execute physical scenario against Showcase daemon
@@ -774,7 +770,8 @@ def test_feature(feature_id: str, span_exporter, monkeypatch):
     RAW_SPANS_CATALOG[feature_id] = [json.loads(s.to_json()) for s in spans]
 
     # Phase 3: Verify Tracing Off scenarios emit zero telemetry
-    if row["Span Count"] == "0":
+    expected_count = int(row["Span Count"])
+    if expected_count == 0:
         assert len(spans) == 0, f"Expected 0 spans for {feature_id}, found {len(spans)}"
         return
 
@@ -783,33 +780,21 @@ def test_feature(feature_id: str, span_exporter, monkeypatch):
     t4_spans = [s for s in spans if s.parent is not None]
 
     tier = row["Tier"]
+    assert tier in ("T3", "T4"), f"Unsupported Tier {tier!r} for {feature_id}"
+    tier_spans = t3_spans if tier == "T3" else t4_spans
+    assert len(tier_spans) == expected_count, (
+        f"Expected {expected_count} {tier} spans for {feature_id}, got {len(tier_spans)}"
+    )
 
-    # Phase 5: Evaluate Root T3 Span (if applicable)
-    if tier in ("T3", "T3 + T4"):
-        assert len(t3_spans) == 1, f"Expected 1 T3 root span, got {len(t3_spans)}"
-        assert_span_matches_row(t3_spans[0], row, target_tier="T3", attempt_idx=0)
-
-    # Phase 6: Evaluate Child T4 Spans (if applicable)
-    if tier in ("T4", "T3 + T4"):
-        expected_count = row["Span Count"]
-        if expected_count.isdigit():
-            expected_t4_count = (
-                int(expected_count) if tier == "T4" else int(expected_count) - 1
-            )
-            assert len(t4_spans) == expected_t4_count, (
-                f"Expected {expected_t4_count} T4 child spans, got {len(t4_spans)}"
-            )
-        else:
-            # Dynamic count for retries exhausted (N attempts + 1 root >= 2 children)
-            assert len(t4_spans) >= 2, (
-                f"Expected >=2 T4 child spans, got {len(t4_spans)}"
-            )
-
-        for idx, child in enumerate(t4_spans):
-            assert_span_matches_row(child, row, target_tier="T4", attempt_idx=idx)
-            # Hierarchy Invariant: child span must point to root T3 span ID as its parent
-            if t3_spans:
-                assert child.parent.span_id == t3_spans[0].context.span_id
+    # Phase 5: Select the target span by Attempt index and validate all columns
+    attempt_idx = int(row["Attempt"])
+    assert 0 <= attempt_idx < len(tier_spans), (
+        f"Attempt index {attempt_idx} out of bounds for {feature_id} "
+        f"(captured {len(tier_spans)} {tier} spans)"
+    )
+    target_span = tier_spans[attempt_idx]
+    with conftest.skip_on_core_mismatch():
+        assert_span_matches_row(target_span, row, t3_spans, t4_spans)
 
 
 # ---------------------------------------------------------------------------

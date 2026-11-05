@@ -827,3 +827,319 @@ class ListBackupsAsyncPager:
 
     def __repr__(self) -> str:
         return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListTokenAuthUsersPager:
+    """A pager for iterating through ``list_token_auth_users`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.redis_cluster_v1beta1.types.ListTokenAuthUsersResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``token_auth_users`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``ListTokenAuthUsers`` requests and continue to iterate
+    through the ``token_auth_users`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.redis_cluster_v1beta1.types.ListTokenAuthUsersResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[..., cloud_redis_cluster.ListTokenAuthUsersResponse],
+        request: cloud_redis_cluster.ListTokenAuthUsersRequest,
+        response: cloud_redis_cluster.ListTokenAuthUsersResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.redis_cluster_v1beta1.types.ListTokenAuthUsersRequest):
+                The initial request object.
+            response (google.cloud.redis_cluster_v1beta1.types.ListTokenAuthUsersResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = cloud_redis_cluster.ListTokenAuthUsersRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(self) -> Iterator[cloud_redis_cluster.ListTokenAuthUsersResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(self) -> Iterator[cloud_redis_cluster.TokenAuthUser]:
+        for page in self.pages:
+            yield from page.token_auth_users
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListTokenAuthUsersAsyncPager:
+    """A pager for iterating through ``list_token_auth_users`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.redis_cluster_v1beta1.types.ListTokenAuthUsersResponse` object, and
+    provides an ``__aiter__`` method to iterate through its
+    ``token_auth_users`` field.
+
+    If there are more pages, the ``__aiter__`` method will make additional
+    ``ListTokenAuthUsers`` requests and continue to iterate
+    through the ``token_auth_users`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.redis_cluster_v1beta1.types.ListTokenAuthUsersResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ..., Awaitable[cloud_redis_cluster.ListTokenAuthUsersResponse]
+        ],
+        request: cloud_redis_cluster.ListTokenAuthUsersRequest,
+        response: cloud_redis_cluster.ListTokenAuthUsersResponse,
+        *,
+        retry: OptionalAsyncRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiates the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.redis_cluster_v1beta1.types.ListTokenAuthUsersRequest):
+                The initial request object.
+            response (google.cloud.redis_cluster_v1beta1.types.ListTokenAuthUsersResponse):
+                The initial response object.
+            retry (google.api_core.retry.AsyncRetry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = cloud_redis_cluster.ListTokenAuthUsersRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    async def pages(
+        self,
+    ) -> AsyncIterator[cloud_redis_cluster.ListTokenAuthUsersResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = await self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __aiter__(self) -> AsyncIterator[cloud_redis_cluster.TokenAuthUser]:
+        async def async_generator():
+            async for page in self.pages:
+                for response in page.token_auth_users:
+                    yield response
+
+        return async_generator()
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListAuthTokensPager:
+    """A pager for iterating through ``list_auth_tokens`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.redis_cluster_v1beta1.types.ListAuthTokensResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``auth_tokens`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``ListAuthTokens`` requests and continue to iterate
+    through the ``auth_tokens`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.redis_cluster_v1beta1.types.ListAuthTokensResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[..., cloud_redis_cluster.ListAuthTokensResponse],
+        request: cloud_redis_cluster.ListAuthTokensRequest,
+        response: cloud_redis_cluster.ListAuthTokensResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.redis_cluster_v1beta1.types.ListAuthTokensRequest):
+                The initial request object.
+            response (google.cloud.redis_cluster_v1beta1.types.ListAuthTokensResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = cloud_redis_cluster.ListAuthTokensRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(self) -> Iterator[cloud_redis_cluster.ListAuthTokensResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(self) -> Iterator[cloud_redis_cluster.AuthToken]:
+        for page in self.pages:
+            yield from page.auth_tokens
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListAuthTokensAsyncPager:
+    """A pager for iterating through ``list_auth_tokens`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.redis_cluster_v1beta1.types.ListAuthTokensResponse` object, and
+    provides an ``__aiter__`` method to iterate through its
+    ``auth_tokens`` field.
+
+    If there are more pages, the ``__aiter__`` method will make additional
+    ``ListAuthTokens`` requests and continue to iterate
+    through the ``auth_tokens`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.redis_cluster_v1beta1.types.ListAuthTokensResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[..., Awaitable[cloud_redis_cluster.ListAuthTokensResponse]],
+        request: cloud_redis_cluster.ListAuthTokensRequest,
+        response: cloud_redis_cluster.ListAuthTokensResponse,
+        *,
+        retry: OptionalAsyncRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiates the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.redis_cluster_v1beta1.types.ListAuthTokensRequest):
+                The initial request object.
+            response (google.cloud.redis_cluster_v1beta1.types.ListAuthTokensResponse):
+                The initial response object.
+            retry (google.api_core.retry.AsyncRetry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = cloud_redis_cluster.ListAuthTokensRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    async def pages(self) -> AsyncIterator[cloud_redis_cluster.ListAuthTokensResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = await self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __aiter__(self) -> AsyncIterator[cloud_redis_cluster.AuthToken]:
+        async def async_generator():
+            async for page in self.pages:
+                for response in page.auth_tokens:
+                    yield response
+
+        return async_generator()
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)

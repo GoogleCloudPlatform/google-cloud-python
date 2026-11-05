@@ -783,6 +783,9 @@ class Table(object):
             operation_timeout = retry.deadline
 
         attempt_timeout = timeout
+        # ``rows`` may be any iterable, so keep a reference to each one to
+        # clear the succeeded rows once the statuses are known.
+        row_list = []
         mutation_entries = []
         for row in rows:
             if not isinstance(row, DirectRow):
@@ -794,6 +797,7 @@ class Table(object):
                     "Row %s is a part of %s table. Current table: %s"
                     % (row.row_key, row.table.name, self.name)
                 )
+            row_list.append(row)
             mutation_entries.append(RowMutationEntry(row.row_key, row._get_mutations()))
 
         try:
@@ -812,6 +816,12 @@ class Table(object):
                 status_pb2.Status(code=code_pb2.OK)
                 for _ in range(len(mutation_entries))
             ]
+
+        # Drop the mutations that were applied. Rows that failed keep theirs so
+        # that they can be applied again separately.
+        for row, status in zip(row_list, return_statuses):
+            if status.code == code_pb2.OK:
+                row.clear()
 
         return return_statuses
 
