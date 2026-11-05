@@ -14,6 +14,8 @@
 
 """User friendly container for Google Cloud Bigtable Column Family."""
 
+import warnings
+
 from google.api_core.gapic_v1.method import DEFAULT
 
 from google.cloud import _helpers
@@ -25,6 +27,9 @@ from google.cloud.bigtable_admin_v2.types import table as table_v2_pb2
 
 class GarbageCollectionRule(object):
     """Garbage collection rule for column families within a table.
+
+    .. deprecated:: 2.30.0
+        Use :class:`google.cloud.bigtable_admin_v2.types.GcRule` instead.
 
     Cells in the column family (within a table) fitting the rule will be
     deleted during garbage collection.
@@ -43,6 +48,9 @@ class GarbageCollectionRule(object):
 
 class MaxVersionsGCRule(GarbageCollectionRule):
     """Garbage collection limiting the number of versions of a cell.
+
+    .. deprecated:: 2.30.0
+        Use :class:`google.cloud.bigtable_admin_v2.types.GcRule` instead.
 
     For example:
 
@@ -77,6 +85,9 @@ class MaxVersionsGCRule(GarbageCollectionRule):
 
 class MaxAgeGCRule(GarbageCollectionRule):
     """Garbage collection limiting the age of a cell.
+
+    .. deprecated:: 2.30.0
+        Use :class:`google.cloud.bigtable_admin_v2.types.GcRule` instead.
 
     For example:
 
@@ -113,6 +124,9 @@ class MaxAgeGCRule(GarbageCollectionRule):
 class GCRuleUnion(GarbageCollectionRule):
     """Union of garbage collection rules.
 
+    .. deprecated:: 2.30.0
+        Use :class:`google.cloud.bigtable_admin_v2.types.GcRule` instead.
+
     For example:
 
     .. literalinclude:: snippets_table.py
@@ -147,6 +161,9 @@ class GCRuleUnion(GarbageCollectionRule):
 
 class GCRuleIntersection(GarbageCollectionRule):
     """Intersection of garbage collection rules.
+
+    .. deprecated:: 2.30.0
+        Use :class:`google.cloud.bigtable_admin_v2.types.GcRule` instead.
 
     For example:
 
@@ -184,6 +201,9 @@ class GCRuleIntersection(GarbageCollectionRule):
 
 class ColumnFamily(object):
     """Representation of a Google Cloud Bigtable Column Family.
+
+    .. deprecated:: 2.30.0
+        Use :class:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient` instead.
 
     We can use a :class:`ColumnFamily` to:
 
@@ -259,6 +279,11 @@ class ColumnFamily(object):
     def create(self):
         """Create this column family.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.modify_column_families`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -267,6 +292,13 @@ class ColumnFamily(object):
             :dedent: 4
 
         """
+        warnings.warn(
+            "ColumnFamily.create is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "modify_column_families instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         column_family = self.to_pb()
         modification = table_admin_v2_pb2.ModifyColumnFamiliesRequest.Modification(
             id=self.column_family_id, create=column_family
@@ -283,6 +315,11 @@ class ColumnFamily(object):
     def update(self):
         """Update this column family.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.modify_column_families`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -295,6 +332,13 @@ class ColumnFamily(object):
             Only the GC rule can be updated. By changing the column family ID,
             you will simply be referring to a different column family.
         """
+        warnings.warn(
+            "ColumnFamily.update is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "modify_column_families instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         column_family = self.to_pb()
         modification = table_admin_v2_pb2.ModifyColumnFamiliesRequest.Modification(
             id=self.column_family_id, update=column_family
@@ -311,6 +355,11 @@ class ColumnFamily(object):
     def delete(self):
         """Delete this column family.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableTableAdminClient.modify_column_families`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets_table.py
@@ -319,6 +368,13 @@ class ColumnFamily(object):
             :dedent: 4
 
         """
+        warnings.warn(
+            "ColumnFamily.delete is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableTableAdminClient."
+            "modify_column_families instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         modification = table_admin_v2_pb2.ModifyColumnFamiliesRequest.Modification(
             id=self.column_family_id, drop=True
         )

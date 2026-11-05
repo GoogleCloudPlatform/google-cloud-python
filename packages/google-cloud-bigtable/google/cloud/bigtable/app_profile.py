@@ -15,6 +15,7 @@
 """User-friendly container for Google Cloud Bigtable AppProfile."""
 
 import re
+import warnings
 
 from google.api_core.exceptions import NotFound
 from google.protobuf import field_mask_pb2
@@ -31,6 +32,9 @@ _APP_PROFILE_NAME_RE = re.compile(
 
 class AppProfile(object):
     """Representation of a Google Cloud Bigtable AppProfile.
+
+    .. deprecated:: 2.30.0
+        Use :class:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient` instead.
 
     We can use a :class:`AppProfile` to:
 
@@ -246,6 +250,11 @@ class AppProfile(object):
     def reload(self):
         """Reload the metadata for this cluster
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.get_app_profile`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -253,6 +262,13 @@ class AppProfile(object):
             :end-before: [END bigtable_api_reload_app_profile]
             :dedent: 4
         """
+        warnings.warn(
+            "AppProfile.reload is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "get_app_profile instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
 
         app_profile_pb = self.instance_admin_client.get_app_profile(
             request={"name": self.name}
@@ -265,6 +281,11 @@ class AppProfile(object):
     def exists(self):
         """Check whether the AppProfile already exists.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.get_app_profile`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -275,6 +296,13 @@ class AppProfile(object):
         :rtype: bool
         :returns: True if the AppProfile exists, else False.
         """
+        warnings.warn(
+            "AppProfile.exists is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "get_app_profile instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         try:
             self.instance_admin_client.get_app_profile(request={"name": self.name})
             return True
@@ -284,6 +312,11 @@ class AppProfile(object):
 
     def create(self, ignore_warnings=None):
         """Create this AppProfile.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.create_app_profile`
+            instead.
 
         .. note::
 
@@ -303,6 +336,13 @@ class AppProfile(object):
         :param: ignore_warnings: (Optional) If true, ignore safety checks when
                                  creating the AppProfile.
         """
+        warnings.warn(
+            "AppProfile.create is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "create_app_profile instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         return self.from_pb(
             self.instance_admin_client.create_app_profile(
                 request={
@@ -317,6 +357,11 @@ class AppProfile(object):
 
     def update(self, ignore_warnings=None):
         """Update this app_profile.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.update_app_profile`
+            instead.
 
         .. note::
 
@@ -334,6 +379,13 @@ class AppProfile(object):
             :end-before: [END bigtable_api_update_app_profile]
             :dedent: 4
         """
+        warnings.warn(
+            "AppProfile.update is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "update_app_profile instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         update_mask_pb = field_mask_pb2.FieldMask()
 
         if self.description is not None:
@@ -355,6 +407,11 @@ class AppProfile(object):
     def delete(self, ignore_warnings=None):
         """Delete this AppProfile.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.delete_app_profile`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -371,6 +428,13 @@ class AppProfile(object):
                  If the request failed due to a retryable error and retry
                  attempts failed. ValueError: If the parameters are invalid.
         """
+        warnings.warn(
+            "AppProfile.delete is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "delete_app_profile instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         self.instance_admin_client.delete_app_profile(
             request={"name": self.name, "ignore_warnings": ignore_warnings}
         )

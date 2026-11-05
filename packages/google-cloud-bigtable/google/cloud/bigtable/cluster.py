@@ -15,6 +15,7 @@
 """User friendly container for Google Cloud Bigtable Cluster."""
 
 import re
+import warnings
 
 from google.api_core.exceptions import NotFound
 from google.protobuf import field_mask_pb2
@@ -30,6 +31,9 @@ _CLUSTER_NAME_RE = re.compile(
 
 class Cluster(object):
     """Representation of a Google Cloud Bigtable Cluster.
+
+    .. deprecated:: 2.30.0
+        Use :class:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient` instead.
 
     We can use a :class:`Cluster` to:
 
@@ -300,6 +304,11 @@ class Cluster(object):
     def reload(self):
         """Reload the metadata for this cluster.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.get_cluster`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -307,6 +316,13 @@ class Cluster(object):
             :end-before: [END bigtable_api_reload_cluster]
             :dedent: 4
         """
+        warnings.warn(
+            "Cluster.reload is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "get_cluster instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         cluster_pb = self._instance._client.instance_admin_client.get_cluster(
             request={"name": self.name}
         )
@@ -318,6 +334,11 @@ class Cluster(object):
     def exists(self):
         """Check whether the cluster already exists.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.get_cluster`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -328,6 +349,13 @@ class Cluster(object):
         :rtype: bool
         :returns: True if the table exists, else False.
         """
+        warnings.warn(
+            "Cluster.exists is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "get_cluster instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         client = self._instance._client
         try:
             client.instance_admin_client.get_cluster(request={"name": self.name})
@@ -338,6 +366,11 @@ class Cluster(object):
 
     def create(self):
         """Create this cluster.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.create_cluster`
+            instead.
 
         For example:
 
@@ -368,6 +401,13 @@ class Cluster(object):
                   or if the autoscaling configurations are only partially set.
 
         """
+        warnings.warn(
+            "Cluster.create is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "create_cluster instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
 
         self._validate_scaling_config()
 
@@ -384,6 +424,11 @@ class Cluster(object):
 
     def update(self):
         """Update this cluster.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.partial_update_cluster`
+            instead.
 
         For example:
 
@@ -411,6 +456,13 @@ class Cluster(object):
                   update operation.
 
         """
+        warnings.warn(
+            "Cluster.update is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "partial_update_cluster instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
 
         client = self._instance._client
 
@@ -443,6 +495,11 @@ class Cluster(object):
         """
         Disable autoscaling by specifying the number of nodes.
 
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.partial_update_cluster`
+            instead.
+
         For example:
 
         .. literalinclude:: snippets.py
@@ -453,6 +510,13 @@ class Cluster(object):
         :type serve_nodes: int
         :param serve_nodes: The number of nodes in the cluster.
         """
+        warnings.warn(
+            "Cluster.disable_autoscaling is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "partial_update_cluster instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
 
         client = self._instance._client
 
@@ -474,6 +538,11 @@ class Cluster(object):
 
     def delete(self):
         """Delete this cluster.
+
+        .. deprecated:: 2.30.0
+            Use
+            :meth:`google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient.delete_cluster`
+            instead.
 
         For example:
 
@@ -499,6 +568,13 @@ class Cluster(object):
           irrevocably disappear from the API, and their data will be
           permanently deleted.
         """
+        warnings.warn(
+            "Cluster.delete is deprecated. Use "
+            "google.cloud.bigtable_admin_v2.BigtableInstanceAdminClient."
+            "delete_cluster instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         client = self._instance._client
         client.instance_admin_client.delete_cluster(request={"name": self.name})
 
