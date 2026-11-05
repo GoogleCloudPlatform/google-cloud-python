@@ -14,7 +14,6 @@
 
 """User friendly container for Google Cloud Bigtable Column Family."""
 
-
 from google.api_core.gapic_v1.method import DEFAULT
 
 from google.cloud import _helpers
