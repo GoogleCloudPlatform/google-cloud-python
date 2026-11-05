@@ -2585,7 +2585,13 @@
       "component": "google-cloud-saasplatform-saasservicemgmt",
       "extra-files": [
         "google/cloud/saasplatform_saasservicemgmt/gapic_version.py",
+        "google/cloud/saasplatform_saasservicemgmt_v1/gapic_version.py",
         "google/cloud/saasplatform_saasservicemgmt_v1beta1/gapic_version.py",
+        {
+          "jsonpath": "$.clientLibrary.version",
+          "path": "samples/generated_samples/snippet_metadata_google.cloud.saasplatform.saasservicemgmt.v1.json",
+          "type": "json"
+        },
         {
           "jsonpath": "$.clientLibrary.version",
           "path": "samples/generated_samples/snippet_metadata_google.cloud.saasplatform.saasservicemgmt.v1beta1.json",
