@@ -31,6 +31,9 @@ steps:
       # Specify the nox session consumed by ci/run_conditional_tests.sh and ci/run_single_test.sh.
       - 'NOX_SESSION=${_NOX_SESSION}'
       - 'TEST_TYPE=${_NOX_SESSION}'
+      # Configure parallel package execution and unbuffered Python output for real-time logging.
+      - 'PARALLEL_WORKERS=${_PARALLEL_WORKERS}'
+      - 'PYTHONUNBUFFERED=1'
     script: |
       #!/usr/bin/env bash
       set -eo pipefail
@@ -38,10 +41,15 @@ steps:
       # Derive PY_VERSION (e.g. "3.12" from "system-3.12") required by ci/run_single_test.sh.
       export PY_VERSION="${NOX_SESSION#system-}"
 
-      # Deepen both HEAD and target branch history so git diff in ci/get_package_shards.py
-      # can find the merge base in Cloud Build's shallow checkout.
-      git fetch --no-tags origin "+refs/heads/${TARGET_BRANCH}:refs/remotes/origin/${TARGET_BRANCH}" --depth=200 || true
-      git fetch --no-tags origin HEAD --depth=200 || true
+      # Deepen both the checked-out PR commit and target branch history so git diff in
+      # ci/get_package_shards.py finds the merge base in Cloud Build's shallow checkout,
+      # and populate local refs/heads/${TARGET_BRANCH} so ci/run_conditional_tests.sh's
+      # local insteadOf fetch succeeds silently.
+      git fetch --no-tags --quiet origin \
+        "$(git rev-parse HEAD)" \
+        "+refs/heads/${TARGET_BRANCH}:refs/remotes/origin/${TARGET_BRANCH}" \
+        "+refs/heads/${TARGET_BRANCH}:refs/heads/${TARGET_BRANCH}" \
+        --depth=200 || true
 
       # Import ci/get_package_shards.py without modifying the script on disk.
       # Filter get_packages() in memory to _ENABLED_PACKAGES so unmigrated packages are ignored.
@@ -80,20 +88,57 @@ steps:
         exit 0
       fi
 
-      # Package noxfile.py files skip the system session if GOOGLE_APPLICATION_CREDENTIALS is unset.
-      # Set a placeholder value for noxfile.py, then unset it at pytest startup so google.auth.default()
-      # uses native Cloud Build VM metadata server credentials (ADC) automatically.
-      if [[ -z "${GOOGLE_APPLICATION_CREDENTIALS:-}" ]]; then
-        mkdir -p /tmp/cb_pytest_shim
-        cat << 'EOF' > /tmp/cb_pytest_shim/cb_adc_shim.py
+      # Create runtime shims in /tmp/cloudbuild_shims so tracked repo files remain unmodified:
+      # - cloudbuild_pytest_plugin.py: Unsets the placeholder GOOGLE_APPLICATION_CREDENTIALS
+      #   value ("CLOUD_BUILD_ADC" satisfies noxfile.py's env check) so google.auth.default()
+      #   uses Cloud Build VM ADC, and flushes per-test results so `py.test --quiet` logs live.
+      # - nox wrapper: Streams [package]-prefixed output to fd 3 in real time across parallel
+      #   workers, and only writes to stdout on failure so run_conditional_tests.sh does not
+      #   print passing logs twice.
+      mkdir -p /tmp/cloudbuild_shims
+      cat << 'EOF' > /tmp/cloudbuild_shims/cloudbuild_pytest_plugin.py
       import os
+
       if os.environ.get("GOOGLE_APPLICATION_CREDENTIALS") == "CLOUD_BUILD_ADC":
           os.environ.pop("GOOGLE_APPLICATION_CREDENTIALS", None)
+
+
+      def pytest_runtest_logreport(report):
+          if report.when == "call" or (
+              report.when in ("setup", "teardown") and report.failed
+          ):
+              print(
+                  f"{report.outcome.upper()} {report.nodeid} ({report.duration:.1f}s)",
+                  flush=True,
+              )
       EOF
-        export GOOGLE_APPLICATION_CREDENTIALS="CLOUD_BUILD_ADC"
-        export PYTHONPATH="/tmp/cb_pytest_shim${PYTHONPATH:+:${PYTHONPATH}}"
-        export PYTEST_ADDOPTS="-p cb_adc_shim ${PYTEST_ADDOPTS:-}"
+
+      cat << 'EOF' > /tmp/cloudbuild_shims/nox
+      #!/usr/bin/env bash
+      PKG=$(basename "$PWD")
+      REAL_NOX=$(which -a nox | grep -v '/tmp/cloudbuild_shims' | head -n 1)
+      TMP_LOG=$(mktemp)
+      echo "[${PKG}] Starting nox $*" >&3
+      "$REAL_NOX" "$@" 2>&1 | awk -v p="[${PKG}] " -v f="${TMP_LOG}" '{
+        print $0 > f; fflush(f);
+        print p $0 > "/dev/fd/3"; fflush("/dev/fd/3");
+      }'
+      RET=${PIPESTATUS[0]}
+      if [[ ${RET} -ne 0 ]]; then
+        cat "${TMP_LOG}"
       fi
+      rm -f "${TMP_LOG}"
+      exit ${RET}
+      EOF
+      chmod +x /tmp/cloudbuild_shims/nox
+
+      if [[ -z "${GOOGLE_APPLICATION_CREDENTIALS:-}" ]]; then
+        export GOOGLE_APPLICATION_CREDENTIALS="CLOUD_BUILD_ADC"
+      fi
+      export PATH="/tmp/cloudbuild_shims:${PATH}"
+      export PYTHONPATH="/tmp/cloudbuild_shims${PYTHONPATH:+:${PYTHONPATH}}"
+      export PYTEST_ADDOPTS="-p cloudbuild_pytest_plugin ${PYTEST_ADDOPTS:-}"
+      exec 3>&1
 
       # Export PACKAGE_LIST and delegate execution to the existing monorepo test runner script.
       export PACKAGE_LIST
@@ -106,6 +151,7 @@ timeout: 1800s
 substitutions:
   _MAX_SHARDS: '1'
   _SHARD_INDEX: '0'
+  _PARALLEL_WORKERS: '4'
   _BUILD_TYPE: 'presubmit'
   _BASE_BRANCH: 'main'
   _TEST_ALL_PACKAGES: 'false'
