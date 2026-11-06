@@ -945,7 +945,7 @@ def test_read_gbq_with_dry_run(mock_bigquery_client, mock_query_job):
 
     dry_run_result = gbq.read_gbq("SELECT 1", project_id="my-project", dry_run=True)
 
-    _, kwargs = mock_bigquery_client.query.call_args
+    _, kwargs = mock_bigquery_client.query_and_wait.call_args
     job_config = kwargs["job_config"]
     assert job_config.dry_run is True
     assert dry_run_result["totalBytesProcessed"] == total_bytes_processed
