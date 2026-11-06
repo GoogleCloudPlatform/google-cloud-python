@@ -2537,7 +2537,18 @@ def test_grpc_attempt_logging_interceptor_sync_responses(monkeypatch):
         assert res is failed_response
         mock_log.assert_called_once()
         assert mock_log.call_args[1]["target"] == "/google.showcase.v1beta1.Echo/Echo"
-        assert mock_log.call_args[1]["status_code"] == "UNAVAILABLE"
+        assert mock_log.call_args[1]["status_code"] is failed_response.code.return_value
+
+    no_code_response = types.SimpleNamespace(
+        exception=lambda: RuntimeError("wire failure without code")
+    )
+    with mock.patch.object(_observability, "log_transport_attempt") as mock_log:
+        res = interceptor.intercept_unary_unary(
+            lambda d, r: no_code_response, call_details, "req"
+        )
+        assert res is no_code_response
+        mock_log.assert_called_once()
+        assert mock_log.call_args[1]["status_code"] is None
 
     cancelled_response = mock.Mock()
     cancelled_response.exception.side_effect = RuntimeError("FutureCancelledError")
@@ -2624,7 +2635,7 @@ async def test_grpc_attempt_logging_interceptor_async(monkeypatch):
         assert res is fake_call
         mock_log.assert_called_once()
         assert mock_log.call_args[1]["target"] == "/google.showcase.v1beta1.Echo/Echo"
-        assert mock_log.call_args[1]["status_code"] == "UNAVAILABLE"
+        assert mock_log.call_args[1]["status_code"] is fake_call.code.return_value
         assert mock_log.call_args[1]["status_message"] == "backend unavailable"
 
     broken_code_call = mock.AsyncMock()
@@ -2690,6 +2701,15 @@ def test_get_otel_interceptors_with_logging_enabled(
             sync_fn(mock_channel)
             mock_ic.assert_called_once()
             assert len(mock_ic.call_args[0]) == expected_sync_arg_len
+            if tracing_enabled == "true":
+                assert isinstance(
+                    mock_ic.call_args[0][1],
+                    _observability._GrpcAttemptLoggingInterceptor,
+                )
+                assert isinstance(
+                    mock_ic.call_args[0][2],
+                    _observability._SuppressingClientInterceptor,
+                )
         with mock.patch.object(
             _observability.grpc, "intercept_channel", side_effect=TypeError("bad")
         ):
@@ -2703,6 +2723,13 @@ def test_get_otel_interceptors_with_logging_enabled(
         isinstance(i, _observability._AsyncGrpcAttemptLoggingInterceptor)
         for i in async_list
     )
+    if tracing_enabled == "true":
+        assert isinstance(
+            async_list[1], _observability._AsyncGrpcAttemptLoggingInterceptor
+        )
+        assert isinstance(
+            async_list[2], _observability._AsyncSuppressingClientInterceptor
+        )
 
 
 def test_trace_context_http_logging_on_error_status_and_exception(monkeypatch):

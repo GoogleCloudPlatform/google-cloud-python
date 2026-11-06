@@ -42,6 +42,7 @@ if TYPE_CHECKING:
     # The 'noqa: F401' comment avoids flake8 "imported but not used" errors.
     import grpc  # noqa: F401
     import opentelemetry.trace  # noqa: F401
+
 _TRACER_PROVIDER = "tracer_provider"
 
 
@@ -815,8 +816,35 @@ class _AsyncSuppressingClientInterceptor(
             return await continuation(client_call_details, request_iterator)
 
 
-class _BaseGrpcAttemptLoggingInterceptor:
-    """Shared base logic for sync and async gRPC attempt logging interceptors.
+@contextlib.contextmanager
+def _capture_grpc_attempt_exception(
+    method_name: str,
+    client_options: ClientOptions | dict[str, Any] | None = None,
+) -> Iterator[None]:
+    """Logs any unhandled exception raised during gRPC continuation dispatch and re-raises.
+
+    Args:
+        method_name (str): Decoded gRPC method name.
+        client_options (ClientOptions | dict[str, Any] | None): Client options
+            used for error logging gating.
+
+    Yields:
+        None
+    """
+    try:
+        yield
+    except BaseException as exc:
+        log_transport_attempt(
+            target=method_name,
+            kind="grpc",
+            exc=exc,
+            client_options=client_options,
+        )
+        raise
+
+
+class _GrpcAttemptLoggingInterceptor(_SyncUnaryUnaryClientInterceptor):
+    """Sync gRPC client interceptor that logs failed wire attempts at DEBUG level.
 
     Args:
         client_options (ClientOptions | dict[str, Any] | None): Client options
@@ -829,35 +857,6 @@ class _BaseGrpcAttemptLoggingInterceptor:
         self, client_options: ClientOptions | dict[str, Any] | None = None
     ) -> None:
         self._client_options = client_options
-
-    @contextlib.contextmanager
-    def _capture_attempt_exception(self, method_name: str) -> Iterator[None]:
-        """Logs any unhandled exception raised during gRPC continuation dispatch and re-raises.
-
-        Args:
-            method_name (str): Decoded gRPC method name.
-
-        Yields:
-            None
-        """
-        try:
-            yield
-        except BaseException as exc:
-            log_transport_attempt(
-                target=method_name,
-                kind="grpc",
-                exc=exc,
-                client_options=self._client_options,
-            )
-            raise
-
-
-class _GrpcAttemptLoggingInterceptor(
-    _BaseGrpcAttemptLoggingInterceptor, _SyncUnaryUnaryClientInterceptor
-):
-    """Sync gRPC client interceptor that logs failed wire attempts at DEBUG level."""
-
-    __slots__ = ()
 
     def intercept_unary_unary(
         self,
@@ -876,36 +875,40 @@ class _GrpcAttemptLoggingInterceptor(
             Any: The gRPC Call/Future response returned by ``continuation``.
         """
         method_name = _decode_method_name(getattr(client_call_details, "method", None))
-        with self._capture_attempt_exception(method_name):
+        with _capture_grpc_attempt_exception(method_name, self._client_options):
             response = continuation(client_call_details, request)
 
         try:
             exc_fn = getattr(response, "exception", None)
-            if callable(exc_fn):
-                resp_exc = exc_fn()
-                if resp_exc is not None:
-                    code_fn = getattr(response, "code", None)
-                    code = code_fn() if callable(code_fn) else None
-                    code_name = getattr(code, "name", None) or str(code or "UNKNOWN")
-                    log_transport_attempt(
-                        target=method_name,
-                        status_code=code_name,
-                        kind="grpc",
-                        exc=resp_exc,
-                        client_options=self._client_options,
-                    )
+            if callable(exc_fn) and (resp_exc := exc_fn()) is not None:
+                code_fn = getattr(response, "code", None)
+                log_transport_attempt(
+                    target=method_name,
+                    status_code=code_fn() if callable(code_fn) else None,
+                    kind="grpc",
+                    exc=resp_exc,
+                    client_options=self._client_options,
+                )
         except Exception:
             # Fail-open: never disrupt the caller's RPC flow on post-dispatch inspection errors
             pass
         return response
 
 
-class _AsyncGrpcAttemptLoggingInterceptor(
-    _BaseGrpcAttemptLoggingInterceptor, _AsyncUnaryUnaryClientInterceptor
-):
-    """AsyncIO gRPC client interceptor that logs failed wire attempts at DEBUG level."""
+class _AsyncGrpcAttemptLoggingInterceptor(_AsyncUnaryUnaryClientInterceptor):
+    """AsyncIO gRPC client interceptor that logs failed wire attempts at DEBUG level.
 
-    __slots__ = ()
+    Args:
+        client_options (ClientOptions | dict[str, Any] | None): Client options
+            used for error logging gating.
+    """
+
+    __slots__ = ("_client_options",)
+
+    def __init__(
+        self, client_options: ClientOptions | dict[str, Any] | None = None
+    ) -> None:
+        self._client_options = client_options
 
     async def intercept_unary_unary(
         self,
@@ -924,25 +927,25 @@ class _AsyncGrpcAttemptLoggingInterceptor(
             Any: The async gRPC call object returned by ``continuation``.
         """
         method_name = _decode_method_name(getattr(client_call_details, "method", None))
-        with self._capture_attempt_exception(method_name):
+        with _capture_grpc_attempt_exception(method_name, self._client_options):
             call = await continuation(client_call_details, request)
 
         try:
             code_fn = getattr(call, "code", None)
-            if callable(code_fn):
-                code = await code_fn()
-                code_name = getattr(code, "name", str(code))
-                if code_name != "OK":
-                    details_fn = getattr(call, "details", None)
-                    details = await details_fn() if callable(details_fn) else ""
-                    log_transport_attempt(
-                        target=method_name,
-                        status_code=code_name,
-                        kind="grpc",
-                        exc=Exception(details) if details else None,
-                        client_options=self._client_options,
-                        status_message=details or None,
-                    )
+            if (
+                callable(code_fn)
+                and getattr(code := await code_fn(), "name", str(code)) != "OK"
+            ):
+                details_fn = getattr(call, "details", None)
+                details = await details_fn() if callable(details_fn) else ""
+                log_transport_attempt(
+                    target=method_name,
+                    status_code=code,
+                    kind="grpc",
+                    exc=Exception(details) if details else None,
+                    client_options=self._client_options,
+                    status_message=details or None,
+                )
         except Exception:
             # Fail-open: never disrupt the caller's RPC flow on post-dispatch inspection errors
             pass
@@ -953,16 +956,23 @@ def _build_otel_grpc_hook_kwargs(
     client_options: ClientOptions | dict[str, Any] | None = None,
     default_host: str | None = None,
 ) -> dict[str, Any]:
-    """Builds shared keyword arguments for upstream opentelemetry-instrumentation-grpc.
+    """Builds the keyword arguments passed to OpenTelemetry's gRPC interceptor factories.
+
+    Both the sync (`otel_grpc.client_interceptor`) and async
+    (`otel_grpc.aio_client_interceptors`) factories in `opentelemetry.instrumentation.grpc`
+    accept the same keyword arguments to configure how gRPC client spans are created
+    and enriched with Google Cloud attributes.
 
     Args:
         client_options (ClientOptions | dict[str, Any] | None): Client options
-            used to resolve endpoint attributes and custom tracer provider.
+            used to resolve endpoint attributes and a custom tracer provider.
         default_host (str | None): Fallback transport host when ``api_endpoint`` is not
             set on ``client_options``.
 
     Returns:
-        dict[str, Any]: Keyword arguments (`tracer_provider`, `request_hook`, `response_hook`).
+        dict[str, Any]: A dictionary with ``tracer_provider``, ``request_hook``, and
+            ``response_hook`` ready to unpack (``**``) into the OpenTelemetry gRPC
+            interceptor factory functions.
     """
     endpoint_attrs = _extract_endpoint_attributes(
         client_options, default_host=default_host
@@ -998,6 +1008,15 @@ def get_otel_interceptor(
     custom_interceptors: list[grpc.ClientInterceptor] = []
     tracing_interceptor: grpc.ClientInterceptor | None = None
 
+    # Order matters (outer -> inner):
+    #   1. tracing_interceptor (outermost: starts the Tier 4 gRPC span)
+    #   2. _GrpcAttemptLoggingInterceptor (middle: logs failed attempts with the
+    #      Tier 4 span active, outside of suppress_instrumentation)
+    #   3. _SuppressingClientInterceptor (innermost: suppresses downstream
+    #      generic auto-instrumentation without suppressing our attempt logs)
+    if error_logging_enabled:
+        custom_interceptors.append(_GrpcAttemptLoggingInterceptor(client_options))
+
     if tracing_enabled:
         import opentelemetry.instrumentation.grpc as otel_grpc  # type: ignore[import-not-found]
 
@@ -1005,9 +1024,6 @@ def get_otel_interceptor(
             **_build_otel_grpc_hook_kwargs(client_options, default_host)
         )
         custom_interceptors.append(_SuppressingClientInterceptor())
-
-    if error_logging_enabled:
-        custom_interceptors.append(_GrpcAttemptLoggingInterceptor(client_options))
 
     def apply_sync_otel_interceptors(channel: grpc.Channel) -> grpc.Channel:
         """Applies configured sync observability interceptors to a gRPC channel.
@@ -1054,6 +1070,12 @@ def get_otel_async_interceptor(
     if not tracing_enabled and not error_logging_enabled:
         return None
 
+    # Order matters (outer -> inner):
+    #   1. raw_interceptors (outermost: starts the Tier 4 async gRPC span)
+    #   2. _AsyncGrpcAttemptLoggingInterceptor (middle: logs failed attempts with
+    #      the Tier 4 span active, outside of suppress_instrumentation)
+    #   3. _AsyncSuppressingClientInterceptor (innermost: suppresses downstream
+    #      generic auto-instrumentation without suppressing our attempt logs)
     interceptors: list[grpc.aio.ClientInterceptor] = []
     if tracing_enabled:
         # Ignored by mypy: Optional dependency only loaded if tracing_enabled is True
@@ -1067,10 +1089,12 @@ def get_otel_async_interceptor(
             if isinstance(raw_interceptors, (list, tuple))
             else [raw_interceptors]
         )
-        interceptors.append(_AsyncSuppressingClientInterceptor())
 
     if error_logging_enabled:
         interceptors.append(_AsyncGrpcAttemptLoggingInterceptor(client_options))
+
+    if tracing_enabled:
+        interceptors.append(_AsyncSuppressingClientInterceptor())
 
     return interceptors
 
