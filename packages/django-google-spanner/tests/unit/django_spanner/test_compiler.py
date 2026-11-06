@@ -268,3 +268,34 @@ class TestCompiler(SpannerSimpleTestClass):
         end_index = sql.index(")")
         subquery_sql = sql[start_index:end_index]
         self.assertNotIn("WHERE", subquery_sql)
+
+    def test_get_converters_deduplicates_jsonfield_from_db_value(self):
+        from django.db.models import JSONField
+        from django.db.models.expressions import Col
+        from django.db.models.sql import Query
+
+        from django_spanner.compiler import SQLCompiler
+        from tests.unit.django_spanner.models import Number
+
+        field = JSONField()
+        field.set_attributes_from_name("value")
+        expr = Col("tests_detail", field)
+        query = Query(Number)
+        compiler = SQLCompiler(query, self.connection, "default")
+        converters = compiler.get_converters([expr])
+        self.assertIn(0, converters)
+        convs, _ = converters[0]
+        self.assertIn(self.connection.ops.convert_jsonfield_value, convs)
+        self.assertNotIn(field.from_db_value, convs)
+
+        class TaggedJSONField(JSONField):
+            def from_db_value(self, value, expression, connection):
+                return value
+
+        sub_field = TaggedJSONField()
+        sub_field.set_attributes_from_name("value")
+        sub_expr = Col("tests_detail", sub_field)
+        sub_converters = compiler.get_converters([sub_expr])
+        sub_convs, _ = sub_converters[0]
+        self.assertIn(self.connection.ops.convert_jsonfield_value, sub_convs)
+        self.assertIn(sub_field.from_db_value, sub_convs)
