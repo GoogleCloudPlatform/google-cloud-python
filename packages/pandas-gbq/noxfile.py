@@ -60,7 +60,9 @@ UNIT_TEST_EXTRAS = [
     "tqdm",
     "geopandas",
 ]
-UNIT_TEST_EXTRAS_BY_PYTHON = {}
+UNIT_TEST_EXTRAS_BY_PYTHON = {
+    "3.11": [],  # We need at least one "no extras" Python to test against.
+}
 
 SYSTEM_TEST_PYTHON_VERSIONS = ["3.12"]
 SYSTEM_TEST_STANDARD_DEPENDENCIES = [
