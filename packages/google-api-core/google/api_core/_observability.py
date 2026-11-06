@@ -38,13 +38,10 @@ except ImportError:
     _suppress_instrumentation = contextlib.nullcontext
 
 if TYPE_CHECKING:
-    # flake8: grpc, trace, and ClientInterceptor are imported only for static analysis and type annotations
+    # flake8: grpc and opentelemetry.trace are imported only for static analysis and type annotations
     # The 'noqa: F401' comment avoids flake8 "imported but not used" errors.
     import grpc  # noqa: F401
     import opentelemetry.trace  # noqa: F401
-
-    from google.api_core.grpc_helpers import ClientInterceptor  # noqa: F401
-
 _TRACER_PROVIDER = "tracer_provider"
 
 
@@ -403,7 +400,7 @@ def _build_attempt_log_extra(
     target: str | None,
     status_code: int | str | enum.Enum | None,
     norm_status: str | None,
-    kind: str,
+    rpc_system: str,
     http_method: str | None,
     exc: BaseException | None,
     status_message: str | None,
@@ -415,7 +412,7 @@ def _build_attempt_log_extra(
         target (str | None): Full RPC method name (gRPC) or request URL (HTTP).
         status_code (int | str | enum.Enum | None): Raw HTTP status code or gRPC status name/enum.
         norm_status (str | None): Stringified status code if provided.
-        kind (str): Transport kind ("grpc", "rest", "rest_asyncio", or "http").
+        rpc_system (str): Normalized OTel RPC system identifier ("grpc" or "http").
         http_method (str | None): HTTP request method (e.g. "GET", "POST").
         exc (BaseException | None): Exception raised or returned during the attempt.
         status_message (str | None): Explicit status message fallback.
@@ -423,7 +420,6 @@ def _build_attempt_log_extra(
     Returns:
         tuple[dict[str, Any], str | None]: A 2-tuple of (extra_payload, resolved_status).
     """
-    rpc_system = _resolve_rpc_system(kind)
     error_attrs = build_telemetry_error_attributes(
         exc,
         status_code=norm_status,
@@ -504,7 +500,7 @@ def log_transport_attempt(
             target=target,
             status_code=status_code,
             norm_status=norm_status,
-            kind=rpc_system,
+            rpc_system=rpc_system,
             http_method=http_method,
             exc=exc,
             status_message=status_message,
@@ -1085,6 +1081,9 @@ _CHANNEL_INTERCEPTOR_MAPPING = (
     ("intercept_stream_unary", "_stream_unary_interceptors"),
     ("intercept_stream_stream", "_stream_stream_interceptors"),
 )
+_STANDARD_INTERCEPTOR_METHODS = tuple(
+    method for method, _ in _CHANNEL_INTERCEPTOR_MAPPING
+)
 
 
 def apply_otel_async_channel_interceptors(
@@ -1144,11 +1143,11 @@ def apply_otel_async_channel_interceptors(
     # lacking standard method names directly to the unary-unary list.
     unary_list = getattr(channel, "_unary_unary_interceptors", None)
     if isinstance(unary_list, list):
-        standard_methods = tuple(method for method, _ in _CHANNEL_INTERCEPTOR_MAPPING)
         fallback_items = [
             i
             for i in interceptor_list
-            if not any(hasattr(i, m) for m in standard_methods) and i not in unary_list
+            if not any(hasattr(i, m) for m in _STANDARD_INTERCEPTOR_METHODS)
+            and i not in unary_list
         ]
         if fallback_items:
             unary_list[:0] = fallback_items

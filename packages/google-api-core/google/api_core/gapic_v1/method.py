@@ -180,7 +180,7 @@ class _GapicCallable(object):
         self._compression = compression
         self._client_options = client_options
         self._method_name = method_name
-        self._kind = kind
+        self._rpc_system = _observability._resolve_rpc_system(kind)
 
         # Pre-extract the x-goog-api-client header from the initialized metadata.
         self._x_goog_api_client, remaining = _extract_metrics_header(metadata)
@@ -205,11 +205,7 @@ class _GapicCallable(object):
             try:
                 from opentelemetry import trace
 
-                tracer_provider = None
-                if isinstance(client_options, dict):
-                    tracer_provider = client_options.get("tracer_provider")
-                elif client_options is not None:
-                    tracer_provider = getattr(client_options, "tracer_provider", None)
+                tracer_provider = _observability._get_tracer_provider(client_options)
                 if tracer_provider is not None:
                     tracer = tracer_provider.get_tracer("google.api_core")
                 else:
@@ -220,7 +216,7 @@ class _GapicCallable(object):
                     client_options, default_host=default_host
                 )
                 span_attributes = {
-                    "rpc.system.name": _observability._resolve_rpc_system(kind),
+                    "rpc.system.name": self._rpc_system,
                     "rpc.method": span_name,
                     **endpoint_attrs,
                 }
@@ -288,12 +284,11 @@ class _GapicCallable(object):
             logger (logging.Logger | None): Explicit logger override for testing.
         """
         try:
-            rpc_system = _observability._resolve_rpc_system(self._kind)
             if is_cancelled:
                 error_attrs.pop("exception.stacktrace", None)
             extra_payload: dict[str, Any] = {
                 "rpcName": self._method_name,
-                "rpc.system.name": rpc_system,
+                "rpc.system.name": self._rpc_system,
                 **error_attrs,
                 **_observability.extract_trace_context(span),
             }
@@ -371,7 +366,9 @@ class _GapicCallable(object):
     @contextlib.contextmanager
     def _trace_span(self) -> Iterator[None]:
         """Context manager that wraps method execution in a Tier 3 OpenTelemetry span."""
-        span_cm = contextlib.nullcontext()
+        span_cm: contextlib.AbstractContextManager[opentelemetry.trace.Span | None] = (
+            contextlib.nullcontext()
+        )
         if self._start_span_fn is not None:
             try:
                 span_cm = self._start_span_fn()
