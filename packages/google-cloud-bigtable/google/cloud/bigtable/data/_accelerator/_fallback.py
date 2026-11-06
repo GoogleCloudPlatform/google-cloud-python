@@ -163,6 +163,7 @@ def handle_accelerator_error(
 
     * daemon subprocess dead -> trip the breaker; fall back if idempotent, else
       translate and raise (a mid-flight crash may have already committed)
+    * :class:`InvalidChunk` -> trip the breaker, fall back immediately
     * ``UNIMPLEMENTED`` -> trip the breaker, fall back immediately
     * any other gRPC error -> translate and raise
     * a non-gRPC exception -> re-raise unchanged (never masked as a fallback)
@@ -186,12 +187,12 @@ def handle_accelerator_error(
             raise exc
         raise _AcceleratorFallback() from exc
     if isinstance(exc, InvalidChunk):
-        _LOGGER.warning(
-            "Accelerator daemon returned an invalid ReadRows chunk; permanently "
-            "falling back to the native Bigtable client for this table.",
-            exc_info=exc,
-        )
-        breaker.trip()
+        if breaker.trip():
+            _LOGGER.warning(
+                "Accelerator daemon returned an invalid ReadRows chunk; permanently "
+                "falling back to the native Bigtable client for this table."
+            )
+            _LOGGER.debug("Accelerator daemon failure details", exc_info=exc)
         raise _AcceleratorFallback() from exc
     if not isinstance(exc, RpcError):
         # A bug in our own merge machinery, not a daemon result. Do not mask it

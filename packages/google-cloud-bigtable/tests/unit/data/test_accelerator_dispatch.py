@@ -390,11 +390,8 @@ class TestReadRowViaAccelerator:
                 ]
             )
 
-        async def _awaitable_stream():
-            return _malformed_stream()
-
         client_mock = mock.AsyncMock()
-        client_mock.read_rows.return_value = _awaitable_stream()
+        client_mock.read_rows.return_value = _malformed_stream()
         daemon = mock.Mock(is_running=True)
         t = _bare_target(accel_client=client_mock, accel_daemon=daemon)
 

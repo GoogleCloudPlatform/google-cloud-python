@@ -261,6 +261,20 @@ class TestHandleAcceleratorError:
             handle_accelerator_error(exc, daemon=daemon, breaker=breaker)
         assert breaker.bypass()
 
+    def test_invalid_chunk_logs_warning_once_without_traceback(self, caplog):
+        import logging
+
+        daemon = mock.Mock(is_running=True)
+        breaker = AcceleratorBreaker()
+        exc = InvalidChunk("first row chunk is missing key")
+        with caplog.at_level(logging.WARNING):
+            for _ in range(3):
+                with pytest.raises(_AcceleratorFallback):
+                    handle_accelerator_error(exc, daemon=daemon, breaker=breaker)
+        assert len(caplog.records) == 1
+        assert "invalid ReadRows chunk" in caplog.records[0].getMessage()
+        assert caplog.records[0].exc_info is None
+
     # -- Non-gRPC exceptions are re-raised unchanged -------------------------
 
     def test_non_grpc_exception_reraises_unchanged(self):
