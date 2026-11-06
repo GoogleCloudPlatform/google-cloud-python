@@ -2020,6 +2020,59 @@ class TestDatabase(_BaseTest):
             self.assertEqual(committed, NOW)
 
     @CrossSync.pytest
+    async def test_run_in_transaction_session_error(self):
+        from google.api_core.exceptions import ServiceUnavailable
+
+        instance = _Instance(self.INSTANCE_NAME, client=_Client())
+        database = await self._make_one(self.DATABASE_ID, instance, pool=_Pool())
+        session = _Session(run_transaction_function=True)
+        session._committed = object()
+        unit_of_work = mock.AsyncMock(return_value=session._committed)
+
+        with mock.patch.object(database, "_sessions_manager") as sessions_manager:
+            sessions_manager.get_session = mock.AsyncMock(
+                side_effect=[ServiceUnavailable("Session unavailable"), session]
+            )
+            sessions_manager.put_session = mock.AsyncMock()
+
+            with self.assertRaises(ServiceUnavailable):
+                await database.run_in_transaction(unit_of_work)
+
+            unit_of_work.assert_not_called()
+            sessions_manager.put_session.assert_not_called()
+
+            result = await database.run_in_transaction(unit_of_work)
+
+            self.assertIs(result, session._committed)
+            unit_of_work.assert_awaited_once_with(mock.ANY)
+            self.assertFalse(database._local.transaction_running)
+            self.assertEqual(
+                sessions_manager.get_session.await_args_list,
+                [mock.call(TransactionType.READ_WRITE)] * 2,
+            )
+            sessions_manager.put_session.assert_awaited_once_with(session)
+
+    @CrossSync.pytest
+    async def test_run_in_transaction_callback_error(self):
+        instance = _Instance(self.INSTANCE_NAME, client=_Client())
+        database = await self._make_one(self.DATABASE_ID, instance, pool=_Pool())
+        session = _Session(run_transaction_function=True)
+        error = ValueError("Callback failed")
+        unit_of_work = mock.AsyncMock(side_effect=error)
+
+        with mock.patch.object(database, "_sessions_manager") as sessions_manager:
+            sessions_manager.get_session = mock.AsyncMock(return_value=session)
+            sessions_manager.put_session = mock.AsyncMock()
+
+            with self.assertRaises(ValueError) as raised:
+                await database.run_in_transaction(unit_of_work)
+
+            self.assertIs(raised.exception, error)
+            unit_of_work.assert_awaited_once_with(mock.ANY)
+            self.assertFalse(database._local.transaction_running)
+            sessions_manager.put_session.assert_awaited_once_with(session)
+
+    @CrossSync.pytest
     async def test_run_in_transaction_tracing(self):
         from opentelemetry.sdk.trace import TracerProvider
         from opentelemetry.sdk.trace.export import SimpleSpanProcessor

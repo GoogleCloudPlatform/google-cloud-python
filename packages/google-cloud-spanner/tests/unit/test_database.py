@@ -1905,6 +1905,56 @@ class TestDatabase(_BaseTest):
 
             self.assertEqual(committed, NOW)
 
+    def test_run_in_transaction_session_error(self):
+        from google.api_core.exceptions import ServiceUnavailable
+
+        instance = _Instance(self.INSTANCE_NAME, client=_Client())
+        database = self._make_one(self.DATABASE_ID, instance, pool=_Pool())
+        session = _Session(run_transaction_function=True)
+        session._committed = object()
+        unit_of_work = mock.Mock(return_value=session._committed)
+
+        with mock.patch.object(database, "_sessions_manager") as sessions_manager:
+            sessions_manager.get_session.side_effect = [
+                ServiceUnavailable("Session unavailable"),
+                session,
+            ]
+
+            with self.assertRaises(ServiceUnavailable):
+                database.run_in_transaction(unit_of_work)
+
+            unit_of_work.assert_not_called()
+            sessions_manager.put_session.assert_not_called()
+
+            result = database.run_in_transaction(unit_of_work)
+
+            self.assertIs(result, session._committed)
+            unit_of_work.assert_called_once_with(mock.ANY)
+            self.assertFalse(database._local.transaction_running)
+            self.assertEqual(
+                sessions_manager.get_session.call_args_list,
+                [mock.call(TransactionType.READ_WRITE)] * 2,
+            )
+            sessions_manager.put_session.assert_called_once_with(session)
+
+    def test_run_in_transaction_callback_error(self):
+        instance = _Instance(self.INSTANCE_NAME, client=_Client())
+        database = self._make_one(self.DATABASE_ID, instance, pool=_Pool())
+        session = _Session(run_transaction_function=True)
+        error = ValueError("Callback failed")
+        unit_of_work = mock.Mock(side_effect=error)
+
+        with mock.patch.object(database, "_sessions_manager") as sessions_manager:
+            sessions_manager.get_session.return_value = session
+
+            with self.assertRaises(ValueError) as raised:
+                database.run_in_transaction(unit_of_work)
+
+            self.assertIs(raised.exception, error)
+            unit_of_work.assert_called_once_with(mock.ANY)
+            self.assertFalse(database._local.transaction_running)
+            sessions_manager.put_session.assert_called_once_with(session)
+
     def test_run_in_transaction_tracing(self):
         from opentelemetry.sdk.trace import TracerProvider
         from opentelemetry.sdk.trace.export import SimpleSpanProcessor

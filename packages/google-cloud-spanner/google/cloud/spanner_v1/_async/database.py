@@ -1233,14 +1233,16 @@ class Database(object):
             # Check out a session and run the function in a transaction; once
             # done, flip the sanity check bit back and return the session.
             transaction_type = TransactionType.READ_WRITE
-            session = await self._sessions_manager.get_session(transaction_type)
+            session = None
 
             try:
+                session = await self._sessions_manager.get_session(transaction_type)
                 return await session.run_in_transaction(func, *args, **kw)
 
             finally:
                 self._local.transaction_running = False
-                await self._sessions_manager.put_session(session)
+                if session is not None:
+                    await self._sessions_manager.put_session(session)
 
     @CrossSync.convert
     async def restore(self, source):
