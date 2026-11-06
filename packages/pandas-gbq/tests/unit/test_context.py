@@ -29,7 +29,6 @@ def default_bigquery_client(mock_bigquery_client):
 @pytest.fixture(autouse=True)
 def mock_get_credentials(monkeypatch):
     import google.auth.credentials
-
     from pandas_gbq import auth
 
     mock_credentials = mock.MagicMock(google.auth.credentials.Credentials)
@@ -85,11 +84,6 @@ def test_read_gbq_should_use_dialect_with_query(monkeypatch, mock_bigquery_clien
 def test_read_gbq_should_use_dialect_with_query_and_wait(
     monkeypatch, mock_bigquery_client
 ):
-    if not hasattr(mock_bigquery_client, "query_and_wait"):
-        pytest.skip(
-            f"google-cloud-bigquery {google.cloud.bigquery.__version__} does not have query_and_wait"
-        )
-
     import pandas_gbq
     import pandas_gbq.features
 

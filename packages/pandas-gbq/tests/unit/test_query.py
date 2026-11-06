@@ -12,11 +12,10 @@ import freezegun
 import google.api_core.exceptions
 import google.auth.exceptions
 import google.cloud.bigquery
-import pytest
-
 import pandas_gbq.exceptions
 import pandas_gbq.gbq
 import pandas_gbq.query as module_under_test
+import pytest
 
 
 def _make_connector(project_id: str = "some-project", **kwargs):
@@ -26,11 +25,6 @@ def _make_connector(project_id: str = "some-project", **kwargs):
 def test_query_and_wait_via_client_library_apierror_raises_genericgbqexception(
     mock_bigquery_client,
 ):
-    if not hasattr(mock_bigquery_client, "query_and_wait"):
-        pytest.skip(
-            f"google-cloud-bigquery {google.cloud.bigquery.__version__} does not have query_and_wait"
-        )
-
     connector = _make_connector()
     connector.client = mock_bigquery_client
     mock_bigquery_client.query_and_wait.side_effect = (
@@ -53,11 +47,6 @@ def test_query_and_wait_via_client_library_apierror_raises_genericgbqexception(
 def test_query_and_wait_via_client_library_refresherror_raises_accessdenied_service_account(
     mock_bigquery_client,
 ):
-    if not hasattr(mock_bigquery_client, "query_and_wait"):
-        pytest.skip(
-            f"google-cloud-bigquery {google.cloud.bigquery.__version__} does not have query_and_wait"
-        )
-
     connector = _make_connector()
     connector.private_key = "abc"
     connector.client = mock_bigquery_client
@@ -81,11 +70,6 @@ def test_query_and_wait_via_client_library_refresherror_raises_accessdenied_serv
 def test_query_and_wait_via_client_library_refresherror_raises_accessdenied_user_credentials(
     mock_bigquery_client,
 ):
-    if not hasattr(mock_bigquery_client, "query_and_wait"):
-        pytest.skip(
-            f"google-cloud-bigquery {google.cloud.bigquery.__version__} does not have query_and_wait"
-        )
-
     connector = _make_connector()
     connector.client = mock_bigquery_client
     mock_bigquery_client.query_and_wait.side_effect = (
@@ -108,11 +92,6 @@ def test_query_and_wait_via_client_library_refresherror_raises_accessdenied_user
 def test_query_and_wait_via_client_library_timeout_raises_querytimeout(
     mock_bigquery_client,
 ):
-    if not hasattr(mock_bigquery_client, "query_and_wait"):
-        pytest.skip(
-            f"google-cloud-bigquery {google.cloud.bigquery.__version__} does not have query_and_wait"
-        )
-
     connector = _make_connector()
     connector.client = mock_bigquery_client
     connector.start = datetime.datetime(2020, 1, 1).timestamp()

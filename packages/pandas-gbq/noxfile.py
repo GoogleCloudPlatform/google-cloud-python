@@ -36,7 +36,6 @@ LINT_PATHS = ["docs", "pandas_gbq", "tests", "noxfile.py", "setup.py"]
 DEFAULT_PYTHON_VERSION = "3.14"
 
 UNIT_TEST_PYTHON_VERSIONS = [
-    "3.10",
     "3.11",
     "3.12",
     "3.13",
@@ -61,9 +60,7 @@ UNIT_TEST_EXTRAS = [
     "tqdm",
     "geopandas",
 ]
-UNIT_TEST_EXTRAS_BY_PYTHON = {
-    "3.10": [],
-}
+UNIT_TEST_EXTRAS_BY_PYTHON = {}
 
 SYSTEM_TEST_PYTHON_VERSIONS = ["3.12"]
 SYSTEM_TEST_STANDARD_DEPENDENCIES = [
@@ -472,7 +469,7 @@ def cover(session):
     session.run("coverage", "erase")
 
 
-@nox.session(python="3.10")
+@nox.session(python="3.11")
 @_calculate_duration
 def docs(session):
     """Build the docs for this library."""
@@ -508,7 +505,7 @@ def docs(session):
     )
 
 
-@nox.session(python="3.10")
+@nox.session(python="3.11")
 @_calculate_duration
 def docfx(session):
     """Build the docfx yaml files for this library."""

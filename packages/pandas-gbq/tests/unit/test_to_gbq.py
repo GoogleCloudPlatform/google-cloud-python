@@ -13,7 +13,6 @@ import google.cloud.bigquery
 import pandas as pd
 import pytest
 from pandas import DataFrame
-
 from pandas_gbq import gbq
 
 Path = pathlib.Path
@@ -259,12 +258,8 @@ def test_create_user_agent_jupyter_extension():
     from pandas_gbq.gbq_connector import create_user_agent
 
     def custom_import_module_side_effect(name, package=None):
-        if name == "bigquery_jupyter_plugin":
-            return mock.MagicMock()
-        else:
-            import importlib
-
-            return importlib.import_module(name, package)
+        assert name == "bigquery_jupyter_plugin"
+        return mock.MagicMock()
 
     with mock.patch(
         "importlib.import_module", side_effect=custom_import_module_side_effect
