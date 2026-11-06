@@ -495,9 +495,9 @@ def log_transport_attempt(
     logger: logging.Logger | None = None,
     status_message: str | None = None,
 ) -> None:
-    """Emits a DEBUG log for a failed wire attempt (retry/redirect/failure).
+    """Emits a DEBUG log for a failed wire attempt (retry or transport failure).
 
-    Successful transport attempts (2xx HTTP or OK gRPC) return immediately without
+    Non-error transport attempts (< 400 HTTP or OK gRPC) return immediately without
     emitting logs to avoid hot-path allocations.
 
     Args:
@@ -862,6 +862,8 @@ def _capture_grpc_attempt_exception(
     """
     try:
         yield
+    except (KeyboardInterrupt, SystemExit, GeneratorExit):
+        raise
     except BaseException as exc:
         log_transport_attempt(
             target=method_name,
