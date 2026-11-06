@@ -516,7 +516,7 @@ class TestCredentialsFileProjectResolution:
                 google.auth,
                 "load_credentials_from_file",
                 return_value=(file_creds, "project-from-credentials-file"),
-            ),
+            ) as mock_load_file,
             mock.patch.object(
                 google.auth,
                 "default",
@@ -542,6 +542,11 @@ class TestCredentialsFileProjectResolution:
                     == "/fake/sa_key.json"
                 )
                 mock_adc.assert_not_called()
+                assert mock_load_file.call_args_list[0] == mock.call(
+                    "/fake/sa_key.json",
+                    scopes=None,
+                    default_scopes=_sync_client_mod.TransportType.AUTH_SCOPES,
+                )
             finally:
                 client.close()
 

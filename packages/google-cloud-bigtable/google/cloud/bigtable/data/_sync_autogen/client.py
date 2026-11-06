@@ -270,7 +270,9 @@ class BigtableDataClient(ClientWithProject):
             )
             if project is None:
                 _, project = google.auth.load_credentials_from_file(
-                    client_options.credentials_file
+                    client_options.credentials_file,
+                    scopes=client_options.scopes,
+                    default_scopes=TransportType.AUTH_SCOPES,
                 )
         ClientWithProject.__init__(
             self,
