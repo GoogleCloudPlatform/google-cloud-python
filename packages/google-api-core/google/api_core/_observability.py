@@ -281,7 +281,7 @@ def build_telemetry_error_attributes(
     http_response = getattr(target_exc, "response", None)
     http_status = (
         _extract_http_status_code(http_response)
-        if not hasattr(http_response, "trailing_metadata")
+        if http_response is not None and not hasattr(http_response, "trailing_metadata")
         else None
     )
     if http_status is None:
