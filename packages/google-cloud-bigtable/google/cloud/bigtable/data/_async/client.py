@@ -1698,6 +1698,9 @@ class _DataApiTargetAsync(abc.ABC):
         operation_timeout, attempt_timeout = _get_timeouts(
             operation_timeout, attempt_timeout, self
         )
+        attempt_timeout_gen = _attempt_timeout_generator(
+            attempt_timeout, operation_timeout
+        )
 
         if not mutations:
             raise ValueError("No mutations provided")
@@ -1713,23 +1716,26 @@ class _DataApiTargetAsync(abc.ABC):
             predicate = retries.if_exception_type()
 
         with self._create_operation(OperationType.MUTATE_ROW) as operation_metric:
-            target = partial(
-                self.client._gapic_client.mutate_row,
-                request=MutateRowRequest(
-                    row_key=row_key.encode("utf-8")
-                    if isinstance(row_key, str)
-                    else row_key,
-                    mutations=[mutation._to_pb() for mutation in mutations_list],
-                    app_profile_id=self.app_profile_id,
-                    **self._request_path,
-                ),
-                timeout=attempt_timeout,
-                retry=None,
-            )
+
+            @CrossSync.convert
+            async def execute_rpc():
+                return await self.client._gapic_client.mutate_row(
+                    request=MutateRowRequest(
+                        row_key=row_key.encode("utf-8")
+                        if isinstance(row_key, str)
+                        else row_key,
+                        mutations=[mutation._to_pb() for mutation in mutations_list],
+                        app_profile_id=self.app_profile_id,
+                        **self._request_path,
+                    ),
+                    timeout=next(attempt_timeout_gen),
+                    retry=None,
+                )
+
             return await tracked_retry(
                 retry_fn=CrossSync.retry_target,
                 operation=operation_metric,
-                target=target,
+                target=execute_rpc,
                 predicate=predicate,
                 timeout=operation_timeout,
             )
