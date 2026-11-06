@@ -13,12 +13,13 @@
 # limitations under the License.
 
 import contextlib
+import json
 import ssl
 from unittest import mock
 
 import pytest  # type: ignore
 
-from google.auth import exceptions
+from google.auth import _agent_identity_utils, environment_vars, exceptions
 from google.auth.transport import _mtls_helper, mtls
 
 
@@ -560,6 +561,7 @@ def test_has_default_client_cert_source_malformed_config_no_gke_fallback(
     mock_is_ready.assert_not_called()
 
 
+@mock.patch("google.auth.transport.mtls.path.exists", return_value=False)
 @mock.patch(
     "google.auth.transport._mtls_helper._get_non_spiffe_workload_cert_and_key_paths",
     autospec=True,
@@ -570,8 +572,70 @@ def test_has_default_client_cert_source_malformed_config_no_gke_fallback(
     autospec=True,
 )
 def test_has_default_client_cert_source_spiffe_returns_true_without_polling(
-    mock_spiffe_path, mock_non_spiffe_paths
+    mock_spiffe_path, mock_non_spiffe_paths, mock_exists
 ):
     assert mtls.has_default_client_cert_source() is True
     mock_spiffe_path.assert_called_once_with()
+    mock_exists.assert_called_once_with(
+        "/var/run/secrets/workload-spiffe-credentials/credentials.json"
+    )
     mock_non_spiffe_paths.assert_not_called()
+
+
+@pytest.fixture
+def spiffe_config_file(tmp_path, monkeypatch):
+    well_known_dir = tmp_path / "workload-spiffe-credentials"
+    well_known_dir.mkdir()
+    home_dir = tmp_path / "gcloud_home"
+    home_dir.mkdir()
+    config_file = well_known_dir / "credentials.json"
+    monkeypatch.setattr(
+        _agent_identity_utils,
+        "_WELL_KNOWN_CERT_PATH",
+        str(well_known_dir / "certificates.pem"),
+    )
+    monkeypatch.setattr(
+        _mtls_helper._cloud_sdk, "get_config_path", lambda: str(home_dir)
+    )
+    monkeypatch.setattr(
+        _mtls_helper,
+        "CONTEXT_AWARE_METADATA_PATH",
+        str(tmp_path / "context_aware_metadata.json"),
+    )
+    monkeypatch.delenv(
+        environment_vars.GOOGLE_API_USE_CLIENT_CERTIFICATE, raising=False
+    )
+    monkeypatch.setenv(environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file))
+    return config_file
+
+
+@mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+def test_has_default_client_cert_source_spiffe_pems_not_mounted(
+    mock_sleep, spiffe_config_file
+):
+    well_known_dir = spiffe_config_file.parent
+    spiffe_config_file.write_text(
+        json.dumps(
+            {
+                "cert_configs": {
+                    "workload": {
+                        "cert_path": str(well_known_dir / "certificates.pem"),
+                        "key_path": str(well_known_dir / "private_key.pem"),
+                    }
+                }
+            }
+        )
+    )
+
+    assert mtls.has_default_client_cert_source() is True
+    mock_sleep.assert_not_called()
+
+
+@mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+def test_has_default_client_cert_source_spiffe_config_without_workload(
+    mock_sleep, spiffe_config_file
+):
+    spiffe_config_file.write_text('{"cert_configs": {}}')
+
+    assert mtls.has_default_client_cert_source() is False
+    mock_sleep.assert_not_called()

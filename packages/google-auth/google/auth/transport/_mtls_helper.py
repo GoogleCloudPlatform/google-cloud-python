@@ -19,6 +19,7 @@ import json
 import logging
 import os
 import re
+import stat
 import subprocess
 import sys
 import tempfile
@@ -418,10 +419,9 @@ def _get_workload_cert_and_key(
 
     spiffe_config_path = _get_spiffe_polling_config_path(certificate_config_path)
     if spiffe_config_path is not None:
-        _, _, _, cert_data, key_data = _poll_spiffe_workload_credentials(
-            spiffe_config_path
-        )
-        return cert_data, key_data
+        cert_path, key_path, _ = _poll_spiffe_workload_paths(spiffe_config_path)
+        if cert_path is not None:
+            return _read_cert_and_key_files(cert_path, key_path)
 
     cert_path, key_path, config_file_path = _get_non_spiffe_workload_cert_and_key_paths(
         certificate_config_path, include_context_aware
@@ -494,10 +494,11 @@ def _get_cert_config_path(certificate_config_path=None, include_context_aware=Tr
 def _get_workload_cert_and_key_paths(config_path=None, include_context_aware=True):
     spiffe_config_path = _get_spiffe_polling_config_path(config_path)
     if spiffe_config_path is not None:
-        cert_path, key_path, config_file_path, _, _ = _poll_spiffe_workload_credentials(
+        cert_path, key_path, config_file_path = _poll_spiffe_workload_paths(
             spiffe_config_path
         )
-        return cert_path, key_path, config_file_path
+        if cert_path is not None:
+            return cert_path, key_path, config_file_path
 
     return _get_non_spiffe_workload_cert_and_key_paths(
         config_path, include_context_aware
@@ -595,8 +596,37 @@ def _extract_workload_paths_from_config(data, absolute_path):
     return workload["cert_path"], workload["key_path"]
 
 
-def _poll_spiffe_workload_credentials(spiffe_config_path):
-    """Polls up to 30s for SPIFFE workload config, cert, and key files to be ready."""
+def _check_spiffe_file_ready(file_path):
+    """Raises if file_path is missing, not a regular file, or empty."""
+    file_stat = os.stat(file_path)
+    if not stat.S_ISREG(file_stat.st_mode) or file_stat.st_size == 0:
+        raise exceptions.ClientCertError(
+            "File {} is empty or not a regular file".format(file_path)
+        )
+
+
+def _poll_spiffe_workload_paths(spiffe_config_path):
+    """Polls up to 30s for the SPIFFE workload config, cert, and key to be ready.
+
+    The config is retried while it is missing, empty, or not yet valid JSON.
+    The cert and key are retried while either is missing, empty, or not a
+    regular file. Their contents are not read here, so a non-empty but invalid
+    PEM is reported by the caller's read without polling. Cert and key paths
+    outside the well-known SPIFFE directory are returned without any check.
+
+    Args:
+        spiffe_config_path (str): The expanded SPIFFE certificate config path.
+
+    Returns:
+        Tuple[Optional[str], Optional[str], str]: The cert path, key path, and
+            config path. The cert and key paths are None if the config has no
+            "workload" section.
+
+    Raises:
+        PermissionError: If the config, cert, or key cannot be accessed.
+        google.auth.exceptions.ClientCertError: If the config schema is
+            invalid, or the files are not ready after 30s.
+    """
     last_error = None
     for attempt, interval in enumerate(_agent_identity_utils._POLLING_INTERVALS):
         try:
@@ -610,21 +640,22 @@ def _poll_spiffe_workload_credentials(spiffe_config_path):
                 data, spiffe_config_path
             )
             if cert_path is None and key_path is None:
-                return None, None, spiffe_config_path, None, None
+                return None, None, spiffe_config_path
 
             cert_path = path.expanduser(cert_path)
             key_path = path.expanduser(key_path)
+            if not (
+                _agent_identity_utils._is_in_well_known_dir(cert_path)
+                and _agent_identity_utils._is_in_well_known_dir(key_path)
+            ):
+                return cert_path, key_path, spiffe_config_path
             try:
-                cert_data, key_data = _read_cert_and_key_files(cert_path, key_path)
-                return cert_path, key_path, spiffe_config_path, cert_data, key_data
+                _check_spiffe_file_ready(cert_path)
+                _check_spiffe_file_ready(key_path)
+                return cert_path, key_path, spiffe_config_path
             except PermissionError:
                 raise
             except (OSError, exceptions.ClientCertError) as caught_exc:
-                if not (
-                    _agent_identity_utils._is_in_well_known_dir(cert_path)
-                    and _agent_identity_utils._is_in_well_known_dir(key_path)
-                ):
-                    raise
                 last_error = caught_exc
 
         if attempt + 1 == _agent_identity_utils._FAST_POLL_CYCLES:
