@@ -27,6 +27,7 @@ from google.cloud.bigtable.data._accelerator._fallback import (
     _grpc_code,
     handle_accelerator_error,
 )
+from google.cloud.bigtable.data.exceptions import InvalidChunk
 
 # ---------------------------------------------------------------------------
 # AcceleratorBreaker
@@ -247,6 +248,32 @@ class TestHandleAcceleratorError:
         with pytest.raises(core_exceptions.GoogleAPICallError):
             handle_accelerator_error(exc, daemon=daemon, breaker=breaker)
         assert not breaker.bypass()
+
+    # -- InvalidChunk --------------------------------------------------------
+
+    def test_invalid_chunk_trips_breaker_and_falls_back(self):
+        daemon = mock.Mock()
+        daemon.is_running = True
+        breaker = AcceleratorBreaker()
+
+        exc = InvalidChunk("first row chunk is missing key")
+        with pytest.raises(_AcceleratorFallback):
+            handle_accelerator_error(exc, daemon=daemon, breaker=breaker)
+        assert breaker.bypass()
+
+    def test_invalid_chunk_logs_warning_once_without_traceback(self, caplog):
+        import logging
+
+        daemon = mock.Mock(is_running=True)
+        breaker = AcceleratorBreaker()
+        exc = InvalidChunk("first row chunk is missing key")
+        with caplog.at_level(logging.WARNING):
+            for _ in range(3):
+                with pytest.raises(_AcceleratorFallback):
+                    handle_accelerator_error(exc, daemon=daemon, breaker=breaker)
+        assert len(caplog.records) == 1
+        assert "invalid ReadRows chunk" in caplog.records[0].getMessage()
+        assert caplog.records[0].exc_info is None
 
     # -- Non-gRPC exceptions are re-raised unchanged -------------------------
 
