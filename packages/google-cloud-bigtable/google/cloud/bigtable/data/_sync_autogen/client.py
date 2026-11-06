@@ -1682,16 +1682,11 @@ class _DataApiTarget(abc.ABC):
         try:
             return client.mutate_row(request, timeout=operation_timeout)
         except Exception as exc:
-            is_idempotent = (
-                _is_mutate_row_idempotent(request)
-                if daemon is not None and (not daemon.is_running)
-                else True
-            )
             handle_accelerator_error(
                 exc,
                 daemon=daemon,
                 breaker=self._accelerator_breaker,
-                is_idempotent=is_idempotent,
+                is_idempotent=_is_mutate_row_idempotent(request),
             )
             raise
 

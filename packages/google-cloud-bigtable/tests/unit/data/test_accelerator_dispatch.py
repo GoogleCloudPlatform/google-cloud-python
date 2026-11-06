@@ -543,10 +543,12 @@ class TestMutateRowAcceleratorDispatch:
             SetCell("cf", "col", b"val", timestamp_micros=-1),
             AddToCell("cf", "col", 1, timestamp_micros=1000),
         ):
-            daemon = mock.Mock(is_running=True)
+            daemon = mock.NonCallableMock()
+            is_running_prop = mock.PropertyMock(return_value=True)
+            type(daemon).is_running = is_running_prop
 
             async def crash_midflight(*args, **kwargs):
-                daemon.is_running = False
+                is_running_prop.return_value = False
                 raise _FakeRpcError(StatusCode.UNAVAILABLE, "socket closed")
 
             client_mock = mock.AsyncMock()
@@ -561,6 +563,7 @@ class TestMutateRowAcceleratorDispatch:
                 native_mock.assert_not_called()
 
             assert t._accelerator_breaker.is_tripped
+            assert is_running_prop.call_count == 1
 
 
 # ---------------------------------------------------------------------------
