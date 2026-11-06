@@ -2253,7 +2253,7 @@ class _DataApiTargetAsync(abc.ABC):
                 operation_timeout -= time.monotonic() - start_time
                 if operation_timeout <= 0:
                     raise DeadlineExceeded(
-                        "Operation timeout exceeded before starting query"
+                        "Operation timeout exceeded before starting mutation"
                     )
                 attempt_timeout = min(attempt_timeout, operation_timeout)
 

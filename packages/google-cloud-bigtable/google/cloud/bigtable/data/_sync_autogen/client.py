@@ -1832,7 +1832,7 @@ class _DataApiTarget(abc.ABC):
                 operation_timeout -= time.monotonic() - start_time
                 if operation_timeout <= 0:
                     raise DeadlineExceeded(
-                        "Operation timeout exceeded before starting query"
+                        "Operation timeout exceeded before starting mutation"
                     )
                 attempt_timeout = min(attempt_timeout, operation_timeout)
         if all((mutation.is_idempotent() for mutation in mutations_list)):
