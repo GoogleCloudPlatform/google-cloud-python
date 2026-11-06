@@ -317,9 +317,9 @@ def extract_rpc_identity(
     Returns:
         tuple[str, str, str]: A 3-tuple of (full_rpc_name, service_name, rpc_method_name).
     """
-    method_str = _decode_method_name(method_name).lstrip("/")
-    service, _, method = method_str.rpartition("/")
-    return method_str, service, method
+    full_rpc_name = _decode_method_name(method_name).lstrip("/")
+    service, _, method = full_rpc_name.rpartition("/")
+    return full_rpc_name, service, method
 
 
 def _resolve_rpc_system(kind: str | None = "grpc") -> str:
@@ -831,11 +831,11 @@ class _BaseGrpcAttemptLoggingInterceptor:
         self._client_options = client_options
 
     @contextlib.contextmanager
-    def _capture_attempt_exception(self, method_str: str) -> Iterator[None]:
+    def _capture_attempt_exception(self, method_name: str) -> Iterator[None]:
         """Logs any unhandled exception raised during gRPC continuation dispatch and re-raises.
 
         Args:
-            method_str (str): Decoded gRPC method name.
+            method_name (str): Decoded gRPC method name.
 
         Yields:
             None
@@ -844,7 +844,7 @@ class _BaseGrpcAttemptLoggingInterceptor:
             yield
         except BaseException as exc:
             log_transport_attempt(
-                target=method_str,
+                target=method_name,
                 kind="grpc",
                 exc=exc,
                 client_options=self._client_options,
@@ -875,8 +875,8 @@ class _GrpcAttemptLoggingInterceptor(
         Returns:
             Any: The gRPC Call/Future response returned by ``continuation``.
         """
-        method_str = _decode_method_name(getattr(client_call_details, "method", None))
-        with self._capture_attempt_exception(method_str):
+        method_name = _decode_method_name(getattr(client_call_details, "method", None))
+        with self._capture_attempt_exception(method_name):
             response = continuation(client_call_details, request)
 
         try:
@@ -888,7 +888,7 @@ class _GrpcAttemptLoggingInterceptor(
                     code = code_fn() if callable(code_fn) else None
                     code_name = getattr(code, "name", None) or str(code or "UNKNOWN")
                     log_transport_attempt(
-                        target=method_str,
+                        target=method_name,
                         status_code=code_name,
                         kind="grpc",
                         exc=resp_exc,
@@ -923,8 +923,8 @@ class _AsyncGrpcAttemptLoggingInterceptor(
         Returns:
             Any: The async gRPC call object returned by ``continuation``.
         """
-        method_str = _decode_method_name(getattr(client_call_details, "method", None))
-        with self._capture_attempt_exception(method_str):
+        method_name = _decode_method_name(getattr(client_call_details, "method", None))
+        with self._capture_attempt_exception(method_name):
             call = await continuation(client_call_details, request)
 
         try:
@@ -936,7 +936,7 @@ class _AsyncGrpcAttemptLoggingInterceptor(
                     details_fn = getattr(call, "details", None)
                     details = await details_fn() if callable(details_fn) else ""
                     log_transport_attempt(
-                        target=method_str,
+                        target=method_name,
                         status_code=code_name,
                         kind="grpc",
                         exc=Exception(details) if details else None,
