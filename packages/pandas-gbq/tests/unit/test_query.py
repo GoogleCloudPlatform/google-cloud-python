@@ -12,10 +12,11 @@ import freezegun
 import google.api_core.exceptions
 import google.auth.exceptions
 import google.cloud.bigquery
+import pytest
+
 import pandas_gbq.exceptions
 import pandas_gbq.gbq
 import pandas_gbq.query as module_under_test
-import pytest
 
 
 def _make_connector(project_id: str = "some-project", **kwargs):

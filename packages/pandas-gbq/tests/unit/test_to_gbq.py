@@ -13,6 +13,7 @@ import google.cloud.bigquery
 import pandas as pd
 import pytest
 from pandas import DataFrame
+
 from pandas_gbq import gbq
 
 Path = pathlib.Path

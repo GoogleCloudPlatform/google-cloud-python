@@ -16,12 +16,13 @@ import google.cloud.bigquery.table
 import numpy
 import packaging.version
 import pandas
+import pytest
+from pandas import DataFrame
+
 import pandas_gbq.constants
 import pandas_gbq.core.read
 import pandas_gbq.exceptions
 import pandas_gbq.features
-import pytest
-from pandas import DataFrame
 from pandas_gbq import gbq
 from pandas_gbq.features import FEATURES
 

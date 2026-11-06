@@ -29,6 +29,7 @@ def default_bigquery_client(mock_bigquery_client):
 @pytest.fixture(autouse=True)
 def mock_get_credentials(monkeypatch):
     import google.auth.credentials
+
     from pandas_gbq import auth
 
     mock_credentials = mock.MagicMock(google.auth.credentials.Credentials)
