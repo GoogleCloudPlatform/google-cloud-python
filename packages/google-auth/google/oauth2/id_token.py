@@ -222,8 +222,9 @@ def verify_firebase_token(id_token, request, audience=None, clock_skew_in_second
             HTTP requests.
         audience (Optional[Union[str, Iterable[str]]]): The audience that this
             token is intended for. This is your Firebase project ID. If
-            ``None`` or empty, a ``UserWarning`` is issued. Passing a
-            non-empty ``audience`` will be required in a future release.
+            ``None`` or empty, the audience will be left unverified, and a
+            ``UserWarning`` is issued. Passing a non-empty ``audience`` will be
+            required in a future release.
         clock_skew_in_seconds (int): The clock skew used for `iat` and `exp`
             validation.
 
