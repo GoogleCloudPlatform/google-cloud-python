@@ -1774,9 +1774,7 @@ class _DataApiTargetAsync(abc.ABC):
         return [row async for row in row_generator]
 
     @CrossSync.convert
-    async def _read_row_via_accelerator(
-        self, query, operation_timeout, attempt_timeout
-    ):
+    async def _read_row_via_accelerator(self, query, operation_timeout):
         """Drive a single ReadRows attempt through the accelerator daemon.
 
         Raises ``_AcceleratorFallback`` if the caller should retry on the native
@@ -1791,7 +1789,7 @@ class _DataApiTargetAsync(abc.ABC):
             query,
             self,
             operation_timeout=operation_timeout,
-            attempt_timeout=attempt_timeout,
+            attempt_timeout=operation_timeout,
             metric=ActiveOperationMetric(OperationType.READ_ROWS, is_streaming=False),
             retryable_exceptions=(),
         )
@@ -1859,9 +1857,7 @@ class _DataApiTargetAsync(abc.ABC):
         if self._use_accelerator("read_row"):
             start_time = time.monotonic()
             try:
-                return await self._read_row_via_accelerator(
-                    query, operation_timeout, attempt_timeout
-                )
+                return await self._read_row_via_accelerator(query, operation_timeout)
             except _AcceleratorFallback:
                 # Daemon can't serve this call; fall through to the native path.
                 operation_timeout -= time.monotonic() - start_time
