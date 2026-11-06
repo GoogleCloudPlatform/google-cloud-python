@@ -32,6 +32,12 @@ from google.api_core import exceptions, retry, timeout
 from google.api_core.gapic_v1 import client_info
 from tests.helpers import assert_uninstrumented_gapic_callable
 
+_DEFAULT_SPAN_ATTRIBUTES = {
+    "rpc.system.name": "grpc",
+    "rpc.method": "google.cloud.secretmanager.v1.SecretManagerService/ListSecrets",
+    "url.domain": "googleapis.com",
+}
+
 
 def _utcnow_monotonic():
     curr_value = datetime.datetime.min
@@ -350,13 +356,6 @@ def test_wrap_method_with_call_not_supported():
 def test__deduplicate_metadata_tokens(headers, expected):
     dedup = google.api_core.gapic_v1.method._deduplicate_metadata_tokens
     assert dedup(*headers) == expected
-
-
-_DEFAULT_SPAN_ATTRIBUTES = {
-    "rpc.system.name": "grpc",
-    "rpc.method": "google.cloud.secretmanager.v1.SecretManagerService/ListSecrets",
-    "url.domain": "googleapis.com",
-}
 
 
 @pytest.mark.parametrize(

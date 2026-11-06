@@ -8,6 +8,10 @@ from google.api_core.client_logging import (
     setup_logging,
 )
 
+DEFAULT_CONSUMER_PROJECT = "projects/123"
+SAMPLE_TRACE_ID = "0123456789abcdef0123456789abcdef"
+SAMPLE_SPAN_ID = "0123456789abcdef"
+
 
 def reset_logger(scope):
     logger = logging.getLogger(scope)
@@ -137,11 +141,6 @@ def test_structured_log_formatter():
     assert parsed_msg["severity"] == "DEBUG"
     assert parsed_msg["message"] == "This is a test message."
     assert parsed_msg["rpcName"] == "bar"
-
-
-DEFAULT_CONSUMER_PROJECT = "projects/123"
-SAMPLE_TRACE_ID = "0123456789abcdef0123456789abcdef"
-SAMPLE_SPAN_ID = "0123456789abcdef"
 
 
 def test_structured_log_formatter_json_fields_and_wildcard_metadata():

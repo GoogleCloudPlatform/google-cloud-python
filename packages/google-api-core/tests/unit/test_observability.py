@@ -26,6 +26,13 @@ from google.api_core import _observability, exceptions
 from google.api_core._feature_gating_helpers import FeatureGatingError
 from google.api_core.client_options import ClientOptions
 
+_INVALID_ARGUMENT_CODE = (
+    "INVALID_ARGUMENT" if exceptions.grpc is not None else "BAD_REQUEST"
+)
+_UNAVAILABLE_CODE = (
+    "UNAVAILABLE" if exceptions.grpc is not None else "SERVICE_UNAVAILABLE"
+)
+
 
 def test_is_otel_capabilities_enabled_disabled(monkeypatch):
     """Proves that is_otel_capabilities_enabled returns False when the tracing environment variable is disabled."""
@@ -2018,14 +2025,6 @@ def test_extract_error_message(target_exc, http_response, fallback, expected):
         _observability._extract_error_message(target_exc, http_response, fallback)
         == expected
     )
-
-
-_INVALID_ARGUMENT_CODE = (
-    "INVALID_ARGUMENT" if exceptions.grpc is not None else "BAD_REQUEST"
-)
-_UNAVAILABLE_CODE = (
-    "UNAVAILABLE" if exceptions.grpc is not None else "SERVICE_UNAVAILABLE"
-)
 
 
 @pytest.mark.parametrize(

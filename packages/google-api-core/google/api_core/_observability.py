@@ -43,7 +43,18 @@ if TYPE_CHECKING:
     import grpc  # noqa: F401
     import opentelemetry.trace  # noqa: F401
 
+_LOGGER = logging.getLogger(__name__)
 _TRACER_PROVIDER = "tracer_provider"
+_TRACE_CONTEXT_PROPAGATOR: Any = None
+_CHANNEL_INTERCEPTOR_MAPPING = (
+    ("intercept_unary_unary", "_unary_unary_interceptors"),
+    ("intercept_unary_stream", "_unary_stream_interceptors"),
+    ("intercept_stream_unary", "_stream_unary_interceptors"),
+    ("intercept_stream_stream", "_stream_stream_interceptors"),
+)
+_STANDARD_INTERCEPTOR_METHODS = tuple(
+    method for method, _ in _CHANNEL_INTERCEPTOR_MAPPING
+)
 
 
 @functools.cache
@@ -287,9 +298,6 @@ def build_telemetry_error_attributes(
         attrs["exception.stacktrace"] = "".join(traceback.format_exception(exc))
 
     return attrs
-
-
-_LOGGER = logging.getLogger(__name__)
 
 
 def _decode_method_name(method: str | bytes | None) -> str:
@@ -1099,17 +1107,6 @@ def get_otel_async_interceptor(
     return interceptors
 
 
-_CHANNEL_INTERCEPTOR_MAPPING = (
-    ("intercept_unary_unary", "_unary_unary_interceptors"),
-    ("intercept_unary_stream", "_unary_stream_interceptors"),
-    ("intercept_stream_unary", "_stream_unary_interceptors"),
-    ("intercept_stream_stream", "_stream_stream_interceptors"),
-)
-_STANDARD_INTERCEPTOR_METHODS = tuple(
-    method for method, _ in _CHANNEL_INTERCEPTOR_MAPPING
-)
-
-
 def apply_otel_async_channel_interceptors(
     channel: Any,
     client_options: ClientOptions | dict[str, Any] | Sequence[Any] | None = None,
@@ -1177,9 +1174,6 @@ def apply_otel_async_channel_interceptors(
             unary_list[:0] = fallback_items
 
     return channel
-
-
-_TRACE_CONTEXT_PROPAGATOR: Any = None
 
 
 class _TraceContext:
