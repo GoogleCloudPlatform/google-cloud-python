@@ -2998,3 +2998,70 @@ def test_get_otel_interceptors_with_logging_enabled(
         assert isinstance(
             async_list[2], _observability._AsyncSuppressingClientInterceptor
         )
+
+
+def test_trace_context_http_logging_on_error_status_and_exception(monkeypatch):
+    """Proves that _TraceContext logs HTTP error responses (>= 400) and dispatch exceptions when logging is enabled."""
+    monkeypatch.setenv("GOOGLE_SDK_EXPERIMENTAL_PYTHON_TRACING_ENABLED", "false")
+    monkeypatch.setenv("GOOGLE_SDK_EXPERIMENTAL_PYTHON_LOGGING_ENABLED", "true")
+
+    with mock.patch.object(_observability, "log_transport_attempt") as mock_log:
+        with _observability.trace_http_request(
+            method="POST", url="https://example.com/v1/echo"
+        ) as ctx:
+            ctx.record_response(
+                mock.Mock(status_code=503, headers={}, reason="Service Unavailable")
+            )
+        mock_log.assert_called_once()
+        assert mock_log.call_args[1]["status_code"] == 503
+        assert mock_log.call_args[1]["kind"] == "http"
+        assert mock_log.call_args[1]["status_message"] == "Service Unavailable"
+
+    with mock.patch.object(_observability, "log_transport_attempt") as mock_log:
+        with pytest.raises(ConnectionError):
+            with _observability.trace_http_request(
+                method="GET", url="https://example.com/v1/echo"
+            ) as ctx:
+                ctx.record_error(None)
+                raise ConnectionError("reset")
+        mock_log.assert_called_once()
+        assert mock_log.call_args[1]["kind"] == "http"
+        assert isinstance(mock_log.call_args[1]["exc"], ConnectionError)
+
+    with mock.patch.object(
+        _observability, "log_transport_attempt", side_effect=RuntimeError("log crash")
+    ):
+        ctx_err = _observability._TraceContext(method="GET", url="https://example.com")
+        ctx_err.record_error(ConnectionError("fail-open"))
+        ctx_err.record_response(mock.Mock(status_code=500, headers={}))
+        ctx_err.record_response(mock.Mock(status_code="invalid", headers={}))
+
+    class BadTextResponse:
+        status_code = 500
+        headers: dict = {}
+
+        @property
+        def text(self):
+            raise RuntimeError("broken text")
+
+        reason = "Fallback Reason"
+
+    assert (
+        _observability._TraceContext._extract_http_error_message(BadTextResponse())
+        == "Fallback Reason"
+    )
+
+    monkeypatch.setenv("GOOGLE_SDK_EXPERIMENTAL_PYTHON_TRACING_ENABLED", "true")
+    mock_parent_span = mock.MagicMock()
+    mock_parent_span.is_recording.return_value = True
+    mock_parent_span.attributes = {}
+    mock_parent_span.set_attribute.side_effect = RuntimeError("parent attr crash")
+    mock_otel = mock.MagicMock()
+    mock_otel.trace.get_current_span.return_value = mock_parent_span
+    monkeypatch.setitem(sys.modules, "opentelemetry", mock_otel)
+    monkeypatch.setitem(sys.modules, "opentelemetry.trace", mock_otel.trace)
+    monkeypatch.setitem(sys.modules, "opentelemetry.instrumentation.grpc", mock.Mock())
+    with _observability.trace_http_request(
+        method="GET", url="https://example.com/v1/echo", url_template="/v1/echo"
+    ):
+        pass
