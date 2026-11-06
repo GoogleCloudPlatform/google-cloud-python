@@ -35,6 +35,7 @@ from typing import (
     cast,
 )
 
+import google.auth
 import google.auth._default
 import google.auth.credentials
 from google.api_core import client_options as client_options_lib
@@ -47,6 +48,7 @@ from google.api_core.exceptions import (
 )
 from google.auth import (
     compute_engine,
+    environment_vars,
     external_account,
     external_account_authorized_user,
     impersonated_credentials,
@@ -343,6 +345,22 @@ class BigtableDataClientAsync(ClientWithProject):
             if project is None:
                 project = _DEFAULT_BIGTABLE_EMULATOR_CLIENT
         self._metrics_interceptor = MetricsInterceptorType()
+        if (
+            project is None
+            and credentials is None
+            and client_options is not None
+            and client_options.credentials_file
+        ):
+            project = os.getenv(
+                environment_vars.PROJECT,
+                os.getenv(environment_vars.LEGACY_PROJECT),
+            )
+            if project is None:
+                _, project = google.auth.load_credentials_from_file(
+                    client_options.credentials_file,
+                    scopes=client_options.scopes,
+                    default_scopes=TransportType.AUTH_SCOPES,
+                )
         # initialize client
         ClientWithProject.__init__(
             self,

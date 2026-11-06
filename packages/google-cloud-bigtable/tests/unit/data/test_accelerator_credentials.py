@@ -17,11 +17,15 @@ These exercise pure helpers on the async client without spinning up a full
 client or event loop."""
 
 from types import SimpleNamespace
+from unittest import mock
 
+import google.auth
+import google.auth.credentials
 import pytest
 from google.api_core.client_options import ClientOptions
 from google.auth import (
     compute_engine,
+    exceptions as auth_exceptions,
     external_account_authorized_user,
     identity_pool,
     impersonated_credentials,
@@ -42,6 +46,7 @@ from google.cloud.bigtable.data._async.client import (
     _DataApiTargetAsync,
 )
 from google.cloud.bigtable.data._sync_autogen import client as _sync_client_mod
+from google.cloud.bigtable.data._sync_autogen.client import BigtableDataClient
 
 
 def _bare_client(cls=BigtableDataClientAsync, unset=_UNSET):
@@ -465,3 +470,186 @@ class TestVerifyDaemonIdentity:
                 client_scopes=[],
                 target_cls=target_cls,
             )
+
+
+class _ScopedFakeCredentials(
+    google.auth.credentials.Scoped, google.auth.credentials.Credentials
+):
+    def __init__(self, email="sa@file-project.iam.gserviceaccount.com"):
+        super().__init__()
+        self.service_account_email = email
+        self._universe_domain = "googleapis.com"
+
+    @property
+    def universe_domain(self):
+        return self._universe_domain
+
+    @property
+    def requires_scopes(self):
+        return False
+
+    def with_scopes(self, scopes, default_scopes=None):
+        return self
+
+    def refresh(self, request):
+        self.token = "fake-token"
+
+
+class TestCredentialsFileProjectResolution:
+    """Verify that ClientOptions(credentials_file=...) resolves client.project
+    from the credentials file rather than ambient ADC."""
+
+    def test_sync_resolves_project_from_credentials_file_instead_of_adc(
+        self, monkeypatch
+    ):
+        monkeypatch.delenv("GOOGLE_CLOUD_PROJECT", raising=False)
+        monkeypatch.delenv("GCLOUD_PROJECT", raising=False)
+        monkeypatch.delenv("BIGTABLE_EMULATOR_HOST", raising=False)
+
+        file_creds = _ScopedFakeCredentials()
+        adc_creds = _ScopedFakeCredentials(
+            "adc@ambient-project.iam.gserviceaccount.com"
+        )
+
+        with (
+            mock.patch.object(
+                google.auth,
+                "load_credentials_from_file",
+                return_value=(file_creds, "project-from-credentials-file"),
+            ) as mock_load_file,
+            mock.patch.object(
+                google.auth,
+                "default",
+                return_value=(adc_creds, "ambient-adc-project"),
+            ) as mock_adc,
+            mock.patch(
+                "google.cloud.bigtable.data._sync_autogen.client.BigtableMetricsExporter"
+            ),
+            mock.patch(
+                "google.cloud.bigtable.data._sync_autogen.client.GoogleCloudMetricsHandler"
+            ),
+            mock.patch.object(BigtableDataClient, "_start_background_channel_refresh"),
+        ):
+            client = BigtableDataClient(
+                client_options=ClientOptions(credentials_file="/fake/sa_key.json"),
+                use_accelerator=False,
+            )
+            try:
+                assert client.project == "project-from-credentials-file"
+                assert client._accelerator_blocked_reason is None
+                assert (
+                    client._accelerator_env.get("GOOGLE_APPLICATION_CREDENTIALS")
+                    == "/fake/sa_key.json"
+                )
+                mock_adc.assert_not_called()
+                assert mock_load_file.call_args_list[0] == mock.call(
+                    "/fake/sa_key.json",
+                    scopes=None,
+                    default_scopes=_sync_client_mod.TransportType.AUTH_SCOPES,
+                )
+            finally:
+                client.close()
+
+    def test_sync_credentials_file_succeeds_without_ambient_adc(self, monkeypatch):
+        monkeypatch.delenv("GOOGLE_CLOUD_PROJECT", raising=False)
+        monkeypatch.delenv("GCLOUD_PROJECT", raising=False)
+        monkeypatch.delenv("BIGTABLE_EMULATOR_HOST", raising=False)
+
+        file_creds = _ScopedFakeCredentials()
+
+        with (
+            mock.patch.object(
+                google.auth,
+                "load_credentials_from_file",
+                return_value=(file_creds, "project-from-credentials-file"),
+            ),
+            mock.patch.object(
+                google.auth,
+                "default",
+                side_effect=auth_exceptions.DefaultCredentialsError("No ADC"),
+            ),
+            mock.patch(
+                "google.cloud.bigtable.data._sync_autogen.client.BigtableMetricsExporter"
+            ),
+            mock.patch(
+                "google.cloud.bigtable.data._sync_autogen.client.GoogleCloudMetricsHandler"
+            ),
+            mock.patch.object(BigtableDataClient, "_start_background_channel_refresh"),
+        ):
+            client = BigtableDataClient(
+                client_options=ClientOptions(credentials_file="/fake/sa_key.json"),
+                use_accelerator=False,
+            )
+            try:
+                assert client.project == "project-from-credentials-file"
+            finally:
+                client.close()
+
+    def test_sync_credentials_file_respects_env_project_override(self, monkeypatch):
+        monkeypatch.setenv("GOOGLE_CLOUD_PROJECT", "env-override-project")
+        monkeypatch.delenv("BIGTABLE_EMULATOR_HOST", raising=False)
+
+        file_creds = _ScopedFakeCredentials()
+
+        with (
+            mock.patch.object(
+                google.auth,
+                "load_credentials_from_file",
+                return_value=(file_creds, "project-from-credentials-file"),
+            ),
+            mock.patch(
+                "google.cloud.bigtable.data._sync_autogen.client.BigtableMetricsExporter"
+            ),
+            mock.patch(
+                "google.cloud.bigtable.data._sync_autogen.client.GoogleCloudMetricsHandler"
+            ),
+            mock.patch.object(BigtableDataClient, "_start_background_channel_refresh"),
+        ):
+            client = BigtableDataClient(
+                client_options=ClientOptions(credentials_file="/fake/sa_key.json"),
+                use_accelerator=False,
+            )
+            try:
+                assert client.project == "env-override-project"
+            finally:
+                client.close()
+
+    @pytest.mark.asyncio
+    async def test_async_resolves_project_from_credentials_file_without_adc(
+        self, monkeypatch
+    ):
+        monkeypatch.delenv("GOOGLE_CLOUD_PROJECT", raising=False)
+        monkeypatch.delenv("GCLOUD_PROJECT", raising=False)
+        monkeypatch.delenv("BIGTABLE_EMULATOR_HOST", raising=False)
+
+        file_creds = _ScopedFakeCredentials()
+
+        with (
+            mock.patch.object(
+                google.auth,
+                "load_credentials_from_file",
+                return_value=(file_creds, "project-from-credentials-file"),
+            ),
+            mock.patch.object(
+                google.auth,
+                "default",
+                side_effect=auth_exceptions.DefaultCredentialsError("No ADC"),
+            ),
+            mock.patch(
+                "google.cloud.bigtable.data._async.client.BigtableMetricsExporter"
+            ),
+            mock.patch(
+                "google.cloud.bigtable.data._async.client.GoogleCloudMetricsHandler"
+            ),
+            mock.patch.object(
+                BigtableDataClientAsync, "_start_background_channel_refresh"
+            ),
+        ):
+            client = BigtableDataClientAsync(
+                client_options=ClientOptions(credentials_file="/fake/sa_key.json"),
+                use_accelerator=False,
+            )
+            try:
+                assert client.project == "project-from-credentials-file"
+            finally:
+                await client.close()
