@@ -12,19 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import base64
 import json
 import os
+import warnings
 from unittest import mock
 
 import pytest  # type: ignore
 
 from google.auth import (
+    _helpers,
+    crypt,
     environment_vars,
     exceptions,
     impersonated_credentials,
+    jwt,
     transport,
 )
 from google.oauth2 import id_token, service_account
+
+PRIVATE_KEY_FILE = os.path.join(os.path.dirname(__file__), "../data/privatekey.pem")
+
+PUBLIC_CERT_FILE = os.path.join(os.path.dirname(__file__), "../data/public_cert.pem")
 
 SERVICE_ACCOUNT_FILE = os.path.join(
     os.path.dirname(__file__), "../data/service_account.json"
@@ -237,9 +246,16 @@ def test_verify_oauth2_token_invalid_iss(verify_token):
 
 @mock.patch("google.oauth2.id_token.verify_token", autospec=True)
 def test_verify_firebase_token(verify_token):
-    result = id_token.verify_firebase_token(
-        mock.sentinel.token, mock.sentinel.request, audience=mock.sentinel.audience
-    )
+    verify_token.return_value = {
+        "aud": "my-project-id",
+        "iss": "https://securetoken.google.com/my-project-id",
+        "sub": "my-user-id",
+    }
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", UserWarning)
+        result = id_token.verify_firebase_token(
+            mock.sentinel.token, mock.sentinel.request, audience=mock.sentinel.audience
+        )
 
     assert result == verify_token.return_value
     verify_token.assert_called_once_with(
@@ -253,6 +269,11 @@ def test_verify_firebase_token(verify_token):
 
 @mock.patch("google.oauth2.id_token.verify_token", autospec=True)
 def test_verify_firebase_token_clock_skew(verify_token):
+    verify_token.return_value = {
+        "aud": "my-project-id",
+        "iss": "https://securetoken.google.com/my-project-id",
+        "sub": "my-user-id",
+    }
     result = id_token.verify_firebase_token(
         mock.sentinel.token,
         mock.sentinel.request,
@@ -268,6 +289,186 @@ def test_verify_firebase_token_clock_skew(verify_token):
         certs_url=id_token._GOOGLE_APIS_CERTS_URL,
         clock_skew_in_seconds=10,
     )
+
+
+@pytest.mark.parametrize(
+    "invalid_payload",
+    [
+        {"aud": "my-project-id"},
+        {
+            "aud": "my-project-id",
+            "iss": "https://securetoken.google.com/other-project-id",
+        },
+    ],
+)
+@mock.patch("google.oauth2.id_token.verify_token", autospec=True)
+def test_verify_firebase_token_invalid_iss(verify_token, invalid_payload):
+    verify_token.return_value = invalid_payload
+
+    with pytest.raises(exceptions.InvalidValue, match="Wrong issuer"):
+        id_token.verify_firebase_token(
+            mock.sentinel.token,
+            mock.sentinel.request,
+            audience=mock.sentinel.audience,
+        )
+
+
+@pytest.mark.parametrize(
+    "invalid_payload",
+    [
+        {"iss": "https://securetoken.google.com/"},
+        {"aud": "", "iss": "https://securetoken.google.com/"},
+        {
+            "aud": ["my-project-id"],
+            "iss": "https://securetoken.google.com/my-project-id",
+        },
+    ],
+)
+@mock.patch("google.oauth2.id_token.verify_token", autospec=True)
+def test_verify_firebase_token_missing_aud(verify_token, invalid_payload):
+    verify_token.return_value = invalid_payload
+
+    with pytest.raises(
+        exceptions.InvalidValue, match="Token does not contain a valid 'aud' claim"
+    ):
+        id_token.verify_firebase_token(
+            mock.sentinel.token,
+            mock.sentinel.request,
+            audience=mock.sentinel.audience,
+        )
+
+
+@pytest.mark.parametrize(
+    "invalid_payload",
+    [
+        {
+            "aud": "my-project-id",
+            "iss": "https://securetoken.google.com/my-project-id",
+        },
+        {
+            "aud": "my-project-id",
+            "iss": "https://securetoken.google.com/my-project-id",
+            "sub": "",
+        },
+        {
+            "aud": "my-project-id",
+            "iss": "https://securetoken.google.com/my-project-id",
+            "sub": 123,
+        },
+    ],
+)
+@mock.patch("google.oauth2.id_token.verify_token", autospec=True)
+def test_verify_firebase_token_invalid_sub(verify_token, invalid_payload):
+    verify_token.return_value = invalid_payload
+
+    with pytest.raises(
+        exceptions.InvalidValue, match="Token does not contain a valid 'sub' claim"
+    ):
+        id_token.verify_firebase_token(
+            mock.sentinel.token,
+            mock.sentinel.request,
+            audience=mock.sentinel.audience,
+        )
+
+
+@pytest.mark.parametrize("audience", [None, "", []])
+@mock.patch("google.oauth2.id_token.verify_token", autospec=True)
+def test_verify_firebase_token_warns_without_audience(verify_token, audience):
+    verify_token.return_value = {
+        "aud": "my-project-id",
+        "iss": "https://securetoken.google.com/my-project-id",
+        "sub": "my-user-id",
+    }
+
+    with pytest.warns(
+        UserWarning,
+        match=(
+            "Calling verify_firebase_token without an 'audience' leaves the "
+            "token's audience claim unverified"
+        ),
+    ) as record:
+        result = id_token.verify_firebase_token(
+            mock.sentinel.token, mock.sentinel.request, audience=audience
+        )
+
+    assert len(record) == 1
+    assert record[0].filename == __file__
+    assert result == verify_token.return_value
+    verify_token.assert_called_once_with(
+        mock.sentinel.token,
+        mock.sentinel.request,
+        audience=audience,
+        certs_url=id_token._GOOGLE_APIS_CERTS_URL,
+        clock_skew_in_seconds=0,
+    )
+
+
+@pytest.mark.parametrize("alg", ["ES256", "ES384"])
+def test_verify_firebase_token_mismatched_alg_for_rsa_certs(alg):
+    with open(PUBLIC_CERT_FILE, "r") as fh:
+        public_cert = fh.read()
+    request = make_request(200, {"1": public_cert})
+    header = base64.urlsafe_b64encode(
+        json.dumps({"alg": alg, "kid": "1", "typ": "JWT"}).encode("utf-8")
+    )
+    payload = base64.urlsafe_b64encode(
+        json.dumps(
+            {
+                "aud": "my-project-id",
+                "iss": "https://securetoken.google.com/my-project-id",
+                "sub": "my-user-id",
+            }
+        ).encode("utf-8")
+    )
+    sig = base64.urlsafe_b64encode(b"sig")
+    token = b".".join([header, payload, sig])
+
+    with pytest.raises(
+        exceptions.InvalidValue,
+        match="Certificate key type does not match signature algorithm {}".format(alg),
+    ):
+        id_token.verify_firebase_token(token, request, audience="my-project-id")
+
+
+def test_verify_firebase_token_end_to_end():
+    with open(PRIVATE_KEY_FILE, "rb") as fh:
+        private_key = fh.read()
+    with open(PUBLIC_CERT_FILE, "r") as fh:
+        public_cert = fh.read()
+
+    signer = crypt.RSASigner.from_string(private_key, "1")
+    now = _helpers.datetime_to_secs(_helpers.utcnow())
+
+    valid_payload = {
+        "aud": "my-project-id",
+        "iss": "https://securetoken.google.com/my-project-id",
+        "sub": "my-user-id",
+        "iat": now,
+        "exp": now + 300,
+    }
+    valid_token = jwt.encode(signer, valid_payload)
+    request = make_request(200, {"1": public_cert})
+
+    result = id_token.verify_firebase_token(
+        valid_token, request, audience="my-project-id"
+    )
+    assert result == valid_payload
+
+    cross_tenant_token = jwt.encode(
+        signer,
+        {
+            "aud": "other-project-id",
+            "iss": "https://securetoken.google.com/other-project-id",
+            "sub": "my-user-id",
+            "iat": now,
+            "exp": now + 300,
+        },
+    )
+    request = make_request(200, {"1": public_cert})
+    with pytest.raises(exceptions.InvalidValue, match="Token has wrong audience"):
+        id_token.verify_firebase_token(
+            cross_tenant_token, request, audience="my-project-id"
+        )
 
 
 def test_fetch_id_token_credentials_optional_request(monkeypatch):

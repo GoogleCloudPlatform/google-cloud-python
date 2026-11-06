@@ -61,6 +61,7 @@ library like `CacheControl`_ to create a cache-aware
 import http.client as http_client
 import json
 import os
+import warnings
 
 from google.auth import environment_vars, exceptions, jwt
 from google.auth.transport import requests
@@ -176,22 +177,53 @@ async def verify_firebase_token(
         id_token (Union[str, bytes]): The encoded token.
         request (google.auth.transport.Request): The object used to make
             HTTP requests. This must be an aiohttp request.
-        audience (str): The audience that this token is intended for. This is
-            typically your Firebase application ID. If None then the audience
-            is not verified.
+        audience (Optional[Union[str, Iterable[str]]]): The audience that this
+            token is intended for. This is your Firebase project ID. If
+            ``None`` or empty, the audience will be left unverified, and a
+            ``UserWarning`` is issued. Passing a non-empty ``audience`` will be
+            required in a future release.
         clock_skew_in_seconds (int): The clock skew used for `iat` and `exp`
             validation.
 
     Returns:
         Mapping[str, Any]: The decoded token.
+
+    Raises:
+        exceptions.InvalidValue: If the issuer, audience, or subject is invalid.
+        ValueError: If token verification fails.
     """
-    return await verify_token(
+    if not audience:
+        warnings.warn(
+            "Calling verify_firebase_token without an 'audience' leaves the "
+            "token's audience claim unverified. Pass your Firebase project ID "
+            "as 'audience', which will be required in a future release.",
+            UserWarning,
+            stacklevel=2,
+        )
+
+    idinfo = await verify_token(
         id_token,
         request,
         audience=audience,
         certs_url=sync_id_token._GOOGLE_APIS_CERTS_URL,
         clock_skew_in_seconds=clock_skew_in_seconds,
     )
+
+    token_aud = idinfo.get("aud")
+    if not isinstance(token_aud, str) or not token_aud:
+        raise exceptions.InvalidValue("Token does not contain a valid 'aud' claim.")
+
+    expected_issuer = "{}{}".format(sync_id_token._FIREBASE_ISSUER_PREFIX, token_aud)
+    if idinfo.get("iss") != expected_issuer:
+        raise exceptions.InvalidValue(
+            "Wrong issuer. 'iss' should be '{}'.".format(expected_issuer)
+        )
+
+    token_sub = idinfo.get("sub")
+    if not isinstance(token_sub, str) or not token_sub:
+        raise exceptions.InvalidValue("Token does not contain a valid 'sub' claim.")
+
+    return idinfo
 
 
 async def fetch_id_token(request, audience, bind_id_token=None):
