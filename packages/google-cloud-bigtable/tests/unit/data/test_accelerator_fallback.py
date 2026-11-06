@@ -280,3 +280,23 @@ class TestHandleAcceleratorError:
         with pytest.raises(core_exceptions.GoogleAPICallError):
             handle_accelerator_error(exc, daemon=None, breaker=breaker)
         assert not breaker.bypass()
+
+    def test_dead_daemon_non_idempotent_trips_breaker_without_fallback(self):
+        daemon = mock.Mock(is_running=False)
+        breaker = AcceleratorBreaker()
+        exc = _make_rpc_error(StatusCode.UNAVAILABLE)
+        with pytest.raises(core_exceptions.ServiceUnavailable):
+            handle_accelerator_error(
+                exc, daemon=daemon, breaker=breaker, is_idempotent=False
+            )
+        assert breaker.is_tripped
+
+    def test_dead_daemon_non_idempotent_non_grpc_reraises_and_trips(self):
+        daemon = mock.Mock(is_running=False)
+        breaker = AcceleratorBreaker()
+        exc = RuntimeError("broken pipe")
+        with pytest.raises(RuntimeError, match="broken pipe"):
+            handle_accelerator_error(
+                exc, daemon=daemon, breaker=breaker, is_idempotent=False
+            )
+        assert breaker.is_tripped

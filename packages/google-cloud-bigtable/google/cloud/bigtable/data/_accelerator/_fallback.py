@@ -151,6 +151,7 @@ def handle_accelerator_error(
     *,
     daemon: "AcceleratorDaemon | None",
     breaker: AcceleratorBreaker,
+    is_idempotent: bool = True,
 ) -> None:
     """Classify an exception raised by an accelerator-routed RPC.
 
@@ -158,7 +159,8 @@ def handle_accelerator_error(
     to retry on the native path, or raises the translated ``google.api_core``
     exception for the caller to propagate:
 
-    * daemon subprocess dead -> trip the breaker, fall back (it will not recover)
+    * daemon subprocess dead -> trip the breaker; fall back if idempotent, else
+      translate and raise (a mid-flight crash may have already committed)
     * ``UNIMPLEMENTED`` -> trip the breaker, fall back immediately
     * any other gRPC error -> translate and raise
     * a non-gRPC exception -> re-raise unchanged (never masked as a fallback)
@@ -176,6 +178,10 @@ def handle_accelerator_error(
                 "to the native Bigtable client for this table."
             )
             _LOGGER.debug("Accelerator daemon failure details", exc_info=exc)
+        if not is_idempotent:
+            if isinstance(exc, RpcError):
+                raise core_exceptions.from_grpc_error(exc) from exc
+            raise exc
         raise _AcceleratorFallback() from exc
     if not isinstance(exc, RpcError):
         # A bug in our own merge machinery, not a daemon result. Do not mask it

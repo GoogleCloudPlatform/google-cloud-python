@@ -576,6 +576,53 @@ class TestMutateRowAcceleratorDispatch:
         with pytest.raises(ValueError, match="No mutations provided"):
             self._run(t.mutate_row(b"key1", []))
 
+    def test_non_idempotent_mutate_row_routes_to_accelerator(self):
+        from google.cloud.bigtable.data.mutations import AddToCell, SetCell
+        from google.cloud.bigtable_v2.types.bigtable import MutateRowResponse
+
+        resp = MutateRowResponse()
+        for mut in (
+            SetCell("cf", "col", b"val", timestamp_micros=-1),
+            AddToCell("cf", "col", 1, timestamp_micros=1000),
+        ):
+            client_mock = mock.AsyncMock()
+            client_mock.mutate_row.return_value = resp
+            daemon = mock.Mock(is_running=True)
+            t = _bare_target(accel_client=client_mock, accel_daemon=daemon)
+
+            result = self._run(t.mutate_row(b"key1", [mut]))
+            assert result == resp
+            client_mock.mutate_row.assert_awaited_once()
+
+    def test_non_idempotent_midflight_daemon_death_raises_without_fallback(self):
+        from google.cloud.bigtable.data.mutations import AddToCell, SetCell
+
+        for mut in (
+            SetCell("cf", "col", b"val", timestamp_micros=-1),
+            AddToCell("cf", "col", 1, timestamp_micros=1000),
+        ):
+            daemon = mock.NonCallableMock()
+            is_running_prop = mock.PropertyMock(return_value=True)
+            type(daemon).is_running = is_running_prop
+
+            async def crash_midflight(*args, **kwargs):
+                is_running_prop.return_value = False
+                raise _FakeRpcError(StatusCode.UNAVAILABLE, "socket closed")
+
+            client_mock = mock.AsyncMock()
+            client_mock.mutate_row.side_effect = crash_midflight
+            t = _bare_target(accel_client=client_mock, accel_daemon=daemon)
+
+            with mock.patch(
+                "google.cloud.bigtable.data._async.client.tracked_retry"
+            ) as native_mock:
+                with pytest.raises(core_exceptions.ServiceUnavailable):
+                    self._run(t.mutate_row(b"key1", [mut]))
+                native_mock.assert_not_called()
+
+            assert t._accelerator_breaker.is_tripped
+            assert is_running_prop.call_count == 1
+
 
 # ---------------------------------------------------------------------------
 # _start_accelerator: startup lifecycle

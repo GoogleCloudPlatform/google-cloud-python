@@ -454,3 +454,15 @@ class _EntryWithProto:
 
     entry: RowMutationEntry
     proto: types_pb.MutateRowsRequest.Entry
+
+
+def _is_mutate_row_idempotent(request: types_pb.MutateRowRequest) -> bool:
+    """Return False on the first server-timestamped SetCell or aggregate mutation."""
+    for pb in getattr(request, "_pb", request).mutations:
+        which = pb.WhichOneof("mutation")
+        if (
+            which == "set_cell"
+            and pb.set_cell.timestamp_micros == _SERVER_SIDE_TIMESTAMP
+        ) or which in ("add_to_cell", "merge_to_cell"):
+            return False
+    return True
