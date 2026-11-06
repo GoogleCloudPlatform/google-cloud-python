@@ -399,22 +399,24 @@ class AcceleratorDaemon:
     def read_identity(self) -> dict[str, Any]:
         """Read and consume the daemon's ``identity.json``.
 
-        The daemon writes the principal it resolved to this file (in the same
-        0700 tempdir as the socket) before it binds, so it is guaranteed present
-        once ``start()`` returns. Read it once, then unlink it — the identity is
-        verified a single time at connect and never needs re-reading.
+        The daemon writes its resolved principal, credential type, and scopes to
+        this file before binding the socket. Read it once and unlink it.
 
         Raises:
-            RuntimeError: if the daemon was never started, or if it did not
-                write an ``identity.json`` (e.g. an older binary), so the caller
-                can fall back to the native client rather than route blindly.
+            RuntimeError: if the daemon was not started, ``identity.json`` is
+                missing, or the payload is not a JSON object.
         """
         if self._tempdir is None:
             raise RuntimeError("AcceleratorDaemon has not been started")
         path = os.path.join(self._tempdir, _IDENTITY_FILENAME)
         try:
             with open(path, "rb") as f:
-                return json.load(f)
+                data = json.load(f)
+            if not isinstance(data, dict):
+                raise RuntimeError(
+                    f"Invalid {_IDENTITY_FILENAME}: expected JSON object"
+                )
+            return data
         except FileNotFoundError as exc:
             raise RuntimeError(
                 f"Accelerator daemon did not write {_IDENTITY_FILENAME}; "
