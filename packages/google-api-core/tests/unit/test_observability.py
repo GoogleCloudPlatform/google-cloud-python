@@ -2656,11 +2656,19 @@ def test_log_transport_attempt_emits_debug(
 
 
 def test_capture_grpc_attempt_exception(mock_service_logger):
-    """Proves _capture_grpc_attempt_exception logs and re-raises exceptions."""
+    """Proves _capture_grpc_attempt_exception logs and re-raises exceptions while bypassing system interrupts."""
     with _observability._capture_grpc_attempt_exception(
         "/google.showcase.v1beta1.Echo/Echo"
     ):
         pass
+    mock_service_logger.debug.assert_not_called()
+
+    for interrupt_exc in (KeyboardInterrupt, SystemExit):
+        with pytest.raises(interrupt_exc):
+            with _observability._capture_grpc_attempt_exception(
+                "/google.showcase.v1beta1.Echo/Echo"
+            ):
+                raise interrupt_exc()
     mock_service_logger.debug.assert_not_called()
 
     with pytest.raises(RuntimeError, match="wire boom"):
