@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import concurrent.futures
 import datetime
 import sys
 import types
@@ -850,25 +851,19 @@ def test_wrap_method_uninstrumented_exception():
         wrapped()
 
 
-def test_gapic_callable_report_method_error_and_logging(monkeypatch):
-    """Proves _GapicCallable._report_method_error enriches spans, emits ERROR logs on failure, and is silent on success."""
-    import logging
-    import types
-
-    monkeypatch.setenv("GOOGLE_SDK_EXPERIMENTAL_PYTHON_LOGGING_ENABLED", "true")
-
-    mock_ok_target = mock.Mock(return_value="ok")
+def test_gapic_callable_logging_silent_on_success(mock_service_logger):
+    """Proves _GapicCallable does not emit error logs when the RPC succeeds."""
     wrapped_ok = google.api_core.gapic_v1.method.wrap_method(
-        mock_ok_target,
+        mock.Mock(return_value="ok"),
         method_name="/google.cloud.secretmanager.v1.SecretManagerService/GetSecret",
     )
-    mock_logger = mock.Mock()
-    with mock.patch(
-        "google.api_core._observability._get_service_logger",
-        return_value=mock_logger,
-    ):
-        assert wrapped_ok() == "ok"
-        mock_logger.log.assert_not_called()
+    assert wrapped_ok() == "ok"
+    mock_service_logger.log.assert_not_called()
+
+
+def test_gapic_callable_logging_terminal_error(mock_otel, mock_service_logger):
+    """Proves _GapicCallable enriches spans and emits an ERROR log with ErrorInfo on failure."""
+    import logging
 
     error_info = types.SimpleNamespace(
         domain="googleapis.com",
@@ -877,24 +872,23 @@ def test_gapic_callable_report_method_error_and_logging(monkeypatch):
     )
     err = exceptions.NotFound("Secret missing")
     err._error_info = error_info
-
-    wrapped_fail = google.api_core.gapic_v1.method.wrap_method(
-        mock.Mock(side_effect=err),
-        method_name="/google.cloud.secretmanager.v1.SecretManagerService/GetSecret",
-        kind="rest",
-    )
-    mock_span = mock.Mock()
-    mock_span.get_span_context.return_value = types.SimpleNamespace(
+    mock_otel.span.get_span_context.return_value = types.SimpleNamespace(
         is_valid=True,
         trace_id=0x0123456789ABCDEF0123456789ABCDEF,
         span_id=0x0123456789ABCDEF,
         trace_flags=0x01,
     )
+    wrapped_fail = google.api_core.gapic_v1.method.wrap_method(
+        mock.Mock(side_effect=err),
+        method_name="/google.cloud.secretmanager.v1.SecretManagerService/GetSecret",
+        kind="rest",
+    )
 
-    err_logger = mock.Mock()
-    wrapped_fail._report_method_error(err, span=mock_span, logger=err_logger)
-    err_logger.log.assert_called_once()
-    args, kwargs = err_logger.log.call_args
+    with pytest.raises(exceptions.NotFound):
+        wrapped_fail()
+
+    mock_service_logger.log.assert_called_once()
+    args, kwargs = mock_service_logger.log.call_args
     assert args[0] == logging.ERROR
     assert kwargs["exc_info"] is True
     extra = kwargs["extra"]
@@ -914,18 +908,53 @@ def test_gapic_callable_report_method_error_and_logging(monkeypatch):
     assert extra["span_id"] == "0123456789abcdef"
     assert extra["json_fields"]["error.type"] == "SECRET_NOT_FOUND"
 
-    cancel_logger = mock.Mock()
-    wrapped_fail._report_method_error(
-        exceptions.Cancelled("Call cancelled"), span=None, logger=cancel_logger
+
+@pytest.mark.parametrize(
+    "cancel_exc_factory,expected_error_type",
+    [
+        pytest.param(
+            lambda: exceptions.Cancelled("Call cancelled"),
+            "CANCELLED",
+            id="google_api_core_cancelled",
+        ),
+        pytest.param(
+            lambda: concurrent.futures.CancelledError("Future cancelled"),
+            "CancelledError",
+            id="concurrent_futures_cancelled_error",
+        ),
+    ],
+)
+def test_gapic_callable_logging_cancellation(
+    mock_otel, mock_service_logger, cancel_exc_factory, expected_error_type
+):
+    """Proves _GapicCallable emits DEBUG without stacktrace on RPC or Future cancellation."""
+    import logging
+
+    err = cancel_exc_factory()
+    wrapped_cancel = google.api_core.gapic_v1.method.wrap_method(
+        mock.Mock(side_effect=err),
+        method_name="/google.cloud.secretmanager.v1.SecretManagerService/GetSecret",
     )
-    cancel_logger.log.assert_called_once()
-    c_args, c_kwargs = cancel_logger.log.call_args
+    with pytest.raises(type(err)):
+        wrapped_cancel()
+
+    mock_service_logger.log.assert_called_once()
+    c_args, c_kwargs = mock_service_logger.log.call_args
     assert c_args[0] == logging.DEBUG
     assert c_kwargs["exc_info"] is False
     assert "exception.stacktrace" not in c_kwargs["extra"]
     assert c_kwargs["extra"]["rpc.response.status_code"] == "CANCELLED"
+    assert c_kwargs["extra"]["error.type"] == expected_error_type
 
-    bad_span = mock.Mock()
-    bad_span.set_attribute.side_effect = RuntimeError("span broken")
-    err_logger.log.side_effect = RuntimeError("logger broken")
-    wrapped_fail._report_method_error(err, span=bad_span, logger=err_logger)
+
+def test_gapic_callable_logging_fail_open_resilience(mock_otel, mock_service_logger):
+    """Proves _GapicCallable fails open and re-raises caller exception if span or logger raises."""
+    mock_otel.span.set_attribute.side_effect = RuntimeError("span broken")
+    mock_service_logger.log.side_effect = RuntimeError("logger broken")
+
+    wrapped_fail = google.api_core.gapic_v1.method.wrap_method(
+        mock.Mock(side_effect=exceptions.NotFound("Secret missing")),
+        method_name="/google.cloud.secretmanager.v1.SecretManagerService/GetSecret",
+    )
+    with pytest.raises(exceptions.NotFound, match="Secret missing"):
+        wrapped_fail()

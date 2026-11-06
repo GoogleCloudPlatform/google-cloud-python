@@ -655,8 +655,8 @@ async def test_invoke_wrapped_method_with_metadata_and_no_client_info():
     ],
 )
 async def test_wrap_method_async_logging_error_and_cancelled(
-    monkeypatch,
     mock_otel,
+    mock_service_logger,
     exc_factory,
     expected_level_name,
     expected_exc_info,
@@ -666,26 +666,20 @@ async def test_wrap_method_async_logging_error_and_cancelled(
     """Proves that _AsyncGapicCallable emits ERROR on terminal failure and DEBUG without traceback on asyncio.CancelledError."""
     import logging
 
-    monkeypatch.setenv("GOOGLE_SDK_EXPERIMENTAL_PYTHON_LOGGING_ENABLED", "true")
-    mock_logger = mock.Mock()
     err = exc_factory()
     mock_target = mock.AsyncMock(side_effect=err)
     wrapped = gapic_v1.method_async.wrap_method(
         mock_target,
         method_name="/google.cloud.secretmanager.v1.SecretManagerService/GetSecret",
     )
-    with mock.patch(
-        "google.api_core._observability._get_service_logger",
-        return_value=mock_logger,
-    ):
-        with pytest.raises(type(err)):
-            await wrapped()
+    with pytest.raises(type(err)):
+        await wrapped()
 
     mock_otel.span.set_attribute.assert_any_call(
         "rpc.response.status_code", expected_status
     )
-    mock_logger.log.assert_called_once()
-    args, kwargs = mock_logger.log.call_args
+    mock_service_logger.log.assert_called_once()
+    args, kwargs = mock_service_logger.log.call_args
     assert args[0] == getattr(logging, expected_level_name)
     assert kwargs["exc_info"] is expected_exc_info
     assert kwargs["extra"]["rpc.response.status_code"] == expected_status

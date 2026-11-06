@@ -18,13 +18,14 @@
 
 from __future__ import annotations
 
+import asyncio
 import contextlib
 import enum
 import functools
 import logging
 import traceback
 import urllib.parse
-from collections.abc import Iterator
+from collections.abc import Iterator, MutableMapping
 from typing import TYPE_CHECKING, Any, Callable, Sequence
 
 from google.api_core import _feature_gating_helpers, client_logging, exceptions
@@ -907,20 +908,27 @@ class _GrpcAttemptLoggingInterceptor(_SyncUnaryUnaryClientInterceptor):
         with _capture_grpc_attempt_exception(method_name, self._client_options):
             response = continuation(client_call_details, request)
 
-        try:
-            exc_fn = getattr(response, "exception", None)
-            if callable(exc_fn) and (resp_exc := exc_fn()) is not None:
-                code_fn = getattr(response, "code", None)
-                log_transport_attempt(
-                    target=method_name,
-                    status_code=code_fn() if callable(code_fn) else None,
-                    kind="grpc",
-                    exc=resp_exc,
-                    client_options=self._client_options,
-                )
-        except Exception:
-            # Fail-open: never disrupt the caller's RPC flow on post-dispatch inspection errors
-            pass
+        def _inspect_sync_response(resp: Any) -> None:
+            try:
+                exc_fn = getattr(resp, "exception", None)
+                if callable(exc_fn) and (resp_exc := exc_fn()) is not None:
+                    code_fn = getattr(resp, "code", None)
+                    log_transport_attempt(
+                        target=method_name,
+                        status_code=code_fn() if callable(code_fn) else None,
+                        kind="grpc",
+                        exc=resp_exc,
+                        client_options=self._client_options,
+                    )
+            except Exception:
+                # Fail-open: never disrupt the caller's RPC flow on post-dispatch inspection errors
+                pass
+
+        add_callback = getattr(response, "add_done_callback", None)
+        if callable(add_callback):
+            add_callback(_inspect_sync_response)
+        else:
+            _inspect_sync_response(response)
         return response
 
 
@@ -959,25 +967,36 @@ class _AsyncGrpcAttemptLoggingInterceptor(_AsyncUnaryUnaryClientInterceptor):
         with _capture_grpc_attempt_exception(method_name, self._client_options):
             call = await continuation(client_call_details, request)
 
-        try:
-            code_fn = getattr(call, "code", None)
-            if (
-                callable(code_fn)
-                and getattr(code := await code_fn(), "name", str(code)) != "OK"
-            ):
-                details_fn = getattr(call, "details", None)
-                details = await details_fn() if callable(details_fn) else ""
-                log_transport_attempt(
-                    target=method_name,
-                    status_code=code,
-                    kind="grpc",
-                    exc=Exception(details) if details else None,
-                    client_options=self._client_options,
-                    status_message=details or None,
+        async def _inspect_async_call(target_call: Any) -> None:
+            try:
+                code_fn = getattr(target_call, "code", None)
+                if (
+                    callable(code_fn)
+                    and getattr(code := await code_fn(), "name", str(code)) != "OK"
+                ):
+                    details_fn = getattr(target_call, "details", None)
+                    details = await details_fn() if callable(details_fn) else ""
+                    log_transport_attempt(
+                        target=method_name,
+                        status_code=code,
+                        kind="grpc",
+                        exc=Exception(details) if details else None,
+                        client_options=self._client_options,
+                        status_message=details or None,
+                    )
+            except Exception:
+                # Fail-open: never disrupt the caller's RPC flow on post-dispatch inspection errors
+                pass
+
+        add_callback = getattr(call, "add_done_callback", None)
+        if callable(add_callback):
+            add_callback(
+                lambda finished_call: asyncio.ensure_future(
+                    _inspect_async_call(finished_call)
                 )
-        except Exception:
-            # Fail-open: never disrupt the caller's RPC flow on post-dispatch inspection errors
-            pass
+            )
+        else:
+            await _inspect_async_call(call)
         return call
 
 
@@ -1243,7 +1262,7 @@ class _TraceContext:
         method: str | None = None,
         url: str | None = None,
         url_template: str | None = None,
-        headers: dict[str, Any] | None = None,
+        headers: MutableMapping[str, Any] | None = None,
         body: Any = None,
         client_options: ClientOptions | dict[str, Any] | None = None,
     ) -> tuple[str, dict[str, Any], Any]:
@@ -1338,7 +1357,7 @@ class _TraceContext:
         method: str | None = None,
         url: str | None = None,
         url_template: str | None = None,
-        headers: dict[str, Any] | None = None,
+        headers: MutableMapping[str, Any] | None = None,
         body: Any = None,
         client_options: ClientOptions | dict[str, Any] | None = None,
     ):
@@ -1570,7 +1589,7 @@ def trace_http_request(
     method: str | None = None,
     url: str | None = None,
     url_template: str | None = None,
-    headers: dict[str, Any] | None = None,
+    headers: MutableMapping[str, Any] | None = None,
     body: Any = None,
     client_options: ClientOptions | dict[str, Any] | None = None,
 ) -> _TraceContext:

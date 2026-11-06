@@ -2340,6 +2340,37 @@ def test_build_telemetry_error_attributes_include_exception(
 
 
 @pytest.mark.parametrize(
+    "method_name,expected_full,expected_service,expected_method",
+    [
+        pytest.param(None, "", "", "", id="none_method_name"),
+        pytest.param("", "", "", "", id="empty_string_method_name"),
+        pytest.param(
+            b"/my.Service/Method",
+            "my.Service/Method",
+            "my.Service",
+            "Method",
+            id="bytes_method_name",
+        ),
+        pytest.param(
+            "/my.Service/Method",
+            "my.Service/Method",
+            "my.Service",
+            "Method",
+            id="string_method_name",
+        ),
+    ],
+)
+def test_extract_rpc_identity(
+    method_name, expected_full, expected_service, expected_method
+):
+    """Proves extract_rpc_identity decodes and partitions method names safely."""
+    full, service, method = _observability.extract_rpc_identity(method_name)
+    assert full == expected_full
+    assert service == expected_service
+    assert method == expected_method
+
+
+@pytest.mark.parametrize(
     "method_name,target,expected_name",
     [
         pytest.param(
@@ -2425,12 +2456,11 @@ def test_get_service_logger(method_name, target, expected_name):
         ),
     ],
 )
-def test_log_transport_attempt_no_op(monkeypatch, logging_enabled, kwargs):
+def test_log_transport_attempt_no_op(monkeypatch, mock_logger, logging_enabled, kwargs):
     """Proves that log_transport_attempt is a no-op when disabled or when an attempt succeeds."""
     monkeypatch.setenv(
         "GOOGLE_SDK_EXPERIMENTAL_PYTHON_LOGGING_ENABLED", logging_enabled
     )
-    mock_logger = mock.Mock()
     _observability.log_transport_attempt(logger=mock_logger, **kwargs)
     mock_logger.debug.assert_not_called()
 
@@ -2477,9 +2507,26 @@ def test_log_transport_attempt_no_op(monkeypatch, logging_enabled, kwargs):
             },
             id="failed_http_attempt_without_exception",
         ),
+        pytest.param(
+            {
+                "target": "/google.showcase.v1beta1.Echo/Echo",
+                "status_code": "UNKNOWN",
+                "kind": "grpc",
+            },
+            {
+                "rpc.system.name": "grpc",
+                "rpc.method": "/google.showcase.v1beta1.Echo/Echo",
+                "rpc.response.status_code": "UNKNOWN",
+                "error.type": "UNKNOWN",
+                "status.message": "HTTP UNKNOWN",
+            },
+            id="failed_grpc_attempt_without_exception",
+        ),
     ],
 )
-def test_log_transport_attempt_emits_debug(monkeypatch, kwargs, expected_extra):
+def test_log_transport_attempt_emits_debug(
+    monkeypatch, mock_logger, kwargs, expected_extra
+):
     """Proves that log_transport_attempt emits structured DEBUG logs on failed wire attempts."""
     monkeypatch.setenv("GOOGLE_SDK_EXPERIMENTAL_PYTHON_LOGGING_ENABLED", "true")
     valid_ctx = types.SimpleNamespace(
@@ -2488,9 +2535,8 @@ def test_log_transport_attempt_emits_debug(monkeypatch, kwargs, expected_extra):
         span_id=0x0123456789ABCDEF,
         trace_flags=0x01,
     )
-    span = mock.Mock()
+    span = mock.Mock(spec_set=["get_span_context", "set_attribute", "is_recording"])
     span.get_span_context.return_value = valid_ctx
-    mock_logger = mock.Mock()
 
     _observability.log_transport_attempt(span=span, logger=mock_logger, **kwargs)
 
@@ -2505,58 +2551,85 @@ def test_log_transport_attempt_emits_debug(monkeypatch, kwargs, expected_extra):
     _observability.log_transport_attempt(span=span, logger=mock_logger, **kwargs)
 
 
-def test_grpc_attempt_logging_interceptor_sync_responses(monkeypatch):
+def _make_callback_sync_response(exc=None, code_name=None):
+    resp = mock.Mock(spec_set=["add_done_callback", "exception", "code"])
+    resp.exception.return_value = exc
+    resp.code.return_value = (
+        types.SimpleNamespace(name=code_name) if code_name else None
+    )
+    resp.add_done_callback.side_effect = lambda cb: cb(resp)
+    return resp
+
+
+@pytest.mark.parametrize(
+    "response_factory,expect_log,expected_code_name",
+    [
+        pytest.param(
+            lambda: _make_callback_sync_response(exc=None),
+            False,
+            None,
+            id="ok_future_response_via_callback_no_log",
+        ),
+        pytest.param(
+            object,
+            False,
+            None,
+            id="plain_object_without_callback_no_log",
+        ),
+        pytest.param(
+            lambda: _make_callback_sync_response(
+                exc=RuntimeError("wire failure"), code_name="UNAVAILABLE"
+            ),
+            True,
+            "UNAVAILABLE",
+            id="failed_future_response_via_callback_logs",
+        ),
+        pytest.param(
+            lambda: types.SimpleNamespace(
+                exception=lambda: RuntimeError("wire failure without code")
+            ),
+            True,
+            None,
+            id="direct_response_no_code_logs_none",
+        ),
+        pytest.param(
+            lambda: mock.Mock(
+                spec_set=["exception"],
+                exception=mock.Mock(side_effect=RuntimeError("FutureCancelledError")),
+            ),
+            False,
+            None,
+            id="exception_in_inspection_fails_open",
+        ),
+    ],
+)
+def test_grpc_attempt_logging_interceptor_sync_responses(
+    monkeypatch, response_factory, expect_log, expected_code_name
+):
     """Proves that _GrpcAttemptLoggingInterceptor logs only failed sync gRPC response objects."""
     monkeypatch.setenv("GOOGLE_SDK_EXPERIMENTAL_PYTHON_LOGGING_ENABLED", "true")
     interceptor = _observability._GrpcAttemptLoggingInterceptor()
     call_details = types.SimpleNamespace(method=b"/google.showcase.v1beta1.Echo/Echo")
+    response = response_factory()
 
-    ok_response = mock.Mock()
-    ok_response.exception.return_value = None
-    assert (
-        interceptor.intercept_unary_unary(lambda d, r: ok_response, call_details, "req")
-        is ok_response
-    )
-    plain_response = object()
-    assert (
-        interceptor.intercept_unary_unary(
-            lambda d, r: plain_response, call_details, "req"
-        )
-        is plain_response
-    )
-
-    failed_response = mock.Mock()
-    failed_response.exception.return_value = RuntimeError("wire failure")
-    failed_response.code.return_value = types.SimpleNamespace(name="UNAVAILABLE")
-
-    with mock.patch.object(_observability, "log_transport_attempt") as mock_log:
+    with mock.patch.object(
+        _observability, "log_transport_attempt", autospec=True, spec_set=True
+    ) as mock_log:
         res = interceptor.intercept_unary_unary(
-            lambda d, r: failed_response, call_details, "req"
+            lambda d, r: response, call_details, "req"
         )
-        assert res is failed_response
-        mock_log.assert_called_once()
-        assert mock_log.call_args[1]["target"] == "/google.showcase.v1beta1.Echo/Echo"
-        assert mock_log.call_args[1]["status_code"] is failed_response.code.return_value
-
-    no_code_response = types.SimpleNamespace(
-        exception=lambda: RuntimeError("wire failure without code")
-    )
-    with mock.patch.object(_observability, "log_transport_attempt") as mock_log:
-        res = interceptor.intercept_unary_unary(
-            lambda d, r: no_code_response, call_details, "req"
-        )
-        assert res is no_code_response
-        mock_log.assert_called_once()
-        assert mock_log.call_args[1]["status_code"] is None
-
-    cancelled_response = mock.Mock()
-    cancelled_response.exception.side_effect = RuntimeError("FutureCancelledError")
-    assert (
-        interceptor.intercept_unary_unary(
-            lambda d, r: cancelled_response, call_details, "req"
-        )
-        is cancelled_response
-    )
+        assert res is response
+        if expect_log:
+            mock_log.assert_called_once()
+            assert (
+                mock_log.call_args[1]["target"] == "/google.showcase.v1beta1.Echo/Echo"
+            )
+            if expected_code_name is not None:
+                assert mock_log.call_args[1]["status_code"].name == expected_code_name
+            else:
+                assert mock_log.call_args[1]["status_code"] is None
+        else:
+            mock_log.assert_not_called()
 
 
 class _FakeSyncRpcError(Exception):
@@ -2572,79 +2645,129 @@ class _BadCodeSyncRpcError(Exception):
 @pytest.mark.parametrize(
     "exc_cls,expected_status",
     [
-        (_FakeSyncRpcError, "INTERNAL"),
-        (_BadCodeSyncRpcError, "_BadCodeSyncRpcError"),
+        pytest.param(_FakeSyncRpcError, "INTERNAL", id="valid_status_code"),
+        pytest.param(
+            _BadCodeSyncRpcError,
+            "_BadCodeSyncRpcError",
+            id="status_code_method_raises",
+        ),
     ],
 )
 def test_grpc_attempt_logging_interceptor_sync_exceptions(
-    monkeypatch, exc_cls, expected_status
+    mock_service_logger, exc_cls, expected_status
 ):
     """Proves that _GrpcAttemptLoggingInterceptor logs exceptions raised directly by sync continuation."""
-    monkeypatch.setenv("GOOGLE_SDK_EXPERIMENTAL_PYTHON_LOGGING_ENABLED", "true")
     interceptor = _observability._GrpcAttemptLoggingInterceptor()
     call_details = types.SimpleNamespace(method=b"/google.showcase.v1beta1.Echo/Echo")
-    mock_logger = mock.Mock()
 
     def raising_continuation(d, r):
         raise exc_cls("sync wire error")
 
-    with mock.patch.object(
-        _observability, "_get_service_logger", return_value=mock_logger
-    ):
-        with pytest.raises(exc_cls):
-            interceptor.intercept_unary_unary(raising_continuation, call_details, "req")
-        mock_logger.debug.assert_called_once()
-        assert (
-            mock_logger.debug.call_args[1]["extra"]["rpc.response.status_code"]
-            == expected_status
-        )
+    with pytest.raises(exc_cls):
+        interceptor.intercept_unary_unary(raising_continuation, call_details, "req")
+    mock_service_logger.debug.assert_called_once()
+    assert (
+        mock_service_logger.debug.call_args[1]["extra"]["rpc.response.status_code"]
+        == expected_status
+    )
+
+
+def _make_callback_async_call(code_name="OK", details=""):
+    call_obj = mock.Mock(spec_set=["add_done_callback", "code", "details"])
+    call_obj.code = mock.AsyncMock(return_value=types.SimpleNamespace(name=code_name))
+    call_obj.details = mock.AsyncMock(return_value=details)
+    call_obj.add_done_callback = mock.Mock(side_effect=lambda cb: cb(call_obj))
+    return call_obj
 
 
 @pytest.mark.asyncio
-async def test_grpc_attempt_logging_interceptor_async(monkeypatch):
+@pytest.mark.parametrize(
+    "call_factory,expect_log,expected_code_name,expected_message",
+    [
+        pytest.param(
+            lambda: _make_callback_async_call(code_name="OK"),
+            False,
+            None,
+            None,
+            id="ok_call_via_callback_no_log",
+        ),
+        pytest.param(
+            object,
+            False,
+            None,
+            None,
+            id="plain_object_without_callback_no_log",
+        ),
+        pytest.param(
+            lambda: _make_callback_async_call(
+                code_name="UNAVAILABLE", details="backend unavailable"
+            ),
+            True,
+            "UNAVAILABLE",
+            "backend unavailable",
+            id="failed_call_via_callback_logs",
+        ),
+        pytest.param(
+            lambda: mock.AsyncMock(
+                spec_set=["code", "details"],
+                code=mock.AsyncMock(
+                    return_value=types.SimpleNamespace(name="UNAVAILABLE")
+                ),
+                details=mock.AsyncMock(return_value="direct await unavailable"),
+            ),
+            True,
+            "UNAVAILABLE",
+            "direct await unavailable",
+            id="direct_call_without_callback_logs",
+        ),
+        pytest.param(
+            lambda: mock.AsyncMock(
+                spec_set=["code"],
+                code=mock.AsyncMock(side_effect=RuntimeError("broken code inspection")),
+            ),
+            False,
+            None,
+            None,
+            id="broken_code_inspection_fails_open",
+        ),
+    ],
+)
+async def test_grpc_attempt_logging_interceptor_async(
+    monkeypatch, call_factory, expect_log, expected_code_name, expected_message
+):
     """Proves that _AsyncGrpcAttemptLoggingInterceptor logs failed async gRPC wire attempts."""
+    import asyncio
+
     monkeypatch.setenv("GOOGLE_SDK_EXPERIMENTAL_PYTHON_LOGGING_ENABLED", "true")
     interceptor = _observability._AsyncGrpcAttemptLoggingInterceptor()
     call_details = types.SimpleNamespace(method=b"/google.showcase.v1beta1.Echo/Echo")
+    call_obj = call_factory()
 
-    ok_call = mock.AsyncMock()
-    ok_call.code.return_value = types.SimpleNamespace(name="OK")
-    assert (
-        await interceptor.intercept_unary_unary(
-            mock.AsyncMock(return_value=ok_call), call_details, "req"
-        )
-        is ok_call
-    )
-    plain_call = object()
-    assert (
-        await interceptor.intercept_unary_unary(
-            mock.AsyncMock(return_value=plain_call), call_details, "req"
-        )
-        is plain_call
-    )
-
-    fake_call = mock.AsyncMock()
-    fake_call.code.return_value = types.SimpleNamespace(name="UNAVAILABLE")
-    fake_call.details.return_value = "backend unavailable"
-
-    with mock.patch.object(_observability, "log_transport_attempt") as mock_log:
+    with mock.patch.object(
+        _observability, "log_transport_attempt", autospec=True, spec_set=True
+    ) as mock_log:
         res = await interceptor.intercept_unary_unary(
-            mock.AsyncMock(return_value=fake_call), call_details, "req"
+            mock.AsyncMock(return_value=call_obj), call_details, "req"
         )
-        assert res is fake_call
-        mock_log.assert_called_once()
-        assert mock_log.call_args[1]["target"] == "/google.showcase.v1beta1.Echo/Echo"
-        assert mock_log.call_args[1]["status_code"] is fake_call.code.return_value
-        assert mock_log.call_args[1]["status_message"] == "backend unavailable"
+        # Allow any scheduled done-callback task to run on the event loop
+        await asyncio.sleep(0)
+        assert res is call_obj
+        if expect_log:
+            mock_log.assert_called_once()
+            assert (
+                mock_log.call_args[1]["target"] == "/google.showcase.v1beta1.Echo/Echo"
+            )
+            assert mock_log.call_args[1]["status_code"].name == expected_code_name
+            assert mock_log.call_args[1]["status_message"] == expected_message
+        else:
+            mock_log.assert_not_called()
 
-    broken_code_call = mock.AsyncMock()
-    broken_code_call.code.side_effect = RuntimeError("broken code inspection")
-    assert (
-        await interceptor.intercept_unary_unary(
-            mock.AsyncMock(return_value=broken_code_call), call_details, "req"
-        )
-        is broken_code_call
-    )
+
+@pytest.mark.asyncio
+async def test_grpc_attempt_logging_interceptor_async_exceptions(mock_service_logger):
+    """Proves that _AsyncGrpcAttemptLoggingInterceptor logs exceptions raised directly by async continuation."""
+    interceptor = _observability._AsyncGrpcAttemptLoggingInterceptor()
+    call_details = types.SimpleNamespace(method=b"/google.showcase.v1beta1.Echo/Echo")
 
     class FakeAsyncError(Exception):
         def code(self):
@@ -2653,19 +2776,15 @@ async def test_grpc_attempt_logging_interceptor_async(monkeypatch):
     async def raising_continuation(d, r):
         raise FakeAsyncError("async wire error")
 
-    mock_logger = mock.Mock()
-    with mock.patch.object(
-        _observability, "_get_service_logger", return_value=mock_logger
-    ):
-        with pytest.raises(FakeAsyncError):
-            await interceptor.intercept_unary_unary(
-                raising_continuation, call_details, "req"
-            )
-        mock_logger.debug.assert_called_once()
-        assert (
-            mock_logger.debug.call_args[1]["extra"]["rpc.response.status_code"]
-            == "FakeAsyncError"
+    with pytest.raises(FakeAsyncError):
+        await interceptor.intercept_unary_unary(
+            raising_continuation, call_details, "req"
         )
+    mock_service_logger.debug.assert_called_once()
+    assert (
+        mock_service_logger.debug.call_args[1]["extra"]["rpc.response.status_code"]
+        == "FakeAsyncError"
+    )
 
 
 @pytest.mark.parametrize(
