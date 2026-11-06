@@ -14,6 +14,7 @@
 
 import asyncio
 import datetime
+import logging
 
 try:
     from unittest import mock
@@ -630,3 +631,55 @@ async def test_invoke_wrapped_method_with_metadata_and_no_client_info():
     method.assert_called_once_with(
         mock.sentinel.request, metadata=[("custom-header", "val")]
     )
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "exc_factory,expected_level,expected_exc_info,expected_status,expect_stacktrace",
+    [
+        pytest.param(
+            lambda: exceptions.NotFound("Secret not found"),
+            logging.ERROR,
+            True,
+            "NOT_FOUND",
+            True,
+            id="terminal_error",
+        ),
+        pytest.param(
+            lambda: asyncio.CancelledError("Task cancelled"),
+            logging.DEBUG,
+            False,
+            "CANCELLED",
+            False,
+            id="cancelled_error",
+        ),
+    ],
+)
+async def test_wrap_method_async_logging_error_and_cancelled(
+    mock_otel,
+    mock_service_logger,
+    exc_factory,
+    expected_level,
+    expected_exc_info,
+    expected_status,
+    expect_stacktrace,
+):
+    """Proves that _AsyncGapicCallable emits ERROR on terminal failure and DEBUG without traceback on asyncio.CancelledError."""
+    err = exc_factory()
+    mock_target = mock.AsyncMock(side_effect=err)
+    wrapped = gapic_v1.method_async.wrap_method(
+        mock_target,
+        method_name="/google.cloud.secretmanager.v1.SecretManagerService/GetSecret",
+    )
+    with pytest.raises(type(err)):
+        await wrapped()
+
+    mock_otel.span.set_attribute.assert_any_call(
+        "rpc.response.status_code", expected_status
+    )
+    mock_service_logger.log.assert_called_once()
+    args, kwargs = mock_service_logger.log.call_args
+    assert args[0] == expected_level
+    assert kwargs["exc_info"] is expected_exc_info
+    assert kwargs["extra"]["rpc.response.status_code"] == expected_status
+    assert ("exception.stacktrace" in kwargs["extra"]) is expect_stacktrace
