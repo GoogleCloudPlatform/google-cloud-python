@@ -35,6 +35,15 @@ LINT_PATHS = ["docs", "pandas_gbq", "tests", "noxfile.py", "setup.py"]
 
 DEFAULT_PYTHON_VERSION = "3.14"
 
+ALL_PYTHON = [
+    "3.10",
+    "3.11",
+    "3.12",
+    "3.13",
+    "3.14",
+    "3.15",
+]
+
 UNIT_TEST_PYTHON_VERSIONS = [
     "3.11",
     "3.12",
@@ -263,10 +272,12 @@ def default(session):
     )
 
 
-@nox.session(python=UNIT_TEST_PYTHON_VERSIONS)
+@nox.session(python=ALL_PYTHON)
 @_calculate_duration
 def unit(session):
     """Run the unit test suite."""
+    if session.python not in UNIT_TEST_PYTHON_VERSIONS:
+        session.skip(f"Python {session.python} is not supported.")
     default(session)
 
 
