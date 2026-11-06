@@ -18,6 +18,8 @@ This is used by gapic clients to provide common error mapping, retry, timeout,
 compression, pagination, and long-running operations to gRPC methods.
 """
 
+from __future__ import annotations
+
 import contextlib
 import enum
 import functools
@@ -110,22 +112,6 @@ def _extract_metrics_header(metadata) -> Tuple[str, List[Tuple[str, str]]]:
     return metric_str, arbitrary_metadata
 
 
-def _extract_rpc_identity(
-    method_name: str,
-) -> Tuple[str, str, str]:
-    """Extract (full_rpc_name, service_name, rpc_method_name) from an explicit method name.
-
-    Args:
-        method_name: Explicit RPC name (e.g. "/google.cloud.secretmanager.v1.SecretManagerService/AccessSecretVersion").
-
-    Returns:
-        Tuple[str, str, str]: A 3-tuple of (full_rpc_name, service_name, rpc_method_name).
-    """
-    method_str = method_name.lstrip("/")
-    service, _, method = method_str.rpartition("/")
-    return method_str, service, method
-
-
 class _GapicCallable(object):
     """Callable that applies retry, timeout, and metadata logic.
 
@@ -181,6 +167,9 @@ class _GapicCallable(object):
         self._retry = retry
         self._timeout = timeout
         self._compression = compression
+        self._client_options = client_options
+        self._method_name = method_name
+        self._rpc_system = _observability._resolve_rpc_system(kind)
 
         # Pre-extract the x-goog-api-client header from the initialized metadata.
         self._x_goog_api_client, remaining = _extract_metrics_header(metadata)
@@ -205,22 +194,18 @@ class _GapicCallable(object):
             try:
                 from opentelemetry import trace
 
-                tracer_provider = None
-                if isinstance(client_options, dict):
-                    tracer_provider = client_options.get("tracer_provider")
-                elif client_options is not None:
-                    tracer_provider = getattr(client_options, "tracer_provider", None)
+                tracer_provider = _observability._get_tracer_provider(client_options)
                 if tracer_provider is not None:
                     tracer = tracer_provider.get_tracer("google.api_core")
                 else:
                     tracer = trace.get_tracer("google.api_core")
 
-                span_name, _, _ = _extract_rpc_identity(method_name)
+                span_name, _, _ = _observability.extract_rpc_identity(method_name)
                 endpoint_attrs = _observability._extract_endpoint_attributes(
                     client_options, default_host=default_host
                 )
                 span_attributes = {
-                    "rpc.system.name": "http" if kind.startswith("rest") else "grpc",
+                    "rpc.system.name": self._rpc_system,
                     "rpc.method": span_name,
                     **endpoint_attrs,
                 }
