@@ -1,11 +1,20 @@
+from __future__ import annotations
+
 import json
 import logging
 import os
 from collections.abc import Mapping
-from typing import List, Optional
+from typing import TYPE_CHECKING, Any, List, Optional
+
+from google.api_core import _feature_gating_helpers
+
+if TYPE_CHECKING:
+    # flake8: ClientOptions is imported only for static analysis and type annotations
+    from google.api_core.client_options import ClientOptions  # noqa: F401
 
 _LOGGING_INITIALIZED = False
 _BASE_LOGGER_NAME = "google"
+_LOGGER_PROVIDER = "logger_provider"
 
 # Fields to be included in the StructuredLogFormatter.
 #
@@ -47,6 +56,30 @@ _recognized_logging_fields = [
 # Pre-compiled allowlists for O(1) exact lookups and C-level prefix matching.
 _EXACT_FIELDS = frozenset(f for f in _recognized_logging_fields if not f.endswith("*"))
 _PREFIX_FIELDS = tuple(f[:-1] for f in _recognized_logging_fields if f.endswith("*"))
+
+
+def is_error_logging_enabled(
+    client_options: ClientOptions | dict[str, Any] | None = None,
+) -> bool:
+    """Determines if OpenTelemetry-correlated Production Error Logging (PEL) is enabled.
+
+    This feature gate controls action-oriented error and retry logging
+    (configured via ``GOOGLE_SDK_EXPERIMENTAL_PYTHON_LOGGING_ENABLED`` and
+    ``client_options.logger_provider``), and is distinct from Application Payload
+    Debug Logging (APDL) configured via ``GOOGLE_SDK_PYTHON_LOGGING_SCOPE``.
+
+    Args:
+        client_options (ClientOptions | dict[str, Any] | None): The client options
+            object or dictionary.
+
+    Returns:
+        bool: True if production error logging is enabled, False otherwise.
+    """
+    return _feature_gating_helpers.resolve_feature_flags(
+        env_var="GOOGLE_SDK_EXPERIMENTAL_PYTHON_LOGGING_ENABLED",
+        feature_key=_LOGGER_PROVIDER,
+        configuration=client_options,
+    )
 
 
 def logger_configured(logger) -> bool:
