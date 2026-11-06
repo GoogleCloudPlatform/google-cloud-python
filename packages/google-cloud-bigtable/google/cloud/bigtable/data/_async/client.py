@@ -1857,13 +1857,19 @@ class _DataApiTargetAsync(abc.ABC):
         )
 
         if self._use_accelerator("read_row"):
+            start_time = time.monotonic()
             try:
                 return await self._read_row_via_accelerator(
                     query, operation_timeout, attempt_timeout
                 )
             except _AcceleratorFallback:
                 # Daemon can't serve this call; fall through to the native path.
-                pass
+                operation_timeout -= time.monotonic() - start_time
+                if operation_timeout <= 0:
+                    raise DeadlineExceeded(
+                        "Operation timeout exceeded before starting query"
+                    )
+                attempt_timeout = min(attempt_timeout, operation_timeout)
 
         retryable_excs = _get_retryable_errors(retryable_errors, self)
 
@@ -2241,13 +2247,19 @@ class _DataApiTargetAsync(abc.ABC):
         )
 
         if self._use_accelerator("mutate_row"):
+            start_time = time.monotonic()
             try:
                 return await self._mutate_row_via_accelerator(
                     request, operation_timeout
                 )
             except _AcceleratorFallback:
                 # Daemon can't serve this call; fall through to the native path.
-                pass
+                operation_timeout -= time.monotonic() - start_time
+                if operation_timeout <= 0:
+                    raise DeadlineExceeded(
+                        "Operation timeout exceeded before starting query"
+                    )
+                attempt_timeout = min(attempt_timeout, operation_timeout)
 
         if all(mutation.is_idempotent() for mutation in mutations_list):
             # mutations are all idempotent and safe to retry
