@@ -144,6 +144,15 @@ class TestUseAccelerator:
         t._accelerator_breaker.trip()
         assert t._use_accelerator("read_row") is False
 
+    def test_close_trips_breaker_before_teardown(self):
+        t = _bare_target(accel_client=mock.AsyncMock(), accel_daemon=mock.Mock())
+        t._accelerator_health = None
+        t._register_instance_future = None
+        t.client._remove_instance_registration = mock.Mock()
+        assert t._accelerator_breaker.is_tripped is False
+        asyncio.get_event_loop().run_until_complete(t.close())
+        assert t._accelerator_breaker.is_tripped is True
+
 
 # ---------------------------------------------------------------------------
 # _mutate_row_via_accelerator
@@ -256,6 +265,55 @@ class TestReadRowViaAccelerator:
 
         with pytest.raises(_AcceleratorFallback):
             self._run(t._read_row_via_accelerator(query, 30.0, 20.0))
+
+    def test_returns_row_on_success(self):
+        from google.protobuf import wrappers_pb2
+
+        from google.cloud.bigtable.data.read_rows_query import ReadRowsQuery
+        from google.cloud.bigtable_v2.types.bigtable import ReadRowsResponse
+
+        async def _stream():
+            yield ReadRowsResponse(
+                chunks=[
+                    ReadRowsResponse.CellChunk(
+                        row_key=b"key1",
+                        family_name=wrappers_pb2.StringValue(value="cf1"),
+                        qualifier=wrappers_pb2.BytesValue(value=b"q1"),
+                        timestamp_micros=1000,
+                        value=b"v1",
+                        commit_row=True,
+                    )
+                ]
+            )
+
+        client_mock = mock.AsyncMock()
+        client_mock.read_rows.return_value = _stream()
+        daemon = mock.Mock(is_running=True)
+        t = _bare_target(accel_client=client_mock, accel_daemon=daemon)
+
+        query = ReadRowsQuery(row_keys=b"key1", limit=1)
+        row = self._run(t._read_row_via_accelerator(query, 30.0, 20.0))
+        assert row is not None
+        assert row.row_key == b"key1"
+        assert row.get_cells("cf1", b"q1")[0].value == b"v1"
+        client_mock.read_rows.assert_awaited_once()
+
+    def test_returns_none_when_stream_is_empty(self):
+        from google.cloud.bigtable.data.read_rows_query import ReadRowsQuery
+
+        async def _empty_stream():
+            if False:
+                yield
+
+        client_mock = mock.AsyncMock()
+        client_mock.read_rows.return_value = _empty_stream()
+        daemon = mock.Mock(is_running=True)
+        t = _bare_target(accel_client=client_mock, accel_daemon=daemon)
+
+        query = ReadRowsQuery(row_keys=b"key1", limit=1)
+        row = self._run(t._read_row_via_accelerator(query, 30.0, 20.0))
+        assert row is None
+        client_mock.read_rows.assert_awaited_once()
 
     def test_unimplemented_trips_breaker_and_raises_fallback(self):
         from google.cloud.bigtable.data.read_rows_query import ReadRowsQuery

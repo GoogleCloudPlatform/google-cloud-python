@@ -85,14 +85,25 @@ class AcceleratorBreaker:
     def __init__(self):
         self._tripped = threading.Event()
         self._degraded = threading.Event()
+        self._trip_lock = threading.Lock()
 
     def bypass(self) -> bool:
         """Whether the accelerator should be skipped for calls made right now."""
         return self._tripped.is_set() or self._degraded.is_set()
 
-    def trip(self) -> None:
-        """Permanently bypass the accelerator (e.g. the daemon process died)."""
-        self._tripped.set()
+    def trip(self) -> bool:
+        """Permanently bypass the accelerator (e.g. the daemon process died).
+
+        Returns ``True`` on the first call that transitions the breaker to
+        tripped, and ``False`` if it was already tripped.
+        """
+        if self._tripped.is_set():
+            return False
+        with self._trip_lock:
+            if self._tripped.is_set():
+                return False
+            self._tripped.set()
+            return True
 
     @property
     def is_tripped(self) -> bool:
@@ -161,12 +172,12 @@ def handle_accelerator_error(
     # check liveness first: the "daemon died mid-flight" case always wins and is
     # never recoverable.
     if daemon is not None and not daemon.is_running:
-        _LOGGER.warning(
-            "Accelerator daemon is no longer running; permanently falling back "
-            "to the native Bigtable client for this table.",
-            exc_info=exc,
-        )
-        breaker.trip()
+        if breaker.trip():
+            _LOGGER.warning(
+                "Accelerator daemon is no longer running; permanently falling back "
+                "to the native Bigtable client for this table."
+            )
+            _LOGGER.debug("Accelerator daemon failure details", exc_info=exc)
         if not is_idempotent:
             if isinstance(exc, RpcError):
                 raise core_exceptions.from_grpc_error(exc) from exc
@@ -180,10 +191,10 @@ def handle_accelerator_error(
         # The daemon only replies UNIMPLEMENTED once it has no working sessions,
         # a persistent condition, so trip the breaker and fall back immediately
         # rather than re-dialing on every subsequent call.
-        _LOGGER.warning(
-            "Accelerator daemon replied UNIMPLEMENTED; permanently falling back "
-            "to the native Bigtable client for this table."
-        )
-        breaker.trip()
+        if breaker.trip():
+            _LOGGER.warning(
+                "Accelerator daemon replied UNIMPLEMENTED; permanently falling back "
+                "to the native Bigtable client for this table."
+            )
         raise _AcceleratorFallback() from exc
     raise core_exceptions.from_grpc_error(exc) from exc

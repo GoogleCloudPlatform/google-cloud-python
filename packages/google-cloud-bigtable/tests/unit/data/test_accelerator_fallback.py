@@ -40,13 +40,13 @@ class TestAcceleratorBreaker:
 
     def test_trip_sets_bypass(self):
         b = AcceleratorBreaker()
-        b.trip()
+        assert b.trip() is True
         assert b.bypass()
 
     def test_trip_is_idempotent(self):
         b = AcceleratorBreaker()
-        b.trip()
-        b.trip()
+        assert b.trip() is True
+        assert b.trip() is False
         assert b.bypass()
 
     def test_bypass_is_sticky(self):
@@ -61,10 +61,14 @@ class TestAcceleratorBreaker:
 
         b = AcceleratorBreaker()
         errors = []
+        first_trips = []
+        lock = threading.Lock()
 
         def trip_and_check():
             try:
-                b.trip()
+                was_first = b.trip()
+                with lock:
+                    first_trips.append(was_first)
                 assert b.bypass()
             except Exception as e:
                 errors.append(e)
@@ -75,6 +79,7 @@ class TestAcceleratorBreaker:
         for t in threads:
             t.join()
         assert not errors
+        assert first_trips.count(True) == 1
 
 
 # ---------------------------------------------------------------------------
@@ -182,6 +187,33 @@ class TestHandleAcceleratorError:
         with pytest.raises(_AcceleratorFallback):
             handle_accelerator_error(exc, daemon=None, breaker=breaker)
         assert breaker.bypass()
+
+    def test_dead_daemon_logs_warning_once_without_traceback(self, caplog):
+        import logging
+
+        daemon = mock.Mock(is_running=False)
+        breaker = AcceleratorBreaker()
+        exc = _make_rpc_error(StatusCode.UNAVAILABLE)
+        with caplog.at_level(logging.WARNING):
+            for _ in range(3):
+                with pytest.raises(_AcceleratorFallback):
+                    handle_accelerator_error(exc, daemon=daemon, breaker=breaker)
+        assert len(caplog.records) == 1
+        assert "no longer running" in caplog.records[0].getMessage()
+        assert caplog.records[0].exc_info is None
+
+    def test_unimplemented_logs_warning_once(self, caplog):
+        import logging
+
+        daemon = mock.Mock(is_running=True)
+        breaker = AcceleratorBreaker()
+        exc = _make_rpc_error(StatusCode.UNIMPLEMENTED)
+        with caplog.at_level(logging.WARNING):
+            for _ in range(3):
+                with pytest.raises(_AcceleratorFallback):
+                    handle_accelerator_error(exc, daemon=daemon, breaker=breaker)
+        assert len(caplog.records) == 1
+        assert "replied UNIMPLEMENTED" in caplog.records[0].getMessage()
 
     # -- Other gRPC errors are translated ------------------------------------
 

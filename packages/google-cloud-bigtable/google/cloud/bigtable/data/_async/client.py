@@ -45,10 +45,22 @@ from google.api_core.exceptions import (
     DeadlineExceeded,
     ServiceUnavailable,
 )
-from google.auth import compute_engine
+from google.auth import (
+    compute_engine,
+    external_account,
+    external_account_authorized_user,
+    impersonated_credentials,
+)
 from google.auth.transport import requests as google_auth_requests
 from google.cloud.client import ClientWithProject
 from google.cloud.environment_vars import BIGTABLE_EMULATOR  # type: ignore
+from google.oauth2 import (
+    credentials as oauth2_credentials,
+)
+from google.oauth2 import (
+    gdch_credentials,
+    service_account,
+)
 from google.protobuf.internal.enum_type_wrapper import EnumTypeWrapper
 from google.protobuf.message import Message
 from grpc import Channel
@@ -223,7 +235,30 @@ def _normalize_scopes(scopes: Any) -> frozenset[str]:
         return frozenset()
     if isinstance(scopes, str):
         scopes = scopes.replace(",", " ").split()
-    return frozenset(s for s in scopes if s)
+    elif not isinstance(scopes, (list, tuple, set, frozenset)):
+        return frozenset()
+    return frozenset(s.strip() for s in scopes if isinstance(s, str) and s.strip())
+
+
+def _credential_type(creds: Any) -> str | None:
+    """Return the ADC credential source type string written to ``identity.json``."""
+    if creds is None:
+        return None
+    if isinstance(creds, service_account.Credentials):
+        return "service_account"
+    if isinstance(creds, impersonated_credentials.Credentials):
+        return "impersonated_service_account"
+    if isinstance(creds, external_account.Credentials):
+        return "external_account"
+    if isinstance(creds, oauth2_credentials.Credentials):
+        return "authorized_user"
+    if isinstance(creds, external_account_authorized_user.Credentials):
+        return "external_account_authorized_user"
+    if isinstance(creds, gdch_credentials.ServiceAccountCredentials):
+        return "gdch_service_account"
+    if isinstance(creds, compute_engine.Credentials):
+        return "gce_metadata"
+    return None
 
 
 @CrossSync.convert_class(
@@ -411,6 +446,7 @@ class BigtableDataClientAsync(ClientWithProject):
         self._accelerator_flags: list[str] = []
         self._accelerator_env: dict[str, str] = {}
         self._cached_principal: str | None | object = _UNSET
+        self._cached_cred_type: str | None | object = _UNSET
 
         # In-memory secrets that cannot be forwarded to a separate process.
         if explicit_credentials:
@@ -435,7 +471,7 @@ class BigtableDataClientAsync(ClientWithProject):
         # Identify this client to the daemon so it can construct the full
         # "python-v{ver}-go-accelerator-v{ver}" User-Agent.
         self._accelerator_flags += [
-            "--caller-user-agent",
+            "--user-agent",
             f"python-v{google.cloud.bigtable.__version__}",
         ]
 
@@ -519,6 +555,14 @@ class BigtableDataClientAsync(ClientWithProject):
         principal: str | None = email if (email and email != "default") else None
         self._cached_principal = principal
         return principal
+
+    def _resolve_credential_type(self) -> str | None:
+        """Resolve this client's credential source type for daemon verification."""
+        if self._cached_cred_type is not _UNSET:
+            return cast("str | None", self._cached_cred_type)
+        cred_type = _credential_type(self._credentials)
+        self._cached_cred_type = cred_type
+        return cred_type
 
     def _build_grpc_channel(self, *args, **kwargs) -> SwappableChannelType:
         """
@@ -1507,11 +1551,9 @@ class _DataApiTargetAsync(abc.ABC):
     def _verify_daemon_identity(self, server: AcceleratorDaemon) -> None:
         """Confirm the daemon resolved the same identity this client did.
 
-        Compares the principal *and* the effective auth scopes the daemon wrote
-        to ``identity.json`` against the client's own. Raises
-        ``_AcceleratorIdentityError`` if the identity cannot be verified (either
-        side unknown) or if a mismatch is detected, so the caller falls back to
-        the native client.
+        Compares the principal, credential source type, and effective auth
+        scopes from ``identity.json`` against this client's own, raising
+        ``_AcceleratorIdentityError`` if unknown or mismatched.
         """
         try:
             identity = server.read_identity()
@@ -1520,7 +1562,17 @@ class _DataApiTargetAsync(abc.ABC):
                 f"Could not read daemon identity: {exc}"
             ) from exc
 
-        daemon_principal = identity.get("principal") or None
+        if not isinstance(identity, dict):
+            raise _AcceleratorIdentityError(
+                "Could not read daemon identity: expected a JSON object"
+            )
+
+        raw_principal = identity.get("principal")
+        daemon_principal = (
+            raw_principal.strip()
+            if isinstance(raw_principal, str) and raw_principal.strip()
+            else None
+        )
         own_principal = self.client._resolve_principal()
         if own_principal is None or daemon_principal is None:
             raise _AcceleratorIdentityError(
@@ -1532,6 +1584,26 @@ class _DataApiTargetAsync(abc.ABC):
                 "Accelerator identity mismatch: this client resolved "
                 f"{own_principal!r} but the daemon resolved "
                 f"{daemon_principal!r}; refusing to route RPCs through the "
+                "accelerator."
+            )
+
+        raw_cred_type = identity.get("type")
+        daemon_cred_type = (
+            raw_cred_type.strip()
+            if isinstance(raw_cred_type, str) and raw_cred_type.strip()
+            else None
+        )
+        own_cred_type = self.client._resolve_credential_type()
+        if own_cred_type is None or daemon_cred_type is None:
+            raise _AcceleratorIdentityError(
+                "Could not verify daemon identity: credential type is unknown on "
+                f"{'this client' if own_cred_type is None else 'the daemon'} side"
+            )
+        if own_cred_type != daemon_cred_type:
+            raise _AcceleratorIdentityError(
+                "Accelerator identity mismatch: this client resolved credential "
+                f"type {own_cred_type!r} but the daemon resolved "
+                f"{daemon_cred_type!r}; refusing to route RPCs through the "
                 "accelerator."
             )
 
@@ -1706,9 +1778,7 @@ class _DataApiTargetAsync(abc.ABC):
             retryable_exceptions=(),
         )
         try:
-            stream = await client.read_rows(
-                row_merger.request, timeout=operation_timeout
-            )
+            stream = client.read_rows(row_merger.request, timeout=operation_timeout)
             chunked_stream = row_merger.chunk_stream(stream)
             results = [a async for a in row_merger.merge_rows(chunked_stream)]
         except Exception as exc:
@@ -2375,6 +2445,10 @@ class _DataApiTargetAsync(abc.ABC):
         """
         Called to close the Table instance and release any resources held by it.
         """
+        # Trip the breaker first so no new RPCs are routed to the accelerator
+        # while it is being torn down, and any in-flight RPCs interrupted by
+        # shutdown do not log a false dead-daemon warning.
+        self._accelerator_breaker.trip()
         # Accelerator teardown goes first, so that nothing that can raise runs
         # ahead of it and strands the daemon subprocess. Within it, the monitor
         # stops before the channel it probes over goes away.

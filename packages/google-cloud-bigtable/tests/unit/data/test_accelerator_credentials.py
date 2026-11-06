@@ -20,21 +20,35 @@ from types import SimpleNamespace
 
 import pytest
 from google.api_core.client_options import ClientOptions
-from google.auth import compute_engine
+from google.auth import (
+    compute_engine,
+    external_account_authorized_user,
+    identity_pool,
+    impersonated_credentials,
+)
+from google.oauth2 import (
+    credentials as oauth2_credentials,
+)
+from google.oauth2 import (
+    gdch_credentials,
+    service_account,
+)
 
 import google.cloud.bigtable
+from google.cloud.bigtable.data._async import client as _async_client_mod
 from google.cloud.bigtable.data._async.client import (
     _UNSET,
     BigtableDataClientAsync,
-    _AcceleratorIdentityError,
     _DataApiTargetAsync,
 )
+from google.cloud.bigtable.data._sync_autogen import client as _sync_client_mod
 
 
-def _bare_client():
+def _bare_client(cls=BigtableDataClientAsync, unset=_UNSET):
     """A client instance that skips __init__ (no network / event loop)."""
-    c = object.__new__(BigtableDataClientAsync)
-    c._cached_principal = _UNSET
+    c = object.__new__(cls)
+    c._cached_principal = unset
+    c._cached_cred_type = unset
     return c
 
 
@@ -169,115 +183,285 @@ class TestResolvePrincipal:
         assert c._resolve_principal() == "compute-sa@proj.iam.gserviceaccount.com"
 
 
-# Matching scopes on both sides by default, so principal-focused tests below
-# exercise only the principal branch. The daemon writes ``scopes`` as a JSON
-# array (see google-cloud-go .../accelerator/cmd/identity.go).
+# Matching scopes and credential type on both sides by default, so
+# principal-focused tests exercise only the principal branch.
 _SCOPES = ["https://www.googleapis.com/auth/bigtable.data"]
+_CRED_TYPE = "service_account"
+
+_CLIENT_MODS = [
+    pytest.param(
+        (
+            _async_client_mod.BigtableDataClientAsync,
+            _async_client_mod._DataApiTargetAsync,
+            _async_client_mod._AcceleratorIdentityError,
+            _async_client_mod._UNSET,
+        ),
+        id="async",
+    ),
+    pytest.param(
+        (
+            _sync_client_mod.BigtableDataClient,
+            _sync_client_mod._DataApiTarget,
+            _sync_client_mod._AcceleratorIdentityError,
+            _sync_client_mod._UNSET,
+        ),
+        id="sync",
+    ),
+]
+
+
+@pytest.mark.parametrize("client_mod", _CLIENT_MODS)
+class TestResolveCredentialType:
+    @pytest.mark.parametrize(
+        ("cred_cls", "expected_type"),
+        [
+            (service_account.Credentials, "service_account"),
+            (impersonated_credentials.Credentials, "impersonated_service_account"),
+            (identity_pool.Credentials, "external_account"),
+            (oauth2_credentials.Credentials, "authorized_user"),
+            (
+                external_account_authorized_user.Credentials,
+                "external_account_authorized_user",
+            ),
+            (gdch_credentials.ServiceAccountCredentials, "gdch_service_account"),
+            (compute_engine.Credentials, "gce_metadata"),
+        ],
+    )
+    def test_known_credential_types(self, client_mod, cred_cls, expected_type):
+        client_cls, _, _, unset = client_mod
+        c = _bare_client(client_cls, unset)
+        c._credentials = object.__new__(cred_cls)
+        assert c._resolve_credential_type() == expected_type
+
+    def test_none_and_unknown_credentials_return_none(self, client_mod):
+        client_cls, _, _, unset = client_mod
+        c = _bare_client(client_cls, unset)
+        c._credentials = None
+        assert c._resolve_credential_type() is None
+
+        c2 = _bare_client(client_cls, unset)
+        c2._credentials = _FakeCreds(email="svc@proj.iam.gserviceaccount.com")
+        assert c2._resolve_credential_type() is None
+
+    def test_cached_across_calls(self, client_mod):
+        client_cls, _, _, unset = client_mod
+        c = _bare_client(client_cls, unset)
+        c._credentials = object.__new__(service_account.Credentials)
+        assert c._resolve_credential_type() == "service_account"
+        c._credentials = object.__new__(compute_engine.Credentials)
+        assert c._resolve_credential_type() == "service_account"
 
 
 class _FakeServer:
-    def __init__(self, principal, scopes=_SCOPES, missing=False, read_raises=None):
+    _OMIT = object()
+
+    def __init__(
+        self,
+        principal,
+        cred_type=_CRED_TYPE,
+        scopes=_SCOPES,
+        missing=False,
+        read_raises=None,
+        raw_identity=_OMIT,
+    ):
         self._principal = principal
+        self._cred_type = cred_type
         self._scopes = scopes
         self._missing = missing
         self._read_raises = read_raises
+        self._raw_identity = raw_identity
 
     def read_identity(self):
         if self._read_raises is not None:
             raise self._read_raises
+        if self._raw_identity is not self._OMIT:
+            return self._raw_identity
         if self._missing:
             return {}
-        return {"principal": self._principal, "scopes": self._scopes}
+        doc = {"principal": self._principal, "scopes": self._scopes}
+        if self._cred_type is not self._OMIT:
+            doc["type"] = self._cred_type
+        return doc
 
 
 def _verify(
     client_principal,
     daemon_principal,
     missing=False,
+    client_type=_CRED_TYPE,
+    daemon_type=_CRED_TYPE,
     client_scopes=_SCOPES,
     daemon_scopes=_SCOPES,
+    raw_identity=_FakeServer._OMIT,
+    target_cls=_DataApiTargetAsync,
 ):
     """Invoke the Table's verify helper against fake client/server doubles."""
     table = SimpleNamespace(
         client=SimpleNamespace(
             _resolve_principal=lambda: client_principal,
+            _resolve_credential_type=lambda: client_type,
             _accelerator_scopes=client_scopes,
         )
     )
-    server = _FakeServer(daemon_principal, scopes=daemon_scopes, missing=missing)
-    _DataApiTargetAsync._verify_daemon_identity(table, server)
+    server = _FakeServer(
+        daemon_principal,
+        cred_type=daemon_type,
+        scopes=daemon_scopes,
+        missing=missing,
+        raw_identity=raw_identity,
+    )
+    target_cls._verify_daemon_identity(table, server)
 
 
+@pytest.mark.parametrize("client_mod", _CLIENT_MODS)
 class TestVerifyDaemonIdentity:
-    def test_match_proceeds(self):
-        # Matching principal and scopes: returns without raising.
-        _verify("svc@proj.iam.gserviceaccount.com", "svc@proj.iam.gserviceaccount.com")
+    def test_match_proceeds(self, client_mod):
+        _, target_cls, _, _ = client_mod
+        _verify(
+            "svc@proj.iam.gserviceaccount.com",
+            "svc@proj.iam.gserviceaccount.com",
+            target_cls=target_cls,
+        )
 
-    def test_read_identity_error_falls_back(self):
-        # Any exception from read_identity (e.g. older daemon with no identity.json,
-        # or a corrupt file) should fall back rather than crash.
+    def test_read_identity_error_falls_back(self, client_mod):
+        _, target_cls, err_cls, _ = client_mod
         table = SimpleNamespace(
             client=SimpleNamespace(
                 _resolve_principal=lambda: "svc@proj.iam.gserviceaccount.com",
+                _resolve_credential_type=lambda: _CRED_TYPE,
                 _accelerator_scopes=_SCOPES,
             )
         )
         for exc in (RuntimeError("no identity.json"), ValueError("bad json")):
             server = _FakeServer(None, read_raises=exc)
-            with pytest.raises(_AcceleratorIdentityError):
-                _DataApiTargetAsync._verify_daemon_identity(table, server)
+            with pytest.raises(err_cls):
+                target_cls._verify_daemon_identity(table, server)
 
-    def test_mismatch_raises(self):
-        with pytest.raises(_AcceleratorIdentityError, match="identity mismatch"):
+    def test_non_dict_identity_falls_back(self, client_mod):
+        _, target_cls, err_cls, _ = client_mod
+        for bad in (None, ["not", "a", "dict"], "string", 123):
+            with pytest.raises(err_cls, match="expected a JSON object"):
+                _verify(
+                    "svc@proj.iam.gserviceaccount.com",
+                    "svc@proj.iam.gserviceaccount.com",
+                    raw_identity=bad,
+                    target_cls=target_cls,
+                )
+
+    def test_mismatch_raises(self, client_mod):
+        _, target_cls, err_cls, _ = client_mod
+        with pytest.raises(err_cls, match="identity mismatch"):
             _verify(
                 "svc-a@proj.iam.gserviceaccount.com",
                 "svc-b@proj.iam.gserviceaccount.com",
+                target_cls=target_cls,
             )
 
-    def test_client_unknown_falls_back(self):
-        with pytest.raises(_AcceleratorIdentityError):
-            _verify(None, "svc@proj.iam.gserviceaccount.com")
+    def test_credential_type_mismatch_same_principal_raises(self, client_mod):
+        _, target_cls, err_cls, _ = client_mod
+        with pytest.raises(err_cls, match="credential type"):
+            _verify(
+                "svc@proj.iam.gserviceaccount.com",
+                "svc@proj.iam.gserviceaccount.com",
+                client_type="gce_metadata",
+                daemon_type="service_account",
+                target_cls=target_cls,
+            )
 
-    def test_daemon_unknown_falls_back(self):
-        with pytest.raises(_AcceleratorIdentityError):
-            _verify("svc@proj.iam.gserviceaccount.com", None)
+    def test_daemon_missing_credential_type_falls_back(self, client_mod):
+        _, target_cls, err_cls, _ = client_mod
+        with pytest.raises(err_cls, match="credential type is unknown on the daemon"):
+            _verify(
+                "svc@proj.iam.gserviceaccount.com",
+                "svc@proj.iam.gserviceaccount.com",
+                daemon_type=_FakeServer._OMIT,
+                target_cls=target_cls,
+            )
 
-    def test_daemon_missing_principal_falls_back(self):
-        with pytest.raises(_AcceleratorIdentityError):
-            _verify("svc@proj.iam.gserviceaccount.com", None, missing=True)
+    def test_client_unknown_credential_type_falls_back(self, client_mod):
+        _, target_cls, err_cls, _ = client_mod
+        with pytest.raises(err_cls, match="credential type is unknown on this client"):
+            _verify(
+                "svc@proj.iam.gserviceaccount.com",
+                "svc@proj.iam.gserviceaccount.com",
+                client_type=None,
+                target_cls=target_cls,
+            )
 
-    def test_scope_match_ignores_order_and_dupes(self):
-        # Principals match; scopes differ only in order/duplication -> proceed.
+    def test_client_unknown_falls_back(self, client_mod):
+        _, target_cls, err_cls, _ = client_mod
+        with pytest.raises(err_cls):
+            _verify(None, "svc@proj.iam.gserviceaccount.com", target_cls=target_cls)
+
+    def test_daemon_unknown_falls_back(self, client_mod):
+        _, target_cls, err_cls, _ = client_mod
+        with pytest.raises(err_cls):
+            _verify("svc@proj.iam.gserviceaccount.com", None, target_cls=target_cls)
+
+    def test_daemon_missing_principal_falls_back(self, client_mod):
+        _, target_cls, err_cls, _ = client_mod
+        with pytest.raises(err_cls):
+            _verify(
+                "svc@proj.iam.gserviceaccount.com",
+                None,
+                missing=True,
+                target_cls=target_cls,
+            )
+
+    def test_scope_match_ignores_order_and_dupes(self, client_mod):
+        _, target_cls, _, _ = client_mod
         _verify(
             "svc@proj.iam.gserviceaccount.com",
             "svc@proj.iam.gserviceaccount.com",
             client_scopes=["scope-a", "scope-b"],
             daemon_scopes=["scope-b", "scope-a", "scope-a"],
+            target_cls=target_cls,
         )
 
-    def test_scope_mismatch_raises(self):
-        # Principals match but the daemon resolved a different effective scope.
-        with pytest.raises(_AcceleratorIdentityError, match="scope mismatch"):
+    def test_scope_string_and_non_iterable_handled(self, client_mod):
+        _, target_cls, err_cls, _ = client_mod
+        _verify(
+            "svc@proj.iam.gserviceaccount.com",
+            "svc@proj.iam.gserviceaccount.com",
+            client_scopes="scope-a, scope-b",
+            daemon_scopes="scope-b scope-a",
+            target_cls=target_cls,
+        )
+        with pytest.raises(err_cls, match="effective scopes are unknown"):
+            _verify(
+                "svc@proj.iam.gserviceaccount.com",
+                "svc@proj.iam.gserviceaccount.com",
+                daemon_scopes=123,
+                target_cls=target_cls,
+            )
+
+    def test_scope_mismatch_raises(self, client_mod):
+        _, target_cls, err_cls, _ = client_mod
+        with pytest.raises(err_cls, match="scope mismatch"):
             _verify(
                 "svc@proj.iam.gserviceaccount.com",
                 "svc@proj.iam.gserviceaccount.com",
                 client_scopes=["https://www.googleapis.com/auth/bigtable.data"],
                 daemon_scopes=["https://www.googleapis.com/auth/cloud-platform"],
+                target_cls=target_cls,
             )
 
-    def test_daemon_missing_scopes_falls_back(self):
-        # Older daemon that resolves a principal but writes no scopes.
-        with pytest.raises(_AcceleratorIdentityError):
+    def test_daemon_missing_scopes_falls_back(self, client_mod):
+        _, target_cls, err_cls, _ = client_mod
+        with pytest.raises(err_cls):
             _verify(
                 "svc@proj.iam.gserviceaccount.com",
                 "svc@proj.iam.gserviceaccount.com",
                 daemon_scopes=[],
+                target_cls=target_cls,
             )
 
-    def test_client_missing_scopes_falls_back(self):
-        with pytest.raises(_AcceleratorIdentityError):
+    def test_client_missing_scopes_falls_back(self, client_mod):
+        _, target_cls, err_cls, _ = client_mod
+        with pytest.raises(err_cls):
             _verify(
                 "svc@proj.iam.gserviceaccount.com",
                 "svc@proj.iam.gserviceaccount.com",
                 client_scopes=[],
+                target_cls=target_cls,
             )

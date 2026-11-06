@@ -79,6 +79,34 @@ class TestExtraEnv:
         # Parent env is preserved (merged, not replaced).
         assert env["EXISTING"] == "keep"
 
+    @pytest.mark.parametrize("is_windows", [False, True])
+    def test_spawns_in_isolated_process_group(self, tmp_path, monkeypatch, is_windows):
+        captured = {}
+
+        def fake_popen(argv, **kwargs):
+            captured.update(kwargs)
+            raise _StopStart()
+
+        monkeypatch.setattr(_daemon, "_IS_WINDOWS", is_windows)
+        monkeypatch.setattr(_daemon.subprocess, "Popen", fake_popen)
+        if is_windows:
+            monkeypatch.setattr(
+                _daemon.subprocess,
+                "CREATE_NEW_PROCESS_GROUP",
+                0x00000200,
+                raising=False,
+            )
+            monkeypatch.setattr(_daemon.socket, "AF_UNIX", 1, raising=False)
+        daemon = _make_daemon(tmp_path)
+        with pytest.raises(_StopStart):
+            daemon.start()
+        if is_windows:
+            assert captured.get("creationflags") == 0x00000200
+            assert "start_new_session" not in captured
+        else:
+            assert captured.get("start_new_session") is True
+            assert "creationflags" not in captured
+
 
 class TestReadIdentity:
     def test_reads_and_unlinks(self, tmp_path):
@@ -88,11 +116,28 @@ class TestReadIdentity:
         daemon._tempdir = str(d)
         identity_path = d / _IDENTITY_FILENAME
         identity_path.write_text(
-            json.dumps({"principal": "svc@proj.iam.gserviceaccount.com"})
+            json.dumps(
+                {
+                    "principal": "svc@proj.iam.gserviceaccount.com",
+                    "type": "service_account",
+                }
+            )
         )
         result = daemon.read_identity()
         assert result["principal"] == "svc@proj.iam.gserviceaccount.com"
+        assert result["type"] == "service_account"
         # The identity is verified once, then consumed.
+        assert not identity_path.exists()
+
+    def test_non_object_json_raises_and_unlinks(self, tmp_path):
+        daemon = _make_daemon(tmp_path)
+        d = tmp_path / "accel-tmp"
+        d.mkdir()
+        daemon._tempdir = str(d)
+        identity_path = d / _IDENTITY_FILENAME
+        identity_path.write_text(json.dumps(["not", "an", "object"]))
+        with pytest.raises(RuntimeError, match="expected JSON object"):
+            daemon.read_identity()
         assert not identity_path.exists()
 
     def test_not_started_raises(self, tmp_path):
