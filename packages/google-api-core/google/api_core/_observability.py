@@ -187,6 +187,28 @@ def _extract_error_info_fields(target_exc: Any) -> tuple[Any, Any, Any]:
     )
 
 
+def _extract_http_status_code(response: Any) -> int | None:
+    """Extracts the numeric HTTP status code from an HTTP response object.
+
+    Inspects ``response.status_code`` (used by ``requests.Response``) and falls
+    back to ``response.status`` (used by ``urllib3`` and ``aiohttp``), returning
+    the status code only when it is a genuine integer (excluding ``bool``).
+
+    Args:
+        response (Any): An HTTP response object (or ``GoogleAPICallError.response``).
+
+    Returns:
+        int | None: The integer HTTP status code (e.g. 200, 404, 503), or None
+            if no integer status code is present.
+    """
+    status = getattr(response, "status_code", None)
+    if status is None:
+        status = getattr(response, "status", None)
+    if isinstance(status, int) and not isinstance(status, bool):
+        return status
+    return None
+
+
 def _extract_error_message(
     target_exc: Any, http_response: Any = None, fallback: str | None = None
 ) -> str | None:
@@ -257,16 +279,15 @@ def build_telemetry_error_attributes(
     domain, reason, metadata = _extract_error_info_fields(target_exc)
 
     # GoogleAPICallError.response holds either an HTTP Response or a gRPC Call
-    # (which has trailing_metadata). Validate once up front so http_response is
-    # only retained when it is an actual HTTP response with an integer status code.
+    # (which has trailing_metadata). Retain http_response only when it is an
+    # HTTP response with a valid integer HTTP status code.
     http_response = getattr(target_exc, "response", None)
     http_status = (
-        getattr(http_response, "status_code", getattr(http_response, "status", None))
-        if http_response is not None and not hasattr(http_response, "trailing_metadata")
+        _extract_http_status_code(http_response)
+        if not hasattr(http_response, "trailing_metadata")
         else None
     )
-    if not isinstance(http_status, int) or isinstance(http_status, bool):
-        http_status = None
+    if http_status is None:
         http_response = None
 
     # Populate OpenTelemetry semantic error attributes and ErrorInfo metadata
@@ -1042,12 +1063,16 @@ def get_otel_interceptor(
         Returns:
             grpc.Channel: The intercepted gRPC channel.
         """
+        # Step 1 (inner layers): Wrap channel with custom_interceptors
+        # ([logging, suppressing]), where logging executes outside suppressing.
         if grpc is not None and custom_interceptors:
             try:
                 channel = grpc.intercept_channel(channel, *custom_interceptors)
             except (AttributeError, TypeError):
                 # Fallback if grpc lacks intercept_channel or custom channel type rejects it.
                 pass
+        # Step 2 (outermost layer): Wrap tracing_interceptor around the outside
+        # of the channel, yielding: [tracing -> logging -> suppressing -> channel].
         if tracing_interceptor is not None:
             return otel_grpc.intercept_channel(channel, tracing_interceptor)
         return channel
@@ -1079,12 +1104,15 @@ def get_otel_async_interceptor(
         return None
 
     # Order matters (outer -> inner):
-    #   1. raw_interceptors (outermost: starts the Tier 4 async gRPC span)
+    #   1. tracing_interceptors (outermost: starts the Tier 4 async gRPC span)
     #   2. _AsyncGrpcAttemptLoggingInterceptor (middle: logs failed attempts with
     #      the Tier 4 span active, outside of suppress_instrumentation)
     #   3. _AsyncSuppressingClientInterceptor (innermost: suppresses downstream
     #      generic auto-instrumentation without suppressing our attempt logs)
     interceptors: list[grpc.aio.ClientInterceptor] = []
+    if error_logging_enabled:
+        interceptors.append(_AsyncGrpcAttemptLoggingInterceptor(client_options))
+
     if tracing_enabled:
         # Ignored by mypy: Optional dependency only loaded if tracing_enabled is True
         import opentelemetry.instrumentation.grpc as otel_grpc  # type: ignore[import-not-found]
@@ -1092,17 +1120,18 @@ def get_otel_async_interceptor(
         raw_interceptors = otel_grpc.aio_client_interceptors(
             **_build_otel_grpc_hook_kwargs(client_options, default_host)
         )
-        interceptors.extend(
+        tracing_interceptors = (
             raw_interceptors
             if isinstance(raw_interceptors, (list, tuple))
             else [raw_interceptors]
         )
-
-    if error_logging_enabled:
-        interceptors.append(_AsyncGrpcAttemptLoggingInterceptor(client_options))
-
-    if tracing_enabled:
-        interceptors.append(_AsyncSuppressingClientInterceptor())
+        # Sandwich logging between outer tracing and inner suppression (outer -> inner):
+        # [*tracing_interceptors, *logging_interceptor, _AsyncSuppressingClientInterceptor]
+        interceptors = [
+            *tracing_interceptors,
+            *interceptors,
+            _AsyncSuppressingClientInterceptor(),
+        ]
 
     return interceptors
 
@@ -1369,23 +1398,11 @@ class _TraceContext:
         Args:
             response (Any): The HTTP response object (e.g. requests.Response).
         """
-        status_code = getattr(
-            response, "status_code", getattr(response, "status", None)
-        )
-        code_int: int | None = None
+        code_int = _extract_http_status_code(response)
         error_msg: str | None = None
-        if status_code is not None:
-            try:
-                code_int = int(status_code)
-                if code_int >= 400:
-                    error_msg = self._extract_http_error_message(response)
-                    self._log_http_attempt(
-                        status_code=code_int, status_message=error_msg
-                    )
-            # Intentionally catch broad Exception so telemetry extraction/logging
-            # fails open and never disrupts the caller's RPC flow.
-            except Exception:
-                pass
+        if code_int is not None and code_int >= 400:
+            error_msg = self._extract_http_error_message(response)
+            self._log_http_attempt(status_code=code_int, status_message=error_msg)
 
         span = self._span
         if span is None or not hasattr(span, "set_attribute"):
