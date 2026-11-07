@@ -127,7 +127,7 @@ class _FutureDict(object):
 
 
 class _FutureResponse(requests.Response):
-    """Reponse that returns a placeholder dictionary for a batched requests."""
+    """Response that returns a placeholder dictionary for a batched requests."""
 
     def __init__(self, future_dict):
         super(_FutureResponse, self).__init__()
