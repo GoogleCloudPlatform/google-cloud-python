@@ -21,7 +21,6 @@ description = "Google BigQuery connector for pandas"
 # 'Development Status :: 5 - Production/Stable'
 release_status = "Development Status :: 4 - Beta"
 dependencies = [
-    "setuptools",
     "db-dtypes >=1.1.1,<2.0.0",
     "numpy >=1.26.4",
     "pandas >=1.5.3",
@@ -33,20 +32,20 @@ dependencies = [
     # Note: google-api-core and google-auth are also included via transitive
     # dependency on google-cloud-bigquery, but this library also uses them
     # directly.
-    "google-api-core >= 2.25.0, <3.0.0",
-    "google-auth >=2.14.1",
+    "google-api-core >= 2.34.0, <3.0.0",
+    "google-auth >=2.62.0",
     "google-auth-oauthlib >=0.7.0",
     # Please also update the minimum version in pandas_gbq/features.py to
     # allow pandas-gbq to detect invalid package versions at runtime.
-    "google-cloud-bigquery >=3.20.0,<4.0.0",
-    "packaging >=22.0.0",
+    "google-cloud-bigquery >=3.43.0,<4.0.0",
+    "packaging >=24.2.0",
 ]
 extras = {
     "bqstorage": [
-        "google-cloud-bigquery-storage >=2.29.0, <3.0.0",
+        "google-cloud-bigquery-storage >=2.40.0, <3.0.0",
     ],
     "tqdm": ["tqdm>=4.23.0"],
-    "geopandas": ["geopandas>=0.14.4", "Shapely>=1.8.5"],
+    "geopandas": ["geopandas>=1.0.0", "Shapely>=2.0.0"],
 }
 
 # Setup boilerplate below this line.

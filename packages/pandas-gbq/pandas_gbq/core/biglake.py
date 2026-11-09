@@ -69,9 +69,9 @@ def get_table_metadata(
             )
         )
     )
-    assert len(count_rows) == 1, (
-        "got unexpected query response when determining number of rows"
-    )
+    assert (
+        len(count_rows) == 1
+    ), "got unexpected query response when determining number of rows"
     total_rows = count_rows[0].total_rows
 
     return BigLakeTableMetadata(
