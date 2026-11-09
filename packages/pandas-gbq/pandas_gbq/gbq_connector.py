@@ -190,8 +190,7 @@ class GbqConnector:
 
         job_config_dict = {
             "query": {
-                "useLegacySql": self.dialect
-                == "legacy"
+                "useLegacySql": self.dialect == "legacy"
                 # 'allowLargeResults', 'createDisposition',
                 # 'preserveNulls', destinationTable, useQueryCache
             }
