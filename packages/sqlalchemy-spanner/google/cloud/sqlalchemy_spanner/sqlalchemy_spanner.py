@@ -394,6 +394,34 @@ class SpannerSQLCompiler(SQLCompiler):
         self.tablealiases = {}
         super().__init__(*args, **kwargs)
 
+    def _ensure_where_clause(self, statement):
+        where_criteria = getattr(statement, "_where_criteria", None)
+        where_clause = getattr(statement, "whereclause", None)
+        has_where = bool(where_criteria) or (where_clause is not None)
+        if not has_where:
+            return statement.where(expression.literal_column("1=1"))
+        return statement
+
+    def visit_delete(self, delete_stmt, **kw):
+        """Compile a DELETE statement.
+
+        Cloud Spanner requires a WHERE clause for all DELETE statements.
+        For SQLAlchemy Core/ORM AST delete statements (e.g. sa.delete(table)),
+        automatically inject 'WHERE 1=1' if no WHERE criteria were supplied.
+        """
+        delete_stmt = self._ensure_where_clause(delete_stmt)
+        return super().visit_delete(delete_stmt, **kw)
+
+    def visit_update(self, update_stmt, **kw):
+        """Compile an UPDATE statement.
+
+        Cloud Spanner requires a WHERE clause for all UPDATE statements.
+        For SQLAlchemy Core/ORM AST update statements (e.g. sa.update(table)),
+        automatically inject 'WHERE 1=1' if no WHERE criteria were supplied.
+        """
+        update_stmt = self._ensure_where_clause(update_stmt)
+        return super().visit_update(update_stmt, **kw)
+
     def get_from_hint_text(self, _, text):
         """Return a hint text.
 
@@ -562,9 +590,9 @@ class SpannerSQLCompiler(SQLCompiler):
             for c in expression._select_iterables(
                 filter(
                     lambda col: (
-                        not col.dialect_options.get("spanner", {}).get(
-                            "exclude_from_returning", False
-                        )
+                        not (getattr(col, "dialect_options", None) or {})
+                        .get("spanner", {})
+                        .get("exclude_from_returning", False)
                     ),
                     returning_cols,
                 )

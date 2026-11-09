@@ -354,3 +354,152 @@ class TestSpannerDialect(fixtures.TestBase):
             compiler.render_literal_value('100% "quoted" mid', sa.String()),
             'r"""100%% "quoted" mid"""',
         )
+
+    def test_unqualified_delete_compiles_with_dummy_where(self):
+        """Test that unqualified DELETE statements automatically append WHERE 1=1."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"))
+        statement = sa.delete(test_table)
+        compiled = str(statement.compile(dialect=dialect))
+        eq_(compiled, "DELETE FROM my_table WHERE 1=1")
+
+    def test_qualified_delete_compiles_without_dummy_where(self):
+        """Test that qualified DELETE statements do not append extra WHERE 1=1."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"))
+        statement = sa.delete(test_table).where(test_table.c.id == 1)
+        compiled = str(statement.compile(dialect=dialect))
+        eq_(compiled, "DELETE FROM my_table WHERE my_table.id = :id_1")
+
+    def test_unqualified_update_compiles_with_dummy_where(self):
+        """Test that unqualified UPDATE statements automatically append WHERE 1=1."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"))
+        statement = sa.update(test_table).values(id=2)
+        compiled = str(statement.compile(dialect=dialect))
+        eq_(compiled, "UPDATE my_table SET id=:id WHERE 1=1")
+
+    def test_qualified_update_compiles_without_dummy_where(self):
+        """Test that qualified UPDATE statements do not append extra WHERE 1=1."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"))
+        statement = sa.update(test_table).where(test_table.c.id == 1).values(id=2)
+        compiled = str(statement.compile(dialect=dialect))
+        eq_(compiled, "UPDATE my_table SET id=:id WHERE my_table.id = :id_1")
+
+    def test_unqualified_delete_with_returning_compiles_with_dummy_where(
+        self,
+    ):
+        """Test unqualified DELETE with RETURNING has WHERE 1=1 before THEN RETURN."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"))
+        statement = sa.delete(test_table).returning(test_table.c.id)
+        compiled = str(statement.compile(dialect=dialect))
+        eq_(compiled, "DELETE FROM my_table WHERE 1=1 THEN RETURN id")
+
+    def test_unqualified_update_with_returning_compiles_with_dummy_where(
+        self,
+    ):
+        """Test unqualified UPDATE with RETURNING has WHERE 1=1 before THEN RETURN."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"))
+        statement = sa.update(test_table).values(id=2).returning(test_table.c.id)
+        compiled = str(statement.compile(dialect=dialect))
+        eq_(compiled, "UPDATE my_table SET id=:id WHERE 1=1 THEN RETURN id")
+
+    def test_delete_with_comparison_operators_does_not_raise_type_error(self):
+        """Test that DELETE with >, IN, LIKE operators compiles without TypeError."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"), sa.column("val"))
+
+        stmt_gt = sa.delete(test_table).where(test_table.c.id > 1)
+        eq_(
+            str(stmt_gt.compile(dialect=dialect)),
+            "DELETE FROM my_table WHERE my_table.id > :id_1",
+        )
+
+        stmt_in = sa.delete(test_table).where(test_table.c.id.in_([1, 2]))
+        eq_(
+            str(stmt_in.compile(dialect=dialect)),
+            "DELETE FROM my_table WHERE my_table.id IN (__[POSTCOMPILE_id_1])",
+        )
+
+    def test_update_with_comparison_operators_does_not_raise_type_error(self):
+        """Test that UPDATE with >, IN, LIKE operators compiles without TypeError."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"), sa.column("val"))
+
+        stmt_gt = sa.update(test_table).where(test_table.c.id > 1).values(val="x")
+        eq_(
+            str(stmt_gt.compile(dialect=dialect)),
+            "UPDATE my_table SET val=:val WHERE my_table.id > :id_1",
+        )
+
+    def test_manual_raw_sql_compiles_without_dummy_where(self):
+        """Test that manually written raw SQL text constructs compile as written.
+
+        SpannerSQLCompiler injects WHERE 1=1 only for SQLAlchemy Core/ORM ASTs
+        (e.g. delete(table) or update(table)). Manually written raw SQL text
+        constructs (e.g. text("DELETE FROM my_table")) are compiled without
+        modification.
+        """
+        dialect = SpannerDialect()
+
+        # 1. Raw SQL text without WHERE clause is compiled as written
+        raw_delete = sa.text("DELETE FROM my_table")
+        eq_(str(raw_delete.compile(dialect=dialect)), "DELETE FROM my_table")
+
+        raw_update = sa.text("UPDATE my_table SET id = 1")
+        eq_(str(raw_update.compile(dialect=dialect)), "UPDATE my_table SET id = 1")
+
+        # 2. Raw SQL text with explicit WHERE 1=1 or WHERE TRUE is compiled as written
+        raw_delete_with_where = sa.text("DELETE FROM my_table WHERE 1=1")
+        eq_(
+            str(raw_delete_with_where.compile(dialect=dialect)),
+            "DELETE FROM my_table WHERE 1=1",
+        )
+
+        raw_update_with_where = sa.text("UPDATE my_table SET id = 1 WHERE TRUE")
+        eq_(
+            str(raw_update_with_where.compile(dialect=dialect)),
+            "UPDATE my_table SET id = 1 WHERE TRUE",
+        )
+
+        # 3. Contrast with ORM/Core ASTs which automatically generate WHERE 1=1
+        test_table = sa.table("my_table", sa.column("id"))
+        ast_delete = sa.delete(test_table)
+        eq_(str(ast_delete.compile(dialect=dialect)), "DELETE FROM my_table WHERE 1=1")
+
+        ast_update = sa.update(test_table).values(id=1)
+        eq_(
+            str(ast_update.compile(dialect=dialect)),
+            "UPDATE my_table SET id=:id WHERE 1=1",
+        )
+
+    def test_empty_where_appends_dummy_where(self):
+        """Test that calling .where() without criteria appends WHERE 1=1."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"))
+
+        delete_stmt = sa.delete(test_table).where()
+        eq_(str(delete_stmt.compile(dialect=dialect)), "DELETE FROM my_table WHERE 1=1")
+
+        update_stmt = sa.update(test_table).values(id=1).where()
+        eq_(
+            str(update_stmt.compile(dialect=dialect)),
+            "UPDATE my_table SET id=:id WHERE 1=1",
+        )
+
+    def test_explicit_literal_where_does_not_duplicate(self):
+        """Test that explicit WHERE 1=1 does not produce WHERE 1=1 AND 1=1."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"))
+
+        delete_stmt = sa.delete(test_table).where(sa.literal_column("1=1"))
+        eq_(str(delete_stmt.compile(dialect=dialect)), "DELETE FROM my_table WHERE 1=1")
+
+        update_stmt = sa.update(test_table).values(id=1).where(sa.literal_column("1=1"))
+        eq_(
+            str(update_stmt.compile(dialect=dialect)),
+            "UPDATE my_table SET id=:id WHERE 1=1",
+        )
