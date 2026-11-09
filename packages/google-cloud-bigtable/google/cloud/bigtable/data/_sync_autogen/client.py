@@ -1413,17 +1413,18 @@ class _DataApiTarget(abc.ABC):
         else:
             predicate = retries.if_exception_type()
         with self._create_operation(OperationType.MUTATE_ROW) as operation_metric:
+            request = MutateRowRequest(
+                row_key=row_key.encode("utf-8")
+                if isinstance(row_key, str)
+                else row_key,
+                mutations=[mutation._to_pb() for mutation in mutations_list],
+                app_profile_id=self.app_profile_id,
+                **self._request_path,
+            )
 
             def execute_rpc():
                 return self.client._gapic_client.mutate_row(
-                    request=MutateRowRequest(
-                        row_key=row_key.encode("utf-8")
-                        if isinstance(row_key, str)
-                        else row_key,
-                        mutations=[mutation._to_pb() for mutation in mutations_list],
-                        app_profile_id=self.app_profile_id,
-                        **self._request_path,
-                    ),
+                    request=request,
                     timeout=next(attempt_timeout_gen),
                     retry=None,
                 )
