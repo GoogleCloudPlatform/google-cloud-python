@@ -264,7 +264,7 @@ class TestReadRowViaAccelerator:
         query = ReadRowsQuery(row_keys=b"key1", limit=1)
 
         with pytest.raises(_AcceleratorFallback):
-            self._run(t._read_row_via_accelerator(query, 30.0, 20.0))
+            self._run(t._read_row_via_accelerator(query, 30.0))
 
     def test_returns_row_on_success(self):
         from google.protobuf import wrappers_pb2
@@ -292,7 +292,7 @@ class TestReadRowViaAccelerator:
         t = _bare_target(accel_client=client_mock, accel_daemon=daemon)
 
         query = ReadRowsQuery(row_keys=b"key1", limit=1)
-        row = self._run(t._read_row_via_accelerator(query, 30.0, 20.0))
+        row = self._run(t._read_row_via_accelerator(query, 30.0))
         assert row is not None
         assert row.row_key == b"key1"
         assert row.get_cells("cf1", b"q1")[0].value == b"v1"
@@ -311,7 +311,7 @@ class TestReadRowViaAccelerator:
         t = _bare_target(accel_client=client_mock, accel_daemon=daemon)
 
         query = ReadRowsQuery(row_keys=b"key1", limit=1)
-        row = self._run(t._read_row_via_accelerator(query, 30.0, 20.0))
+        row = self._run(t._read_row_via_accelerator(query, 30.0))
         assert row is None
         client_mock.read_rows.assert_awaited_once()
 
@@ -326,7 +326,7 @@ class TestReadRowViaAccelerator:
 
         query = ReadRowsQuery(row_keys=b"key1", limit=1)
         with pytest.raises(_AcceleratorFallback):
-            self._run(t._read_row_via_accelerator(query, 30.0, 20.0))
+            self._run(t._read_row_via_accelerator(query, 30.0))
         assert t._accelerator_breaker.bypass()
 
     def test_dead_daemon_trips_breaker_and_raises_fallback(self):
@@ -340,7 +340,7 @@ class TestReadRowViaAccelerator:
 
         query = ReadRowsQuery(row_keys=b"key1", limit=1)
         with pytest.raises(_AcceleratorFallback):
-            self._run(t._read_row_via_accelerator(query, 30.0, 20.0))
+            self._run(t._read_row_via_accelerator(query, 30.0))
         assert t._accelerator_breaker.bypass()
 
     def test_permission_denied_translates_and_raises(self):
@@ -354,7 +354,7 @@ class TestReadRowViaAccelerator:
 
         query = ReadRowsQuery(row_keys=b"key1", limit=1)
         with pytest.raises(core_exceptions.GoogleAPICallError):
-            self._run(t._read_row_via_accelerator(query, 30.0, 20.0))
+            self._run(t._read_row_via_accelerator(query, 30.0))
         assert not t._accelerator_breaker.bypass()
 
     def test_non_grpc_exception_reraises(self):
@@ -367,7 +367,7 @@ class TestReadRowViaAccelerator:
 
         query = ReadRowsQuery(row_keys=b"key1", limit=1)
         with pytest.raises(RuntimeError, match="unexpected"):
-            self._run(t._read_row_via_accelerator(query, 30.0, 20.0))
+            self._run(t._read_row_via_accelerator(query, 30.0))
         assert not t._accelerator_breaker.bypass()
 
     def test_invalid_chunk_trips_breaker_and_raises_fallback(self):
@@ -397,7 +397,7 @@ class TestReadRowViaAccelerator:
 
         query = ReadRowsQuery(row_keys=b"", limit=1)
         with pytest.raises(_AcceleratorFallback):
-            self._run(t._read_row_via_accelerator(query, 30.0, 20.0))
+            self._run(t._read_row_via_accelerator(query, 30.0))
         assert t._accelerator_breaker.bypass()
 
 
@@ -422,7 +422,7 @@ class TestReadRowAcceleratorDispatch:
         t = _bare_target()
         expected_row = Row(b"key1", cells={})
 
-        async def fake_accel(query, op_timeout, att_timeout):
+        async def fake_accel(query, op_timeout):
             return expected_row
 
         with (
@@ -442,7 +442,7 @@ class TestReadRowAcceleratorDispatch:
         t = _bare_target()
         expected_row = Row(b"key1", cells={})
 
-        async def fake_accel_fallback(query, op_timeout, att_timeout):
+        async def fake_accel_fallback(query, op_timeout):
             raise _AcceleratorFallback()
 
         async def _row_gen():
@@ -465,6 +465,68 @@ class TestReadRowAcceleratorDispatch:
             result = self._run(t.read_row(b"key1"))
 
         assert result == expected_row
+
+    def test_fallback_subtracts_elapsed_time_and_clamps_attempt_timeout(self):
+        from google.cloud.bigtable.data.row import Row
+
+        t = _bare_target()
+        expected_row = Row(b"key1", cells={})
+        fake_clock = mock.Mock(monotonic=mock.Mock(return_value=100.0))
+
+        async def fake_accel_fallback(query, op_timeout):
+            fake_clock.monotonic.return_value = 107.0
+            raise _AcceleratorFallback()
+
+        async def _row_gen():
+            yield expected_row
+
+        native_row_merger = mock.Mock()
+        native_row_merger.start_operation.return_value = _row_gen()
+
+        with (
+            mock.patch.object(t, "_use_accelerator", return_value=True),
+            mock.patch.object(
+                t, "_read_row_via_accelerator", side_effect=fake_accel_fallback
+            ),
+            mock.patch("google.cloud.bigtable.data._async.client.time", fake_clock),
+            mock.patch(
+                "google.cloud.bigtable.data._async.client.CrossSync._ReadRowsOperation",
+                return_value=native_row_merger,
+            ) as op_mock,
+        ):
+            result = self._run(
+                t.read_row(b"key1", operation_timeout=10.0, attempt_timeout=5.0)
+            )
+
+        assert result == expected_row
+        op_mock.assert_called_once()
+        _, kwargs = op_mock.call_args
+        assert kwargs["operation_timeout"] == pytest.approx(3.0)
+        assert kwargs["attempt_timeout"] == pytest.approx(3.0)
+
+    def test_fallback_raises_deadline_exceeded_when_budget_exhausted(self):
+        t = _bare_target()
+        fake_clock = mock.Mock(monotonic=mock.Mock(return_value=100.0))
+
+        async def fake_accel_fallback(query, op_timeout):
+            fake_clock.monotonic.return_value = 110.0
+            raise _AcceleratorFallback()
+
+        with (
+            mock.patch.object(t, "_use_accelerator", return_value=True),
+            mock.patch.object(
+                t, "_read_row_via_accelerator", side_effect=fake_accel_fallback
+            ),
+            mock.patch("google.cloud.bigtable.data._async.client.time", fake_clock),
+            mock.patch(
+                "google.cloud.bigtable.data._async.client.CrossSync._ReadRowsOperation"
+            ) as op_mock,
+        ):
+            with pytest.raises(core_exceptions.DeadlineExceeded):
+                self._run(
+                    t.read_row(b"key1", operation_timeout=10.0, attempt_timeout=5.0)
+                )
+            op_mock.assert_not_called()
 
     def test_uses_native_directly_when_accelerator_disabled(self):
         from google.cloud.bigtable.data.row import Row
@@ -578,6 +640,76 @@ class TestMutateRowAcceleratorDispatch:
             result = self._run(t.mutate_row(b"key1", mutations))
 
         assert result == native_resp
+
+    def test_fallback_subtracts_elapsed_time_and_clamps_attempt_timeout(self):
+        from google.cloud.bigtable.data.mutations import SetCell
+        from google.cloud.bigtable_v2.types.bigtable import MutateRowResponse
+
+        t = _bare_target()
+        native_resp = MutateRowResponse()
+        fake_clock = mock.Mock(monotonic=mock.Mock(return_value=100.0))
+
+        async def fake_accel_fallback(request, op_timeout):
+            fake_clock.monotonic.return_value = 107.0
+            raise _AcceleratorFallback()
+
+        async def fake_native_mutate(*args, **kwargs):
+            return native_resp
+
+        mutations = [SetCell("cf", "col", b"val", timestamp_micros=1000)]
+
+        with (
+            mock.patch.object(t, "_use_accelerator", return_value=True),
+            mock.patch.object(
+                t, "_mutate_row_via_accelerator", side_effect=fake_accel_fallback
+            ),
+            mock.patch("google.cloud.bigtable.data._async.client.time", fake_clock),
+            mock.patch(
+                "google.cloud.bigtable.data._async.client.tracked_retry",
+                side_effect=fake_native_mutate,
+            ) as retry_mock,
+        ):
+            result = self._run(
+                t.mutate_row(
+                    b"key1", mutations, operation_timeout=10.0, attempt_timeout=5.0
+                )
+            )
+
+        assert result == native_resp
+        retry_mock.assert_called_once()
+        _, kwargs = retry_mock.call_args
+        assert kwargs["timeout"] == pytest.approx(3.0)
+        assert kwargs["target"].keywords["timeout"] == pytest.approx(3.0)
+
+    def test_fallback_raises_deadline_exceeded_when_budget_exhausted(self):
+        from google.cloud.bigtable.data.mutations import SetCell
+
+        t = _bare_target()
+        fake_clock = mock.Mock(monotonic=mock.Mock(return_value=100.0))
+
+        async def fake_accel_fallback(request, op_timeout):
+            fake_clock.monotonic.return_value = 110.0
+            raise _AcceleratorFallback()
+
+        mutations = [SetCell("cf", "col", b"val", timestamp_micros=1000)]
+
+        with (
+            mock.patch.object(t, "_use_accelerator", return_value=True),
+            mock.patch.object(
+                t, "_mutate_row_via_accelerator", side_effect=fake_accel_fallback
+            ),
+            mock.patch("google.cloud.bigtable.data._async.client.time", fake_clock),
+            mock.patch(
+                "google.cloud.bigtable.data._async.client.tracked_retry"
+            ) as retry_mock,
+        ):
+            with pytest.raises(core_exceptions.DeadlineExceeded):
+                self._run(
+                    t.mutate_row(
+                        b"key1", mutations, operation_timeout=10.0, attempt_timeout=5.0
+                    )
+                )
+            retry_mock.assert_not_called()
 
     def test_uses_native_directly_when_accelerator_disabled(self):
         from google.cloud.bigtable.data.mutations import SetCell
