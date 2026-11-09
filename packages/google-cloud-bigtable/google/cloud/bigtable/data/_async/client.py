@@ -1467,6 +1467,13 @@ class _DataApiTargetAsync(abc.ABC):
             # An in-memory secret we cannot reproduce in the daemon was
             # supplied; stay on the native client rather than run the
             # accelerated path under a different identity.
+            if explicit:
+                raise RuntimeError(
+                    "use_accelerator=True is not supported: "
+                    f"{self.client._accelerator_blocked_reason}; pass "
+                    "credentials_file via client_options, or pass "
+                    "use_accelerator=False."
+                )
             warnings.warn(
                 "Accelerator disabled: "
                 f"{self.client._accelerator_blocked_reason}; using the "

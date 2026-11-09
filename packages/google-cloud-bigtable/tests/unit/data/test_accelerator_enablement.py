@@ -89,6 +89,20 @@ class TestMaybeStartAccelerator:
             t._maybe_start_accelerator(explicit=False)
         assert called == []
 
+    def test_blocked_reason_explicit_raises(self):
+        """Explicit use_accelerator=True + blocked auth config raises RuntimeError."""
+        called = []
+        t = _bare_target(
+            start=lambda: called.append(1),
+            blocked_reason="in-memory credentials cannot be forwarded",
+        )
+        with pytest.raises(
+            RuntimeError,
+            match="use_accelerator=True is not supported: in-memory credentials cannot be forwarded",
+        ):
+            t._maybe_start_accelerator(explicit=True)
+        assert called == []
+
     def test_start_failure_falls_back_to_native(self):
         """A default (non-explicit) daemon start failure (e.g. binary missing)
         never propagates; it warns and leaves the target on the native client."""

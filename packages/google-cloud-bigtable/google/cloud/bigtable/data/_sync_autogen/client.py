@@ -1151,6 +1151,10 @@ class _DataApiTarget(abc.ABC):
             )
             return
         if self.client._accelerator_blocked_reason is not None:
+            if explicit:
+                raise RuntimeError(
+                    f"use_accelerator=True is not supported: {self.client._accelerator_blocked_reason}; pass credentials_file via client_options, or pass use_accelerator=False."
+                )
             warnings.warn(
                 f"Accelerator disabled: {self.client._accelerator_blocked_reason}; using the native client instead.",
                 RuntimeWarning,
