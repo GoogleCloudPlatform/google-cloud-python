@@ -23,6 +23,7 @@ import concurrent.futures
 import logging
 import os
 import random
+import threading
 import time
 import warnings
 import weakref
@@ -163,6 +164,38 @@ class _AcceleratorIdentityError(RuntimeError):
     this client's — signals the caller to fall back to the native client."""
 
 
+class _SharedAccelerator:
+    """Reference-counted accelerator state shared across targets on a client
+    for a single ``(instance_id, app_profile_id)`` tuple."""
+
+    def __init__(
+        self,
+        daemon: AcceleratorDaemon | None,
+        client: Any,
+        health: Any,
+        breaker: AcceleratorBreaker,
+    ):
+        self.daemon = daemon
+        self.client = client
+        self.health = health
+        self.breaker = breaker
+        self.owners: set[int] = set()
+        self.closed: bool = False
+
+
+def _finalize_shared_accelerator_owner(
+    entry: _SharedAccelerator, owner_id: int, lock: threading.Lock
+) -> None:
+    """Stop the shared health monitor when the last referencing target is
+    garbage-collected without ``close()``."""
+    with lock:
+        entry.owners.discard(owner_id)
+        should_stop = not entry.owners and (not entry.closed)
+        health = entry.health
+    if should_stop and health is not None:
+        health.request_stop()
+
+
 def _normalize_scopes(scopes: Any) -> frozenset[str]:
     """Normalize a scope value to a comparable, order-insensitive set.
 
@@ -261,12 +294,11 @@ class BigtableDataClient(ClientWithProject):
         if (
             project is None
             and credentials is None
-            and client_options is not None
+            and (client_options is not None)
             and client_options.credentials_file
         ):
             project = os.getenv(
-                environment_vars.PROJECT,
-                os.getenv(environment_vars.LEGACY_PROJECT),
+                environment_vars.PROJECT, os.getenv(environment_vars.LEGACY_PROJECT)
             )
             if project is None:
                 _, project = google.auth.load_credentials_from_file(
@@ -362,6 +394,8 @@ class BigtableDataClient(ClientWithProject):
         self._accelerator_env: dict[str, str] = {}
         self._cached_principal: str | None | object = _UNSET
         self._cached_cred_type: str | None | object = _UNSET
+        self._accelerator_lock = threading.Lock()
+        self._accelerators: dict[tuple[str, str | None], _SharedAccelerator] = {}
         if explicit_credentials:
             self._accelerator_blocked_reason = "an explicit credentials= object cannot be forwarded to the accelerator daemon"
         elif client_options is not None and getattr(client_options, "api_key", None):
@@ -515,9 +549,53 @@ class BigtableDataClient(ClientWithProject):
                 task_name=f"{self.__class__.__name__} channel refresh",
             )
 
+    def _close_accelerators(self) -> None:
+        """Tear down any shared accelerator daemons still registered on this client."""
+        lock = getattr(self, "_accelerator_lock", None)
+        accelerators = getattr(self, "_accelerators", None)
+        if not isinstance(accelerators, dict):
+            return
+        if lock is not None:
+            with lock:
+                entries = [e for e in accelerators.values() if not e.closed]
+                for e in entries:
+                    e.closed = True
+                accelerators.clear()
+        else:
+            entries = [e for e in accelerators.values() if not e.closed]
+            for e in entries:
+                e.closed = True
+            accelerators.clear()
+        for entry in entries:
+            entry.breaker.trip()
+            if entry.health is not None:
+                try:
+                    entry.health.close()
+                except Exception as exc:
+                    _LOGGER.warning(
+                        "Failed to close accelerator health monitor: %s", exc
+                    )
+                finally:
+                    entry.health = None
+            if entry.client is not None:
+                try:
+                    entry.client.close()
+                except Exception as exc:
+                    _LOGGER.warning("Failed to close accelerator client: %s", exc)
+                finally:
+                    entry.client = None
+            if entry.daemon is not None:
+                try:
+                    entry.daemon.close()
+                except Exception as exc:
+                    _LOGGER.warning("Failed to close accelerator daemon: %s", exc)
+                finally:
+                    entry.daemon = None
+
     def close(self, timeout: float | None = 2.0):
         """Cancel all background tasks"""
         self._is_closed.set()
+        self._close_accelerators()
         if self._channel_refresh_task is not None:
             self._channel_refresh_task.cancel()
             CrossSync._Sync_Impl.wait([self._channel_refresh_task], timeout=timeout)
@@ -1125,6 +1203,8 @@ class _DataApiTarget(abc.ABC):
         self._accelerator_daemon: AcceleratorDaemon | None = None
         self._accelerator_client: AcceleratorClientType | None = None
         self._accelerator_health: AcceleratorHealthMonitorType | None = None
+        self._shared_accelerator: _SharedAccelerator | None = None
+        self._accelerator_finalizer: weakref.finalize | None = None
         self._accelerator_breaker = AcceleratorBreaker()
         if self.client._use_accelerator is not False:
             self._maybe_start_accelerator(explicit=self.client._use_accelerator is True)
@@ -1177,9 +1257,69 @@ class _DataApiTarget(abc.ABC):
             self._accelerator_client = None
 
     def _start_accelerator(self) -> None:
-        """Spawn the daemon for this Table and connect to its UDS.
+        """Acquire or spawn the shared daemon for this target's
+        ``(instance_id, app_profile_id)`` and connect to its UDS.
 
         On any failure the daemon is torn down before the error propagates."""
+        accelerators = getattr(self.client, "_accelerators", None)
+        lock = getattr(self.client, "_accelerator_lock", None)
+        key = (self.instance_id, self.app_profile_id or None)
+        if isinstance(accelerators, dict) and lock is not None:
+            with lock:
+                entry = accelerators.get(key)
+                if entry is not None and (not entry.closed):
+                    if (
+                        entry.health is not None
+                        and entry.health._closed.is_set()
+                        and (not entry.breaker.is_tripped)
+                    ):
+                        try:
+                            entry.health = AcceleratorHealthMonitorType(
+                                entry.client, entry.breaker
+                            )
+                            entry.health.start()
+                        except Exception as exc:
+                            warnings.warn(
+                                f"Could not start the accelerator health monitor; the accelerator will run without health-based fallback: {exc}",
+                                RuntimeWarning,
+                                stacklevel=2,
+                            )
+                            entry.health = None
+                    self._accelerator_daemon = entry.daemon
+                    self._accelerator_client = entry.client
+                    self._accelerator_health = entry.health
+                    self._accelerator_breaker = entry.breaker
+                    self._shared_accelerator = entry
+                    owner_id = id(self)
+                    entry.owners.add(owner_id)
+                    self._accelerator_finalizer = weakref.finalize(
+                        self, _finalize_shared_accelerator_owner, entry, owner_id, lock
+                    )
+                    return
+                self._spawn_and_connect_accelerator()
+                entry = _SharedAccelerator(
+                    daemon=self._accelerator_daemon,
+                    client=self._accelerator_client,
+                    health=self._accelerator_health,
+                    breaker=self._accelerator_breaker,
+                )
+                self._shared_accelerator = entry
+                owner_id = id(self)
+                entry.owners.add(owner_id)
+                accelerators[key] = entry
+                self._accelerator_finalizer = weakref.finalize(
+                    self, _finalize_shared_accelerator_owner, entry, owner_id, lock
+                )
+                return
+        self._spawn_and_connect_accelerator()
+        if self._accelerator_health is not None:
+            self._accelerator_finalizer = weakref.finalize(
+                self, self._accelerator_health.request_stop
+            )
+
+    def _spawn_and_connect_accelerator(self) -> None:
+        """Spawn a new daemon for this target's ``(instance_id, app_profile_id)``
+        and connect to its UDS."""
         flags = ["--project", self.client.project, "--instance", self.instance_id]
         if self.app_profile_id:
             flags.extend(["--app-profile", self.app_profile_id])
@@ -1202,7 +1342,6 @@ class _DataApiTarget(abc.ABC):
                 self._accelerator_client, self._accelerator_breaker
             )
             self._accelerator_health.start()
-            weakref.finalize(self, self._accelerator_health.request_stop)
         except Exception as exc:
             warnings.warn(
                 f"Could not start the accelerator health monitor; the accelerator will run without health-based fallback: {exc}",
@@ -2020,28 +2159,61 @@ class _DataApiTarget(abc.ABC):
 
     def close(self):
         """Called to close the Table instance and release any resources held by it."""
-        self._accelerator_breaker.trip()
-        if self._accelerator_health is not None:
-            try:
-                self._accelerator_health.close()
-            except Exception as exc:
-                _LOGGER.warning("Failed to close accelerator health monitor: %s", exc)
-            finally:
-                self._accelerator_health = None
-        if self._accelerator_client is not None:
-            try:
-                self._accelerator_client.close()
-            except Exception as exc:
-                _LOGGER.warning("Failed to close accelerator client: %s", exc)
-            finally:
-                self._accelerator_client = None
-        if self._accelerator_daemon is not None:
-            try:
-                self._accelerator_daemon.close()
-            except Exception as exc:
-                _LOGGER.warning("Failed to close accelerator daemon: %s", exc)
-            finally:
-                self._accelerator_daemon = None
+        finalizer = getattr(self, "_accelerator_finalizer", None)
+        if finalizer is not None:
+            finalizer.detach()
+            self._accelerator_finalizer = None
+        shared = getattr(self, "_shared_accelerator", None)
+        should_teardown = True
+        if shared is not None:
+            self._shared_accelerator = None
+            accelerators = getattr(self.client, "_accelerators", None)
+            lock = getattr(self.client, "_accelerator_lock", None)
+            key = (self.instance_id, self.app_profile_id or None)
+            if lock is not None:
+                with lock:
+                    shared.owners.discard(id(self))
+                    if not shared.owners and (not shared.closed):
+                        shared.closed = True
+                        if (
+                            isinstance(accelerators, dict)
+                            and accelerators.get(key) is shared
+                        ):
+                            accelerators.pop(key, None)
+                    else:
+                        should_teardown = False
+        if not should_teardown:
+            local_breaker = AcceleratorBreaker()
+            local_breaker.trip()
+            self._accelerator_breaker = local_breaker
+            self._accelerator_health = None
+            self._accelerator_client = None
+            self._accelerator_daemon = None
+        else:
+            self._accelerator_breaker.trip()
+            if self._accelerator_health is not None:
+                try:
+                    self._accelerator_health.close()
+                except Exception as exc:
+                    _LOGGER.warning(
+                        "Failed to close accelerator health monitor: %s", exc
+                    )
+                finally:
+                    self._accelerator_health = None
+            if self._accelerator_client is not None:
+                try:
+                    self._accelerator_client.close()
+                except Exception as exc:
+                    _LOGGER.warning("Failed to close accelerator client: %s", exc)
+                finally:
+                    self._accelerator_client = None
+            if self._accelerator_daemon is not None:
+                try:
+                    self._accelerator_daemon.close()
+                except Exception as exc:
+                    _LOGGER.warning("Failed to close accelerator daemon: %s", exc)
+                finally:
+                    self._accelerator_daemon = None
         if self._register_instance_future:
             self._register_instance_future.cancel()
         self.client._remove_instance_registration(
