@@ -225,28 +225,16 @@ class GbqConnector:
         job_config = typing.cast(bigquery.QueryJobConfig, job_config)
         job_config.dry_run = dry_run
 
-        if FEATURES.bigquery_has_query_and_wait:
-            rows_iter = pandas_gbq.query.query_and_wait_via_client_library(
-                self,
-                self.client,
-                query,
-                location=self.location,
-                project_id=self.project_id,
-                job_config=job_config,
-                max_results=max_results,
-                timeout_ms=timeout_ms,
-            )
-        else:
-            rows_iter = pandas_gbq.query.query_and_wait(
-                self,
-                self.client,
-                query,
-                location=self.location,
-                project_id=self.project_id,
-                job_config=job_config,
-                max_results=max_results,
-                timeout_ms=timeout_ms,
-            )
+        rows_iter = pandas_gbq.query.query_and_wait_via_client_library(
+            self,
+            self.client,
+            query,
+            location=self.location,
+            project_id=self.project_id,
+            job_config=job_config,
+            max_results=max_results,
+            timeout_ms=timeout_ms,
+        )
 
         if dry_run:
             return dry_runs.get_query_stats(rows_iter.job)

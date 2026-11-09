@@ -14,7 +14,6 @@ import google.api_core.exceptions
 import google.cloud.bigquery
 import google.cloud.bigquery.table
 import numpy
-import packaging.version
 import pandas
 import pytest
 from pandas import DataFrame
@@ -22,7 +21,6 @@ from pandas import DataFrame
 import pandas_gbq.constants
 import pandas_gbq.core.read
 import pandas_gbq.exceptions
-import pandas_gbq.features
 from pandas_gbq import gbq
 from pandas_gbq.features import FEATURES
 
@@ -472,70 +470,15 @@ def test_read_gbq_with_no_project_id_given_should_fail(monkeypatch):
         gbq.read_gbq("SELECT 1", dialect="standard")
 
 
-def test_read_gbq_with_inferred_project_id_with_query(
-    monkeypatch, mock_bigquery_client, mock_query_job
-):
-    monkeypatch.setattr(
-        pandas_gbq.features.FEATURES,
-        "_bigquery_installed_version",
-        packaging.version.parse(pandas_gbq.features.BIGQUERY_MINIMUM_VERSION),
-    )
-    type(mock_query_job).cache_hit = mock.PropertyMock(return_value=False)
-    type(mock_query_job).total_bytes_billed = mock.PropertyMock(return_value=10_000_000)
-    type(mock_query_job).total_bytes_processed = mock.PropertyMock(return_value=12345)
-
-    df = gbq.read_gbq("SELECT 1", dialect="standard")
-    assert df is not None
-    mock_bigquery_client.query.assert_called_once()
-
-
-def test_read_gbq_with_inferred_project_id_with_query_and_wait(
-    monkeypatch, mock_bigquery_client
-):
-    monkeypatch.setattr(
-        pandas_gbq.features.FEATURES,
-        "_bigquery_installed_version",
-        packaging.version.parse(pandas_gbq.features.BIGQUERY_QUERY_AND_WAIT_VERSION),
-    )
-
+def test_read_gbq_with_inferred_project_id_with_query_and_wait(mock_bigquery_client):
     df = gbq.read_gbq("SELECT 1", dialect="standard")
     assert df is not None
     mock_bigquery_client.query_and_wait.assert_called_once()
 
 
-def test_read_gbq_with_inferred_project_id_from_service_account_credentials_with_query(
-    monkeypatch, mock_bigquery_client, mock_service_account_credentials
-):
-    monkeypatch.setattr(
-        pandas_gbq.features.FEATURES,
-        "_bigquery_installed_version",
-        packaging.version.parse(pandas_gbq.features.BIGQUERY_MINIMUM_VERSION),
-    )
-
-    mock_service_account_credentials.project_id = "service_account_project_id"
-    df = gbq.read_gbq(
-        "SELECT 1",
-        dialect="standard",
-        credentials=mock_service_account_credentials,
-    )
-    assert df is not None
-    mock_bigquery_client.query.assert_called_once_with(
-        "SELECT 1",
-        job_config=mock.ANY,
-        location=None,
-        project="service_account_project_id",
-    )
-
-
 def test_read_gbq_with_inferred_project_id_from_service_account_credentials_with_query_and_wait(
-    monkeypatch, mock_bigquery_client, mock_service_account_credentials
+    mock_bigquery_client, mock_service_account_credentials
 ):
-    monkeypatch.setattr(
-        pandas_gbq.features.FEATURES,
-        "_bigquery_installed_version",
-        packaging.version.parse(pandas_gbq.features.BIGQUERY_QUERY_AND_WAIT_VERSION),
-    )
-
     mock_service_account_credentials.project_id = "service_account_project_id"
     df = gbq.read_gbq(
         "SELECT 1",
@@ -569,25 +512,7 @@ def test_read_gbq_with_max_results_zero(monkeypatch):
     assert df is None
 
 
-def test_read_gbq_with_max_results_ten_query(monkeypatch, mock_query_job):
-    monkeypatch.setattr(
-        pandas_gbq.features.FEATURES,
-        "_bigquery_installed_version",
-        packaging.version.parse(pandas_gbq.features.BIGQUERY_MINIMUM_VERSION),
-    )
-    df = gbq.read_gbq("SELECT 1", dialect="standard", max_results=10)
-    assert df is not None
-    mock_query_job.result.assert_called_with(max_results=10)
-
-
-def test_read_gbq_with_max_results_ten_query_and_wait(
-    monkeypatch, mock_bigquery_client
-):
-    monkeypatch.setattr(
-        pandas_gbq.features.FEATURES,
-        "_bigquery_installed_version",
-        packaging.version.parse(pandas_gbq.features.BIGQUERY_QUERY_AND_WAIT_VERSION),
-    )
+def test_read_gbq_with_max_results_ten_query_and_wait(mock_bigquery_client):
     df = gbq.read_gbq("SELECT 1", dialect="standard", max_results=10)
     assert df is not None
     mock_bigquery_client.query_and_wait.assert_called_with(

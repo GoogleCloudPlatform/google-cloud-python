@@ -5,8 +5,7 @@
 """Module for checking dependency versions and supported features."""
 
 # https://github.com/googleapis/python-bigquery/blob/main/CHANGELOG.md
-BIGQUERY_MINIMUM_VERSION = "3.4.2"
-BIGQUERY_QUERY_AND_WAIT_VERSION = "3.14.0"
+BIGQUERY_MINIMUM_VERSION = "3.43.0"
 PANDAS_VERBOSITY_DEPRECATION_VERSION = "0.23.0"
 PANDAS_BOOLEAN_DTYPE_VERSION = "1.0.0"
 
@@ -44,13 +43,6 @@ class Features:
             )
 
         return google.cloud.bigquery
-
-    @property
-    def bigquery_has_query_and_wait(self):
-        import packaging.version
-
-        min_version = packaging.version.parse(BIGQUERY_QUERY_AND_WAIT_VERSION)
-        return self.bigquery_installed_version >= min_version
 
     @property
     def pandas_installed_version(self):
