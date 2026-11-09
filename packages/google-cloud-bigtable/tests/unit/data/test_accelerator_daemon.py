@@ -475,6 +475,72 @@ class TestClose:
 
         assert d._proc is None
 
+    def test_gc_without_close_reaps_proc_and_removes_tempdir(
+        self, tmp_path, monkeypatch
+    ):
+        """Garbage-collecting an unclosed AcceleratorDaemon closes stdin, reaps
+        the subprocess before Popen.__del__ runs, and removes the tempdir."""
+        import gc
+        import subprocess
+        import sys
+        import warnings
+        import weakref
+
+        real_popen = subprocess.Popen
+
+        def fake_popen(argv, **kwargs):
+            return real_popen(
+                [sys.executable, "-c", "import sys; sys.stdin.read()"],
+                stdin=subprocess.PIPE,
+                stdout=kwargs.get("stdout"),
+                stderr=kwargs.get("stderr"),
+            )
+
+        monkeypatch.setattr(_daemon.subprocess, "Popen", fake_popen)
+        monkeypatch.setattr(
+            AcceleratorDaemon, "_wait_until_ready", lambda self, t: None
+        )
+
+        d = _make_daemon(tmp_path)
+        d.start()
+        tempdir = d._tempdir
+        assert tempdir is not None and os.path.isdir(tempdir)
+        proc_weak = weakref.ref(d._proc)
+
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter("always", ResourceWarning)
+            del d
+            gc.collect()
+
+        res_warnings = [w for w in caught if issubclass(w.category, ResourceWarning)]
+        assert not res_warnings
+        assert proc_weak() is None
+        assert not os.path.exists(tempdir)
+
+    def test_close_detaches_finalizer(self, tmp_path, monkeypatch):
+        """Calling close() detaches the weakref finalizer so it does not run twice."""
+        import subprocess
+
+        proc_mock = unittest.mock.Mock(spec=subprocess.Popen)
+        proc_mock.poll.return_value = None
+        proc_mock.stdin = unittest.mock.Mock()
+
+        monkeypatch.setattr(_daemon.subprocess, "Popen", lambda *a, **kw: proc_mock)
+        monkeypatch.setattr(
+            AcceleratorDaemon, "_wait_until_ready", lambda self, t: None
+        )
+
+        d = _make_daemon(tmp_path)
+        d.start()
+        finalizer = d._finalizer
+        assert finalizer is not None and finalizer.alive
+
+        with unittest.mock.patch.object(d, "_wait_for_exit", return_value=True):
+            d.close()
+
+        assert not finalizer.alive
+        assert d._finalizer is None
+
 
 # ---------------------------------------------------------------------------
 # _cleanup_tempdir: state clearing

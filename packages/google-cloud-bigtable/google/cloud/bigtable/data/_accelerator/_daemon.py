@@ -35,6 +35,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import weakref
 from typing import Any, Mapping, Sequence
 
 import grpc
@@ -205,6 +206,7 @@ class AcceleratorDaemon:
         self._log_path: str | None = None
         self._proc: subprocess.Popen[bytes] | None = None
         self._auth_secret: str | None = None
+        self._finalizer: weakref.finalize | None = None
 
     def __enter__(self) -> "AcceleratorDaemon":
         """Start the daemon on ``with`` entry and return it."""
@@ -359,8 +361,19 @@ class AcceleratorDaemon:
                 self._cleanup_tempdir()
             raise
 
+        # Close stdin and reap the daemon before Popen.__del__ runs if this
+        # instance is garbage-collected without close(). Otherwise Popen.__del__
+        # appends the live process to subprocess._active, keeping proc.stdin open.
+        self._finalizer = weakref.finalize(
+            self, AcceleratorDaemon._finalize_unclosed, self._proc, self._tempdir
+        )
+
     def close(self) -> None:
         """Tear down the daemon and clean up the UDS tempdir."""
+        finalizer = self._finalizer
+        self._finalizer = None
+        if finalizer is not None:
+            finalizer.detach()
         proc = self._proc
         if proc is None:
             return
@@ -540,3 +553,56 @@ class AcceleratorDaemon:
         self._uds_path = None
         self._log_path = None
         self._auth_secret = None
+
+    @staticmethod
+    def _wait_for_proc_exit(
+        proc: subprocess.Popen[bytes] | None, timeout: float
+    ) -> bool:
+        """Wait up to ``timeout`` seconds for ``proc`` to exit."""
+        if proc is None:
+            return True
+        try:
+            proc.wait(timeout=timeout)
+            return True
+        except subprocess.TimeoutExpired:
+            return False
+        except Exception:
+            return True
+
+    @staticmethod
+    def _finalize_unclosed(
+        proc: subprocess.Popen[bytes] | None, tempdir: str | None
+    ) -> None:
+        """Stop the daemon subprocess and remove its tempdir on garbage collection.
+
+        Holding ``proc`` in ``weakref.finalize`` ensures stdin is closed and the
+        child exits before ``subprocess.Popen.__del__`` can resurrect it into
+        ``subprocess._active``.
+        """
+        try:
+            if proc is not None and proc.poll() is None:
+                if proc.stdin is not None:
+                    try:
+                        proc.stdin.close()
+                    except Exception:
+                        pass
+                if not AcceleratorDaemon._wait_for_proc_exit(
+                    proc, _STDIN_GRACE_SECONDS
+                ):
+                    try:
+                        proc.terminate()
+                    except Exception:
+                        pass
+                    if not AcceleratorDaemon._wait_for_proc_exit(
+                        proc, _SIGTERM_GRACE_SECONDS
+                    ):
+                        try:
+                            proc.kill()
+                        except Exception:
+                            pass
+                        AcceleratorDaemon._wait_for_proc_exit(
+                            proc, _SIGKILL_GRACE_SECONDS
+                        )
+        finally:
+            if tempdir is not None and os.path.isdir(tempdir):
+                shutil.rmtree(tempdir, ignore_errors=True)

@@ -261,12 +261,11 @@ class BigtableDataClient(ClientWithProject):
         if (
             project is None
             and credentials is None
-            and client_options is not None
+            and (client_options is not None)
             and client_options.credentials_file
         ):
             project = os.getenv(
-                environment_vars.PROJECT,
-                os.getenv(environment_vars.LEGACY_PROJECT),
+                environment_vars.PROJECT, os.getenv(environment_vars.LEGACY_PROJECT)
             )
             if project is None:
                 _, project = google.auth.load_credentials_from_file(
@@ -1122,6 +1121,15 @@ class _DataApiTarget(abc.ABC):
             raise RuntimeError(
                 f"{self.__class__.__name__} must be created within an async event loop context."
             ) from e
+        self._instance_finalizer = weakref.finalize(
+            self,
+            self._finalize_instance_registration,
+            self.client,
+            self.instance_id,
+            self.app_profile_id,
+            id(self),
+            self._register_instance_future,
+        )
         self._accelerator_daemon: AcceleratorDaemon | None = None
         self._accelerator_client: AcceleratorClientType | None = None
         self._accelerator_health: AcceleratorHealthMonitorType | None = None
@@ -1194,6 +1202,7 @@ class _DataApiTarget(abc.ABC):
                 server.uds_path, server.auth_secret
             )
             self._accelerator_daemon = server
+            self._daemon_finalizer = weakref.finalize(self, server.close)
         except BaseException:
             server.close()
             raise
@@ -2046,17 +2055,35 @@ class _DataApiTarget(abc.ABC):
             finally:
                 self._accelerator_client = None
         if self._accelerator_daemon is not None:
+            daemon_finalizer = getattr(self, "_daemon_finalizer", None)
+            if daemon_finalizer is not None:
+                daemon_finalizer.detach()
             try:
                 self._accelerator_daemon.close()
             except Exception as exc:
                 _LOGGER.warning("Failed to close accelerator daemon: %s", exc)
             finally:
                 self._accelerator_daemon = None
+        instance_finalizer = getattr(self, "_instance_finalizer", None)
+        if instance_finalizer is not None:
+            instance_finalizer.detach()
         if self._register_instance_future:
             self._register_instance_future.cancel()
         self.client._remove_instance_registration(
             self.instance_id, self.app_profile_id, id(self)
         )
+
+    @staticmethod
+    def _finalize_instance_registration(
+        client: Any,
+        instance_id: str,
+        app_profile_id: str | None,
+        owner_id: int,
+        register_future: Any,
+    ) -> None:
+        if register_future:
+            register_future.cancel()
+        client._remove_instance_registration(instance_id, app_profile_id, owner_id)
 
     def __enter__(self):
         """Implement async context manager protocol

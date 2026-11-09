@@ -987,6 +987,79 @@ class TestStartAccelerator:
 
         assert "--app-profile" not in captured["cli_flags"]
 
+    def test_gc_and_explicit_close_finalizers(self):
+        """Dropping an unclosed Table/TableAsync stops health, closes the daemon,
+        and unregisters the instance; explicit close() detaches the finalizers."""
+        import gc
+
+        from google.cloud.bigtable.data._accelerator._daemon import AcceleratorDaemon
+        from google.cloud.bigtable.data._async.client import TableAsync
+        from google.cloud.bigtable.data._sync_autogen.client import Table
+
+        for table_cls, is_async, call_close in (
+            (TableAsync, True, False),
+            (Table, False, False),
+            (TableAsync, True, True),
+            (Table, False, True),
+        ):
+            fake_daemon = mock.Mock(
+                spec=AcceleratorDaemon, uds_path="/tmp/s", auth_secret="sec"
+            )
+            fake_health = mock.Mock(close=mock.AsyncMock() if is_async else mock.Mock())
+            fake_client = mock.Mock(close=mock.AsyncMock() if is_async else mock.Mock())
+            fake_future = mock.Mock()
+            remove_reg = mock.Mock()
+            client = SimpleNamespace(
+                project="p",
+                _emulator_host=None,
+                _accelerator_blocked_reason=None,
+                _accelerator_flags=[],
+                _accelerator_env={},
+                _use_accelerator=True,
+                _executor=None,
+                _gapic_client=mock.Mock(
+                    instance_path=lambda p, i: f"projects/{p}/instances/{i}"
+                ),
+                _register_instance=mock.Mock(),
+                _remove_instance_registration=remove_reg,
+            )
+            mod = (
+                "google.cloud.bigtable.data._async.client"
+                if is_async
+                else "google.cloud.bigtable.data._sync_autogen.client"
+            )
+            task_fn = (
+                "CrossSync.create_task"
+                if is_async
+                else "CrossSync._Sync_Impl.create_task"
+            )
+            with (
+                mock.patch(f"{mod}.{task_fn}", return_value=fake_future),
+                mock.patch(f"{mod}.AcceleratorDaemon", return_value=fake_daemon),
+                mock.patch(f"{mod}.AcceleratorClientType", return_value=fake_client),
+                mock.patch(
+                    f"{mod}.AcceleratorHealthMonitorType", return_value=fake_health
+                ),
+                mock.patch.object(table_cls, "_verify_daemon_identity"),
+            ):
+                table = table_cls(client, "inst-1", "tbl-1", app_profile_id="prof-1")
+                table_id = id(table)
+
+            if call_close:
+                if is_async:
+                    asyncio.get_event_loop().run_until_complete(table.close())
+                else:
+                    table.close()
+
+            del table
+            gc.collect()
+
+            if not call_close:
+                fake_health.request_stop.assert_called_once()
+            fake_daemon.close.assert_called_once()
+            fake_future.cancel.assert_called_once()
+            remove_reg.assert_called_once_with("inst-1", "prof-1", table_id)
+
 
 # ---------------------------------------------------------------------------
 # Event loop fixture so run_until_complete works
