@@ -23,7 +23,6 @@ import concurrent.futures
 import logging
 import os
 import random
-import threading
 import time
 import warnings
 import weakref
@@ -162,38 +161,6 @@ _UNSET: Any = object()
 class _AcceleratorIdentityError(RuntimeError):
     """Raised when the daemon's identity cannot be confirmed or does not match
     this client's — signals the caller to fall back to the native client."""
-
-
-class _SharedAccelerator:
-    """Reference-counted accelerator state shared across targets on a client
-    for a single ``(instance_id, app_profile_id)`` tuple."""
-
-    def __init__(
-        self,
-        daemon: AcceleratorDaemon | None,
-        client: Any,
-        health: Any,
-        breaker: AcceleratorBreaker,
-    ):
-        self.daemon = daemon
-        self.client = client
-        self.health = health
-        self.breaker = breaker
-        self.owners: set[int] = set()
-        self.closed: bool = False
-
-
-def _finalize_shared_accelerator_owner(
-    entry: _SharedAccelerator, owner_id: int, lock: threading.Lock
-) -> None:
-    """Stop the shared health monitor when the last referencing target is
-    garbage-collected without ``close()``."""
-    with lock:
-        entry.owners.discard(owner_id)
-        should_stop = not entry.owners and (not entry.closed)
-        health = entry.health
-    if should_stop and health is not None:
-        health.request_stop()
 
 
 def _normalize_scopes(scopes: Any) -> frozenset[str]:
@@ -360,15 +327,23 @@ class BigtableDataClient(ClientWithProject):
             if not CrossSync._Sync_Impl.is_async
             else None
         )
+        self._accelerator_daemon: AcceleratorDaemon | None = None
+        self._accelerator_client: AcceleratorClientType | None = None
+        self._accelerator_health: AcceleratorHealthMonitorType | None = None
+        self._accelerator_breaker = AcceleratorBreaker()
+        has_event_loop = True
         if self._emulator_host is None:
             try:
                 self._start_background_channel_refresh()
             except RuntimeError:
+                has_event_loop = False
                 warnings.warn(
                     f"{self.__class__.__name__} should be started in an asyncio event loop. Channel refresh will not be started",
                     RuntimeWarning,
                     stacklevel=2,
                 )
+        if self._use_accelerator is not False and has_event_loop:
+            self._maybe_start_accelerator(explicit=self._use_accelerator is True)
 
     def _init_accelerator_config(
         self,
@@ -378,7 +353,8 @@ class BigtableDataClient(ClientWithProject):
         """Compute the accelerator eligibility and forward-config from the
         caller's auth/identity configuration.
 
-        Sets three attributes read later by ``_DataApiTarget``:
+        Sets three attributes read later by ``_maybe_start_accelerator`` and
+        ``_start_accelerator``:
 
         * ``_accelerator_blocked_reason``: non-None means an in-memory secret
           was supplied that the daemon cannot reproduce (``credentials=``,
@@ -394,8 +370,6 @@ class BigtableDataClient(ClientWithProject):
         self._accelerator_env: dict[str, str] = {}
         self._cached_principal: str | None | object = _UNSET
         self._cached_cred_type: str | None | object = _UNSET
-        self._accelerator_lock = threading.Lock()
-        self._accelerators: dict[tuple[str, str | None], _SharedAccelerator] = {}
         if explicit_credentials:
             self._accelerator_blocked_reason = "an explicit credentials= object cannot be forwarded to the accelerator daemon"
         elif client_options is not None and getattr(client_options, "api_key", None):
@@ -409,7 +383,7 @@ class BigtableDataClient(ClientWithProject):
         if self._accelerator_blocked_reason:
             return
         self._accelerator_flags += [
-            "--user-agent",
+            "--caller-user-agent",
             f"python-v{google.cloud.bigtable.__version__}",
         ]
         scopes = getattr(client_options, "scopes", None) if client_options else None
@@ -549,53 +523,165 @@ class BigtableDataClient(ClientWithProject):
                 task_name=f"{self.__class__.__name__} channel refresh",
             )
 
-    def _close_accelerators(self) -> None:
-        """Tear down any shared accelerator daemons still registered on this client."""
-        lock = getattr(self, "_accelerator_lock", None)
-        accelerators = getattr(self, "_accelerators", None)
-        if not isinstance(accelerators, dict):
+    def _maybe_start_accelerator(self, *, explicit: bool) -> None:
+        """Start the accelerator daemon unless the environment prevents it.
+
+        The accelerator is on by default, so it must never break callers when
+        it can't run. When the emulator is set, or the daemon fails to start
+        (e.g. the binary isn't bundled for this platform), fall back to the
+        native client and warn. The exception is an explicit
+        ``use_accelerator=True``: a caller who required the accelerator gets a
+        hard error rather than a silent fallback, both for the emulator (a
+        genuine misconfiguration) and for a daemon that fails to start."""
+        if self._emulator_host is not None:
+            if explicit:
+                raise RuntimeError(
+                    "use_accelerator=True is not supported when BIGTABLE_EMULATOR_HOST is set; unset the emulator, or pass use_accelerator=False to use the emulator."
+                )
+            warnings.warn(
+                "Accelerator disabled because BIGTABLE_EMULATOR_HOST is set; using the native client.",
+                RuntimeWarning,
+                stacklevel=2,
+            )
             return
-        if lock is not None:
-            with lock:
-                entries = [e for e in accelerators.values() if not e.closed]
-                for e in entries:
-                    e.closed = True
-                accelerators.clear()
-        else:
-            entries = [e for e in accelerators.values() if not e.closed]
-            for e in entries:
-                e.closed = True
-            accelerators.clear()
-        for entry in entries:
-            entry.breaker.trip()
-            if entry.health is not None:
-                try:
-                    entry.health.close()
-                except Exception as exc:
-                    _LOGGER.warning(
-                        "Failed to close accelerator health monitor: %s", exc
-                    )
-                finally:
-                    entry.health = None
-            if entry.client is not None:
-                try:
-                    entry.client.close()
-                except Exception as exc:
-                    _LOGGER.warning("Failed to close accelerator client: %s", exc)
-                finally:
-                    entry.client = None
-            if entry.daemon is not None:
-                try:
-                    entry.daemon.close()
-                except Exception as exc:
-                    _LOGGER.warning("Failed to close accelerator daemon: %s", exc)
-                finally:
-                    entry.daemon = None
+        if self._accelerator_blocked_reason is not None:
+            warnings.warn(
+                f"Accelerator disabled: {self._accelerator_blocked_reason}; using the native client instead.",
+                RuntimeWarning,
+                stacklevel=2,
+            )
+            return
+        try:
+            self._start_accelerator()
+        except _AcceleratorIdentityError as exc:
+            if explicit:
+                raise
+            warnings.warn(f"Accelerator disabled: {exc}", RuntimeWarning, stacklevel=2)
+            self._accelerator_daemon = None
+            self._accelerator_client = None
+        except Exception as exc:
+            if explicit:
+                raise
+            warnings.warn(
+                f"Failed to start the Bigtable accelerator daemon; falling back to the native client: {exc}",
+                RuntimeWarning,
+                stacklevel=2,
+            )
+            self._accelerator_daemon = None
+            self._accelerator_client = None
+
+    def _start_accelerator(self) -> None:
+        """Spawn the daemon for this client and connect to its UDS.
+
+        On any failure the daemon is torn down before the error propagates."""
+        flags = ["--project", self.project, *self._accelerator_flags]
+        server = AcceleratorDaemon(cli_flags=flags, extra_env=self._accelerator_env)
+        try:
+            server.start()
+            self._verify_daemon_identity(server)
+            self._accelerator_client = AcceleratorClientType(
+                server.uds_path, server.auth_secret
+            )
+            self._accelerator_daemon = server
+        except BaseException:
+            server.close()
+            raise
+        try:
+            self._accelerator_health = AcceleratorHealthMonitorType(
+                self._accelerator_client, self._accelerator_breaker
+            )
+            self._accelerator_health.start()
+            weakref.finalize(self, self._accelerator_health.request_stop)
+        except Exception as exc:
+            warnings.warn(
+                f"Could not start the accelerator health monitor; the accelerator will run without health-based fallback: {exc}",
+                RuntimeWarning,
+                stacklevel=2,
+            )
+            self._accelerator_health = None
+
+    def _verify_daemon_identity(self, server: AcceleratorDaemon) -> None:
+        """Confirm the daemon resolved the same identity this client did.
+
+        Compares the principal, credential source type, and effective auth
+        scopes from ``identity.json`` against this client's own, raising
+        ``_AcceleratorIdentityError`` if unknown or mismatched."""
+        try:
+            identity = server.read_identity()
+        except Exception as exc:
+            raise _AcceleratorIdentityError(
+                f"Could not read daemon identity: {exc}"
+            ) from exc
+        if not isinstance(identity, dict):
+            raise _AcceleratorIdentityError(
+                "Could not read daemon identity: expected a JSON object"
+            )
+        raw_principal = identity.get("principal")
+        daemon_principal = (
+            raw_principal.strip()
+            if isinstance(raw_principal, str) and raw_principal.strip()
+            else None
+        )
+        own_principal = self._resolve_principal()
+        if own_principal is None or daemon_principal is None:
+            raise _AcceleratorIdentityError(
+                f"Could not verify daemon identity: principal is unknown on {('this client' if own_principal is None else 'the daemon')} side"
+            )
+        if own_principal != daemon_principal:
+            raise _AcceleratorIdentityError(
+                f"Accelerator identity mismatch: this client resolved {own_principal!r} but the daemon resolved {daemon_principal!r}; refusing to route RPCs through the accelerator."
+            )
+        raw_cred_type = identity.get("type")
+        daemon_cred_type = (
+            raw_cred_type.strip()
+            if isinstance(raw_cred_type, str) and raw_cred_type.strip()
+            else None
+        )
+        own_cred_type = self._resolve_credential_type()
+        if own_cred_type is None or daemon_cred_type is None:
+            raise _AcceleratorIdentityError(
+                f"Could not verify daemon identity: credential type is unknown on {('this client' if own_cred_type is None else 'the daemon')} side"
+            )
+        if own_cred_type != daemon_cred_type:
+            raise _AcceleratorIdentityError(
+                f"Accelerator identity mismatch: this client resolved credential type {own_cred_type!r} but the daemon resolved {daemon_cred_type!r}; refusing to route RPCs through the accelerator."
+            )
+        daemon_scopes = _normalize_scopes(identity.get("scopes"))
+        own_scopes = _normalize_scopes(self._accelerator_scopes)
+        if not own_scopes or not daemon_scopes:
+            raise _AcceleratorIdentityError(
+                f"Could not verify daemon identity: effective scopes are unknown on {('this client' if not own_scopes else 'the daemon')} side"
+            )
+        if own_scopes != daemon_scopes:
+            raise _AcceleratorIdentityError(
+                f"Accelerator scope mismatch: this client forwarded {sorted(own_scopes)!r} but the daemon resolved {sorted(daemon_scopes)!r}; refusing to route RPCs through the accelerator."
+            )
 
     def close(self, timeout: float | None = 2.0):
         """Cancel all background tasks"""
         self._is_closed.set()
-        self._close_accelerators()
+        self._accelerator_breaker.trip()
+        if self._accelerator_health is not None:
+            try:
+                self._accelerator_health.close()
+            except Exception as exc:
+                _LOGGER.warning("Failed to close accelerator health monitor: %s", exc)
+            finally:
+                self._accelerator_health = None
+        if self._accelerator_client is not None:
+            try:
+                self._accelerator_client.close()
+            except Exception as exc:
+                _LOGGER.warning("Failed to close accelerator client: %s", exc)
+            finally:
+                self._accelerator_client = None
+        if self._accelerator_daemon is not None:
+            try:
+                self._accelerator_daemon.close()
+            except Exception as exc:
+                _LOGGER.warning("Failed to close accelerator daemon: %s", exc)
+            finally:
+                self._accelerator_daemon = None
         if self._channel_refresh_task is not None:
             self._channel_refresh_task.cancel()
             CrossSync._Sync_Impl.wait([self._channel_refresh_task], timeout=timeout)
@@ -1200,155 +1286,22 @@ class _DataApiTarget(abc.ABC):
             raise RuntimeError(
                 f"{self.__class__.__name__} must be created within an async event loop context."
             ) from e
-        self._accelerator_daemon: AcceleratorDaemon | None = None
-        self._accelerator_client: AcceleratorClientType | None = None
-        self._accelerator_health: AcceleratorHealthMonitorType | None = None
-        self._shared_accelerator: _SharedAccelerator | None = None
-        self._accelerator_finalizer: weakref.finalize | None = None
-        self._accelerator_breaker = AcceleratorBreaker()
-        if self.client._use_accelerator is not False:
-            self._maybe_start_accelerator(explicit=self.client._use_accelerator is True)
 
-    def _maybe_start_accelerator(self, *, explicit: bool) -> None:
-        """Start the accelerator daemon unless the environment prevents it.
+    @property
+    def _accelerator_daemon(self) -> AcceleratorDaemon | None:
+        return self.client._accelerator_daemon
 
-        The accelerator is on by default, so it must never break callers when
-        it can't run. When the emulator is set, or the daemon fails to start
-        (e.g. the binary isn't bundled for this platform), fall back to the
-        native client and warn. The exception is an explicit
-        ``use_accelerator=True``: a caller who required the accelerator gets a
-        hard error rather than a silent fallback, both for the emulator (a
-        genuine misconfiguration) and for a daemon that fails to start."""
-        if self.client._emulator_host is not None:
-            if explicit:
-                raise RuntimeError(
-                    "use_accelerator=True is not supported when BIGTABLE_EMULATOR_HOST is set; unset the emulator, or pass use_accelerator=False to use the emulator."
-                )
-            warnings.warn(
-                "Accelerator disabled because BIGTABLE_EMULATOR_HOST is set; using the native client.",
-                RuntimeWarning,
-                stacklevel=2,
-            )
-            return
-        if self.client._accelerator_blocked_reason is not None:
-            warnings.warn(
-                f"Accelerator disabled: {self.client._accelerator_blocked_reason}; using the native client instead.",
-                RuntimeWarning,
-                stacklevel=2,
-            )
-            return
-        try:
-            self._start_accelerator()
-        except _AcceleratorIdentityError as exc:
-            if explicit:
-                raise
-            warnings.warn(f"Accelerator disabled: {exc}", RuntimeWarning, stacklevel=2)
-            self._accelerator_daemon = None
-            self._accelerator_client = None
-        except Exception as exc:
-            if explicit:
-                raise
-            warnings.warn(
-                f"Failed to start the Bigtable accelerator daemon; falling back to the native client: {exc}",
-                RuntimeWarning,
-                stacklevel=2,
-            )
-            self._accelerator_daemon = None
-            self._accelerator_client = None
+    @property
+    def _accelerator_client(self) -> AcceleratorClientType | None:
+        return self.client._accelerator_client
 
-    def _start_accelerator(self) -> None:
-        """Acquire or spawn the shared daemon for this target's
-        ``(instance_id, app_profile_id)`` and connect to its UDS.
+    @property
+    def _accelerator_health(self) -> AcceleratorHealthMonitorType | None:
+        return self.client._accelerator_health
 
-        On any failure the daemon is torn down before the error propagates."""
-        accelerators = getattr(self.client, "_accelerators", None)
-        lock = getattr(self.client, "_accelerator_lock", None)
-        key = (self.instance_id, self.app_profile_id or None)
-        if isinstance(accelerators, dict) and lock is not None:
-            with lock:
-                entry = accelerators.get(key)
-                if entry is not None and (not entry.closed):
-                    if (
-                        entry.health is not None
-                        and entry.health._closed.is_set()
-                        and (not entry.breaker.is_tripped)
-                    ):
-                        try:
-                            entry.health = AcceleratorHealthMonitorType(
-                                entry.client, entry.breaker
-                            )
-                            entry.health.start()
-                        except Exception as exc:
-                            warnings.warn(
-                                f"Could not start the accelerator health monitor; the accelerator will run without health-based fallback: {exc}",
-                                RuntimeWarning,
-                                stacklevel=2,
-                            )
-                            entry.health = None
-                    self._accelerator_daemon = entry.daemon
-                    self._accelerator_client = entry.client
-                    self._accelerator_health = entry.health
-                    self._accelerator_breaker = entry.breaker
-                    self._shared_accelerator = entry
-                    owner_id = id(self)
-                    entry.owners.add(owner_id)
-                    self._accelerator_finalizer = weakref.finalize(
-                        self, _finalize_shared_accelerator_owner, entry, owner_id, lock
-                    )
-                    return
-                self._spawn_and_connect_accelerator()
-                entry = _SharedAccelerator(
-                    daemon=self._accelerator_daemon,
-                    client=self._accelerator_client,
-                    health=self._accelerator_health,
-                    breaker=self._accelerator_breaker,
-                )
-                self._shared_accelerator = entry
-                owner_id = id(self)
-                entry.owners.add(owner_id)
-                accelerators[key] = entry
-                self._accelerator_finalizer = weakref.finalize(
-                    self, _finalize_shared_accelerator_owner, entry, owner_id, lock
-                )
-                return
-        self._spawn_and_connect_accelerator()
-        if self._accelerator_health is not None:
-            self._accelerator_finalizer = weakref.finalize(
-                self, self._accelerator_health.request_stop
-            )
-
-    def _spawn_and_connect_accelerator(self) -> None:
-        """Spawn a new daemon for this target's ``(instance_id, app_profile_id)``
-        and connect to its UDS."""
-        flags = ["--project", self.client.project, "--instance", self.instance_id]
-        if self.app_profile_id:
-            flags.extend(["--app-profile", self.app_profile_id])
-        flags.extend(self.client._accelerator_flags)
-        server = AcceleratorDaemon(
-            cli_flags=flags, extra_env=self.client._accelerator_env
-        )
-        try:
-            server.start()
-            self._verify_daemon_identity(server)
-            self._accelerator_client = AcceleratorClientType(
-                server.uds_path, server.auth_secret
-            )
-            self._accelerator_daemon = server
-        except BaseException:
-            server.close()
-            raise
-        try:
-            self._accelerator_health = AcceleratorHealthMonitorType(
-                self._accelerator_client, self._accelerator_breaker
-            )
-            self._accelerator_health.start()
-        except Exception as exc:
-            warnings.warn(
-                f"Could not start the accelerator health monitor; the accelerator will run without health-based fallback: {exc}",
-                RuntimeWarning,
-                stacklevel=2,
-            )
-            self._accelerator_health = None
+    @property
+    def _accelerator_breaker(self) -> AcceleratorBreaker:
+        return self.client._accelerator_breaker
 
     def _use_accelerator(self, method_name: str) -> bool:
         """Whether this call should be routed through the accelerator daemon.
@@ -1360,63 +1313,6 @@ class _DataApiTarget(abc.ABC):
             and is_supported(method_name)
             and (not self._accelerator_breaker.bypass())
         )
-
-    def _verify_daemon_identity(self, server: AcceleratorDaemon) -> None:
-        """Confirm the daemon resolved the same identity this client did.
-
-        Compares the principal, credential source type, and effective auth
-        scopes from ``identity.json`` against this client's own, raising
-        ``_AcceleratorIdentityError`` if unknown or mismatched."""
-        try:
-            identity = server.read_identity()
-        except Exception as exc:
-            raise _AcceleratorIdentityError(
-                f"Could not read daemon identity: {exc}"
-            ) from exc
-        if not isinstance(identity, dict):
-            raise _AcceleratorIdentityError(
-                "Could not read daemon identity: expected a JSON object"
-            )
-        raw_principal = identity.get("principal")
-        daemon_principal = (
-            raw_principal.strip()
-            if isinstance(raw_principal, str) and raw_principal.strip()
-            else None
-        )
-        own_principal = self.client._resolve_principal()
-        if own_principal is None or daemon_principal is None:
-            raise _AcceleratorIdentityError(
-                f"Could not verify daemon identity: principal is unknown on {('this client' if own_principal is None else 'the daemon')} side"
-            )
-        if own_principal != daemon_principal:
-            raise _AcceleratorIdentityError(
-                f"Accelerator identity mismatch: this client resolved {own_principal!r} but the daemon resolved {daemon_principal!r}; refusing to route RPCs through the accelerator."
-            )
-        raw_cred_type = identity.get("type")
-        daemon_cred_type = (
-            raw_cred_type.strip()
-            if isinstance(raw_cred_type, str) and raw_cred_type.strip()
-            else None
-        )
-        own_cred_type = self.client._resolve_credential_type()
-        if own_cred_type is None or daemon_cred_type is None:
-            raise _AcceleratorIdentityError(
-                f"Could not verify daemon identity: credential type is unknown on {('this client' if own_cred_type is None else 'the daemon')} side"
-            )
-        if own_cred_type != daemon_cred_type:
-            raise _AcceleratorIdentityError(
-                f"Accelerator identity mismatch: this client resolved credential type {own_cred_type!r} but the daemon resolved {daemon_cred_type!r}; refusing to route RPCs through the accelerator."
-            )
-        daemon_scopes = _normalize_scopes(identity.get("scopes"))
-        own_scopes = _normalize_scopes(self.client._accelerator_scopes)
-        if not own_scopes or not daemon_scopes:
-            raise _AcceleratorIdentityError(
-                f"Could not verify daemon identity: effective scopes are unknown on {('this client' if not own_scopes else 'the daemon')} side"
-            )
-        if own_scopes != daemon_scopes:
-            raise _AcceleratorIdentityError(
-                f"Accelerator scope mismatch: this client forwarded {sorted(own_scopes)!r} but the daemon resolved {sorted(daemon_scopes)!r}; refusing to route RPCs through the accelerator."
-            )
 
     def _create_operation(
         self, op_type: OperationType, **kwargs
@@ -2159,61 +2055,6 @@ class _DataApiTarget(abc.ABC):
 
     def close(self):
         """Called to close the Table instance and release any resources held by it."""
-        finalizer = getattr(self, "_accelerator_finalizer", None)
-        if finalizer is not None:
-            finalizer.detach()
-            self._accelerator_finalizer = None
-        shared = getattr(self, "_shared_accelerator", None)
-        should_teardown = True
-        if shared is not None:
-            self._shared_accelerator = None
-            accelerators = getattr(self.client, "_accelerators", None)
-            lock = getattr(self.client, "_accelerator_lock", None)
-            key = (self.instance_id, self.app_profile_id or None)
-            if lock is not None:
-                with lock:
-                    shared.owners.discard(id(self))
-                    if not shared.owners and (not shared.closed):
-                        shared.closed = True
-                        if (
-                            isinstance(accelerators, dict)
-                            and accelerators.get(key) is shared
-                        ):
-                            accelerators.pop(key, None)
-                    else:
-                        should_teardown = False
-        if not should_teardown:
-            local_breaker = AcceleratorBreaker()
-            local_breaker.trip()
-            self._accelerator_breaker = local_breaker
-            self._accelerator_health = None
-            self._accelerator_client = None
-            self._accelerator_daemon = None
-        else:
-            self._accelerator_breaker.trip()
-            if self._accelerator_health is not None:
-                try:
-                    self._accelerator_health.close()
-                except Exception as exc:
-                    _LOGGER.warning(
-                        "Failed to close accelerator health monitor: %s", exc
-                    )
-                finally:
-                    self._accelerator_health = None
-            if self._accelerator_client is not None:
-                try:
-                    self._accelerator_client.close()
-                except Exception as exc:
-                    _LOGGER.warning("Failed to close accelerator client: %s", exc)
-                finally:
-                    self._accelerator_client = None
-            if self._accelerator_daemon is not None:
-                try:
-                    self._accelerator_daemon.close()
-                except Exception as exc:
-                    _LOGGER.warning("Failed to close accelerator daemon: %s", exc)
-                finally:
-                    self._accelerator_daemon = None
         if self._register_instance_future:
             self._register_instance_future.cancel()
         self.client._remove_instance_registration(
