@@ -17,6 +17,34 @@ from google.showcase import gapic_version as package_version
 
 __version__ = package_version.__version__
 
+# PEP 0810: Explicit Lazy Imports
+# Python 3.15+ natively intercepts and defers these imports.
+# Developers can disable this behavior and force eager imports.
+# For more information, see:
+# https://docs.python.org/3.15/library/sys.html#sys.set_lazy_imports_filter
+# Older Python versions safely ignore this variable.
+__lazy_modules__ = {
+"google.showcase_v1beta1.services.echo.async_client",
+"google.showcase_v1beta1.services.echo.client",
+"google.showcase_v1beta1.services.identity.async_client",
+"google.showcase_v1beta1.services.identity.client",
+"google.showcase_v1beta1.services.messaging.async_client",
+"google.showcase_v1beta1.services.messaging.client",
+"google.showcase_v1beta1.services.resumable_upload_service.async_client",
+"google.showcase_v1beta1.services.resumable_upload_service.client",
+"google.showcase_v1beta1.services.sequence_service.async_client",
+"google.showcase_v1beta1.services.sequence_service.client",
+"google.showcase_v1beta1.services.testing.async_client",
+"google.showcase_v1beta1.services.testing.client",
+"google.showcase_v1beta1.types.echo",
+"google.showcase_v1beta1.types.identity",
+"google.showcase_v1beta1.types.messaging",
+"google.showcase_v1beta1.types.rest_error",
+"google.showcase_v1beta1.types.resumable_upload",
+"google.showcase_v1beta1.types.sequence",
+"google.showcase_v1beta1.types.testing",
+}
+
 
 from google.showcase_v1beta1.services.echo.client import EchoClient
 from google.showcase_v1beta1.services.echo.async_client import EchoAsyncClient

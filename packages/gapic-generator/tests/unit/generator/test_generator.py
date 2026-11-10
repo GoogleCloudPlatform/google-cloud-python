@@ -12,9 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import ast
 import json
 import os
+import sys
 from textwrap import dedent
+from types import ModuleType
 from typing import Mapping
 from unittest import mock
 
@@ -339,6 +342,96 @@ def test_get_response_resumable_upload_generates_async_client_and_rest_asyncio()
                 "foo/resumable_upload_service/async_client.py",
                 "foo/resumable_upload_service/client.py",
             }
+
+
+@pytest.mark.parametrize("transport", ("grpc+rest", "rest"))
+@pytest.mark.parametrize("namespace", ("google.cloud", "example.api"))
+def test_unversioned_package_lazy_imports(transport, namespace):
+    opts = Options.build(f"transport={transport},python-gapic-namespace={namespace}")
+    package = "google.cloud.hatstand.v1"
+    api_schema = api.API.build(
+        [
+            descriptor_pb2.FileDescriptorProto(
+                name="hatstand.proto",
+                package=package,
+                service=[descriptor_pb2.ServiceDescriptorProto(name="Hatstand")],
+                message_type=[descriptor_pb2.DescriptorProto(name="Request")],
+            ),
+            descriptor_pb2.FileDescriptorProto(
+                name="state.proto",
+                package=package,
+                enum_type=[
+                    descriptor_pb2.EnumDescriptorProto(
+                        name="State",
+                        value=[
+                            descriptor_pb2.EnumValueDescriptorProto(
+                                name="UNKNOWN", number=0
+                            )
+                        ],
+                    )
+                ],
+            ),
+            descriptor_pb2.FileDescriptorProto(name="empty.proto", package=package),
+        ],
+        package=package,
+        opts=opts,
+    )
+    source = (
+        generator.Generator(opts)
+        ._env.get_template("%namespace/%name/__init__.py.j2")
+        .render(api=api_schema, opts=opts)
+    )
+    assignments = {
+        node.targets[0].id: ast.literal_eval(node.value)
+        for node in ast.parse(source).body
+        if isinstance(node, ast.Assign)
+        and node.targets[0].id in ("__lazy_modules__", "__all__")
+    }
+    expected_modules = {
+        f"{namespace}.hatstand_v1.services.hatstand.client",
+        f"{namespace}.hatstand_v1.types.hatstand",
+        f"{namespace}.hatstand_v1.types.state",
+    }
+    expected_exports = {"HatstandClient", "Request", "State"}
+    if "grpc" in transport:
+        expected_modules.add(f"{namespace}.hatstand_v1.services.hatstand.async_client")
+        expected_exports.add("HatstandAsyncClient")
+    assert assignments["__lazy_modules__"] == expected_modules
+    assert set(assignments["__all__"]) == expected_exports
+
+    if sys.version_info >= (3, 15):
+        package_module = ModuleType(f"{namespace}.hatstand")
+        package_module.gapic_version = ModuleType("gapic_version")
+        package_module.gapic_version.__version__ = "1.0.0"
+        with mock.patch.dict(sys.modules, {package_module.__name__: package_module}):
+            exec(source, package_module.__dict__)
+            assert expected_modules.isdisjoint(sys.modules)
+            request_module = ModuleType(f"{namespace}.hatstand_v1.types.hatstand")
+            request_module.Request = object()
+            sys.modules[request_module.__name__] = request_module
+            assert package_module.Request is request_module.Request
+        assert expected_modules.isdisjoint(sys.modules)
+
+
+def test_unversioned_lazy_declaration_targets_subpackage_parent():
+    api_schema = api.API.build(
+        [
+            descriptor_pb2.FileDescriptorProto(
+                name="hatstand.proto", package="google.cloud.hatstand.v1"
+            ),
+            descriptor_pb2.FileDescriptorProto(
+                name="common.proto", package="google.cloud.hatstand.v1.common"
+            ),
+        ],
+        package="google.cloud.hatstand.v1",
+    )
+    source = (
+        make_generator()
+        ._env.get_template("%namespace/%name/__init__.py.j2")
+        .render(api=api_schema, opts=Options.build(""))
+    )
+    assert '"google.cloud.hatstand_v1",' in source
+    assert '"google.cloud.hatstand_v1.common",' not in source
 
 
 def test_get_response_enumerates_services():

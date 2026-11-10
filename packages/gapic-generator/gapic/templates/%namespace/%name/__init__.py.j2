@@ -6,6 +6,32 @@ from {{package_path}} import gapic_version as package_version
 
 __version__ = package_version.__version__
 
+{% set versioned_package_path = (api.naming.module_namespace + (api.naming.versioned_module_name,))|join('.') %}
+# PEP 0810: Explicit Lazy Imports
+# Python 3.15+ natively intercepts and defers these imports.
+# Developers can disable this behavior and force eager imports.
+# For more information, see:
+# https://docs.python.org/3.15/library/sys.html#sys.set_lazy_imports_filter
+# Older Python versions safely ignore this variable.
+__lazy_modules__ = {
+    {% filter sort_lines -%}
+    {% if api.subpackages -%}
+        "{{versioned_package_path}}",
+    {% endif -%}
+    {% for service in api.services.values()
+            if service.meta.address.subpackage == api.subpackage_view -%}
+        "{{versioned_package_path}}.services.{{ service.name|snake_case }}.client",
+        {% if 'grpc' in opts.transport -%}
+        "{{versioned_package_path}}.services.{{ service.name|snake_case }}.async_client",
+        {% endif -%}
+    {% endfor -%}
+    {% for proto in api.protos.values()
+            if proto.meta.address.subpackage == api.subpackage_view and (proto.messages or proto.enums) -%}
+        "{{versioned_package_path}}.types.{{ proto.module_name }}",
+    {% endfor -%}
+    {% endfilter %}
+}
+
 {#  Import subpackages. -#}
 {% for subpackage in api.subpackages|dictsort %}
 from {% if api.naming.module_namespace %}{{ api.naming.module_namespace|join('.') }}.{% endif %}
