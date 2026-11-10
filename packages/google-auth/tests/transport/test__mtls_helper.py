@@ -2351,11 +2351,24 @@ class TestMtlsCertManager(object):
         )
         return cert_file, config_file
 
-    def test_default_discovery_and_rotation_from_config_file(self, tmp_path):
+    @pytest.mark.parametrize(
+        "use_default_location", [False, True], ids=["explicit_path", "default_location"]
+    )
+    def test_default_discovery_and_rotation_from_config_file(
+        self, tmp_path, monkeypatch, use_default_location
+    ):
         cert_file, config_file = self._write_workload_config(tmp_path)
-        manager = _mtls_helper._MtlsCertManager(
-            certificate_config_path=str(config_file)
-        )
+        if use_default_location:
+            # The config file is written as certificate_config.json in tmp_path,
+            # so it is found through the gcloud config directory.
+            monkeypatch.setattr(
+                _mtls_helper._cloud_sdk, "get_config_path", lambda: str(tmp_path)
+            )
+            manager = _mtls_helper._MtlsCertManager()
+        else:
+            manager = _mtls_helper._MtlsCertManager(
+                certificate_config_path=str(config_file)
+            )
         assert manager.get_credential_snapshot() == (None, None, 0)
 
         assert manager.refresh() is True
@@ -2615,9 +2628,7 @@ class TestMtlsCertManager(object):
         )
         _, config_file = self._write_workload_config(tmp_path)
 
-        manager = _mtls_helper._MtlsCertManager(
-            certificate_config_path=str(config_file)
-        )
+        manager = _mtls_helper._MtlsCertManager()
         assert manager.refresh() is True
 
         config_file.unlink()
