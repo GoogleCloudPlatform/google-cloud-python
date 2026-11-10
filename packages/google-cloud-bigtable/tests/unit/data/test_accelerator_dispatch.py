@@ -197,7 +197,7 @@ class TestMutateRowViaAccelerator:
         assert result == resp
         client_mock.mutate_row.assert_awaited_once_with(req, timeout=30.0)
 
-    def test_unimplemented_trips_breaker_and_raises_fallback(self):
+    def test_unimplemented_translates_and_raises(self):
         from google.cloud.bigtable_v2.types.bigtable import MutateRowRequest
 
         rpc_exc = _FakeRpcError(StatusCode.UNIMPLEMENTED, "no sessions")
@@ -207,9 +207,9 @@ class TestMutateRowViaAccelerator:
         t = _bare_target(accel_client=client_mock, accel_daemon=daemon)
 
         req = MutateRowRequest()
-        with pytest.raises(_AcceleratorFallback):
+        with pytest.raises(core_exceptions.MethodNotImplemented):
             self._run(t._mutate_row_via_accelerator(req, 30.0))
-        assert t._accelerator_breaker.bypass()
+        assert not t._accelerator_breaker.bypass()
 
     def test_dead_daemon_trips_breaker_and_raises_fallback(self):
         from google.cloud.bigtable_v2.types.bigtable import MutateRowRequest
@@ -321,7 +321,7 @@ class TestReadRowViaAccelerator:
         assert row is None
         client_mock.read_rows.assert_awaited_once()
 
-    def test_unimplemented_trips_breaker_and_raises_fallback(self):
+    def test_unimplemented_translates_and_raises(self):
         from google.cloud.bigtable.data.read_rows_query import ReadRowsQuery
 
         rpc_exc = _FakeRpcError(StatusCode.UNIMPLEMENTED, "no sessions")
@@ -331,9 +331,9 @@ class TestReadRowViaAccelerator:
         t = _bare_target(accel_client=client_mock, accel_daemon=daemon)
 
         query = ReadRowsQuery(row_keys=b"key1", limit=1)
-        with pytest.raises(_AcceleratorFallback):
+        with pytest.raises(core_exceptions.MethodNotImplemented):
             self._run(t._read_row_via_accelerator(query, 30.0))
-        assert t._accelerator_breaker.bypass()
+        assert not t._accelerator_breaker.bypass()
 
     def test_dead_daemon_trips_breaker_and_raises_fallback(self):
         from google.cloud.bigtable.data.read_rows_query import ReadRowsQuery
@@ -376,9 +376,10 @@ class TestReadRowViaAccelerator:
             self._run(t._read_row_via_accelerator(query, 30.0))
         assert not t._accelerator_breaker.bypass()
 
-    def test_invalid_chunk_trips_breaker_and_raises_fallback(self):
+    def test_invalid_chunk_reraises_without_fallback(self):
         from google.protobuf import wrappers_pb2
 
+        from google.cloud.bigtable.data.exceptions import InvalidChunk
         from google.cloud.bigtable.data.read_rows_query import ReadRowsQuery
         from google.cloud.bigtable_v2.types.bigtable import ReadRowsResponse
 
@@ -402,9 +403,9 @@ class TestReadRowViaAccelerator:
         t = _bare_target(accel_client=client_mock, accel_daemon=daemon)
 
         query = ReadRowsQuery(row_keys=b"", limit=1)
-        with pytest.raises(_AcceleratorFallback):
+        with pytest.raises(InvalidChunk):
             self._run(t._read_row_via_accelerator(query, 30.0))
-        assert t._accelerator_breaker.bypass()
+        assert not t._accelerator_breaker.bypass()
 
 
 # ---------------------------------------------------------------------------

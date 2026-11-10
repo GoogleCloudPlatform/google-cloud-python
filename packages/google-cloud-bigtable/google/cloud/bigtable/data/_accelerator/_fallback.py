@@ -14,20 +14,19 @@
 #
 """Client-side fallback policy for accelerator-routed RPCs.
 
-A daemon that cannot open any sessions replies ``UNIMPLEMENTED``, and the routing
-layer transparently retries the call on the native client. The first
-``UNIMPLEMENTED`` reply trips a sticky breaker so a persistently-degraded daemon
-stops being dialed at all. A daemon whose subprocess has died mid-flight trips
-the breaker immediately — it will never recover.
+The accelerator daemon handles session-to-classic fallback internally (for
+instance, when ``session_load <= 1`` or when the session backend replies
+``UNIMPLEMENTED``). On the Python side, fallback to the native client only
+occurs when the Go binary cannot be started or when the healthcheck to the
+daemon fails (including when the daemon subprocess dies mid-flight).
 
-The same breaker also carries a reversible "degraded" flag, set by the health
-monitor when the daemon is up but too starved to answer its own health check;
-see :class:`AcceleratorBreaker`.
+The breaker carries a permanent "tripped" flag (set when the daemon subprocess
+dies or on client teardown) and a reversible "degraded" flag (set by the health
+monitor when the daemon fails consecutive health checks); see
+:class:`AcceleratorBreaker`.
 
-Any other gRPC error is a real, daemon-served result the native client would
-reproduce (the daemon owns retries, so it has already exhausted them), so it is
-translated to the corresponding ``google.api_core`` exception and raised without
-falling back.
+Any gRPC error returned by a running daemon is translated to the corresponding
+``google.api_core`` exception and raised without falling back.
 
 This module is plain sync-only logic shared verbatim by the async and generated
 sync clients; ``grpc.RpcError`` is the common base of both ``grpc.RpcError`` and
@@ -42,8 +41,6 @@ from typing import TYPE_CHECKING
 
 from google.api_core import exceptions as core_exceptions
 from grpc import RpcError, StatusCode
-
-from google.cloud.bigtable.data.exceptions import InvalidChunk
 
 if TYPE_CHECKING:
     from google.cloud.bigtable.data._accelerator._daemon import AcceleratorDaemon
@@ -62,14 +59,13 @@ class _AcceleratorFallback(Exception):
 class AcceleratorBreaker:
     """Tracks accelerator health and decides when to stop using it.
 
-    One instance per Table. Thread-safe so the generated sync client can share a
-    Table across threads. There are two independent reasons to bypass, and they
-    differ in whether they can be undone:
+    One instance per Client. Thread-safe so the generated sync client can share
+    targets across threads. There are two independent reasons to bypass, and
+    they differ in whether they can be undone:
 
-    * **Tripped** — permanent. The first ``UNIMPLEMENTED`` reply (the daemon
-      understands the RPC shape but has no working sessions), or an explicit
-      :meth:`trip` when the daemon subprocess is found dead. Neither condition
-      recovers, so the accelerator is abandoned for the life of the Table.
+    * **Tripped** — permanent. Set via :meth:`trip` when the daemon subprocess
+      is found dead or when the client closes. It never recovers, so the
+      accelerator is abandoned for the life of the client.
     * **Degraded** — reversible. Set by the health monitor when the daemon stops
       answering its own health check promptly (see
       ``_async/_accelerator_health.py``). A daemon starved of CPU recovers when
@@ -163,14 +159,10 @@ def handle_accelerator_error(
 
     * daemon subprocess dead -> trip the breaker; fall back if idempotent, else
       translate and raise (a mid-flight crash may have already committed)
-    * :class:`InvalidChunk` -> trip the breaker, fall back immediately
-    * ``UNIMPLEMENTED`` -> trip the breaker, fall back immediately
-    * any other gRPC error -> translate and raise
+    * any gRPC error -> translate and raise (the daemon handles ``UNIMPLEMENTED``
+      and session load fallback internally)
     * a non-gRPC exception -> re-raise unchanged (never masked as a fallback)
     """
-    # TODO(accelerator): emit a metric here (e.g. a fallback/error counter keyed
-    # by reason: dead-daemon / unimplemented / translated-error) once client-side
-    # accelerator metrics are wired up.
     # A dead subprocess can surface as a channel error under any status code, so
     # check liveness first: the "daemon died mid-flight" case always wins and is
     # never recoverable.
@@ -178,7 +170,7 @@ def handle_accelerator_error(
         if breaker.trip():
             _LOGGER.warning(
                 "Accelerator daemon is no longer running; permanently falling back "
-                "to the native Bigtable client for this table."
+                "to the native Bigtable client."
             )
             _LOGGER.debug("Accelerator daemon failure details", exc_info=exc)
         if not is_idempotent:
@@ -186,26 +178,8 @@ def handle_accelerator_error(
                 raise core_exceptions.from_grpc_error(exc) from exc
             raise exc
         raise _AcceleratorFallback() from exc
-    if isinstance(exc, InvalidChunk):
-        if breaker.trip():
-            _LOGGER.warning(
-                "Accelerator daemon returned an invalid ReadRows chunk; permanently "
-                "falling back to the native Bigtable client for this table."
-            )
-            _LOGGER.debug("Accelerator daemon failure details", exc_info=exc)
-        raise _AcceleratorFallback() from exc
     if not isinstance(exc, RpcError):
         # A bug in our own merge machinery, not a daemon result. Do not mask it
         # as a fallback; let it propagate unchanged.
         raise exc
-    if _grpc_code(exc) == StatusCode.UNIMPLEMENTED:
-        # The daemon only replies UNIMPLEMENTED once it has no working sessions,
-        # a persistent condition, so trip the breaker and fall back immediately
-        # rather than re-dialing on every subsequent call.
-        if breaker.trip():
-            _LOGGER.warning(
-                "Accelerator daemon replied UNIMPLEMENTED; permanently falling back "
-                "to the native Bigtable client for this table."
-            )
-        raise _AcceleratorFallback() from exc
     raise core_exceptions.from_grpc_error(exc) from exc

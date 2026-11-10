@@ -171,23 +171,23 @@ class TestHandleAcceleratorError:
 
     # -- UNIMPLEMENTED -------------------------------------------------------
 
-    def test_unimplemented_trips_breaker_and_falls_back(self):
+    def test_unimplemented_translated_and_raised(self):
         daemon = mock.Mock()
         daemon.is_running = True
         breaker = AcceleratorBreaker()
 
         exc = _make_rpc_error(StatusCode.UNIMPLEMENTED)
-        with pytest.raises(_AcceleratorFallback):
+        with pytest.raises(core_exceptions.MethodNotImplemented):
             handle_accelerator_error(exc, daemon=daemon, breaker=breaker)
-        assert breaker.bypass()
+        assert not breaker.bypass()
 
-    def test_unimplemented_without_daemon_object_falls_back(self):
-        """daemon=None means the client has no daemon reference; UNIMPLEMENTED still trips."""
+    def test_unimplemented_without_daemon_object_translated_and_raised(self):
+        """daemon=None means the client has no daemon reference; UNIMPLEMENTED is translated."""
         breaker = AcceleratorBreaker()
         exc = _make_rpc_error(StatusCode.UNIMPLEMENTED)
-        with pytest.raises(_AcceleratorFallback):
+        with pytest.raises(core_exceptions.MethodNotImplemented):
             handle_accelerator_error(exc, daemon=None, breaker=breaker)
-        assert breaker.bypass()
+        assert not breaker.bypass()
 
     def test_dead_daemon_logs_warning_once_without_traceback(self, caplog):
         import logging
@@ -202,19 +202,6 @@ class TestHandleAcceleratorError:
         assert len(caplog.records) == 1
         assert "no longer running" in caplog.records[0].getMessage()
         assert caplog.records[0].exc_info is None
-
-    def test_unimplemented_logs_warning_once(self, caplog):
-        import logging
-
-        daemon = mock.Mock(is_running=True)
-        breaker = AcceleratorBreaker()
-        exc = _make_rpc_error(StatusCode.UNIMPLEMENTED)
-        with caplog.at_level(logging.WARNING):
-            for _ in range(3):
-                with pytest.raises(_AcceleratorFallback):
-                    handle_accelerator_error(exc, daemon=daemon, breaker=breaker)
-        assert len(caplog.records) == 1
-        assert "replied UNIMPLEMENTED" in caplog.records[0].getMessage()
 
     # -- Other gRPC errors are translated ------------------------------------
 
@@ -251,29 +238,15 @@ class TestHandleAcceleratorError:
 
     # -- InvalidChunk --------------------------------------------------------
 
-    def test_invalid_chunk_trips_breaker_and_falls_back(self):
+    def test_invalid_chunk_reraises_unchanged(self):
         daemon = mock.Mock()
         daemon.is_running = True
         breaker = AcceleratorBreaker()
 
         exc = InvalidChunk("first row chunk is missing key")
-        with pytest.raises(_AcceleratorFallback):
+        with pytest.raises(InvalidChunk, match="first row chunk is missing key"):
             handle_accelerator_error(exc, daemon=daemon, breaker=breaker)
-        assert breaker.bypass()
-
-    def test_invalid_chunk_logs_warning_once_without_traceback(self, caplog):
-        import logging
-
-        daemon = mock.Mock(is_running=True)
-        breaker = AcceleratorBreaker()
-        exc = InvalidChunk("first row chunk is missing key")
-        with caplog.at_level(logging.WARNING):
-            for _ in range(3):
-                with pytest.raises(_AcceleratorFallback):
-                    handle_accelerator_error(exc, daemon=daemon, breaker=breaker)
-        assert len(caplog.records) == 1
-        assert "invalid ReadRows chunk" in caplog.records[0].getMessage()
-        assert caplog.records[0].exc_info is None
+        assert not breaker.bypass()
 
     # -- Non-gRPC exceptions are re-raised unchanged -------------------------
 
