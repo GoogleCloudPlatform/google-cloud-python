@@ -82,6 +82,62 @@ class TestAcceleratorBreaker:
         assert not errors
         assert first_trips.count(True) == 1
 
+    def test_trip_instance_is_isolated_to_that_instance(self):
+        b = AcceleratorBreaker()
+        assert b.trip_instance("instance-a") is True
+        assert b.trip_instance("instance-a") is False
+        assert b.is_instance_tripped("instance-a") is True
+        assert b.is_instance_tripped("instance-b") is False
+        assert b.bypass("instance-a") is True
+        assert b.bypass("instance-b") is False
+        assert b.bypass() is False
+        assert b.is_tripped is False
+
+    def test_client_wide_trip_overrides_all_instances(self):
+        b = AcceleratorBreaker()
+        b.trip_instance("instance-a")
+        assert b.bypass("instance-b") is False
+        assert b.trip() is True
+        assert b.bypass("instance-a") is True
+        assert b.bypass("instance-b") is True
+        assert b.bypass() is True
+
+    def test_set_degraded_overrides_instances_until_recovered(self):
+        b = AcceleratorBreaker()
+        b.trip_instance("instance-a")
+        b.set_degraded(True)
+        assert b.bypass("instance-a") is True
+        assert b.bypass("instance-b") is True
+        b.set_degraded(False)
+        assert b.bypass("instance-a") is True
+        assert b.bypass("instance-b") is False
+
+    def test_trip_instance_thread_safety(self):
+        import threading
+
+        b = AcceleratorBreaker()
+        errors = []
+        first_trips = []
+        lock = threading.Lock()
+
+        def trip_and_check():
+            try:
+                was_first = b.trip_instance("instance-a")
+                with lock:
+                    first_trips.append(was_first)
+                assert b.bypass("instance-a")
+                assert not b.bypass("instance-b")
+            except Exception as e:
+                errors.append(e)
+
+        threads = [threading.Thread(target=trip_and_check) for _ in range(20)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
+        assert not errors
+        assert first_trips.count(True) == 1
+
 
 # ---------------------------------------------------------------------------
 # _grpc_code
@@ -215,6 +271,39 @@ class TestHandleAcceleratorError:
                     handle_accelerator_error(exc, daemon=daemon, breaker=breaker)
         assert len(caplog.records) == 1
         assert "replied UNIMPLEMENTED" in caplog.records[0].getMessage()
+
+    def test_unimplemented_with_instance_id_trips_only_that_instance(self, caplog):
+        import logging
+
+        daemon = mock.Mock(is_running=True)
+        breaker = AcceleratorBreaker()
+        exc = _make_rpc_error(StatusCode.UNIMPLEMENTED)
+        with caplog.at_level(logging.WARNING):
+            for _ in range(3):
+                with pytest.raises(_AcceleratorFallback):
+                    handle_accelerator_error(
+                        exc,
+                        daemon=daemon,
+                        breaker=breaker,
+                        instance_id="instance-a",
+                    )
+        assert breaker.bypass("instance-a") is True
+        assert breaker.bypass("instance-b") is False
+        assert breaker.is_tripped is False
+        assert len(caplog.records) == 1
+        assert "instance-a" in caplog.records[0].getMessage()
+
+        with caplog.at_level(logging.WARNING):
+            with pytest.raises(_AcceleratorFallback):
+                handle_accelerator_error(
+                    exc,
+                    daemon=daemon,
+                    breaker=breaker,
+                    instance_id="instance-b",
+                )
+        assert breaker.bypass("instance-b") is True
+        assert len(caplog.records) == 2
+        assert "instance-b" in caplog.records[1].getMessage()
 
     # -- Other gRPC errors are translated ------------------------------------
 

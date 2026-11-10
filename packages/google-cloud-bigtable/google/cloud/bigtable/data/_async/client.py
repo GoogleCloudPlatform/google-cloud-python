@@ -459,12 +459,23 @@ class BigtableDataClientAsync(ClientWithProject):
                     stacklevel=2,
                 )
         if self._use_accelerator is not False:
+            if CrossSync.is_async:
+                try:
+                    CrossSync.verify_async_event_loop()
+                except RuntimeError:
+                    has_event_loop = False
             if not has_event_loop:
                 if self._use_accelerator is True:
                     raise RuntimeError(
                         "use_accelerator=True is not supported when "
                         "there is no active asyncio event loop."
                     )
+                warnings.warn(
+                    "Accelerator disabled because no asyncio event loop is active; "
+                    "using the native client.",
+                    RuntimeWarning,
+                    stacklevel=2,
+                )
             else:
                 # None (default) or True: attempt to start. ``True`` is an
                 # explicit request, so a conflict with the emulator or startup
@@ -1711,7 +1722,7 @@ class _DataApiTargetAsync(abc.ABC):
         return (
             self._accelerator_client is not None
             and is_supported(method_name)
-            and not self._accelerator_breaker.bypass()
+            and not self._accelerator_breaker.bypass(self.instance_id)
         )
 
     def _create_operation(
@@ -1876,6 +1887,7 @@ class _DataApiTargetAsync(abc.ABC):
                 exc,
                 daemon=daemon,
                 breaker=self._accelerator_breaker,
+                instance_id=self.instance_id,
             )
             raise  # unreachable: handle_accelerator_error always raises
         try:
@@ -2256,6 +2268,7 @@ class _DataApiTargetAsync(abc.ABC):
                 daemon=daemon,
                 breaker=self._accelerator_breaker,
                 is_idempotent=_is_mutate_row_idempotent(request),
+                instance_id=self.instance_id,
             )
             raise  # unreachable: handle_accelerator_error always raises
 

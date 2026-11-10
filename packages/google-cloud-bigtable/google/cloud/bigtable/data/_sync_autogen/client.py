@@ -356,6 +356,11 @@ class BigtableDataClient(ClientWithProject):
                     raise RuntimeError(
                         "use_accelerator=True is not supported when there is no active asyncio event loop."
                     )
+                warnings.warn(
+                    "Accelerator disabled because no asyncio event loop is active; using the native client.",
+                    RuntimeWarning,
+                    stacklevel=2,
+                )
             else:
                 self._maybe_start_accelerator(explicit=self._use_accelerator is True)
 
@@ -1343,7 +1348,7 @@ class _DataApiTarget(abc.ABC):
         return (
             self._accelerator_client is not None
             and is_supported(method_name)
-            and (not self._accelerator_breaker.bypass())
+            and (not self._accelerator_breaker.bypass(self.instance_id))
         )
 
     def _create_operation(
@@ -1494,7 +1499,10 @@ class _DataApiTarget(abc.ABC):
             results = [a for a in row_merger.merge_rows(chunked_stream)]
         except Exception as exc:
             handle_accelerator_error(
-                exc, daemon=daemon, breaker=self._accelerator_breaker
+                exc,
+                daemon=daemon,
+                breaker=self._accelerator_breaker,
+                instance_id=self.instance_id,
             )
             raise
         try:
@@ -1837,6 +1845,7 @@ class _DataApiTarget(abc.ABC):
                 daemon=daemon,
                 breaker=self._accelerator_breaker,
                 is_idempotent=_is_mutate_row_idempotent(request),
+                instance_id=self.instance_id,
             )
             raise
 

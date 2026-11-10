@@ -1212,18 +1212,25 @@ class TestBigtableDataClientAsync:
 
     @CrossSync.drop
     def test_client_ctor_sync(self):
-        # initializing client in a sync context should raise RuntimeError
+        # initializing client in a sync context should warn for both channel
+        # refresh and disabled accelerator
 
         with pytest.warns(RuntimeWarning) as warnings:
             client = self._make_client(project="project-id", use_emulator=False)
-        expected_warning = [w for w in warnings if "client.py" in w.filename]
-        assert len(expected_warning) == 1
-        assert (
-            "BigtableDataClientAsync should be started in an asyncio event loop."
-            in str(expected_warning[0].message)
+        expected_warnings = [w for w in warnings if "client.py" in w.filename]
+        assert len(expected_warnings) == 2
+        messages = [str(w.message) for w in expected_warnings]
+        assert any(
+            "BigtableDataClientAsync should be started in an asyncio event loop." in m
+            for m in messages
+        )
+        assert any(
+            "Accelerator disabled because no asyncio event loop is active" in m
+            for m in messages
         )
         assert client.project == "project-id"
         assert client._channel_refresh_task is None
+        assert client._accelerator_daemon is None
 
     @CrossSync.drop
     def test_client_ctor_sync_explicit_accelerator_raises(self):
@@ -1237,6 +1244,34 @@ class TestBigtableDataClientAsync:
             self._make_client(
                 project="project-id", use_emulator=False, use_accelerator=True
             )
+
+    @CrossSync.drop
+    def test_client_ctor_sync_disable_background_refresh_explicit_accelerator_raises(
+        self,
+    ):
+        with pytest.raises(
+            RuntimeError,
+            match="use_accelerator=True is not supported when there is no active asyncio event loop",
+        ):
+            self._make_client(
+                project="project-id",
+                use_emulator=False,
+                _disable_background_refresh=True,
+                use_accelerator=True,
+            )
+
+    @CrossSync.drop
+    def test_client_ctor_sync_disable_background_refresh_warns_for_accelerator(self):
+        with pytest.warns(
+            RuntimeWarning,
+            match="Accelerator disabled because no asyncio event loop is active",
+        ):
+            client = self._make_client(
+                project="project-id",
+                use_emulator=False,
+                _disable_background_refresh=True,
+            )
+        assert client._accelerator_daemon is None
 
     @CrossSync.pytest
     @pytest.mark.parametrize(
