@@ -227,3 +227,56 @@ class TestBucketMetadataCache(unittest.TestCase):
         cache.check_and_evict("b2")
 
         self.assertEqual(lock_states_at_start, [False, False])
+
+    def test_background_methods_suppress_metrics(self):
+        import asyncio
+
+        from google.cloud.storage import _opentelemetry_metrics
+
+        observed_flags = []
+
+        client = mock.Mock()
+
+        def fake_get_bucket(name, timeout=None):
+            observed_flags.append(_opentelemetry_metrics.is_metrics_suppressed())
+            b = mock.Mock()
+            b.name = name
+            b.location = "US"
+            b.location_type = "multi-region"
+            b.project_number = 111
+            return b
+
+        def fake_bucket(name):
+            b = mock.Mock()
+
+            def fake_exists():
+                observed_flags.append(_opentelemetry_metrics.is_metrics_suppressed())
+                return True
+
+            b.exists.side_effect = fake_exists
+            return b
+
+        async def fake_async_get_bucket(request=None, timeout=None):
+            observed_flags.append(_opentelemetry_metrics.is_metrics_suppressed())
+            b = mock.Mock()
+            b.name = "projects/_/buckets/b1"
+            b.location = "US-CENTRAL1"
+            b.location_type = "region"
+            b.project_number = 222
+            return b
+
+        client.get_bucket.side_effect = fake_get_bucket
+        client.bucket.side_effect = fake_bucket
+        client.grpc_client = mock.Mock()
+        client.grpc_client.get_bucket = mock.AsyncMock(
+            side_effect=fake_async_get_bucket
+        )
+
+        cache = BucketMetadataCache(client)
+        cache._fetch_background("b1")
+        cache._verify_existence_background("b1")
+        asyncio.run(cache._fetch_background_async("b1"))
+        asyncio.run(cache._verify_existence_background_async("b1"))
+
+        self.assertEqual(observed_flags, [True, True, True, True])
+        self.assertFalse(_opentelemetry_metrics.is_metrics_suppressed())

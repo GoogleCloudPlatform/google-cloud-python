@@ -806,6 +806,24 @@ class _OperationState:
 _OP_STATE: ContextVar[Optional[_OperationState]] = ContextVar(
     "_gcs_otel_op_state", default=None
 )
+_SUPPRESS_METRICS: ContextVar[bool] = ContextVar(
+    "_gcs_otel_suppress_metrics", default=False
+)
+
+
+def is_metrics_suppressed() -> bool:
+    """Returns True if all metrics recording is suppressed in the current context."""
+    return _SUPPRESS_METRICS.get()
+
+
+@contextlib.contextmanager
+def suppress_metrics() -> Iterator[None]:
+    """Suppresses all metrics recording (logical and transport) in the current context."""
+    token = _SUPPRESS_METRICS.set(True)
+    try:
+        yield
+    finally:
+        _SUPPRESS_METRICS.reset(token)
 
 
 def get_current_operation() -> Optional[_OperationState]:
@@ -843,6 +861,10 @@ def start_operation(
             (e.g. ``"google.storage.v2.Storage/BidiReadObject"``). If omitted,
             inferred from ``operation``.
     """
+    if is_metrics_suppressed():
+        yield None
+        return
+
     existing = get_current_operation()
     if existing is not None:
         if suppress and not existing.suppressed:
@@ -1125,7 +1147,7 @@ class _MetricsRecorder:
         rpc_method: Optional[str] = None,
     ) -> None:
         """Records end-to-end logical operation duration and count."""
-        if not self.standard_enabled or self.meter is None:
+        if not self.standard_enabled or self.meter is None or is_metrics_suppressed():
             return
         logical_op = normalize_logical_operation(operation)
         full_rpc_method = resolve_rpc_method(
@@ -1153,7 +1175,7 @@ class _MetricsRecorder:
         network_path: Optional[str] = None,
     ) -> None:
         """Records a transport retry attempt with the prior failed attempt's error type."""
-        if not self.standard_enabled or self.meter is None:
+        if not self.standard_enabled or self.meter is None or is_metrics_suppressed():
             return
         current_op = get_current_operation()
         raw_op = operation or (current_op.operation if current_op else None)
@@ -1209,7 +1231,7 @@ class _MetricsRecorder:
         network_path: Optional[str] = None,
     ) -> None:
         """Records a single physical HTTP request attempt."""
-        if not self.standard_enabled or self.meter is None:
+        if not self.standard_enabled or self.meter is None or is_metrics_suppressed():
             return
         current_op = get_current_operation()
         raw_op = operation or (current_op.operation if current_op else None)
@@ -1267,7 +1289,7 @@ class _MetricsRecorder:
         op_state: Optional[_OperationState] = None,
     ) -> None:
         """Records a single physical gRPC call attempt."""
-        if not self.standard_enabled or self.meter is None:
+        if not self.standard_enabled or self.meter is None or is_metrics_suppressed():
             return
         active_op = op_state if op_state is not None else get_current_operation()
         raw_rpc = (
@@ -1315,7 +1337,7 @@ class _MetricsRecorder:
         client_method: Optional[str] = None,
     ) -> None:
         """Records the payload byte size of an upload or write operation."""
-        if not self.standard_enabled or self.meter is None:
+        if not self.standard_enabled or self.meter is None or is_metrics_suppressed():
             return
         if not isinstance(size, int) or isinstance(size, bool):
             return
@@ -1334,7 +1356,7 @@ class _MetricsRecorder:
         client_method: Optional[str] = None,
     ) -> None:
         """Records the payload byte size of a download or read operation."""
-        if not self.standard_enabled or self.meter is None:
+        if not self.standard_enabled or self.meter is None or is_metrics_suppressed():
             return
         if not isinstance(size, int) or isinstance(size, bool):
             return
@@ -1353,7 +1375,7 @@ class _MetricsRecorder:
         network_path: Optional[str] = None,
     ) -> None:
         """Records time to first response byte (TTFB) in seconds."""
-        if not self.standard_enabled or self.meter is None:
+        if not self.standard_enabled or self.meter is None or is_metrics_suppressed():
             return
         current_op = get_current_operation()
         raw_op = operation or (current_op.operation if current_op else None)
@@ -1372,7 +1394,7 @@ class _MetricsRecorder:
         op_state: Optional[_OperationState] = None,
     ) -> None:
         """Records a request attempt that failed before reaching a GCS server."""
-        if not self.standard_enabled or self.meter is None:
+        if not self.standard_enabled or self.meter is None or is_metrics_suppressed():
             return
         if error_type in _AMBIGUOUS_CLIENT_ABORT_ERRORS:
             return

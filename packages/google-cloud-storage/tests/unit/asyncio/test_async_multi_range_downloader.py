@@ -3113,3 +3113,174 @@ class TestAsyncMultiRangeDownloader:
             recorder.errors_counter.add.call_args.kwargs["attributes"]["error.type"]
             == "CHECKSUM_MISMATCH"
         )
+
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader.generate_random_56_bit_integer"
+    )
+    @mock.patch(
+        "google.cloud.storage.asyncio.async_multi_range_downloader._AsyncReadObjectStream"
+    )
+    @pytest.mark.asyncio
+    async def test_mrd_multi_stream_body_size_and_premature_stream_end_retry_metrics(
+        self, mock_cls_stream, mock_random_int, monkeypatch
+    ):
+        from google.api_core.retry_async import AsyncRetry
+
+        from google.cloud.storage import _opentelemetry_metrics
+        from google.cloud.storage.asyncio.async_multi_range_downloader import (
+            MultiStreamConfig,
+            _StreamEnd,
+        )
+
+        monkeypatch.setattr(_opentelemetry_metrics, "HAS_OPENTELEMETRY_METRICS", True)
+        monkeypatch.setattr(_opentelemetry_metrics, "_ENABLE_METRICS_DEV_GATE", True)
+        mock_metrics = mock.Mock()
+        mock_meter = mock.Mock()
+        mock_meter.create_histogram.side_effect = lambda *a, **kw: mock.Mock()
+        mock_meter.create_counter.side_effect = lambda *a, **kw: mock.Mock()
+        mock_metrics.get_meter.return_value = mock_meter
+        monkeypatch.setattr(
+            _opentelemetry_metrics, "metrics", mock_metrics, raising=False
+        )
+
+        recorder = _opentelemetry_metrics._MetricsRecorder(
+            enable_metrics=True, rpc_system="grpc"
+        )
+        mock_client = self._make_mock_client()
+        mock_client._metrics_recorder = recorder
+
+        s1 = self._make_mock_stream(read_handle=b"h1")
+        s2 = self._make_mock_stream(read_handle=b"h2")
+        mock_cls_stream.side_effect = [s1, s2]
+
+        config = MultiStreamConfig(
+            min_streams=2,
+            max_streams=4,
+            target_io_depth=1,
+            target_bytes=10,
+        )
+        mrd = await AsyncMultiRangeDownloader.create_mrd(
+            mock_client, "b", "o", multi_stream_config=config
+        )
+
+        # 1. Multi-stream download_ranges emits record_response_body_size ONCE with aggregate total
+        recorder.response_body_size.record.reset_mock()
+        with mock.patch.object(
+            mrd,
+            "_download_ranges_on_stream",
+            new=AsyncMock(side_effect=[10, 15]),
+        ) as mock_dl:
+            await mrd.download_ranges([(0, 10, BytesIO()), (10, 15, BytesIO())])
+            assert mock_dl.call_count == 2
+
+        recorder.response_body_size.record.assert_called_once()
+        assert recorder.response_body_size.record.call_args.args[0] == 25
+
+        # 2. BufferError on short read does NOT emit record_response_body_size
+        recorder.response_body_size.record.reset_mock()
+        short_resp = _storage_v2.BidiReadObjectResponse(
+            object_data_ranges=[
+                _storage_v2.ObjectRangeData(
+                    checksummed_data=_storage_v2.ChecksummedData(
+                        content=b"ab", crc32c=google_crc32c.value(b"ab")
+                    ),
+                    range_end=True,
+                    read_range=_storage_v2.ReadRange(
+                        read_offset=0, read_length=2, read_id=555
+                    ),
+                )
+            ]
+        )
+        mock_random_int.return_value = 555
+        single_stream = self._make_mock_stream(read_handle=b"h_single")
+        mock_cls_stream.side_effect = [single_stream]
+        q_short = asyncio.Queue()
+        q_short.put_nowait(short_resp)
+        mrd_single = await AsyncMultiRangeDownloader.create_mrd(mock_client, "b", "o")
+        mrd_single._primary_stream.multiplexer.register = mock.MagicMock(
+            return_value=q_short
+        )
+        mrd_single._primary_stream.multiplexer.unregister = mock.MagicMock()
+        mrd_single._primary_stream.multiplexer.send = AsyncMock()
+        recorder.response_body_size.record.reset_mock()
+        with pytest.raises(BufferError):
+            await mrd_single.download_ranges([(0, 4, bytearray(4))])
+        recorder.response_body_size.record.assert_not_called()
+
+        # 3. Premature _StreamEnd with pending_read_ids marks attempt failed ("UNAVAILABLE")
+        #    and emits retries_counter on reopen
+        full_resp = _storage_v2.BidiReadObjectResponse(
+            object_data_ranges=[
+                _storage_v2.ObjectRangeData(
+                    checksummed_data=_storage_v2.ChecksummedData(
+                        content=b"data", crc32c=google_crc32c.value(b"data")
+                    ),
+                    range_end=True,
+                    read_range=_storage_v2.ReadRange(
+                        read_offset=0, read_length=4, read_id=777
+                    ),
+                )
+            ]
+        )
+        mock_random_int.return_value = 777
+        q1 = asyncio.Queue()
+        q1.put_nowait(_StreamEnd())
+        q1.put_nowait(full_resp)
+
+        mrd_single._primary_stream.multiplexer.register = mock.MagicMock(
+            return_value=q1
+        )
+        mrd_single._primary_stream.multiplexer.unregister = mock.MagicMock()
+        mrd_single._primary_stream.multiplexer.send = AsyncMock()
+        mrd_single._primary_stream.multiplexer.reopen_stream = AsyncMock()
+
+        recorder.retries_counter.add.reset_mock()
+        out_buf = BytesIO()
+        await mrd_single.download_ranges(
+            [(0, 4, out_buf)],
+            retry_policy=AsyncRetry(
+                predicate=lambda e: True, initial=0.001, maximum=0.001
+            ),
+        )
+        assert out_buf.getvalue() == b"data"
+        recorder.retries_counter.add.assert_called_once()
+        assert (
+            recorder.retries_counter.add.call_args.kwargs["attributes"]["error.type"]
+            == "UNAVAILABLE"
+        )
+
+        # Also cover the branch where read() already incremented current_op.recorded_attempts before _StreamEnd
+        q3 = asyncio.Queue()
+        q3.put_nowait(_StreamEnd())
+        q3.put_nowait(full_resp)
+        send_calls = 0
+
+        async def send_and_bump_attempts(_req):
+            nonlocal send_calls
+            send_calls += 1
+            if send_calls == 1:
+                op = _opentelemetry_metrics.get_current_operation()
+                if op is not None:
+                    op.recorded_attempts += 1
+
+        mrd_single._primary_stream.multiplexer.register = mock.MagicMock(
+            return_value=q3
+        )
+        mrd_single._primary_stream.multiplexer.send = AsyncMock(
+            side_effect=send_and_bump_attempts
+        )
+        recorder.retries_counter.add.reset_mock()
+        out_buf2 = BytesIO()
+        await mrd_single.download_ranges(
+            [(0, 4, out_buf2)],
+            retry_policy=AsyncRetry(
+                predicate=lambda e: True, initial=0.001, maximum=0.001
+            ),
+        )
+        assert out_buf2.getvalue() == b"data"
+        recorder.retries_counter.add.assert_called_once()
+        assert (
+            recorder.retries_counter.add.call_args.kwargs["attributes"]["error.type"]
+            == "UNAVAILABLE"
+        )
+        await mrd.close()

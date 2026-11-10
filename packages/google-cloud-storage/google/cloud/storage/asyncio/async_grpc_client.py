@@ -42,6 +42,18 @@ _GRPC_STATUS_NAMES = {sc.name for sc in grpc.StatusCode}
 _DIRECTPATH_IPV4_NET = ipaddress.ip_network("34.126.0.0/18")
 _DIRECTPATH_IPV6_NET = ipaddress.ip_network("2001:4860:8040::/42")
 _GFE_METADATA_KEYS = frozenset({"x-goog-gfe-service-time", "x-guploader-uploadid"})
+_PRE_RESPONSE_UNREACHED_ERROR_TYPES = frozenset(
+    {
+        "AUTHENTICATION_ERROR",
+        "CLIENT_VALIDATION_ERROR",
+        "CONNECTION_ERROR",
+        "DNS_FAILURE",
+        "TLS_FAILURE",
+        "UNAUTHENTICATED",
+        "UNAVAILABLE",
+        "UNKNOWN",
+    }
+)
 _PEER_IP_RE = re.compile(
     r"ipv4:([0-9.]+)|ipv6:(?:(?:\[|%5B|%5b)([0-9a-fA-F:.]+)(?:\]|%5D|%5d)|([0-9a-fA-F:]+))"
 )
@@ -286,6 +298,95 @@ def _resolve_network_path(
     return "unknown"
 
 
+def _has_server_metadata(
+    call: Any = None,
+    exc: Optional[BaseException] = None,
+) -> bool:
+    """Returns True if ``call`` or ``exc`` contains any server response metadata."""
+    if call is not None:
+        for current in _iter_wrapped_calls(call):
+            inst_dict = getattr(current, "__dict__", None)
+            cython_call = getattr(current, "_cython_call", None)
+            status_obj = (
+                getattr(cython_call, "_status", None)
+                if cython_call is not None
+                else None
+            )
+            status_trailing = None
+            if status_obj is not None:
+                trailing_fn = getattr(status_obj, "trailing_metadata", None)
+                status_trailing = (
+                    trailing_fn()
+                    if callable(trailing_fn)
+                    else getattr(status_obj, "_trailing_metadata", None)
+                )
+
+            md_candidates = [
+                getattr(cython_call, "_initial_metadata", None)
+                if cython_call is not None
+                else None,
+                getattr(cython_call, "_trailing_metadata", None)
+                if cython_call is not None
+                else None,
+                status_trailing,
+                inst_dict.get("_initial_metadata")
+                if isinstance(inst_dict, dict)
+                else None,
+                inst_dict.get("_trailing_metadata")
+                if isinstance(inst_dict, dict)
+                else None,
+            ]
+            for md in md_candidates:
+                entries, is_gfe = _inspect_metadata(md)
+                if entries or is_gfe:
+                    return True
+
+    if exc is not None:
+        for item in _opentelemetry_metrics._iter_exception_chain(exc):
+            for md_attr in ("initial_metadata", "trailing_metadata"):
+                md_fn = getattr(item, md_attr, None)
+                md = md_fn() if callable(md_fn) else md_fn
+                entries, is_gfe = _inspect_metadata(md)
+                if entries or is_gfe:
+                    return True
+
+    return False
+
+
+def _should_record_server_unreached(
+    call: Any = None,
+    exc: Optional[BaseException] = None,
+    received_server_response: bool = False,
+    error_type: str = "OK",
+) -> bool:
+    """Returns True when a failed gRPC attempt never reached a GCS server."""
+    if (
+        received_server_response
+        or error_type not in _PRE_RESPONSE_UNREACHED_ERROR_TYPES
+    ):
+        return False
+    if _has_server_metadata(call=call, exc=exc):
+        return False
+    return True
+
+
+def _is_call_suppressed(
+    op_state: Optional[_opentelemetry_metrics._OperationState],
+    suppressed_tasks: Optional[Any] = None,
+) -> bool:
+    """Returns True if transport metrics should be suppressed for this gRPC call."""
+    if _opentelemetry_metrics.is_metrics_suppressed():
+        return True
+    if suppressed_tasks is not None:
+        try:
+            current_task = asyncio.current_task()
+        except RuntimeError:
+            current_task = None
+        if current_task is not None and current_task in suppressed_tasks:
+            return True
+    return False
+
+
 def _mark_call_closing_cleanly(call: Any) -> None:
     """Marks a wrapped gRPC call as closing cleanly before normal cancellation."""
     for current in _iter_wrapped_calls(call):
@@ -432,6 +533,18 @@ class _TrackedCallBase:
             )
             if is_stale_teardown:
                 active_op.last_failure_error_type = saved_prior_error
+            if not is_stale_teardown and _should_record_server_unreached(
+                call=self._call,
+                exc=exc,
+                received_server_response=received_response or self._received_response,
+                error_type=error_type,
+            ):
+                self._recorder.record_server_unreached(
+                    error_type=error_type,
+                    operation=self._logical_operation,
+                    network_path=resolved_path,
+                    op_state=active_op,
+                )
 
     def _record_from_exception(self, exc: BaseException) -> None:
         if isinstance(exc, asyncio.CancelledError) and self._closing_cleanly:
@@ -508,6 +621,7 @@ class _TrackedUnaryResponseMixin:
                 received_response=True,
                 record_ttfb=True,
             )
+            self._started_after_failure = False
             return response
 
     def __await__(self):
@@ -543,6 +657,7 @@ class _TrackedStreamResponseMixin:
                 self._record_once(
                     status_code="OK", error_type="OK", received_response=True
                 )
+                self._started_after_failure = False
 
     def __aiter__(self):
         return self._aiter_impl()
@@ -560,6 +675,7 @@ class _TrackedStreamResponseMixin:
                     status_code="OK", error_type="OK", received_response=True
                 )
             else:
+                self._started_after_failure = False
                 self._record_ttfb_once()
             return response
 
@@ -627,14 +743,18 @@ class _MetricsUnaryUnaryInterceptor(grpc.aio.UnaryUnaryClientInterceptor):
         self,
         recorder: _opentelemetry_metrics._MetricsRecorder,
         direct_path_attempted: bool = False,
+        suppressed_tasks: Optional[Any] = None,
     ) -> None:
         self._recorder = recorder
         self._direct_path_attempted = direct_path_attempted
+        self._suppressed_tasks = suppressed_tasks
 
     async def intercept_unary_unary(self, continuation, client_call_details, request):
+        op_state = _opentelemetry_metrics.get_current_operation()
+        if _is_call_suppressed(op_state, self._suppressed_tasks):
+            return await continuation(client_call_details, request)
         rpc_method = _extract_rpc_method(getattr(client_call_details, "method", None))
         logical_operation = _extract_logical_operation(rpc_method)
-        op_state = _opentelemetry_metrics.get_current_operation()
         start_time = time.perf_counter()
         try:
             call = await continuation(client_call_details, request)
@@ -655,6 +775,17 @@ class _MetricsUnaryUnaryInterceptor(grpc.aio.UnaryUnaryClientInterceptor):
                 network_path=resolved_path,
                 op_state=op_state,
             )
+            if _should_record_server_unreached(
+                exc=exc,
+                received_server_response=False,
+                error_type=error_type,
+            ):
+                self._recorder.record_server_unreached(
+                    error_type=error_type,
+                    operation=logical_operation,
+                    network_path=resolved_path,
+                    op_state=op_state,
+                )
             raise
         return _TrackedUnaryUnaryCall(
             call,
@@ -674,14 +805,18 @@ class _MetricsUnaryStreamInterceptor(grpc.aio.UnaryStreamClientInterceptor):
         self,
         recorder: _opentelemetry_metrics._MetricsRecorder,
         direct_path_attempted: bool = False,
+        suppressed_tasks: Optional[Any] = None,
     ) -> None:
         self._recorder = recorder
         self._direct_path_attempted = direct_path_attempted
+        self._suppressed_tasks = suppressed_tasks
 
     async def intercept_unary_stream(self, continuation, client_call_details, request):
+        op_state = _opentelemetry_metrics.get_current_operation()
+        if _is_call_suppressed(op_state, self._suppressed_tasks):
+            return await continuation(client_call_details, request)
         rpc_method = _extract_rpc_method(getattr(client_call_details, "method", None))
         logical_operation = _extract_logical_operation(rpc_method)
-        op_state = _opentelemetry_metrics.get_current_operation()
         start_time = time.perf_counter()
         try:
             call = await continuation(client_call_details, request)
@@ -702,6 +837,17 @@ class _MetricsUnaryStreamInterceptor(grpc.aio.UnaryStreamClientInterceptor):
                 network_path=resolved_path,
                 op_state=op_state,
             )
+            if _should_record_server_unreached(
+                exc=exc,
+                received_server_response=False,
+                error_type=error_type,
+            ):
+                self._recorder.record_server_unreached(
+                    error_type=error_type,
+                    operation=logical_operation,
+                    network_path=resolved_path,
+                    op_state=op_state,
+                )
             raise
         return _TrackedUnaryStreamCall(
             call,
@@ -721,16 +867,20 @@ class _MetricsStreamUnaryInterceptor(grpc.aio.StreamUnaryClientInterceptor):
         self,
         recorder: _opentelemetry_metrics._MetricsRecorder,
         direct_path_attempted: bool = False,
+        suppressed_tasks: Optional[Any] = None,
     ) -> None:
         self._recorder = recorder
         self._direct_path_attempted = direct_path_attempted
+        self._suppressed_tasks = suppressed_tasks
 
     async def intercept_stream_unary(
         self, continuation, client_call_details, request_iterator
     ):
+        op_state = _opentelemetry_metrics.get_current_operation()
+        if _is_call_suppressed(op_state, self._suppressed_tasks):
+            return await continuation(client_call_details, request_iterator)
         rpc_method = _extract_rpc_method(getattr(client_call_details, "method", None))
         logical_operation = _extract_logical_operation(rpc_method)
-        op_state = _opentelemetry_metrics.get_current_operation()
         start_time = time.perf_counter()
         try:
             call = await continuation(client_call_details, request_iterator)
@@ -751,6 +901,17 @@ class _MetricsStreamUnaryInterceptor(grpc.aio.StreamUnaryClientInterceptor):
                 network_path=resolved_path,
                 op_state=op_state,
             )
+            if _should_record_server_unreached(
+                exc=exc,
+                received_server_response=False,
+                error_type=error_type,
+            ):
+                self._recorder.record_server_unreached(
+                    error_type=error_type,
+                    operation=logical_operation,
+                    network_path=resolved_path,
+                    op_state=op_state,
+                )
             raise
         return _TrackedStreamUnaryCall(
             call,
@@ -770,16 +931,20 @@ class _MetricsStreamStreamInterceptor(grpc.aio.StreamStreamClientInterceptor):
         self,
         recorder: _opentelemetry_metrics._MetricsRecorder,
         direct_path_attempted: bool = False,
+        suppressed_tasks: Optional[Any] = None,
     ) -> None:
         self._recorder = recorder
         self._direct_path_attempted = direct_path_attempted
+        self._suppressed_tasks = suppressed_tasks
 
     async def intercept_stream_stream(
         self, continuation, client_call_details, request_iterator
     ):
+        op_state = _opentelemetry_metrics.get_current_operation()
+        if _is_call_suppressed(op_state, self._suppressed_tasks):
+            return await continuation(client_call_details, request_iterator)
         rpc_method = _extract_rpc_method(getattr(client_call_details, "method", None))
         logical_operation = _extract_logical_operation(rpc_method)
-        op_state = _opentelemetry_metrics.get_current_operation()
         start_time = time.perf_counter()
         try:
             call = await continuation(client_call_details, request_iterator)
@@ -800,6 +965,17 @@ class _MetricsStreamStreamInterceptor(grpc.aio.StreamStreamClientInterceptor):
                 network_path=resolved_path,
                 op_state=op_state,
             )
+            if _should_record_server_unreached(
+                exc=exc,
+                received_server_response=False,
+                error_type=error_type,
+            ):
+                self._recorder.record_server_unreached(
+                    error_type=error_type,
+                    operation=logical_operation,
+                    network_path=resolved_path,
+                    op_state=op_state,
+                )
             raise
         return _TrackedStreamStreamCall(
             call,
@@ -815,20 +991,29 @@ class _MetricsStreamStreamInterceptor(grpc.aio.StreamStreamClientInterceptor):
 def _create_metrics_interceptors(
     recorder: _opentelemetry_metrics._MetricsRecorder,
     direct_path_attempted: bool = False,
+    suppressed_tasks: Optional[Any] = None,
 ) -> Tuple[grpc.aio.ClientInterceptor, ...]:
     """Creates the 4 ``grpc.aio`` client interceptors for ``recorder``."""
     return (
         _MetricsUnaryUnaryInterceptor(
-            recorder, direct_path_attempted=direct_path_attempted
+            recorder,
+            direct_path_attempted=direct_path_attempted,
+            suppressed_tasks=suppressed_tasks,
         ),
         _MetricsUnaryStreamInterceptor(
-            recorder, direct_path_attempted=direct_path_attempted
+            recorder,
+            direct_path_attempted=direct_path_attempted,
+            suppressed_tasks=suppressed_tasks,
         ),
         _MetricsStreamUnaryInterceptor(
-            recorder, direct_path_attempted=direct_path_attempted
+            recorder,
+            direct_path_attempted=direct_path_attempted,
+            suppressed_tasks=suppressed_tasks,
         ),
         _MetricsStreamStreamInterceptor(
-            recorder, direct_path_attempted=direct_path_attempted
+            recorder,
+            direct_path_attempted=direct_path_attempted,
+            suppressed_tasks=suppressed_tasks,
         ),
     )
 
@@ -984,7 +1169,9 @@ class AsyncGrpcClient:
             channel = grpc.aio.insecure_channel(
                 client_options.api_endpoint,
                 interceptors=_create_metrics_interceptors(
-                    self._metrics_recorder, direct_path_attempted=False
+                    self._metrics_recorder,
+                    direct_path_attempted=False,
+                    suppressed_tasks=self._bucket_metadata_cache._background_tasks,
                 ),
             )
         else:
@@ -1033,6 +1220,7 @@ class AsyncGrpcClient:
             extra_channel_kwargs["interceptors"] = _create_metrics_interceptors(
                 self._metrics_recorder,
                 direct_path_attempted=direct_path_attempted,
+                suppressed_tasks=self._bucket_metadata_cache._background_tasks,
             )
 
         if attempt_direct_path_xds_over_interconnect:

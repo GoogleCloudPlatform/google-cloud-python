@@ -1207,6 +1207,23 @@ class TestAsyncAppendableObjectWriter:
             == "google.storage.v2.Storage/BidiWriteObject"
         )
 
+        # Direct empty append(b"") records 0 for request_body_size (unless _suppress_append_body_size is True)
+        mock_recorder.record_logical_operation.reset_mock()
+        mock_recorder.record_request_body_size.reset_mock()
+        await writer.append(b"")
+        mock_recorder.record_request_body_size.assert_called_once_with(
+            0, operation="WriteObject"
+        )
+        mock_recorder.record_logical_operation.assert_called_once()
+
+        mock_recorder.record_request_body_size.reset_mock()
+        writer._suppress_append_body_size = True
+        try:
+            await writer.append(b"")
+        finally:
+            writer._suppress_append_body_size = False
+        mock_recorder.record_request_body_size.assert_not_called()
+
         # append_from_file suppresses per-chunk append metrics and records total size once
         mock_recorder.record_logical_operation.reset_mock()
         mock_recorder.record_request_body_size.reset_mock()
@@ -1362,7 +1379,69 @@ class TestAsyncAppendableObjectWriter:
             == "INTERNAL"
         )
 
-        # 5. open() failure when metrics are disabled (recorder is None)
+        # 5. close() and finalize() multi-retry when self.open() increments recorded_attempts on reopen
+        async def open_bumps_attempts(*args, **kwargs):
+            op = _opentelemetry_metrics.get_current_operation()
+            if op is not None:
+                op.recorded_attempts += 1
+
+        recorder.retries_counter.add.reset_mock()
+        writer._is_stream_open = True
+        writer.offset = 0
+        mock_stream.persisted_size = 0
+        mock_stream.open = AsyncMock(side_effect=open_bumps_attempts)
+        mock_stream.close = AsyncMock(
+            side_effect=[
+                exceptions.Aborted("redirect1", errors=[redirect]),
+                exceptions.ServiceUnavailable("503 on second close"),
+                None,
+            ]
+        )
+        await writer.close(finalize_on_close=False, retry_policy=fast_retry)
+        assert recorder.retries_counter.add.call_count == 2
+        assert (
+            recorder.retries_counter.add.call_args_list[0].kwargs["attributes"][
+                "error.type"
+            ]
+            == "ABORTED"
+        )
+        assert (
+            recorder.retries_counter.add.call_args_list[1].kwargs["attributes"][
+                "error.type"
+            ]
+            == "UNAVAILABLE"
+        )
+
+        recorder.retries_counter.add.reset_mock()
+        writer._is_stream_open = True
+        writer.offset = 0
+        mock_stream.close = AsyncMock(return_value=None)
+        mock_stream.send = AsyncMock(return_value=None)
+        mock_stream.recv = AsyncMock(
+            side_effect=[
+                exceptions.InternalServerError("500 finalize 1"),
+                exceptions.ServiceUnavailable("503 finalize 2"),
+                storage_type.BidiWriteObjectResponse(
+                    resource=storage_type.Object(size=3)
+                ),
+            ]
+        )
+        await writer.finalize(retry_policy=fast_retry)
+        assert recorder.retries_counter.add.call_count == 2
+        assert (
+            recorder.retries_counter.add.call_args_list[0].kwargs["attributes"][
+                "error.type"
+            ]
+            == "INTERNAL"
+        )
+        assert (
+            recorder.retries_counter.add.call_args_list[1].kwargs["attributes"][
+                "error.type"
+            ]
+            == "UNAVAILABLE"
+        )
+
+        # 6. open() failure when metrics are disabled (recorder is None)
         mock_client._metrics_recorder = None
         writer_disabled = self._make_one(mock_client)
         mock_stream.open = AsyncMock(side_effect=exceptions.NotFound("404"))

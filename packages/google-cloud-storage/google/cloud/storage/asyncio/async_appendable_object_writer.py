@@ -645,6 +645,8 @@ class AsyncAppendableObjectWriter:
             if not self._is_stream_open:
                 raise ValueError("Stream is not open. Call open() before append().")
             if not data:
+                if recorder is not None and not self._suppress_append_body_size:
+                    recorder.record_request_body_size(0, operation="WriteObject")
                 logger.debug("No data provided to append; returning without action.")
                 return
 
@@ -927,6 +929,11 @@ class AsyncAppendableObjectWriter:
                                         received_server_response=True
                                     ),
                                 )
+                            attempts_before = (
+                                current_op.recorded_attempts
+                                if current_op is not None
+                                else 0
+                            )
                             if (
                                 self.offset is not None
                                 and expected_offset is not None
@@ -936,6 +943,11 @@ class AsyncAppendableObjectWriter:
                                     f"Unrecoverable data loss during reconnect. Expected offset {expected_offset}, got {self.offset}"
                                 )
 
+                        attempts_before = (
+                            current_op.recorded_attempts
+                            if current_op is not None
+                            else 0
+                        )
                         await self.write_obj_stream.close()
                     except Exception as exc:
                         if recorder is not None:
@@ -1054,6 +1066,11 @@ class AsyncAppendableObjectWriter:
                                         received_server_response=True
                                     ),
                                 )
+                            attempts_before = (
+                                current_op.recorded_attempts
+                                if current_op is not None
+                                else 0
+                            )
                             if (
                                 self.offset is not None
                                 and expected_offset is not None
@@ -1063,6 +1080,11 @@ class AsyncAppendableObjectWriter:
                                     f"Unrecoverable data loss during reconnect. Expected offset {expected_offset}, got {self.offset}"
                                 )
 
+                        attempts_before = (
+                            current_op.recorded_attempts
+                            if current_op is not None
+                            else 0
+                        )
                         await self.write_obj_stream.send(finalize_req)
                         response = await self.write_obj_stream.recv()
                     except Exception as exc:

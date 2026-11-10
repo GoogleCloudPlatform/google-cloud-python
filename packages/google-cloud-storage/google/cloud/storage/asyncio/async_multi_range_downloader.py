@@ -649,7 +649,7 @@ class AsyncMultiRangeDownloader:
         metadata: Optional[List[Tuple[str, str]]],
         enable_checksum: bool,
         accepts_memoryview: bool = False,
-    ) -> None:
+    ) -> int:
         """Downloads multiple byte ranges from the object into the buffers
         provided by user with automatic retries on a single pooled stream.
         """
@@ -738,7 +738,20 @@ class AsyncMultiRangeDownloader:
                         await pooled_stream.multiplexer.reopen_stream(
                             broken_gen, stream_factory
                         )
+                        if attempt_count > 1 and recorder is not None:
+                            _opentelemetry_metrics.record_pending_retry(
+                                recorder,
+                                operation="ReadObject",
+                                network_path=self._current_network_path(
+                                    received_server_response=True,
+                                    stream=pooled_stream.stream,
+                                ),
+                            )
 
+                    current_op = _opentelemetry_metrics.get_current_operation()
+                    attempts_at_start = (
+                        current_op.recorded_attempts if current_op is not None else 0
+                    )
                     stream_generation = pooled_stream.multiplexer.stream_generation
 
                     # Send Requests
@@ -762,6 +775,16 @@ class AsyncMultiRangeDownloader:
                         if isinstance(item, _StreamEnd):
                             if pending_read_ids:
                                 last_broken_generation = stream_generation
+                                current_op = (
+                                    _opentelemetry_metrics.get_current_operation()
+                                )
+                                if current_op is not None:
+                                    if (
+                                        current_op.recorded_attempts
+                                        == attempts_at_start
+                                    ):
+                                        current_op.recorded_attempts += 1
+                                    current_op.mark_attempt_failed("UNAVAILABLE")
                                 raise exceptions.ServiceUnavailable(
                                     "Stream ended with pending read_ids"
                                 )
@@ -848,10 +871,6 @@ class AsyncMultiRangeDownloader:
                 # Drop chunks still held, e.g. after cancellation.
                 strategy.discard_pending_checksums(initial_state)
 
-            if recorder is not None:
-                total_bytes = sum(ds.bytes_written for ds in download_states.values())
-                recorder.record_response_body_size(total_bytes, operation="ReadObject")
-
             if initial_state.get("read_handle"):
                 self.read_handle = initial_state["read_handle"]
 
@@ -865,6 +884,8 @@ class AsyncMultiRangeDownloader:
                         f"bytes at offset {download_state.initial_offset}, got "
                         f"{download_state.bytes_written}"
                     )
+
+            return sum(ds.bytes_written for ds in download_states.values())
         finally:
             if pooled_stream.multiplexer is not None:
                 pooled_stream.multiplexer.unregister(read_ids)
@@ -995,6 +1016,7 @@ class AsyncMultiRangeDownloader:
                         self.read_obj_str, self._multiplexer
                     )
 
+                total_bytes = 0
                 if self._pool is not None:
                     pool = self._pool
                     persisted_size = self.persisted_size
@@ -1015,12 +1037,13 @@ class AsyncMultiRangeDownloader:
                             Tuple[int, int, Union[IO[bytes], bytearray, memoryview]]
                         ],
                     ) -> None:
+                        nonlocal total_bytes
                         batch_bytes = sum(
                             pool.effective_range_bytes(offset, length, persisted_size)
                             for offset, length, _ in batch
                         )
                         try:
-                            await self._download_ranges_on_stream(
+                            batch_written = await self._download_ranges_on_stream(
                                 stream,
                                 batch,
                                 retry_policy,
@@ -1028,6 +1051,10 @@ class AsyncMultiRangeDownloader:
                                 enable_checksum,
                                 accepts_memoryview=accepts_memoryview,
                             )
+                            if isinstance(batch_written, int) and not isinstance(
+                                batch_written, bool
+                            ):
+                                total_bytes += batch_written
                         finally:
                             pool.release_stream(stream, len(batch), batch_bytes)
 
@@ -1092,13 +1119,22 @@ class AsyncMultiRangeDownloader:
                     elif tasks:
                         await _run_concurrently(tasks)
                 else:
-                    await self._download_ranges_on_stream(
+                    batch_written = await self._download_ranges_on_stream(
                         self._primary_stream,
                         read_ranges,
                         retry_policy,
                         metadata,
                         enable_checksum,
                         accepts_memoryview=accepts_memoryview,
+                    )
+                    if isinstance(batch_written, int) and not isinstance(
+                        batch_written, bool
+                    ):
+                        total_bytes += batch_written
+
+                if recorder is not None:
+                    recorder.record_response_body_size(
+                        total_bytes, operation="ReadObject"
                     )
 
     async def close(self):

@@ -1474,3 +1474,240 @@ class TestAsyncGrpcClient:
             )
             is True
         )
+
+    @pytest.mark.asyncio
+    async def test_server_unreached_suppressed_tasks_and_started_after_failure_reset(
+        self, monkeypatch
+    ):
+        from google.api_core import exceptions as api_exceptions
+
+        monkeypatch.setattr(_opentelemetry_metrics, "HAS_OPENTELEMETRY_METRICS", True)
+        monkeypatch.setattr(_opentelemetry_metrics, "_ENABLE_METRICS_DEV_GATE", True)
+        mock_metrics = mock.Mock()
+        mock_meter = mock.Mock()
+        mock_meter.create_histogram.side_effect = lambda *a, **kw: mock.Mock()
+        mock_meter.create_counter.side_effect = lambda *a, **kw: mock.Mock()
+        mock_metrics.get_meter.return_value = mock_meter
+        monkeypatch.setattr(
+            _opentelemetry_metrics, "metrics", mock_metrics, raising=False
+        )
+
+        recorder = _opentelemetry_metrics._MetricsRecorder(
+            enable_metrics=True, rpc_system="grpc"
+        )
+
+        # 1. _has_server_metadata & _should_record_server_unreached coverage
+        assert async_grpc_client._has_server_metadata() is False
+        assert async_grpc_client._has_server_metadata(call=42) is False
+        call_with_cy_status = types.SimpleNamespace(
+            _cython_call=types.SimpleNamespace(
+                _initial_metadata=None,
+                _trailing_metadata=None,
+                _status=types.SimpleNamespace(
+                    trailing_metadata=lambda: (("x-server", "1"),)
+                ),
+            )
+        )
+        assert async_grpc_client._has_server_metadata(call=call_with_cy_status) is True
+        call_with_status_attr = types.SimpleNamespace(
+            _cython_call=types.SimpleNamespace(
+                _initial_metadata=None,
+                _trailing_metadata=None,
+                _status=types.SimpleNamespace(_trailing_metadata=(("x-server", "1"),)),
+            )
+        )
+        assert (
+            async_grpc_client._has_server_metadata(call=call_with_status_attr) is True
+        )
+
+        class _ErrWithMeta(Exception):
+            def initial_metadata(self):
+                return (("x-goog-gfe-service-time", "1"),)
+
+            trailing_metadata = None
+
+        assert async_grpc_client._has_server_metadata(exc=_ErrWithMeta()) is True
+        assert (
+            async_grpc_client._should_record_server_unreached(
+                received_server_response=True, error_type="UNAVAILABLE"
+            )
+            is False
+        )
+        assert (
+            async_grpc_client._should_record_server_unreached(
+                received_server_response=False, error_type="NOT_FOUND"
+            )
+            is False
+        )
+        assert (
+            async_grpc_client._should_record_server_unreached(
+                call=call_with_cy_status,
+                received_server_response=False,
+                error_type="UNAVAILABLE",
+            )
+            is False
+        )
+        assert (
+            async_grpc_client._should_record_server_unreached(
+                exc=_ErrWithMeta(),
+                received_server_response=False,
+                error_type="UNAVAILABLE",
+            )
+            is False
+        )
+        assert (
+            async_grpc_client._should_record_server_unreached(
+                received_server_response=False, error_type="UNAVAILABLE"
+            )
+            is True
+        )
+
+        # 2. _is_call_suppressed coverage (contextvar, suppressed_tasks, RuntimeError fallback)
+        suppressed_tasks = set()
+        assert async_grpc_client._is_call_suppressed(None, suppressed_tasks) is False
+        current_task = asyncio.current_task()
+        suppressed_tasks.add(current_task)
+        assert async_grpc_client._is_call_suppressed(None, suppressed_tasks) is True
+        suppressed_tasks.clear()
+
+        with mock.patch("asyncio.current_task", side_effect=RuntimeError("no loop")):
+            assert async_grpc_client._is_call_suppressed(None, {object()}) is False
+
+        with _opentelemetry_metrics.suppress_metrics():
+            assert async_grpc_client._is_call_suppressed(None, None) is True
+
+        # 3. All 4 interceptors bypass tracking when suppressed, and record server_unreached on continuation failure
+        u_u, u_s, s_u, s_s = async_grpc_client._create_metrics_interceptors(
+            recorder, direct_path_attempted=False, suppressed_tasks=suppressed_tasks
+        )
+        details = mock.MagicMock(method="/google.storage.v2.Storage/GetBucket")
+
+        suppressed_tasks.add(current_task)
+        for interceptor, method_name in (
+            (u_u, "intercept_unary_unary"),
+            (u_s, "intercept_unary_stream"),
+            (s_u, "intercept_stream_unary"),
+            (s_s, "intercept_stream_stream"),
+        ):
+            sentinel = object()
+            res = await getattr(interceptor, method_name)(
+                mock.AsyncMock(return_value=sentinel), details, "req"
+            )
+            assert res is sentinel
+        recorder.attempts_counter.add.assert_not_called()
+        suppressed_tasks.clear()
+
+        # Continuation failure with NotFound does NOT record server_unreached
+        for interceptor, method_name in (
+            (u_u, "intercept_unary_unary"),
+            (u_s, "intercept_unary_stream"),
+            (s_u, "intercept_stream_unary"),
+            (s_s, "intercept_stream_stream"),
+        ):
+            recorder.server_unreached_counter.add.reset_mock()
+            with pytest.raises(api_exceptions.NotFound):
+                await getattr(interceptor, method_name)(
+                    mock.AsyncMock(side_effect=api_exceptions.NotFound("404")),
+                    details,
+                    "req",
+                )
+            recorder.server_unreached_counter.add.assert_not_called()
+
+        # Continuation failure with ServiceUnavailable DOES record server_unreached
+        for interceptor, method_name in (
+            (u_u, "intercept_unary_unary"),
+            (u_s, "intercept_unary_stream"),
+            (s_u, "intercept_stream_unary"),
+            (s_s, "intercept_stream_stream"),
+        ):
+            recorder.server_unreached_counter.add.reset_mock()
+            with pytest.raises(api_exceptions.ServiceUnavailable):
+                await getattr(interceptor, method_name)(
+                    mock.AsyncMock(
+                        side_effect=api_exceptions.ServiceUnavailable("503")
+                    ),
+                    details,
+                    "req",
+                )
+            recorder.server_unreached_counter.add.assert_called_once()
+
+        # 4. _started_after_failure reset on response across unary, __aiter__, and read()
+        op = _opentelemetry_metrics._OperationState(
+            client_method="storage.asyncio.AsyncMultiRangeDownloader.download_ranges",
+            operation="ReadObject",
+            rpc_method="google.storage.v2.Storage/BidiReadObject",
+        )
+        op.mark_attempt_failed("UNAVAILABLE")
+
+        # (a) Unary _await_impl resets _started_after_failure
+        class _SimpleUnary:
+            async def _coro(self):
+                return "ok"
+
+            def __await__(self):
+                return self._coro().__await__()
+
+        tracked_u = async_grpc_client._TrackedUnaryUnaryCall(
+            _SimpleUnary(),
+            recorder,
+            "google.storage.v2.Storage/GetObject",
+            "GetObject",
+            0.0,
+            op,
+        )
+        assert tracked_u._started_after_failure is True
+        assert await tracked_u == "ok"
+        assert tracked_u._started_after_failure is False
+
+        # (b) Stream __aiter__ resets _started_after_failure
+        op.mark_attempt_failed("UNAVAILABLE")
+
+        class _SimpleIterStream:
+            def __aiter__(self):
+                async def _g():
+                    yield "chunk1"
+
+                return _g()
+
+        tracked_iter = async_grpc_client._TrackedUnaryStreamCall(
+            _SimpleIterStream(),
+            recorder,
+            "google.storage.v2.Storage/ReadObject",
+            "ReadObject",
+            0.0,
+            op,
+        )
+        assert tracked_iter._started_after_failure is True
+        items = [x async for x in tracked_iter]
+        assert items == ["chunk1"]
+        assert tracked_iter._started_after_failure is False
+
+        # (c) Stream read() resets _started_after_failure so a subsequent mid-stream failure
+        # followed by cancel() preserves last_failure_error_type instead of overwriting with CANCELLED
+        op.mark_attempt_failed("UNAVAILABLE")
+        raw_reopened = mock.MagicMock()
+        raw_reopened.read = mock.AsyncMock(return_value="first_msg")
+        raw_reopened.cancel = mock.MagicMock(return_value=True)
+        tracked_reopened = async_grpc_client._TrackedStreamStreamCall(
+            raw_reopened,
+            recorder,
+            "google.storage.v2.Storage/BidiReadObject",
+            "ReadObject",
+            0.0,
+            op,
+        )
+        assert tracked_reopened._started_after_failure is True
+        # First open retry consumes the prior error and reads a message
+        op.consume_retry_error()
+        assert await tracked_reopened.read() == "first_msg"
+        assert tracked_reopened._started_after_failure is False
+
+        # Now a second mid-stream failure occurs (e.g. ABORTED), then stream is cancelled during reopen
+        op.mark_attempt_failed("ABORTED")
+        recorder.retries_counter.add.reset_mock()
+        recorder.server_unreached_counter.add.reset_mock()
+        tracked_reopened.cancel()
+        # Because _started_after_failure was reset to False, cancel() is treated as stale teardown
+        assert op.last_failure_error_type == "ABORTED"
+        recorder.retries_counter.add.assert_not_called()
+        recorder.server_unreached_counter.add.assert_not_called()
