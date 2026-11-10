@@ -18,3 +18,9 @@ from django.db import models
 class Singer(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
+
+
+class Event(models.Model):
+    name = models.CharField(max_length=200)
+    start_time = models.DateTimeField()
+    start_time_of_day = models.TimeField(null=True)

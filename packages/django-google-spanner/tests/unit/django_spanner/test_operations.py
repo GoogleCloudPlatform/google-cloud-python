@@ -10,9 +10,9 @@ from datetime import timedelta
 from decimal import Decimal
 from unittest import mock
 
-from django.conf import settings
 from django.core.management.color import no_style
-from django.db.utils import DatabaseError
+from django.db.utils import DatabaseError, OperationalError
+from django.test import override_settings
 from google.cloud.spanner_dbapi.types import DateStr
 
 from tests.unit.django_spanner.simple_test import SpannerSimpleTestClass
@@ -114,81 +114,130 @@ class TestOperations(SpannerSimpleTestClass):
     def test_date_extract_sql(self):
         self.assertEqual(
             self.db_operations.date_extract_sql("week", "dummy_field"),
-            ("EXTRACT(isoweek FROM dummy_field)", None),
+            ("EXTRACT(isoweek FROM dummy_field)", ()),
         )
 
     def test_date_extract_sql_lookup_type_dayofweek(self):
         self.assertEqual(
             self.db_operations.date_extract_sql("dayofweek", "dummy_field"),
-            ("EXTRACT(dayofweek FROM dummy_field)", None),
+            ("EXTRACT(dayofweek FROM dummy_field)", ()),
         )
 
+    @override_settings(USE_TZ=True)
     def test_datetime_extract_sql(self):
-        settings.USE_TZ = True
         self.assertEqual(
             self.db_operations.datetime_extract_sql(
                 "dayofweek", "dummy_field", None, "IST"
             ),
             (
-                'EXTRACT(dayofweek FROM dummy_field AT TIME ZONE "IST")',
-                None,
+                "EXTRACT(dayofweek FROM dummy_field AT TIME ZONE %s)",
+                ("IST",),
+            ),
+        )
+        self.assertEqual(
+            self.db_operations.datetime_extract_sql(
+                "dayofweek", "dummy_field", None, None
+            ),
+            (
+                "EXTRACT(dayofweek FROM dummy_field)",
+                (),
             ),
         )
 
+    @override_settings(USE_TZ=False)
     def test_datetime_extract_sql_use_tz_false(self):
-        settings.USE_TZ = False
         self.assertEqual(
             self.db_operations.datetime_extract_sql(
                 "dayofweek", "dummy_field", None, "IST"
             ),
             (
-                'EXTRACT(dayofweek FROM dummy_field AT TIME ZONE "UTC")',
-                None,
+                "EXTRACT(dayofweek FROM dummy_field AT TIME ZONE %s)",
+                ("IST",),
             ),
         )
-        settings.USE_TZ = True  # reset changes.
+        self.assertEqual(
+            self.db_operations.datetime_extract_sql(
+                "dayofweek", "dummy_field", None, None
+            ),
+            (
+                "EXTRACT(dayofweek FROM dummy_field AT TIME ZONE %s)",
+                ("UTC",),
+            ),
+        )
 
     def test_time_extract_sql(self):
         self.assertEqual(
             self.db_operations.time_extract_sql("dayofweek", "dummy_field"),
             (
-                'EXTRACT(dayofweek FROM dummy_field AT TIME ZONE "UTC")',
-                None,
+                "EXTRACT(dayofweek FROM dummy_field AT TIME ZONE %s)",
+                ("UTC",),
             ),
         )
 
-    def test_time_trunc_sql(self):
+    @override_settings(USE_TZ=True)
+    def test_time_trunc_sql_use_tz_true(self):
         self.assertEqual(
             self.db_operations.time_trunc_sql("dayofweek", "dummy_field", None),
-            ('TIMESTAMP_TRUNC(dummy_field, dayofweek, "UTC")', None),
+            ("TIMESTAMP_TRUNC(dummy_field, dayofweek, %s)", ("UTC",)),
+        )
+        self.assertEqual(
+            self.db_operations.time_trunc_sql(
+                "dayofweek", "dummy_field", None, tzname="UTC"
+            ),
+            ("TIMESTAMP_TRUNC(dummy_field, dayofweek, %s)", ("UTC",)),
+        )
+        self.assertEqual(
+            self.db_operations.time_trunc_sql(
+                "dayofweek", "dummy_field", None, tzname="America/New_York"
+            ),
+            ("TIMESTAMP_TRUNC(dummy_field, dayofweek, %s)", ("America/New_York",)),
+        )
+
+    @override_settings(USE_TZ=False)
+    def test_time_trunc_sql_use_tz_false(self):
+        self.assertEqual(
+            self.db_operations.time_trunc_sql("dayofweek", "dummy_field", None),
+            ("TIMESTAMP_TRUNC(dummy_field, dayofweek, %s)", ("UTC",)),
+        )
+        self.assertEqual(
+            self.db_operations.time_trunc_sql(
+                "dayofweek", "dummy_field", None, tzname="America/New_York"
+            ),
+            ("TIMESTAMP_TRUNC(dummy_field, dayofweek, %s)", ("UTC",)),
         )
 
     def test_datetime_cast_date_sql(self):
         self.assertEqual(
             self.db_operations.datetime_cast_date_sql("dummy_field", None, "IST"),
-            ('DATE(dummy_field, "IST")', None),
+            ("DATE(dummy_field, %s)", ("IST",)),
         )
 
+    @override_settings(USE_TZ=True)
     def test_datetime_cast_time_sql(self):
-        settings.USE_TZ = True
         self.assertEqual(
             self.db_operations.datetime_cast_time_sql("dummy_field", None, "IST"),
             (
-                "TIMESTAMP(FORMAT_TIMESTAMP('%Y-%m-%d %R:%E9S %Z', dummy_field, 'IST'))",
-                None,
+                "TIMESTAMP(FORMAT_TIMESTAMP('1970-01-01 %H:%M:%E9S', dummy_field, %s), 'UTC')",
+                ("IST",),
             ),
         )
 
+    @override_settings(USE_TZ=False)
     def test_datetime_cast_time_sql_use_tz_false(self):
-        settings.USE_TZ = False
         self.assertEqual(
             self.db_operations.datetime_cast_time_sql("dummy_field", None, "IST"),
             (
-                "TIMESTAMP(FORMAT_TIMESTAMP('%Y-%m-%d %R:%E9S %Z', dummy_field, 'UTC'))",
-                None,
+                "TIMESTAMP(FORMAT_TIMESTAMP('1970-01-01 %H:%M:%E9S', dummy_field, %s), 'UTC')",
+                ("IST",),
             ),
         )
-        settings.USE_TZ = True  # reset changes.
+        self.assertEqual(
+            self.db_operations.datetime_cast_time_sql("dummy_field", None, None),
+            (
+                "TIMESTAMP(FORMAT_TIMESTAMP('1970-01-01 %H:%M:%E9S', dummy_field, %s), 'UTC')",
+                ("UTC",),
+            ),
+        )
 
     def test_date_interval_sql(self):
         self.assertEqual(
@@ -324,26 +373,343 @@ class TestOperations(SpannerSimpleTestClass):
     def test_date_and_time_trunc_sql(self):
         sql, params = self.db_operations.date_trunc_sql("year", "field", None)
         self.assertEqual(sql, "DATE_TRUNC(CAST(field AS DATE), year)")
-        self.assertIsNone(params)
+        self.assertEqual(params, ())
+
+        sql, params = self.db_operations.date_extract_sql("year", "field", None)
+        self.assertEqual(sql, "EXTRACT(year FROM field)")
+        self.assertEqual(params, ())
+
+        sql, params = self.db_operations.time_extract_sql("hour", "field", None)
+        self.assertEqual(sql, "EXTRACT(hour FROM field AT TIME ZONE %s)")
+        self.assertEqual(params, ("UTC",))
 
         sql, params = self.db_operations.time_trunc_sql("hour", "field", None)
-        self.assertEqual(sql, 'TIMESTAMP_TRUNC(field, hour, "UTC")')
-        self.assertIsNone(params)
+        self.assertEqual(sql, "TIMESTAMP_TRUNC(field, hour, %s)")
+        self.assertEqual(params, ("UTC",))
+
+        sql, params = self.db_operations.time_trunc_sql(
+            "hour", "field", None, tzname="America/New_York"
+        )
+        self.assertEqual(sql, "TIMESTAMP_TRUNC(field, hour, %s)")
+        self.assertEqual(params, ("America/New_York",))
+
+        sql, params = self.db_operations.datetime_trunc_sql(
+            "day", "field", None, tzname=None
+        )
+        self.assertEqual(sql, "TIMESTAMP_TRUNC(field, day)")
+        self.assertEqual(params, ())
 
         sql, params = self.db_operations.datetime_trunc_sql(
             "day", "field", None, tzname="UTC"
         )
-        self.assertEqual(sql, 'TIMESTAMP_TRUNC(field, day, "UTC")')
-        self.assertIsNone(params)
+        self.assertEqual(sql, "TIMESTAMP_TRUNC(field, day, %s)")
+        self.assertEqual(params, ("UTC",))
 
+        sql, params = self.db_operations.date_trunc_sql("week", "field", None)
+        self.assertEqual(
+            sql,
+            "DATE_ADD(CAST(DATE_TRUNC(CAST(DATE_SUB(CAST(field AS DATE), INTERVAL 1 DAY) AS DATE), week) AS DATE), INTERVAL 1 DAY)",
+        )
+        self.assertEqual(params, ())
+
+        sql, params = self.db_operations.datetime_trunc_sql(
+            "week", "field", None, tzname=None
+        )
+        self.assertEqual(
+            sql,
+            "TIMESTAMP_ADD(TIMESTAMP_TRUNC(TIMESTAMP_SUB(field, INTERVAL 1 DAY), week), INTERVAL 1 DAY)",
+        )
+        self.assertEqual(params, ())
+
+        sql, params = self.db_operations.datetime_trunc_sql(
+            "week", "field", None, tzname="UTC"
+        )
+        self.assertEqual(
+            sql,
+            "TIMESTAMP_ADD(TIMESTAMP_TRUNC(TIMESTAMP_SUB(field, INTERVAL 1 DAY), week, %s), INTERVAL 1 DAY)",
+        )
+        self.assertEqual(params, ("UTC",))
+
+    @override_settings(USE_TZ=True)
     def test_datetime_cast_sql(self):
+        sql, params = self.db_operations.datetime_cast_date_sql("field", None, None)
+        self.assertEqual(sql, "DATE(field)")
+        self.assertEqual(params, ())
+
         sql, params = self.db_operations.datetime_cast_date_sql("field", None, "UTC")
-        self.assertEqual(sql, 'DATE(field, "UTC")')
-        self.assertIsNone(params)
+        self.assertEqual(sql, "DATE(field, %s)")
+        self.assertEqual(params, ("UTC",))
+
+        sql, params = self.db_operations.datetime_cast_time_sql("field", None, None)
+        self.assertEqual(
+            sql,
+            "TIMESTAMP(FORMAT_TIMESTAMP('1970-01-01 %H:%M:%E9S', field), 'UTC')",
+        )
+        self.assertEqual(params, ())
 
         sql, params = self.db_operations.datetime_cast_time_sql("field", None, "UTC")
         self.assertEqual(
             sql,
-            "TIMESTAMP(FORMAT_TIMESTAMP('%Y-%m-%d %R:%E9S %Z', field, 'UTC'))",
+            "TIMESTAMP(FORMAT_TIMESTAMP('1970-01-01 %H:%M:%E9S', field, %s), 'UTC')",
         )
-        self.assertIsNone(params)
+        self.assertEqual(params, ("UTC",))
+
+    @override_settings(USE_TZ=False)
+    def test_datetime_trunc_and_cast_sql_use_tz_false(self):
+        sql, params = self.db_operations.datetime_trunc_sql(
+            "day", "field", None, tzname="America/New_York"
+        )
+        self.assertEqual(sql, "TIMESTAMP_TRUNC(field, day, %s)")
+        self.assertEqual(params, ("America/New_York",))
+
+        sql, params = self.db_operations.datetime_trunc_sql(
+            "day", "field", None, tzname=None
+        )
+        self.assertEqual(sql, "TIMESTAMP_TRUNC(field, day, %s)")
+        self.assertEqual(params, ("UTC",))
+
+        sql, params = self.db_operations.datetime_cast_date_sql(
+            "field", None, tzname="America/New_York"
+        )
+        self.assertEqual(sql, "DATE(field, %s)")
+        self.assertEqual(params, ("America/New_York",))
+
+        sql, params = self.db_operations.datetime_cast_date_sql(
+            "field", None, tzname=None
+        )
+        self.assertEqual(sql, "DATE(field, %s)")
+        self.assertEqual(params, ("UTC",))
+
+        sql, params = self.db_operations.datetime_cast_time_sql(
+            "field", None, tzname="America/New_York"
+        )
+        self.assertEqual(
+            sql,
+            "TIMESTAMP(FORMAT_TIMESTAMP('1970-01-01 %H:%M:%E9S', field, %s), 'UTC')",
+        )
+        self.assertEqual(params, ("America/New_York",))
+
+        sql, params = self.db_operations.datetime_cast_time_sql(
+            "field", None, tzname=None
+        )
+        self.assertEqual(
+            sql,
+            "TIMESTAMP(FORMAT_TIMESTAMP('1970-01-01 %H:%M:%E9S', field, %s), 'UTC')",
+        )
+        self.assertEqual(params, ("UTC",))
+
+    @override_settings(USE_TZ=True)
+    def test_get_timezone_param_use_tz_true(self):
+        self.assertEqual(
+            self.db_operations._get_timezone_param("America/New_York"),
+            "America/New_York",
+        )
+        self.assertEqual(
+            self.db_operations._get_timezone_param("+05:30"),
+            "+05:30",
+        )
+        self.assertIsNone(self.db_operations._get_timezone_param(None))
+
+    @override_settings(USE_TZ=False)
+    def test_get_timezone_param_use_tz_false(self):
+        self.assertEqual(
+            self.db_operations._get_timezone_param("America/New_York"),
+            "America/New_York",
+        )
+        self.assertEqual(
+            self.db_operations._get_timezone_param("-08:00"),
+            "-08:00",
+        )
+        self.assertEqual(
+            self.db_operations._get_timezone_param(None),
+            "UTC",
+        )
+
+    def test_prepare_tzname_delta(self):
+        self.assertEqual(
+            self.db_operations._prepare_tzname_delta("UTC-04:43"), "-04:43"
+        )
+        self.assertEqual(
+            self.db_operations._prepare_tzname_delta("UTC+05:00"), "+05:00"
+        )
+        self.assertEqual(
+            self.db_operations._prepare_tzname_delta("UTC+05:30:00"), "+05:30"
+        )
+        self.assertEqual(self.db_operations._prepare_tzname_delta("-0443"), "-0443")
+        self.assertEqual(self.db_operations._prepare_tzname_delta("+0500"), "+0500")
+        self.assertEqual(self.db_operations._prepare_tzname_delta("+03:00"), "+03:00")
+        self.assertEqual(
+            self.db_operations._prepare_tzname_delta("+05:30:00"), "+05:30"
+        )
+        self.assertEqual(
+            self.db_operations._prepare_tzname_delta("-05:00:00"), "-05:00"
+        )
+        self.assertEqual(self.db_operations._prepare_tzname_delta("+05:30"), "+05:30")
+        self.assertEqual(self.db_operations._prepare_tzname_delta("-04:43"), "-04:43")
+        self.assertEqual(self.db_operations._prepare_tzname_delta("UTC-0443"), "-0443")
+        self.assertEqual(self.db_operations._prepare_tzname_delta("UTC+0500"), "+0500")
+        self.assertEqual(self.db_operations._prepare_tzname_delta("+05"), "+05")
+        self.assertEqual(self.db_operations._prepare_tzname_delta("-08"), "-08")
+        self.assertEqual(self.db_operations._prepare_tzname_delta("+5"), "+5")
+        self.assertEqual(self.db_operations._prepare_tzname_delta("-8"), "-8")
+        self.assertEqual(self.db_operations._prepare_tzname_delta("+5:30"), "+5:30")
+        self.assertEqual(self.db_operations._prepare_tzname_delta("-8:00"), "-8:00")
+        self.assertEqual(self.db_operations._prepare_tzname_delta("UTC+5"), "+5")
+        self.assertEqual(self.db_operations._prepare_tzname_delta("UTC-8"), "-8")
+        self.assertEqual(self.db_operations._prepare_tzname_delta("UTC+5:30"), "+5:30")
+        self.assertEqual(self.db_operations._prepare_tzname_delta("UTC-8:00"), "-8:00")
+        self.assertEqual(
+            self.db_operations._prepare_tzname_delta("America/New_York"),
+            "America/New_York",
+        )
+        self.assertEqual(
+            self.db_operations._prepare_tzname_delta("Etc/GMT+5"),
+            "Etc/GMT+5",
+        )
+        self.assertEqual(
+            self.db_operations._prepare_tzname_delta("Etc/GMT-5"),
+            "Etc/GMT-5",
+        )
+        self.assertEqual(
+            self.db_operations._prepare_tzname_delta("Etc/GMT+10"),
+            "Etc/GMT+10",
+        )
+        self.assertEqual(
+            self.db_operations._prepare_tzname_delta("Etc/GMT-10"),
+            "Etc/GMT-10",
+        )
+        self.assertEqual(self.db_operations._prepare_tzname_delta("UTC"), "UTC")
+        self.assertEqual(self.db_operations._prepare_tzname_delta(""), "UTC")
+        self.assertEqual(self.db_operations._prepare_tzname_delta(None), "UTC")
+        self.assertEqual(
+            self.db_operations._prepare_tzname_delta("+invalid"), "+invalid"
+        )
+
+    def test_extract_lookup_type_validation(self):
+        valid_lookups = ["year", "month", "day", "hour", "minute", "second", "isoweek"]
+        for lookup_type in valid_lookups:
+            self.db_operations._validate_lookup_type(lookup_type)
+
+        invalid_lookups = [
+            "year' OR 1=1--",
+            "day; DROP TABLE students;",
+            "foo bar",
+            "",
+            "year\x00",
+            None,
+            123,
+        ]
+        for lookup_type in invalid_lookups:
+            with self.assertRaises(ValueError):
+                self.db_operations._validate_lookup_type(lookup_type)
+            with self.assertRaises(ValueError):
+                self.db_operations.date_extract_sql(lookup_type, "field")
+            with self.assertRaises(ValueError):
+                self.db_operations.datetime_extract_sql(
+                    lookup_type, "field", None, "UTC"
+                )
+            with self.assertRaises(ValueError):
+                self.db_operations.time_extract_sql(lookup_type, "field")
+
+    def test_trunc_lookup_type_validation(self):
+        valid_lookups = [
+            "year",
+            "quarter",
+            "month",
+            "week",
+            "day",
+            "hour",
+            "minute",
+            "second",
+        ]
+        for lookup_type in valid_lookups:
+            self.db_operations._validate_trunc_lookup_type(lookup_type)
+
+        invalid_lookups = [
+            "year' OR 1=1--",
+            "day; DROP TABLE students;",
+            "foo bar",
+            "",
+            "year\x00",
+            None,
+            123,
+        ]
+        for lookup_type in invalid_lookups:
+            with self.assertRaises(OperationalError):
+                self.db_operations._validate_trunc_lookup_type(lookup_type)
+            with self.assertRaises(OperationalError):
+                self.db_operations.date_trunc_sql(lookup_type, "field", None)
+            with self.assertRaises(OperationalError):
+                self.db_operations.datetime_trunc_sql(
+                    lookup_type, "field", None, tzname="UTC"
+                )
+            with self.assertRaises(OperationalError):
+                self.db_operations.time_trunc_sql(lookup_type, "field", None)
+
+    @override_settings(USE_TZ=True)
+    def test_timezone_methods_preserve_existing_params(self):
+        existing_params = ["param1", "param2"]
+
+        sql, params = self.db_operations.datetime_extract_sql(
+            "hour", "field", existing_params, "UTC"
+        )
+        self.assertEqual(params, ("param1", "param2", "UTC"))
+
+        sql, params = self.db_operations.datetime_trunc_sql(
+            "hour", "field", existing_params, tzname="UTC"
+        )
+        self.assertEqual(params, ("param1", "param2", "UTC"))
+
+        sql, params = self.db_operations.time_trunc_sql(
+            "hour", "field", existing_params, tzname="UTC"
+        )
+        self.assertEqual(params, ("param1", "param2", "UTC"))
+
+        sql, params = self.db_operations.datetime_cast_date_sql(
+            "field", existing_params, "UTC"
+        )
+        self.assertEqual(params, ("param1", "param2", "UTC"))
+
+        sql, params = self.db_operations.datetime_cast_time_sql(
+            "field", existing_params, "UTC"
+        )
+        self.assertEqual(params, ("param1", "param2", "UTC"))
+
+    @override_settings(USE_TZ=True)
+    def test_tzname_sql_injection_defense(self):
+        malicious_tzname = "UTC'; DROP TABLE students; --"
+
+        sql, params = self.db_operations.datetime_extract_sql(
+            "hour", "field", None, malicious_tzname
+        )
+        self.assertNotIn(malicious_tzname, sql)
+        self.assertIn("%s", sql)
+        self.assertEqual(params, (malicious_tzname,))
+
+        sql, params = self.db_operations.datetime_trunc_sql(
+            "hour", "field", None, tzname=malicious_tzname
+        )
+        self.assertNotIn(malicious_tzname, sql)
+        self.assertIn("%s", sql)
+        self.assertEqual(params, (malicious_tzname,))
+
+        sql, params = self.db_operations.time_trunc_sql(
+            "hour", "field", None, tzname=malicious_tzname
+        )
+        self.assertNotIn(malicious_tzname, sql)
+        self.assertIn("%s", sql)
+        self.assertEqual(params, (malicious_tzname,))
+
+        sql, params = self.db_operations.datetime_cast_date_sql(
+            "field", None, malicious_tzname
+        )
+        self.assertNotIn(malicious_tzname, sql)
+        self.assertIn("%s", sql)
+        self.assertEqual(params, (malicious_tzname,))
+
+        sql, params = self.db_operations.datetime_cast_time_sql(
+            "field", None, malicious_tzname
+        )
+        self.assertNotIn(malicious_tzname, sql)
+        self.assertIn("%s", sql)
+        self.assertEqual(params, (malicious_tzname,))
