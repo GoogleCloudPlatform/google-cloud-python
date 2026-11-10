@@ -25,6 +25,7 @@ from unittest import mock
 
 import pytest  # type: ignore
 import urllib3.util
+from cryptography import x509
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import ec
 
@@ -2388,8 +2389,10 @@ class TestMtlsCertManager(object):
         manager = _mtls_helper._MtlsCertManager(client_cert_source=source)
         assert manager.cert_fingerprint is None
 
+        # The chain's leaf is public_cert.pem; load it on its own so the expected
+        # value does not depend on how the manager picks the leaf from the chain.
         expected_leaf_fp = _agent_identity_utils.calculate_certificate_fingerprint(
-            _agent_identity_utils.parse_certificate(TRUST_CHAIN_WITH_LEAF_BYTES)
+            x509.load_pem_x509_certificate(pytest.public_cert_bytes)
         )
         assert manager.refresh() is True
         assert manager.generation_id == 1
