@@ -25,10 +25,12 @@ import pytest
 from google.api_core.client_options import ClientOptions
 from google.auth import (
     compute_engine,
-    exceptions as auth_exceptions,
     external_account_authorized_user,
     identity_pool,
     impersonated_credentials,
+)
+from google.auth import (
+    exceptions as auth_exceptions,
 )
 from google.oauth2 import (
     credentials as oauth2_credentials,
@@ -62,6 +64,28 @@ class _FakeCreds:
     def __init__(self, email=None):
         if email is not None:
             self.service_account_email = email
+
+
+_CLIENT_MODS = [
+    pytest.param(
+        (
+            _async_client_mod.BigtableDataClientAsync,
+            _async_client_mod._DataApiTargetAsync,
+            _async_client_mod._AcceleratorIdentityError,
+            _async_client_mod._UNSET,
+        ),
+        id="async",
+    ),
+    pytest.param(
+        (
+            _sync_client_mod.BigtableDataClient,
+            _sync_client_mod._DataApiTarget,
+            _sync_client_mod._AcceleratorIdentityError,
+            _sync_client_mod._UNSET,
+        ),
+        id="sync",
+    ),
+]
 
 
 class TestInitAcceleratorConfig:
@@ -137,7 +161,7 @@ class TestInitAcceleratorConfig:
         c._init_accelerator_config(explicit_credentials=False, client_options=None)
         flags = c._accelerator_flags
         expected = f"python-v{google.cloud.bigtable.__version__}"
-        assert flags[flags.index("--caller-user-agent") + 1] == expected
+        assert flags[flags.index("--user-agent") + 1] == expected
 
     def test_caller_user_agent_not_built_when_blocked(self):
         # Blocked means the daemon never starts, so no flag list is ever
@@ -146,6 +170,73 @@ class TestInitAcceleratorConfig:
         c._init_accelerator_config(explicit_credentials=True, client_options=None)
         assert c._accelerator_blocked_reason is not None
         assert c._accelerator_flags == []
+
+    @pytest.mark.parametrize("client_mod", _CLIENT_MODS)
+    def test_scopes_list_whitespace_trimmed_and_blank_dropped(self, client_mod):
+        client_cls, _, _, unset = client_mod
+        c = _bare_client(client_cls, unset)
+        c._init_accelerator_config(
+            explicit_credentials=False,
+            client_options=ClientOptions(
+                scopes=[
+                    " https://www.googleapis.com/auth/bigtable.data ",
+                    " https://www.googleapis.com/auth/cloud-platform",
+                    "   ",
+                    "",
+                ]
+            ),
+        )
+        expected = [
+            "https://www.googleapis.com/auth/bigtable.data",
+            "https://www.googleapis.com/auth/cloud-platform",
+        ]
+        assert c._accelerator_scopes == expected
+        flags = c._accelerator_flags
+        assert flags[flags.index("--scopes") + 1] == ",".join(expected)
+
+    @pytest.mark.parametrize("client_mod", _CLIENT_MODS)
+    def test_scopes_string_not_exploded_into_characters(self, client_mod):
+        client_cls, _, _, unset = client_mod
+        single = "https://www.googleapis.com/auth/bigtable.data"
+        c1 = _bare_client(client_cls, unset)
+        c1._init_accelerator_config(
+            explicit_credentials=False,
+            client_options=ClientOptions(scopes=single),
+        )
+        assert c1._accelerator_scopes == [single]
+        flags1 = c1._accelerator_flags
+        assert flags1[flags1.index("--scopes") + 1] == single
+
+        multi = (
+            "https://www.googleapis.com/auth/bigtable.data, "
+            "https://www.googleapis.com/auth/cloud-platform"
+        )
+        c2 = _bare_client(client_cls, unset)
+        c2._init_accelerator_config(
+            explicit_credentials=False,
+            client_options=ClientOptions(scopes=multi),
+        )
+        expected = [
+            "https://www.googleapis.com/auth/bigtable.data",
+            "https://www.googleapis.com/auth/cloud-platform",
+        ]
+        assert c2._accelerator_scopes == expected
+        flags2 = c2._accelerator_flags
+        assert flags2[flags2.index("--scopes") + 1] == ",".join(expected)
+
+    @pytest.mark.parametrize("client_mod", _CLIENT_MODS)
+    def test_scopes_blank_falls_back_to_default_auth_scopes(self, client_mod):
+        client_cls, _, _, unset = client_mod
+        default_scopes = list(_async_client_mod.TransportType.AUTH_SCOPES)
+        for blank in (["   ", ""], "   ,  "):
+            c = _bare_client(client_cls, unset)
+            c._init_accelerator_config(
+                explicit_credentials=False,
+                client_options=ClientOptions(scopes=blank),
+            )
+            assert c._accelerator_scopes == default_scopes
+            flags = c._accelerator_flags
+            assert flags[flags.index("--scopes") + 1] == ",".join(default_scopes)
 
 
 class TestResolvePrincipal:
@@ -191,27 +282,6 @@ class TestResolvePrincipal:
 # principal-focused tests exercise only the principal branch.
 _SCOPES = ["https://www.googleapis.com/auth/bigtable.data"]
 _CRED_TYPE = "service_account"
-
-_CLIENT_MODS = [
-    pytest.param(
-        (
-            _async_client_mod.BigtableDataClientAsync,
-            _async_client_mod._DataApiTargetAsync,
-            _async_client_mod._AcceleratorIdentityError,
-            _async_client_mod._UNSET,
-        ),
-        id="async",
-    ),
-    pytest.param(
-        (
-            _sync_client_mod.BigtableDataClient,
-            _sync_client_mod._DataApiTarget,
-            _sync_client_mod._AcceleratorIdentityError,
-            _sync_client_mod._UNSET,
-        ),
-        id="sync",
-    ),
-]
 
 
 @pytest.mark.parametrize("client_mod", _CLIENT_MODS)
@@ -415,6 +485,16 @@ class TestVerifyDaemonIdentity:
             "svc@proj.iam.gserviceaccount.com",
             client_scopes=["scope-a", "scope-b"],
             daemon_scopes=["scope-b", "scope-a", "scope-a"],
+            client_cls=client_cls,
+        )
+
+    def test_scope_list_whitespace_and_comma_elements_match(self, client_mod):
+        client_cls, _, _, _ = client_mod
+        _verify(
+            "svc@proj.iam.gserviceaccount.com",
+            "svc@proj.iam.gserviceaccount.com",
+            client_scopes=[" scope-a ", "scope-b, scope-c "],
+            daemon_scopes=["scope-a", "scope-b", "scope-c"],
             client_cls=client_cls,
         )
 

@@ -174,10 +174,18 @@ def _normalize_scopes(scopes: Any) -> frozenset[str]:
     if not scopes:
         return frozenset()
     if isinstance(scopes, str):
-        scopes = scopes.replace(",", " ").split()
-    elif not isinstance(scopes, (list, tuple, set, frozenset)):
+        return frozenset(scopes.replace(",", " ").split())
+    if not isinstance(scopes, (list, tuple, set, frozenset)):
         return frozenset()
-    return frozenset((s.strip() for s in scopes if isinstance(s, str) and s.strip()))
+    return frozenset(
+        (
+            part.strip()
+            for s in scopes
+            if isinstance(s, str)
+            for part in s.split(",")
+            if part.strip()
+        )
+    )
 
 
 def _credential_type(creds: Any) -> str | None:
@@ -383,11 +391,16 @@ class BigtableDataClient(ClientWithProject):
         if self._accelerator_blocked_reason:
             return
         self._accelerator_flags += [
-            "--caller-user-agent",
+            "--user-agent",
             f"python-v{google.cloud.bigtable.__version__}",
         ]
         scopes = getattr(client_options, "scopes", None) if client_options else None
-        effective_scopes = list(scopes) if scopes else list(TransportType.AUTH_SCOPES)
+        normalized_scopes = _normalize_scopes(scopes)
+        effective_scopes = (
+            sorted(normalized_scopes)
+            if normalized_scopes
+            else list(TransportType.AUTH_SCOPES)
+        )
         self._accelerator_scopes: list[str] = effective_scopes
         if effective_scopes:
             self._accelerator_flags += ["--scopes", ",".join(effective_scopes)]
@@ -545,6 +558,10 @@ class BigtableDataClient(ClientWithProject):
             )
             return
         if self._accelerator_blocked_reason is not None:
+            if explicit:
+                raise RuntimeError(
+                    f"use_accelerator=True is not supported: {self._accelerator_blocked_reason}; pass credentials_file via client_options, or pass use_accelerator=False."
+                )
             warnings.warn(
                 f"Accelerator disabled: {self._accelerator_blocked_reason}; using the native client instead.",
                 RuntimeWarning,
@@ -1438,7 +1455,7 @@ class _DataApiTarget(abc.ABC):
         )
         return [row for row in row_generator]
 
-    def _read_row_via_accelerator(self, query, operation_timeout, attempt_timeout):
+    def _read_row_via_accelerator(self, query, operation_timeout):
         """Drive a single ReadRows attempt through the accelerator daemon.
 
         Raises ``_AcceleratorFallback`` if the caller should retry on the native
@@ -1452,7 +1469,7 @@ class _DataApiTarget(abc.ABC):
             query,
             self,
             operation_timeout=operation_timeout,
-            attempt_timeout=attempt_timeout,
+            attempt_timeout=operation_timeout,
             metric=ActiveOperationMetric(OperationType.READ_ROWS, is_streaming=False),
             retryable_exceptions=(),
         )
@@ -1511,12 +1528,16 @@ class _DataApiTarget(abc.ABC):
             operation_timeout, attempt_timeout, self
         )
         if self._use_accelerator("read_row"):
+            start_time = time.monotonic()
             try:
-                return self._read_row_via_accelerator(
-                    query, operation_timeout, attempt_timeout
-                )
+                return self._read_row_via_accelerator(query, operation_timeout)
             except _AcceleratorFallback:
-                pass
+                operation_timeout -= time.monotonic() - start_time
+                if operation_timeout <= 0:
+                    raise DeadlineExceeded(
+                        "Operation timeout exceeded before starting query"
+                    )
+                attempt_timeout = min(attempt_timeout, operation_timeout)
         retryable_excs = _get_retryable_errors(retryable_errors, self)
         row_merger = CrossSync._Sync_Impl._ReadRowsOperation(
             query,
@@ -1856,10 +1877,16 @@ class _DataApiTarget(abc.ABC):
             **self._request_path,
         )
         if self._use_accelerator("mutate_row"):
+            start_time = time.monotonic()
             try:
                 return self._mutate_row_via_accelerator(request, operation_timeout)
             except _AcceleratorFallback:
-                pass
+                operation_timeout -= time.monotonic() - start_time
+                if operation_timeout <= 0:
+                    raise DeadlineExceeded(
+                        "Operation timeout exceeded before starting mutation"
+                    )
+                attempt_timeout = min(attempt_timeout, operation_timeout)
         if all((mutation.is_idempotent() for mutation in mutations_list)):
             predicate = retries.if_exception_type(
                 *_get_retryable_errors(retryable_errors, self)

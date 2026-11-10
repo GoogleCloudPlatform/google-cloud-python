@@ -236,10 +236,16 @@ def _normalize_scopes(scopes: Any) -> frozenset[str]:
     if not scopes:
         return frozenset()
     if isinstance(scopes, str):
-        scopes = scopes.replace(",", " ").split()
-    elif not isinstance(scopes, (list, tuple, set, frozenset)):
+        return frozenset(scopes.replace(",", " ").split())
+    if not isinstance(scopes, (list, tuple, set, frozenset)):
         return frozenset()
-    return frozenset(s.strip() for s in scopes if isinstance(s, str) and s.strip())
+    return frozenset(
+        part.strip()
+        for s in scopes
+        if isinstance(s, str)
+        for part in s.split(",")
+        if part.strip()
+    )
 
 
 def _credential_type(creds: Any) -> str | None:
@@ -507,7 +513,7 @@ class BigtableDataClientAsync(ClientWithProject):
         # Identify this client to the daemon so it can construct the full
         # "python-v{ver}-go-accelerator-v{ver}" User-Agent.
         self._accelerator_flags += [
-            "--caller-user-agent",
+            "--user-agent",
             f"python-v{google.cloud.bigtable.__version__}",
         ]
 
@@ -516,7 +522,12 @@ class BigtableDataClientAsync(ClientWithProject):
         # Forward the effective auth scopes so the daemon's token audience
         # matches the native client (whose default is TransportType.AUTH_SCOPES),
         # rather than the daemon's single hardcoded data scope.
-        effective_scopes = list(scopes) if scopes else list(TransportType.AUTH_SCOPES)
+        normalized_scopes = _normalize_scopes(scopes)
+        effective_scopes = (
+            sorted(normalized_scopes)
+            if normalized_scopes
+            else list(TransportType.AUTH_SCOPES)
+        )
         # Remember the scopes we forwarded so the identity handshake can confirm
         # the daemon actually resolved a token for the same effective scope.
         self._accelerator_scopes: list[str] = effective_scopes
@@ -726,6 +737,13 @@ class BigtableDataClientAsync(ClientWithProject):
             # An in-memory secret we cannot reproduce in the daemon was
             # supplied; stay on the native client rather than run the
             # accelerated path under a different identity.
+            if explicit:
+                raise RuntimeError(
+                    "use_accelerator=True is not supported: "
+                    f"{self._accelerator_blocked_reason}; pass "
+                    "credentials_file via client_options, or pass "
+                    "use_accelerator=False."
+                )
             warnings.warn(
                 "Accelerator disabled: "
                 f"{self._accelerator_blocked_reason}; using the "
@@ -1813,9 +1831,7 @@ class _DataApiTargetAsync(abc.ABC):
         return [row async for row in row_generator]
 
     @CrossSync.convert
-    async def _read_row_via_accelerator(
-        self, query, operation_timeout, attempt_timeout
-    ):
+    async def _read_row_via_accelerator(self, query, operation_timeout):
         """Drive a single ReadRows attempt through the accelerator daemon.
 
         Raises ``_AcceleratorFallback`` if the caller should retry on the native
@@ -1830,7 +1846,7 @@ class _DataApiTargetAsync(abc.ABC):
             query,
             self,
             operation_timeout=operation_timeout,
-            attempt_timeout=attempt_timeout,
+            attempt_timeout=operation_timeout,
             metric=ActiveOperationMetric(OperationType.READ_ROWS, is_streaming=False),
             retryable_exceptions=(),
         )
@@ -1896,13 +1912,17 @@ class _DataApiTargetAsync(abc.ABC):
         )
 
         if self._use_accelerator("read_row"):
+            start_time = time.monotonic()
             try:
-                return await self._read_row_via_accelerator(
-                    query, operation_timeout, attempt_timeout
-                )
+                return await self._read_row_via_accelerator(query, operation_timeout)
             except _AcceleratorFallback:
                 # Daemon can't serve this call; fall through to the native path.
-                pass
+                operation_timeout -= time.monotonic() - start_time
+                if operation_timeout <= 0:
+                    raise DeadlineExceeded(
+                        "Operation timeout exceeded before starting query"
+                    )
+                attempt_timeout = min(attempt_timeout, operation_timeout)
 
         retryable_excs = _get_retryable_errors(retryable_errors, self)
 
@@ -2280,13 +2300,19 @@ class _DataApiTargetAsync(abc.ABC):
         )
 
         if self._use_accelerator("mutate_row"):
+            start_time = time.monotonic()
             try:
                 return await self._mutate_row_via_accelerator(
                     request, operation_timeout
                 )
             except _AcceleratorFallback:
                 # Daemon can't serve this call; fall through to the native path.
-                pass
+                operation_timeout -= time.monotonic() - start_time
+                if operation_timeout <= 0:
+                    raise DeadlineExceeded(
+                        "Operation timeout exceeded before starting mutation"
+                    )
+                attempt_timeout = min(attempt_timeout, operation_timeout)
 
         if all(mutation.is_idempotent() for mutation in mutations_list):
             # mutations are all idempotent and safe to retry
