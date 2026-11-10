@@ -2622,33 +2622,28 @@ class TestMtlsCertManager(object):
             1,
         )
 
-    def test_deepcopy_shares_instance_and_pickle_roundtrip_recreates_lock(
-        self, tmp_path
-    ):
-        cert_file, config_file = self._write_workload_config(tmp_path)
+    def test_copy_and_deepcopy_share_instance(self, tmp_path):
+        _, config_file = self._write_workload_config(tmp_path)
         manager = _mtls_helper._MtlsCertManager(
             certificate_config_path=str(config_file)
         )
         assert manager.refresh() is True
 
         assert copy.copy(manager) is manager
-        copied = copy.deepcopy(manager)
-        assert copied is manager
+        assert copy.deepcopy(manager) is manager
 
-        restored = pickle.loads(pickle.dumps(manager))
-        assert restored is not manager
-        assert restored.get_credential_snapshot() == (
-            pytest.public_cert_bytes,
-            pytest.private_key_bytes,
-            1,
+    @pytest.mark.parametrize(
+        "client_cert_source",
+        [None, lambda: (pytest.public_cert_bytes, pytest.private_key_bytes)],
+        ids=["default_discovery", "callback"],
+    )
+    def test_pickle_raises_type_error(self, tmp_path, client_cert_source):
+        _, config_file = self._write_workload_config(tmp_path)
+        manager = _mtls_helper._MtlsCertManager(
+            client_cert_source=client_cert_source,
+            certificate_config_path=str(config_file),
         )
-        assert restored.generation_id == 1
+        assert manager.refresh() is True
 
-        cert_file.write_bytes(OTHER_CERT_BYTES)
-        assert restored.refresh() is True
-        assert restored.generation_id == 2
-        assert restored.get_credential_snapshot() == (
-            OTHER_CERT_BYTES,
-            pytest.private_key_bytes,
-            2,
-        )
+        with pytest.raises(TypeError, match="cannot pickle '_MtlsCertManager'"):
+            pickle.dumps(manager)

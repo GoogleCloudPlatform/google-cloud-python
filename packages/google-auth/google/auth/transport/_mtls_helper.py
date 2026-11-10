@@ -1112,11 +1112,8 @@ class _MtlsCertManager:
         # Share the same thread-safe manager instance across deep copies.
         return self
 
-    def __getstate__(self):
-        state = self.__dict__.copy()
-        state["_lock"] = None
-        return state
-
-    def __setstate__(self, state):
-        self.__dict__.update(state)
-        self._lock = threading.Lock()
+    def __reduce_ex__(self, protocol):
+        # The manager holds the private key and often an unpicklable callback
+        # (such as the closure from mtls.default_client_cert_source()). Objects
+        # that hold a manager must leave it out of their own pickled state.
+        raise TypeError(f"cannot pickle {type(self).__name__!r} object")
