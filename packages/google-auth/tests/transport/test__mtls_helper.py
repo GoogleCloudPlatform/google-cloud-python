@@ -2434,7 +2434,14 @@ class TestMtlsCertManager(object):
         assert manager.refresh(expected_generation=0) is True
         assert source.call_count == 1
 
-        source.return_value = (OTHER_CERT_BYTES, pytest.private_key_bytes)
+        # Hold the lock long enough for the other threads to queue behind the
+        # first reload; an instant source lets each thread finish before the
+        # next one enters refresh(), and the test would pass without the lock.
+        def slow_reload():
+            time.sleep(0.1)
+            return OTHER_CERT_BYTES, pytest.private_key_bytes
+
+        source.side_effect = slow_reload
         results = [None] * 4
 
         def worker(idx):
