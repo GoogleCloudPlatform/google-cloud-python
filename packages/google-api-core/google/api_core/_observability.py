@@ -335,7 +335,7 @@ def _decode_method_name(method: str | bytes | None) -> str:
 def extract_rpc_identity(
     method_name: str | bytes | None,
 ) -> tuple[str, str, str]:
-    """Extracts (full_rpc_name, service_name, rpc_method_name) from a gRPC method path.
+    """Extracts RPC identity tuple from a gRPC method path.
 
     Args:
         method_name (str | bytes | None): Explicit gRPC method path
@@ -350,7 +350,7 @@ def extract_rpc_identity(
 
 
 def _resolve_rpc_system(kind: str | None = "grpc") -> str:
-    """Normalizes a transport kind ('grpc', 'rest', 'rest_asyncio', 'http') to an OTel rpc.system.name.
+    """Normalizes a transport kind to an OpenTelemetry rpc.system.name.
 
     Args:
         kind (str | None): The transport kind identifier.
@@ -367,7 +367,7 @@ def _extract_endpoint_attributes(
     client_options: ClientOptions | dict[str, Any] | None = None,
     default_host: str | None = None,
 ) -> dict[str, Any]:
-    """Extracts server.address, server.port (if non-default), and url.domain from client options if present.
+    """Extracts server.address, server.port, and url.domain from client options.
 
     Args:
         client_options (ClientOptions | dict[str, Any] | None): The client options
@@ -421,7 +421,7 @@ def _extract_endpoint_attributes(
 def _make_grpc_client_request_hook(
     endpoint_attrs: dict[str, Any] | None = None,
 ) -> Callable[[Any, Any], None]:
-    """Creates an OpenTelemetry gRPC client request hook with optional endpoint attributes.
+    """Creates an OTel gRPC client request hook with endpoint attributes.
 
     Args:
         endpoint_attrs (dict[str, Any] | None): Optional static endpoint attributes to attach
@@ -663,7 +663,7 @@ def _build_otel_grpc_hook_kwargs(
     client_options: ClientOptions | dict[str, Any] | None = None,
     default_host: str | None = None,
 ) -> dict[str, Any]:
-    """Builds the keyword arguments passed to OpenTelemetry's gRPC interceptor factories.
+    """Builds keyword arguments for OpenTelemetry gRPC interceptor factories.
 
     Both the sync (`otel_grpc.client_interceptor`) and async
     (`otel_grpc.aio_client_interceptors`) factories in `opentelemetry.instrumentation.grpc`
@@ -1175,7 +1175,7 @@ def trace_http_request(
         method (str | None): Explicit HTTP method (e.g. "GET", "POST").
         url (str | None): Fully qualified request URL.
         url_template (str | None): Parameterized path template for url.template.
-        headers (dict[str, Any] | None): Mutable dictionary of request headers.
+        headers (MutableMapping[str, Any] | None): Mutable mapping of request headers.
         body (Any | None): Request payload (used for body size calculation).
         client_options (ClientOptions | dict[str, Any] | None): Client options
             containing custom endpoint and tracer provider configurations.
