@@ -24,16 +24,16 @@ __version__ = package_version.__version__
 # https://docs.python.org/3.15/library/sys.html#sys.set_lazy_imports_filter
 # Older Python versions safely ignore this variable.
 __lazy_modules__ = {
-"google.cloud.logging_v2.services.config_service_v2.async_client",
-"google.cloud.logging_v2.services.config_service_v2.client",
-"google.cloud.logging_v2.services.logging_service_v2.async_client",
-"google.cloud.logging_v2.services.logging_service_v2.client",
-"google.cloud.logging_v2.services.metrics_service_v2.async_client",
-"google.cloud.logging_v2.services.metrics_service_v2.client",
-"google.cloud.logging_v2.types.log_entry",
-"google.cloud.logging_v2.types.logging",
-"google.cloud.logging_v2.types.logging_config",
-"google.cloud.logging_v2.types.logging_metrics",
+    "google.cloud.logging_v2.services.config_service_v2.async_client",
+    "google.cloud.logging_v2.services.config_service_v2.client",
+    "google.cloud.logging_v2.services.logging_service_v2.async_client",
+    "google.cloud.logging_v2.services.logging_service_v2.client",
+    "google.cloud.logging_v2.services.metrics_service_v2.async_client",
+    "google.cloud.logging_v2.services.metrics_service_v2.client",
+    "google.cloud.logging_v2.types.log_entry",
+    "google.cloud.logging_v2.types.logging",
+    "google.cloud.logging_v2.types.logging_config",
+    "google.cloud.logging_v2.types.logging_metrics",
 }
 
 

@@ -24,10 +24,10 @@ __version__ = package_version.__version__
 # https://docs.python.org/3.15/library/sys.html#sys.set_lazy_imports_filter
 # Older Python versions safely ignore this variable.
 __lazy_modules__ = {
-"google.cloud.storagebatchoperations_v1.services.storage_batch_operations.async_client",
-"google.cloud.storagebatchoperations_v1.services.storage_batch_operations.client",
-"google.cloud.storagebatchoperations_v1.types.storage_batch_operations",
-"google.cloud.storagebatchoperations_v1.types.storage_batch_operations_types",
+    "google.cloud.storagebatchoperations_v1.services.storage_batch_operations.async_client",
+    "google.cloud.storagebatchoperations_v1.services.storage_batch_operations.client",
+    "google.cloud.storagebatchoperations_v1.types.storage_batch_operations",
+    "google.cloud.storagebatchoperations_v1.types.storage_batch_operations_types",
 }
 
 

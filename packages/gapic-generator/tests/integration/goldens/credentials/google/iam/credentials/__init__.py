@@ -24,9 +24,9 @@ __version__ = package_version.__version__
 # https://docs.python.org/3.15/library/sys.html#sys.set_lazy_imports_filter
 # Older Python versions safely ignore this variable.
 __lazy_modules__ = {
-"google.iam.credentials_v1.services.iam_credentials.async_client",
-"google.iam.credentials_v1.services.iam_credentials.client",
-"google.iam.credentials_v1.types.common",
+    "google.iam.credentials_v1.services.iam_credentials.async_client",
+    "google.iam.credentials_v1.services.iam_credentials.client",
+    "google.iam.credentials_v1.types.common",
 }
 
 

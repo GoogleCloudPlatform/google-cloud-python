@@ -24,9 +24,9 @@ __version__ = package_version.__version__
 # https://docs.python.org/3.15/library/sys.html#sys.set_lazy_imports_filter
 # Older Python versions safely ignore this variable.
 __lazy_modules__ = {
-"google.cloud.redis_v1.services.cloud_redis.async_client",
-"google.cloud.redis_v1.services.cloud_redis.client",
-"google.cloud.redis_v1.types.cloud_redis",
+    "google.cloud.redis_v1.services.cloud_redis.async_client",
+    "google.cloud.redis_v1.services.cloud_redis.client",
+    "google.cloud.redis_v1.types.cloud_redis",
 }
 
 

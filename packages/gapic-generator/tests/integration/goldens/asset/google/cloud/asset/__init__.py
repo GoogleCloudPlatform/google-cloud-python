@@ -24,11 +24,11 @@ __version__ = package_version.__version__
 # https://docs.python.org/3.15/library/sys.html#sys.set_lazy_imports_filter
 # Older Python versions safely ignore this variable.
 __lazy_modules__ = {
-"google.cloud.asset_v1.services.asset_service.async_client",
-"google.cloud.asset_v1.services.asset_service.client",
-"google.cloud.asset_v1.types.asset_enrichment_resourceowners",
-"google.cloud.asset_v1.types.asset_service",
-"google.cloud.asset_v1.types.assets",
+    "google.cloud.asset_v1.services.asset_service.async_client",
+    "google.cloud.asset_v1.services.asset_service.client",
+    "google.cloud.asset_v1.types.asset_enrichment_resourceowners",
+    "google.cloud.asset_v1.types.asset_service",
+    "google.cloud.asset_v1.types.assets",
 }
 
 
