@@ -10,6 +10,7 @@ from base64 import b64decode
 from datetime import datetime, time
 from uuid import UUID
 
+import sqlparse
 from django.conf import settings
 from django.db.backends.base.operations import BaseDatabaseOperations
 from django.db.utils import DatabaseError
@@ -98,6 +99,31 @@ class DatabaseOperations(BaseDatabaseOperations):
         if os.environ.get("RUNNING_SPANNER_BACKEND_TESTS") == "1":
             name = name.replace(" ", "_").replace("-", "_")
         return escape_name(name)
+
+    def prepare_sql_script(self, sql):
+        """Split a raw SQL script into executable non-empty statements.
+
+        Strips SQL comments before checking emptiness so trailing comments and
+        standalone semicolons in ``RunSQL`` migrations do not emit empty strings
+        that Cloud Spanner rejects as invalid statements.
+
+        :type sql: str
+        :param sql: Raw SQL script containing zero or more ``;``-delimited
+                    statements and optional SQL comments.
+
+        :rtype: list[str]
+        :returns: Ordered list of comment-stripped SQL statements; returns
+                  ``[]`` when ``sql`` contains only whitespace, comments, or
+                  semicolons.
+        """
+        statements = []
+        for raw_statement in sqlparse.split(sql):
+            formatted = sqlparse.format(raw_statement, strip_comments=True).strip()
+            # Filter comment-only chunks and bare semicolons produced after
+            # comment stripping so callers receive only executable SQL.
+            if formatted and formatted.rstrip(";").strip():
+                statements.append(formatted)
+        return statements
 
     def bulk_batch_size(self, fields, objs):
         """

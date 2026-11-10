@@ -503,3 +503,185 @@ class TestUtils(SpannerSimpleTestClass):
 
         normal_field = mock.MagicMock(generated=False, db_default=None)
         self.assertTrue(schema_editor.skip_default(normal_field))
+
+    def test_quote_value_googlesql_literals(self):
+        import datetime
+        import uuid
+        from decimal import Decimal
+
+        from django.apps.registry import Apps
+        from django.db import models
+        from django.db.models.functions import Concat, Lower, Now
+        from django.test import override_settings
+        from google.cloud.spanner_dbapi.parse_utils import DateStr, TimestampStr
+        from google.cloud.spanner_v1 import JsonObject
+
+        schema_editor = DatabaseSchemaEditor(self.connection)
+        self.assertEqual(schema_editor.quote_value(True), "TRUE")
+        self.assertEqual(schema_editor.quote_value(False), "FALSE")
+        self.assertEqual(schema_editor.quote_value(None), "NULL")
+        self.assertEqual(schema_editor.quote_value(42), "42")
+        self.assertEqual(schema_editor.quote_value(1.5), "1.5")
+        self.assertEqual(
+            schema_editor.quote_value("it's a \\ test\n\r\t\x00\x7f"),
+            r"'it\'s a \\ test\n\r\t\x00\x7f'",
+        )
+        self.assertEqual(
+            schema_editor.quote_value(JsonObject({"k": "it's"})),
+            r"""JSON '{"k":"it\'s"}'""",
+        )
+        self.assertEqual(schema_editor.quote_value(JsonObject(None)), "NULL")
+        self.assertEqual(
+            schema_editor.quote_value(
+                uuid.UUID("12345678-1234-5678-1234-567812345678")
+            ),
+            "'12345678123456781234567812345678'",
+        )
+        self.assertEqual(schema_editor.quote_value(b"\x00\xffa"), r"b'\x00\xff\x61'")
+        self.assertEqual(
+            schema_editor.quote_value(DateStr("2026-11-10")),
+            "DATE '2026-11-10'",
+        )
+        self.assertEqual(
+            schema_editor.quote_value(TimestampStr("2026-11-10T01:02:03.000000Z")),
+            "TIMESTAMP '2026-11-10T01:02:03.000000Z'",
+        )
+        self.assertEqual(
+            schema_editor.quote_value(datetime.date(2026, 11, 10)),
+            "DATE '2026-11-10'",
+        )
+        with override_settings(USE_TZ=False):
+            self.assertEqual(
+                schema_editor.quote_value(datetime.datetime(2026, 11, 10, 1, 2, 3)),
+                "TIMESTAMP '2026-11-10T01:02:03Z'",
+            )
+        with override_settings(USE_TZ=True, TIME_ZONE="America/New_York"):
+            self.assertEqual(
+                schema_editor.quote_value(datetime.datetime(2026, 1, 15, 12, 0, 0)),
+                "TIMESTAMP '2026-01-15T17:00:00Z'",
+            )
+        tz_plus2 = datetime.timezone(datetime.timedelta(hours=2))
+        self.assertEqual(
+            schema_editor.quote_value(
+                datetime.datetime(2026, 11, 10, 3, 2, 3, tzinfo=tz_plus2)
+            ),
+            "TIMESTAMP '2026-11-10T01:02:03Z'",
+        )
+        self.assertEqual(
+            schema_editor.quote_value(datetime.time(12, 30, 0)),
+            "TIMESTAMP '0001-01-01T12:30:00.000000Z'",
+        )
+        self.assertEqual(
+            schema_editor.quote_value(Decimal("12.34")),
+            "NUMERIC '12.34'",
+        )
+        self.assertEqual(
+            schema_editor.quote_value(float("nan")),
+            "CAST('NaN' AS FLOAT64)",
+        )
+        self.assertEqual(
+            schema_editor.quote_value(float("inf")),
+            "CAST('Infinity' AS FLOAT64)",
+        )
+        self.assertEqual(
+            schema_editor.quote_value(float("-inf")),
+            "CAST('-Infinity' AS FLOAT64)",
+        )
+        with self.assertRaises(ValueError):
+            schema_editor.quote_value(Decimal("NaN"))
+        with self.assertRaises(TypeError):
+            schema_editor.quote_value(object())
+
+        class _LiteralModel(models.Model):
+            name = models.CharField(max_length=40)
+            tag = models.CharField(max_length=20, db_default="it's")
+            created_at = models.DateTimeField(db_default=Now())
+            gen_tag = models.GeneratedField(
+                expression=Concat(models.Value("a'b"), "name"),
+                output_field=models.CharField(max_length=80),
+                db_persist=True,
+            )
+            gen_lower = models.GeneratedField(
+                expression=Lower("name"),
+                output_field=models.CharField(max_length=80),
+                db_persist=True,
+            )
+
+            class Meta:
+                app_label = "tests"
+                apps = Apps()
+
+        def_sql, _ = schema_editor.column_sql(
+            _LiteralModel, _LiteralModel._meta.get_field("tag")
+        )
+        self.assertIn(r"DEFAULT ('it\'s')", def_sql)
+        now_sql, _ = schema_editor.column_sql(
+            _LiteralModel, _LiteralModel._meta.get_field("created_at")
+        )
+        self.assertIn("DEFAULT (", now_sql)
+        gen_sql, _ = schema_editor.column_sql(
+            _LiteralModel, _LiteralModel._meta.get_field("gen_tag")
+        )
+        self.assertIn(r"'a\'b'", gen_sql)
+        self.assertTrue(gen_sql.endswith("STORED"))
+        gen_np_sql, _ = schema_editor.column_sql(
+            _LiteralModel, _LiteralModel._meta.get_field("gen_lower")
+        )
+        self.assertTrue(gen_np_sql.endswith("STORED"))
+
+    def test_prepare_sql_script_strips_comment_and_empty_fragments(self):
+        script = (
+            "-- leading comment\n"
+            "CREATE TABLE a (id INT64 NOT NULL) PRIMARY KEY (id);\n"
+            " ; \n"
+            "CREATE INDEX a_idx ON a (id);\n"
+            "-- trailing comment\n"
+        )
+        self.assertEqual(
+            self.connection.ops.prepare_sql_script(script),
+            [
+                "CREATE TABLE a (id INT64 NOT NULL) PRIMARY KEY (id);",
+                "CREATE INDEX a_idx ON a (id);",
+            ],
+        )
+
+    def test_schema_editor_collect_sql_and_atomic_guard(self):
+        from django.db.transaction import TransactionManagementError
+
+        self.connection.settings_dict["AUTO_BATCH_DDL"] = True
+        try:
+            # Lazy unopened connection opens an auto-flushing batch only outside
+            # collect_sql=True, atomic blocks, and AUTOCOMMIT=False.
+            with DatabaseSchemaEditor(self.connection):
+                self.assertTrue(self.connection.in_ddl_batch)
+            self.assertFalse(self.connection.in_ddl_batch)
+
+            self.connection.settings_dict["AUTOCOMMIT"] = False
+            try:
+                with DatabaseSchemaEditor(self.connection):
+                    self.assertFalse(self.connection.in_ddl_batch)
+            finally:
+                self.connection.settings_dict["AUTOCOMMIT"] = True
+
+            with DatabaseSchemaEditor(self.connection, collect_sql=True) as editor:
+                self.assertFalse(self.connection.in_ddl_batch)
+                editor.create_model(Author)
+                with self.assertRaises(TypeError):
+                    editor.execute(
+                        "INSERT INTO tests_author (name) VALUES (%s)", [object()]
+                    )
+            self.assertFalse(self.connection.in_ddl_batch)
+            self.assertTrue(
+                any("CREATE TABLE tests_author" in s for s in editor.collected_sql)
+            )
+
+            self.connection.in_atomic_block = True
+            try:
+                with self.assertRaises(TransactionManagementError):
+                    with DatabaseSchemaEditor(self.connection) as editor:
+                        self.assertFalse(self.connection.in_ddl_batch)
+                        editor.create_model(Author)
+            finally:
+                self.connection.in_atomic_block = False
+        finally:
+            self.connection.settings_dict.pop("AUTO_BATCH_DDL", None)

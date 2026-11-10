@@ -18,12 +18,6 @@ Mutations
 Mutations are not a concept that is understood by Django so it does not support
 it inherently. The workaround is to use python-spanner objects and run Mutations using that.
 
-Batch DDL
-~~~~~~~~~
-Migrations (creation and updation) of tables in Django are sequential operations. 
-Django doesn't inherently support doing batch DDL operations. However, customers 
-can use python-spanner objects to run batch DDL for unmanaged tables in Django.
-
 Stale Reads
 ~~~~~~~~~~~
 Stale Reads are not a concept that is understood by Django so it does not support 
@@ -90,8 +84,6 @@ Workaround
      - Raw Queries can be used for Query hints `Link <https://stackoverflow.com/a/28350704/3027854>`__.
    * - Mutations
      - Python-spanner database objects can be used to run Mutation queries. `Link <https://cloud.google.com/spanner/docs/modify-mutation-api#python>`__.
-   * - Batch DDL
-     - Using unmanaged tables in Django. `Link <https://docs.djangoproject.com/en/4.0/ref/models/options/#managed>`__ and Directly using Python spanner objects to execute batch DDL statements. `Link <https://cloud.google.com/spanner/docs/getting-started/python#create_a_database>`__.
    * - Stale Reads
      - Python-spanner database objects can be used to perform stale reads. `Link <https://cloud.google.com/spanner/docs/reads#python>`__.
    * - Interleaving

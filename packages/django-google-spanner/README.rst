@@ -170,6 +170,51 @@ A transaction is automatically started if you define an
 To disable transactions in autocommit mode, set the flag `ALLOW_TRANSACTIONS_IN_AUTO_COMMIT` to False in your ``settings.py`` file.
 
 
+DDL batching
+~~~~~~~~~~~~
+
+By default (``AUTO_BATCH_DDL = False``), ``django_spanner`` executes each DDL
+statement emitted by ``DatabaseSchemaEditor`` individually. To automatically
+batch DDL statements generated inside each ``connection.schema_editor()`` block
+(including ``manage.py migrate`` and ``manage.py migrate --run-syncdb``) into a
+single Cloud Spanner ``UpdateDatabaseDdl`` operation—flushing automatically
+before any interleaved queries, DML backfills, or ``RunPython``
+transactions—set ``AUTO_BATCH_DDL`` to ``True`` in your ``DATABASES`` setting
+(or ``'auto_batch_ddl': True`` inside ``OPTIONS``):
+
+.. code:: python
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django_spanner',
+            'PROJECT': '$PROJECT',
+            'INSTANCE': '$INSTANCE',
+            'NAME': '$DATABASE',
+            'AUTO_BATCH_DDL': True,
+        }
+    }
+
+Regardless of ``AUTO_BATCH_DDL``, you can always group DDL statements across
+multiple ``schema_editor()`` blocks or raw cursors programmatically using
+``with connection.ddl_batch():``, or via client-side ``START BATCH DDL`` /
+``RUN BATCH`` / ``ABORT BATCH`` SQL statements on ``connection.cursor()``.
+
+Important operational behavior:
+
+- **Partial execution on failure**: Cloud Spanner applies statements inside an
+  ``UpdateDatabaseDdl`` call in order without transactional DDL rollback. If a
+  later statement in a batch fails, earlier statements in that batch may remain
+  applied while the Django migration remains unrecorded.
+- **Per-connection visibility**: Buffered DDL is tracked on a single Django
+  database connection until flushed. Queries run on a separate connection,
+  thread, or external Spanner client mid-migration will not observe pending
+  schema changes until a non-DDL flush boundary, ``schema_editor()`` exit, or
+  ``RUN BATCH``.
+- **Strict SQL batch mode**: ``START BATCH DDL`` rejects non-DDL queries, DML,
+  and transactions with ``ProgrammingError`` until ``RUN BATCH`` or
+  ``ABORT BATCH`` completes the batch.
+
+
 Set credentials and project environment variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 You'll need to download a service account JSON key file and point to it using an environment variable:

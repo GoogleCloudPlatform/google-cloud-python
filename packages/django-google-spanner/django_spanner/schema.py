@@ -13,6 +13,7 @@ from django.db.models.fields import NOT_PROVIDED
 
 from django_spanner import USE_EMULATOR
 from django_spanner._opentelemetry_tracing import trace_call
+from django_spanner.utils import quote_ddl_literal
 
 
 class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
@@ -56,6 +57,68 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
     # This can cause failures in django, hence sql_create_inline_fk is disabled.
     # sql_create_inline_fk = "CONSTRAINT FK_%(to_table)s_%(to_column)s_%(from_table)s_%(from_column)s FOREIGN KEY (%(from_column_norm)s) REFERENCES %(to_table_norm)s  (%(to_column_norm)s)"  # noqa
     sql_create_inline_fk = None
+
+    def __enter__(self):
+        """Enter the schema editing context and coordinate DDL batching.
+
+        Automatically opens a connection-scoped auto-flushing DDL batch when
+        ``connection.auto_batch_ddl`` is enabled outside ``collect_sql`` and
+        ``atomic`` transaction blocks, or records a rollback checkpoint when
+        joining a caller-managed outer ``ddl_batch()``.
+
+        :rtype: :class:`DatabaseSchemaEditor`
+        :returns: ``self`` initialized with an empty ``deferred_sql`` queue.
+        """
+        super().__enter__()
+        self._owns_ddl_batch = False
+        self._ddl_batch_checkpoint = None
+        # Skip starting a DDL batch during sqlmigrate (collect_sql=True) or
+        # inside atomic blocks so BaseDatabaseSchemaEditor.execute raises
+        # TransactionManagementError on disallowed transactional DDL.
+        if not self.collect_sql and not self.connection.in_atomic_block:
+            if self.connection.in_ddl_batch:
+                self._ddl_batch_checkpoint = self.connection.checkpoint_ddl_batch()
+            elif (
+                self.connection.auto_batch_ddl and self.connection._can_auto_batch_ddl()
+            ):
+                self.connection.start_batch_ddl(auto_flush=True)
+                self._owns_ddl_batch = True
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        """Exit the schema editing context, flushing or discarding batched DDL.
+
+        On clean exit, appends ``deferred_sql`` into the active batch before
+        submitting a single ``UpdateDatabaseDdl`` RPC when this editor started
+        the batch. On error, discards un-flushed DDL from this editor without
+        sending an RPC.
+
+        :param exc_type: Exception class raised inside the ``with`` block, or
+                         ``None`` on normal completion.
+        :param exc_value: Exception instance raised inside the ``with`` block,
+                          or ``None``.
+        :param traceback: Traceback object for ``exc_value``, or ``None``.
+        :returns: ``None`` (never suppresses exceptions).
+        :raises django.db.DatabaseError: If flushing the batched DDL statements
+                                         fails on Cloud Spanner.
+        """
+        try:
+            super().__exit__(exc_type, exc_value, traceback)
+        except BaseException:
+            self._discard_editor_ddl_batch()
+            raise
+        if exc_type is not None:
+            self._discard_editor_ddl_batch()
+            return
+        if self._owns_ddl_batch and self.connection.in_ddl_batch:
+            self.connection.run_batch()
+
+    def _discard_editor_ddl_batch(self):
+        """Abort an owned DDL batch or roll back un-flushed nested DDL statements."""
+        if self._owns_ddl_batch and self.connection.in_ddl_batch:
+            self.connection.abort_batch()
+        elif self._ddl_batch_checkpoint is not None:
+            self.connection.rollback_ddl_checkpoint(self._ddl_batch_checkpoint)
 
     def create_model(self, model):
         """
@@ -390,39 +453,22 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
         # Handle GeneratedField
         if getattr(field, "generated", False):
             generated_sql, generated_params = field.generated_sql(self.connection)
-            quoted_params = []
-            for p in generated_params:
-                if isinstance(p, str):
-                    quoted_params.append(
-                        "'%s'" % p.replace("\\", "\\\\").replace("'", "\\'")
-                    )
-                elif isinstance(p, bool):
-                    quoted_params.append("TRUE" if p else "FALSE")
-                elif p is None:
-                    quoted_params.append("NULL")
-                else:
-                    quoted_params.append(str(p))
-            sql += " AS (%s) STORED" % (generated_sql % tuple(quoted_params))
+            quoted_params = tuple(quote_ddl_literal(p) for p in generated_params)
+            sql += " AS (%s) STORED" % (
+                generated_sql % quoted_params if quoted_params else generated_sql
+            )
 
         # Handle db_default
         db_default = getattr(field, "db_default", None)
         if db_default is not None and db_default is not NOT_PROVIDED:
             default_sql, default_params = self.db_default_sql(field)
             if default_sql:
-                # Spanner DDL doesn't support parameters, so we must inline them.
-                quoted_params = []
-                for p in default_params:
-                    if isinstance(p, str):
-                        quoted_params.append(
-                            "'%s'" % p.replace("\\", "\\\\").replace("'", "\\'")
-                        )
-                    elif isinstance(p, bool):
-                        quoted_params.append("TRUE" if p else "FALSE")
-                    elif p is None:
-                        quoted_params.append("NULL")
-                    else:
-                        quoted_params.append(str(p))
-                sql += " DEFAULT (%s)" % (default_sql % tuple(quoted_params))
+                # Spanner DDL doesn't support parameters, so inline literals directly.
+                quoted_params = tuple(quote_ddl_literal(p) for p in default_params)
+                rendered_default = (
+                    default_sql % quoted_params if quoted_params else default_sql
+                )
+                sql += " DEFAULT (%s)" % rendered_default
 
         # Return the sql
         return sql, params
@@ -455,12 +501,8 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
             super().add_index(model, index)
 
     def quote_value(self, value):
-        # A more complete implementation isn't currently required.
-        if isinstance(value, str):
-            return "'%s'" % value.replace("'", "''")
-        if isinstance(value, bool):
-            return "TRUE" if value else "FALSE"
-        return str(value)
+        """Quote a Python scalar as a Cloud Spanner GoogleSQL literal for DDL/SQL."""
+        return quote_ddl_literal(value)
 
     def prepare_default(self, value):
         return self.quote_value(value)
