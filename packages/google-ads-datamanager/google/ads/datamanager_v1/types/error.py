@@ -75,7 +75,7 @@ class ErrorReason(proto.Enum):
             per request is 10,000.
         TOO_MANY_USER_IDENTIFIERS (18):
             Maximum number of user identifiers allowed
-            per audience member is 10.
+            per record is 10.
         TOO_MANY_DESTINATIONS (19):
             Maximum number of destinations allowed per
             request is 10.
@@ -104,6 +104,8 @@ class ErrorReason(proto.Enum):
             Conversion action ID is not valid.
         INVALID_CONVERSION_ACTION_TYPE (29):
             The conversion action type is not valid.
+        ENCRYPTION_NOT_SUPPORTED (132):
+            Encryption is not supported for this request.
         INVALID_CURRENCY_CODE (30):
             The currency code is not supported.
         INVALID_EVENT (31):
@@ -359,9 +361,8 @@ class ErrorReason(proto.Enum):
         INSIGHTS_MISSING_FOR_DIMENSION (123):
             Insights missing for this dimension.
         REQUIRED_PREREQUISITE_LINK_MISSING (124):
-            A required prerequisite link (such as a
-            Google Ads link) must exist for the Google
-            Analytics property to perform this operation.
+            Deprecated: Error is unused in the Data
+            Manager API.
         INVALID_REMOVE_AS_OF_TIME (125):
             The remove as of time must be in the past or
             present. Future timestamps are not permitted for
@@ -377,12 +378,41 @@ class ErrorReason(proto.Enum):
             The ad identifier does not belong to the account.
 
             For example, the
-            [``gclid``][google.ads.datamanager.v1.AdIdentifiers.gclid]
-            isn't associated with the
-            [``operating_account``][google.ads.datamanager.v1.Destination.operating_account]
+            [gclid][google.ads.datamanager.v1.AdIdentifiers.gclid] isn't
+            associated with the
+            [operating_account][google.ads.datamanager.v1.Destination.operating_account]
             and
-            [``product_destination_id``][google.ads.datamanager.v1.Destination.product_destination_id]
+            [product_destination_id][google.ads.datamanager.v1.Destination.product_destination_id]
             of the destination.
+        UNSUPPORTED_ACCOUNT_TYPE_FOR_USER_LIST_DIRECT_LICENSE (129):
+            The account type is not a supported ``client_account_type``
+            for a
+            [UserListDirectLicense][google.ads.datamanager.v1.UserListDirectLicense].
+        DUPLICATE_ELEMENTS (130):
+            Duplicate elements in a list in the request.
+        UNSUPPORTED_BASELINE_LOCATION (131):
+            The baseline location is not supported for generating
+            insights.
+
+            When
+            [location_auto_detection_enabled][google.ads.datamanager.v1.Baseline.location_auto_detection_enabled]
+            is set to ``true``, this error indicates that the detected
+            majority location for the audience is not among the
+            supported locations.
+
+            To resolve this, explicitly specify a supported location in
+            [baseline_location][google.ads.datamanager.v1.Baseline.baseline_location],
+            or retry once the audience list updates with a supported
+            majority location. See
+            https://support.google.com/google-ads/answer/11161206 for
+            the list of supported countries.
+        CONVERSION_PRECEDES_CALL (133):
+            The
+            [event_timestamp][google.ads.datamanager.v1.Event.event_timestamp]
+            cannot be earlier than the
+            [start_timestamp][google.ads.datamanager.v1.CallInfo.start_timestamp].
+        INVALID_DATE (134):
+            The date is not valid.
     """
 
     ERROR_REASON_UNSPECIFIED = 0
@@ -415,6 +445,7 @@ class ErrorReason(proto.Enum):
     INVALID_NUMBER_FORMAT = 27
     INVALID_CONVERSION_ACTION_ID = 28
     INVALID_CONVERSION_ACTION_TYPE = 29
+    ENCRYPTION_NOT_SUPPORTED = 132
     INVALID_CURRENCY_CODE = 30
     INVALID_EVENT = 31
     TOO_MANY_EVENTS = 32
@@ -514,6 +545,11 @@ class ErrorReason(proto.Enum):
     REQUEST_TOO_OLD = 126
     CONVERSION_ACTION_TOO_RECENTLY_CREATED = 127
     INVALID_AD_IDENTIFIER_FOR_ACCOUNT = 128
+    UNSUPPORTED_ACCOUNT_TYPE_FOR_USER_LIST_DIRECT_LICENSE = 129
+    DUPLICATE_ELEMENTS = 130
+    UNSUPPORTED_BASELINE_LOCATION = 131
+    CONVERSION_PRECEDES_CALL = 133
+    INVALID_DATE = 134
 
 
 __all__ = tuple(sorted(__protobuf__.manifest))

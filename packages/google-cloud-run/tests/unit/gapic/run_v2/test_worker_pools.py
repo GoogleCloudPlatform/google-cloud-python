@@ -76,6 +76,7 @@ from google.cloud.run_v2.types import (
     condition,
     instance_split,
     k8s_min,
+    sandbox,
     vendor_settings,
     worker_pool,
     worker_pool_revision_template,
@@ -1049,7 +1050,11 @@ def test_worker_pools_client_create_channel_credentials_file(
             credentials=file_creds,
             credentials_file=None,
             quota_project_id=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             scopes=None,
             default_host="run.googleapis.com",
             ssl_credentials=None,
@@ -3588,7 +3593,6 @@ def test_create_worker_pool_rest_required_fields(
 
     request_init = {}
     request_init["parent"] = ""
-    request_init["worker_pool_id"] = ""
     request = request_type(**request_init)
     pb_request = request_type.pb(request)
     jsonified_request = json.loads(
@@ -3596,7 +3600,6 @@ def test_create_worker_pool_rest_required_fields(
     )
 
     # verify fields with default values are dropped
-    assert "workerPoolId" not in jsonified_request
 
     default_values = getattr(
         transport_class._BaseCreateWorkerPool,
@@ -3609,11 +3612,8 @@ def test_create_worker_pool_rest_required_fields(
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
-    assert "workerPoolId" in jsonified_request
-    assert jsonified_request["workerPoolId"] == request_init["worker_pool_id"]
 
     jsonified_request["parent"] = "parent_value"
-    jsonified_request["workerPoolId"] = "worker_pool_id_value"
 
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
@@ -3626,8 +3626,6 @@ def test_create_worker_pool_rest_required_fields(
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
     assert jsonified_request["parent"] == "parent_value"
-    assert "workerPoolId" in jsonified_request
-    assert jsonified_request["workerPoolId"] == "worker_pool_id_value"
 
     client = WorkerPoolsClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -3664,13 +3662,7 @@ def test_create_worker_pool_rest_required_fields(
 
             response = client.create_worker_pool(request)
 
-            expected_params = [
-                (
-                    "workerPoolId",
-                    "",
-                ),
-                ("$alt", "json;enum-encoding=int"),
-            ]
+            expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
 
@@ -5801,7 +5793,15 @@ def test_create_worker_pool_rest_call_success(request_type):
                             "bucket": "bucket_value",
                             "object_": "object__value",
                             "generation": 1068,
-                        }
+                        },
+                        "inlined_source": {
+                            "sources": [
+                                {
+                                    "filename": "filename_value",
+                                    "content": "content_value",
+                                }
+                            ]
+                        },
                     },
                     "command": ["command_value1", "command_value2"],
                     "args": ["args_value1", "args_value2"],
@@ -5854,8 +5854,22 @@ def test_create_worker_pool_rest_call_success(request_type):
                         "function_target": "function_target_value",
                         "source_location": "source_location_value",
                     },
+                    "sandbox_launcher": True,
                 }
             ],
+            "sandboxes": {
+                "templates": [
+                    {
+                        "name": "name_value",
+                        "image": "image_value",
+                        "command": ["command_value1", "command_value2"],
+                        "args": ["args_value1", "args_value2"],
+                        "env": {},
+                        "volume_mounts": {},
+                        "working_dir": "working_dir_value",
+                    }
+                ]
+            },
             "volumes": [
                 {
                     "name": "name_value",
@@ -5895,6 +5909,8 @@ def test_create_worker_pool_rest_call_success(request_type):
             "encryption_key_shutdown_duration": {"seconds": 751, "nanos": 543},
             "node_selector": {"accelerator": "accelerator_value"},
             "gpu_zonal_redundancy_disabled": True,
+            "client": "client_value",
+            "client_version": "client_version_value",
         },
         "instance_splits": [{"type_": 1, "revision": "revision_value", "percent": 753}],
         "scaling": {"manual_instance_count": 2234},
@@ -5908,6 +5924,7 @@ def test_create_worker_pool_rest_call_success(request_type):
             "reason": 1,
             "revision_reason": 1,
             "execution_reason": 1,
+            "instance_reason": 1,
         },
         "conditions": {},
         "latest_ready_revision": "latest_ready_revision_value",
@@ -6466,7 +6483,15 @@ def test_update_worker_pool_rest_call_success(request_type):
                             "bucket": "bucket_value",
                             "object_": "object__value",
                             "generation": 1068,
-                        }
+                        },
+                        "inlined_source": {
+                            "sources": [
+                                {
+                                    "filename": "filename_value",
+                                    "content": "content_value",
+                                }
+                            ]
+                        },
                     },
                     "command": ["command_value1", "command_value2"],
                     "args": ["args_value1", "args_value2"],
@@ -6519,8 +6544,22 @@ def test_update_worker_pool_rest_call_success(request_type):
                         "function_target": "function_target_value",
                         "source_location": "source_location_value",
                     },
+                    "sandbox_launcher": True,
                 }
             ],
+            "sandboxes": {
+                "templates": [
+                    {
+                        "name": "name_value",
+                        "image": "image_value",
+                        "command": ["command_value1", "command_value2"],
+                        "args": ["args_value1", "args_value2"],
+                        "env": {},
+                        "volume_mounts": {},
+                        "working_dir": "working_dir_value",
+                    }
+                ]
+            },
             "volumes": [
                 {
                     "name": "name_value",
@@ -6560,6 +6599,8 @@ def test_update_worker_pool_rest_call_success(request_type):
             "encryption_key_shutdown_duration": {"seconds": 751, "nanos": 543},
             "node_selector": {"accelerator": "accelerator_value"},
             "gpu_zonal_redundancy_disabled": True,
+            "client": "client_value",
+            "client_version": "client_version_value",
         },
         "instance_splits": [{"type_": 1, "revision": "revision_value", "percent": 753}],
         "scaling": {"manual_instance_count": 2234},
@@ -6573,6 +6614,7 @@ def test_update_worker_pool_rest_call_success(request_type):
             "reason": 1,
             "revision_reason": 1,
             "execution_reason": 1,
+            "instance_reason": 1,
         },
         "conditions": {},
         "latest_ready_revision": "latest_ready_revision_value",
@@ -7926,7 +7968,11 @@ def test_worker_pools_base_transport_with_credentials_file():
         load_creds.assert_called_once_with(
             "credentials.json",
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             quota_project_id="octopus",
         )
 
@@ -7952,7 +7998,11 @@ def test_worker_pools_auth_adc():
         WorkerPoolsClient()
         adc.assert_called_once_with(
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             quota_project_id=None,
         )
 
@@ -7972,7 +8022,11 @@ def test_worker_pools_transport_auth_adc(transport_class):
         transport_class(quota_project_id="octopus", scopes=["1", "2"])
         adc.assert_called_once_with(
             scopes=["1", "2"],
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             quota_project_id="octopus",
         )
 
@@ -8025,7 +8079,11 @@ def test_worker_pools_transport_create_channel(transport_class, grpc_helpers):
             credentials=creds,
             credentials_file=None,
             quota_project_id="octopus",
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             scopes=["1", "2"],
             default_host="run.googleapis.com",
             ssl_credentials=None,

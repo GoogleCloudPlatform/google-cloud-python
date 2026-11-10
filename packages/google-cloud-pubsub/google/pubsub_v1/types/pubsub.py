@@ -1410,10 +1410,13 @@ class Compression(proto.Message):
                 Unspecified algorithm.
             ZLIB (1):
                 ZLIB compression.
+            ZSTD (3):
+                Zstd compression.
         """
 
         COMPRESSION_ALGORITHM_UNSPECIFIED = 0
         ZLIB = 1
+        ZSTD = 3
 
     class CompressionMode(proto.Enum):
         r"""The mode of the compression SMT.

@@ -36,7 +36,12 @@ __protobuf__ = proto.module(
 
 
 class RunAvailabilityForecastRequest(proto.Message):
-    r"""Request object for [RunAvailabilityForecast][] method.
+    r"""Request object for ``RunAvailabilityForecast`` method.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
 
     .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
@@ -46,6 +51,12 @@ class RunAvailabilityForecastRequest(proto.Message):
             [LineItem][google.ads.admanager.v1.LineItem] to be
             forecasted. Format:
             ``networks/{network_code}/lineItems/{line_item_id}``
+
+            This field is a member of `oneof`_ ``line_item_data``.
+        forecasting_line_item (google.ads.admanager_v1.types.ForecastingLineItem):
+            Optional. The
+            [ForecastingLineItem][google.ads.admanager.v1.ForecastingLineItem]
+            to be forecasted.
 
             This field is a member of `oneof`_ ``line_item_data``.
         parent (str):
@@ -58,6 +69,12 @@ class RunAvailabilityForecastRequest(proto.Message):
         proto.STRING,
         number=3,
         oneof="line_item_data",
+    )
+    forecasting_line_item: forecast_messages.ForecastingLineItem = proto.Field(
+        proto.MESSAGE,
+        number=6,
+        oneof="line_item_data",
+        message=forecast_messages.ForecastingLineItem,
     )
     parent: str = proto.Field(
         proto.STRING,
@@ -73,7 +90,7 @@ class RunAvailabilityForecastRequest(proto.Message):
 
 
 class RunAvailabilityForecastResponse(proto.Message):
-    r"""Response object for [RunAvailabilityForecast][] method.
+    r"""Response object for ``RunAvailabilityForecast`` method.
 
     Attributes:
         availability_forecast_result (google.ads.admanager_v1.types.AvailabilityForecast):
@@ -88,7 +105,12 @@ class RunAvailabilityForecastResponse(proto.Message):
 
 
 class RunDeliveryForecastRequest(proto.Message):
-    r"""Request object for [RunDeliveryForecast][] method.
+    r"""Request object for ``RunDeliveryForecast`` method.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
 
     .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
@@ -97,6 +119,12 @@ class RunDeliveryForecastRequest(proto.Message):
             Optional. The resource names of the
             [LineItems][google.ads.admanager.v1.LineItem] to be
             forecasted.
+
+            This field is a member of `oneof`_ ``line_item_data``.
+        forecasting_line_items (google.ads.admanager_v1.types.ForecastingLineItemList):
+            Optional. The
+            [ForecastingLineItems][google.ads.admanager.v1.ForecastingLineItem]
+            to be forecasted.
 
             This field is a member of `oneof`_ ``line_item_data``.
         parent (str):
@@ -111,6 +139,12 @@ class RunDeliveryForecastRequest(proto.Message):
         oneof="line_item_data",
         message=forecast_messages.ExistingLineItemList,
     )
+    forecasting_line_items: forecast_messages.ForecastingLineItemList = proto.Field(
+        proto.MESSAGE,
+        number=6,
+        oneof="line_item_data",
+        message=forecast_messages.ForecastingLineItemList,
+    )
     parent: str = proto.Field(
         proto.STRING,
         number=1,
@@ -123,7 +157,7 @@ class RunDeliveryForecastRequest(proto.Message):
 
 
 class RunDeliveryForecastResponse(proto.Message):
-    r"""Response object for [RunDeliveryForecast][] method.
+    r"""Response object for ``RunDeliveryForecast`` method.
 
     Attributes:
         delivery_forecast_result (google.ads.admanager_v1.types.DeliveryForecastResult):
@@ -138,7 +172,7 @@ class RunDeliveryForecastResponse(proto.Message):
 
 
 class RunTrafficDataRequest(proto.Message):
-    r"""Request object for [RunTrafficData][] method.
+    r"""Request object for ``RunTrafficData`` method.
 
     Attributes:
         parent (str):
@@ -176,7 +210,7 @@ class RunTrafficDataRequest(proto.Message):
 
 
 class RunTrafficDataResponse(proto.Message):
-    r"""Response object for [RunTrafficData][] method.
+    r"""Response object for ``RunTrafficData`` method.
 
     Attributes:
         historical_time_series (google.ads.admanager_v1.types.TimeSeries):

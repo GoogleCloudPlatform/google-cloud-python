@@ -154,6 +154,14 @@ class SqlInstancesServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_execute_sql_read_only(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_execute_sql_read_only(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_export(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -282,6 +290,14 @@ class SqlInstancesServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_reconcile_networking(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_reconcile_networking(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_reencrypt(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -362,6 +378,14 @@ class SqlInstancesServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_start(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_start(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_start_external_sync(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -375,6 +399,14 @@ class SqlInstancesServiceRestInterceptor:
                 return request, metadata
 
             def post_start_replica(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_stop(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_stop(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -913,6 +945,58 @@ class SqlInstancesServiceRestInterceptor:
         `post_execute_sql` interceptor. The (possibly modified) response returned by
         `post_execute_sql` will be passed to
         `post_execute_sql_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_execute_sql_read_only(
+        self,
+        request: cloud_sql.SqlInstancesExecuteSqlReadOnlyRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        cloud_sql.SqlInstancesExecuteSqlReadOnlyRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for execute_sql_read_only
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the SqlInstancesService server.
+        """
+        return request, metadata
+
+    def post_execute_sql_read_only(
+        self, response: cloud_sql.SqlInstancesExecuteSqlReadOnlyResponse
+    ) -> cloud_sql.SqlInstancesExecuteSqlReadOnlyResponse:
+        """Post-rpc interceptor for execute_sql_read_only
+
+        DEPRECATED. Please use the `post_execute_sql_read_only_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the SqlInstancesService server but before
+        it is returned to user code. This `post_execute_sql_read_only` interceptor runs
+        before the `post_execute_sql_read_only_with_metadata` interceptor.
+        """
+        return response
+
+    def post_execute_sql_read_only_with_metadata(
+        self,
+        response: cloud_sql.SqlInstancesExecuteSqlReadOnlyResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        cloud_sql.SqlInstancesExecuteSqlReadOnlyResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for execute_sql_read_only
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the SqlInstancesService server but before it is returned to user code.
+
+        We recommend only using this `post_execute_sql_read_only_with_metadata`
+        interceptor in new development instead of the `post_execute_sql_read_only` interceptor.
+        When both interceptors are used, this `post_execute_sql_read_only_with_metadata` interceptor runs after the
+        `post_execute_sql_read_only` interceptor. The (possibly modified) response returned by
+        `post_execute_sql_read_only` will be passed to
+        `post_execute_sql_read_only_with_metadata`.
         """
         return response, metadata
 
@@ -1713,6 +1797,55 @@ class SqlInstancesServiceRestInterceptor:
         """
         return response, metadata
 
+    def pre_reconcile_networking(
+        self,
+        request: cloud_sql.SqlInstancesReconcileNetworkingRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        cloud_sql.SqlInstancesReconcileNetworkingRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for reconcile_networking
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the SqlInstancesService server.
+        """
+        return request, metadata
+
+    def post_reconcile_networking(
+        self, response: cloud_sql_resources.Operation
+    ) -> cloud_sql_resources.Operation:
+        """Post-rpc interceptor for reconcile_networking
+
+        DEPRECATED. Please use the `post_reconcile_networking_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the SqlInstancesService server but before
+        it is returned to user code. This `post_reconcile_networking` interceptor runs
+        before the `post_reconcile_networking_with_metadata` interceptor.
+        """
+        return response
+
+    def post_reconcile_networking_with_metadata(
+        self,
+        response: cloud_sql_resources.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[cloud_sql_resources.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for reconcile_networking
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the SqlInstancesService server but before it is returned to user code.
+
+        We recommend only using this `post_reconcile_networking_with_metadata`
+        interceptor in new development instead of the `post_reconcile_networking` interceptor.
+        When both interceptors are used, this `post_reconcile_networking_with_metadata` interceptor runs after the
+        `post_reconcile_networking` interceptor. The (possibly modified) response returned by
+        `post_reconcile_networking` will be passed to
+        `post_reconcile_networking_with_metadata`.
+        """
+        return response, metadata
+
     def pre_reencrypt(
         self,
         request: cloud_sql.SqlInstancesReencryptRequest,
@@ -2204,6 +2337,54 @@ class SqlInstancesServiceRestInterceptor:
         """
         return response, metadata
 
+    def pre_start(
+        self,
+        request: cloud_sql.SqlInstancesStartRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        cloud_sql.SqlInstancesStartRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for start
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the SqlInstancesService server.
+        """
+        return request, metadata
+
+    def post_start(
+        self, response: cloud_sql_resources.Operation
+    ) -> cloud_sql_resources.Operation:
+        """Post-rpc interceptor for start
+
+        DEPRECATED. Please use the `post_start_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the SqlInstancesService server but before
+        it is returned to user code. This `post_start` interceptor runs
+        before the `post_start_with_metadata` interceptor.
+        """
+        return response
+
+    def post_start_with_metadata(
+        self,
+        response: cloud_sql_resources.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[cloud_sql_resources.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for start
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the SqlInstancesService server but before it is returned to user code.
+
+        We recommend only using this `post_start_with_metadata`
+        interceptor in new development instead of the `post_start` interceptor.
+        When both interceptors are used, this `post_start_with_metadata` interceptor runs after the
+        `post_start` interceptor. The (possibly modified) response returned by
+        `post_start` will be passed to
+        `post_start_with_metadata`.
+        """
+        return response, metadata
+
     def pre_start_external_sync(
         self,
         request: cloud_sql.SqlInstancesStartExternalSyncRequest,
@@ -2299,6 +2480,54 @@ class SqlInstancesServiceRestInterceptor:
         `post_start_replica` interceptor. The (possibly modified) response returned by
         `post_start_replica` will be passed to
         `post_start_replica_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_stop(
+        self,
+        request: cloud_sql.SqlInstancesStopRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        cloud_sql.SqlInstancesStopRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for stop
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the SqlInstancesService server.
+        """
+        return request, metadata
+
+    def post_stop(
+        self, response: cloud_sql_resources.Operation
+    ) -> cloud_sql_resources.Operation:
+        """Post-rpc interceptor for stop
+
+        DEPRECATED. Please use the `post_stop_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the SqlInstancesService server but before
+        it is returned to user code. This `post_stop` interceptor runs
+        before the `post_stop_with_metadata` interceptor.
+        """
+        return response
+
+    def post_stop_with_metadata(
+        self,
+        response: cloud_sql_resources.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[cloud_sql_resources.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for stop
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the SqlInstancesService server but before it is returned to user code.
+
+        We recommend only using this `post_stop_with_metadata`
+        interceptor in new development instead of the `post_stop` interceptor.
+        When both interceptors are used, this `post_stop_with_metadata` interceptor runs after the
+        `post_stop` interceptor. The (possibly modified) response returned by
+        `post_stop` will be passed to
+        `post_stop_with_metadata`.
         """
         return response, metadata
 
@@ -4144,6 +4373,165 @@ class SqlInstancesServiceRestTransport(_BaseSqlInstancesServiceRestTransport):
                     extra={
                         "serviceName": "google.cloud.sql.v1beta4.SqlInstancesService",
                         "rpcName": "ExecuteSql",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _ExecuteSqlReadOnly(
+        _BaseSqlInstancesServiceRestTransport._BaseExecuteSqlReadOnly,
+        SqlInstancesServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("SqlInstancesServiceRestTransport.ExecuteSqlReadOnly")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: cloud_sql.SqlInstancesExecuteSqlReadOnlyRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> cloud_sql.SqlInstancesExecuteSqlReadOnlyResponse:
+            r"""Call the execute sql read only method over HTTP.
+
+            Args:
+                request (~.cloud_sql.SqlInstancesExecuteSqlReadOnlyRequest):
+                    The request object. Execute read only SQL statements
+                request. Execute SQL statements in
+                read-only mode request.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.cloud_sql.SqlInstancesExecuteSqlReadOnlyResponse:
+                    Execute SQL statements response.
+                Execute SQL statements in read-only mode
+                response.
+
+            """
+
+            http_options = _BaseSqlInstancesServiceRestTransport._BaseExecuteSqlReadOnly._get_http_options()
+            request, metadata = self._interceptor.pre_execute_sql_read_only(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSqlInstancesServiceRestTransport._BaseExecuteSqlReadOnly,
+                    "_BaseExecuteSqlReadOnly__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.sql_v1beta4.SqlInstancesServiceClient.ExecuteSqlReadOnly",
+                    extra={
+                        "serviceName": "google.cloud.sql.v1beta4.SqlInstancesService",
+                        "rpcName": "ExecuteSqlReadOnly",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                SqlInstancesServiceRestTransport._ExecuteSqlReadOnly._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                    body,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = cloud_sql.SqlInstancesExecuteSqlReadOnlyResponse()
+            pb_resp = cloud_sql.SqlInstancesExecuteSqlReadOnlyResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_execute_sql_read_only(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_execute_sql_read_only_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        cloud_sql.SqlInstancesExecuteSqlReadOnlyResponse.to_json(
+                            response
+                        )
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.sql_v1beta4.SqlInstancesServiceClient.execute_sql_read_only",
+                    extra={
+                        "serviceName": "google.cloud.sql.v1beta4.SqlInstancesService",
+                        "rpcName": "ExecuteSqlReadOnly",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -6585,6 +6973,162 @@ class SqlInstancesServiceRestTransport(_BaseSqlInstancesServiceRestTransport):
                 )
             return resp
 
+    class _ReconcileNetworking(
+        _BaseSqlInstancesServiceRestTransport._BaseReconcileNetworking,
+        SqlInstancesServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("SqlInstancesServiceRestTransport.ReconcileNetworking")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: cloud_sql.SqlInstancesReconcileNetworkingRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> cloud_sql_resources.Operation:
+            r"""Call the reconcile networking method over HTTP.
+
+            Args:
+                request (~.cloud_sql.SqlInstancesReconcileNetworkingRequest):
+                    The request object. Request message for
+                SqlInstancesService.ReconcileNetworking.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.cloud_sql_resources.Operation:
+                    An Operation resource.&nbsp;For
+                successful operations that return an
+                Operation resource, only the fields
+                relevant to the operation are populated
+                in the resource.
+
+            """
+
+            http_options = _BaseSqlInstancesServiceRestTransport._BaseReconcileNetworking._get_http_options()
+            request, metadata = self._interceptor.pre_reconcile_networking(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSqlInstancesServiceRestTransport._BaseReconcileNetworking,
+                    "_BaseReconcileNetworking__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.sql_v1beta4.SqlInstancesServiceClient.ReconcileNetworking",
+                    extra={
+                        "serviceName": "google.cloud.sql.v1beta4.SqlInstancesService",
+                        "rpcName": "ReconcileNetworking",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                SqlInstancesServiceRestTransport._ReconcileNetworking._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                    body,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = cloud_sql_resources.Operation()
+            pb_resp = cloud_sql_resources.Operation.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_reconcile_networking(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_reconcile_networking_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = cloud_sql_resources.Operation.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.sql_v1beta4.SqlInstancesServiceClient.reconcile_networking",
+                    extra={
+                        "serviceName": "google.cloud.sql.v1beta4.SqlInstancesService",
+                        "rpcName": "ReconcileNetworking",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _Reencrypt(
         _BaseSqlInstancesServiceRestTransport._BaseReencrypt,
         SqlInstancesServiceRestStub,
@@ -8111,6 +8655,156 @@ class SqlInstancesServiceRestTransport(_BaseSqlInstancesServiceRestTransport):
                 )
             return resp
 
+    class _Start(
+        _BaseSqlInstancesServiceRestTransport._BaseStart, SqlInstancesServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("SqlInstancesServiceRestTransport.Start")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: cloud_sql.SqlInstancesStartRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> cloud_sql_resources.Operation:
+            r"""Call the start method over HTTP.
+
+            Args:
+                request (~.cloud_sql.SqlInstancesStartRequest):
+                    The request object. Instance start request.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.cloud_sql_resources.Operation:
+                    An Operation resource.&nbsp;For
+                successful operations that return an
+                Operation resource, only the fields
+                relevant to the operation are populated
+                in the resource.
+
+            """
+
+            http_options = (
+                _BaseSqlInstancesServiceRestTransport._BaseStart._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_start(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSqlInstancesServiceRestTransport._BaseStart,
+                    "_BaseStart__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.sql_v1beta4.SqlInstancesServiceClient.Start",
+                    extra={
+                        "serviceName": "google.cloud.sql.v1beta4.SqlInstancesService",
+                        "rpcName": "Start",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = SqlInstancesServiceRestTransport._Start._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = cloud_sql_resources.Operation()
+            pb_resp = cloud_sql_resources.Operation.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_start(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_start_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = cloud_sql_resources.Operation.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.sql_v1beta4.SqlInstancesServiceClient.start",
+                    extra={
+                        "serviceName": "google.cloud.sql.v1beta4.SqlInstancesService",
+                        "rpcName": "Start",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _StartExternalSync(
         _BaseSqlInstancesServiceRestTransport._BaseStartExternalSync,
         SqlInstancesServiceRestStub,
@@ -8409,6 +9103,154 @@ class SqlInstancesServiceRestTransport(_BaseSqlInstancesServiceRestTransport):
                     extra={
                         "serviceName": "google.cloud.sql.v1beta4.SqlInstancesService",
                         "rpcName": "StartReplica",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _Stop(
+        _BaseSqlInstancesServiceRestTransport._BaseStop, SqlInstancesServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("SqlInstancesServiceRestTransport.Stop")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: cloud_sql.SqlInstancesStopRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> cloud_sql_resources.Operation:
+            r"""Call the stop method over HTTP.
+
+            Args:
+                request (~.cloud_sql.SqlInstancesStopRequest):
+                    The request object. Instance stop request.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.cloud_sql_resources.Operation:
+                    An Operation resource.&nbsp;For
+                successful operations that return an
+                Operation resource, only the fields
+                relevant to the operation are populated
+                in the resource.
+
+            """
+
+            http_options = (
+                _BaseSqlInstancesServiceRestTransport._BaseStop._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_stop(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseSqlInstancesServiceRestTransport._BaseStop,
+                    "_BaseStop__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.sql_v1beta4.SqlInstancesServiceClient.Stop",
+                    extra={
+                        "serviceName": "google.cloud.sql.v1beta4.SqlInstancesService",
+                        "rpcName": "Stop",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = SqlInstancesServiceRestTransport._Stop._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = cloud_sql_resources.Operation()
+            pb_resp = cloud_sql_resources.Operation.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_stop(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_stop_with_metadata(resp, response_metadata)
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = cloud_sql_resources.Operation.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.sql_v1beta4.SqlInstancesServiceClient.stop",
+                    extra={
+                        "serviceName": "google.cloud.sql.v1beta4.SqlInstancesService",
+                        "rpcName": "Stop",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -9274,6 +10116,17 @@ class SqlInstancesServiceRestTransport(_BaseSqlInstancesServiceRestTransport):
         return self._ExecuteSql(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def execute_sql_read_only(
+        self,
+    ) -> Callable[
+        [cloud_sql.SqlInstancesExecuteSqlReadOnlyRequest],
+        cloud_sql.SqlInstancesExecuteSqlReadOnlyResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ExecuteSqlReadOnly(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def export(
         self,
     ) -> Callable[[cloud_sql.SqlInstancesExportRequest], cloud_sql_resources.Operation]:
@@ -9438,6 +10291,17 @@ class SqlInstancesServiceRestTransport(_BaseSqlInstancesServiceRestTransport):
         return self._PromoteReplica(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def reconcile_networking(
+        self,
+    ) -> Callable[
+        [cloud_sql.SqlInstancesReconcileNetworkingRequest],
+        cloud_sql_resources.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ReconcileNetworking(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def reencrypt(
         self,
     ) -> Callable[
@@ -9546,6 +10410,14 @@ class SqlInstancesServiceRestTransport(_BaseSqlInstancesServiceRestTransport):
         )  # type: ignore
 
     @property
+    def start(
+        self,
+    ) -> Callable[[cloud_sql.SqlInstancesStartRequest], cloud_sql_resources.Operation]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._Start(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def start_external_sync(
         self,
     ) -> Callable[
@@ -9564,6 +10436,14 @@ class SqlInstancesServiceRestTransport(_BaseSqlInstancesServiceRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._StartReplica(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def stop(
+        self,
+    ) -> Callable[[cloud_sql.SqlInstancesStopRequest], cloud_sql_resources.Operation]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._Stop(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def stop_replica(

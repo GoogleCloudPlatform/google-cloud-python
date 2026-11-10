@@ -61,9 +61,11 @@ from google.cloud.oracledatabase_v1.types import (
     common,
     database,
     database_character_set,
+    database_connection,
     db_node,
     db_server,
     db_system,
+    db_system_compute_performance,
     db_system_initial_storage_size,
     db_system_shape,
     db_version,
@@ -71,6 +73,7 @@ from google.cloud.oracledatabase_v1.types import (
     exadata_infra,
     exadb_vm_cluster,
     exascale_db_storage_vault,
+    flex_component,
     gi_version,
     goldengate_connection,
     goldengate_connection_assignment,
@@ -90,6 +93,9 @@ from google.cloud.oracledatabase_v1.types import (
 from google.cloud.oracledatabase_v1.types import (
     autonomous_database as gco_autonomous_database,
 )
+from google.cloud.oracledatabase_v1.types import (
+    database_connection as gco_database_connection,
+)
 from google.cloud.oracledatabase_v1.types import db_system as gco_db_system
 from google.cloud.oracledatabase_v1.types import (
     exadb_vm_cluster as gco_exadb_vm_cluster,
@@ -97,6 +103,7 @@ from google.cloud.oracledatabase_v1.types import (
 from google.cloud.oracledatabase_v1.types import (
     exascale_db_storage_vault as gco_exascale_db_storage_vault,
 )
+from google.cloud.oracledatabase_v1.types import execute_sql as gco_execute_sql
 from google.cloud.oracledatabase_v1.types import (
     goldengate_connection as gco_goldengate_connection,
 )
@@ -180,12 +187,24 @@ class OracleDatabaseAsyncClient:
     parse_database_character_set_path = staticmethod(
         OracleDatabaseClient.parse_database_character_set_path
     )
+    database_connection_path = staticmethod(
+        OracleDatabaseClient.database_connection_path
+    )
+    parse_database_connection_path = staticmethod(
+        OracleDatabaseClient.parse_database_connection_path
+    )
     db_node_path = staticmethod(OracleDatabaseClient.db_node_path)
     parse_db_node_path = staticmethod(OracleDatabaseClient.parse_db_node_path)
     db_server_path = staticmethod(OracleDatabaseClient.db_server_path)
     parse_db_server_path = staticmethod(OracleDatabaseClient.parse_db_server_path)
     db_system_path = staticmethod(OracleDatabaseClient.db_system_path)
     parse_db_system_path = staticmethod(OracleDatabaseClient.parse_db_system_path)
+    db_system_compute_performance_path = staticmethod(
+        OracleDatabaseClient.db_system_compute_performance_path
+    )
+    parse_db_system_compute_performance_path = staticmethod(
+        OracleDatabaseClient.parse_db_system_compute_performance_path
+    )
     db_system_initial_storage_size_path = staticmethod(
         OracleDatabaseClient.db_system_initial_storage_size_path
     )
@@ -209,6 +228,10 @@ class OracleDatabaseAsyncClient:
     )
     parse_exascale_db_storage_vault_path = staticmethod(
         OracleDatabaseClient.parse_exascale_db_storage_vault_path
+    )
+    flex_component_path = staticmethod(OracleDatabaseClient.flex_component_path)
+    parse_flex_component_path = staticmethod(
+        OracleDatabaseClient.parse_flex_component_path
     )
     gi_version_path = staticmethod(OracleDatabaseClient.gi_version_path)
     parse_gi_version_path = staticmethod(OracleDatabaseClient.parse_gi_version_path)
@@ -260,6 +283,10 @@ class OracleDatabaseAsyncClient:
     )
     network_path = staticmethod(OracleDatabaseClient.network_path)
     parse_network_path = staticmethod(OracleDatabaseClient.parse_network_path)
+    network_attachment_path = staticmethod(OracleDatabaseClient.network_attachment_path)
+    parse_network_attachment_path = staticmethod(
+        OracleDatabaseClient.parse_network_attachment_path
+    )
     odb_dns_zone_path = staticmethod(OracleDatabaseClient.odb_dns_zone_path)
     parse_odb_dns_zone_path = staticmethod(OracleDatabaseClient.parse_odb_dns_zone_path)
     odb_network_path = staticmethod(OracleDatabaseClient.odb_network_path)
@@ -273,6 +300,12 @@ class OracleDatabaseAsyncClient:
     secret_version_path = staticmethod(OracleDatabaseClient.secret_version_path)
     parse_secret_version_path = staticmethod(
         OracleDatabaseClient.parse_secret_version_path
+    )
+    workload_identity_pool_path = staticmethod(
+        OracleDatabaseClient.workload_identity_pool_path
+    )
+    parse_workload_identity_pool_path = staticmethod(
+        OracleDatabaseClient.parse_workload_identity_pool_path
     )
     common_billing_account_path = staticmethod(
         OracleDatabaseClient.common_billing_account_path
@@ -874,6 +907,168 @@ class OracleDatabaseAsyncClient:
         # add these here.
         metadata = tuple(metadata) + (
             gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            exadata_infra.CloudExadataInfrastructure,
+            metadata_type=oracledatabase.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def update_cloud_exadata_infrastructure(
+        self,
+        request: Optional[
+            Union[oracledatabase.UpdateCloudExadataInfrastructureRequest, dict]
+        ] = None,
+        *,
+        cloud_exadata_infrastructure: Optional[
+            exadata_infra.CloudExadataInfrastructure
+        ] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Updates the parameters of a single Exadata
+        Infrastructure.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_update_cloud_exadata_infrastructure():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                request = oracledatabase_v1.UpdateCloudExadataInfrastructureRequest(
+                )
+
+                # Make the request
+                operation = await client.update_cloud_exadata_infrastructure(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.UpdateCloudExadataInfrastructureRequest, dict]]):
+                The request object. The request for ``CloudExadataInfrastructure.Update``.
+            cloud_exadata_infrastructure (:class:`google.cloud.oracledatabase_v1.types.CloudExadataInfrastructure`):
+                Required. The resource being updated. Note only
+                ``labels`` can be updated. The provided ``labels`` will
+                completely replace the existing labels. Any existing
+                label keys that are not included in the update request
+                will be deleted. Not providing ``labels`` and
+                ``update_mask`` will not update the labels. To clear all
+                labels, specify ``labels`` in the ``update_mask`` and
+                omit or leave the ``labels`` field empty in the update
+                request.
+
+                This corresponds to the ``cloud_exadata_infrastructure`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Optional. Field mask is used to specify the fields to be
+                overwritten in the Exadata resource by the update. The
+                fields specified in the ``update_mask`` are relative to
+                the resource, not the full request. A field will be
+                overwritten if it is in the mask. If the user does not
+                provide a mask then the service treats this as an
+                implied field mask equivalent to all fields that are
+                populated (have a non-empty value). To clear or unset a
+                field, the field must be explicitly specified in the
+                ``update_mask``.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.cloud.oracledatabase_v1.types.CloudExadataInfrastructure` Represents CloudExadataInfrastructure resource.
+                   https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/CloudExadataInfrastructure/
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [cloud_exadata_infrastructure, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, oracledatabase.UpdateCloudExadataInfrastructureRequest
+        ):
+            request = oracledatabase.UpdateCloudExadataInfrastructureRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if cloud_exadata_infrastructure is not None:
+            request.cloud_exadata_infrastructure = cloud_exadata_infrastructure
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_cloud_exadata_infrastructure
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (
+                    (
+                        "cloud_exadata_infrastructure.name",
+                        request.cloud_exadata_infrastructure.name,
+                    ),
+                )
+            ),
         )
 
         # Validate the universe domain.
@@ -1575,6 +1770,159 @@ class OracleDatabaseAsyncClient:
         # Done; return the response.
         return response
 
+    async def update_cloud_vm_cluster(
+        self,
+        request: Optional[
+            Union[oracledatabase.UpdateCloudVmClusterRequest, dict]
+        ] = None,
+        *,
+        cloud_vm_cluster: Optional[vm_cluster.CloudVmCluster] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Updates the parameters of a single Vm Cluster.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_update_cloud_vm_cluster():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                cloud_vm_cluster = oracledatabase_v1.CloudVmCluster()
+                cloud_vm_cluster.exadata_infrastructure = "exadata_infrastructure_value"
+
+                request = oracledatabase_v1.UpdateCloudVmClusterRequest(
+                    cloud_vm_cluster=cloud_vm_cluster,
+                )
+
+                # Make the request
+                operation = await client.update_cloud_vm_cluster(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.UpdateCloudVmClusterRequest, dict]]):
+                The request object. The request for ``CloudVmCluster.Update``.
+            cloud_vm_cluster (:class:`google.cloud.oracledatabase_v1.types.CloudVmCluster`):
+                Required. The resource being updated. Note only
+                ``labels`` can be updated. The provided ``labels`` will
+                completely replace the existing labels. Any existing
+                label keys that are not included in the update request
+                will be deleted. Not providing ``labels`` and
+                ``update_mask`` will not update the labels. To clear all
+                labels, specify ``labels`` in the ``update_mask`` and
+                omit or leave the ``labels`` field empty in the update
+                request.
+
+                This corresponds to the ``cloud_vm_cluster`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Optional. A mask specifying which fields in the VM
+                Cluster should be updated. A field specified in the mask
+                is overwritten. If a mask isn't provided, the service
+                treats this as an implied field mask equivalent to all
+                fields that are populated (have a non-empty value). To
+                clear or unset a field, the field must be explicitly
+                specified in the ``update_mask``.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.cloud.oracledatabase_v1.types.CloudVmCluster` Details of the Cloud VM Cluster resource.
+                   https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/CloudVmCluster/
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [cloud_vm_cluster, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, oracledatabase.UpdateCloudVmClusterRequest):
+            request = oracledatabase.UpdateCloudVmClusterRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if cloud_vm_cluster is not None:
+            request.cloud_vm_cluster = cloud_vm_cluster
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_cloud_vm_cluster
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("cloud_vm_cluster.name", request.cloud_vm_cluster.name),)
+            ),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            vm_cluster.CloudVmCluster,
+            metadata_type=oracledatabase.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
     async def delete_cloud_vm_cluster(
         self,
         request: Optional[
@@ -1710,6 +2058,540 @@ class OracleDatabaseAsyncClient:
         # Done; return the response.
         return response
 
+    async def enable_cloud_vm_cluster_identity_connector(
+        self,
+        request: Optional[
+            Union[oracledatabase.EnableCloudVmClusterIdentityConnectorRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Enables the Workload Identity Connector for a Cloud
+        VM Cluster.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_enable_cloud_vm_cluster_identity_connector():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                request = oracledatabase_v1.EnableCloudVmClusterIdentityConnectorRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                operation = await client.enable_cloud_vm_cluster_identity_connector(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.EnableCloudVmClusterIdentityConnectorRequest, dict]]):
+                The request object. The request for
+                ``CloudVmCluster.EnableCloudVmClusterIdentityConnector``.
+            name (:class:`str`):
+                Required. The name of the Cloud VM Cluster in the
+                following format:
+                projects/{project}/locations/{location}/cloudVmClusters/{cloud_vm_cluster}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.cloud.oracledatabase_v1.types.CloudVmCluster` Details of the Cloud VM Cluster resource.
+                   https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/CloudVmCluster/
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, oracledatabase.EnableCloudVmClusterIdentityConnectorRequest
+        ):
+            request = oracledatabase.EnableCloudVmClusterIdentityConnectorRequest(
+                request
+            )
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.enable_cloud_vm_cluster_identity_connector
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            vm_cluster.CloudVmCluster,
+            metadata_type=oracledatabase.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def disable_cloud_vm_cluster_identity_connector(
+        self,
+        request: Optional[
+            Union[oracledatabase.DisableCloudVmClusterIdentityConnectorRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Disables the Workload Identity Connector for a Cloud
+        VM Cluster.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_disable_cloud_vm_cluster_identity_connector():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                request = oracledatabase_v1.DisableCloudVmClusterIdentityConnectorRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                operation = await client.disable_cloud_vm_cluster_identity_connector(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.DisableCloudVmClusterIdentityConnectorRequest, dict]]):
+                The request object. The request for
+                ``CloudVmCluster.DisableCloudVmClusterIdentityConnector``.
+            name (:class:`str`):
+                Required. The name of the Cloud VM Cluster in the
+                following format:
+                projects/{project}/locations/{location}/cloudVmClusters/{cloud_vm_cluster}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.cloud.oracledatabase_v1.types.CloudVmCluster` Details of the Cloud VM Cluster resource.
+                   https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/CloudVmCluster/
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, oracledatabase.DisableCloudVmClusterIdentityConnectorRequest
+        ):
+            request = oracledatabase.DisableCloudVmClusterIdentityConnectorRequest(
+                request
+            )
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.disable_cloud_vm_cluster_identity_connector
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            vm_cluster.CloudVmCluster,
+            metadata_type=oracledatabase.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def enable_exadb_vm_cluster_identity_connector(
+        self,
+        request: Optional[
+            Union[oracledatabase.EnableExadbVmClusterIdentityConnectorRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Enables the Workload Identity Connector for an Exadb
+        VM Cluster.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_enable_exadb_vm_cluster_identity_connector():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                request = oracledatabase_v1.EnableExadbVmClusterIdentityConnectorRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                operation = await client.enable_exadb_vm_cluster_identity_connector(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.EnableExadbVmClusterIdentityConnectorRequest, dict]]):
+                The request object. The request for
+                ``ExadbVmCluster.EnableExadbVmClusterIdentityConnector``.
+            name (:class:`str`):
+                Required. The name of the Exadb VM Cluster in the
+                following format:
+                projects/{project}/locations/{location}/exadbVmClusters/{exadb_vm_cluster}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.cloud.oracledatabase_v1.types.ExadbVmCluster` ExadbVmCluster represents a cluster of VMs that are used to run Exadata
+                   workloads.
+                   https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/ExadbVmCluster/
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, oracledatabase.EnableExadbVmClusterIdentityConnectorRequest
+        ):
+            request = oracledatabase.EnableExadbVmClusterIdentityConnectorRequest(
+                request
+            )
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.enable_exadb_vm_cluster_identity_connector
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            exadb_vm_cluster.ExadbVmCluster,
+            metadata_type=oracledatabase.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def disable_exadb_vm_cluster_identity_connector(
+        self,
+        request: Optional[
+            Union[oracledatabase.DisableExadbVmClusterIdentityConnectorRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Disables the Workload Identity Connector for an Exadb
+        VM Cluster.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_disable_exadb_vm_cluster_identity_connector():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                request = oracledatabase_v1.DisableExadbVmClusterIdentityConnectorRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                operation = await client.disable_exadb_vm_cluster_identity_connector(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.DisableExadbVmClusterIdentityConnectorRequest, dict]]):
+                The request object. The request for
+                ``ExadbVmCluster.DisableExadbVmClusterIdentityConnector``.
+            name (:class:`str`):
+                Required. The name of the Exadb VM Cluster in the
+                following format:
+                projects/{project}/locations/{location}/exadbVmClusters/{exadb_vm_cluster}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.cloud.oracledatabase_v1.types.ExadbVmCluster` ExadbVmCluster represents a cluster of VMs that are used to run Exadata
+                   workloads.
+                   https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/ExadbVmCluster/
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, oracledatabase.DisableExadbVmClusterIdentityConnectorRequest
+        ):
+            request = oracledatabase.DisableExadbVmClusterIdentityConnectorRequest(
+                request
+            )
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.disable_exadb_vm_cluster_identity_connector
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            exadb_vm_cluster.ExadbVmCluster,
+            metadata_type=oracledatabase.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
     async def list_entitlements(
         self,
         request: Optional[Union[oracledatabase.ListEntitlementsRequest, dict]] = None,
@@ -1824,6 +2706,133 @@ class OracleDatabaseAsyncClient:
         # This method is paged; wrap the response in a pager, which provides
         # an `__aiter__` convenience method.
         response = pagers.ListEntitlementsAsyncPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def list_flex_components(
+        self,
+        request: Optional[Union[flex_component.ListFlexComponentsRequest, dict]] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListFlexComponentsAsyncPager:
+        r"""Lists Flex Components in a given project and
+        location.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_list_flex_components():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                request = oracledatabase_v1.ListFlexComponentsRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_flex_components(request=request)
+
+                # Handle the response
+                async for response in page_result:
+                    print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.ListFlexComponentsRequest, dict]]):
+                The request object. Message for listing FlexComponents.
+            parent (:class:`str`):
+                Required. Parent value for
+                ListFlexComponentsRequest Format:
+                projects/{project}/locations/{location}
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.oracledatabase_v1.services.oracle_database.pagers.ListFlexComponentsAsyncPager:
+                Message for response to listing
+                FlexComponents
+                Iterating over this object will yield
+                results and resolve additional pages
+                automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, flex_component.ListFlexComponentsRequest):
+            request = flex_component.ListFlexComponentsRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.list_flex_components
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__aiter__` convenience method.
+        response = pagers.ListFlexComponentsAsyncPager(
             method=rpc,
             request=request,
             response=response,
@@ -2914,17 +3923,27 @@ class OracleDatabaseAsyncClient:
             request (Optional[Union[google.cloud.oracledatabase_v1.types.UpdateAutonomousDatabaseRequest, dict]]):
                 The request object. The request for ``AutonomousDatabase.Update``.
             autonomous_database (:class:`google.cloud.oracledatabase_v1.types.AutonomousDatabase`):
-                Required. The resource being updated
+                Required. The Autonomous Database resource being
+                updated. For ``labels``, the provided map completely
+                replaces existing labels; any existing keys not included
+                will be deleted. To clear all labels, specify ``labels``
+                in the ``update_mask`` and omit or leave the ``labels``
+                field empty in the update request.
+
                 This corresponds to the ``autonomous_database`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
                 Optional. Field mask is used to specify the fields to be
                 overwritten in the Exadata resource by the update. The
-                fields specified in the update_mask are relative to the
-                resource, not the full request. A field will be
+                fields specified in the ``update_mask`` are relative to
+                the resource, not the full request. A field will be
                 overwritten if it is in the mask. If the user does not
-                provide a mask then all fields will be overwritten.
+                provide a mask then the service treats this as an
+                implied field mask equivalent to all fields that are
+                populated (have a non-empty value). To clear or unset a
+                field, the field must be explicitly specified in the
+                ``update_mask``.
 
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -5131,6 +6150,159 @@ class OracleDatabaseAsyncClient:
         # Done; return the response.
         return response
 
+    async def update_odb_network(
+        self,
+        request: Optional[Union[gco_odb_network.UpdateOdbNetworkRequest, dict]] = None,
+        *,
+        odb_network: Optional[gco_odb_network.OdbNetwork] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Updates the ``labels`` and ``service_connectivity_config`` of a
+        single OdbNetwork.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_update_odb_network():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                odb_network = oracledatabase_v1.OdbNetwork()
+                odb_network.network = "network_value"
+
+                request = oracledatabase_v1.UpdateOdbNetworkRequest(
+                    odb_network=odb_network,
+                )
+
+                # Make the request
+                operation = await client.update_odb_network(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.UpdateOdbNetworkRequest, dict]]):
+                The request object. The request for ``OdbNetwork.Update``.
+            odb_network (:class:`google.cloud.oracledatabase_v1.types.OdbNetwork`):
+                Required. The resource being updated. Note only
+                ``labels`` and ``service_connectivity_config`` can be
+                updated. The provided labels will completely replace the
+                existing labels. Any existing label keys that are not
+                included in the update request will be deleted. Not
+                providing labels and update_mask will not update the
+                labels. To clear all labels, specify ``labels`` in the
+                ``update_mask`` and omit or leave the ``labels`` field
+                empty in the update request.
+
+                This corresponds to the ``odb_network`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Optional. A mask specifying which fields in the
+                OdbNetwork should be updated. A field specified in the
+                mask is updated. If a mask isn't provided, the service
+                treats this as an implied field mask equivalent to all
+                fields that are populated (have a non-empty value). To
+                clear or unset a field, the field must be explicitly
+                specified in the ``update_mask``.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.oracledatabase_v1.types.OdbNetwork`
+                Represents OdbNetwork resource.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [odb_network, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, gco_odb_network.UpdateOdbNetworkRequest):
+            request = gco_odb_network.UpdateOdbNetworkRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if odb_network is not None:
+            request.odb_network = odb_network
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_odb_network
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("odb_network.name", request.odb_network.name),)
+            ),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            gco_odb_network.OdbNetwork,
+            metadata_type=oracledatabase.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
     async def delete_odb_network(
         self,
         request: Optional[Union[odb_network.DeleteOdbNetworkRequest, dict]] = None,
@@ -5629,6 +6801,158 @@ class OracleDatabaseAsyncClient:
         # add these here.
         metadata = tuple(metadata) + (
             gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            gco_odb_subnet.OdbSubnet,
+            metadata_type=oracledatabase.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def update_odb_subnet(
+        self,
+        request: Optional[Union[gco_odb_subnet.UpdateOdbSubnetRequest, dict]] = None,
+        *,
+        odb_subnet: Optional[gco_odb_subnet.OdbSubnet] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Updates the ``labels`` of a single ODB Subnet.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_update_odb_subnet():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                odb_subnet = oracledatabase_v1.OdbSubnet()
+                odb_subnet.cidr_range = "cidr_range_value"
+                odb_subnet.purpose = "BACKUP_SUBNET"
+
+                request = oracledatabase_v1.UpdateOdbSubnetRequest(
+                    odb_subnet=odb_subnet,
+                )
+
+                # Make the request
+                operation = await client.update_odb_subnet(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.UpdateOdbSubnetRequest, dict]]):
+                The request object. The request for ``OdbSubnet.Update``.
+            odb_subnet (:class:`google.cloud.oracledatabase_v1.types.OdbSubnet`):
+                Required. The resource being updated. Note only labels
+                can be updated. The provided labels will completely
+                replace the existing labels. Any existing label keys
+                that are not included in the update request will be
+                deleted. Not providing labels and update_mask will not
+                update the labels. To clear all labels, specify
+                ``labels`` in the ``update_mask`` and omit or leave the
+                ``labels`` field empty in the update request.
+
+                This corresponds to the ``odb_subnet`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Optional. A mask specifying which fields in the
+                OdbSubnet should be updated. A field specified in the
+                mask is updated. If a mask isn't provided, the service
+                treats this as an implied field mask equivalent to all
+                fields that are populated (have a non-empty value). To
+                clear or unset a field, the field must be explicitly
+                specified in the ``update_mask``.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.oracledatabase_v1.types.OdbSubnet`
+                Represents OdbSubnet resource.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [odb_subnet, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, gco_odb_subnet.UpdateOdbSubnetRequest):
+            request = gco_odb_subnet.UpdateOdbSubnetRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if odb_subnet is not None:
+            request.odb_subnet = odb_subnet
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_odb_subnet
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("odb_subnet.name", request.odb_subnet.name),)
+            ),
         )
 
         # Validate the universe domain.
@@ -6909,21 +8233,30 @@ class OracleDatabaseAsyncClient:
         Args:
             request (Optional[Union[google.cloud.oracledatabase_v1.types.UpdateExadbVmClusterRequest, dict]]):
                 The request object. The request for ``ExadbVmCluster.Update``. We only
-                support adding the Virtual Machine to the
-                ExadbVmCluster. Rest of the fields in ExadbVmCluster are
-                immutable.
+                support adding the Virtual Machine to the ExadbVmCluster
+                and updating labels. Rest of the fields in
+                ExadbVmCluster are immutable.
             exadb_vm_cluster (:class:`google.cloud.oracledatabase_v1.types.ExadbVmCluster`):
-                Required. The resource being updated.
+                Required. The ExadbVmCluster resource being updated.
+                Mutable fields that can be updated include ``labels``
+                and ``properties.node_count``. For ``labels``, the
+                provided map completely replaces existing labels; any
+                existing keys not included will be deleted. To clear all
+                labels, specify ``labels`` in the ``update_mask`` and
+                omit or leave the ``labels`` field empty in the update
+                request.
+
                 This corresponds to the ``exadb_vm_cluster`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
-                Optional. A mask specifying which
-                fields in th VM Cluster should be
-                updated. A field specified in the mask
-                is overwritten. If a mask isn't provided
-                then all the fields in the VM Cluster
-                are overwritten.
+                Optional. A mask specifying which fields in th VM
+                Cluster should be updated. A field specified in the mask
+                is overwritten. If a mask isn't provided then the
+                service treats this as an implied field mask equivalent
+                to all fields that are populated (have a non-empty
+                value). To clear or unset a field, the field must be
+                explicitly specified in the ``update_mask``.
 
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -7567,6 +8900,172 @@ class OracleDatabaseAsyncClient:
         # Done; return the response.
         return response
 
+    async def update_exascale_db_storage_vault(
+        self,
+        request: Optional[
+            Union[
+                gco_exascale_db_storage_vault.UpdateExascaleDbStorageVaultRequest, dict
+            ]
+        ] = None,
+        *,
+        exascale_db_storage_vault: Optional[
+            gco_exascale_db_storage_vault.ExascaleDbStorageVault
+        ] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Updates the ``labels`` of a single ExascaleDbStorageVault.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_update_exascale_db_storage_vault():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                exascale_db_storage_vault = oracledatabase_v1.ExascaleDbStorageVault()
+                exascale_db_storage_vault.display_name = "display_name_value"
+                exascale_db_storage_vault.properties.exascale_db_storage_details.total_size_gbs = 1497
+
+                request = oracledatabase_v1.UpdateExascaleDbStorageVaultRequest(
+                    exascale_db_storage_vault=exascale_db_storage_vault,
+                )
+
+                # Make the request
+                operation = await client.update_exascale_db_storage_vault(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.UpdateExascaleDbStorageVaultRequest, dict]]):
+                The request object. The request for ``ExascaleDbStorageVault.Update``.
+            exascale_db_storage_vault (:class:`google.cloud.oracledatabase_v1.types.ExascaleDbStorageVault`):
+                Required. The resource being updated. Note only labels
+                can be updated. The provided labels will completely
+                replace the existing labels. Any existing label keys
+                that are not included in the update request will be
+                deleted. Not providing labels and update_mask will not
+                update the labels. To clear all labels, specify
+                ``labels`` in the ``update_mask`` and omit or leave the
+                ``labels`` field empty in the update request.
+
+                This corresponds to the ``exascale_db_storage_vault`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Optional. A mask specifying which fields in the
+                ExascaleDbStorageVault should be updated. A field
+                specified in the mask is updated. If a mask isn't
+                provided, the service treats this as an implied field
+                mask equivalent to all fields that are populated (have a
+                non-empty value). To clear or unset a field, the field
+                must be explicitly specified in the ``update_mask``.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.cloud.oracledatabase_v1.types.ExascaleDbStorageVault` ExascaleDbStorageVault represents a storage vault exadb vm cluster resource.
+                   https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/ExascaleDbStorageVault/
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [exascale_db_storage_vault, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, gco_exascale_db_storage_vault.UpdateExascaleDbStorageVaultRequest
+        ):
+            request = gco_exascale_db_storage_vault.UpdateExascaleDbStorageVaultRequest(
+                request
+            )
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if exascale_db_storage_vault is not None:
+            request.exascale_db_storage_vault = exascale_db_storage_vault
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_exascale_db_storage_vault
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (
+                    (
+                        "exascale_db_storage_vault.name",
+                        request.exascale_db_storage_vault.name,
+                    ),
+                )
+            ),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            gco_exascale_db_storage_vault.ExascaleDbStorageVault,
+            metadata_type=oracledatabase.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
     async def delete_exascale_db_storage_vault(
         self,
         request: Optional[
@@ -7835,6 +9334,147 @@ class OracleDatabaseAsyncClient:
         # This method is paged; wrap the response in a pager, which provides
         # an `__aiter__` convenience method.
         response = pagers.ListDbSystemInitialStorageSizesAsyncPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def list_db_system_compute_performances(
+        self,
+        request: Optional[
+            Union[
+                db_system_compute_performance.ListDbSystemComputePerformancesRequest,
+                dict,
+            ]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListDbSystemComputePerformancesAsyncPager:
+        r"""Lists all the DbSystemComputePerformances for the
+        given project and location.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_list_db_system_compute_performances():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                request = oracledatabase_v1.ListDbSystemComputePerformancesRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_db_system_compute_performances(request=request)
+
+                # Handle the response
+                async for response in page_result:
+                    print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.ListDbSystemComputePerformancesRequest, dict]]):
+                The request object. Message for listing
+                DbSystemComputePerformances.
+            parent (:class:`str`):
+                Required. Parent value for
+                ListDbSystemComputePerformancesRequest
+                Format:
+                projects/{project}/locations/{location}
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.oracledatabase_v1.services.oracle_database.pagers.ListDbSystemComputePerformancesAsyncPager:
+                Message for response to listing
+                DbSystemComputePerformances
+                Iterating over this object will yield
+                results and resolve additional pages
+                automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request,
+            db_system_compute_performance.ListDbSystemComputePerformancesRequest,
+        ):
+            request = (
+                db_system_compute_performance.ListDbSystemComputePerformancesRequest(
+                    request
+                )
+            )
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.list_db_system_compute_performances
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__aiter__` convenience method.
+        response = pagers.ListDbSystemComputePerformancesAsyncPager(
             method=rpc,
             request=request,
             response=response,
@@ -8716,6 +10356,159 @@ class OracleDatabaseAsyncClient:
         # Done; return the response.
         return response
 
+    async def update_db_system(
+        self,
+        request: Optional[Union[gco_db_system.UpdateDbSystemRequest, dict]] = None,
+        *,
+        db_system: Optional[gco_db_system.DbSystem] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Updates the ``labels`` of a single DbSystem.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_update_db_system():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                db_system = oracledatabase_v1.DbSystem()
+                db_system.odb_subnet = "odb_subnet_value"
+                db_system.display_name = "display_name_value"
+
+                request = oracledatabase_v1.UpdateDbSystemRequest(
+                    db_system=db_system,
+                )
+
+                # Make the request
+                operation = await client.update_db_system(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.UpdateDbSystemRequest, dict]]):
+                The request object. The request for ``DbSystem.Update``.
+            db_system (:class:`google.cloud.oracledatabase_v1.types.DbSystem`):
+                Required. The resource being updated. Note only labels
+                can be updated. The provided labels will completely
+                replace the existing labels. Any existing label keys
+                that are not included in the update request will be
+                deleted. Not providing labels and update_mask will not
+                update the labels. To clear all labels, specify
+                ``labels`` in the ``update_mask`` and omit or leave the
+                ``labels`` field empty in the update request. To clear
+                or unset a field, the field must be explicitly specified
+                in the ``update_mask``.
+
+                This corresponds to the ``db_system`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Optional. A mask specifying which
+                fields in the DbSystem should be
+                updated. A field specified in the mask
+                is updated. If a mask isn't provided,
+                the service treats this as an implied
+                field mask equivalent to all fields that
+                are populated (have a non-empty value).
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.cloud.oracledatabase_v1.types.DbSystem` Details of the DbSystem (BaseDB) resource.
+                   https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/DbSystem/
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [db_system, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, gco_db_system.UpdateDbSystemRequest):
+            request = gco_db_system.UpdateDbSystemRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if db_system is not None:
+            request.db_system = db_system
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_db_system
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("db_system.name", request.db_system.name),)
+            ),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            gco_db_system.DbSystem,
+            metadata_type=oracledatabase.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
     async def delete_db_system(
         self,
         request: Optional[Union[db_system.DeleteDbSystemRequest, dict]] = None,
@@ -9239,6 +11032,171 @@ class OracleDatabaseAsyncClient:
         # add these here.
         metadata = tuple(metadata) + (
             gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            gco_goldengate_deployment.GoldengateDeployment,
+            metadata_type=oracledatabase.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def update_goldengate_deployment(
+        self,
+        request: Optional[
+            Union[gco_goldengate_deployment.UpdateGoldengateDeploymentRequest, dict]
+        ] = None,
+        *,
+        goldengate_deployment: Optional[
+            gco_goldengate_deployment.GoldengateDeployment
+        ] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Updates the ``labels`` of a single GoldengateDeployment.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_update_goldengate_deployment():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                goldengate_deployment = oracledatabase_v1.GoldengateDeployment()
+                goldengate_deployment.properties.deployment_type = "deployment_type_value"
+                goldengate_deployment.properties.ogg_data.admin_password = "admin_password_value"
+                goldengate_deployment.properties.ogg_data.deployment = "deployment_value"
+                goldengate_deployment.properties.ogg_data.admin_username = "admin_username_value"
+                goldengate_deployment.odb_subnet = "odb_subnet_value"
+                goldengate_deployment.display_name = "display_name_value"
+
+                request = oracledatabase_v1.UpdateGoldengateDeploymentRequest(
+                    goldengate_deployment=goldengate_deployment,
+                )
+
+                # Make the request
+                operation = await client.update_goldengate_deployment(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.UpdateGoldengateDeploymentRequest, dict]]):
+                The request object. The request for ``GoldengateDeployment.Update``.
+            goldengate_deployment (:class:`google.cloud.oracledatabase_v1.types.GoldengateDeployment`):
+                Required. The resource being updated. Note only labels
+                can be updated. The provided labels will completely
+                replace the existing labels. Any existing label keys
+                that are not included in the update request will be
+                deleted. Not providing labels and update_mask will not
+                update the labels. To clear all labels, specify
+                ``labels`` in the ``update_mask`` and omit or leave the
+                ``labels`` field empty in the update request.
+
+                This corresponds to the ``goldengate_deployment`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Optional. A mask specifying which fields in the
+                GoldengateDeployment should be updated. A field
+                specified in the mask is updated. If a mask isn't
+                provided, the service treats this as an implied field
+                mask equivalent to all fields that are populated (have a
+                non-empty value). To clear or unset a field, the field
+                must be explicitly specified in the ``update_mask``.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.oracledatabase_v1.types.GoldengateDeployment`
+                GoldengateDeployment Goldengate Deployment resource
+                model.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [goldengate_deployment, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, gco_goldengate_deployment.UpdateGoldengateDeploymentRequest
+        ):
+            request = gco_goldengate_deployment.UpdateGoldengateDeploymentRequest(
+                request
+            )
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if goldengate_deployment is not None:
+            request.goldengate_deployment = goldengate_deployment
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_goldengate_deployment
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("goldengate_deployment.name", request.goldengate_deployment.name),)
+            ),
         )
 
         # Validate the universe domain.
@@ -10048,6 +12006,167 @@ class OracleDatabaseAsyncClient:
         # add these here.
         metadata = tuple(metadata) + (
             gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            gco_goldengate_connection.GoldengateConnection,
+            metadata_type=oracledatabase.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def update_goldengate_connection(
+        self,
+        request: Optional[
+            Union[gco_goldengate_connection.UpdateGoldengateConnectionRequest, dict]
+        ] = None,
+        *,
+        goldengate_connection: Optional[
+            gco_goldengate_connection.GoldengateConnection
+        ] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Updates the ``labels`` of a single GoldengateConnection.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_update_goldengate_connection():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                goldengate_connection = oracledatabase_v1.GoldengateConnection()
+                goldengate_connection.properties.oracle_connection_properties.password = "password_value"
+                goldengate_connection.properties.connection_type = "ICEBERG"
+                goldengate_connection.properties.display_name = "display_name_value"
+
+                request = oracledatabase_v1.UpdateGoldengateConnectionRequest(
+                    goldengate_connection=goldengate_connection,
+                )
+
+                # Make the request
+                operation = await client.update_goldengate_connection(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.UpdateGoldengateConnectionRequest, dict]]):
+                The request object. The request for ``GoldengateConnection.Update``.
+            goldengate_connection (:class:`google.cloud.oracledatabase_v1.types.GoldengateConnection`):
+                Required. The resource being updated. Note only labels
+                can be updated. The provided labels will completely
+                replace the existing labels. Any existing label keys
+                that are not included in the update request will be
+                deleted. Not providing labels and update_mask will not
+                update the labels. To clear all labels, specify
+                ``labels`` in the ``update_mask`` and omit or leave the
+                ``labels`` field empty in the update request.
+
+                This corresponds to the ``goldengate_connection`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Optional. A mask specifying which fields in the
+                GoldengateConnection should be updated. A field
+                specified in the mask is updated. If a mask isn't
+                provided, the service treats this as an implied field
+                mask equivalent to all fields that are populated (have a
+                non-empty value). To clear or unset a field, the field
+                must be explicitly specified in the ``update_mask``.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.oracledatabase_v1.types.GoldengateConnection`
+                Details of the GoldengateConnection resource.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [goldengate_connection, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, gco_goldengate_connection.UpdateGoldengateConnectionRequest
+        ):
+            request = gco_goldengate_connection.UpdateGoldengateConnectionRequest(
+                request
+            )
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if goldengate_connection is not None:
+            request.goldengate_connection = goldengate_connection
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_goldengate_connection
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("goldengate_connection.name", request.goldengate_connection.name),)
+            ),
         )
 
         # Validate the universe domain.
@@ -11453,6 +13572,178 @@ class OracleDatabaseAsyncClient:
         # Done; return the response.
         return response
 
+    async def update_goldengate_connection_assignment(
+        self,
+        request: Optional[
+            Union[
+                gco_goldengate_connection_assignment.UpdateGoldengateConnectionAssignmentRequest,
+                dict,
+            ]
+        ] = None,
+        *,
+        goldengate_connection_assignment: Optional[
+            gco_goldengate_connection_assignment.GoldengateConnectionAssignment
+        ] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Updates the ``labels`` of a single
+        GoldengateConnectionAssignment.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_update_goldengate_connection_assignment():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                goldengate_connection_assignment = oracledatabase_v1.GoldengateConnectionAssignment()
+                goldengate_connection_assignment.properties.goldengate_connection = "goldengate_connection_value"
+                goldengate_connection_assignment.properties.goldengate_deployment = "goldengate_deployment_value"
+
+                request = oracledatabase_v1.UpdateGoldengateConnectionAssignmentRequest(
+                    goldengate_connection_assignment=goldengate_connection_assignment,
+                )
+
+                # Make the request
+                operation = await client.update_goldengate_connection_assignment(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.UpdateGoldengateConnectionAssignmentRequest, dict]]):
+                The request object. Request message for updating a
+                GoldengateConnectionAssignment.
+            goldengate_connection_assignment (:class:`google.cloud.oracledatabase_v1.types.GoldengateConnectionAssignment`):
+                Required. The resource being updated. Note only labels
+                can be updated. The provided labels will completely
+                replace the existing labels. Any existing label keys
+                that are not included in the update request will be
+                deleted. Not providing labels and update_mask will not
+                update the labels. To clear all labels, specify
+                ``labels`` in the ``update_mask`` and omit or leave the
+                ``labels`` field empty in the update request.
+
+                This corresponds to the ``goldengate_connection_assignment`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Optional. A mask specifying which fields in the
+                GoldengateConnectionAssignment should be updated. A
+                field specified in the mask is updated. If a mask isn't
+                provided, the service treats this as an implied field
+                mask equivalent to all fields that are populated (have a
+                non-empty value). To clear or unset a field, the field
+                must be explicitly specified in the ``update_mask``.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.oracledatabase_v1.types.GoldengateConnectionAssignment`
+                Represents the metadata of a Goldengate Connection
+                Assignment.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [goldengate_connection_assignment, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request,
+            gco_goldengate_connection_assignment.UpdateGoldengateConnectionAssignmentRequest,
+        ):
+            request = gco_goldengate_connection_assignment.UpdateGoldengateConnectionAssignmentRequest(
+                request
+            )
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if goldengate_connection_assignment is not None:
+            request.goldengate_connection_assignment = goldengate_connection_assignment
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_goldengate_connection_assignment
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (
+                    (
+                        "goldengate_connection_assignment.name",
+                        request.goldengate_connection_assignment.name,
+                    ),
+                )
+            ),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            gco_goldengate_connection_assignment.GoldengateConnectionAssignment,
+            metadata_type=oracledatabase.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
     async def delete_goldengate_connection_assignment(
         self,
         request: Optional[
@@ -11699,6 +13990,932 @@ class OracleDatabaseAsyncClient:
         # and friendly error handling.
         rpc = self._client._transport._wrapped_methods[
             self._client._transport.test_goldengate_connection_assignment
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def list_database_connections(
+        self,
+        request: Optional[
+            Union[database_connection.ListDatabaseConnectionsRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> pagers.ListDatabaseConnectionsAsyncPager:
+        r"""Lists DatabaseConnections in a given project and
+        location.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_list_database_connections():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                request = oracledatabase_v1.ListDatabaseConnectionsRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_database_connections(request=request)
+
+                # Handle the response
+                async for response in page_result:
+                    print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.ListDatabaseConnectionsRequest, dict]]):
+                The request object. The request for ``DatabaseConnection.List``.
+            parent (:class:`str`):
+                Required. The parent value for the
+                DatabaseConnection in the following
+                format:
+                projects/{project}/locations/{location}.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.oracledatabase_v1.services.oracle_database.pagers.ListDatabaseConnectionsAsyncPager:
+                The response for DatabaseConnection.List.
+
+                Iterating over this object will yield results and
+                resolve additional pages automatically.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, database_connection.ListDatabaseConnectionsRequest):
+            request = database_connection.ListDatabaseConnectionsRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.list_database_connections
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # This method is paged; wrap the response in a pager, which provides
+        # an `__aiter__` convenience method.
+        response = pagers.ListDatabaseConnectionsAsyncPager(
+            method=rpc,
+            request=request,
+            response=response,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def get_database_connection(
+        self,
+        request: Optional[
+            Union[database_connection.GetDatabaseConnectionRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> database_connection.DatabaseConnection:
+        r"""Gets details of a single DatabaseConnection.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_get_database_connection():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                request = oracledatabase_v1.GetDatabaseConnectionRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = await client.get_database_connection(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.GetDatabaseConnectionRequest, dict]]):
+                The request object. The request for ``DatabaseConnection.Get``.
+            name (:class:`str`):
+                Required. The name of the DatabaseConnection in the
+                following format:
+                projects/{project}/locations/{location}/databaseConnections/{database_connection}.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.oracledatabase_v1.types.DatabaseConnection:
+                Represents DatabaseConnection
+                resource.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, database_connection.GetDatabaseConnectionRequest):
+            request = database_connection.GetDatabaseConnectionRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.get_database_connection
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def create_database_connection(
+        self,
+        request: Optional[
+            Union[gco_database_connection.CreateDatabaseConnectionRequest, dict]
+        ] = None,
+        *,
+        parent: Optional[str] = None,
+        database_connection: Optional[
+            gco_database_connection.DatabaseConnection
+        ] = None,
+        database_connection_id: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Creates a new DatabaseConnection in a given project
+        and location.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_create_database_connection():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                database_connection = oracledatabase_v1.DatabaseConnection()
+                database_connection.wallet_secret_version = "wallet_secret_version_value"
+                database_connection.odb_network = "odb_network_value"
+                database_connection.connection_string = "connection_string_value"
+
+                request = oracledatabase_v1.CreateDatabaseConnectionRequest(
+                    parent="parent_value",
+                    database_connection_id="database_connection_id_value",
+                    database_connection=database_connection,
+                )
+
+                # Make the request
+                operation = await client.create_database_connection(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.CreateDatabaseConnectionRequest, dict]]):
+                The request object. The request for ``DatabaseConnection.Create``.
+            parent (:class:`str`):
+                Required. The parent value for the
+                DatabaseConnection in the following
+                format:
+                projects/{project}/locations/{location}.
+
+                This corresponds to the ``parent`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            database_connection (:class:`google.cloud.oracledatabase_v1.types.DatabaseConnection`):
+                Required. Details of the
+                DatabaseConnection instance to create.
+
+                This corresponds to the ``database_connection`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            database_connection_id (:class:`str`):
+                Required. The ID of the DatabaseConnection to create.
+                This value is restricted to
+                (^\ `a-z <[a-z0-9-]{0,61}[a-z0-9]>`__?$) and must be a
+                maximum of 63 characters in length. The value must start
+                with a letter and end with a letter or a number.
+
+                This corresponds to the ``database_connection_id`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.oracledatabase_v1.types.DatabaseConnection`
+                Represents DatabaseConnection resource.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [parent, database_connection, database_connection_id]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, gco_database_connection.CreateDatabaseConnectionRequest
+        ):
+            request = gco_database_connection.CreateDatabaseConnectionRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if parent is not None:
+            request.parent = parent
+        if database_connection is not None:
+            request.database_connection = database_connection
+        if database_connection_id is not None:
+            request.database_connection_id = database_connection_id
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.create_database_connection
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            gco_database_connection.DatabaseConnection,
+            metadata_type=oracledatabase.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def update_database_connection(
+        self,
+        request: Optional[
+            Union[gco_database_connection.UpdateDatabaseConnectionRequest, dict]
+        ] = None,
+        *,
+        database_connection: Optional[
+            gco_database_connection.DatabaseConnection
+        ] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Updates the parameters of a single
+        DatabaseConnection.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_update_database_connection():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                database_connection = oracledatabase_v1.DatabaseConnection()
+                database_connection.wallet_secret_version = "wallet_secret_version_value"
+                database_connection.odb_network = "odb_network_value"
+                database_connection.connection_string = "connection_string_value"
+
+                request = oracledatabase_v1.UpdateDatabaseConnectionRequest(
+                    database_connection=database_connection,
+                )
+
+                # Make the request
+                operation = await client.update_database_connection(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.UpdateDatabaseConnectionRequest, dict]]):
+                The request object. The request for ``DatabaseConnection.Update``.
+            database_connection (:class:`google.cloud.oracledatabase_v1.types.DatabaseConnection`):
+                Required. The resource being updated.
+                This corresponds to the ``database_connection`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Optional. A mask specifying which
+                fields in the DatabaseConnection should
+                be updated. A field specified in the
+                mask is overwritten. If a mask isn't
+                provided then all the fields in the
+                DatabaseConnection are overwritten.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be
+                :class:`google.cloud.oracledatabase_v1.types.DatabaseConnection`
+                Represents DatabaseConnection resource.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [database_connection, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(
+            request, gco_database_connection.UpdateDatabaseConnectionRequest
+        ):
+            request = gco_database_connection.UpdateDatabaseConnectionRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if database_connection is not None:
+            request.database_connection = database_connection
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_database_connection
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata(
+                (("database_connection.name", request.database_connection.name),)
+            ),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            gco_database_connection.DatabaseConnection,
+            metadata_type=oracledatabase.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def delete_database_connection(
+        self,
+        request: Optional[
+            Union[database_connection.DeleteDatabaseConnectionRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Deletes a single DatabaseConnection.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_delete_database_connection():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                request = oracledatabase_v1.DeleteDatabaseConnectionRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                operation = await client.delete_database_connection(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.DeleteDatabaseConnectionRequest, dict]]):
+                The request object. The request for ``DatabaseConnection.Delete``.
+            name (:class:`str`):
+                Required. The name of the resource in the following
+                format:
+                projects/{project}/locations/{location}/databaseConnections/{database_connection}.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.protobuf.empty_pb2.Empty` A generic empty message that you can re-use to avoid defining duplicated
+                   empty messages in your APIs. A typical example is to
+                   use it as the request or the response type of an API
+                   method. For instance:
+
+                      service Foo {
+                         rpc Bar(google.protobuf.Empty) returns
+                         (google.protobuf.Empty);
+
+                      }
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, database_connection.DeleteDatabaseConnectionRequest):
+            request = database_connection.DeleteDatabaseConnectionRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.delete_database_connection
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            empty_pb2.Empty,
+            metadata_type=oracledatabase.OperationMetadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def test_database_connection(
+        self,
+        request: Optional[
+            Union[database_connection.TestDatabaseConnectionRequest, dict]
+        ] = None,
+        *,
+        name: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> database_connection.TestDatabaseConnectionResponse:
+        r"""Tests connectivity of a DatabaseConnection.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_test_database_connection():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                request = oracledatabase_v1.TestDatabaseConnectionRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = await client.test_database_connection(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.TestDatabaseConnectionRequest, dict]]):
+                The request object. Request message for
+                ``DatabaseConnection.TestDatabaseConnection``.
+            name (:class:`str`):
+                Required. The name of the DatabaseConnection to test.
+                Format:
+                projects/{project}/locations/{location}/databaseConnections/{database_connection}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.oracledatabase_v1.types.TestDatabaseConnectionResponse:
+                Response message for
+                DatabaseConnection.TestDatabaseConnection.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, database_connection.TestDatabaseConnectionRequest):
+            request = database_connection.TestDatabaseConnectionRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.test_database_connection
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def execute_sql(
+        self,
+        request: Optional[Union[gco_execute_sql.ExecuteSqlRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        sql_statement: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> gco_execute_sql.ExecuteSqlResponse:
+        r"""Executes a SQL statement on a DatabaseConnection.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import oracledatabase_v1
+
+            async def sample_execute_sql():
+                # Create a client
+                client = oracledatabase_v1.OracleDatabaseAsyncClient()
+
+                # Initialize request argument(s)
+                request = oracledatabase_v1.ExecuteSqlRequest(
+                    name="name_value",
+                    sql_statement="sql_statement_value",
+                )
+
+                # Make the request
+                response = await client.execute_sql(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.oracledatabase_v1.types.ExecuteSqlRequest, dict]]):
+                The request object. The request for ``DatabaseConnection.ExecuteSql``.
+            name (:class:`str`):
+                Required. The name of the DatabaseConnection in the
+                following format:
+                projects/{project}/locations/{location}/databaseConnections/{database_connection}.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            sql_statement (:class:`str`):
+                Required. The SQL statement to
+                execute.
+
+                This corresponds to the ``sql_statement`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.cloud.oracledatabase_v1.types.ExecuteSqlResponse:
+                Execute a SQL statement response.
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [name, sql_statement]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, gco_execute_sql.ExecuteSqlRequest):
+            request = gco_execute_sql.ExecuteSqlRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+        if sql_statement is not None:
+            request.sql_statement = sql_statement
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.execute_sql
         ]
 
         # Certain fields should be provided within the metadata header;

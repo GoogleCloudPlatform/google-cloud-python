@@ -17,6 +17,7 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import proto  # type: ignore
 
 from google.cloud.sqladmin_v1.types import cloud_sql_resources
@@ -31,6 +32,10 @@ __protobuf__ = proto.module(
         "SslCertsInsertRequest",
         "SslCertsInsertResponse",
         "SslCertsListResponse",
+        "UpdateCustomerManagedCertificateRequest",
+        "DeleteCustomerManagedCertificateRequest",
+        "ListCustomerManagedCertificatesRequest",
+        "ListCustomerManagedCertificatesResponse",
     },
 )
 
@@ -214,6 +219,137 @@ class SslCertsListResponse(proto.Message):
         proto.MESSAGE,
         number=2,
         message=cloud_sql_resources.SslCert,
+    )
+
+
+class UpdateCustomerManagedCertificateRequest(proto.Message):
+    r"""Request message for
+    SqlSslCertsService.UpdateCustomerManagedCertificate.
+
+    Attributes:
+        instance (str):
+            Required. Cloud SQL instance ID. This does
+            not include the project ID.
+        project (str):
+            Required. Project ID of the project that
+            contains the instance.
+        customer_managed_certificate_config (google.cloud.sqladmin_v1.types.CustomerManagedCertificateConfig):
+            Required. The customer managed certificate
+            bundle SSL configuration to update.
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. The list of fields to be updated.
+        allow_missing (bool):
+            Optional. If set to true, and the customer managed
+            certificate bundle configuration is not found, a new
+            customer managed certificate bundle configuration will be
+            created. In this situation, ``update_mask`` is ignored.
+        certificate_bundle (str):
+            Required. Name tag of the customer managed
+            certificate bundle to update. It must start with
+            a letter, be alphanumeric, and have a maximum
+            length of 10 characters.
+    """
+
+    instance: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    customer_managed_certificate_config: cloud_sql_resources.CustomerManagedCertificateConfig = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=cloud_sql_resources.CustomerManagedCertificateConfig,
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message=field_mask_pb2.FieldMask,
+    )
+    allow_missing: bool = proto.Field(
+        proto.BOOL,
+        number=5,
+    )
+    certificate_bundle: str = proto.Field(
+        proto.STRING,
+        number=6,
+    )
+
+
+class DeleteCustomerManagedCertificateRequest(proto.Message):
+    r"""Request message for
+    SqlSslCertsService.DeleteCustomerManagedCertificate.
+
+    Attributes:
+        instance (str):
+            Required. Cloud SQL instance ID. This does
+            not include the project ID.
+        project (str):
+            Required. Project ID of the project that
+            contains the instance.
+        certificate_bundle (str):
+            Required. Name tag of the customer managed
+            certificate bundle to delete. It must start with
+            a letter, be alphanumeric, and have a maximum
+            length of 10 characters.
+    """
+
+    instance: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    certificate_bundle: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class ListCustomerManagedCertificatesRequest(proto.Message):
+    r"""Request message for
+    SqlSslCertsService.ListCustomerManagedCertificates.
+
+    Attributes:
+        instance (str):
+            Required. Cloud SQL instance ID. This does
+            not include the project ID.
+        project (str):
+            Required. Project ID of the project that
+            contains the instance.
+    """
+
+    instance: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class ListCustomerManagedCertificatesResponse(proto.Message):
+    r"""Response message for
+    SqlSslCertsService.ListCustomerManagedCertificates.
+
+    Attributes:
+        customer_managed_certificates (MutableSequence[google.cloud.sqladmin_v1.types.CustomerManagedCertificateConfig]):
+            Required. List of customer managed SSL configurations for
+            the instance. Note: Sensitive private keys (e.g.,
+            PEER_CLIENT_KEY) are redacted in this response.
+    """
+
+    customer_managed_certificates: MutableSequence[
+        cloud_sql_resources.CustomerManagedCertificateConfig
+    ] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=cloud_sql_resources.CustomerManagedCertificateConfig,
     )
 
 

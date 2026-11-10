@@ -35,12 +35,15 @@ from google.cloud.oracledatabase_v1.types import (
     autonomous_database,
     database,
     database_character_set,
+    database_connection,
     db_system,
+    db_system_compute_performance,
     db_system_initial_storage_size,
     db_version,
     exadata_infra,
     exadb_vm_cluster,
     exascale_db_storage_vault,
+    flex_component,
     goldengate_connection,
     goldengate_connection_assignment,
     goldengate_connection_type,
@@ -56,10 +59,14 @@ from google.cloud.oracledatabase_v1.types import (
     pluggable_database,
     vm_cluster,
 )
+from google.cloud.oracledatabase_v1.types import (
+    database_connection as gco_database_connection,
+)
 from google.cloud.oracledatabase_v1.types import db_system as gco_db_system
 from google.cloud.oracledatabase_v1.types import (
     exascale_db_storage_vault as gco_exascale_db_storage_vault,
 )
+from google.cloud.oracledatabase_v1.types import execute_sql as gco_execute_sql
 from google.cloud.oracledatabase_v1.types import (
     goldengate_connection as gco_goldengate_connection,
 )
@@ -143,6 +150,14 @@ class OracleDatabaseRestInterceptor:
                 return request, metadata
 
             def post_create_cloud_vm_cluster(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_create_database_connection(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_create_database_connection(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -242,6 +257,14 @@ class OracleDatabaseRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_delete_database_connection(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_delete_database_connection(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_delete_db_system(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -314,6 +337,46 @@ class OracleDatabaseRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_disable_cloud_vm_cluster_identity_connector(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_disable_cloud_vm_cluster_identity_connector(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_disable_exadb_vm_cluster_identity_connector(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_disable_exadb_vm_cluster_identity_connector(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_enable_cloud_vm_cluster_identity_connector(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_enable_cloud_vm_cluster_identity_connector(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_enable_exadb_vm_cluster_identity_connector(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_enable_exadb_vm_cluster_identity_connector(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_execute_sql(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_execute_sql(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_failover_autonomous_database(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -367,6 +430,14 @@ class OracleDatabaseRestInterceptor:
                 return request, metadata
 
             def post_get_database(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_get_database_connection(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_get_database_connection(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -506,6 +577,14 @@ class OracleDatabaseRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_list_database_connections(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_database_connections(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_list_databases(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -527,6 +606,14 @@ class OracleDatabaseRestInterceptor:
                 return request, metadata
 
             def post_list_db_servers(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_list_db_system_compute_performances(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_db_system_compute_performances(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -583,6 +670,14 @@ class OracleDatabaseRestInterceptor:
                 return request, metadata
 
             def post_list_exascale_db_storage_vaults(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_list_flex_components(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_list_flex_components(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -762,6 +857,14 @@ class OracleDatabaseRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_test_database_connection(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_test_database_connection(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_test_goldengate_connection_assignment(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -778,11 +881,91 @@ class OracleDatabaseRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_update_cloud_exadata_infrastructure(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_cloud_exadata_infrastructure(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_cloud_vm_cluster(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_cloud_vm_cluster(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_database_connection(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_database_connection(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_db_system(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_db_system(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_update_exadb_vm_cluster(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
 
             def post_update_exadb_vm_cluster(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_exascale_db_storage_vault(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_exascale_db_storage_vault(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_goldengate_connection(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_goldengate_connection(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_goldengate_connection_assignment(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_goldengate_connection_assignment(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_goldengate_deployment(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_goldengate_deployment(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_odb_network(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_odb_network(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_odb_subnet(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_odb_subnet(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -985,6 +1168,55 @@ class OracleDatabaseRestInterceptor:
         `post_create_cloud_vm_cluster` interceptor. The (possibly modified) response returned by
         `post_create_cloud_vm_cluster` will be passed to
         `post_create_cloud_vm_cluster_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_create_database_connection(
+        self,
+        request: gco_database_connection.CreateDatabaseConnectionRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        gco_database_connection.CreateDatabaseConnectionRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for create_database_connection
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_create_database_connection(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for create_database_connection
+
+        DEPRECATED. Please use the `post_create_database_connection_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_create_database_connection` interceptor runs
+        before the `post_create_database_connection_with_metadata` interceptor.
+        """
+        return response
+
+    def post_create_database_connection_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for create_database_connection
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_create_database_connection_with_metadata`
+        interceptor in new development instead of the `post_create_database_connection` interceptor.
+        When both interceptors are used, this `post_create_database_connection_with_metadata` interceptor runs after the
+        `post_create_database_connection` interceptor. The (possibly modified) response returned by
+        `post_create_database_connection` will be passed to
+        `post_create_database_connection_with_metadata`.
         """
         return response, metadata
 
@@ -1573,6 +1805,55 @@ class OracleDatabaseRestInterceptor:
         """
         return response, metadata
 
+    def pre_delete_database_connection(
+        self,
+        request: database_connection.DeleteDatabaseConnectionRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        database_connection.DeleteDatabaseConnectionRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for delete_database_connection
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_delete_database_connection(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for delete_database_connection
+
+        DEPRECATED. Please use the `post_delete_database_connection_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_delete_database_connection` interceptor runs
+        before the `post_delete_database_connection_with_metadata` interceptor.
+        """
+        return response
+
+    def post_delete_database_connection_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for delete_database_connection
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_delete_database_connection_with_metadata`
+        interceptor in new development instead of the `post_delete_database_connection` interceptor.
+        When both interceptors are used, this `post_delete_database_connection_with_metadata` interceptor runs after the
+        `post_delete_database_connection` interceptor. The (possibly modified) response returned by
+        `post_delete_database_connection` will be passed to
+        `post_delete_database_connection_with_metadata`.
+        """
+        return response, metadata
+
     def pre_delete_db_system(
         self,
         request: db_system.DeleteDbSystemRequest,
@@ -2010,6 +2291,252 @@ class OracleDatabaseRestInterceptor:
         """
         return response, metadata
 
+    def pre_disable_cloud_vm_cluster_identity_connector(
+        self,
+        request: oracledatabase.DisableCloudVmClusterIdentityConnectorRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        oracledatabase.DisableCloudVmClusterIdentityConnectorRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for disable_cloud_vm_cluster_identity_connector
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_disable_cloud_vm_cluster_identity_connector(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for disable_cloud_vm_cluster_identity_connector
+
+        DEPRECATED. Please use the `post_disable_cloud_vm_cluster_identity_connector_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_disable_cloud_vm_cluster_identity_connector` interceptor runs
+        before the `post_disable_cloud_vm_cluster_identity_connector_with_metadata` interceptor.
+        """
+        return response
+
+    def post_disable_cloud_vm_cluster_identity_connector_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for disable_cloud_vm_cluster_identity_connector
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_disable_cloud_vm_cluster_identity_connector_with_metadata`
+        interceptor in new development instead of the `post_disable_cloud_vm_cluster_identity_connector` interceptor.
+        When both interceptors are used, this `post_disable_cloud_vm_cluster_identity_connector_with_metadata` interceptor runs after the
+        `post_disable_cloud_vm_cluster_identity_connector` interceptor. The (possibly modified) response returned by
+        `post_disable_cloud_vm_cluster_identity_connector` will be passed to
+        `post_disable_cloud_vm_cluster_identity_connector_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_disable_exadb_vm_cluster_identity_connector(
+        self,
+        request: oracledatabase.DisableExadbVmClusterIdentityConnectorRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        oracledatabase.DisableExadbVmClusterIdentityConnectorRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for disable_exadb_vm_cluster_identity_connector
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_disable_exadb_vm_cluster_identity_connector(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for disable_exadb_vm_cluster_identity_connector
+
+        DEPRECATED. Please use the `post_disable_exadb_vm_cluster_identity_connector_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_disable_exadb_vm_cluster_identity_connector` interceptor runs
+        before the `post_disable_exadb_vm_cluster_identity_connector_with_metadata` interceptor.
+        """
+        return response
+
+    def post_disable_exadb_vm_cluster_identity_connector_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for disable_exadb_vm_cluster_identity_connector
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_disable_exadb_vm_cluster_identity_connector_with_metadata`
+        interceptor in new development instead of the `post_disable_exadb_vm_cluster_identity_connector` interceptor.
+        When both interceptors are used, this `post_disable_exadb_vm_cluster_identity_connector_with_metadata` interceptor runs after the
+        `post_disable_exadb_vm_cluster_identity_connector` interceptor. The (possibly modified) response returned by
+        `post_disable_exadb_vm_cluster_identity_connector` will be passed to
+        `post_disable_exadb_vm_cluster_identity_connector_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_enable_cloud_vm_cluster_identity_connector(
+        self,
+        request: oracledatabase.EnableCloudVmClusterIdentityConnectorRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        oracledatabase.EnableCloudVmClusterIdentityConnectorRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for enable_cloud_vm_cluster_identity_connector
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_enable_cloud_vm_cluster_identity_connector(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for enable_cloud_vm_cluster_identity_connector
+
+        DEPRECATED. Please use the `post_enable_cloud_vm_cluster_identity_connector_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_enable_cloud_vm_cluster_identity_connector` interceptor runs
+        before the `post_enable_cloud_vm_cluster_identity_connector_with_metadata` interceptor.
+        """
+        return response
+
+    def post_enable_cloud_vm_cluster_identity_connector_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for enable_cloud_vm_cluster_identity_connector
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_enable_cloud_vm_cluster_identity_connector_with_metadata`
+        interceptor in new development instead of the `post_enable_cloud_vm_cluster_identity_connector` interceptor.
+        When both interceptors are used, this `post_enable_cloud_vm_cluster_identity_connector_with_metadata` interceptor runs after the
+        `post_enable_cloud_vm_cluster_identity_connector` interceptor. The (possibly modified) response returned by
+        `post_enable_cloud_vm_cluster_identity_connector` will be passed to
+        `post_enable_cloud_vm_cluster_identity_connector_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_enable_exadb_vm_cluster_identity_connector(
+        self,
+        request: oracledatabase.EnableExadbVmClusterIdentityConnectorRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        oracledatabase.EnableExadbVmClusterIdentityConnectorRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for enable_exadb_vm_cluster_identity_connector
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_enable_exadb_vm_cluster_identity_connector(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for enable_exadb_vm_cluster_identity_connector
+
+        DEPRECATED. Please use the `post_enable_exadb_vm_cluster_identity_connector_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_enable_exadb_vm_cluster_identity_connector` interceptor runs
+        before the `post_enable_exadb_vm_cluster_identity_connector_with_metadata` interceptor.
+        """
+        return response
+
+    def post_enable_exadb_vm_cluster_identity_connector_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for enable_exadb_vm_cluster_identity_connector
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_enable_exadb_vm_cluster_identity_connector_with_metadata`
+        interceptor in new development instead of the `post_enable_exadb_vm_cluster_identity_connector` interceptor.
+        When both interceptors are used, this `post_enable_exadb_vm_cluster_identity_connector_with_metadata` interceptor runs after the
+        `post_enable_exadb_vm_cluster_identity_connector` interceptor. The (possibly modified) response returned by
+        `post_enable_exadb_vm_cluster_identity_connector` will be passed to
+        `post_enable_exadb_vm_cluster_identity_connector_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_execute_sql(
+        self,
+        request: gco_execute_sql.ExecuteSqlRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        gco_execute_sql.ExecuteSqlRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for execute_sql
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_execute_sql(
+        self, response: gco_execute_sql.ExecuteSqlResponse
+    ) -> gco_execute_sql.ExecuteSqlResponse:
+        """Post-rpc interceptor for execute_sql
+
+        DEPRECATED. Please use the `post_execute_sql_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_execute_sql` interceptor runs
+        before the `post_execute_sql_with_metadata` interceptor.
+        """
+        return response
+
+    def post_execute_sql_with_metadata(
+        self,
+        response: gco_execute_sql.ExecuteSqlResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        gco_execute_sql.ExecuteSqlResponse, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for execute_sql
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_execute_sql_with_metadata`
+        interceptor in new development instead of the `post_execute_sql` interceptor.
+        When both interceptors are used, this `post_execute_sql_with_metadata` interceptor runs after the
+        `post_execute_sql` interceptor. The (possibly modified) response returned by
+        `post_execute_sql` will be passed to
+        `post_execute_sql_with_metadata`.
+        """
+        return response, metadata
+
     def pre_failover_autonomous_database(
         self,
         request: oracledatabase.FailoverAutonomousDatabaseRequest,
@@ -2355,6 +2882,57 @@ class OracleDatabaseRestInterceptor:
         `post_get_database` interceptor. The (possibly modified) response returned by
         `post_get_database` will be passed to
         `post_get_database_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_get_database_connection(
+        self,
+        request: database_connection.GetDatabaseConnectionRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        database_connection.GetDatabaseConnectionRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for get_database_connection
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_get_database_connection(
+        self, response: database_connection.DatabaseConnection
+    ) -> database_connection.DatabaseConnection:
+        """Post-rpc interceptor for get_database_connection
+
+        DEPRECATED. Please use the `post_get_database_connection_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_get_database_connection` interceptor runs
+        before the `post_get_database_connection_with_metadata` interceptor.
+        """
+        return response
+
+    def post_get_database_connection_with_metadata(
+        self,
+        response: database_connection.DatabaseConnection,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        database_connection.DatabaseConnection, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Post-rpc interceptor for get_database_connection
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_get_database_connection_with_metadata`
+        interceptor in new development instead of the `post_get_database_connection` interceptor.
+        When both interceptors are used, this `post_get_database_connection_with_metadata` interceptor runs after the
+        `post_get_database_connection` interceptor. The (possibly modified) response returned by
+        `post_get_database_connection` will be passed to
+        `post_get_database_connection_with_metadata`.
         """
         return response, metadata
 
@@ -3217,6 +3795,58 @@ class OracleDatabaseRestInterceptor:
         """
         return response, metadata
 
+    def pre_list_database_connections(
+        self,
+        request: database_connection.ListDatabaseConnectionsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        database_connection.ListDatabaseConnectionsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for list_database_connections
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_list_database_connections(
+        self, response: database_connection.ListDatabaseConnectionsResponse
+    ) -> database_connection.ListDatabaseConnectionsResponse:
+        """Post-rpc interceptor for list_database_connections
+
+        DEPRECATED. Please use the `post_list_database_connections_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_list_database_connections` interceptor runs
+        before the `post_list_database_connections_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_database_connections_with_metadata(
+        self,
+        response: database_connection.ListDatabaseConnectionsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        database_connection.ListDatabaseConnectionsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for list_database_connections
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_list_database_connections_with_metadata`
+        interceptor in new development instead of the `post_list_database_connections` interceptor.
+        When both interceptors are used, this `post_list_database_connections_with_metadata` interceptor runs after the
+        `post_list_database_connections` interceptor. The (possibly modified) response returned by
+        `post_list_database_connections` will be passed to
+        `post_list_database_connections_with_metadata`.
+        """
+        return response, metadata
+
     def pre_list_databases(
         self,
         request: database.ListDatabasesRequest,
@@ -3360,6 +3990,59 @@ class OracleDatabaseRestInterceptor:
         `post_list_db_servers` interceptor. The (possibly modified) response returned by
         `post_list_db_servers` will be passed to
         `post_list_db_servers_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_list_db_system_compute_performances(
+        self,
+        request: db_system_compute_performance.ListDbSystemComputePerformancesRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        db_system_compute_performance.ListDbSystemComputePerformancesRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for list_db_system_compute_performances
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_list_db_system_compute_performances(
+        self,
+        response: db_system_compute_performance.ListDbSystemComputePerformancesResponse,
+    ) -> db_system_compute_performance.ListDbSystemComputePerformancesResponse:
+        """Post-rpc interceptor for list_db_system_compute_performances
+
+        DEPRECATED. Please use the `post_list_db_system_compute_performances_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_list_db_system_compute_performances` interceptor runs
+        before the `post_list_db_system_compute_performances_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_db_system_compute_performances_with_metadata(
+        self,
+        response: db_system_compute_performance.ListDbSystemComputePerformancesResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        db_system_compute_performance.ListDbSystemComputePerformancesResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for list_db_system_compute_performances
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_list_db_system_compute_performances_with_metadata`
+        interceptor in new development instead of the `post_list_db_system_compute_performances` interceptor.
+        When both interceptors are used, this `post_list_db_system_compute_performances_with_metadata` interceptor runs after the
+        `post_list_db_system_compute_performances` interceptor. The (possibly modified) response returned by
+        `post_list_db_system_compute_performances` will be passed to
+        `post_list_db_system_compute_performances_with_metadata`.
         """
         return response, metadata
 
@@ -3717,6 +4400,58 @@ class OracleDatabaseRestInterceptor:
         `post_list_exascale_db_storage_vaults` interceptor. The (possibly modified) response returned by
         `post_list_exascale_db_storage_vaults` will be passed to
         `post_list_exascale_db_storage_vaults_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_list_flex_components(
+        self,
+        request: flex_component.ListFlexComponentsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        flex_component.ListFlexComponentsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for list_flex_components
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_list_flex_components(
+        self, response: flex_component.ListFlexComponentsResponse
+    ) -> flex_component.ListFlexComponentsResponse:
+        """Post-rpc interceptor for list_flex_components
+
+        DEPRECATED. Please use the `post_list_flex_components_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_list_flex_components` interceptor runs
+        before the `post_list_flex_components_with_metadata` interceptor.
+        """
+        return response
+
+    def post_list_flex_components_with_metadata(
+        self,
+        response: flex_component.ListFlexComponentsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        flex_component.ListFlexComponentsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for list_flex_components
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_list_flex_components_with_metadata`
+        interceptor in new development instead of the `post_list_flex_components` interceptor.
+        When both interceptors are used, this `post_list_flex_components_with_metadata` interceptor runs after the
+        `post_list_flex_components` interceptor. The (possibly modified) response returned by
+        `post_list_flex_components` will be passed to
+        `post_list_flex_components_with_metadata`.
         """
         return response, metadata
 
@@ -4830,6 +5565,58 @@ class OracleDatabaseRestInterceptor:
         """
         return response, metadata
 
+    def pre_test_database_connection(
+        self,
+        request: database_connection.TestDatabaseConnectionRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        database_connection.TestDatabaseConnectionRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for test_database_connection
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_test_database_connection(
+        self, response: database_connection.TestDatabaseConnectionResponse
+    ) -> database_connection.TestDatabaseConnectionResponse:
+        """Post-rpc interceptor for test_database_connection
+
+        DEPRECATED. Please use the `post_test_database_connection_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_test_database_connection` interceptor runs
+        before the `post_test_database_connection_with_metadata` interceptor.
+        """
+        return response
+
+    def post_test_database_connection_with_metadata(
+        self,
+        response: database_connection.TestDatabaseConnectionResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        database_connection.TestDatabaseConnectionResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for test_database_connection
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_test_database_connection_with_metadata`
+        interceptor in new development instead of the `post_test_database_connection` interceptor.
+        When both interceptors are used, this `post_test_database_connection_with_metadata` interceptor runs after the
+        `post_test_database_connection` interceptor. The (possibly modified) response returned by
+        `post_test_database_connection` will be passed to
+        `post_test_database_connection_with_metadata`.
+        """
+        return response, metadata
+
     def pre_test_goldengate_connection_assignment(
         self,
         request: goldengate_connection_assignment.TestGoldengateConnectionAssignmentRequest,
@@ -4932,6 +5719,201 @@ class OracleDatabaseRestInterceptor:
         """
         return response, metadata
 
+    def pre_update_cloud_exadata_infrastructure(
+        self,
+        request: oracledatabase.UpdateCloudExadataInfrastructureRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        oracledatabase.UpdateCloudExadataInfrastructureRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for update_cloud_exadata_infrastructure
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_update_cloud_exadata_infrastructure(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for update_cloud_exadata_infrastructure
+
+        DEPRECATED. Please use the `post_update_cloud_exadata_infrastructure_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_update_cloud_exadata_infrastructure` interceptor runs
+        before the `post_update_cloud_exadata_infrastructure_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_cloud_exadata_infrastructure_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_cloud_exadata_infrastructure
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_update_cloud_exadata_infrastructure_with_metadata`
+        interceptor in new development instead of the `post_update_cloud_exadata_infrastructure` interceptor.
+        When both interceptors are used, this `post_update_cloud_exadata_infrastructure_with_metadata` interceptor runs after the
+        `post_update_cloud_exadata_infrastructure` interceptor. The (possibly modified) response returned by
+        `post_update_cloud_exadata_infrastructure` will be passed to
+        `post_update_cloud_exadata_infrastructure_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_cloud_vm_cluster(
+        self,
+        request: oracledatabase.UpdateCloudVmClusterRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        oracledatabase.UpdateCloudVmClusterRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for update_cloud_vm_cluster
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_update_cloud_vm_cluster(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for update_cloud_vm_cluster
+
+        DEPRECATED. Please use the `post_update_cloud_vm_cluster_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_update_cloud_vm_cluster` interceptor runs
+        before the `post_update_cloud_vm_cluster_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_cloud_vm_cluster_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_cloud_vm_cluster
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_update_cloud_vm_cluster_with_metadata`
+        interceptor in new development instead of the `post_update_cloud_vm_cluster` interceptor.
+        When both interceptors are used, this `post_update_cloud_vm_cluster_with_metadata` interceptor runs after the
+        `post_update_cloud_vm_cluster` interceptor. The (possibly modified) response returned by
+        `post_update_cloud_vm_cluster` will be passed to
+        `post_update_cloud_vm_cluster_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_database_connection(
+        self,
+        request: gco_database_connection.UpdateDatabaseConnectionRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        gco_database_connection.UpdateDatabaseConnectionRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for update_database_connection
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_update_database_connection(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for update_database_connection
+
+        DEPRECATED. Please use the `post_update_database_connection_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_update_database_connection` interceptor runs
+        before the `post_update_database_connection_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_database_connection_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_database_connection
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_update_database_connection_with_metadata`
+        interceptor in new development instead of the `post_update_database_connection` interceptor.
+        When both interceptors are used, this `post_update_database_connection_with_metadata` interceptor runs after the
+        `post_update_database_connection` interceptor. The (possibly modified) response returned by
+        `post_update_database_connection` will be passed to
+        `post_update_database_connection_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_db_system(
+        self,
+        request: gco_db_system.UpdateDbSystemRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        gco_db_system.UpdateDbSystemRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for update_db_system
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_update_db_system(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for update_db_system
+
+        DEPRECATED. Please use the `post_update_db_system_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_update_db_system` interceptor runs
+        before the `post_update_db_system_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_db_system_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_db_system
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_update_db_system_with_metadata`
+        interceptor in new development instead of the `post_update_db_system` interceptor.
+        When both interceptors are used, this `post_update_db_system_with_metadata` interceptor runs after the
+        `post_update_db_system` interceptor. The (possibly modified) response returned by
+        `post_update_db_system` will be passed to
+        `post_update_db_system_with_metadata`.
+        """
+        return response, metadata
+
     def pre_update_exadb_vm_cluster(
         self,
         request: oracledatabase.UpdateExadbVmClusterRequest,
@@ -4978,6 +5960,298 @@ class OracleDatabaseRestInterceptor:
         `post_update_exadb_vm_cluster` interceptor. The (possibly modified) response returned by
         `post_update_exadb_vm_cluster` will be passed to
         `post_update_exadb_vm_cluster_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_exascale_db_storage_vault(
+        self,
+        request: gco_exascale_db_storage_vault.UpdateExascaleDbStorageVaultRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        gco_exascale_db_storage_vault.UpdateExascaleDbStorageVaultRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for update_exascale_db_storage_vault
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_update_exascale_db_storage_vault(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for update_exascale_db_storage_vault
+
+        DEPRECATED. Please use the `post_update_exascale_db_storage_vault_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_update_exascale_db_storage_vault` interceptor runs
+        before the `post_update_exascale_db_storage_vault_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_exascale_db_storage_vault_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_exascale_db_storage_vault
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_update_exascale_db_storage_vault_with_metadata`
+        interceptor in new development instead of the `post_update_exascale_db_storage_vault` interceptor.
+        When both interceptors are used, this `post_update_exascale_db_storage_vault_with_metadata` interceptor runs after the
+        `post_update_exascale_db_storage_vault` interceptor. The (possibly modified) response returned by
+        `post_update_exascale_db_storage_vault` will be passed to
+        `post_update_exascale_db_storage_vault_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_goldengate_connection(
+        self,
+        request: gco_goldengate_connection.UpdateGoldengateConnectionRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        gco_goldengate_connection.UpdateGoldengateConnectionRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for update_goldengate_connection
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_update_goldengate_connection(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for update_goldengate_connection
+
+        DEPRECATED. Please use the `post_update_goldengate_connection_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_update_goldengate_connection` interceptor runs
+        before the `post_update_goldengate_connection_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_goldengate_connection_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_goldengate_connection
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_update_goldengate_connection_with_metadata`
+        interceptor in new development instead of the `post_update_goldengate_connection` interceptor.
+        When both interceptors are used, this `post_update_goldengate_connection_with_metadata` interceptor runs after the
+        `post_update_goldengate_connection` interceptor. The (possibly modified) response returned by
+        `post_update_goldengate_connection` will be passed to
+        `post_update_goldengate_connection_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_goldengate_connection_assignment(
+        self,
+        request: gco_goldengate_connection_assignment.UpdateGoldengateConnectionAssignmentRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        gco_goldengate_connection_assignment.UpdateGoldengateConnectionAssignmentRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for update_goldengate_connection_assignment
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_update_goldengate_connection_assignment(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for update_goldengate_connection_assignment
+
+        DEPRECATED. Please use the `post_update_goldengate_connection_assignment_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_update_goldengate_connection_assignment` interceptor runs
+        before the `post_update_goldengate_connection_assignment_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_goldengate_connection_assignment_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_goldengate_connection_assignment
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_update_goldengate_connection_assignment_with_metadata`
+        interceptor in new development instead of the `post_update_goldengate_connection_assignment` interceptor.
+        When both interceptors are used, this `post_update_goldengate_connection_assignment_with_metadata` interceptor runs after the
+        `post_update_goldengate_connection_assignment` interceptor. The (possibly modified) response returned by
+        `post_update_goldengate_connection_assignment` will be passed to
+        `post_update_goldengate_connection_assignment_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_goldengate_deployment(
+        self,
+        request: gco_goldengate_deployment.UpdateGoldengateDeploymentRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        gco_goldengate_deployment.UpdateGoldengateDeploymentRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for update_goldengate_deployment
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_update_goldengate_deployment(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for update_goldengate_deployment
+
+        DEPRECATED. Please use the `post_update_goldengate_deployment_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_update_goldengate_deployment` interceptor runs
+        before the `post_update_goldengate_deployment_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_goldengate_deployment_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_goldengate_deployment
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_update_goldengate_deployment_with_metadata`
+        interceptor in new development instead of the `post_update_goldengate_deployment` interceptor.
+        When both interceptors are used, this `post_update_goldengate_deployment_with_metadata` interceptor runs after the
+        `post_update_goldengate_deployment` interceptor. The (possibly modified) response returned by
+        `post_update_goldengate_deployment` will be passed to
+        `post_update_goldengate_deployment_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_odb_network(
+        self,
+        request: gco_odb_network.UpdateOdbNetworkRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        gco_odb_network.UpdateOdbNetworkRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for update_odb_network
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_update_odb_network(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for update_odb_network
+
+        DEPRECATED. Please use the `post_update_odb_network_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_update_odb_network` interceptor runs
+        before the `post_update_odb_network_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_odb_network_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_odb_network
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_update_odb_network_with_metadata`
+        interceptor in new development instead of the `post_update_odb_network` interceptor.
+        When both interceptors are used, this `post_update_odb_network_with_metadata` interceptor runs after the
+        `post_update_odb_network` interceptor. The (possibly modified) response returned by
+        `post_update_odb_network` will be passed to
+        `post_update_odb_network_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_odb_subnet(
+        self,
+        request: gco_odb_subnet.UpdateOdbSubnetRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        gco_odb_subnet.UpdateOdbSubnetRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for update_odb_subnet
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the OracleDatabase server.
+        """
+        return request, metadata
+
+    def post_update_odb_subnet(
+        self, response: operations_pb2.Operation
+    ) -> operations_pb2.Operation:
+        """Post-rpc interceptor for update_odb_subnet
+
+        DEPRECATED. Please use the `post_update_odb_subnet_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the OracleDatabase server but before
+        it is returned to user code. This `post_update_odb_subnet` interceptor runs
+        before the `post_update_odb_subnet_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_odb_subnet_with_metadata(
+        self,
+        response: operations_pb2.Operation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[operations_pb2.Operation, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_odb_subnet
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the OracleDatabase server but before it is returned to user code.
+
+        We recommend only using this `post_update_odb_subnet_with_metadata`
+        interceptor in new development instead of the `post_update_odb_subnet` interceptor.
+        When both interceptors are used, this `post_update_odb_subnet_with_metadata` interceptor runs after the
+        `post_update_odb_subnet` interceptor. The (possibly modified) response returned by
+        `post_update_odb_subnet` will be passed to
+        `post_update_odb_subnet_with_metadata`.
         """
         return response, metadata
 
@@ -5885,6 +7159,158 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
                     extra={
                         "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
                         "rpcName": "CreateCloudVmCluster",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _CreateDatabaseConnection(
+        _BaseOracleDatabaseRestTransport._BaseCreateDatabaseConnection,
+        OracleDatabaseRestStub,
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.CreateDatabaseConnection")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: gco_database_connection.CreateDatabaseConnectionRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the create database
+            connection method over HTTP.
+
+                Args:
+                    request (~.gco_database_connection.CreateDatabaseConnectionRequest):
+                        The request object. The request for ``DatabaseConnection.Create``.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.operations_pb2.Operation:
+                        This resource represents a
+                    long-running operation that is the
+                    result of a network API call.
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseCreateDatabaseConnection._get_http_options()
+            request, metadata = self._interceptor.pre_create_database_connection(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseCreateDatabaseConnection,
+                    "_BaseCreateDatabaseConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.CreateDatabaseConnection",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "CreateDatabaseConnection",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                OracleDatabaseRestTransport._CreateDatabaseConnection._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                    body,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_create_database_connection(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_create_database_connection_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.create_database_connection",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "CreateDatabaseConnection",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -7698,6 +9124,156 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
                 )
             return resp
 
+    class _DeleteDatabaseConnection(
+        _BaseOracleDatabaseRestTransport._BaseDeleteDatabaseConnection,
+        OracleDatabaseRestStub,
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.DeleteDatabaseConnection")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: database_connection.DeleteDatabaseConnectionRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the delete database
+            connection method over HTTP.
+
+                Args:
+                    request (~.database_connection.DeleteDatabaseConnectionRequest):
+                        The request object. The request for ``DatabaseConnection.Delete``.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.operations_pb2.Operation:
+                        This resource represents a
+                    long-running operation that is the
+                    result of a network API call.
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseDeleteDatabaseConnection._get_http_options()
+            request, metadata = self._interceptor.pre_delete_database_connection(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseDeleteDatabaseConnection,
+                    "_BaseDeleteDatabaseConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.DeleteDatabaseConnection",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "DeleteDatabaseConnection",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                OracleDatabaseRestTransport._DeleteDatabaseConnection._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_delete_database_connection(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_delete_database_connection_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.delete_database_connection",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "DeleteDatabaseConnection",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _DeleteDbSystem(
         _BaseOracleDatabaseRestTransport._BaseDeleteDbSystem, OracleDatabaseRestStub
     ):
@@ -9039,6 +10615,791 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
                 )
             return resp
 
+    class _DisableCloudVmClusterIdentityConnector(
+        _BaseOracleDatabaseRestTransport._BaseDisableCloudVmClusterIdentityConnector,
+        OracleDatabaseRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "OracleDatabaseRestTransport.DisableCloudVmClusterIdentityConnector"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: oracledatabase.DisableCloudVmClusterIdentityConnectorRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the disable cloud vm cluster
+            identity connector method over HTTP.
+
+                Args:
+                    request (~.oracledatabase.DisableCloudVmClusterIdentityConnectorRequest):
+                        The request object. The request for
+                    ``CloudVmCluster.DisableCloudVmClusterIdentityConnector``.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.operations_pb2.Operation:
+                        This resource represents a
+                    long-running operation that is the
+                    result of a network API call.
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseDisableCloudVmClusterIdentityConnector._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_disable_cloud_vm_cluster_identity_connector(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseDisableCloudVmClusterIdentityConnector,
+                    "_BaseDisableCloudVmClusterIdentityConnector__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.DisableCloudVmClusterIdentityConnector",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "DisableCloudVmClusterIdentityConnector",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = OracleDatabaseRestTransport._DisableCloudVmClusterIdentityConnector._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_disable_cloud_vm_cluster_identity_connector(
+                resp
+            )
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_disable_cloud_vm_cluster_identity_connector_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.disable_cloud_vm_cluster_identity_connector",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "DisableCloudVmClusterIdentityConnector",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _DisableExadbVmClusterIdentityConnector(
+        _BaseOracleDatabaseRestTransport._BaseDisableExadbVmClusterIdentityConnector,
+        OracleDatabaseRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "OracleDatabaseRestTransport.DisableExadbVmClusterIdentityConnector"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: oracledatabase.DisableExadbVmClusterIdentityConnectorRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the disable exadb vm cluster
+            identity connector method over HTTP.
+
+                Args:
+                    request (~.oracledatabase.DisableExadbVmClusterIdentityConnectorRequest):
+                        The request object. The request for
+                    ``ExadbVmCluster.DisableExadbVmClusterIdentityConnector``.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.operations_pb2.Operation:
+                        This resource represents a
+                    long-running operation that is the
+                    result of a network API call.
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseDisableExadbVmClusterIdentityConnector._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_disable_exadb_vm_cluster_identity_connector(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseDisableExadbVmClusterIdentityConnector,
+                    "_BaseDisableExadbVmClusterIdentityConnector__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.DisableExadbVmClusterIdentityConnector",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "DisableExadbVmClusterIdentityConnector",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = OracleDatabaseRestTransport._DisableExadbVmClusterIdentityConnector._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_disable_exadb_vm_cluster_identity_connector(
+                resp
+            )
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_disable_exadb_vm_cluster_identity_connector_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.disable_exadb_vm_cluster_identity_connector",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "DisableExadbVmClusterIdentityConnector",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _EnableCloudVmClusterIdentityConnector(
+        _BaseOracleDatabaseRestTransport._BaseEnableCloudVmClusterIdentityConnector,
+        OracleDatabaseRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "OracleDatabaseRestTransport.EnableCloudVmClusterIdentityConnector"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: oracledatabase.EnableCloudVmClusterIdentityConnectorRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the enable cloud vm cluster
+            identity connector method over HTTP.
+
+                Args:
+                    request (~.oracledatabase.EnableCloudVmClusterIdentityConnectorRequest):
+                        The request object. The request for
+                    ``CloudVmCluster.EnableCloudVmClusterIdentityConnector``.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.operations_pb2.Operation:
+                        This resource represents a
+                    long-running operation that is the
+                    result of a network API call.
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseEnableCloudVmClusterIdentityConnector._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_enable_cloud_vm_cluster_identity_connector(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseEnableCloudVmClusterIdentityConnector,
+                    "_BaseEnableCloudVmClusterIdentityConnector__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.EnableCloudVmClusterIdentityConnector",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "EnableCloudVmClusterIdentityConnector",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = OracleDatabaseRestTransport._EnableCloudVmClusterIdentityConnector._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_enable_cloud_vm_cluster_identity_connector(
+                resp
+            )
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_enable_cloud_vm_cluster_identity_connector_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.enable_cloud_vm_cluster_identity_connector",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "EnableCloudVmClusterIdentityConnector",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _EnableExadbVmClusterIdentityConnector(
+        _BaseOracleDatabaseRestTransport._BaseEnableExadbVmClusterIdentityConnector,
+        OracleDatabaseRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "OracleDatabaseRestTransport.EnableExadbVmClusterIdentityConnector"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: oracledatabase.EnableExadbVmClusterIdentityConnectorRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the enable exadb vm cluster
+            identity connector method over HTTP.
+
+                Args:
+                    request (~.oracledatabase.EnableExadbVmClusterIdentityConnectorRequest):
+                        The request object. The request for
+                    ``ExadbVmCluster.EnableExadbVmClusterIdentityConnector``.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.operations_pb2.Operation:
+                        This resource represents a
+                    long-running operation that is the
+                    result of a network API call.
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseEnableExadbVmClusterIdentityConnector._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_enable_exadb_vm_cluster_identity_connector(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseEnableExadbVmClusterIdentityConnector,
+                    "_BaseEnableExadbVmClusterIdentityConnector__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.EnableExadbVmClusterIdentityConnector",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "EnableExadbVmClusterIdentityConnector",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = OracleDatabaseRestTransport._EnableExadbVmClusterIdentityConnector._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_enable_exadb_vm_cluster_identity_connector(
+                resp
+            )
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_enable_exadb_vm_cluster_identity_connector_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.enable_exadb_vm_cluster_identity_connector",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "EnableExadbVmClusterIdentityConnector",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _ExecuteSql(
+        _BaseOracleDatabaseRestTransport._BaseExecuteSql, OracleDatabaseRestStub
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.ExecuteSql")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: gco_execute_sql.ExecuteSqlRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> gco_execute_sql.ExecuteSqlResponse:
+            r"""Call the execute sql method over HTTP.
+
+            Args:
+                request (~.gco_execute_sql.ExecuteSqlRequest):
+                    The request object. The request for ``DatabaseConnection.ExecuteSql``.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.gco_execute_sql.ExecuteSqlResponse:
+                    Execute a SQL statement response.
+            """
+
+            http_options = (
+                _BaseOracleDatabaseRestTransport._BaseExecuteSql._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_execute_sql(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseExecuteSql,
+                    "_BaseExecuteSql__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.ExecuteSql",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "ExecuteSql",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = OracleDatabaseRestTransport._ExecuteSql._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = gco_execute_sql.ExecuteSqlResponse()
+            pb_resp = gco_execute_sql.ExecuteSqlResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_execute_sql(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_execute_sql_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = gco_execute_sql.ExecuteSqlResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.execute_sql",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "ExecuteSql",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _FailoverAutonomousDatabase(
         _BaseOracleDatabaseRestTransport._BaseFailoverAutonomousDatabase,
         OracleDatabaseRestStub,
@@ -10106,6 +12467,156 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
                     extra={
                         "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
                         "rpcName": "GetDatabase",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _GetDatabaseConnection(
+        _BaseOracleDatabaseRestTransport._BaseGetDatabaseConnection,
+        OracleDatabaseRestStub,
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.GetDatabaseConnection")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: database_connection.GetDatabaseConnectionRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> database_connection.DatabaseConnection:
+            r"""Call the get database connection method over HTTP.
+
+            Args:
+                request (~.database_connection.GetDatabaseConnectionRequest):
+                    The request object. The request for ``DatabaseConnection.Get``.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.database_connection.DatabaseConnection:
+                    Represents DatabaseConnection
+                resource.
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseGetDatabaseConnection._get_http_options()
+            request, metadata = self._interceptor.pre_get_database_connection(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseGetDatabaseConnection,
+                    "_BaseGetDatabaseConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.GetDatabaseConnection",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "GetDatabaseConnection",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = OracleDatabaseRestTransport._GetDatabaseConnection._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = database_connection.DatabaseConnection()
+            pb_resp = database_connection.DatabaseConnection.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_get_database_connection(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_get_database_connection_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = database_connection.DatabaseConnection.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.get_database_connection",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "GetDatabaseConnection",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -12685,6 +15196,158 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
                 )
             return resp
 
+    class _ListDatabaseConnections(
+        _BaseOracleDatabaseRestTransport._BaseListDatabaseConnections,
+        OracleDatabaseRestStub,
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.ListDatabaseConnections")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: database_connection.ListDatabaseConnectionsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> database_connection.ListDatabaseConnectionsResponse:
+            r"""Call the list database connections method over HTTP.
+
+            Args:
+                request (~.database_connection.ListDatabaseConnectionsRequest):
+                    The request object. The request for ``DatabaseConnection.List``.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.database_connection.ListDatabaseConnectionsResponse:
+                    The response for ``DatabaseConnection.List``.
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseListDatabaseConnections._get_http_options()
+            request, metadata = self._interceptor.pre_list_database_connections(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseListDatabaseConnections,
+                    "_BaseListDatabaseConnections__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.ListDatabaseConnections",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "ListDatabaseConnections",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                OracleDatabaseRestTransport._ListDatabaseConnections._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = database_connection.ListDatabaseConnectionsResponse()
+            pb_resp = database_connection.ListDatabaseConnectionsResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_database_connections(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_list_database_connections_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        database_connection.ListDatabaseConnectionsResponse.to_json(
+                            response
+                        )
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.list_database_connections",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "ListDatabaseConnections",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _ListDatabases(
         _BaseOracleDatabaseRestTransport._BaseListDatabases, OracleDatabaseRestStub
     ):
@@ -13118,6 +15781,166 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
                     extra={
                         "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
                         "rpcName": "ListDbServers",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _ListDbSystemComputePerformances(
+        _BaseOracleDatabaseRestTransport._BaseListDbSystemComputePerformances,
+        OracleDatabaseRestStub,
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.ListDbSystemComputePerformances")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: db_system_compute_performance.ListDbSystemComputePerformancesRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> db_system_compute_performance.ListDbSystemComputePerformancesResponse:
+            r"""Call the list db system compute
+            performances method over HTTP.
+
+                Args:
+                    request (~.db_system_compute_performance.ListDbSystemComputePerformancesRequest):
+                        The request object. Message for listing
+                    DbSystemComputePerformances.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.db_system_compute_performance.ListDbSystemComputePerformancesResponse:
+                        Message for response to listing
+                    DbSystemComputePerformances
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseListDbSystemComputePerformances._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_list_db_system_compute_performances(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseListDbSystemComputePerformances,
+                    "_BaseListDbSystemComputePerformances__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.ListDbSystemComputePerformances",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "ListDbSystemComputePerformances",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = OracleDatabaseRestTransport._ListDbSystemComputePerformances._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = (
+                db_system_compute_performance.ListDbSystemComputePerformancesResponse()
+            )
+            pb_resp = db_system_compute_performance.ListDbSystemComputePerformancesResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_db_system_compute_performances(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_list_db_system_compute_performances_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = db_system_compute_performance.ListDbSystemComputePerformancesResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.list_db_system_compute_performances",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "ListDbSystemComputePerformances",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -14166,6 +16989,155 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
                     extra={
                         "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
                         "rpcName": "ListExascaleDbStorageVaults",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _ListFlexComponents(
+        _BaseOracleDatabaseRestTransport._BaseListFlexComponents, OracleDatabaseRestStub
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.ListFlexComponents")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+            )
+            return response
+
+        def __call__(
+            self,
+            request: flex_component.ListFlexComponentsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> flex_component.ListFlexComponentsResponse:
+            r"""Call the list flex components method over HTTP.
+
+            Args:
+                request (~.flex_component.ListFlexComponentsRequest):
+                    The request object. Message for listing FlexComponents.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.flex_component.ListFlexComponentsResponse:
+                    Message for response to listing
+                FlexComponents
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseListFlexComponents._get_http_options()
+            request, metadata = self._interceptor.pre_list_flex_components(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseListFlexComponents,
+                    "_BaseListFlexComponents__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.ListFlexComponents",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "ListFlexComponents",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = OracleDatabaseRestTransport._ListFlexComponents._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = flex_component.ListFlexComponentsResponse()
+            pb_resp = flex_component.ListFlexComponentsResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_list_flex_components(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_list_flex_components_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        flex_component.ListFlexComponentsResponse.to_json(response)
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.list_flex_components",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "ListFlexComponents",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -17541,6 +20513,163 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
                 )
             return resp
 
+    class _TestDatabaseConnection(
+        _BaseOracleDatabaseRestTransport._BaseTestDatabaseConnection,
+        OracleDatabaseRestStub,
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.TestDatabaseConnection")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: database_connection.TestDatabaseConnectionRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> database_connection.TestDatabaseConnectionResponse:
+            r"""Call the test database connection method over HTTP.
+
+            Args:
+                request (~.database_connection.TestDatabaseConnectionRequest):
+                    The request object. Request message for
+                ``DatabaseConnection.TestDatabaseConnection``.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.database_connection.TestDatabaseConnectionResponse:
+                    Response message for
+                ``DatabaseConnection.TestDatabaseConnection``.
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseTestDatabaseConnection._get_http_options()
+            request, metadata = self._interceptor.pre_test_database_connection(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseTestDatabaseConnection,
+                    "_BaseTestDatabaseConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.TestDatabaseConnection",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "TestDatabaseConnection",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                OracleDatabaseRestTransport._TestDatabaseConnection._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                    body,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = database_connection.TestDatabaseConnectionResponse()
+            pb_resp = database_connection.TestDatabaseConnectionResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_test_database_connection(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_test_database_connection_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        database_connection.TestDatabaseConnectionResponse.to_json(
+                            response
+                        )
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.test_database_connection",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "TestDatabaseConnection",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _TestGoldengateConnectionAssignment(
         _BaseOracleDatabaseRestTransport._BaseTestGoldengateConnectionAssignment,
         OracleDatabaseRestStub,
@@ -17859,6 +20988,611 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
                 )
             return resp
 
+    class _UpdateCloudExadataInfrastructure(
+        _BaseOracleDatabaseRestTransport._BaseUpdateCloudExadataInfrastructure,
+        OracleDatabaseRestStub,
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.UpdateCloudExadataInfrastructure")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: oracledatabase.UpdateCloudExadataInfrastructureRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the update cloud exadata
+            infrastructure method over HTTP.
+
+                Args:
+                    request (~.oracledatabase.UpdateCloudExadataInfrastructureRequest):
+                        The request object. The request for ``CloudExadataInfrastructure.Update``.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.operations_pb2.Operation:
+                        This resource represents a
+                    long-running operation that is the
+                    result of a network API call.
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseUpdateCloudExadataInfrastructure._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_update_cloud_exadata_infrastructure(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseUpdateCloudExadataInfrastructure,
+                    "_BaseUpdateCloudExadataInfrastructure__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.UpdateCloudExadataInfrastructure",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateCloudExadataInfrastructure",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = OracleDatabaseRestTransport._UpdateCloudExadataInfrastructure._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_cloud_exadata_infrastructure(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_update_cloud_exadata_infrastructure_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.update_cloud_exadata_infrastructure",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateCloudExadataInfrastructure",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _UpdateCloudVmCluster(
+        _BaseOracleDatabaseRestTransport._BaseUpdateCloudVmCluster,
+        OracleDatabaseRestStub,
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.UpdateCloudVmCluster")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: oracledatabase.UpdateCloudVmClusterRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the update cloud vm cluster method over HTTP.
+
+            Args:
+                request (~.oracledatabase.UpdateCloudVmClusterRequest):
+                    The request object. The request for ``CloudVmCluster.Update``.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseUpdateCloudVmCluster._get_http_options()
+            request, metadata = self._interceptor.pre_update_cloud_vm_cluster(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseUpdateCloudVmCluster,
+                    "_BaseUpdateCloudVmCluster__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.UpdateCloudVmCluster",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateCloudVmCluster",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = OracleDatabaseRestTransport._UpdateCloudVmCluster._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_cloud_vm_cluster(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_cloud_vm_cluster_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.update_cloud_vm_cluster",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateCloudVmCluster",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _UpdateDatabaseConnection(
+        _BaseOracleDatabaseRestTransport._BaseUpdateDatabaseConnection,
+        OracleDatabaseRestStub,
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.UpdateDatabaseConnection")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: gco_database_connection.UpdateDatabaseConnectionRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the update database
+            connection method over HTTP.
+
+                Args:
+                    request (~.gco_database_connection.UpdateDatabaseConnectionRequest):
+                        The request object. The request for ``DatabaseConnection.Update``.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.operations_pb2.Operation:
+                        This resource represents a
+                    long-running operation that is the
+                    result of a network API call.
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseUpdateDatabaseConnection._get_http_options()
+            request, metadata = self._interceptor.pre_update_database_connection(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseUpdateDatabaseConnection,
+                    "_BaseUpdateDatabaseConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.UpdateDatabaseConnection",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateDatabaseConnection",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                OracleDatabaseRestTransport._UpdateDatabaseConnection._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                    body,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_database_connection(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_database_connection_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.update_database_connection",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateDatabaseConnection",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _UpdateDbSystem(
+        _BaseOracleDatabaseRestTransport._BaseUpdateDbSystem, OracleDatabaseRestStub
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.UpdateDbSystem")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: gco_db_system.UpdateDbSystemRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the update db system method over HTTP.
+
+            Args:
+                request (~.gco_db_system.UpdateDbSystemRequest):
+                    The request object. The request for ``DbSystem.Update``.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = (
+                _BaseOracleDatabaseRestTransport._BaseUpdateDbSystem._get_http_options()
+            )
+            request, metadata = self._interceptor.pre_update_db_system(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseUpdateDbSystem,
+                    "_BaseUpdateDbSystem__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.UpdateDbSystem",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateDbSystem",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = OracleDatabaseRestTransport._UpdateDbSystem._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_db_system(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_db_system_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.update_db_system",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateDbSystem",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _UpdateExadbVmCluster(
         _BaseOracleDatabaseRestTransport._BaseUpdateExadbVmCluster,
         OracleDatabaseRestStub,
@@ -17902,9 +21636,9 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
             Args:
                 request (~.oracledatabase.UpdateExadbVmClusterRequest):
                     The request object. The request for ``ExadbVmCluster.Update``. We only
-                support adding the Virtual Machine to the
-                ExadbVmCluster. Rest of the fields in ExadbVmCluster are
-                immutable.
+                support adding the Virtual Machine to the ExadbVmCluster
+                and updating labels. Rest of the fields in
+                ExadbVmCluster are immutable.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -18011,6 +21745,917 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
                 )
             return resp
 
+    class _UpdateExascaleDbStorageVault(
+        _BaseOracleDatabaseRestTransport._BaseUpdateExascaleDbStorageVault,
+        OracleDatabaseRestStub,
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.UpdateExascaleDbStorageVault")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: gco_exascale_db_storage_vault.UpdateExascaleDbStorageVaultRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the update exascale db
+            storage vault method over HTTP.
+
+                Args:
+                    request (~.gco_exascale_db_storage_vault.UpdateExascaleDbStorageVaultRequest):
+                        The request object. The request for ``ExascaleDbStorageVault.Update``.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.operations_pb2.Operation:
+                        This resource represents a
+                    long-running operation that is the
+                    result of a network API call.
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseUpdateExascaleDbStorageVault._get_http_options()
+            request, metadata = self._interceptor.pre_update_exascale_db_storage_vault(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseUpdateExascaleDbStorageVault,
+                    "_BaseUpdateExascaleDbStorageVault__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.UpdateExascaleDbStorageVault",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateExascaleDbStorageVault",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                OracleDatabaseRestTransport._UpdateExascaleDbStorageVault._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                    body,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_exascale_db_storage_vault(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_update_exascale_db_storage_vault_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.update_exascale_db_storage_vault",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateExascaleDbStorageVault",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _UpdateGoldengateConnection(
+        _BaseOracleDatabaseRestTransport._BaseUpdateGoldengateConnection,
+        OracleDatabaseRestStub,
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.UpdateGoldengateConnection")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: gco_goldengate_connection.UpdateGoldengateConnectionRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the update goldengate
+            connection method over HTTP.
+
+                Args:
+                    request (~.gco_goldengate_connection.UpdateGoldengateConnectionRequest):
+                        The request object. The request for ``GoldengateConnection.Update``.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.operations_pb2.Operation:
+                        This resource represents a
+                    long-running operation that is the
+                    result of a network API call.
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseUpdateGoldengateConnection._get_http_options()
+            request, metadata = self._interceptor.pre_update_goldengate_connection(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseUpdateGoldengateConnection,
+                    "_BaseUpdateGoldengateConnection__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.UpdateGoldengateConnection",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateGoldengateConnection",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                OracleDatabaseRestTransport._UpdateGoldengateConnection._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                    body,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_goldengate_connection(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_goldengate_connection_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.update_goldengate_connection",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateGoldengateConnection",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _UpdateGoldengateConnectionAssignment(
+        _BaseOracleDatabaseRestTransport._BaseUpdateGoldengateConnectionAssignment,
+        OracleDatabaseRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "OracleDatabaseRestTransport.UpdateGoldengateConnectionAssignment"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: gco_goldengate_connection_assignment.UpdateGoldengateConnectionAssignmentRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the update goldengate
+            connection assignment method over HTTP.
+
+                Args:
+                    request (~.gco_goldengate_connection_assignment.UpdateGoldengateConnectionAssignmentRequest):
+                        The request object. Request message for updating a
+                    GoldengateConnectionAssignment.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.operations_pb2.Operation:
+                        This resource represents a
+                    long-running operation that is the
+                    result of a network API call.
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseUpdateGoldengateConnectionAssignment._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_update_goldengate_connection_assignment(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseUpdateGoldengateConnectionAssignment,
+                    "_BaseUpdateGoldengateConnectionAssignment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.UpdateGoldengateConnectionAssignment",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateGoldengateConnectionAssignment",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = OracleDatabaseRestTransport._UpdateGoldengateConnectionAssignment._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_goldengate_connection_assignment(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_update_goldengate_connection_assignment_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.update_goldengate_connection_assignment",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateGoldengateConnectionAssignment",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _UpdateGoldengateDeployment(
+        _BaseOracleDatabaseRestTransport._BaseUpdateGoldengateDeployment,
+        OracleDatabaseRestStub,
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.UpdateGoldengateDeployment")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: gco_goldengate_deployment.UpdateGoldengateDeploymentRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the update goldengate
+            deployment method over HTTP.
+
+                Args:
+                    request (~.gco_goldengate_deployment.UpdateGoldengateDeploymentRequest):
+                        The request object. The request for ``GoldengateDeployment.Update``.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.operations_pb2.Operation:
+                        This resource represents a
+                    long-running operation that is the
+                    result of a network API call.
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseUpdateGoldengateDeployment._get_http_options()
+            request, metadata = self._interceptor.pre_update_goldengate_deployment(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseUpdateGoldengateDeployment,
+                    "_BaseUpdateGoldengateDeployment__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.UpdateGoldengateDeployment",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateGoldengateDeployment",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = (
+                OracleDatabaseRestTransport._UpdateGoldengateDeployment._get_response(
+                    self._host,
+                    metadata,
+                    query_params,
+                    self._session,
+                    timeout,
+                    transcoded_request,
+                    body,
+                )
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_goldengate_deployment(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_goldengate_deployment_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.update_goldengate_deployment",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateGoldengateDeployment",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _UpdateOdbNetwork(
+        _BaseOracleDatabaseRestTransport._BaseUpdateOdbNetwork, OracleDatabaseRestStub
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.UpdateOdbNetwork")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: gco_odb_network.UpdateOdbNetworkRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the update odb network method over HTTP.
+
+            Args:
+                request (~.gco_odb_network.UpdateOdbNetworkRequest):
+                    The request object. The request for ``OdbNetwork.Update``.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseUpdateOdbNetwork._get_http_options()
+            request, metadata = self._interceptor.pre_update_odb_network(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseUpdateOdbNetwork,
+                    "_BaseUpdateOdbNetwork__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.UpdateOdbNetwork",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateOdbNetwork",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = OracleDatabaseRestTransport._UpdateOdbNetwork._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_odb_network(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_odb_network_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.update_odb_network",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateOdbNetwork",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _UpdateOdbSubnet(
+        _BaseOracleDatabaseRestTransport._BaseUpdateOdbSubnet, OracleDatabaseRestStub
+    ):
+        def __hash__(self):
+            return hash("OracleDatabaseRestTransport.UpdateOdbSubnet")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: gco_odb_subnet.UpdateOdbSubnetRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> operations_pb2.Operation:
+            r"""Call the update odb subnet method over HTTP.
+
+            Args:
+                request (~.gco_odb_subnet.UpdateOdbSubnetRequest):
+                    The request object. The request for ``OdbSubnet.Update``.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.operations_pb2.Operation:
+                    This resource represents a
+                long-running operation that is the
+                result of a network API call.
+
+            """
+
+            http_options = _BaseOracleDatabaseRestTransport._BaseUpdateOdbSubnet._get_http_options()
+            request, metadata = self._interceptor.pre_update_odb_subnet(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseOracleDatabaseRestTransport._BaseUpdateOdbSubnet,
+                    "_BaseUpdateOdbSubnet__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.cloud.oracledatabase_v1.OracleDatabaseClient.UpdateOdbSubnet",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateOdbSubnet",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = OracleDatabaseRestTransport._UpdateOdbSubnet._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = operations_pb2.Operation()
+            json_format.Parse(response.content, resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_odb_subnet(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_odb_subnet_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = json_format.MessageToJson(resp)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.cloud.oracledatabase_v1.OracleDatabaseClient.update_odb_subnet",
+                    extra={
+                        "serviceName": "google.cloud.oracledatabase.v1.OracleDatabase",
+                        "rpcName": "UpdateOdbSubnet",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     @property
     def configure_exascale_cloud_exadata_infrastructure(
         self,
@@ -18058,6 +22703,19 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._CreateCloudVmCluster(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def create_database_connection(
+        self,
+    ) -> Callable[
+        [gco_database_connection.CreateDatabaseConnectionRequest],
+        operations_pb2.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._CreateDatabaseConnection(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
 
     @property
     def create_db_system(
@@ -18191,6 +22849,18 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
         return self._DeleteCloudVmCluster(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def delete_database_connection(
+        self,
+    ) -> Callable[
+        [database_connection.DeleteDatabaseConnectionRequest], operations_pb2.Operation
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._DeleteDatabaseConnection(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
     def delete_db_system(
         self,
     ) -> Callable[[db_system.DeleteDbSystemRequest], operations_pb2.Operation]:
@@ -18285,6 +22955,68 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
         return self._DeleteOdbSubnet(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
+    def disable_cloud_vm_cluster_identity_connector(
+        self,
+    ) -> Callable[
+        [oracledatabase.DisableCloudVmClusterIdentityConnectorRequest],
+        operations_pb2.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._DisableCloudVmClusterIdentityConnector(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def disable_exadb_vm_cluster_identity_connector(
+        self,
+    ) -> Callable[
+        [oracledatabase.DisableExadbVmClusterIdentityConnectorRequest],
+        operations_pb2.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._DisableExadbVmClusterIdentityConnector(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def enable_cloud_vm_cluster_identity_connector(
+        self,
+    ) -> Callable[
+        [oracledatabase.EnableCloudVmClusterIdentityConnectorRequest],
+        operations_pb2.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._EnableCloudVmClusterIdentityConnector(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def enable_exadb_vm_cluster_identity_connector(
+        self,
+    ) -> Callable[
+        [oracledatabase.EnableExadbVmClusterIdentityConnectorRequest],
+        operations_pb2.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._EnableExadbVmClusterIdentityConnector(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def execute_sql(
+        self,
+    ) -> Callable[
+        [gco_execute_sql.ExecuteSqlRequest], gco_execute_sql.ExecuteSqlResponse
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ExecuteSql(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def failover_autonomous_database(
         self,
     ) -> Callable[
@@ -18361,6 +23093,17 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._GetDatabase(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def get_database_connection(
+        self,
+    ) -> Callable[
+        [database_connection.GetDatabaseConnectionRequest],
+        database_connection.DatabaseConnection,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._GetDatabaseConnection(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def get_db_system(
@@ -18557,6 +23300,19 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
         )  # type: ignore
 
     @property
+    def list_database_connections(
+        self,
+    ) -> Callable[
+        [database_connection.ListDatabaseConnectionsRequest],
+        database_connection.ListDatabaseConnectionsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListDatabaseConnections(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
     def list_databases(
         self,
     ) -> Callable[[database.ListDatabasesRequest], database.ListDatabasesResponse]:
@@ -18583,6 +23339,19 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._ListDbServers(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def list_db_system_compute_performances(
+        self,
+    ) -> Callable[
+        [db_system_compute_performance.ListDbSystemComputePerformancesRequest],
+        db_system_compute_performance.ListDbSystemComputePerformancesResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListDbSystemComputePerformances(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
 
     @property
     def list_db_system_initial_storage_sizes(
@@ -18660,6 +23429,17 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
         return self._ListExascaleDbStorageVaults(
             self._session, self._host, self._interceptor
         )  # type: ignore
+
+    @property
+    def list_flex_components(
+        self,
+    ) -> Callable[
+        [flex_component.ListFlexComponentsRequest],
+        flex_component.ListFlexComponentsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._ListFlexComponents(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def list_gi_versions(
@@ -18928,6 +23708,19 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
         )  # type: ignore
 
     @property
+    def test_database_connection(
+        self,
+    ) -> Callable[
+        [database_connection.TestDatabaseConnectionRequest],
+        database_connection.TestDatabaseConnectionResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._TestDatabaseConnection(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
     def test_goldengate_connection_assignment(
         self,
     ) -> Callable[
@@ -18953,6 +23746,50 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
         )  # type: ignore
 
     @property
+    def update_cloud_exadata_infrastructure(
+        self,
+    ) -> Callable[
+        [oracledatabase.UpdateCloudExadataInfrastructureRequest],
+        operations_pb2.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateCloudExadataInfrastructure(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def update_cloud_vm_cluster(
+        self,
+    ) -> Callable[
+        [oracledatabase.UpdateCloudVmClusterRequest], operations_pb2.Operation
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateCloudVmCluster(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def update_database_connection(
+        self,
+    ) -> Callable[
+        [gco_database_connection.UpdateDatabaseConnectionRequest],
+        operations_pb2.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateDatabaseConnection(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def update_db_system(
+        self,
+    ) -> Callable[[gco_db_system.UpdateDbSystemRequest], operations_pb2.Operation]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateDbSystem(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def update_exadb_vm_cluster(
         self,
     ) -> Callable[
@@ -18961,6 +23798,76 @@ class OracleDatabaseRestTransport(_BaseOracleDatabaseRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._UpdateExadbVmCluster(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def update_exascale_db_storage_vault(
+        self,
+    ) -> Callable[
+        [gco_exascale_db_storage_vault.UpdateExascaleDbStorageVaultRequest],
+        operations_pb2.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateExascaleDbStorageVault(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def update_goldengate_connection(
+        self,
+    ) -> Callable[
+        [gco_goldengate_connection.UpdateGoldengateConnectionRequest],
+        operations_pb2.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateGoldengateConnection(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def update_goldengate_connection_assignment(
+        self,
+    ) -> Callable[
+        [
+            gco_goldengate_connection_assignment.UpdateGoldengateConnectionAssignmentRequest
+        ],
+        operations_pb2.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateGoldengateConnectionAssignment(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def update_goldengate_deployment(
+        self,
+    ) -> Callable[
+        [gco_goldengate_deployment.UpdateGoldengateDeploymentRequest],
+        operations_pb2.Operation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateGoldengateDeployment(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def update_odb_network(
+        self,
+    ) -> Callable[[gco_odb_network.UpdateOdbNetworkRequest], operations_pb2.Operation]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateOdbNetwork(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def update_odb_subnet(
+        self,
+    ) -> Callable[[gco_odb_subnet.UpdateOdbSubnetRequest], operations_pb2.Operation]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateOdbSubnet(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def get_location(self):

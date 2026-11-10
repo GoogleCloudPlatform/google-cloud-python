@@ -28,6 +28,8 @@ __protobuf__ = proto.module(
         "SqlFileType",
         "BakType",
         "SqlMaintenanceType",
+        "CertificateType",
+        "Intent",
         "SqlBackendType",
         "SqlIpAddressType",
         "SqlDatabaseVersion",
@@ -81,9 +83,13 @@ __protobuf__ = proto.module(
         "AdvancedMachineFeatures",
         "SslCert",
         "SslCertDetail",
+        "DNSEntry",
+        "CustomerManagedCertificate",
+        "CustomerManagedCertificateConfig",
         "SqlActiveDirectoryConfig",
         "SqlServerAuditConfig",
         "SqlServerEntraIdConfig",
+        "InitialUsersConfig",
         "AcquireSsrsLeaseContext",
         "DnsNameMapping",
         "StartWorkloadCaptureContext",
@@ -171,6 +177,53 @@ class SqlMaintenanceType(proto.Enum):
     REPLICA_INCLUDED_MAINTENANCE = 2
     INSTANCE_SELF_SERVICE_MAINTENANCE = 3
     REPLICA_INCLUDED_SELF_SERVICE_MAINTENANCE = 4
+
+
+class CertificateType(proto.Enum):
+    r"""Certificate type for customer managed certificates.
+
+    Values:
+        CERTIFICATE_TYPE_UNSPECIFIED (0):
+            Unspecified certificate type.
+        CERTIFICATE_TYPE_PEER_SERVER_CA (1):
+            The x509 PEM-encoded certificate of the CA
+            that signed the source database server's
+            certificate.
+        CERTIFICATE_TYPE_PEER_CLIENT_KEY (2):
+            The unencrypted PKCS#1 or PKCS#8 PEM-encoded
+            private key associated with the Client
+            Certificate.
+        CERTIFICATE_TYPE_PEER_CLIENT_CERTIFICATE (3):
+            The x509 PEM-encoded certificate used by the
+            client to authenticate against the source
+            database server.
+    """
+
+    CERTIFICATE_TYPE_UNSPECIFIED = 0
+    CERTIFICATE_TYPE_PEER_SERVER_CA = 1
+    CERTIFICATE_TYPE_PEER_CLIENT_KEY = 2
+    CERTIFICATE_TYPE_PEER_CLIENT_CERTIFICATE = 3
+
+
+class Intent(proto.Enum):
+    r"""Intent for the customer managed certificate configuration.
+
+    Values:
+        INTENT_UNSPECIFIED (0):
+            Unspecified intent.
+        PG_LOGICAL (1):
+            Configures customer-managed certificates for pg_logical
+            extension to achieve mTLS authentication.
+        NATIVE_REPLICATION (2):
+            Configures customer-managed certificates for
+            built-in PostgreSQL native replication to
+            achieve mTLS authentication. Supported for Cloud
+            SQL for PostgreSQL 10 and later.
+    """
+
+    INTENT_UNSPECIFIED = 0
+    PG_LOGICAL = 1
+    NATIVE_REPLICATION = 2
 
 
 class SqlBackendType(proto.Enum):
@@ -3099,6 +3152,9 @@ class Operation(proto.Message):
                 Switches over a Blue-Green deployment.
             DELETE_BLUE_GREEN_DEPLOYMENT (58):
                 Deletes a Blue-Green deployment.
+            RECONCILE_NETWORKING (64):
+                Reconciles network infrastructure (e.g.
+                Private Service Connect, Automated DNS Records).
         """
 
         SQL_OPERATION_TYPE_UNSPECIFIED = 0
@@ -3158,6 +3214,7 @@ class Operation(proto.Message):
         CREATE_BLUE_GREEN_DEPLOYMENT = 56
         SWITCHOVER_BLUE_GREEN_DEPLOYMENT = 57
         DELETE_BLUE_GREEN_DEPLOYMENT = 58
+        RECONCILE_NETWORKING = 64
 
     class SqlOperationStatus(proto.Enum):
         r"""The status of an operation.
@@ -3589,6 +3646,17 @@ class Settings(proto.Message):
         insights_config (google.cloud.sqladmin_v1.types.InsightsConfig):
             Insights configuration, for now relevant only
             for Postgres.
+        msdtc_enabled (bool):
+            Optional. Enables Microsoft Distributed
+            Transaction Coordinator (MSDTC) for SQL Server.
+
+            This field is a member of `oneof`_ ``_msdtc_enabled``.
+        msdtc_rpc_auth_mode (google.cloud.sqladmin_v1.types.Settings.MsdtcRpcAuthMode):
+            Optional. RPC authentication mode for
+            Microsoft Distributed Transaction Coordinator
+            (MSDTC).
+
+            This field is a member of `oneof`_ ``_msdtc_rpc_auth_mode``.
         password_validation_policy (google.cloud.sqladmin_v1.types.PasswordValidationPolicy):
             The local user password validation policy of
             the instance for PostgreSQL and MySQL.
@@ -3697,6 +3765,9 @@ class Settings(proto.Message):
             Optional. Configuration for Performance
             Capture, provides diagnostic metrics during high
             load situations.
+        initial_users_config (google.cloud.sqladmin_v1.types.InitialUsersConfig):
+            Optional. Input only. Users to be created on
+            the instance during instance creation.
     """
 
     class SqlActivationPolicy(proto.Enum):
@@ -3717,6 +3788,38 @@ class Settings(proto.Message):
         ALWAYS = 1
         NEVER = 2
         ON_DEMAND = 3
+
+    class MsdtcRpcAuthMode(proto.Enum):
+        r"""RPC authentication modes for Microsoft Distributed
+        Transaction Coordinator (MSDTC).
+
+        Values:
+            MSDTC_RPC_AUTH_MODE_UNSPECIFIED (0):
+                Unspecified RPC authentication mode.
+            ALLOW_ONLY_SECURE_RPC_CALLS (1):
+                Allow only secure RPC calls. Both servers
+                (caller and receiver) must successfully verify
+                each other's identities, typically using Active
+                Directory machine accounts and Kerberos Service
+                Principal Names (SPNs). This is equivalent to
+                Mutual Authentication in Microsoft SQL Server on
+                Windows.
+            FALLBACK_TO_UNSECURE_RPC_IF_NECESSARY (2):
+                Similar to Incoming authentication mode in
+                Microsoft SQL Server on Windows, the caller
+                authenticates to the receiver. The receiver
+                verifies the caller's identity, but the Receiver
+                does not authenticate itself back to the caller.
+            TURN_OFF_RPC_SECURITY (3):
+                No authentication. Highly insecure and thus
+                should only be used on already secure networks
+                and never over public IP.
+        """
+
+        MSDTC_RPC_AUTH_MODE_UNSPECIFIED = 0
+        ALLOW_ONLY_SECURE_RPC_CALLS = 1
+        FALLBACK_TO_UNSECURE_RPC_IF_NECESSARY = 2
+        TURN_OFF_RPC_SECURITY = 3
 
     class Edition(proto.Enum):
         r"""The list of Cloud SQL editions available to users.
@@ -3898,6 +4001,17 @@ class Settings(proto.Message):
         number=25,
         message="InsightsConfig",
     )
+    msdtc_enabled: bool = proto.Field(
+        proto.BOOL,
+        number=58,
+        optional=True,
+    )
+    msdtc_rpc_auth_mode: MsdtcRpcAuthMode = proto.Field(
+        proto.ENUM,
+        number=60,
+        optional=True,
+        enum=MsdtcRpcAuthMode,
+    )
     password_validation_policy: "PasswordValidationPolicy" = proto.Field(
         proto.MESSAGE,
         number=27,
@@ -4010,6 +4124,11 @@ class Settings(proto.Message):
         proto.MESSAGE,
         number=54,
         message="PerformanceCaptureConfig",
+    )
+    initial_users_config: "InitialUsersConfig" = proto.Field(
+        proto.MESSAGE,
+        number=55,
+        message="InitialUsersConfig",
     )
 
 
@@ -4481,6 +4600,109 @@ class SslCertDetail(proto.Message):
     )
 
 
+class DNSEntry(proto.Message):
+    r"""DNS Entry for the primary instance in a replication topology.
+
+    Attributes:
+        dns (str):
+            Required. The DNS name.
+        ipv4_address (str):
+            Required. The IP address.
+    """
+
+    dns: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    ipv4_address: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class CustomerManagedCertificate(proto.Message):
+    r"""A single certificate or key in a customer managed certificate
+    bundle.
+
+    Attributes:
+        certificate_type (google.cloud.sqladmin_v1.types.CertificateType):
+            Required. The certificate type.
+        content (bytes):
+            Required. Input only. The PEM-encoded
+            certificate or key content in base64 format.
+        file_path (str):
+            Output only. File path of the PEM-encoded certificate or key
+            content on the database virtual machine. This path can be
+            used by database extensions or plugins (for example, to
+            configure ``pglogical`` in PostgreSQL) that need to
+            reference the certificate or key file directly on the VM's
+            filesystem, ex: certs/c1/server-ca.pem
+    """
+
+    certificate_type: "CertificateType" = proto.Field(
+        proto.ENUM,
+        number=1,
+        enum="CertificateType",
+    )
+    content: bytes = proto.Field(
+        proto.BYTES,
+        number=2,
+    )
+    file_path: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+
+
+class CustomerManagedCertificateConfig(proto.Message):
+    r"""Customer managed certificate SSL configuration.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        bundle (str):
+            Output only. The name of the customer managed
+            certificate configuration. This name will be
+            used to identify a certificate bundle.
+        intent (google.cloud.sqladmin_v1.types.Intent):
+            Required. The intent for this customer
+            managed certificate configuration.
+        primary_dns_record (google.cloud.sqladmin_v1.types.DNSEntry):
+            DNS name associated with the primary instance
+            in a replication topology. This is needed to
+            insert a DNS entry in a replica VM.
+
+            This field is a member of `oneof`_ ``_primary_dns_record``.
+        customer_managed_certificates (MutableSequence[google.cloud.sqladmin_v1.types.CustomerManagedCertificate]):
+            Required. The server CA certificate, client
+            key and client certificate. You can specify up
+            to 3 certificates in a bundle.
+    """
+
+    bundle: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    intent: "Intent" = proto.Field(
+        proto.ENUM,
+        number=2,
+        enum="Intent",
+    )
+    primary_dns_record: "DNSEntry" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        optional=True,
+        message="DNSEntry",
+    )
+    customer_managed_certificates: MutableSequence["CustomerManagedCertificate"] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=4,
+            message="CustomerManagedCertificate",
+        )
+    )
+
+
 class SqlActiveDirectoryConfig(proto.Message):
     r"""Active Directory configuration, relevant only for Cloud SQL
     for SQL Server.
@@ -4615,6 +4837,98 @@ class SqlServerEntraIdConfig(proto.Message):
     application_id: str = proto.Field(
         proto.STRING,
         number=3,
+    )
+
+
+class InitialUsersConfig(proto.Message):
+    r"""Configuration for users created during instance creation.
+
+    Attributes:
+        initial_users (MutableSequence[google.cloud.sqladmin_v1.types.InitialUsersConfig.InitialUser]):
+            Optional. List of IAM users to be created
+            during instance creation. A maximum of 5 users
+            are allowed.
+    """
+
+    class InitialUser(proto.Message):
+        r"""Configuration for an IAM user created during instance
+        creation.
+
+        Attributes:
+            name (str):
+                Required. The name of the user in the Cloud
+                SQL instance.
+            type_ (google.cloud.sqladmin_v1.types.InitialUsersConfig.InitialUser.SqlUserType):
+                Required. The user type. Cannot be BUILT_IN.
+            roles (MutableSequence[str]):
+                Optional. The database roles to be assigned to the user. If
+                empty, will grant role ``cloudsqlsuperuser``.
+        """
+
+        class SqlUserType(proto.Enum):
+            r"""The user type.
+
+            Values:
+                BUILT_IN (0):
+                    The database's built-in user type. Not
+                    supported for initial user creation.
+                CLOUD_IAM_USER (1):
+                    Cloud IAM user.
+                    MySQL will truncate the @ and domain when it
+                    stores the user.
+                CLOUD_IAM_SERVICE_ACCOUNT (2):
+                    Cloud IAM service account.
+                    For PostgreSQL, omit the .gserviceaccount.com
+                    suffix. MySQL will truncate the @ and domain
+                    when it stores the user.
+                CLOUD_IAM_GROUP (3):
+                    Cloud IAM group.
+                CLOUD_IAM_GROUP_USER (4):
+                    Login for a user that belongs to the Cloud
+                    IAM group. Not supported for initial user
+                    creation.
+                CLOUD_IAM_GROUP_SERVICE_ACCOUNT (5):
+                    Login for a service account that belongs to
+                    the Cloud IAM group. Not supported for initial
+                    user creation.
+                CLOUD_IAM_WORKFORCE_IDENTITY (6):
+                    Cloud IAM workforce identity.
+                ENTRAID_USER (7):
+                    Microsoft Entra ID user. Not supported for
+                    initial user creation.
+                ACTIVE_DIRECTORY_USER (8):
+                    Active Directory user. Not supported for
+                    initial user creation.
+            """
+
+            BUILT_IN = 0
+            CLOUD_IAM_USER = 1
+            CLOUD_IAM_SERVICE_ACCOUNT = 2
+            CLOUD_IAM_GROUP = 3
+            CLOUD_IAM_GROUP_USER = 4
+            CLOUD_IAM_GROUP_SERVICE_ACCOUNT = 5
+            CLOUD_IAM_WORKFORCE_IDENTITY = 6
+            ENTRAID_USER = 7
+            ACTIVE_DIRECTORY_USER = 8
+
+        name: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+        type_: "InitialUsersConfig.InitialUser.SqlUserType" = proto.Field(
+            proto.ENUM,
+            number=2,
+            enum="InitialUsersConfig.InitialUser.SqlUserType",
+        )
+        roles: MutableSequence[str] = proto.RepeatedField(
+            proto.STRING,
+            number=3,
+        )
+
+    initial_users: MutableSequence[InitialUser] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=InitialUser,
     )
 
 
@@ -4852,6 +5166,10 @@ class StartWorkloadReplayContext(proto.Message):
             unique ID in the format ``workload-<epoch_timestamp>`` (for
             example, ``workload-1786046400``). Use this ID to start
             executing the recorded SQL queries.
+        source_instance (str):
+            Output only. The name of the source Cloud SQL instance where
+            the workload was captured, excluding the project ID (for
+            example, ``my-source-instance``).
     """
 
     replay_instance: str = proto.Field(
@@ -4861,6 +5179,10 @@ class StartWorkloadReplayContext(proto.Message):
     workload_id: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+    source_instance: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 

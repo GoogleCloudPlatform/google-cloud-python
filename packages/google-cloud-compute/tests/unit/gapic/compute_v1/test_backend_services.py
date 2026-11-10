@@ -204,7 +204,7 @@ def test_add_signed_url_key_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -239,7 +239,7 @@ def test_aggregated_list_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -272,7 +272,7 @@ def test_delete_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -307,7 +307,7 @@ def test_delete_signed_url_key_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -340,7 +340,7 @@ def test_get_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -377,7 +377,7 @@ def test_get_effective_security_policies_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -410,7 +410,7 @@ def test_get_health_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -445,7 +445,7 @@ def test_get_iam_policy_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -478,7 +478,7 @@ def test_insert_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -511,7 +511,7 @@ def test_list_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -544,7 +544,7 @@ def test_list_usable_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -577,7 +577,7 @@ def test_patch_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -612,7 +612,7 @@ def test_set_edge_security_policy_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -647,7 +647,7 @@ def test_set_iam_policy_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -682,7 +682,7 @@ def test_set_security_policy_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -717,7 +717,7 @@ def test_test_iam_permissions_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -750,7 +750,7 @@ def test_update_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -8006,6 +8006,10 @@ def test_insert_rest_call_success(request_type):
             "custom_response_headers_value2",
         ],
         "description": "description_value",
+        "dynamic_forwarding": {
+            "forward_proxy": {"enabled": True, "proxy_mode": "proxy_mode_value"},
+            "ip_port_selection": {"enabled": True},
+        },
         "edge_security_policy": "edge_security_policy_value",
         "enable_c_d_n": True,
         "external_managed_migration_state": "external_managed_migration_state_value",
@@ -8723,6 +8727,10 @@ def test_patch_rest_call_success(request_type):
             "custom_response_headers_value2",
         ],
         "description": "description_value",
+        "dynamic_forwarding": {
+            "forward_proxy": {"enabled": True, "proxy_mode": "proxy_mode_value"},
+            "ip_port_selection": {"enabled": True},
+        },
         "edge_security_policy": "edge_security_policy_value",
         "enable_c_d_n": True,
         "external_managed_migration_state": "external_managed_migration_state_value",
@@ -10125,6 +10133,10 @@ def test_update_rest_call_success(request_type):
             "custom_response_headers_value2",
         ],
         "description": "description_value",
+        "dynamic_forwarding": {
+            "forward_proxy": {"enabled": True, "proxy_mode": "proxy_mode_value"},
+            "ip_port_selection": {"enabled": True},
+        },
         "edge_security_policy": "edge_security_policy_value",
         "enable_c_d_n": True,
         "external_managed_migration_state": "external_managed_migration_state_value",

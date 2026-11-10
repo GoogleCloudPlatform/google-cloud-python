@@ -787,7 +787,6 @@ class WorkerPoolsClient(metaclass=WorkerPoolsClientMeta):
                 # Initialize request argument(s)
                 request = run_v2.CreateWorkerPoolRequest(
                     parent="parent_value",
-                    worker_pool_id="worker_pool_id_value",
                 )
 
                 # Make the request
@@ -822,10 +821,12 @@ class WorkerPoolsClient(metaclass=WorkerPoolsClientMeta):
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             worker_pool_id (str):
-                Required. The unique identifier for the WorkerPool. It
+                Optional. The unique identifier for the WorkerPool. It
                 must begin with letter, and cannot end with hyphen; must
                 contain fewer than 50 characters. The name of the worker
                 pool becomes ``{parent}/workerPools/{worker_pool_id}``.
+                If not provided, the server will generate a unique
+                ``worker_pool_id``.
 
                 This corresponds to the ``worker_pool_id`` field
                 on the ``request`` instance; if ``request`` is provided, this

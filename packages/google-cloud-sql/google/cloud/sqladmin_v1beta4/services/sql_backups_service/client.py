@@ -246,6 +246,23 @@ class SqlBackupsServiceClient(metaclass=SqlBackupsServiceClientMeta):
         return m.groupdict() if m else {}
 
     @staticmethod
+    def instance_path(
+        project: str,
+        instance: str,
+    ) -> str:
+        """Returns a fully-qualified instance string."""
+        return "projects/{project}/instances/{instance}".format(
+            project=project,
+            instance=instance,
+        )
+
+    @staticmethod
+    def parse_instance_path(path: str) -> Dict[str, str]:
+        """Parses a instance path into its component segments."""
+        m = re.match(r"^projects/(?P<project>.+?)/instances/(?P<instance>.+?)$", path)
+        return m.groupdict() if m else {}
+
+    @staticmethod
     def network_attachment_path(
         project: str,
         region: str,

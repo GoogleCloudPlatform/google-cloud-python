@@ -17,6 +17,8 @@ import json  # type: ignore
 import re
 from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
+import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
+import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
 from google.api_core import gapic_v1, path_template
 from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
@@ -94,9 +96,7 @@ class _BaseInstancesRestTransport(InstancesTransport):
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
-            "instanceId": "",
-        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
 
         @staticmethod
         def _get_http_options():
@@ -121,6 +121,22 @@ class _BaseInstancesRestTransport(InstancesTransport):
                 {
                     "method": "delete",
                     "uri": "/v2/{name=projects/*/locations/*/instances/*}",
+                },
+            ]
+            return http_options
+
+    class _BaseGetIamPolicy:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v2/{resource=projects/*/locations/*/instances/*}:getIamPolicy",
                 },
             ]
             return http_options
@@ -157,6 +173,23 @@ class _BaseInstancesRestTransport(InstancesTransport):
             ]
             return http_options
 
+    class _BaseSetIamPolicy:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v2/{resource=projects/*/locations/*/instances/*}:setIamPolicy",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
     class _BaseStartInstance:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -187,6 +220,40 @@ class _BaseInstancesRestTransport(InstancesTransport):
                     "method": "post",
                     "uri": "/v2/{name=projects/*/locations/*/instances/*}:stop",
                     "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseTestIamPermissions:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v2/{resource=projects/*/locations/*/instances/*}:testIamPermissions",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseUpdateInstance:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v2/{instance.name=projects/*/locations/*/instances/*}",
+                    "body": "instance",
                 },
             ]
             return http_options

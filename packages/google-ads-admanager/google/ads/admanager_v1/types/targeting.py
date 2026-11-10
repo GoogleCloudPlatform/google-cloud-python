@@ -17,10 +17,15 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.type.dayofweek_pb2 as dayofweek_pb2  # type: ignore
+import google.type.interval_pb2 as interval_pb2  # type: ignore
+import google.type.timeofday_pb2 as timeofday_pb2  # type: ignore
 import proto  # type: ignore
 
 from google.ads.admanager_v1.types import (
+    dayparting_time_zone_enum,
     request_platform_enum,
+    size,
     targeted_video_bumper_type_enum,
     video_position_enum,
 )
@@ -29,6 +34,8 @@ __protobuf__ = proto.module(
     package="google.ads.admanager.v1",
     manifest={
         "Targeting",
+        "InventorySizeTargeting",
+        "InventoryUrlTargeting",
         "GeoTargeting",
         "TechnologyTargeting",
         "BandwidthTargeting",
@@ -47,7 +54,10 @@ __protobuf__ = proto.module(
         "CustomTargetingLiteral",
         "AudienceSegmentTargeting",
         "CmsMetadataTargeting",
+        "DateTimeRangeTargeting",
+        "PublisherProvidedSignalsTargeting",
         "UserDomainTargeting",
+        "ContextualTargeting",
         "VideoPositionTargeting",
         "VideoPosition",
         "DataSegmentTargeting",
@@ -55,6 +65,9 @@ __protobuf__ = proto.module(
         "ContentTargeting",
         "MobileApplicationTargeting",
         "FirstPartyMobileApplicationTargeting",
+        "DayPart",
+        "DayPartTargeting",
+        "BuyerUserListTargeting",
     },
 )
 
@@ -63,12 +76,18 @@ class Targeting(proto.Message):
     r"""Targeting expression.
 
     Attributes:
+        inventory_url_targeting (google.ads.admanager_v1.types.InventoryUrlTargeting):
+            Optional. Used to target/exclude specific
+            websites.
         geo_targeting (google.ads.admanager_v1.types.GeoTargeting):
             Optional. Used to target/exclude various geo
             targets.
         technology_targeting (google.ads.admanager_v1.types.TechnologyTargeting):
             Optional. Used to target various technology
             targeting dimensions.
+        inventory_size_targeting (google.ads.admanager_v1.types.InventorySizeTargeting):
+            Optional. Used to target/exclude ad requests
+            for specific ad slot sizes.
         inventory_targeting (google.ads.admanager_v1.types.InventoryTargeting):
             Optional. Used to target/exclude various ad
             units and/or placements.
@@ -78,8 +97,16 @@ class Targeting(proto.Message):
         custom_targeting (google.ads.admanager_v1.types.CustomTargeting):
             Optional. Used to target key/values, audience
             segments, and/or CMS metadata.
+        date_time_range_targeting (google.ads.admanager_v1.types.DateTimeRangeTargeting):
+            Optional. Used to target a datetime range.
+        publisher_provided_signals_targeting (google.ads.admanager_v1.types.PublisherProvidedSignalsTargeting):
+            Optional. Used to target publisher provided
+            signals.
         user_domain_targeting (google.ads.admanager_v1.types.UserDomainTargeting):
             Optional. Used to target user domains.
+        contextual_targeting (google.ads.admanager_v1.types.ContextualTargeting):
+            Optional. Used to target verticals / content
+            labels
         video_position_targeting (google.ads.admanager_v1.types.VideoPositionTargeting):
             Optional. Used to target video positions.
         data_segment_targeting (google.ads.admanager_v1.types.DataSegmentTargeting):
@@ -90,8 +117,17 @@ class Targeting(proto.Message):
             Optional. Used to target content.
         mobile_application_targeting (google.ads.admanager_v1.types.MobileApplicationTargeting):
             Optional. Used to target mobile applications.
+        day_part_targeting (google.ads.admanager_v1.types.DayPartTargeting):
+            Optional. Used to target day parts.
+        buyer_user_list_targeting (google.ads.admanager_v1.types.BuyerUserListTargeting):
+            Optional. Used to target buyer user lists.
     """
 
+    inventory_url_targeting: "InventoryUrlTargeting" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="InventoryUrlTargeting",
+    )
     geo_targeting: "GeoTargeting" = proto.Field(
         proto.MESSAGE,
         number=2,
@@ -101,6 +137,11 @@ class Targeting(proto.Message):
         proto.MESSAGE,
         number=3,
         message="TechnologyTargeting",
+    )
+    inventory_size_targeting: "InventorySizeTargeting" = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message="InventorySizeTargeting",
     )
     inventory_targeting: "InventoryTargeting" = proto.Field(
         proto.MESSAGE,
@@ -117,10 +158,27 @@ class Targeting(proto.Message):
         number=7,
         message="CustomTargeting",
     )
+    date_time_range_targeting: "DateTimeRangeTargeting" = proto.Field(
+        proto.MESSAGE,
+        number=8,
+        message="DateTimeRangeTargeting",
+    )
+    publisher_provided_signals_targeting: "PublisherProvidedSignalsTargeting" = (
+        proto.Field(
+            proto.MESSAGE,
+            number=9,
+            message="PublisherProvidedSignalsTargeting",
+        )
+    )
     user_domain_targeting: "UserDomainTargeting" = proto.Field(
         proto.MESSAGE,
         number=10,
         message="UserDomainTargeting",
+    )
+    contextual_targeting: "ContextualTargeting" = proto.Field(
+        proto.MESSAGE,
+        number=11,
+        message="ContextualTargeting",
     )
     video_position_targeting: "VideoPositionTargeting" = proto.Field(
         proto.MESSAGE,
@@ -146,6 +204,63 @@ class Targeting(proto.Message):
         proto.MESSAGE,
         number=18,
         message="MobileApplicationTargeting",
+    )
+    day_part_targeting: "DayPartTargeting" = proto.Field(
+        proto.MESSAGE,
+        number=19,
+        message="DayPartTargeting",
+    )
+    buyer_user_list_targeting: "BuyerUserListTargeting" = proto.Field(
+        proto.MESSAGE,
+        number=20,
+        message="BuyerUserListTargeting",
+    )
+
+
+class InventorySizeTargeting(proto.Message):
+    r"""Represents a list of targeted and excluded sizes.
+
+    Attributes:
+        targeted_inventory_sizes (MutableSequence[google.ads.admanager_v1.types.Size]):
+            Optional. A list of sizes that should be
+            targeted/included.
+        excluded_inventory_sizes (MutableSequence[google.ads.admanager_v1.types.Size]):
+            Optional. A list of sizes that should be
+            excluded.
+    """
+
+    targeted_inventory_sizes: MutableSequence[size.Size] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=size.Size,
+    )
+    excluded_inventory_sizes: MutableSequence[size.Size] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message=size.Size,
+    )
+
+
+class InventoryUrlTargeting(proto.Message):
+    r"""Represents a list of targeted and excluded inventory URLs and
+    Sites.
+
+    Attributes:
+        targeted_inventory_urls (MutableSequence[str]):
+            Optional. A list of inventory URL resource
+            names that should be targeted/included.
+        excluded_inventory_urls (MutableSequence[str]):
+            Optional. A list of inventory URL resource
+            names that should be excluded.
+    """
+
+    targeted_inventory_urls: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+    excluded_inventory_urls: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=4,
     )
 
 
@@ -739,6 +854,43 @@ class CmsMetadataTargeting(proto.Message):
     )
 
 
+class DateTimeRangeTargeting(proto.Message):
+    r"""Represents targeting for a range of datetimes.
+
+    Attributes:
+        targeted_range (MutableSequence[google.type.interval_pb2.Interval]):
+            Optional. The targeted datetime ranges.
+    """
+
+    targeted_range: MutableSequence[interval_pb2.Interval] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=interval_pb2.Interval,
+    )
+
+
+class PublisherProvidedSignalsTargeting(proto.Message):
+    r"""Publisher Provided Signals Targeting
+
+    Attributes:
+        targeted_taxonomy_categories (MutableSequence[str]):
+            Optional. The resource names of the taxonomy
+            categories that should be targeted/included.
+        excluded_taxonomy_categories (MutableSequence[str]):
+            Optional. The resource names of the taxonomy
+            categories that should be excluded.
+    """
+
+    targeted_taxonomy_categories: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+    excluded_taxonomy_categories: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=4,
+    )
+
+
 class UserDomainTargeting(proto.Message):
     r"""User Domain Targeting
 
@@ -758,6 +910,39 @@ class UserDomainTargeting(proto.Message):
     excluded_user_domains: MutableSequence[str] = proto.RepeatedField(
         proto.STRING,
         number=2,
+    )
+
+
+class ContextualTargeting(proto.Message):
+    r"""Contextual Targeting
+
+    Attributes:
+        targeted_verticals (MutableSequence[str]):
+            Optional. A list of verticals that should be
+            targeted/included. Verticals are ``AdCategory`` resources of
+            type ``VERTICAL``. Format:
+            ``networks/{network_code}/adCategories/{ad_category_id}``
+        excluded_verticals (MutableSequence[str]):
+            Optional. A list of verticals that should be excluded.
+            Verticals are ``AdCategory`` resources of type ``VERTICAL``.
+            Format:
+            ``networks/{network_code}/adCategories/{ad_category_id}``
+        excluded_content_labels (MutableSequence[str]):
+            Optional. A list of content labels that
+            should be excluded.
+    """
+
+    targeted_verticals: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=4,
+    )
+    excluded_verticals: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=5,
+    )
+    excluded_content_labels: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=6,
     )
 
 
@@ -798,12 +983,18 @@ class VideoPosition(proto.Message):
 
             This field is a member of `oneof`_ ``_reverse_midroll_index``.
         pod_position (int):
-            Optional. The video position within a pod to target. This
-            field must be unset in order to target a specific video
-            position (e.g. position_type), bumper type (e.g.
-            bumper_type), or custom ad spot (e.g. custom_spot_id).
+            Optional. The video position within a pod to target. If set,
+            ``adSpot``, ``bumperType``, and ``positionType`` must be
+            unset.
 
             This field is a member of `oneof`_ ``_pod_position``.
+        ad_spot (str):
+            Optional. The resource name of the custom ad spot to target.
+            If set, ``bumperType``, ``podPosition``, and
+            ``positionType`` must be unset. Format:
+            ``networks/{network_code}/adSpots/{ad_spot_id}``
+
+            This field is a member of `oneof`_ ``_ad_spot``.
         position_type (google.ads.admanager_v1.types.VideoPositionEnum.VideoPosition):
             Optional. The position within a video to
             target. A video ad can target a position
@@ -812,10 +1003,9 @@ class VideoPosition(proto.Message):
 
             This field is a member of `oneof`_ ``_position_type``.
         bumper_type (google.ads.admanager_v1.types.TargetedVideoBumperTypeEnum.TargetedVideoBumperType):
-            Optional. The video bumper type to target. This field must
-            be unset in order to target a specific video position (e.g.
-            position_type), pod position (e.g. pod_position), or custom
-            ad spot (e.g. custom_spot_id).
+            Optional. The video bumper type to target. If set,
+            ``adSpot``, ``podPosition``, and ``positionType`` must be
+            unset.
 
             This field is a member of `oneof`_ ``_bumper_type``.
     """
@@ -833,6 +1023,11 @@ class VideoPosition(proto.Message):
     pod_position: int = proto.Field(
         proto.INT64,
         number=3,
+        optional=True,
+    )
+    ad_spot: str = proto.Field(
+        proto.STRING,
+        number=7,
         optional=True,
     )
     position_type: video_position_enum.VideoPositionEnum.VideoPosition = proto.Field(
@@ -1068,6 +1263,89 @@ class FirstPartyMobileApplicationTargeting(proto.Message):
     excluded_applications: MutableSequence[str] = proto.RepeatedField(
         proto.STRING,
         number=4,
+    )
+
+
+class DayPart(proto.Message):
+    r"""A day of the week and time interval within the day.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        day_of_week (google.type.dayofweek_pb2.DayOfWeek):
+            Required. The day of the week.
+
+            This field is a member of `oneof`_ ``_day_of_week``.
+        start_time (google.type.timeofday_pb2.TimeOfDay):
+            Required. The start time of the day part.
+
+            This field is a member of `oneof`_ ``_start_time``.
+        end_time (google.type.timeofday_pb2.TimeOfDay):
+            Required. The end time of the day part.
+
+            This field is a member of `oneof`_ ``_end_time``.
+    """
+
+    day_of_week: dayofweek_pb2.DayOfWeek = proto.Field(
+        proto.ENUM,
+        number=1,
+        optional=True,
+        enum=dayofweek_pb2.DayOfWeek,
+    )
+    start_time: timeofday_pb2.TimeOfDay = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        optional=True,
+        message=timeofday_pb2.TimeOfDay,
+    )
+    end_time: timeofday_pb2.TimeOfDay = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        optional=True,
+        message=timeofday_pb2.TimeOfDay,
+    )
+
+
+class DayPartTargeting(proto.Message):
+    r"""Day Part Targeting
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        targeted_day_parts (MutableSequence[google.ads.admanager_v1.types.DayPart]):
+            Optional. The targeted day parts.
+        dayparting_time_zone (google.ads.admanager_v1.types.DaypartingTimeZoneEnum.DaypartingTimeZone):
+            Required. The time zone to use for the day
+            parts.
+
+            This field is a member of `oneof`_ ``_dayparting_time_zone``.
+    """
+
+    targeted_day_parts: MutableSequence["DayPart"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="DayPart",
+    )
+    dayparting_time_zone: dayparting_time_zone_enum.DaypartingTimeZoneEnum.DaypartingTimeZone = proto.Field(
+        proto.ENUM,
+        number=2,
+        optional=True,
+        enum=dayparting_time_zone_enum.DaypartingTimeZoneEnum.DaypartingTimeZone,
+    )
+
+
+class BuyerUserListTargeting(proto.Message):
+    r"""Buyer User List Targeting.
+
+    Attributes:
+        has_buyer_user_list_targeting (bool):
+            Output only. Whether any buyer user lists are
+            currently targeted.
+    """
+
+    has_buyer_user_list_targeting: bool = proto.Field(
+        proto.BOOL,
+        number=3,
     )
 
 

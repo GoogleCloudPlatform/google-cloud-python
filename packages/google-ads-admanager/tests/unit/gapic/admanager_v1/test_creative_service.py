@@ -39,6 +39,8 @@ except ImportError:  # pragma: NO COVER
     HAS_GOOGLE_AUTH_AIO = False
 
 import google.auth
+import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 from google.api_core import (
     client_options,
@@ -61,12 +63,28 @@ from google.ads.admanager_v1.services.creative_service import (
 )
 from google.ads.admanager_v1.types import (
     applied_label,
+    asset_enums,
+    conversion_event_enum,
+    creative_asset,
+    creative_enums,
     creative_messages,
+    creative_placeholder,
     creative_service,
     creative_third_party_data_declaration_status_enum,
+    custom_creative_asset,
     custom_field_value,
+    delivery_enums,
+    rich_media_studio_child_asset_type_enum,
+    rich_media_studio_creative_billing_attribute_enum,
+    rich_media_studio_creative_format_enum,
+    rich_media_studio_messages,
     size,
+    size_type_enum,
+    skippable_ad_type_enum,
     third_party_data_declaration,
+    third_party_data_declaration_type_enum,
+    vast_redirect_type_enum,
+    video_tracking_url,
 )
 
 CRED_INFO_JSON = {
@@ -1331,6 +1349,733 @@ def test_list_creatives_rest_pager(transport: str = "rest"):
             assert page_.raw_page.next_page_token == token
 
 
+def test_create_creative_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = CreativeServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._transport.create_creative in client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.create_creative] = mock_rpc
+
+        request = {}
+        client.create_creative(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.create_creative(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_create_creative_rest_required_fields(
+    request_type=creative_service.CreateCreativeRequest,
+):
+    transport_class = transports.CreativeServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseCreateCreative,
+        "_BaseCreateCreative__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = creative_messages.Creative()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = creative_messages.Creative.pb(return_value)
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.create_creative(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_create_creative_rest_flattened():
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = creative_messages.Creative()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            creative=creative_messages.Creative(
+                ad_exchange_creative=creative_messages.AdExchangeCreativeDetails(
+                    native_eligible=True
+                )
+            ),
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = creative_messages.Creative.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.create_creative(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*}/creatives" % client.transport._host, args[1]
+        )
+
+
+def test_create_creative_rest_flattened_error(transport: str = "rest"):
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.create_creative(
+            creative_service.CreateCreativeRequest(),
+            parent="parent_value",
+            creative=creative_messages.Creative(
+                ad_exchange_creative=creative_messages.AdExchangeCreativeDetails(
+                    native_eligible=True
+                )
+            ),
+        )
+
+
+def test_update_creative_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = CreativeServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert client._transport.update_creative in client._transport._wrapped_methods
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.update_creative] = mock_rpc
+
+        request = {}
+        client.update_creative(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.update_creative(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_update_creative_rest_required_fields(
+    request_type=creative_service.UpdateCreativeRequest,
+):
+    transport_class = transports.CreativeServiceRestTransport
+
+    request_init = {}
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseUpdateCreative,
+        "_BaseUpdateCreative__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(("updateMask",))
+
+    # verify required fields with non-default values are left alone
+
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = creative_messages.Creative()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "patch",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = creative_messages.Creative.pb(return_value)
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.update_creative(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_update_creative_rest_flattened():
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = creative_messages.Creative()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"creative": {"name": "networks/sample1/creatives/sample2"}}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            creative=creative_messages.Creative(
+                ad_exchange_creative=creative_messages.AdExchangeCreativeDetails(
+                    native_eligible=True
+                )
+            ),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = creative_messages.Creative.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.update_creative(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{creative.name=networks/*/creatives/*}" % client.transport._host,
+            args[1],
+        )
+
+
+def test_update_creative_rest_flattened_error(transport: str = "rest"):
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.update_creative(
+            creative_service.UpdateCreativeRequest(),
+            creative=creative_messages.Creative(
+                ad_exchange_creative=creative_messages.AdExchangeCreativeDetails(
+                    native_eligible=True
+                )
+            ),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+
+
+def test_batch_create_creatives_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = CreativeServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_create_creatives
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.batch_create_creatives] = (
+            mock_rpc
+        )
+
+        request = {}
+        client.batch_create_creatives(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_create_creatives(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_create_creatives_rest_required_fields(
+    request_type=creative_service.BatchCreateCreativesRequest,
+):
+    transport_class = transports.CreativeServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchCreateCreatives,
+        "_BaseBatchCreateCreatives__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = creative_service.BatchCreateCreativesResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = creative_service.BatchCreateCreativesResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_create_creatives(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_create_creatives_rest_flattened():
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = creative_service.BatchCreateCreativesResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            requests=[creative_service.CreateCreativeRequest(parent="parent_value")],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = creative_service.BatchCreateCreativesResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_create_creatives(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*}/creatives:batchCreate" % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_create_creatives_rest_flattened_error(transport: str = "rest"):
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_create_creatives(
+            creative_service.BatchCreateCreativesRequest(),
+            parent="parent_value",
+            requests=[creative_service.CreateCreativeRequest(parent="parent_value")],
+        )
+
+
+def test_batch_update_creatives_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = CreativeServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_update_creatives
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[client._transport.batch_update_creatives] = (
+            mock_rpc
+        )
+
+        request = {}
+        client.batch_update_creatives(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_update_creatives(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_update_creatives_rest_required_fields(
+    request_type=creative_service.BatchUpdateCreativesRequest,
+):
+    transport_class = transports.CreativeServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchUpdateCreatives,
+        "_BaseBatchUpdateCreatives__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = creative_service.BatchUpdateCreativesResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = creative_service.BatchUpdateCreativesResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_update_creatives(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_update_creatives_rest_flattened():
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = creative_service.BatchUpdateCreativesResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            requests=[
+                creative_service.UpdateCreativeRequest(
+                    creative=creative_messages.Creative(
+                        ad_exchange_creative=creative_messages.AdExchangeCreativeDetails(
+                            native_eligible=True
+                        )
+                    )
+                )
+            ],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = creative_service.BatchUpdateCreativesResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_update_creatives(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*}/creatives:batchUpdate" % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_update_creatives_rest_flattened_error(transport: str = "rest"):
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_update_creatives(
+            creative_service.BatchUpdateCreativesRequest(),
+            parent="parent_value",
+            requests=[
+                creative_service.UpdateCreativeRequest(
+                    creative=creative_messages.Creative(
+                        ad_exchange_creative=creative_messages.AdExchangeCreativeDetails(
+                            native_eligible=True
+                        )
+                    )
+                )
+            ],
+        )
+
+
 def test_batch_activate_creatives_rest_use_cached_wrapped_rpc():
     # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
     # instead of constructing them on each call
@@ -2064,6 +2809,1236 @@ def test_list_creatives_rest_interceptors(null_interceptor):
         post_with_metadata.assert_called_once()
 
 
+def test_create_creative_rest_bad_request(
+    request_type=creative_service.CreateCreativeRequest,
+):
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.create_creative(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        creative_service.CreateCreativeRequest,
+        dict,
+    ],
+)
+def test_create_creative_rest_call_success(request_type):
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request_init["creative"] = {
+        "ad_exchange_creative": {
+            "native_eligible": True,
+            "interstitial": True,
+            "allows_all_requested_sizes": True,
+            "slot_id": "slot_id_value",
+            "backfill_snippet": "backfill_snippet_value",
+        },
+        "ad_sense_creative": {
+            "slot_id": "slot_id_value",
+            "backfill_snippet": "backfill_snippet_value",
+        },
+        "aspect_ratio_image_creative": {
+            "alt_text": "alt_text_value",
+            "destination_url": "destination_url_value",
+            "destination_url_type": 1,
+            "image_assets": [
+                {
+                    "asset": "asset_value",
+                    "asset_byte_array": b"asset_byte_array_blob",
+                    "file_name": "file_name_value",
+                    "file_size": 954,
+                    "asset_url": "asset_url_value",
+                    "size": {"width": 544, "height": 633, "size_type": 1},
+                    "click_tags": [
+                        {"display_name": "display_name_value", "url": "url_value"}
+                    ],
+                    "image_density": 1,
+                }
+            ],
+            "third_party_impression_tracking_urls": [
+                "third_party_impression_tracking_urls_value1",
+                "third_party_impression_tracking_urls_value2",
+            ],
+        },
+        "audio_creative": {
+            "vast_info": {
+                "duration": {"seconds": 751, "nanos": 543},
+                "allow_duration_override": True,
+                "tracking_urls": [{"conversion_event": 1, "url": "url_value"}],
+                "custom_parameters": "custom_parameters_value",
+                "ad_id": "ad_id_value",
+                "ad_id_type": 1,
+                "skippable_ad_type": 1,
+                "vast_preview_url": "vast_preview_url_value",
+                "creative_set_display_name": "creative_set_display_name_value",
+                "creative_set": "creative_set_value",
+                "destination_url": "destination_url_value",
+                "destination_url_type": 1,
+                "companion_creatives": [
+                    "companion_creatives_value1",
+                    "companion_creatives_value2",
+                ],
+            }
+        },
+        "audio_redirect_creative": {"vast_info": {}},
+        "click_tracking_creative": {"click_tracking_url": "click_tracking_url_value"},
+        "custom_creative": {
+            "html_snippet": "html_snippet_value",
+            "amp_html_snippet": "amp_html_snippet_value",
+            "interstitial": True,
+            "destination_url": "destination_url_value",
+            "destination_url_type": 1,
+            "safe_frame_compatible": True,
+            "effective_safe_frame_compatible": True,
+            "third_party_impression_tracking_urls": [
+                "third_party_impression_tracking_urls_value1",
+                "third_party_impression_tracking_urls_value2",
+            ],
+            "locked_orientation": 1,
+            "custom_creative_assets": [{"macro_name": "macro_name_value", "asset": {}}],
+        },
+        "html5_creative": {
+            "locked_orientation": 1,
+            "override_size": True,
+            "third_party_impression_tracking_urls": [
+                "third_party_impression_tracking_urls_value1",
+                "third_party_impression_tracking_urls_value2",
+            ],
+            "third_party_click_tracking_url": "third_party_click_tracking_url_value",
+            "safe_frame_compatible": True,
+            "html5_asset": {},
+        },
+        "image_creative": {
+            "alt_text": "alt_text_value",
+            "destination_url": "destination_url_value",
+            "destination_url_type": 1,
+            "third_party_impression_tracking_urls": [
+                "third_party_impression_tracking_urls_value1",
+                "third_party_impression_tracking_urls_value2",
+            ],
+            "amp_destination_url": "amp_destination_url_value",
+            "locked_orientation": 1,
+            "primary_image_asset": {},
+            "secondary_image_assets": {},
+            "override_size": True,
+        },
+        "image_overlay_creative": {
+            "locked_orientation": 1,
+            "destination_url": "destination_url_value",
+            "destination_url_type": 1,
+            "override_size": True,
+            "primary_image_asset": {},
+            "creative_set_display_name": "creative_set_display_name_value",
+            "creative_set": "creative_set_value",
+            "companion_creatives": [
+                "companion_creatives_value1",
+                "companion_creatives_value2",
+            ],
+            "tracking_urls": {},
+            "custom_parameters": "custom_parameters_value",
+            "duration": {},
+            "expected_companions": [
+                {
+                    "size": {},
+                    "companions": [{"size": {}}],
+                    "expected_creative_count": 2444,
+                    "applied_labels": [{"label": "label_value", "negated": True}],
+                    "amp_only": True,
+                    "creative_targeting_display_name": "creative_targeting_display_name_value",
+                }
+            ],
+            "expected_companion_delivery_option": 1,
+            "vast_preview_url": "vast_preview_url_value",
+        },
+        "image_redirect_creative": {
+            "destination_url": "destination_url_value",
+            "destination_url_type": 1,
+            "alt_text": "alt_text_value",
+            "image_url": "image_url_value",
+            "third_party_impression_tracking_urls": [
+                "third_party_impression_tracking_urls_value1",
+                "third_party_impression_tracking_urls_value2",
+            ],
+        },
+        "image_redirect_overlay_creative": {
+            "destination_url": "destination_url_value",
+            "destination_url_type": 1,
+            "image_url": "image_url_value",
+            "asset_size": {},
+            "duration": {},
+            "tracking_urls": {},
+            "custom_parameters": "custom_parameters_value",
+            "expected_companions": {},
+            "expected_companion_delivery_option": 1,
+            "vast_preview_url": "vast_preview_url_value",
+            "creative_set_display_name": "creative_set_display_name_value",
+            "creative_set": "creative_set_value",
+            "companion_creatives": [
+                "companion_creatives_value1",
+                "companion_creatives_value2",
+            ],
+        },
+        "internal_redirect_creative": {
+            "locked_orientation": 1,
+            "asset_size": {},
+            "internal_redirect_url": "internal_redirect_url_value",
+            "override_size": True,
+            "interstitial": True,
+            "ssl_scan_result": 1,
+            "ssl_manual_override": 1,
+            "third_party_impression_tracking_urls": [
+                "third_party_impression_tracking_urls_value1",
+                "third_party_impression_tracking_urls_value2",
+            ],
+        },
+        "legacy_dfp_creative": {},
+        "programmatic_creative": {},
+        "rich_media_studio_creative": {
+            "locked_orientation": 1,
+            "studio_creative_id": 1910,
+            "creative_format": 1,
+            "total_file_size": 1597,
+            "ad_tag_keys": ["ad_tag_keys_value1", "ad_tag_keys_value2"],
+            "custom_key_values": [
+                "custom_key_values_value1",
+                "custom_key_values_value2",
+            ],
+            "survey_url": "survey_url_value",
+            "all_impressions_url": "all_impressions_url_value",
+            "rich_media_impressions_url": "rich_media_impressions_url_value",
+            "backup_image_impressions_url": "backup_image_impressions_url_value",
+            "override_css": "override_css_value",
+            "required_flash_plugin_version": "required_flash_plugin_version_value",
+            "duration": {},
+            "billing_attribute": 1,
+            "rich_media_studio_child_asset_properties": [
+                {
+                    "display_name": "display_name_value",
+                    "type_": 1,
+                    "total_file_size": 1597,
+                    "width": 544,
+                    "height": 633,
+                    "url": "url_value",
+                }
+            ],
+            "ssl_scan_result": 1,
+            "ssl_manual_override": 1,
+        },
+        "set_top_box_creative": {"vast_info": {}},
+        "template_creative": {
+            "amp_destination_url": "amp_destination_url_value",
+            "locked_orientation": 1,
+            "destination_url": "destination_url_value",
+            "destination_url_type": 1,
+        },
+        "third_party_creative": {
+            "snippet": "snippet_value",
+            "expanded_snippet": "expanded_snippet_value",
+            "locked_orientation": 1,
+            "ssl_scan_result": 1,
+            "ssl_manual_override": 1,
+            "safe_frame_compatible": True,
+            "third_party_impression_tracking_urls": [
+                "third_party_impression_tracking_urls_value1",
+                "third_party_impression_tracking_urls_value2",
+            ],
+            "amp_redirect_url": "amp_redirect_url_value",
+            "destination_url": "destination_url_value",
+            "destination_url_type": 1,
+        },
+        "vast_redirect_creative": {
+            "vast_xml_url": "vast_xml_url_value",
+            "vast_redirect_type": 1,
+            "duration": {},
+            "vast_pricing_enabled": True,
+            "programmatic_demand_source": True,
+            "server_side_unwrapping_disabled": True,
+            "tracking_urls": {},
+            "vast_preview_url": "vast_preview_url_value",
+            "audio": True,
+            "destination_url": "destination_url_value",
+            "destination_url_type": 1,
+        },
+        "video_creative": {"vast_info": {}},
+        "video_redirect_creative": {"vast_info": {}},
+        "name": "name_value",
+        "display_name": "display_name_value",
+        "advertiser": "advertiser_value",
+        "update_time": {"seconds": 751, "nanos": 543},
+        "custom_field_values": [
+            {
+                "custom_field": "custom_field_value",
+                "value": {
+                    "dropdown_value": 1513,
+                    "string_value": "string_value_value",
+                    "number_value": 0.1285,
+                    "toggle_value": True,
+                },
+            }
+        ],
+        "preview_url": "preview_url_value",
+        "size": {},
+        "third_party_data_declaration": {
+            "declaration_type": 1,
+            "third_party_companies": [
+                "third_party_companies_value1",
+                "third_party_companies_value2",
+            ],
+        },
+        "third_party_data_declaration_status": 1,
+        "self_declared_european_union_political_content": True,
+        "ad_badging_enabled": True,
+        "applied_labels": {},
+        "buyer_placement_config": {
+            "placement_id": "placement_id_value",
+            "placement_display_name": "placement_display_name_value",
+        },
+    }
+    # The version of a generated dependency at test runtime may differ from the version used during generation.
+    # Delete any fields which are not present in the current runtime dependency
+    # See https://github.com/googleapis/gapic-generator-python/issues/1748
+
+    # Determine if the message type is proto-plus or protobuf
+    test_field = creative_service.CreateCreativeRequest.meta.fields["creative"]
+
+    def get_message_fields(field):
+        # Given a field which is a message (composite type), return a list with
+        # all the fields of the message.
+        # If the field is not a composite type, return an empty list.
+        message_fields = []
+
+        if hasattr(field, "message") and field.message:
+            is_field_type_proto_plus_type = not hasattr(field.message, "DESCRIPTOR")
+
+            if is_field_type_proto_plus_type:
+                message_fields = field.message.meta.fields.values()
+            # Add `# pragma: NO COVER` because there may not be any `*_pb2` field types
+            else:  # pragma: NO COVER
+                message_fields = field.message.DESCRIPTOR.fields
+        return message_fields
+
+    runtime_nested_fields = [
+        (field.name, nested_field.name)
+        for field in get_message_fields(test_field)
+        for nested_field in get_message_fields(field)
+    ]
+
+    subfields_not_in_runtime = []
+
+    # For each item in the sample request, create a list of sub fields which are not present at runtime
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for field, value in request_init["creative"].items():  # pragma: NO COVER
+        result = None
+        is_repeated = False
+        # For repeated fields
+        if isinstance(value, list) and len(value):
+            is_repeated = True
+            result = value[0]
+        # For fields where the type is another message
+        if isinstance(value, dict):
+            result = value
+
+        if result and hasattr(result, "keys"):
+            for subfield in result.keys():
+                if (field, subfield) not in runtime_nested_fields:
+                    subfields_not_in_runtime.append(
+                        {
+                            "field": field,
+                            "subfield": subfield,
+                            "is_repeated": is_repeated,
+                        }
+                    )
+
+    # Remove fields from the sample request which are not present in the runtime version of the dependency
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for subfield_to_delete in subfields_not_in_runtime:  # pragma: NO COVER
+        field = subfield_to_delete.get("field")
+        field_repeated = subfield_to_delete.get("is_repeated")
+        subfield = subfield_to_delete.get("subfield")
+        if subfield:
+            if field_repeated:
+                for i in range(0, len(request_init["creative"][field])):
+                    del request_init["creative"][field][i][subfield]
+            else:
+                del request_init["creative"][field][subfield]
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = creative_messages.Creative(
+            name="name_value",
+            display_name="display_name_value",
+            advertiser="advertiser_value",
+            preview_url="preview_url_value",
+            third_party_data_declaration_status=creative_third_party_data_declaration_status_enum.CreativeThirdPartyDataDeclarationStatusEnum.CreativeThirdPartyDataDeclarationStatus.COMPLETE,
+            self_declared_european_union_political_content=True,
+            ad_badging_enabled=True,
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = creative_messages.Creative.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.create_creative(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, creative_messages.Creative)
+    assert response.name == "name_value"
+    assert response.display_name == "display_name_value"
+    assert response.advertiser == "advertiser_value"
+    assert response.preview_url == "preview_url_value"
+    assert (
+        response.third_party_data_declaration_status
+        == creative_third_party_data_declaration_status_enum.CreativeThirdPartyDataDeclarationStatusEnum.CreativeThirdPartyDataDeclarationStatus.COMPLETE
+    )
+    assert response.self_declared_european_union_political_content is True
+    assert response.ad_badging_enabled is True
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_create_creative_rest_interceptors(null_interceptor):
+    transport = transports.CreativeServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.CreativeServiceRestInterceptor(),
+    )
+    client = CreativeServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.CreativeServiceRestInterceptor, "post_create_creative"
+        ) as post,
+        mock.patch.object(
+            transports.CreativeServiceRestInterceptor,
+            "post_create_creative_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.CreativeServiceRestInterceptor, "pre_create_creative"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = creative_service.CreateCreativeRequest.pb(
+            creative_service.CreateCreativeRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = creative_messages.Creative.to_json(creative_messages.Creative())
+        req.return_value.content = return_value
+
+        request = creative_service.CreateCreativeRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = creative_messages.Creative()
+        post_with_metadata.return_value = creative_messages.Creative(), metadata
+
+        client.create_creative(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_update_creative_rest_bad_request(
+    request_type=creative_service.UpdateCreativeRequest,
+):
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"creative": {"name": "networks/sample1/creatives/sample2"}}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.update_creative(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        creative_service.UpdateCreativeRequest,
+        dict,
+    ],
+)
+def test_update_creative_rest_call_success(request_type):
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"creative": {"name": "networks/sample1/creatives/sample2"}}
+    request_init["creative"] = {
+        "ad_exchange_creative": {
+            "native_eligible": True,
+            "interstitial": True,
+            "allows_all_requested_sizes": True,
+            "slot_id": "slot_id_value",
+            "backfill_snippet": "backfill_snippet_value",
+        },
+        "ad_sense_creative": {
+            "slot_id": "slot_id_value",
+            "backfill_snippet": "backfill_snippet_value",
+        },
+        "aspect_ratio_image_creative": {
+            "alt_text": "alt_text_value",
+            "destination_url": "destination_url_value",
+            "destination_url_type": 1,
+            "image_assets": [
+                {
+                    "asset": "asset_value",
+                    "asset_byte_array": b"asset_byte_array_blob",
+                    "file_name": "file_name_value",
+                    "file_size": 954,
+                    "asset_url": "asset_url_value",
+                    "size": {"width": 544, "height": 633, "size_type": 1},
+                    "click_tags": [
+                        {"display_name": "display_name_value", "url": "url_value"}
+                    ],
+                    "image_density": 1,
+                }
+            ],
+            "third_party_impression_tracking_urls": [
+                "third_party_impression_tracking_urls_value1",
+                "third_party_impression_tracking_urls_value2",
+            ],
+        },
+        "audio_creative": {
+            "vast_info": {
+                "duration": {"seconds": 751, "nanos": 543},
+                "allow_duration_override": True,
+                "tracking_urls": [{"conversion_event": 1, "url": "url_value"}],
+                "custom_parameters": "custom_parameters_value",
+                "ad_id": "ad_id_value",
+                "ad_id_type": 1,
+                "skippable_ad_type": 1,
+                "vast_preview_url": "vast_preview_url_value",
+                "creative_set_display_name": "creative_set_display_name_value",
+                "creative_set": "creative_set_value",
+                "destination_url": "destination_url_value",
+                "destination_url_type": 1,
+                "companion_creatives": [
+                    "companion_creatives_value1",
+                    "companion_creatives_value2",
+                ],
+            }
+        },
+        "audio_redirect_creative": {"vast_info": {}},
+        "click_tracking_creative": {"click_tracking_url": "click_tracking_url_value"},
+        "custom_creative": {
+            "html_snippet": "html_snippet_value",
+            "amp_html_snippet": "amp_html_snippet_value",
+            "interstitial": True,
+            "destination_url": "destination_url_value",
+            "destination_url_type": 1,
+            "safe_frame_compatible": True,
+            "effective_safe_frame_compatible": True,
+            "third_party_impression_tracking_urls": [
+                "third_party_impression_tracking_urls_value1",
+                "third_party_impression_tracking_urls_value2",
+            ],
+            "locked_orientation": 1,
+            "custom_creative_assets": [{"macro_name": "macro_name_value", "asset": {}}],
+        },
+        "html5_creative": {
+            "locked_orientation": 1,
+            "override_size": True,
+            "third_party_impression_tracking_urls": [
+                "third_party_impression_tracking_urls_value1",
+                "third_party_impression_tracking_urls_value2",
+            ],
+            "third_party_click_tracking_url": "third_party_click_tracking_url_value",
+            "safe_frame_compatible": True,
+            "html5_asset": {},
+        },
+        "image_creative": {
+            "alt_text": "alt_text_value",
+            "destination_url": "destination_url_value",
+            "destination_url_type": 1,
+            "third_party_impression_tracking_urls": [
+                "third_party_impression_tracking_urls_value1",
+                "third_party_impression_tracking_urls_value2",
+            ],
+            "amp_destination_url": "amp_destination_url_value",
+            "locked_orientation": 1,
+            "primary_image_asset": {},
+            "secondary_image_assets": {},
+            "override_size": True,
+        },
+        "image_overlay_creative": {
+            "locked_orientation": 1,
+            "destination_url": "destination_url_value",
+            "destination_url_type": 1,
+            "override_size": True,
+            "primary_image_asset": {},
+            "creative_set_display_name": "creative_set_display_name_value",
+            "creative_set": "creative_set_value",
+            "companion_creatives": [
+                "companion_creatives_value1",
+                "companion_creatives_value2",
+            ],
+            "tracking_urls": {},
+            "custom_parameters": "custom_parameters_value",
+            "duration": {},
+            "expected_companions": [
+                {
+                    "size": {},
+                    "companions": [{"size": {}}],
+                    "expected_creative_count": 2444,
+                    "applied_labels": [{"label": "label_value", "negated": True}],
+                    "amp_only": True,
+                    "creative_targeting_display_name": "creative_targeting_display_name_value",
+                }
+            ],
+            "expected_companion_delivery_option": 1,
+            "vast_preview_url": "vast_preview_url_value",
+        },
+        "image_redirect_creative": {
+            "destination_url": "destination_url_value",
+            "destination_url_type": 1,
+            "alt_text": "alt_text_value",
+            "image_url": "image_url_value",
+            "third_party_impression_tracking_urls": [
+                "third_party_impression_tracking_urls_value1",
+                "third_party_impression_tracking_urls_value2",
+            ],
+        },
+        "image_redirect_overlay_creative": {
+            "destination_url": "destination_url_value",
+            "destination_url_type": 1,
+            "image_url": "image_url_value",
+            "asset_size": {},
+            "duration": {},
+            "tracking_urls": {},
+            "custom_parameters": "custom_parameters_value",
+            "expected_companions": {},
+            "expected_companion_delivery_option": 1,
+            "vast_preview_url": "vast_preview_url_value",
+            "creative_set_display_name": "creative_set_display_name_value",
+            "creative_set": "creative_set_value",
+            "companion_creatives": [
+                "companion_creatives_value1",
+                "companion_creatives_value2",
+            ],
+        },
+        "internal_redirect_creative": {
+            "locked_orientation": 1,
+            "asset_size": {},
+            "internal_redirect_url": "internal_redirect_url_value",
+            "override_size": True,
+            "interstitial": True,
+            "ssl_scan_result": 1,
+            "ssl_manual_override": 1,
+            "third_party_impression_tracking_urls": [
+                "third_party_impression_tracking_urls_value1",
+                "third_party_impression_tracking_urls_value2",
+            ],
+        },
+        "legacy_dfp_creative": {},
+        "programmatic_creative": {},
+        "rich_media_studio_creative": {
+            "locked_orientation": 1,
+            "studio_creative_id": 1910,
+            "creative_format": 1,
+            "total_file_size": 1597,
+            "ad_tag_keys": ["ad_tag_keys_value1", "ad_tag_keys_value2"],
+            "custom_key_values": [
+                "custom_key_values_value1",
+                "custom_key_values_value2",
+            ],
+            "survey_url": "survey_url_value",
+            "all_impressions_url": "all_impressions_url_value",
+            "rich_media_impressions_url": "rich_media_impressions_url_value",
+            "backup_image_impressions_url": "backup_image_impressions_url_value",
+            "override_css": "override_css_value",
+            "required_flash_plugin_version": "required_flash_plugin_version_value",
+            "duration": {},
+            "billing_attribute": 1,
+            "rich_media_studio_child_asset_properties": [
+                {
+                    "display_name": "display_name_value",
+                    "type_": 1,
+                    "total_file_size": 1597,
+                    "width": 544,
+                    "height": 633,
+                    "url": "url_value",
+                }
+            ],
+            "ssl_scan_result": 1,
+            "ssl_manual_override": 1,
+        },
+        "set_top_box_creative": {"vast_info": {}},
+        "template_creative": {
+            "amp_destination_url": "amp_destination_url_value",
+            "locked_orientation": 1,
+            "destination_url": "destination_url_value",
+            "destination_url_type": 1,
+        },
+        "third_party_creative": {
+            "snippet": "snippet_value",
+            "expanded_snippet": "expanded_snippet_value",
+            "locked_orientation": 1,
+            "ssl_scan_result": 1,
+            "ssl_manual_override": 1,
+            "safe_frame_compatible": True,
+            "third_party_impression_tracking_urls": [
+                "third_party_impression_tracking_urls_value1",
+                "third_party_impression_tracking_urls_value2",
+            ],
+            "amp_redirect_url": "amp_redirect_url_value",
+            "destination_url": "destination_url_value",
+            "destination_url_type": 1,
+        },
+        "vast_redirect_creative": {
+            "vast_xml_url": "vast_xml_url_value",
+            "vast_redirect_type": 1,
+            "duration": {},
+            "vast_pricing_enabled": True,
+            "programmatic_demand_source": True,
+            "server_side_unwrapping_disabled": True,
+            "tracking_urls": {},
+            "vast_preview_url": "vast_preview_url_value",
+            "audio": True,
+            "destination_url": "destination_url_value",
+            "destination_url_type": 1,
+        },
+        "video_creative": {"vast_info": {}},
+        "video_redirect_creative": {"vast_info": {}},
+        "name": "networks/sample1/creatives/sample2",
+        "display_name": "display_name_value",
+        "advertiser": "advertiser_value",
+        "update_time": {"seconds": 751, "nanos": 543},
+        "custom_field_values": [
+            {
+                "custom_field": "custom_field_value",
+                "value": {
+                    "dropdown_value": 1513,
+                    "string_value": "string_value_value",
+                    "number_value": 0.1285,
+                    "toggle_value": True,
+                },
+            }
+        ],
+        "preview_url": "preview_url_value",
+        "size": {},
+        "third_party_data_declaration": {
+            "declaration_type": 1,
+            "third_party_companies": [
+                "third_party_companies_value1",
+                "third_party_companies_value2",
+            ],
+        },
+        "third_party_data_declaration_status": 1,
+        "self_declared_european_union_political_content": True,
+        "ad_badging_enabled": True,
+        "applied_labels": {},
+        "buyer_placement_config": {
+            "placement_id": "placement_id_value",
+            "placement_display_name": "placement_display_name_value",
+        },
+    }
+    # The version of a generated dependency at test runtime may differ from the version used during generation.
+    # Delete any fields which are not present in the current runtime dependency
+    # See https://github.com/googleapis/gapic-generator-python/issues/1748
+
+    # Determine if the message type is proto-plus or protobuf
+    test_field = creative_service.UpdateCreativeRequest.meta.fields["creative"]
+
+    def get_message_fields(field):
+        # Given a field which is a message (composite type), return a list with
+        # all the fields of the message.
+        # If the field is not a composite type, return an empty list.
+        message_fields = []
+
+        if hasattr(field, "message") and field.message:
+            is_field_type_proto_plus_type = not hasattr(field.message, "DESCRIPTOR")
+
+            if is_field_type_proto_plus_type:
+                message_fields = field.message.meta.fields.values()
+            # Add `# pragma: NO COVER` because there may not be any `*_pb2` field types
+            else:  # pragma: NO COVER
+                message_fields = field.message.DESCRIPTOR.fields
+        return message_fields
+
+    runtime_nested_fields = [
+        (field.name, nested_field.name)
+        for field in get_message_fields(test_field)
+        for nested_field in get_message_fields(field)
+    ]
+
+    subfields_not_in_runtime = []
+
+    # For each item in the sample request, create a list of sub fields which are not present at runtime
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for field, value in request_init["creative"].items():  # pragma: NO COVER
+        result = None
+        is_repeated = False
+        # For repeated fields
+        if isinstance(value, list) and len(value):
+            is_repeated = True
+            result = value[0]
+        # For fields where the type is another message
+        if isinstance(value, dict):
+            result = value
+
+        if result and hasattr(result, "keys"):
+            for subfield in result.keys():
+                if (field, subfield) not in runtime_nested_fields:
+                    subfields_not_in_runtime.append(
+                        {
+                            "field": field,
+                            "subfield": subfield,
+                            "is_repeated": is_repeated,
+                        }
+                    )
+
+    # Remove fields from the sample request which are not present in the runtime version of the dependency
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for subfield_to_delete in subfields_not_in_runtime:  # pragma: NO COVER
+        field = subfield_to_delete.get("field")
+        field_repeated = subfield_to_delete.get("is_repeated")
+        subfield = subfield_to_delete.get("subfield")
+        if subfield:
+            if field_repeated:
+                for i in range(0, len(request_init["creative"][field])):
+                    del request_init["creative"][field][i][subfield]
+            else:
+                del request_init["creative"][field][subfield]
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = creative_messages.Creative(
+            name="name_value",
+            display_name="display_name_value",
+            advertiser="advertiser_value",
+            preview_url="preview_url_value",
+            third_party_data_declaration_status=creative_third_party_data_declaration_status_enum.CreativeThirdPartyDataDeclarationStatusEnum.CreativeThirdPartyDataDeclarationStatus.COMPLETE,
+            self_declared_european_union_political_content=True,
+            ad_badging_enabled=True,
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = creative_messages.Creative.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.update_creative(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, creative_messages.Creative)
+    assert response.name == "name_value"
+    assert response.display_name == "display_name_value"
+    assert response.advertiser == "advertiser_value"
+    assert response.preview_url == "preview_url_value"
+    assert (
+        response.third_party_data_declaration_status
+        == creative_third_party_data_declaration_status_enum.CreativeThirdPartyDataDeclarationStatusEnum.CreativeThirdPartyDataDeclarationStatus.COMPLETE
+    )
+    assert response.self_declared_european_union_political_content is True
+    assert response.ad_badging_enabled is True
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_update_creative_rest_interceptors(null_interceptor):
+    transport = transports.CreativeServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.CreativeServiceRestInterceptor(),
+    )
+    client = CreativeServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.CreativeServiceRestInterceptor, "post_update_creative"
+        ) as post,
+        mock.patch.object(
+            transports.CreativeServiceRestInterceptor,
+            "post_update_creative_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.CreativeServiceRestInterceptor, "pre_update_creative"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = creative_service.UpdateCreativeRequest.pb(
+            creative_service.UpdateCreativeRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = creative_messages.Creative.to_json(creative_messages.Creative())
+        req.return_value.content = return_value
+
+        request = creative_service.UpdateCreativeRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = creative_messages.Creative()
+        post_with_metadata.return_value = creative_messages.Creative(), metadata
+
+        client.update_creative(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_create_creatives_rest_bad_request(
+    request_type=creative_service.BatchCreateCreativesRequest,
+):
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_create_creatives(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        creative_service.BatchCreateCreativesRequest,
+        dict,
+    ],
+)
+def test_batch_create_creatives_rest_call_success(request_type):
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = creative_service.BatchCreateCreativesResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = creative_service.BatchCreateCreativesResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_create_creatives(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, creative_service.BatchCreateCreativesResponse)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_create_creatives_rest_interceptors(null_interceptor):
+    transport = transports.CreativeServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.CreativeServiceRestInterceptor(),
+    )
+    client = CreativeServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.CreativeServiceRestInterceptor, "post_batch_create_creatives"
+        ) as post,
+        mock.patch.object(
+            transports.CreativeServiceRestInterceptor,
+            "post_batch_create_creatives_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.CreativeServiceRestInterceptor, "pre_batch_create_creatives"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = creative_service.BatchCreateCreativesRequest.pb(
+            creative_service.BatchCreateCreativesRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = creative_service.BatchCreateCreativesResponse.to_json(
+            creative_service.BatchCreateCreativesResponse()
+        )
+        req.return_value.content = return_value
+
+        request = creative_service.BatchCreateCreativesRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = creative_service.BatchCreateCreativesResponse()
+        post_with_metadata.return_value = (
+            creative_service.BatchCreateCreativesResponse(),
+            metadata,
+        )
+
+        client.batch_create_creatives(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_update_creatives_rest_bad_request(
+    request_type=creative_service.BatchUpdateCreativesRequest,
+):
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_update_creatives(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        creative_service.BatchUpdateCreativesRequest,
+        dict,
+    ],
+)
+def test_batch_update_creatives_rest_call_success(request_type):
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = creative_service.BatchUpdateCreativesResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = creative_service.BatchUpdateCreativesResponse.pb(return_value)
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_update_creatives(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, creative_service.BatchUpdateCreativesResponse)
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_update_creatives_rest_interceptors(null_interceptor):
+    transport = transports.CreativeServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.CreativeServiceRestInterceptor(),
+    )
+    client = CreativeServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.CreativeServiceRestInterceptor, "post_batch_update_creatives"
+        ) as post,
+        mock.patch.object(
+            transports.CreativeServiceRestInterceptor,
+            "post_batch_update_creatives_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.CreativeServiceRestInterceptor, "pre_batch_update_creatives"
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = creative_service.BatchUpdateCreativesRequest.pb(
+            creative_service.BatchUpdateCreativesRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = creative_service.BatchUpdateCreativesResponse.to_json(
+            creative_service.BatchUpdateCreativesResponse()
+        )
+        req.return_value.content = return_value
+
+        request = creative_service.BatchUpdateCreativesRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = creative_service.BatchUpdateCreativesResponse()
+        post_with_metadata.return_value = (
+            creative_service.BatchUpdateCreativesResponse(),
+            metadata,
+        )
+
+        client.batch_update_creatives(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
 def test_batch_activate_creatives_rest_bad_request(
     request_type=creative_service.BatchActivateCreativesRequest,
 ):
@@ -2505,6 +4480,86 @@ def test_list_creatives_empty_call_rest():
 
 # This test is a coverage failsafe to make sure that totally empty calls,
 # i.e. request == None and no flattened fields passed, work.
+def test_create_creative_empty_call_rest():
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.create_creative), "__call__") as call:
+        client.create_creative(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = creative_service.CreateCreativeRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_update_creative_empty_call_rest():
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(type(client.transport.update_creative), "__call__") as call:
+        client.update_creative(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = creative_service.UpdateCreativeRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_create_creatives_empty_call_rest():
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_create_creatives), "__call__"
+    ) as call:
+        client.batch_create_creatives(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = creative_service.BatchCreateCreativesRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_update_creatives_empty_call_rest():
+    client = CreativeServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_update_creatives), "__call__"
+    ) as call:
+        client.batch_update_creatives(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = creative_service.BatchUpdateCreativesRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
 def test_batch_activate_creatives_empty_call_rest():
     client = CreativeServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -2569,6 +4624,10 @@ def test_creative_service_base_transport():
     methods = (
         "get_creative",
         "list_creatives",
+        "create_creative",
+        "update_creative",
+        "batch_create_creatives",
+        "batch_update_creatives",
         "batch_activate_creatives",
         "batch_deactivate_creatives",
         "get_operation",
@@ -2721,6 +4780,18 @@ def test_creative_service_client_transport_session_collision(transport_name):
     assert session1 != session2
     session1 = client1.transport.list_creatives._session
     session2 = client2.transport.list_creatives._session
+    assert session1 != session2
+    session1 = client1.transport.create_creative._session
+    session2 = client2.transport.create_creative._session
+    assert session1 != session2
+    session1 = client1.transport.update_creative._session
+    session2 = client2.transport.update_creative._session
+    assert session1 != session2
+    session1 = client1.transport.batch_create_creatives._session
+    session2 = client2.transport.batch_create_creatives._session
+    assert session1 != session2
+    session1 = client1.transport.batch_update_creatives._session
+    session2 = client2.transport.batch_update_creatives._session
     assert session1 != session2
     session1 = client1.transport.batch_activate_creatives._session
     session2 = client2.transport.batch_activate_creatives._session

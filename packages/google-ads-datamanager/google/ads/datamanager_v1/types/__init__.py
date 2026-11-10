@@ -37,6 +37,9 @@ from .audience import (
     PpidData,
     UserIdData,
 )
+from .call_info import (
+    CallInfo,
+)
 from .cart_data import (
     CartData,
     Item,
@@ -120,6 +123,14 @@ from .partner_link_service import (
     SearchPartnerLinksRequest,
     SearchPartnerLinksResponse,
 )
+from .partner_match_report_entry import (
+    PartnerMatchAdGroup,
+    PartnerMatchAdvertiserAccount,
+    PartnerMatchCampaign,
+    PartnerMatchLineItem,
+    PartnerMatchReportEntry,
+    PartnerMatchUserList,
+)
 from .processing_errors import (
     ErrorCount,
     ErrorInfo,
@@ -129,6 +140,10 @@ from .processing_errors import (
     WarningCount,
     WarningInfo,
     WarningReason,
+)
+from .reporting_service import (
+    RetrievePartnerMatchReportRequest,
+    RetrievePartnerMatchReportResponse,
 )
 from .request_status_per_destination import (
     RequestStatusPerDestination,
@@ -235,6 +250,7 @@ __all__ = (
     "PartnerProvidedIdData",
     "PpidData",
     "UserIdData",
+    "CallInfo",
     "CartData",
     "Item",
     "ItemCustomVariable",
@@ -288,6 +304,12 @@ __all__ = (
     "SearchPartnerLinksRequest",
     "SearchPartnerLinksResponse",
     "FeatureSet",
+    "PartnerMatchAdGroup",
+    "PartnerMatchAdvertiserAccount",
+    "PartnerMatchCampaign",
+    "PartnerMatchLineItem",
+    "PartnerMatchReportEntry",
+    "PartnerMatchUserList",
     "ErrorCount",
     "ErrorInfo",
     "FieldWarning",
@@ -296,6 +318,8 @@ __all__ = (
     "ProcessingErrorReason",
     "ProcessingWarningReason",
     "WarningReason",
+    "RetrievePartnerMatchReportRequest",
+    "RetrievePartnerMatchReportResponse",
     "RequestStatusPerDestination",
     "TermsOfService",
     "TermsOfServiceStatus",

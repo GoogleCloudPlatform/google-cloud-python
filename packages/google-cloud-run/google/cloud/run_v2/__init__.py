@@ -32,6 +32,7 @@ __lazy_modules__ = {
     "google.cloud.run_v2.services.jobs",
     "google.cloud.run_v2.services.revisions",
     "google.cloud.run_v2.services.services",
+    "google.cloud.run_v2.services.source_upload",
     "google.cloud.run_v2.services.tasks",
     "google.cloud.run_v2.services.worker_pools",
     "google.cloud.run_v2.types.build",
@@ -45,7 +46,9 @@ __lazy_modules__ = {
     "google.cloud.run_v2.types.k8s_min",
     "google.cloud.run_v2.types.revision",
     "google.cloud.run_v2.types.revision_template",
+    "google.cloud.run_v2.types.sandbox",
     "google.cloud.run_v2.types.service",
+    "google.cloud.run_v2.types.source_upload",
     "google.cloud.run_v2.types.status",
     "google.cloud.run_v2.types.task",
     "google.cloud.run_v2.types.task_template",
@@ -62,6 +65,7 @@ from .services.instances import InstancesAsyncClient, InstancesClient
 from .services.jobs import JobsAsyncClient, JobsClient
 from .services.revisions import RevisionsAsyncClient, RevisionsClient
 from .services.services import ServicesAsyncClient, ServicesClient
+from .services.source_upload import SourceUploadAsyncClient, SourceUploadClient
 from .services.tasks import TasksAsyncClient, TasksClient
 from .services.worker_pools import WorkerPoolsAsyncClient, WorkerPoolsClient
 from .types.build import StorageSource, SubmitBuildRequest, SubmitBuildResponse
@@ -85,6 +89,7 @@ from .types.instance import (
     ListInstancesResponse,
     StartInstanceRequest,
     StopInstanceRequest,
+    UpdateInstanceRequest,
 )
 from .types.instance_split import (
     InstanceSplit,
@@ -133,6 +138,7 @@ from .types.revision import (
     Revision,
 )
 from .types.revision_template import RevisionTemplate
+from .types.sandbox import SandboxConfiguration, SandboxTemplate
 from .types.service import (
     CreateServiceRequest,
     DeleteServiceRequest,
@@ -142,6 +148,7 @@ from .types.service import (
     Service,
     UpdateServiceRequest,
 )
+from .types.source_upload import UploadSourceRequest, UploadSourceResponse
 from .types.status import RevisionScalingStatus
 from .types.task import (
     GetTaskRequest,
@@ -157,10 +164,14 @@ from .types.traffic_target import (
     TrafficTargetStatus,
 )
 from .types.vendor_settings import (
+    AmbientNetworking,
+    AmbientScope,
     BinaryAuthorization,
     BuildConfig,
     EncryptionKeyRevocationAction,
     ExecutionEnvironment,
+    FunctionalType,
+    IdentityType,
     IngressTraffic,
     NodeSelector,
     RevisionScaling,
@@ -168,6 +179,7 @@ from .types.vendor_settings import (
     ServiceScaling,
     VpcAccess,
     WorkerPoolScaling,
+    WorkloadIdentityConfig,
 )
 from .types.worker_pool import (
     CreateWorkerPoolRequest,
@@ -187,8 +199,11 @@ __all__ = (
     "JobsAsyncClient",
     "RevisionsAsyncClient",
     "ServicesAsyncClient",
+    "SourceUploadAsyncClient",
     "TasksAsyncClient",
     "WorkerPoolsAsyncClient",
+    "AmbientNetworking",
+    "AmbientScope",
     "BinaryAuthorization",
     "BuildConfig",
     "BuildInfo",
@@ -218,6 +233,7 @@ __all__ = (
     "ExecutionReference",
     "ExecutionTemplate",
     "ExecutionsClient",
+    "FunctionalType",
     "GCSVolumeSource",
     "GRPCAction",
     "GetExecutionRequest",
@@ -229,6 +245,7 @@ __all__ = (
     "GetWorkerPoolRequest",
     "HTTPGetAction",
     "HTTPHeader",
+    "IdentityType",
     "IngressTraffic",
     "Instance",
     "InstanceSplit",
@@ -261,6 +278,8 @@ __all__ = (
     "RevisionTemplate",
     "RevisionsClient",
     "RunJobRequest",
+    "SandboxConfiguration",
+    "SandboxTemplate",
     "SecretKeySelector",
     "SecretVolumeSource",
     "Service",
@@ -268,6 +287,7 @@ __all__ = (
     "ServiceScaling",
     "ServicesClient",
     "SourceCode",
+    "SourceUploadClient",
     "StartInstanceRequest",
     "StopInstanceRequest",
     "StorageSource",
@@ -281,9 +301,12 @@ __all__ = (
     "TrafficTarget",
     "TrafficTargetAllocationType",
     "TrafficTargetStatus",
+    "UpdateInstanceRequest",
     "UpdateJobRequest",
     "UpdateServiceRequest",
     "UpdateWorkerPoolRequest",
+    "UploadSourceRequest",
+    "UploadSourceResponse",
     "VersionToPath",
     "Volume",
     "VolumeMount",
@@ -292,6 +315,7 @@ __all__ = (
     "WorkerPoolRevisionTemplate",
     "WorkerPoolScaling",
     "WorkerPoolsClient",
+    "WorkloadIdentityConfig",
 )
 
 api_core.check_python_version("google.cloud.run_v2")

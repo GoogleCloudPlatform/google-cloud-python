@@ -17,6 +17,7 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
 
@@ -64,6 +65,7 @@ __protobuf__ = proto.module(
         "IcebergStorage",
         "GoldengateIcebergConnectionProperties",
         "CreateGoldengateConnectionRequest",
+        "UpdateGoldengateConnectionRequest",
         "DeleteGoldengateConnectionRequest",
         "GetGoldengateConnectionRequest",
         "ListGoldengateConnectionsRequest",
@@ -83,25 +85,25 @@ class GoldengateConnection(proto.Message):
             the following format:
             projects/{project}/locations/{region}/goldengateConnections/{goldengate_connection}
         properties (google.cloud.oracledatabase_v1.types.GoldengateConnectionProperties):
-            Required. The properties of the
+            Required. Immutable. The properties of the
             GoldengateConnection.
         gcp_oracle_zone (str):
-            Optional. The GCP Oracle zone where Oracle
-            GoldengateConnection is hosted. Example:
-            us-east4-b-r2. If not specified, the system will
-            pick a zone based on availability.
+            Optional. Immutable. The GCP Oracle zone
+            where Oracle GoldengateConnection is hosted.
+            Example: us-east4-b-r2. If not specified, the
+            system will pick a zone based on availability.
         labels (MutableMapping[str, str]):
             Optional. The labels or tags associated with
             the GoldengateConnection.
         odb_network (str):
-            Optional. The name of the OdbNetwork associated with the
-            GoldengateConnection. The format is
+            Optional. Immutable. The name of the OdbNetwork associated
+            with the GoldengateConnection. The format is
             projects/{project}/locations/{location}/odbNetworks/{odb_network}.
             It is optional but if specified, this should match the
             parent ODBNetwork of the OdbSubnet.
         odb_subnet (str):
-            Optional. The name of the OdbSubnet associated with the
-            GoldengateConnection for IP allocation. Format:
+            Optional. Immutable. The name of the OdbSubnet associated
+            with the GoldengateConnection for IP allocation. Format:
             projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
         entitlement_id (str):
             Output only. The ID of the subscription
@@ -3931,6 +3933,58 @@ class CreateGoldengateConnectionRequest(proto.Message):
     request_id: str = proto.Field(
         proto.STRING,
         number=4,
+    )
+
+
+class UpdateGoldengateConnectionRequest(proto.Message):
+    r"""The request for ``GoldengateConnection.Update``.
+
+    Attributes:
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. A mask specifying which fields in the
+            GoldengateConnection should be updated. A field specified in
+            the mask is updated. If a mask isn't provided, the service
+            treats this as an implied field mask equivalent to all
+            fields that are populated (have a non-empty value). To clear
+            or unset a field, the field must be explicitly specified in
+            the ``update_mask``.
+        goldengate_connection (google.cloud.oracledatabase_v1.types.GoldengateConnection):
+            Required. The resource being updated. Note only labels can
+            be updated. The provided labels will completely replace the
+            existing labels. Any existing label keys that are not
+            included in the update request will be deleted. Not
+            providing labels and update_mask will not update the labels.
+            To clear all labels, specify ``labels`` in the
+            ``update_mask`` and omit or leave the ``labels`` field empty
+            in the update request.
+        request_id (str):
+            Optional. An optional ID to identify the
+            request. This value is used to identify
+            duplicate requests. If you make a request with
+            the same request ID and the original request is
+            still in progress or completed, the server
+            ignores the second request. This prevents
+            clients from accidentally creating duplicate
+            commitments.
+
+            The request ID must be a valid UUID with the
+            exception that zero UUID is not supported
+            (00000000-0000-0000-0000-000000000000).
+    """
+
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=field_mask_pb2.FieldMask,
+    )
+    goldengate_connection: "GoldengateConnection" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="GoldengateConnection",
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 

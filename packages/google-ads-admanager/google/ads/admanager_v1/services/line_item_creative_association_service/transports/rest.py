@@ -20,6 +20,7 @@ import warnings
 from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
 import google.protobuf
+import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, rest_helpers, rest_streaming
 from google.api_core import retry as retries
@@ -76,6 +77,50 @@ class LineItemCreativeAssociationServiceRestInterceptor:
 
     .. code-block:: python
         class MyCustomLineItemCreativeAssociationServiceInterceptor(LineItemCreativeAssociationServiceRestInterceptor):
+            def pre_batch_activate_line_item_creative_associations(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_activate_line_item_creative_associations(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_batch_create_line_item_creative_associations(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_create_line_item_creative_associations(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_batch_deactivate_line_item_creative_associations(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_deactivate_line_item_creative_associations(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_batch_delete_line_item_creative_associations(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def pre_batch_update_line_item_creative_associations(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_update_line_item_creative_associations(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_create_line_item_creative_association(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_create_line_item_creative_association(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_get_line_item_creative_association(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
@@ -92,11 +137,307 @@ class LineItemCreativeAssociationServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_preview_line_item_creative_association(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_preview_line_item_creative_association(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_line_item_creative_association(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_line_item_creative_association(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
         transport = LineItemCreativeAssociationServiceRestTransport(interceptor=MyCustomLineItemCreativeAssociationServiceInterceptor())
         client = LineItemCreativeAssociationServiceClient(transport=transport)
 
 
     """
+
+    def pre_batch_activate_line_item_creative_associations(
+        self,
+        request: line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_activate_line_item_creative_associations
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the LineItemCreativeAssociationService server.
+        """
+        return request, metadata
+
+    def post_batch_activate_line_item_creative_associations(
+        self,
+        response: line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse,
+    ) -> line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse:
+        """Post-rpc interceptor for batch_activate_line_item_creative_associations
+
+        DEPRECATED. Please use the `post_batch_activate_line_item_creative_associations_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the LineItemCreativeAssociationService server but before
+        it is returned to user code. This `post_batch_activate_line_item_creative_associations` interceptor runs
+        before the `post_batch_activate_line_item_creative_associations_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_activate_line_item_creative_associations_with_metadata(
+        self,
+        response: line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for batch_activate_line_item_creative_associations
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the LineItemCreativeAssociationService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_activate_line_item_creative_associations_with_metadata`
+        interceptor in new development instead of the `post_batch_activate_line_item_creative_associations` interceptor.
+        When both interceptors are used, this `post_batch_activate_line_item_creative_associations_with_metadata` interceptor runs after the
+        `post_batch_activate_line_item_creative_associations` interceptor. The (possibly modified) response returned by
+        `post_batch_activate_line_item_creative_associations` will be passed to
+        `post_batch_activate_line_item_creative_associations_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_batch_create_line_item_creative_associations(
+        self,
+        request: line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_create_line_item_creative_associations
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the LineItemCreativeAssociationService server.
+        """
+        return request, metadata
+
+    def post_batch_create_line_item_creative_associations(
+        self,
+        response: line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse,
+    ) -> line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse:
+        """Post-rpc interceptor for batch_create_line_item_creative_associations
+
+        DEPRECATED. Please use the `post_batch_create_line_item_creative_associations_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the LineItemCreativeAssociationService server but before
+        it is returned to user code. This `post_batch_create_line_item_creative_associations` interceptor runs
+        before the `post_batch_create_line_item_creative_associations_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_create_line_item_creative_associations_with_metadata(
+        self,
+        response: line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for batch_create_line_item_creative_associations
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the LineItemCreativeAssociationService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_create_line_item_creative_associations_with_metadata`
+        interceptor in new development instead of the `post_batch_create_line_item_creative_associations` interceptor.
+        When both interceptors are used, this `post_batch_create_line_item_creative_associations_with_metadata` interceptor runs after the
+        `post_batch_create_line_item_creative_associations` interceptor. The (possibly modified) response returned by
+        `post_batch_create_line_item_creative_associations` will be passed to
+        `post_batch_create_line_item_creative_associations_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_batch_deactivate_line_item_creative_associations(
+        self,
+        request: line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_deactivate_line_item_creative_associations
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the LineItemCreativeAssociationService server.
+        """
+        return request, metadata
+
+    def post_batch_deactivate_line_item_creative_associations(
+        self,
+        response: line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse,
+    ) -> line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse:
+        """Post-rpc interceptor for batch_deactivate_line_item_creative_associations
+
+        DEPRECATED. Please use the `post_batch_deactivate_line_item_creative_associations_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the LineItemCreativeAssociationService server but before
+        it is returned to user code. This `post_batch_deactivate_line_item_creative_associations` interceptor runs
+        before the `post_batch_deactivate_line_item_creative_associations_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_deactivate_line_item_creative_associations_with_metadata(
+        self,
+        response: line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for batch_deactivate_line_item_creative_associations
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the LineItemCreativeAssociationService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_deactivate_line_item_creative_associations_with_metadata`
+        interceptor in new development instead of the `post_batch_deactivate_line_item_creative_associations` interceptor.
+        When both interceptors are used, this `post_batch_deactivate_line_item_creative_associations_with_metadata` interceptor runs after the
+        `post_batch_deactivate_line_item_creative_associations` interceptor. The (possibly modified) response returned by
+        `post_batch_deactivate_line_item_creative_associations` will be passed to
+        `post_batch_deactivate_line_item_creative_associations_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_batch_delete_line_item_creative_associations(
+        self,
+        request: line_item_creative_association_service.BatchDeleteLineItemCreativeAssociationsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        line_item_creative_association_service.BatchDeleteLineItemCreativeAssociationsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_delete_line_item_creative_associations
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the LineItemCreativeAssociationService server.
+        """
+        return request, metadata
+
+    def pre_batch_update_line_item_creative_associations(
+        self,
+        request: line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_update_line_item_creative_associations
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the LineItemCreativeAssociationService server.
+        """
+        return request, metadata
+
+    def post_batch_update_line_item_creative_associations(
+        self,
+        response: line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse,
+    ) -> line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse:
+        """Post-rpc interceptor for batch_update_line_item_creative_associations
+
+        DEPRECATED. Please use the `post_batch_update_line_item_creative_associations_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the LineItemCreativeAssociationService server but before
+        it is returned to user code. This `post_batch_update_line_item_creative_associations` interceptor runs
+        before the `post_batch_update_line_item_creative_associations_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_update_line_item_creative_associations_with_metadata(
+        self,
+        response: line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for batch_update_line_item_creative_associations
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the LineItemCreativeAssociationService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_update_line_item_creative_associations_with_metadata`
+        interceptor in new development instead of the `post_batch_update_line_item_creative_associations` interceptor.
+        When both interceptors are used, this `post_batch_update_line_item_creative_associations_with_metadata` interceptor runs after the
+        `post_batch_update_line_item_creative_associations` interceptor. The (possibly modified) response returned by
+        `post_batch_update_line_item_creative_associations` will be passed to
+        `post_batch_update_line_item_creative_associations_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_create_line_item_creative_association(
+        self,
+        request: line_item_creative_association_service.CreateLineItemCreativeAssociationRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        line_item_creative_association_service.CreateLineItemCreativeAssociationRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for create_line_item_creative_association
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the LineItemCreativeAssociationService server.
+        """
+        return request, metadata
+
+    def post_create_line_item_creative_association(
+        self,
+        response: line_item_creative_association_messages.LineItemCreativeAssociation,
+    ) -> line_item_creative_association_messages.LineItemCreativeAssociation:
+        """Post-rpc interceptor for create_line_item_creative_association
+
+        DEPRECATED. Please use the `post_create_line_item_creative_association_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the LineItemCreativeAssociationService server but before
+        it is returned to user code. This `post_create_line_item_creative_association` interceptor runs
+        before the `post_create_line_item_creative_association_with_metadata` interceptor.
+        """
+        return response
+
+    def post_create_line_item_creative_association_with_metadata(
+        self,
+        response: line_item_creative_association_messages.LineItemCreativeAssociation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        line_item_creative_association_messages.LineItemCreativeAssociation,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for create_line_item_creative_association
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the LineItemCreativeAssociationService server but before it is returned to user code.
+
+        We recommend only using this `post_create_line_item_creative_association_with_metadata`
+        interceptor in new development instead of the `post_create_line_item_creative_association` interceptor.
+        When both interceptors are used, this `post_create_line_item_creative_association_with_metadata` interceptor runs after the
+        `post_create_line_item_creative_association` interceptor. The (possibly modified) response returned by
+        `post_create_line_item_creative_association` will be passed to
+        `post_create_line_item_creative_association_with_metadata`.
+        """
+        return response, metadata
 
     def pre_get_line_item_creative_association(
         self,
@@ -203,6 +544,112 @@ class LineItemCreativeAssociationServiceRestInterceptor:
         `post_list_line_item_creative_associations` interceptor. The (possibly modified) response returned by
         `post_list_line_item_creative_associations` will be passed to
         `post_list_line_item_creative_associations_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_preview_line_item_creative_association(
+        self,
+        request: line_item_creative_association_service.PreviewLineItemCreativeAssociationRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        line_item_creative_association_service.PreviewLineItemCreativeAssociationRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for preview_line_item_creative_association
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the LineItemCreativeAssociationService server.
+        """
+        return request, metadata
+
+    def post_preview_line_item_creative_association(
+        self,
+        response: line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse,
+    ) -> line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse:
+        """Post-rpc interceptor for preview_line_item_creative_association
+
+        DEPRECATED. Please use the `post_preview_line_item_creative_association_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the LineItemCreativeAssociationService server but before
+        it is returned to user code. This `post_preview_line_item_creative_association` interceptor runs
+        before the `post_preview_line_item_creative_association_with_metadata` interceptor.
+        """
+        return response
+
+    def post_preview_line_item_creative_association_with_metadata(
+        self,
+        response: line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for preview_line_item_creative_association
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the LineItemCreativeAssociationService server but before it is returned to user code.
+
+        We recommend only using this `post_preview_line_item_creative_association_with_metadata`
+        interceptor in new development instead of the `post_preview_line_item_creative_association` interceptor.
+        When both interceptors are used, this `post_preview_line_item_creative_association_with_metadata` interceptor runs after the
+        `post_preview_line_item_creative_association` interceptor. The (possibly modified) response returned by
+        `post_preview_line_item_creative_association` will be passed to
+        `post_preview_line_item_creative_association_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_line_item_creative_association(
+        self,
+        request: line_item_creative_association_service.UpdateLineItemCreativeAssociationRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        line_item_creative_association_service.UpdateLineItemCreativeAssociationRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for update_line_item_creative_association
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the LineItemCreativeAssociationService server.
+        """
+        return request, metadata
+
+    def post_update_line_item_creative_association(
+        self,
+        response: line_item_creative_association_messages.LineItemCreativeAssociation,
+    ) -> line_item_creative_association_messages.LineItemCreativeAssociation:
+        """Post-rpc interceptor for update_line_item_creative_association
+
+        DEPRECATED. Please use the `post_update_line_item_creative_association_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the LineItemCreativeAssociationService server but before
+        it is returned to user code. This `post_update_line_item_creative_association` interceptor runs
+        before the `post_update_line_item_creative_association_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_line_item_creative_association_with_metadata(
+        self,
+        response: line_item_creative_association_messages.LineItemCreativeAssociation,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        line_item_creative_association_messages.LineItemCreativeAssociation,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for update_line_item_creative_association
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the LineItemCreativeAssociationService server but before it is returned to user code.
+
+        We recommend only using this `post_update_line_item_creative_association_with_metadata`
+        interceptor in new development instead of the `post_update_line_item_creative_association` interceptor.
+        When both interceptors are used, this `post_update_line_item_creative_association_with_metadata` interceptor runs after the
+        `post_update_line_item_creative_association` interceptor. The (possibly modified) response returned by
+        `post_update_line_item_creative_association` will be passed to
+        `post_update_line_item_creative_association_with_metadata`.
         """
         return response, metadata
 
@@ -352,6 +799,950 @@ class LineItemCreativeAssociationServiceRestTransport(
             interceptor or LineItemCreativeAssociationServiceRestInterceptor()
         )
         self._prep_wrapped_messages(client_info)
+
+    class _BatchActivateLineItemCreativeAssociations(
+        _BaseLineItemCreativeAssociationServiceRestTransport._BaseBatchActivateLineItemCreativeAssociations,
+        LineItemCreativeAssociationServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "LineItemCreativeAssociationServiceRestTransport.BatchActivateLineItemCreativeAssociations"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse:
+            r"""Call the batch activate line item
+            creative associations method over HTTP.
+
+                Args:
+                    request (~.line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsRequest):
+                        The request object. Request message for
+                    ``BatchActivateLineItemCreativeAssociations`` method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse:
+                        Response object for
+                    ``BatchActivateLineItemCreativeAssociations`` method.
+
+            """
+
+            http_options = _BaseLineItemCreativeAssociationServiceRestTransport._BaseBatchActivateLineItemCreativeAssociations._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_batch_activate_line_item_creative_associations(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineItemCreativeAssociationServiceRestTransport._BaseBatchActivateLineItemCreativeAssociations,
+                    "_BaseBatchActivateLineItemCreativeAssociations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.LineItemCreativeAssociationServiceClient.BatchActivateLineItemCreativeAssociations",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.LineItemCreativeAssociationService",
+                        "rpcName": "BatchActivateLineItemCreativeAssociations",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = LineItemCreativeAssociationServiceRestTransport._BatchActivateLineItemCreativeAssociations._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse()
+            pb_resp = line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = (
+                self._interceptor.post_batch_activate_line_item_creative_associations(
+                    resp
+                )
+            )
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_batch_activate_line_item_creative_associations_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.LineItemCreativeAssociationServiceClient.batch_activate_line_item_creative_associations",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.LineItemCreativeAssociationService",
+                        "rpcName": "BatchActivateLineItemCreativeAssociations",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _BatchCreateLineItemCreativeAssociations(
+        _BaseLineItemCreativeAssociationServiceRestTransport._BaseBatchCreateLineItemCreativeAssociations,
+        LineItemCreativeAssociationServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "LineItemCreativeAssociationServiceRestTransport.BatchCreateLineItemCreativeAssociations"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse:
+            r"""Call the batch create line item
+            creative associations method over HTTP.
+
+                Args:
+                    request (~.line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsRequest):
+                        The request object. Request object for
+                    ``BatchCreateLineItemCreativeAssociations`` method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse:
+                        Response object for
+                    ``BatchCreateLineItemCreativeAssociations`` method.
+
+            """
+
+            http_options = _BaseLineItemCreativeAssociationServiceRestTransport._BaseBatchCreateLineItemCreativeAssociations._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_batch_create_line_item_creative_associations(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineItemCreativeAssociationServiceRestTransport._BaseBatchCreateLineItemCreativeAssociations,
+                    "_BaseBatchCreateLineItemCreativeAssociations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.LineItemCreativeAssociationServiceClient.BatchCreateLineItemCreativeAssociations",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.LineItemCreativeAssociationService",
+                        "rpcName": "BatchCreateLineItemCreativeAssociations",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = LineItemCreativeAssociationServiceRestTransport._BatchCreateLineItemCreativeAssociations._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse()
+            pb_resp = line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_create_line_item_creative_associations(
+                resp
+            )
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_batch_create_line_item_creative_associations_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.LineItemCreativeAssociationServiceClient.batch_create_line_item_creative_associations",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.LineItemCreativeAssociationService",
+                        "rpcName": "BatchCreateLineItemCreativeAssociations",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _BatchDeactivateLineItemCreativeAssociations(
+        _BaseLineItemCreativeAssociationServiceRestTransport._BaseBatchDeactivateLineItemCreativeAssociations,
+        LineItemCreativeAssociationServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "LineItemCreativeAssociationServiceRestTransport.BatchDeactivateLineItemCreativeAssociations"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse:
+            r"""Call the batch deactivate line
+            item creative associations method over HTTP.
+
+                Args:
+                    request (~.line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsRequest):
+                        The request object. Request message for
+                    ``BatchDeactivateLineItemCreativeAssociations`` method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse:
+                        Response object for
+                    ``BatchDeactivateLineItemCreativeAssociations`` method.
+
+            """
+
+            http_options = _BaseLineItemCreativeAssociationServiceRestTransport._BaseBatchDeactivateLineItemCreativeAssociations._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_batch_deactivate_line_item_creative_associations(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineItemCreativeAssociationServiceRestTransport._BaseBatchDeactivateLineItemCreativeAssociations,
+                    "_BaseBatchDeactivateLineItemCreativeAssociations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.LineItemCreativeAssociationServiceClient.BatchDeactivateLineItemCreativeAssociations",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.LineItemCreativeAssociationService",
+                        "rpcName": "BatchDeactivateLineItemCreativeAssociations",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = LineItemCreativeAssociationServiceRestTransport._BatchDeactivateLineItemCreativeAssociations._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse()
+            pb_resp = line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = (
+                self._interceptor.post_batch_deactivate_line_item_creative_associations(
+                    resp
+                )
+            )
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_batch_deactivate_line_item_creative_associations_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.LineItemCreativeAssociationServiceClient.batch_deactivate_line_item_creative_associations",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.LineItemCreativeAssociationService",
+                        "rpcName": "BatchDeactivateLineItemCreativeAssociations",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _BatchDeleteLineItemCreativeAssociations(
+        _BaseLineItemCreativeAssociationServiceRestTransport._BaseBatchDeleteLineItemCreativeAssociations,
+        LineItemCreativeAssociationServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "LineItemCreativeAssociationServiceRestTransport.BatchDeleteLineItemCreativeAssociations"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: line_item_creative_association_service.BatchDeleteLineItemCreativeAssociationsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ):
+            r"""Call the batch delete line item
+            creative associations method over HTTP.
+
+                Args:
+                    request (~.line_item_creative_association_service.BatchDeleteLineItemCreativeAssociationsRequest):
+                        The request object. Request message for
+                    ``BatchDeleteLineItemCreativeAssociations`` method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+            """
+
+            http_options = _BaseLineItemCreativeAssociationServiceRestTransport._BaseBatchDeleteLineItemCreativeAssociations._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_batch_delete_line_item_creative_associations(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineItemCreativeAssociationServiceRestTransport._BaseBatchDeleteLineItemCreativeAssociations,
+                    "_BaseBatchDeleteLineItemCreativeAssociations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.LineItemCreativeAssociationServiceClient.BatchDeleteLineItemCreativeAssociations",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.LineItemCreativeAssociationService",
+                        "rpcName": "BatchDeleteLineItemCreativeAssociations",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = LineItemCreativeAssociationServiceRestTransport._BatchDeleteLineItemCreativeAssociations._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+    class _BatchUpdateLineItemCreativeAssociations(
+        _BaseLineItemCreativeAssociationServiceRestTransport._BaseBatchUpdateLineItemCreativeAssociations,
+        LineItemCreativeAssociationServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "LineItemCreativeAssociationServiceRestTransport.BatchUpdateLineItemCreativeAssociations"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse:
+            r"""Call the batch update line item
+            creative associations method over HTTP.
+
+                Args:
+                    request (~.line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsRequest):
+                        The request object. Request object for
+                    ``BatchUpdateLineItemCreativeAssociations`` method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse:
+                        Response object for
+                    ``BatchUpdateLineItemCreativeAssociations`` method.
+
+            """
+
+            http_options = _BaseLineItemCreativeAssociationServiceRestTransport._BaseBatchUpdateLineItemCreativeAssociations._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_batch_update_line_item_creative_associations(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineItemCreativeAssociationServiceRestTransport._BaseBatchUpdateLineItemCreativeAssociations,
+                    "_BaseBatchUpdateLineItemCreativeAssociations__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.LineItemCreativeAssociationServiceClient.BatchUpdateLineItemCreativeAssociations",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.LineItemCreativeAssociationService",
+                        "rpcName": "BatchUpdateLineItemCreativeAssociations",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = LineItemCreativeAssociationServiceRestTransport._BatchUpdateLineItemCreativeAssociations._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse()
+            pb_resp = line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_update_line_item_creative_associations(
+                resp
+            )
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_batch_update_line_item_creative_associations_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.LineItemCreativeAssociationServiceClient.batch_update_line_item_creative_associations",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.LineItemCreativeAssociationService",
+                        "rpcName": "BatchUpdateLineItemCreativeAssociations",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _CreateLineItemCreativeAssociation(
+        _BaseLineItemCreativeAssociationServiceRestTransport._BaseCreateLineItemCreativeAssociation,
+        LineItemCreativeAssociationServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "LineItemCreativeAssociationServiceRestTransport.CreateLineItemCreativeAssociation"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: line_item_creative_association_service.CreateLineItemCreativeAssociationRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> line_item_creative_association_messages.LineItemCreativeAssociation:
+            r"""Call the create line item creative
+            association method over HTTP.
+
+                Args:
+                    request (~.line_item_creative_association_service.CreateLineItemCreativeAssociationRequest):
+                        The request object. Request object for ``CreateLineItemCreativeAssociation``
+                    method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.line_item_creative_association_messages.LineItemCreativeAssociation:
+                        A LineItemCreativeAssociation associates a
+                    [Creative][google.ads.admanager.v1.Creative] or
+                    [CreativeSet][google.ads.admanager.v1.CreativeSet] with
+                    a [LineItem][google.ads.admanager.v1.LineItem] so that
+                    the creative can be served in ad units targeted by the
+                    line item.
+
+            """
+
+            http_options = _BaseLineItemCreativeAssociationServiceRestTransport._BaseCreateLineItemCreativeAssociation._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_create_line_item_creative_association(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineItemCreativeAssociationServiceRestTransport._BaseCreateLineItemCreativeAssociation,
+                    "_BaseCreateLineItemCreativeAssociation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.LineItemCreativeAssociationServiceClient.CreateLineItemCreativeAssociation",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.LineItemCreativeAssociationService",
+                        "rpcName": "CreateLineItemCreativeAssociation",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = LineItemCreativeAssociationServiceRestTransport._CreateLineItemCreativeAssociation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = line_item_creative_association_messages.LineItemCreativeAssociation()
+            pb_resp = (
+                line_item_creative_association_messages.LineItemCreativeAssociation.pb(
+                    resp
+                )
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_create_line_item_creative_association(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_create_line_item_creative_association_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = line_item_creative_association_messages.LineItemCreativeAssociation.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.LineItemCreativeAssociationServiceClient.create_line_item_creative_association",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.LineItemCreativeAssociationService",
+                        "rpcName": "CreateLineItemCreativeAssociation",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
 
     class _GetLineItemCreativeAssociation(
         _BaseLineItemCreativeAssociationServiceRestTransport._BaseGetLineItemCreativeAssociation,
@@ -680,6 +2071,426 @@ class LineItemCreativeAssociationServiceRestTransport(
                 )
             return resp
 
+    class _PreviewLineItemCreativeAssociation(
+        _BaseLineItemCreativeAssociationServiceRestTransport._BasePreviewLineItemCreativeAssociation,
+        LineItemCreativeAssociationServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "LineItemCreativeAssociationServiceRestTransport.PreviewLineItemCreativeAssociation"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: line_item_creative_association_service.PreviewLineItemCreativeAssociationRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse:
+            r"""Call the preview line item
+            creative association method over HTTP.
+
+                Args:
+                    request (~.line_item_creative_association_service.PreviewLineItemCreativeAssociationRequest):
+                        The request object. Request message for
+                    ``PreviewLineItemCreativeAssociation`` method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse:
+                        Response object for
+                    ``PreviewLineItemCreativeAssociation`` method.
+
+            """
+
+            http_options = _BaseLineItemCreativeAssociationServiceRestTransport._BasePreviewLineItemCreativeAssociation._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_preview_line_item_creative_association(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineItemCreativeAssociationServiceRestTransport._BasePreviewLineItemCreativeAssociation,
+                    "_BasePreviewLineItemCreativeAssociation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.LineItemCreativeAssociationServiceClient.PreviewLineItemCreativeAssociation",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.LineItemCreativeAssociationService",
+                        "rpcName": "PreviewLineItemCreativeAssociation",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = LineItemCreativeAssociationServiceRestTransport._PreviewLineItemCreativeAssociation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse()
+            pb_resp = line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse.pb(
+                resp
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_preview_line_item_creative_association(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_preview_line_item_creative_association_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.LineItemCreativeAssociationServiceClient.preview_line_item_creative_association",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.LineItemCreativeAssociationService",
+                        "rpcName": "PreviewLineItemCreativeAssociation",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _UpdateLineItemCreativeAssociation(
+        _BaseLineItemCreativeAssociationServiceRestTransport._BaseUpdateLineItemCreativeAssociation,
+        LineItemCreativeAssociationServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash(
+                "LineItemCreativeAssociationServiceRestTransport.UpdateLineItemCreativeAssociation"
+            )
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: line_item_creative_association_service.UpdateLineItemCreativeAssociationRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> line_item_creative_association_messages.LineItemCreativeAssociation:
+            r"""Call the update line item creative
+            association method over HTTP.
+
+                Args:
+                    request (~.line_item_creative_association_service.UpdateLineItemCreativeAssociationRequest):
+                        The request object. Request object for ``UpdateLineItemCreativeAssociation``
+                    method.
+                    retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                        should be retried.
+                    timeout (float): The timeout for this request.
+                    metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                        sent along with the request as metadata. Normally, each value must be of type `str`,
+                        but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                        be of type `bytes`.
+
+                Returns:
+                    ~.line_item_creative_association_messages.LineItemCreativeAssociation:
+                        A LineItemCreativeAssociation associates a
+                    [Creative][google.ads.admanager.v1.Creative] or
+                    [CreativeSet][google.ads.admanager.v1.CreativeSet] with
+                    a [LineItem][google.ads.admanager.v1.LineItem] so that
+                    the creative can be served in ad units targeted by the
+                    line item.
+
+            """
+
+            http_options = _BaseLineItemCreativeAssociationServiceRestTransport._BaseUpdateLineItemCreativeAssociation._get_http_options()
+            request, metadata = (
+                self._interceptor.pre_update_line_item_creative_association(
+                    request, metadata
+                )
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseLineItemCreativeAssociationServiceRestTransport._BaseUpdateLineItemCreativeAssociation,
+                    "_BaseUpdateLineItemCreativeAssociation__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.LineItemCreativeAssociationServiceClient.UpdateLineItemCreativeAssociation",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.LineItemCreativeAssociationService",
+                        "rpcName": "UpdateLineItemCreativeAssociation",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = LineItemCreativeAssociationServiceRestTransport._UpdateLineItemCreativeAssociation._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = line_item_creative_association_messages.LineItemCreativeAssociation()
+            pb_resp = (
+                line_item_creative_association_messages.LineItemCreativeAssociation.pb(
+                    resp
+                )
+            )
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_line_item_creative_association(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = (
+                self._interceptor.post_update_line_item_creative_association_with_metadata(
+                    resp, response_metadata
+                )
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = line_item_creative_association_messages.LineItemCreativeAssociation.to_json(
+                        response
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.LineItemCreativeAssociationServiceClient.update_line_item_creative_association",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.LineItemCreativeAssociationService",
+                        "rpcName": "UpdateLineItemCreativeAssociation",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    @property
+    def batch_activate_line_item_creative_associations(
+        self,
+    ) -> Callable[
+        [
+            line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsRequest
+        ],
+        line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchActivateLineItemCreativeAssociations(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def batch_create_line_item_creative_associations(
+        self,
+    ) -> Callable[
+        [
+            line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsRequest
+        ],
+        line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchCreateLineItemCreativeAssociations(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def batch_deactivate_line_item_creative_associations(
+        self,
+    ) -> Callable[
+        [
+            line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsRequest
+        ],
+        line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchDeactivateLineItemCreativeAssociations(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def batch_delete_line_item_creative_associations(
+        self,
+    ) -> Callable[
+        [
+            line_item_creative_association_service.BatchDeleteLineItemCreativeAssociationsRequest
+        ],
+        empty_pb2.Empty,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchDeleteLineItemCreativeAssociations(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def batch_update_line_item_creative_associations(
+        self,
+    ) -> Callable[
+        [
+            line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsRequest
+        ],
+        line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchUpdateLineItemCreativeAssociations(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def create_line_item_creative_association(
+        self,
+    ) -> Callable[
+        [
+            line_item_creative_association_service.CreateLineItemCreativeAssociationRequest
+        ],
+        line_item_creative_association_messages.LineItemCreativeAssociation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._CreateLineItemCreativeAssociation(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
     @property
     def get_line_item_creative_association(
         self,
@@ -705,6 +2516,36 @@ class LineItemCreativeAssociationServiceRestTransport(
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._ListLineItemCreativeAssociations(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def preview_line_item_creative_association(
+        self,
+    ) -> Callable[
+        [
+            line_item_creative_association_service.PreviewLineItemCreativeAssociationRequest
+        ],
+        line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._PreviewLineItemCreativeAssociation(
+            self._session, self._host, self._interceptor
+        )  # type: ignore
+
+    @property
+    def update_line_item_creative_association(
+        self,
+    ) -> Callable[
+        [
+            line_item_creative_association_service.UpdateLineItemCreativeAssociationRequest
+        ],
+        line_item_creative_association_messages.LineItemCreativeAssociation,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateLineItemCreativeAssociation(
             self._session, self._host, self._interceptor
         )  # type: ignore
 

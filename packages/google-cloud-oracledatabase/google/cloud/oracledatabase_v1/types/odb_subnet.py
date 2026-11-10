@@ -17,6 +17,7 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
 
@@ -25,6 +26,7 @@ __protobuf__ = proto.module(
     manifest={
         "OdbSubnet",
         "CreateOdbSubnetRequest",
+        "UpdateOdbSubnetRequest",
         "DeleteOdbSubnetRequest",
         "ListOdbSubnetsRequest",
         "ListOdbSubnetsResponse",
@@ -42,9 +44,10 @@ class OdbSubnet(proto.Message):
             following format:
             projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
         cidr_range (str):
-            Required. The CIDR range of the subnet.
+            Required. Immutable. The CIDR range of the
+            subnet.
         purpose (google.cloud.oracledatabase_v1.types.OdbSubnet.Purpose):
-            Required. Purpose of the subnet.
+            Required. Immutable. Purpose of the subnet.
         labels (MutableMapping[str, str]):
             Optional. Labels or tags associated with the
             resource.
@@ -174,6 +177,58 @@ class CreateOdbSubnetRequest(proto.Message):
     request_id: str = proto.Field(
         proto.STRING,
         number=4,
+    )
+
+
+class UpdateOdbSubnetRequest(proto.Message):
+    r"""The request for ``OdbSubnet.Update``.
+
+    Attributes:
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. A mask specifying which fields in the OdbSubnet
+            should be updated. A field specified in the mask is updated.
+            If a mask isn't provided, the service treats this as an
+            implied field mask equivalent to all fields that are
+            populated (have a non-empty value). To clear or unset a
+            field, the field must be explicitly specified in the
+            ``update_mask``.
+        odb_subnet (google.cloud.oracledatabase_v1.types.OdbSubnet):
+            Required. The resource being updated. Note only labels can
+            be updated. The provided labels will completely replace the
+            existing labels. Any existing label keys that are not
+            included in the update request will be deleted. Not
+            providing labels and update_mask will not update the labels.
+            To clear all labels, specify ``labels`` in the
+            ``update_mask`` and omit or leave the ``labels`` field empty
+            in the update request.
+        request_id (str):
+            Optional. An optional ID to identify the
+            request. This value is used to identify
+            duplicate requests. If you make a request with
+            the same request ID and the original request is
+            still in progress or completed, the server
+            ignores the second request. This prevents
+            clients from accidentally creating duplicate
+            commitments.
+
+            The request ID must be a valid UUID with the
+            exception that zero UUID is not supported
+            (00000000-0000-0000-0000-000000000000).
+    """
+
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=field_mask_pb2.FieldMask,
+    )
+    odb_subnet: "OdbSubnet" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="OdbSubnet",
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 

@@ -162,6 +162,21 @@ class ProcessingErrorReason(proto.Enum):
             External attribution data is missing. Sending
             events to a destination for an external
             attribution conversion action isn't supported.
+        PROCESSING_ERROR_REASON_DESTINATION_TOO_RECENTLY_CREATED (45):
+            The destination was created too recently. Try
+            again in a few hours.
+        PROCESSING_ERROR_REASON_EXPIRED_CLICK (46):
+            The matched click is older than the
+            conversion action's configured click-through
+            conversion lookback window (or the 90-day click
+            TTL).
+        PROCESSING_ERROR_REASON_TOO_RECENT_CALL (47):
+            The call is still being processed.
+        PROCESSING_ERROR_REASON_EXPIRED_CALL (48):
+            The call is too old for this conversion to be
+            imported.
+        PROCESSING_ERROR_REASON_INVALID_CALL (49):
+            The call was not found.
     """
 
     PROCESSING_ERROR_REASON_UNSPECIFIED = 0
@@ -211,6 +226,11 @@ class ProcessingErrorReason(proto.Enum):
     PROCESSING_ERROR_REASON_INVALID_OPERATING_ACCOUNT_FOR_CLICK = 42
     PROCESSING_ERROR_REASON_CLICK_NOT_FOUND = 43
     PROCESSING_ERROR_REASON_EXTERNAL_ATTRIBUTION_DATA_MISSING = 44
+    PROCESSING_ERROR_REASON_DESTINATION_TOO_RECENTLY_CREATED = 45
+    PROCESSING_ERROR_REASON_EXPIRED_CLICK = 46
+    PROCESSING_ERROR_REASON_TOO_RECENT_CALL = 47
+    PROCESSING_ERROR_REASON_EXPIRED_CALL = 48
+    PROCESSING_ERROR_REASON_INVALID_CALL = 49
 
 
 class ProcessingWarningReason(proto.Enum):
@@ -243,6 +263,19 @@ class ProcessingWarningReason(proto.Enum):
             Internal error.
         PROCESSING_WARNING_REASON_AWS_AUTH_FAILED (9):
             The system failed to authenticate with AWS.
+        PROCESSING_WARNING_REASON_CUSTOM_VARIABLE_NOT_ENABLED (10):
+            A [CustomVariable][google.ads.datamanager.v1.CustomVariable]
+            or
+            [ItemCustomVariable][google.ads.datamanager.v1.ItemCustomVariable]
+            is not enabled in the account.
+        PROCESSING_WARNING_REASON_CUSTOM_VARIABLE_NOT_PREDEFINED (11):
+            The value of a
+            [CustomVariable][google.ads.datamanager.v1.CustomVariable]
+            or
+            [ItemCustomVariable][google.ads.datamanager.v1.ItemCustomVariable]
+            is not among the predefined allowed values configured for
+            the custom variable on the destination account and will be
+            replaced by an uncategorized value.
     """
 
     PROCESSING_WARNING_REASON_UNSPECIFIED = 0
@@ -255,6 +288,8 @@ class ProcessingWarningReason(proto.Enum):
     PROCESSING_WARNING_REASON_USER_IDENTIFIER_DECRYPTION_ERROR = 7
     PROCESSING_WARNING_REASON_INTERNAL_ERROR = 8
     PROCESSING_WARNING_REASON_AWS_AUTH_FAILED = 9
+    PROCESSING_WARNING_REASON_CUSTOM_VARIABLE_NOT_ENABLED = 10
+    PROCESSING_WARNING_REASON_CUSTOM_VARIABLE_NOT_PREDEFINED = 11
 
 
 class WarningReason(proto.Enum):
@@ -324,6 +359,8 @@ class WarningReason(proto.Enum):
             The
             [``merchant_id``][google.ads.datamanager.v1.CartData.merchant_id]
             is invalid.
+        WARNING_REASON_INVALID_NUMBER_FORMAT (15):
+            The number format is invalid.
     """
 
     WARNING_REASON_UNSPECIFIED = 0
@@ -341,6 +378,7 @@ class WarningReason(proto.Enum):
     WARNING_REASON_INVALID_DEVICE_CATEGORY = 12
     WARNING_REASON_INVALID_DEVICE_SCREEN_RESOLUTION = 13
     WARNING_REASON_INVALID_MERCHANT_ID = 14
+    WARNING_REASON_INVALID_NUMBER_FORMAT = 15
 
 
 class ErrorInfo(proto.Message):
@@ -368,6 +406,10 @@ class ErrorCount(proto.Message):
             for a given reason.
         reason (google.ads.datamanager_v1.types.ProcessingErrorReason):
             The error reason of the failed records.
+        record_indices (MutableSequence[int]):
+            The 0-based indices of the records in the
+            original request that failed with this error
+            reason.
     """
 
     record_count: int = proto.Field(
@@ -378,6 +420,10 @@ class ErrorCount(proto.Message):
         proto.ENUM,
         number=2,
         enum="ProcessingErrorReason",
+    )
+    record_indices: MutableSequence[int] = proto.RepeatedField(
+        proto.INT32,
+        number=3,
     )
 
 
@@ -405,6 +451,9 @@ class WarningCount(proto.Message):
             The count of records that have a warning.
         reason (google.ads.datamanager_v1.types.ProcessingWarningReason):
             The warning reason.
+        record_indices (MutableSequence[int]):
+            The 0-based indices of the records in the
+            original request that had this warning reason.
     """
 
     record_count: int = proto.Field(
@@ -415,6 +464,10 @@ class WarningCount(proto.Message):
         proto.ENUM,
         number=2,
         enum="ProcessingWarningReason",
+    )
+    record_indices: MutableSequence[int] = proto.RepeatedField(
+        proto.INT32,
+        number=3,
     )
 
 

@@ -71,6 +71,7 @@ from google.cloud.run_v2.types import (
     condition,
     k8s_min,
     revision,
+    sandbox,
     status,
     vendor_settings,
 )
@@ -1040,7 +1041,11 @@ def test_revisions_client_create_channel_credentials_file(
             credentials=file_creds,
             credentials_file=None,
             quota_project_id=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             scopes=None,
             default_host="run.googleapis.com",
             ssl_credentials=None,
@@ -1089,6 +1094,8 @@ def test_get_revision(request_type, transport: str = "grpc"):
             session_affinity=True,
             gpu_zonal_redundancy_disabled=True,
             creator="creator_value",
+            client="client_value",
+            client_version="client_version_value",
             etag="etag_value",
         )
         response = client.get_revision(request)
@@ -1124,6 +1131,8 @@ def test_get_revision(request_type, transport: str = "grpc"):
     assert response.session_affinity is True
     assert response.gpu_zonal_redundancy_disabled is True
     assert response.creator == "creator_value"
+    assert response.client == "client_value"
+    assert response.client_version == "client_version_value"
     assert response.etag == "etag_value"
 
 
@@ -1273,6 +1282,8 @@ async def test_get_revision_async(request_type, transport: str = "grpc_asyncio")
                 session_affinity=True,
                 gpu_zonal_redundancy_disabled=True,
                 creator="creator_value",
+                client="client_value",
+                client_version="client_version_value",
                 etag="etag_value",
             )
         )
@@ -1309,6 +1320,8 @@ async def test_get_revision_async(request_type, transport: str = "grpc_asyncio")
     assert response.session_affinity is True
     assert response.gpu_zonal_redundancy_disabled is True
     assert response.creator == "creator_value"
+    assert response.client == "client_value"
+    assert response.client_version == "client_version_value"
     assert response.etag == "etag_value"
 
 
@@ -3003,6 +3016,8 @@ async def test_get_revision_empty_call_grpc_asyncio():
                 session_affinity=True,
                 gpu_zonal_redundancy_disabled=True,
                 creator="creator_value",
+                client="client_value",
+                client_version="client_version_value",
                 etag="etag_value",
             )
         )
@@ -3094,6 +3109,8 @@ async def test_get_revision_routing_parameters_request_1_grpc_asyncio():
                 session_affinity=True,
                 gpu_zonal_redundancy_disabled=True,
                 creator="creator_value",
+                client="client_value",
+                client_version="client_version_value",
                 etag="etag_value",
             )
         )
@@ -3251,6 +3268,8 @@ def test_get_revision_rest_call_success(request_type):
             session_affinity=True,
             gpu_zonal_redundancy_disabled=True,
             creator="creator_value",
+            client="client_value",
+            client_version="client_version_value",
             etag="etag_value",
         )
 
@@ -3291,6 +3310,8 @@ def test_get_revision_rest_call_success(request_type):
     assert response.session_affinity is True
     assert response.gpu_zonal_redundancy_disabled is True
     assert response.creator == "creator_value"
+    assert response.client == "client_value"
+    assert response.client_version == "client_version_value"
     assert response.etag == "etag_value"
 
 
@@ -4095,7 +4116,11 @@ def test_revisions_base_transport_with_credentials_file():
         load_creds.assert_called_once_with(
             "credentials.json",
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             quota_project_id="octopus",
         )
 
@@ -4121,7 +4146,11 @@ def test_revisions_auth_adc():
         RevisionsClient()
         adc.assert_called_once_with(
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             quota_project_id=None,
         )
 
@@ -4141,7 +4170,11 @@ def test_revisions_transport_auth_adc(transport_class):
         transport_class(quota_project_id="octopus", scopes=["1", "2"])
         adc.assert_called_once_with(
             scopes=["1", "2"],
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             quota_project_id="octopus",
         )
 
@@ -4194,7 +4227,11 @@ def test_revisions_transport_create_channel(transport_class, grpc_helpers):
             credentials=creds,
             credentials_file=None,
             quota_project_id="octopus",
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             scopes=["1", "2"],
             default_host="run.googleapis.com",
             ssl_credentials=None,

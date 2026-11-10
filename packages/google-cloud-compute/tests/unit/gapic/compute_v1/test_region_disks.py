@@ -204,7 +204,7 @@ def test_add_resource_policies_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -237,7 +237,7 @@ def test_bulk_insert_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -272,7 +272,7 @@ def test_create_snapshot_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -305,7 +305,7 @@ def test_delete_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -338,7 +338,7 @@ def test_get_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -373,7 +373,7 @@ def test_get_iam_policy_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -406,7 +406,7 @@ def test_insert_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -439,7 +439,7 @@ def test_list_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -474,7 +474,7 @@ def test_remove_resource_policies_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -507,7 +507,7 @@ def test_resize_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -542,7 +542,7 @@ def test_set_iam_policy_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -575,7 +575,7 @@ def test_set_labels_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -610,7 +610,7 @@ def test_start_async_replication_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -645,7 +645,7 @@ def test_stop_async_replication_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -680,7 +680,7 @@ def test_stop_group_async_replication_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -715,7 +715,7 @@ def test_test_iam_permissions_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -748,7 +748,7 @@ def test_update_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -783,7 +783,7 @@ def test_update_kms_key_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -8721,6 +8721,9 @@ def test_get_rest_call_success(request_type):
             source_image_id="source_image_id_value",
             source_instant_snapshot="source_instant_snapshot_value",
             source_instant_snapshot_id="source_instant_snapshot_id_value",
+            source_machine_image="source_machine_image_value",
+            source_machine_image_disk_device_name="source_machine_image_disk_device_name_value",
+            source_machine_image_id="source_machine_image_id_value",
             source_snapshot="source_snapshot_value",
             source_snapshot_id="source_snapshot_id_value",
             source_storage_object="source_storage_object_value",
@@ -8784,6 +8787,12 @@ def test_get_rest_call_success(request_type):
     assert response.source_image_id == "source_image_id_value"
     assert response.source_instant_snapshot == "source_instant_snapshot_value"
     assert response.source_instant_snapshot_id == "source_instant_snapshot_id_value"
+    assert response.source_machine_image == "source_machine_image_value"
+    assert (
+        response.source_machine_image_disk_device_name
+        == "source_machine_image_disk_device_name_value"
+    )
+    assert response.source_machine_image_id == "source_machine_image_id_value"
     assert response.source_snapshot == "source_snapshot_value"
     assert response.source_snapshot_id == "source_snapshot_id_value"
     assert response.source_storage_object == "source_storage_object_value"
@@ -9078,6 +9087,10 @@ def test_insert_rest_call_success(request_type):
         "source_image_id": "source_image_id_value",
         "source_instant_snapshot": "source_instant_snapshot_value",
         "source_instant_snapshot_id": "source_instant_snapshot_id_value",
+        "source_machine_image": "source_machine_image_value",
+        "source_machine_image_disk_device_name": "source_machine_image_disk_device_name_value",
+        "source_machine_image_encryption_key": {},
+        "source_machine_image_id": "source_machine_image_id_value",
         "source_snapshot": "source_snapshot_value",
         "source_snapshot_encryption_key": {},
         "source_snapshot_id": "source_snapshot_id_value",
@@ -11397,6 +11410,10 @@ def test_update_rest_call_success(request_type):
         "source_image_id": "source_image_id_value",
         "source_instant_snapshot": "source_instant_snapshot_value",
         "source_instant_snapshot_id": "source_instant_snapshot_id_value",
+        "source_machine_image": "source_machine_image_value",
+        "source_machine_image_disk_device_name": "source_machine_image_disk_device_name_value",
+        "source_machine_image_encryption_key": {},
+        "source_machine_image_id": "source_machine_image_id_value",
         "source_snapshot": "source_snapshot_value",
         "source_snapshot_encryption_key": {},
         "source_snapshot_id": "source_snapshot_id_value",

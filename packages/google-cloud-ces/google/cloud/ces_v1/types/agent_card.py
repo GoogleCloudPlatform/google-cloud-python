@@ -19,6 +19,8 @@ from typing import MutableMapping, MutableSequence
 
 import proto  # type: ignore
 
+from google.cloud.ces_v1.types import auth
+
 __protobuf__ = proto.module(
     package="google.cloud.ces.v1",
     manifest={
@@ -196,6 +198,20 @@ class RemoteAgentTool(proto.Message):
         agent_card (google.cloud.ces_v1.types.AgentCard):
             Required. The agent card of the remote agent
             that this tool invokes.
+        api_authentication (google.cloud.ces_v1.types.ApiAuthentication):
+            Optional. Authentication configuration for
+            calling the remote agent.
+        stateful_agent (bool):
+            Optional. When enabled, the interaction between the CXAS app
+            and the remote agent will share the same context. If the
+            remote agent returns a context_id, it will be persisted for
+            the entirety of the session for this remote agent tool.
+        input_variable_mapping (MutableMapping[str, str]):
+            Optional. Mapping of input variable names of
+            remote agent to GECX variable names.
+        output_variable_mapping (MutableMapping[str, str]):
+            Optional. Mapping of output variable names of
+            remote agent to GECX variable names.
     """
 
     name: str = proto.Field(
@@ -210,6 +226,25 @@ class RemoteAgentTool(proto.Message):
         proto.MESSAGE,
         number=3,
         message="AgentCard",
+    )
+    api_authentication: auth.ApiAuthentication = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message=auth.ApiAuthentication,
+    )
+    stateful_agent: bool = proto.Field(
+        proto.BOOL,
+        number=5,
+    )
+    input_variable_mapping: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=6,
+    )
+    output_variable_mapping: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=7,
     )
 
 

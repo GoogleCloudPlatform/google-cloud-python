@@ -857,6 +857,16 @@ class IngestionServiceAsyncClient:
 
         This feature is only available to accounts on an allowlist.
 
+        Authorization Headers:
+
+        This method also requires the following header to define how the
+        API authorizes access for the request:
+
+        - ``login-account``: (Required) The resource name of the Data
+          Partner account where the Google Account of the credentials is
+          a user. Format:
+          ``accountTypes/DATA_PARTNER/accounts/{loginAccountId}``
+
         .. code-block:: python
 
             # This snippet has been automatically generated and should be regarded as a

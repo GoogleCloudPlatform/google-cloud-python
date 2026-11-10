@@ -245,6 +245,23 @@ class _BaseSqlInstancesServiceRestTransport(SqlInstancesServiceTransport):
             ]
             return http_options
 
+    class _BaseExecuteSqlReadOnly:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/sql/v1beta4/projects/{project}/instances/{instance}/executeSqlReadOnly",
+                    "body": "body",
+                },
+            ]
+            return http_options
+
     class _BaseExport:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -485,6 +502,23 @@ class _BaseSqlInstancesServiceRestTransport(SqlInstancesServiceTransport):
             ]
             return http_options
 
+    class _BaseReconcileNetworking:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/sql/v1beta4/projects/{project}/instances/{instance}:reconcileNetworking",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
     class _BaseReencrypt:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -638,6 +672,22 @@ class _BaseSqlInstancesServiceRestTransport(SqlInstancesServiceTransport):
             ]
             return http_options
 
+    class _BaseStart:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/sql/v1beta4/projects/{project}/instances/{instance}:start",
+                },
+            ]
+            return http_options
+
     class _BaseStartExternalSync:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -663,6 +713,22 @@ class _BaseSqlInstancesServiceRestTransport(SqlInstancesServiceTransport):
                 {
                     "method": "post",
                     "uri": "/sql/v1beta4/projects/{project}/instances/{instance}/startReplica",
+                },
+            ]
+            return http_options
+
+    class _BaseStop:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/sql/v1beta4/projects/{project}/instances/{instance}:stop",
                 },
             ]
             return http_options

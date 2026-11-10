@@ -85,6 +85,15 @@ class ExadbVmCluster(proto.Message):
             Output only. The identity connector details
             which will allow OCI to securely access the
             resources in the customer project.
+        identity_connector_disabled (bool):
+            Optional. Input only. Immutable. If set to
+            true, disables the automatic provisioning of the
+            Workload Identity Connector during creation. If
+            set to false or omitted, the Workload Identity
+            Connector will be automatically provisioned by
+            default. Note: Provisioning the Workload
+            Identity Connector is a prerequisite for
+            enabling Google Cloud CMEK.
     """
 
     name: str = proto.Field(
@@ -134,6 +143,10 @@ class ExadbVmCluster(proto.Message):
         proto.MESSAGE,
         number=12,
         message=common.IdentityConnector,
+    )
+    identity_connector_disabled: bool = proto.Field(
+        proto.BOOL,
+        number=13,
     )
 
 

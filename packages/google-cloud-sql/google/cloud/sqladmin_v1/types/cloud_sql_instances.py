@@ -52,6 +52,8 @@ __protobuf__ = proto.module(
         "SqlInstancesSwitchoverRequest",
         "SqlInstancesResetSslConfigRequest",
         "SqlInstancesRestartRequest",
+        "SqlInstancesStartRequest",
+        "SqlInstancesStopRequest",
         "SqlInstancesRestoreBackupRequest",
         "SqlInstancesRotateServerCaRequest",
         "SqlInstancesRotateServerCertificateRequest",
@@ -99,6 +101,8 @@ __protobuf__ = proto.module(
         "BinLogCoordinates",
         "DatabaseInstance",
         "BlueGreenDeploymentInfo",
+        "WorkloadReplayConfig",
+        "WorkloadCaptureConfig",
         "GeminiInstanceConfig",
         "ReplicationCluster",
         "AvailableDatabaseVersion",
@@ -115,8 +119,11 @@ __protobuf__ = proto.module(
         "SelectedObjects",
         "OnPremisesConfiguration",
         "ReplicaConfiguration",
+        "SqlInstancesExecuteSqlReadOnlyRequest",
         "SqlInstancesExecuteSqlRequest",
+        "ExecuteSqlReadOnlyPayload",
         "ExecuteSqlPayload",
+        "SqlInstancesExecuteSqlReadOnlyResponse",
         "SqlInstancesExecuteSqlResponse",
         "QueryResult",
         "Column",
@@ -128,6 +135,8 @@ __protobuf__ = proto.module(
         "SqlInstancesReleaseSsrsLeaseRequest",
         "SqlInstancesReleaseSsrsLeaseResponse",
         "SqlInstancesPointInTimeRestoreRequest",
+        "SqlInstancesReconcileNetworkingRequest",
+        "PscDnsReconcileNetworkingRequest",
     },
 )
 
@@ -978,6 +987,66 @@ class SqlInstancesRestartRequest(proto.Message):
             instance to be restarted.
         location (str):
             Optional. Region of the Cloud SQL instance.
+    """
+
+    instance: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    location: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class SqlInstancesStartRequest(proto.Message):
+    r"""Instance start request.
+
+    Attributes:
+        instance (str):
+            Required. Cloud SQL instance ID. This does
+            not include the project ID.
+        project (str):
+            Required. Project ID of the project that
+            contains the instance to be started.
+        location (str):
+            Optional. The region of the Cloud SQL instance, for example
+            ``us-central1``. If omitted, the region is determined from
+            the instance.
+    """
+
+    instance: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    location: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class SqlInstancesStopRequest(proto.Message):
+    r"""Instance stop request.
+
+    Attributes:
+        instance (str):
+            Required. Cloud SQL instance ID. This does
+            not include the project ID.
+        project (str):
+            Required. Project ID of the project that
+            contains the instance to be stopped.
+        location (str):
+            Optional. The region of the Cloud SQL instance, for example
+            ``us-central1``. If omitted, the region is determined from
+            the instance.
     """
 
     instance: str = proto.Field(
@@ -2861,6 +2930,15 @@ class DatabaseInstance(proto.Message):
             default.
 
             This field is a member of `oneof`_ ``_database_center_integration``.
+        workload_replay_config (google.cloud.sqladmin_v1.types.WorkloadReplayConfig):
+            Output only. The workload replay
+            configuration for this instance. This field is
+            set only for workload replay instances.
+        workload_capture_config (google.cloud.sqladmin_v1.types.WorkloadCaptureConfig):
+            Output only. The workload capture
+            configuration for this instance. This field is
+            set only when an active workload capture is
+            present on the instance.
     """
 
     class SqlInstanceState(proto.Enum):
@@ -3431,6 +3509,16 @@ class DatabaseInstance(proto.Message):
         optional=True,
         enum=DatabaseCenterIntegration,
     )
+    workload_replay_config: "WorkloadReplayConfig" = proto.Field(
+        proto.MESSAGE,
+        number=79,
+        message="WorkloadReplayConfig",
+    )
+    workload_capture_config: "WorkloadCaptureConfig" = proto.Field(
+        proto.MESSAGE,
+        number=80,
+        message="WorkloadCaptureConfig",
+    )
 
 
 class BlueGreenDeploymentInfo(proto.Message):
@@ -3547,6 +3635,266 @@ class BlueGreenDeploymentInfo(proto.Message):
         number=4,
         optional=True,
         enum=State,
+    )
+
+
+class WorkloadReplayConfig(proto.Message):
+    r"""The workload replay configuration for a Cloud SQL replay
+    instance.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        workload_id (str):
+            Output only. The ID of the captured workload
+            being replayed.
+
+            This field is a member of `oneof`_ ``_workload_id``.
+        source_instance (str):
+            Output only. The name of the source instance,
+            excluding the project ID, where the workload was
+            captured.
+
+            This field is a member of `oneof`_ ``_source_instance``.
+        replay_mode (google.cloud.sqladmin_v1.types.WorkloadReplayConfig.ReplayMode):
+            Output only. The mode of the workload replay.
+
+            This field is a member of `oneof`_ ``_replay_mode``.
+        state (google.cloud.sqladmin_v1.types.WorkloadReplayConfig.State):
+            Output only. The state of the workload
+            replay.
+
+            This field is a member of `oneof`_ ``_state``.
+        start_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The start time of the workload
+            replay.
+        end_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The end time of the workload
+            replay. This field is unset while the replay is
+            running.
+    """
+
+    class ReplayMode(proto.Enum):
+        r"""The mode of workload replay.
+
+        Values:
+            REPLAY_MODE_UNSPECIFIED (0):
+                Default value. This value is unused.
+            LIVE (1):
+                Live workload replay mode.
+            OFFLINE (2):
+                Offline (delayed) workload replay mode.
+        """
+
+        REPLAY_MODE_UNSPECIFIED = 0
+        LIVE = 1
+        OFFLINE = 2
+
+    class State(proto.Enum):
+        r"""The state of the workload replay.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                Default value. This value is unused.
+            RUNNING (1):
+                Workload replay is currently running.
+            COMPLETED (2):
+                Workload replay completed successfully. Cloud
+                SQL sets this state when all captured workload
+                files finish replaying or when you explicitly
+                stop the replay.
+            FAILED (3):
+                Workload replay failed.
+            TERMINATED (4):
+                Workload replay was terminated automatically.
+                Cloud SQL sets this state when it automatically
+                stops the replay because of a conflicting
+                operation.
+        """
+
+        STATE_UNSPECIFIED = 0
+        RUNNING = 1
+        COMPLETED = 2
+        FAILED = 3
+        TERMINATED = 4
+
+    workload_id: str = proto.Field(
+        proto.STRING,
+        number=1,
+        optional=True,
+    )
+    source_instance: str = proto.Field(
+        proto.STRING,
+        number=2,
+        optional=True,
+    )
+    replay_mode: ReplayMode = proto.Field(
+        proto.ENUM,
+        number=3,
+        optional=True,
+        enum=ReplayMode,
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=4,
+        optional=True,
+        enum=State,
+    )
+    start_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=5,
+        message=timestamp_pb2.Timestamp,
+    )
+    end_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=6,
+        message=timestamp_pb2.Timestamp,
+    )
+
+
+class WorkloadCaptureConfig(proto.Message):
+    r"""The workload capture configuration for a Cloud SQL primary
+    instance.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        workload_id (str):
+            Output only. The ID of the captured workload.
+
+            This field is a member of `oneof`_ ``_workload_id``.
+        capture_mode (google.cloud.sqladmin_v1.types.WorkloadCaptureConfig.CaptureMode):
+            Output only. The mode of the workload
+            capture.
+
+            This field is a member of `oneof`_ ``_capture_mode``.
+        state (google.cloud.sqladmin_v1.types.WorkloadCaptureConfig.State):
+            Output only. The state of the workload
+            capture.
+
+            This field is a member of `oneof`_ ``_state``.
+        start_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The start time of the workload
+            capture.
+        end_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. The end time of the workload
+            capture. This field is unset while the capture
+            is running.
+        replay_instance (str):
+            Output only. The name of the replay instance,
+            excluding the project ID, if live replay is
+            enabled.
+
+            This field is a member of `oneof`_ ``_replay_instance``.
+        retention_days (int):
+            Output only. The retention period in days for
+            the captured workload.
+
+            This field is a member of `oneof`_ ``_retention_days``.
+        backup_id (str):
+            Output only. The base backup ID associated
+            with the workload capture.
+
+            This field is a member of `oneof`_ ``_backup_id``.
+        max_capture_duration (google.protobuf.duration_pb2.Duration):
+            Output only. The maximum duration for this
+            workload capture.
+    """
+
+    class CaptureMode(proto.Enum):
+        r"""The mode of workload capture.
+
+        Values:
+            CAPTURE_MODE_UNSPECIFIED (0):
+                Default value. This value is unused.
+            CAPTURE_ONLY (1):
+                Captures the workload on the primary instance
+                without live replay.
+            CAPTURE_AND_LIVE_REPLAY (2):
+                Captures the workload and simultaneously
+                replays it on a live replay instance.
+        """
+
+        CAPTURE_MODE_UNSPECIFIED = 0
+        CAPTURE_ONLY = 1
+        CAPTURE_AND_LIVE_REPLAY = 2
+
+    class State(proto.Enum):
+        r"""The state of the workload capture.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                Default value. This value is unused.
+            RUNNING (1):
+                Workload capture is currently running.
+            COMPLETED (2):
+                Workload capture completed successfully.
+                Cloud SQL sets this state when you explicitly
+                stop the capture.
+            FAILED (3):
+                Workload capture failed.
+            TERMINATED (4):
+                Workload capture was terminated
+                automatically. Cloud SQL sets this state when it
+                automatically stops the capture because of a
+                conflicting operation or because the capture
+                reached its maximum duration.
+        """
+
+        STATE_UNSPECIFIED = 0
+        RUNNING = 1
+        COMPLETED = 2
+        FAILED = 3
+        TERMINATED = 4
+
+    workload_id: str = proto.Field(
+        proto.STRING,
+        number=1,
+        optional=True,
+    )
+    capture_mode: CaptureMode = proto.Field(
+        proto.ENUM,
+        number=2,
+        optional=True,
+        enum=CaptureMode,
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=3,
+        optional=True,
+        enum=State,
+    )
+    start_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message=timestamp_pb2.Timestamp,
+    )
+    end_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=5,
+        message=timestamp_pb2.Timestamp,
+    )
+    replay_instance: str = proto.Field(
+        proto.STRING,
+        number=6,
+        optional=True,
+    )
+    retention_days: int = proto.Field(
+        proto.INT32,
+        number=7,
+        optional=True,
+    )
+    backup_id: str = proto.Field(
+        proto.STRING,
+        number=8,
+        optional=True,
+    )
+    max_capture_duration: duration_pb2.Duration = proto.Field(
+        proto.MESSAGE,
+        number=13,
+        message=duration_pb2.Duration,
     )
 
 
@@ -4490,6 +4838,42 @@ class ReplicaConfiguration(proto.Message):
     )
 
 
+class SqlInstancesExecuteSqlReadOnlyRequest(proto.Message):
+    r"""Execute SQL statements request.
+    Execute SQL statements in read-only mode request.
+
+    Attributes:
+        instance (str):
+            Required. Database instance ID. This does not
+            include the project ID.
+        project (str):
+            Required. Project ID of the project that
+            contains the instance.
+        body (google.cloud.sqladmin_v1.types.ExecuteSqlReadOnlyPayload):
+            Required. The request body.
+        location (str):
+            Optional. Region of the Cloud SQL instance.
+    """
+
+    instance: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    body: "ExecuteSqlReadOnlyPayload" = proto.Field(
+        proto.MESSAGE,
+        number=100,
+        message="ExecuteSqlReadOnlyPayload",
+    )
+    location: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
 class SqlInstancesExecuteSqlRequest(proto.Message):
     r"""
 
@@ -4522,6 +4906,82 @@ class SqlInstancesExecuteSqlRequest(proto.Message):
     location: str = proto.Field(
         proto.STRING,
         number=3,
+    )
+
+
+class ExecuteSqlReadOnlyPayload(proto.Message):
+    r"""The request payload used to execute SQL statements in
+    read-only mode.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        user (str):
+            Optional. The name of an existing database user to connect
+            to the database. When ``auto_iam_authn`` is set to true,
+            this field is ignored and the API caller's IAM user is used.
+        sql_statement (str):
+            Required. SQL statements to run on the
+            database. It can be a single statement or a
+            sequence of statements separated by semicolons.
+        database (str):
+            Optional. Name of the database on which the
+            statement will be executed. For Postgres and SQL
+            Server it's required, for MySQL it's optional.
+        password_secret_version (str):
+            Optional. The resource name of the Secret Manager secret
+            holding the password for the user to log into the database.
+            The secret should be created using the regional endpoint
+            (for API) or from the Regional Secrets page (for UI), and
+            stored in the same region as the Cloud SQL instance. The
+            expected resource name format is
+            ``projects/{project}/locations/{location}/secrets/{secret}/versions/{secret_version}``.
+            This field is used together with the ``user`` field. The
+            secret resource name will not be stored.
+
+            This field is a member of `oneof`_ ``user_password``.
+        auto_iam_authn (bool):
+            Optional. When set to true, the API caller
+            identity associated with the request is used for
+            database authentication. The API caller must be
+            an IAM user in the database.
+
+            This field is a member of `oneof`_ ``user_password``.
+        row_limit (int):
+            Optional. The maximum number of rows returned
+            per SQL statement.
+    """
+
+    user: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    sql_statement: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    database: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    password_secret_version: str = proto.Field(
+        proto.STRING,
+        number=5,
+        oneof="user_password",
+    )
+    auto_iam_authn: bool = proto.Field(
+        proto.BOOL,
+        number=11,
+        oneof="user_password",
+    )
+    row_limit: int = proto.Field(
+        proto.INT64,
+        number=10,
     )
 
 
@@ -4639,6 +5099,53 @@ class ExecuteSqlPayload(proto.Message):
     application: str = proto.Field(
         proto.STRING,
         number=16,
+    )
+
+
+class SqlInstancesExecuteSqlReadOnlyResponse(proto.Message):
+    r"""Execute SQL statements response.
+    Execute SQL statements in read-only mode response.
+
+    Attributes:
+        messages (MutableSequence[google.cloud.sqladmin_v1.types.SqlInstancesExecuteSqlResponse.Message]):
+            A list of notices and warnings generated during query
+            execution. For PostgreSQL, this includes all notices and
+            warnings. For MySQL, this includes warnings generated by the
+            last executed statement. To retrieve all warnings for a
+            multi-statement query, ``SHOW WARNINGS`` must be executed
+            after each statement.
+        metadata (google.cloud.sqladmin_v1.types.Metadata):
+            The additional metadata information regarding
+            the execution of the SQL statements.
+        results (MutableSequence[google.cloud.sqladmin_v1.types.QueryResult]):
+            The list of results after executing all the
+            SQL statements.
+        status (google.rpc.status_pb2.Status):
+            Contains the error from the database if the
+            SQL execution failed.
+    """
+
+    messages: MutableSequence["SqlInstancesExecuteSqlResponse.Message"] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=9,
+            message="SqlInstancesExecuteSqlResponse.Message",
+        )
+    )
+    metadata: "Metadata" = proto.Field(
+        proto.MESSAGE,
+        number=6,
+        message="Metadata",
+    )
+    results: MutableSequence["QueryResult"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=7,
+        message="QueryResult",
+    )
+    status: status_pb2.Status = proto.Field(
+        proto.MESSAGE,
+        number=8,
+        message=status_pb2.Status,
     )
 
 
@@ -4958,6 +5465,82 @@ class SqlInstancesPointInTimeRestoreRequest(proto.Message):
         proto.MESSAGE,
         number=100,
         message="PointInTimeRestoreContext",
+    )
+
+
+class SqlInstancesReconcileNetworkingRequest(proto.Message):
+    r"""Request message for SqlInstancesService.ReconcileNetworking.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        instance (str):
+            Required. Cloud SQL instance ID.
+        project (str):
+            Required. Project ID of the project that
+            contains the instance.
+        psc_dns (google.cloud.sqladmin_v1.types.PscDnsReconcileNetworkingRequest):
+            Request to recreate Private Service Connect
+            DNS write endpoints and reconcile Private
+            Service Connect connectivity infrastructure for
+            the instance.
+
+            This field is a member of `oneof`_ ``reconcile_data``.
+        location (str):
+            Optional. Region of the Cloud SQL instance.
+    """
+
+    instance: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    project: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    psc_dns: "PscDnsReconcileNetworkingRequest" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        oneof="reconcile_data",
+        message="PscDnsReconcileNetworkingRequest",
+    )
+    location: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+
+
+class PscDnsReconcileNetworkingRequest(proto.Message):
+    r"""Request parameters specific to PSC DNS networking
+    reconciliation.
+
+    Attributes:
+        networks (MutableSequence[str]):
+            Optional. List of specific consumer VPC
+            networks to reconcile. They must be specified as
+            full resource names (e.g.,
+            "projects/my-consumer-project/global/networks/prod-vpc").
+            If empty, recreates Write Endpoints for all the
+            consumer networks associated with this instance.
+        force (bool):
+            Optional. Set ``true`` to force the reset and reapplication
+            of Private Service Connect connectivity infrastructure if
+            standard reconciliation does not resolve automated DNS
+            issues. This operation might cause a brief disruption in
+            network connectivity for connected VPC networks while
+            settings are reapplied. Use this option only when standard
+            reconciliation fails to resolve networking issues (for
+            example, if connectivity resources are stuck in an updating
+            or creating state).
+    """
+
+    networks: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=1,
+    )
+    force: bool = proto.Field(
+        proto.BOOL,
+        number=2,
     )
 
 

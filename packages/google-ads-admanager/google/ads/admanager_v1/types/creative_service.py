@@ -17,6 +17,7 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import proto  # type: ignore
 
 from google.ads.admanager_v1.types import creative_messages
@@ -27,6 +28,12 @@ __protobuf__ = proto.module(
         "GetCreativeRequest",
         "ListCreativesRequest",
         "ListCreativesResponse",
+        "CreateCreativeRequest",
+        "UpdateCreativeRequest",
+        "BatchCreateCreativesRequest",
+        "BatchCreateCreativesResponse",
+        "BatchUpdateCreativesRequest",
+        "BatchUpdateCreativesResponse",
         "BatchActivateCreativesRequest",
         "BatchActivateCreativesResponse",
         "BatchDeactivateCreativesRequest",
@@ -76,13 +83,21 @@ class ListCreativesRequest(proto.Message):
             details at
             https://developers.google.com/ad-manager/api/beta/filters
 
+            Syntax summary: double-quoted ``"..."`` (never ``'...'``)
+            strings and RFC 3339 timestamps, full resource names on
+            reference fields (for example,
+            ``order = "networks/123/orders/456"``, not ``*Id`` or bare
+            IDs), prefix or suffix ``*`` wildcards with ``=``
+            (``displayName = "foo*"``), ``:`` for substring or
+            repeated-field matching, unquoted enums and booleans,
+            uppercase ``AND``/``OR``/``NOT``, and standalone
+            ``IN(field, SET(v1, v2))`` (not ``field IN (...)``).
+
             **Filterable fields:**
 
             - ``advertiser``
             - ``displayName``
             - ``name``
-            - ``setTopBoxCreative.externalAssetId,providerId``
-            - ``size.canonicalName,height,width``
             - ``thirdPartyDataDeclarationStatus``
             - ``updateTime``
         order_by (str):
@@ -162,6 +177,132 @@ class ListCreativesResponse(proto.Message):
     total_size: int = proto.Field(
         proto.INT32,
         number=3,
+    )
+
+
+class CreateCreativeRequest(proto.Message):
+    r"""Request object for ``CreateCreative`` method.
+
+    Attributes:
+        parent (str):
+            Required. The parent resource where this ``Creative`` will
+            be created. Format: ``networks/{network_code}``
+        creative (google.ads.admanager_v1.types.Creative):
+            Required. The ``Creative`` to create.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    creative: creative_messages.Creative = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=creative_messages.Creative,
+    )
+
+
+class UpdateCreativeRequest(proto.Message):
+    r"""Request object for ``UpdateCreative`` method.
+
+    Attributes:
+        creative (google.ads.admanager_v1.types.Creative):
+            Required. The ``Creative`` to update.
+
+            The ``Creative``'s name is used to identify the ``Creative``
+            to update. Format:
+            ``networks/{network_code}/creatives/{creative_id}``
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. The list of fields to update.
+    """
+
+    creative: creative_messages.Creative = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=creative_messages.Creative,
+    )
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask_pb2.FieldMask,
+    )
+
+
+class BatchCreateCreativesRequest(proto.Message):
+    r"""Request object for ``BatchCreateCreatives`` method.
+
+    Attributes:
+        parent (str):
+            Required. The parent resource where ``Creatives`` will be
+            created. Format: ``networks/{network_code}`` The parent
+            field in the CreateCreativeRequest must match this field.
+        requests (MutableSequence[google.ads.admanager_v1.types.CreateCreativeRequest]):
+            Required. The ``Creative`` objects to create. A maximum of
+            100 objects can be created in a batch.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    requests: MutableSequence["CreateCreativeRequest"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message="CreateCreativeRequest",
+    )
+
+
+class BatchCreateCreativesResponse(proto.Message):
+    r"""Response object for ``BatchCreateCreatives`` method.
+
+    Attributes:
+        creatives (MutableSequence[google.ads.admanager_v1.types.Creative]):
+            The ``Creative`` objects created.
+    """
+
+    creatives: MutableSequence[creative_messages.Creative] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=creative_messages.Creative,
+    )
+
+
+class BatchUpdateCreativesRequest(proto.Message):
+    r"""Request object for ``BatchUpdateCreatives`` method.
+
+    Attributes:
+        parent (str):
+            Required. The parent resource where ``Creatives`` will be
+            updated. Format: ``networks/{network_code}`` The parent
+            field in the UpdateCreativeRequest must match this field.
+        requests (MutableSequence[google.ads.admanager_v1.types.UpdateCreativeRequest]):
+            Required. The ``Creative`` objects to update. A maximum of
+            100 objects can be updated in a batch.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    requests: MutableSequence["UpdateCreativeRequest"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message="UpdateCreativeRequest",
+    )
+
+
+class BatchUpdateCreativesResponse(proto.Message):
+    r"""Response object for ``BatchUpdateCreatives`` method.
+
+    Attributes:
+        creatives (MutableSequence[google.ads.admanager_v1.types.Creative]):
+            The ``Creative`` objects updated.
+    """
+
+    creatives: MutableSequence[creative_messages.Creative] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=creative_messages.Creative,
     )
 
 

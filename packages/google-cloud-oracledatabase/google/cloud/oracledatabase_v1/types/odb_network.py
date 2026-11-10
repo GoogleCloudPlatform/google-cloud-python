@@ -17,6 +17,7 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
 
@@ -26,9 +27,12 @@ __protobuf__ = proto.module(
         "OdbNetwork",
         "CreateOdbNetworkRequest",
         "DeleteOdbNetworkRequest",
+        "UpdateOdbNetworkRequest",
         "ListOdbNetworksRequest",
         "ListOdbNetworksResponse",
         "GetOdbNetworkRequest",
+        "PscInterfaceConfig",
+        "ServiceConnectivityConfig",
     },
 )
 
@@ -42,8 +46,8 @@ class OdbNetwork(proto.Message):
             following format:
             projects/{project}/locations/{region}/odbNetworks/{odb_network}
         network (str):
-            Required. The name of the VPC network in the
-            following format:
+            Required. Immutable. The name of the VPC
+            network in the following format:
             projects/{project}/global/networks/{network}
         labels (MutableMapping[str, str]):
             Optional. Labels or tags associated with the
@@ -57,10 +61,25 @@ class OdbNetwork(proto.Message):
             Output only. The ID of the subscription
             entitlement associated with the OdbNetwork.
         gcp_oracle_zone (str):
-            Optional. The GCP Oracle zone where
-            OdbNetwork is hosted. Example: us-east4-b-r2. If
-            not specified, the system will pick a zone based
-            on availability.
+            Optional. Immutable. The GCP Oracle zone
+            where OdbNetwork is hosted. Example:
+            us-east4-b-r2. If not specified, the system will
+            pick a zone based on availability.
+        service_connectivity_config (google.cloud.oracledatabase_v1.types.ServiceConnectivityConfig):
+            Optional. Configuration to enable the service
+            (Oracledatabase@Google Cloud) to establish connectivity to
+            the database.
+
+            This should be specified if you intend to associate this
+            OdbNetwork with a DatabaseConnection resource to
+            ``ExecuteSQL`` on the database, or to create a
+            ServiceIntegration with the Database.
+
+            Please don't specify it otherwise to avoid complicating the
+            network setup.
+        reconciling (bool):
+            Output only. Indicates whether the OdbNetwork
+            is currently reconciling changes.
     """
 
     class State(proto.Enum):
@@ -119,6 +138,15 @@ class OdbNetwork(proto.Message):
     gcp_oracle_zone: str = proto.Field(
         proto.STRING,
         number=7,
+    )
+    service_connectivity_config: "ServiceConnectivityConfig" = proto.Field(
+        proto.MESSAGE,
+        number=8,
+        message="ServiceConnectivityConfig",
+    )
+    reconciling: bool = proto.Field(
+        proto.BOOL,
+        number=9,
     )
 
 
@@ -201,6 +229,58 @@ class DeleteOdbNetworkRequest(proto.Message):
     request_id: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+
+
+class UpdateOdbNetworkRequest(proto.Message):
+    r"""The request for ``OdbNetwork.Update``.
+
+    Attributes:
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. A mask specifying which fields in the OdbNetwork
+            should be updated. A field specified in the mask is updated.
+            If a mask isn't provided, the service treats this as an
+            implied field mask equivalent to all fields that are
+            populated (have a non-empty value). To clear or unset a
+            field, the field must be explicitly specified in the
+            ``update_mask``.
+        odb_network (google.cloud.oracledatabase_v1.types.OdbNetwork):
+            Required. The resource being updated. Note only ``labels``
+            and ``service_connectivity_config`` can be updated. The
+            provided labels will completely replace the existing labels.
+            Any existing label keys that are not included in the update
+            request will be deleted. Not providing labels and
+            update_mask will not update the labels. To clear all labels,
+            specify ``labels`` in the ``update_mask`` and omit or leave
+            the ``labels`` field empty in the update request.
+        request_id (str):
+            Optional. An optional ID to identify the
+            request. This value is used to identify
+            duplicate requests. If you make a request with
+            the same request ID and the original request is
+            still in progress or completed, the server
+            ignores the second request. This prevents
+            clients from accidentally creating duplicate
+            commitments.
+
+            The request ID must be a valid UUID with the
+            exception that zero UUID is not supported
+            (00000000-0000-0000-0000-000000000000).
+    """
+
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=field_mask_pb2.FieldMask,
+    )
+    odb_network: "OdbNetwork" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="OdbNetwork",
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 
@@ -297,6 +377,50 @@ class GetOdbNetworkRequest(proto.Message):
     name: str = proto.Field(
         proto.STRING,
         number=1,
+    )
+
+
+class PscInterfaceConfig(proto.Message):
+    r"""Configuration for a Private Service Connect (PSC) interface
+    used by Oracledatabase@Google Cloud to establish private
+    connectivity to the database.
+
+    Attributes:
+        network_attachment (str):
+            Optional. The resource name of the Network Attachment that
+            Oracledatabase@Google Cloud will use to establish private
+            connectivity to the database via a Private Service Connect
+            Interface (PSC-I). Format:
+            projects/{project}/regions/{region}/networkAttachments/{network_attachment}
+    """
+
+    network_attachment: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+
+
+class ServiceConnectivityConfig(proto.Message):
+    r"""Configuration to enable the service (Oracledatabase@Google Cloud) to
+    establish connectivity to the database.
+
+    This should be specified if you intend to associate this OdbNetwork
+    with a DatabaseConnection resource to ``ExecuteSQL`` on the
+    database, or to create a ServiceIntegration with the Database.
+
+    Please don't specify it otherwise to avoid complicating the network
+    setup.
+
+    Attributes:
+        psc_interface_config (google.cloud.oracledatabase_v1.types.PscInterfaceConfig):
+            Optional. Configuration for Private Service
+            Connect (PSC) interface.
+    """
+
+    psc_interface_config: "PscInterfaceConfig" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="PscInterfaceConfig",
     )
 
 

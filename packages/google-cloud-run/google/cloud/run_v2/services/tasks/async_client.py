@@ -50,7 +50,7 @@ from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
 
 from google.cloud.run_v2.services.tasks import pagers
-from google.cloud.run_v2.types import condition, k8s_min, task, vendor_settings
+from google.cloud.run_v2.types import condition, k8s_min, sandbox, task, vendor_settings
 
 from .client import TasksClient
 from .transports.base import DEFAULT_CLIENT_INFO, TasksTransport

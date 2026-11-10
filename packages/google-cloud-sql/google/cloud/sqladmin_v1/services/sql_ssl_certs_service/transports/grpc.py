@@ -450,6 +450,105 @@ class SqlSslCertsServiceGrpcTransport(SqlSslCertsServiceTransport):
             )
         return self._stubs["list"]
 
+    @property
+    def update_customer_managed_certificate(
+        self,
+    ) -> Callable[
+        [cloud_sql_ssl_certs.UpdateCustomerManagedCertificateRequest],
+        cloud_sql_resources.Operation,
+    ]:
+        r"""Return a callable for the update customer managed
+        certificate method over gRPC.
+
+        Upload and update customer managed certificate bundle
+        for an existing Cloud SQL instance.
+
+        Returns:
+            Callable[[~.UpdateCustomerManagedCertificateRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "update_customer_managed_certificate" not in self._stubs:
+            self._stubs["update_customer_managed_certificate"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.sql.v1.SqlSslCertsService/UpdateCustomerManagedCertificate",
+                    request_serializer=cloud_sql_ssl_certs.UpdateCustomerManagedCertificateRequest.serialize,
+                    response_deserializer=cloud_sql_resources.Operation.deserialize,
+                )
+            )
+        return self._stubs["update_customer_managed_certificate"]
+
+    @property
+    def delete_customer_managed_certificate(
+        self,
+    ) -> Callable[
+        [cloud_sql_ssl_certs.DeleteCustomerManagedCertificateRequest],
+        cloud_sql_resources.Operation,
+    ]:
+        r"""Return a callable for the delete customer managed
+        certificate method over gRPC.
+
+        Delete customer managed certificate bundle for an
+        existing Cloud SQL instance.
+
+        Returns:
+            Callable[[~.DeleteCustomerManagedCertificateRequest],
+                    ~.Operation]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "delete_customer_managed_certificate" not in self._stubs:
+            self._stubs["delete_customer_managed_certificate"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.sql.v1.SqlSslCertsService/DeleteCustomerManagedCertificate",
+                    request_serializer=cloud_sql_ssl_certs.DeleteCustomerManagedCertificateRequest.serialize,
+                    response_deserializer=cloud_sql_resources.Operation.deserialize,
+                )
+            )
+        return self._stubs["delete_customer_managed_certificate"]
+
+    @property
+    def list_customer_managed_certificates(
+        self,
+    ) -> Callable[
+        [cloud_sql_ssl_certs.ListCustomerManagedCertificatesRequest],
+        cloud_sql_ssl_certs.ListCustomerManagedCertificatesResponse,
+    ]:
+        r"""Return a callable for the list customer managed
+        certificates method over gRPC.
+
+        List all customer managed certificate bundles for an
+        existing Cloud SQL instance.
+
+        Returns:
+            Callable[[~.ListCustomerManagedCertificatesRequest],
+                    ~.ListCustomerManagedCertificatesResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "list_customer_managed_certificates" not in self._stubs:
+            self._stubs["list_customer_managed_certificates"] = (
+                self._logged_channel.unary_unary(
+                    "/google.cloud.sql.v1.SqlSslCertsService/ListCustomerManagedCertificates",
+                    request_serializer=cloud_sql_ssl_certs.ListCustomerManagedCertificatesRequest.serialize,
+                    response_deserializer=cloud_sql_ssl_certs.ListCustomerManagedCertificatesResponse.deserialize,
+                )
+            )
+        return self._stubs["list_customer_managed_certificates"]
+
     def close(self):
         self._logged_channel.close()
 

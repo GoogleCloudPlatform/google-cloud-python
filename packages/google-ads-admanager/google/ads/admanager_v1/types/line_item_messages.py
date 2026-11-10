@@ -526,6 +526,11 @@ class LineItem(proto.Message):
             line item. If empty, all formats are allowed.
             This property only applies to programmatic video
             line items.
+        allocation_delivery_profile (str):
+            Optional. The allocation delivery profile for
+            the line item.
+
+            This field is a member of `oneof`_ ``_allocation_delivery_profile``.
     """
 
     name: str = proto.Field(
@@ -889,6 +894,11 @@ class LineItem(proto.Message):
         proto.ENUM,
         number=112,
         enum=line_item_allowed_format_enum.LineItemAllowedFormatEnum.LineItemAllowedFormat,
+    )
+    allocation_delivery_profile: str = proto.Field(
+        proto.STRING,
+        number=131,
+        optional=True,
     )
 
 

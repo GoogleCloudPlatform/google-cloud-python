@@ -30,6 +30,11 @@
                 "list_clusters"
               ]
             },
+            "ListNodes": {
+              "methods": [
+                "list_nodes"
+              ]
+            },
             "UpdateCluster": {
               "methods": [
                 "update_cluster"
@@ -60,6 +65,11 @@
                 "list_clusters"
               ]
             },
+            "ListNodes": {
+              "methods": [
+                "list_nodes"
+              ]
+            },
             "UpdateCluster": {
               "methods": [
                 "update_cluster"
@@ -88,6 +98,11 @@
             "ListClusters": {
               "methods": [
                 "list_clusters"
+              ]
+            },
+            "ListNodes": {
+              "methods": [
+                "list_nodes"
               ]
             },
             "UpdateCluster": {

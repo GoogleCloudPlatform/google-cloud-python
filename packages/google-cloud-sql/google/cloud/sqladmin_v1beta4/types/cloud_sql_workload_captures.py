@@ -252,6 +252,9 @@ class WorkloadCapture(proto.Message):
             with the workload capture.
 
             This field is a member of `oneof`_ ``_backup_id``.
+        capture_mode (google.cloud.sqladmin_v1beta4.types.WorkloadCapture.WorkloadCaptureMode):
+            Output only. The capture mode of the workload
+            capture.
     """
 
     class State(proto.Enum):
@@ -281,6 +284,24 @@ class WorkloadCapture(proto.Message):
         COMPLETED = 2
         FAILED = 3
         TERMINATED = 4
+
+    class WorkloadCaptureMode(proto.Enum):
+        r"""Specifies the mode of the workload capture.
+
+        Values:
+            WORKLOAD_CAPTURE_MODE_UNSPECIFIED (0):
+                Default value. This value is unused.
+            CAPTURE_ONLY (1):
+                Records and stores the workload without live
+                replay.
+            CAPTURE_AND_LIVE_REPLAY (2):
+                Records the workload and simultaneously
+                replays it on a live replay instance.
+        """
+
+        WORKLOAD_CAPTURE_MODE_UNSPECIFIED = 0
+        CAPTURE_ONLY = 1
+        CAPTURE_AND_LIVE_REPLAY = 2
 
     workload_id: str = proto.Field(
         proto.STRING,
@@ -319,6 +340,11 @@ class WorkloadCapture(proto.Message):
         proto.STRING,
         number=8,
         optional=True,
+    )
+    capture_mode: WorkloadCaptureMode = proto.Field(
+        proto.ENUM,
+        number=13,
+        enum=WorkloadCaptureMode,
     )
 
 

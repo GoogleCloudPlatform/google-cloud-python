@@ -23,7 +23,12 @@ import proto  # type: ignore
 from google.ads.admanager_v1.types import (
     creative_placeholder as gaa_creative_placeholder,
 )
-from google.ads.admanager_v1.types import date_range, forecasting_enums, goal_enums
+from google.ads.admanager_v1.types import (
+    date_range,
+    forecasting_enums,
+    goal_enums,
+    line_item_messages,
+)
 from google.ads.admanager_v1.types import targeting as gaa_targeting
 
 __protobuf__ = proto.module(
@@ -45,6 +50,8 @@ __protobuf__ = proto.module(
         "LineItemDeliveryForecast",
         "TimeSeries",
         "ExistingLineItemList",
+        "ForecastingLineItem",
+        "ForecastingLineItemList",
     },
 )
 
@@ -61,13 +68,14 @@ class AvailabilityForecastOptions(proto.Message):
             Optional. When specified, forecast result for the
             availability line item will also include breakdowns by its
             targeting in
-            [AvailabilityForecast.targetingCriteriaBreakdowns][].
+            [AvailabilityForecast.targetingCriteriaBreakdowns][google.ads.admanager.v1.AvailabilityForecast.targeting_criteria_breakdowns].
 
             This field is a member of `oneof`_ ``_targeting_criteria_breakdown_included``.
         contending_line_items_included (bool):
             Optional. When specified, the forecast result for the
             availability line item will also include contending line
-            items in [AvailabilityForecast.contendingLineItems][].
+            items in
+            [AvailabilityForecast.contendingLineItems][google.ads.admanager.v1.AvailabilityForecast.contending_line_items].
 
             This field is a member of `oneof`_ ``_contending_line_items_included``.
         breakdown (google.ads.admanager_v1.types.ForecastBreakdownOptions):
@@ -141,29 +149,35 @@ class AvailabilityForecast(proto.Message):
             This field is a member of `oneof`_ ``_order``.
         unit_type (google.ads.admanager_v1.types.UnitTypeEnum.UnitType):
             The unit with which the goal or cap of the LineItem is
-            defined. Will be the same value as [Goal.unitType][] for
+            defined. Will be the same value as
+            [Goal.unitType][google.ads.admanager.v1.Goal.unit_type] for
             both a set line item or a prospective one.
 
             This field is a member of `oneof`_ ``_unit_type``.
         available_units (int):
-            The number of units, defined by [Goal.unitType][], that can
-            be booked without affecting the delivery of any reserved
-            line items. Exceeding this value won't cause an overbook,
-            but lower priority line items may not run.
+            The number of units, defined by
+            [Goal.unitType][google.ads.admanager.v1.Goal.unit_type],
+            that can be booked without affecting the delivery of any
+            reserved line items. Exceeding this value won't cause an
+            overbook, but lower priority line items may not run.
 
             This field is a member of `oneof`_ ``_available_units``.
         delivered_units (int):
-            The number of units, defined by [Goal.unitType][], that have
-            already been served if the reservation is already running.
+            The number of units, defined by
+            [Goal.unitType][google.ads.admanager.v1.Goal.unit_type],
+            that have already been served if the reservation is already
+            running.
 
             This field is a member of `oneof`_ ``_delivered_units``.
         matched_units (int):
-            The number of units, defined by [Goal.unitType][], that
-            match the specified targeting and delivery settings.
+            The number of units, defined by
+            [Goal.unitType][google.ads.admanager.v1.Goal.unit_type],
+            that match the specified targeting and delivery settings.
 
             This field is a member of `oneof`_ ``_matched_units``.
         possible_units (int):
-            The maximum number of units, defined by [Goal.unitType][],
+            The maximum number of units, defined by
+            [Goal.unitType][google.ads.admanager.v1.Goal.unit_type],
             that could be booked by taking inventory away from lower
             priority line items and some same priority line items.
 
@@ -172,13 +186,14 @@ class AvailabilityForecast(proto.Message):
 
             This field is a member of `oneof`_ ``_possible_units``.
         reserved_units (int):
-            The number of reserved units, defined by [Goal.unitType][],
+            The number of reserved units, defined by
+            [Goal.unitType][google.ads.admanager.v1.Goal.unit_type],
             requested. This can be an absolute or percentage value.
 
             This field is a member of `oneof`_ ``_reserved_units``.
         breakdowns (MutableSequence[google.ads.admanager_v1.types.ForecastBreakdown]):
             The breakdowns for each time window defined in
-            [ForecastBreakdownOptions.timeWindows][].
+            [ForecastBreakdownOptions.timeWindows][google.ads.admanager.v1.ForecastBreakdownOptions.time_windows].
 
             If no breakdown was requested through
             [AvailabilityForecastOptions.breakdown][google.ads.admanager.v1.AvailabilityForecastOptions.breakdown],
@@ -349,7 +364,8 @@ class ForecastBreakdownTarget(proto.Message):
     Attributes:
         display_name (str):
             An optional name for this breakdown target, to be populated
-            in the corresponding [ForecastBreakdownEntry.displayName][]
+            in the corresponding
+            [ForecastBreakdownEntry.displayName][google.ads.admanager.v1.ForecastBreakdownEntry.display_name]
             field.
 
             This field is a member of `oneof`_ ``_display_name``.
@@ -425,7 +441,9 @@ class ForecastBreakdownEntry(proto.Message):
     Attributes:
         display_name (str):
             The optional name of this entry, as specified in the
-            corresponding [ForecastBreakdownTarget.displayName][] field.
+            corresponding
+            [ForecastBreakdownTarget.displayName][google.ads.admanager.v1.ForecastBreakdownTarget.display_name]
+            field.
 
             This field is a member of `oneof`_ ``_display_name``.
         forecast (google.ads.admanager_v1.types.DeliveryForecast):
@@ -736,24 +754,30 @@ class LineItemDeliveryForecast(proto.Message):
             This field is a member of `oneof`_ ``_order``.
         unit_type (google.ads.admanager_v1.types.UnitTypeEnum.UnitType):
             The unit with which the goal or cap of the LineItem is
-            defined. Will be the same value as [Goal.unitType][] for
+            defined. Will be the same value as
+            [Goal.unitType][google.ads.admanager.v1.Goal.unit_type] for
             both a set line item or a prospective one.
 
             This field is a member of `oneof`_ ``_unit_type``.
         predicted_delivery_units (int):
-            The number of units, defined by [Goal.unitType][], that will
-            be delivered by the line item. Delivery of existing line
-            items that are of same or lower priorities may be impacted.
+            The number of units, defined by
+            [Goal.unitType][google.ads.admanager.v1.Goal.unit_type],
+            that will be delivered by the line item. Delivery of
+            existing line items that are of same or lower priorities may
+            be impacted.
 
             This field is a member of `oneof`_ ``_predicted_delivery_units``.
         delivered_units (int):
-            The number of units, defined by [Goal.unitType][], that have
-            already been served if the reservation is already running.
+            The number of units, defined by
+            [Goal.unitType][google.ads.admanager.v1.Goal.unit_type],
+            that have already been served if the reservation is already
+            running.
 
             This field is a member of `oneof`_ ``_delivered_units``.
         matched_units (int):
-            The number of units, defined by [Goal.unitType][], that
-            match the specified LineItem#targeting and delivery
+            The number of units, defined by
+            [Goal.unitType][google.ads.admanager.v1.Goal.unit_type],
+            that match the specified LineItem#targeting and delivery
             settings.
 
             This field is a member of `oneof`_ ``_matched_units``.
@@ -836,6 +860,61 @@ class ExistingLineItemList(proto.Message):
     line_items: MutableSequence[str] = proto.RepeatedField(
         proto.STRING,
         number=1,
+    )
+
+
+class ForecastingLineItem(proto.Message):
+    r"""A [LineItem][google.ads.admanager.v1.LineItem] or
+    [ProposalLineItem][] to be forecasted along with an optional
+    override advertiser.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        line_item (google.ads.admanager_v1.types.LineItem):
+            Optional. The [LineItem][google.ads.admanager.v1.LineItem]
+            to be forecasted.
+
+            This field is a member of `oneof`_ ``line_item_entry``.
+        advertiser (str):
+            Optional. The resource name of the advertiser
+            [Company][google.ads.admanager.v1.Company] for the
+            prospective line item. Format:
+            ``networks/{network_code}/companies/{company_id}``
+    """
+
+    line_item: line_item_messages.LineItem = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        oneof="line_item_entry",
+        message=line_item_messages.LineItem,
+    )
+    advertiser: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+
+
+class ForecastingLineItemList(proto.Message):
+    r"""[ForecastingLineItemList][google.ads.admanager.v1.ForecastingLineItemList]
+    is a wrapper around a repeated field of
+    [ForecastingLineItem][google.ads.admanager.v1.ForecastingLineItem]
+    objects.
+
+    Attributes:
+        forecasting_line_items (MutableSequence[google.ads.admanager_v1.types.ForecastingLineItem]):
+            Required. The list of
+            [ForecastingLineItem][google.ads.admanager.v1.ForecastingLineItem]
+            objects.
+    """
+
+    forecasting_line_items: MutableSequence["ForecastingLineItem"] = (
+        proto.RepeatedField(
+            proto.MESSAGE,
+            number=1,
+            message="ForecastingLineItem",
+        )
     )
 
 

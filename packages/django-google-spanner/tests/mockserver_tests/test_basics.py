@@ -11,6 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from unittest import mock
+
 from django.db import connection, models
 from google.cloud.spanner_v1 import (
     BatchCreateSessionsRequest,
@@ -25,6 +27,7 @@ from tests.mockserver_tests.mock_server_test_base import (
     add_select1_result,
     add_singer_query_result,
     add_single_result,
+    add_update_count,
 )
 from tests.mockserver_tests.models import Singer
 from tests.settings import DATABASES
@@ -140,3 +143,43 @@ class TestBasics(MockServerTestBase):
             for db, config in DATABASES.items():
                 if config["ENGINE"] == "django_spanner":
                     config.pop("DISABLE_RANDOM_ID_GENERATION", None)
+
+    def test_update_all_without_dbapi_intervention(self):
+        """Verify Django generates WHERE 1=1 even when DB-API injection is disabled."""
+        with mock.patch(
+            "google.cloud.spanner_dbapi.parse_utils.ensure_where_clause",
+            side_effect=lambda sql: sql,
+        ):
+            add_update_count("UPDATE tests_singer SET last_name = @a0 WHERE 1=1", 1)
+            Singer.objects.all().update(last_name="Test")
+
+            requests = [
+                request
+                for request in self.spanner_service.requests
+                if isinstance(request, ExecuteSqlRequest)
+            ]
+            self.assertEqual(len(requests), 1)
+            self.assertEqual(
+                requests[0].sql,
+                "UPDATE tests_singer SET last_name = @a0 WHERE 1=1",
+            )
+
+    def test_delete_all_without_dbapi_intervention(self):
+        """Verify Django generates WHERE 1=1 even when DB-API injection is disabled."""
+        with mock.patch(
+            "google.cloud.spanner_dbapi.parse_utils.ensure_where_clause",
+            side_effect=lambda sql: sql,
+        ):
+            add_update_count("DELETE FROM tests_singer WHERE 1=1", 1)
+            Singer.objects.all().delete()
+
+            requests = [
+                request
+                for request in self.spanner_service.requests
+                if isinstance(request, ExecuteSqlRequest)
+            ]
+            self.assertEqual(len(requests), 1)
+            self.assertEqual(
+                requests[0].sql,
+                "DELETE FROM tests_singer WHERE 1=1",
+            )

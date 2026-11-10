@@ -7751,6 +7751,13 @@ def test_create_data_scan_rest_call_success(request_type):
                 },
                 "queries": {},
             },
+            "data_product_result": {
+                "overview": "overview_value",
+                "queries": {},
+                "asset_descriptions": [
+                    {"resource": "resource_value", "overview": "overview_value"}
+                ],
+            },
         },
         "execution_identity": {
             "dataplex_service_agent": {},
@@ -8261,6 +8268,13 @@ def test_update_data_scan_rest_call_success(request_type):
                     ]
                 },
                 "queries": {},
+            },
+            "data_product_result": {
+                "overview": "overview_value",
+                "queries": {},
+                "asset_descriptions": [
+                    {"resource": "resource_value", "overview": "overview_value"}
+                ],
             },
         },
         "execution_identity": {

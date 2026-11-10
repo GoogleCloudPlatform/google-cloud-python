@@ -57,8 +57,9 @@ class CreateJobRequest(proto.Message):
         job (google.cloud.run_v2.types.Job):
             Required. The Job instance to create.
         job_id (str):
-            Required. The unique identifier for the Job. The name of the
-            job becomes {parent}/jobs/{job_id}.
+            Optional. The unique identifier for the Job. The name of the
+            job becomes {parent}/jobs/{job_id}. If not provided, the
+            server will generate a unique ``job_id``.
         validate_only (bool):
             Indicates that the request should be
             validated and default values populated, without
@@ -259,6 +260,9 @@ class RunJobRequest(proto.Message):
         r"""RunJob Overrides that contains Execution fields to be
         overridden.
 
+
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
         Attributes:
             container_overrides (MutableSequence[google.cloud.run_v2.types.RunJobRequest.Overrides.ContainerOverride]):
                 Per container override specification.
@@ -269,6 +273,12 @@ class RunJobRequest(proto.Message):
                 Duration in seconds the task may be active before the system
                 will actively try to mark it failed and kill associated
                 containers. Will replace existing timeout_seconds value.
+            delay_execution (bool):
+                Optional. If true, the system will start the
+                execution within the next 12 hours depending on
+                available capacity.
+
+                This field is a member of `oneof`_ ``_delay_execution``.
         """
 
         class ContainerOverride(proto.Message):
@@ -322,6 +332,11 @@ class RunJobRequest(proto.Message):
             proto.MESSAGE,
             number=4,
             message=duration_pb2.Duration,
+        )
+        delay_execution: bool = proto.Field(
+            proto.BOOL,
+            number=6,
+            optional=True,
         )
 
     name: str = proto.Field(
@@ -505,6 +520,8 @@ class Job(proto.Message):
             63 characters.
 
             This field is a member of `oneof`_ ``create_execution``.
+        functional_type (google.cloud.run_v2.types.FunctionalType):
+            Optional. The functional type of the Job.
         etag (str):
             Optional. A system-generated fingerprint for
             this version of the resource. May be used to
@@ -624,6 +641,11 @@ class Job(proto.Message):
         proto.STRING,
         number=27,
         oneof="create_execution",
+    )
+    functional_type: vendor_settings.FunctionalType = proto.Field(
+        proto.ENUM,
+        number=31,
+        enum=vendor_settings.FunctionalType,
     )
     etag: str = proto.Field(
         proto.STRING,

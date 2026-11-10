@@ -58,10 +58,7 @@ def mock_row_iterator(mock_bigquery_client):
     def generate_schema():
         if mock_bigquery_client.query.call_args:
             query = mock_bigquery_client.query.call_args[0][0]
-        elif (
-            hasattr(mock_bigquery_client, "query_and_wait")
-            and mock_bigquery_client.query_and_wait.call_args
-        ):
+        elif mock_bigquery_client.query_and_wait.call_args:
             query = mock_bigquery_client.query_and_wait.call_args[0][0]
         else:
             query = ""
@@ -81,9 +78,7 @@ def default_bigquery_client(mock_bigquery_client, mock_query_job, mock_row_itera
     mock_row_iterator.job = mock_query_job
     mock_bigquery_client.list_rows.return_value = mock_row_iterator
     mock_bigquery_client.query.return_value = mock_query_job
-
-    if hasattr(mock_bigquery_client, "query_and_wait"):
-        mock_bigquery_client.query_and_wait.return_value = mock_row_iterator
+    mock_bigquery_client.query_and_wait.return_value = mock_row_iterator
 
     # Mock out get_table.
     def get_table(table_ref_or_id, **kwargs):
@@ -497,11 +492,6 @@ def test_read_gbq_with_inferred_project_id_with_query(
 def test_read_gbq_with_inferred_project_id_with_query_and_wait(
     monkeypatch, mock_bigquery_client
 ):
-    if not hasattr(mock_bigquery_client, "query_and_wait"):
-        pytest.skip(
-            f"google-cloud-bigquery {google.cloud.bigquery.__version__} does not have query_and_wait"
-        )
-
     monkeypatch.setattr(
         pandas_gbq.features.FEATURES,
         "_bigquery_installed_version",
@@ -540,11 +530,6 @@ def test_read_gbq_with_inferred_project_id_from_service_account_credentials_with
 def test_read_gbq_with_inferred_project_id_from_service_account_credentials_with_query_and_wait(
     monkeypatch, mock_bigquery_client, mock_service_account_credentials
 ):
-    if not hasattr(mock_bigquery_client, "query_and_wait"):
-        pytest.skip(
-            f"google-cloud-bigquery {google.cloud.bigquery.__version__} does not have query_and_wait"
-        )
-
     monkeypatch.setattr(
         pandas_gbq.features.FEATURES,
         "_bigquery_installed_version",
@@ -598,11 +583,6 @@ def test_read_gbq_with_max_results_ten_query(monkeypatch, mock_query_job):
 def test_read_gbq_with_max_results_ten_query_and_wait(
     monkeypatch, mock_bigquery_client
 ):
-    if not hasattr(mock_bigquery_client, "query_and_wait"):
-        pytest.skip(
-            f"google-cloud-bigquery {google.cloud.bigquery.__version__} does not have query_and_wait"
-        )
-
     monkeypatch.setattr(
         pandas_gbq.features.FEATURES,
         "_bigquery_installed_version",
@@ -966,15 +946,7 @@ def test_read_gbq_with_dry_run(mock_bigquery_client, mock_query_job):
 
     dry_run_result = gbq.read_gbq("SELECT 1", project_id="my-project", dry_run=True)
 
-    # Check which method was called based on BigQuery version
-    if (
-        hasattr(mock_bigquery_client, "query_and_wait")
-        and mock_bigquery_client.query_and_wait.called
-    ):
-        _, kwargs = mock_bigquery_client.query_and_wait.call_args
-        job_config = kwargs["job_config"]
-    else:
-        _, kwargs = mock_bigquery_client.query.call_args
-        job_config = kwargs["job_config"]
+    _, kwargs = mock_bigquery_client.query.call_args
+    job_config = kwargs["job_config"]
     assert job_config.dry_run is True
     assert dry_run_result["totalBytesProcessed"] == total_bytes_processed

@@ -1878,6 +1878,167 @@
       "clientMethod": {
         "async": true,
         "client": {
+          "fullName": "google.ads.datamanager_v1.ReportingServiceAsyncClient",
+          "shortName": "ReportingServiceAsyncClient"
+        },
+        "fullName": "google.ads.datamanager_v1.ReportingServiceAsyncClient.retrieve_partner_match_report",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.ReportingService.RetrievePartnerMatchReport",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.ReportingService",
+            "shortName": "ReportingService"
+          },
+          "shortName": "RetrievePartnerMatchReport"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.RetrievePartnerMatchReportRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.services.reporting_service.pagers.RetrievePartnerMatchReportAsyncPager",
+        "shortName": "retrieve_partner_match_report"
+      },
+      "description": "Sample for RetrievePartnerMatchReport",
+      "file": "datamanager_v1_generated_reporting_service_retrieve_partner_match_report_async.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_ReportingService_RetrievePartnerMatchReport_async",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_reporting_service_retrieve_partner_match_report_async.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "client": {
+          "fullName": "google.ads.datamanager_v1.ReportingServiceClient",
+          "shortName": "ReportingServiceClient"
+        },
+        "fullName": "google.ads.datamanager_v1.ReportingServiceClient.retrieve_partner_match_report",
+        "method": {
+          "fullName": "google.ads.datamanager.v1.ReportingService.RetrievePartnerMatchReport",
+          "service": {
+            "fullName": "google.ads.datamanager.v1.ReportingService",
+            "shortName": "ReportingService"
+          },
+          "shortName": "RetrievePartnerMatchReport"
+        },
+        "parameters": [
+          {
+            "name": "request",
+            "type": "google.ads.datamanager_v1.types.RetrievePartnerMatchReportRequest"
+          },
+          {
+            "name": "parent",
+            "type": "str"
+          },
+          {
+            "name": "retry",
+            "type": "google.api_core.retry.Retry"
+          },
+          {
+            "name": "timeout",
+            "type": "float"
+          },
+          {
+            "name": "metadata",
+            "type": "Sequence[Tuple[str, Union[str, bytes]]]"
+          }
+        ],
+        "resultType": "google.ads.datamanager_v1.services.reporting_service.pagers.RetrievePartnerMatchReportPager",
+        "shortName": "retrieve_partner_match_report"
+      },
+      "description": "Sample for RetrievePartnerMatchReport",
+      "file": "datamanager_v1_generated_reporting_service_retrieve_partner_match_report_sync.py",
+      "language": "PYTHON",
+      "origin": "API_DEFINITION",
+      "regionTag": "datamanager_v1_generated_ReportingService_RetrievePartnerMatchReport_sync",
+      "segments": [
+        {
+          "end": 53,
+          "start": 27,
+          "type": "FULL"
+        },
+        {
+          "end": 53,
+          "start": 27,
+          "type": "SHORT"
+        },
+        {
+          "end": 40,
+          "start": 38,
+          "type": "CLIENT_INITIALIZATION"
+        },
+        {
+          "end": 46,
+          "start": 41,
+          "type": "REQUEST_INITIALIZATION"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "type": "REQUEST_EXECUTION"
+        },
+        {
+          "end": 54,
+          "start": 50,
+          "type": "RESPONSE_HANDLING"
+        }
+      ],
+      "title": "datamanager_v1_generated_reporting_service_retrieve_partner_match_report_sync.py"
+    },
+    {
+      "canonical": true,
+      "clientMethod": {
+        "async": true,
+        "client": {
           "fullName": "google.ads.datamanager_v1.UserListDirectLicenseServiceAsyncClient",
           "shortName": "UserListDirectLicenseServiceAsyncClient"
         },
