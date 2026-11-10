@@ -17,8 +17,8 @@
 
 set PYTHON_VERSION=%1
 if "%PYTHON_VERSION%"=="" (
-  echo "Python version was not provided, using Python 3.10"
-  set PYTHON_VERSION=3.10
+  echo "Python version was not provided, using Python 3.14"
+  set PYTHON_VERSION=3.14
 )
 
 py -%PYTHON_VERSION%-64 -m pip install --no-index --find-links=wheels google-crc32c --force-reinstall

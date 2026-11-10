@@ -25,8 +25,10 @@ HERE = os.path.dirname(__file__)
 
 # Constants
 DEFAULT_PYTHON_VERSION = "3.14"
-UNIT_TEST_PYTHON_VERSIONS = ["3.10", "3.11", "3.12", "3.13", "3.14", "3.15"]
-ALL_PYTHON = list(UNIT_TEST_PYTHON_VERSIONS)
+# Python 3.10 stays in ALL_PYTHON because the shared CI matrix still runs
+# `nox -s unit-3.10` for every package. That session skips itself.
+ALL_PYTHON = ["3.10", "3.11", "3.12", "3.13", "3.14", "3.15"]
+UNIT_TEST_PYTHON_VERSIONS = ["3.11", "3.12", "3.13", "3.14", "3.15"]
 
 FLAKE8_VERSION = "flake8==6.1.0"
 RUFF_VERSION = "ruff==0.14.14"
@@ -192,9 +194,12 @@ def core_deps_from_source(session):
     )
 
 
-@nox.session(python=UNIT_TEST_PYTHON_VERSIONS)
+@nox.session(python=ALL_PYTHON)
 def unit(session):
     """Run all unit tests."""
+    if session.python not in UNIT_TEST_PYTHON_VERSIONS:
+        session.skip(f"Python {session.python} is not supported.")
+
     session.env["CRC32C_PURE_PYTHON"] = "1"
     session.env["PYTHONPATH"] = "src"
     session.install("pytest", "pytest-cov")
@@ -213,13 +218,13 @@ def cover(session):
     session.run("coverage", "erase")
 
 
-@nox.session(python="3.10")
+@nox.session(python="3.15")
 def docs(session):
     """Run all docs tests."""
     session.skip("Docs tests are not supported")
 
 
-@nox.session(python="3.10")
+@nox.session(python="3.15")
 def docfx(session):
     """Run all docfx tests."""
     session.skip("Docfx tests are not supported")
