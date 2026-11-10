@@ -1004,6 +1004,11 @@ class _MtlsCertManager:
     def generation_id(self) -> int:
         return self._generation_id
 
+    @property
+    def cert_fingerprint(self) -> Optional[str]:
+        """Fingerprint of the current leaf certificate, or ``None`` if not loaded."""
+        return self._cert_fingerprint
+
     def get_credential_snapshot(
         self,
     ) -> Tuple[Optional[bytes], Optional[bytes], int]:
@@ -1069,6 +1074,7 @@ class _MtlsCertManager:
                 exceptions.MutualTLSChannelError,
                 OSError,
                 ValueError,
+                ImportError,
             ) as caught_exc:
                 if self._generation_id > 0:
                     _LOGGER.debug(
@@ -1093,6 +1099,10 @@ class _MtlsCertManager:
                 return True
 
             return False
+
+    def __copy__(self):
+        # Share the same thread-safe manager instance across shallow copies.
+        return self
 
     def __deepcopy__(self, memo):
         # Share the same thread-safe manager instance across deep copies.

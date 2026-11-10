@@ -2385,6 +2385,7 @@ class TestMtlsCertManager(object):
             ]
         )
         manager = _mtls_helper._MtlsCertManager(client_cert_source=source)
+        assert manager.cert_fingerprint is None
 
         expected_leaf_fp = _agent_identity_utils.calculate_certificate_fingerprint(
             _agent_identity_utils.parse_certificate(TRUST_CHAIN_WITH_LEAF_BYTES)
@@ -2396,7 +2397,7 @@ class TestMtlsCertManager(object):
             pytest.private_key_bytes,
             1,
         )
-        assert manager._cert_fingerprint == expected_leaf_fp
+        assert manager.cert_fingerprint == expected_leaf_fp
 
         assert manager.refresh() is False
         assert manager.generation_id == 1
@@ -2407,6 +2408,11 @@ class TestMtlsCertManager(object):
             OTHER_CERT_BYTES,
             pytest.private_key_bytes,
             2,
+        )
+        assert manager.cert_fingerprint == (
+            _agent_identity_utils.calculate_certificate_fingerprint(
+                _agent_identity_utils.parse_certificate(OTHER_CERT_BYTES)
+            )
         )
         assert source.call_count == 3
 
@@ -2458,6 +2464,7 @@ class TestMtlsCertManager(object):
             mock.Mock(side_effect=exceptions.ClientCertError("bad cert config")),
             mock.Mock(side_effect=exceptions.MutualTLSChannelError("channel error")),
             mock.Mock(side_effect=OSError("file missing")),
+            mock.Mock(side_effect=ImportError("cryptography missing")),
             mock.Mock(return_value=(b"not a valid pem cert", pytest.private_key_bytes)),
             mock.Mock(return_value=(b"", pytest.private_key_bytes)),
             mock.Mock(return_value=(pytest.public_cert_bytes, b"")),
@@ -2472,22 +2479,28 @@ class TestMtlsCertManager(object):
         assert manager.generation_id == 0
         assert manager.get_credential_snapshot() == (None, None, 0)
 
-    def test_transient_reload_error_retains_last_known_good_cert(self):
+    @pytest.mark.parametrize(
+        "reload_error",
+        [OSError("transient read error"), ImportError("cryptography missing")],
+    )
+    def test_transient_reload_error_retains_last_known_good_cert(self, reload_error):
         source = mock.Mock(
             side_effect=[
                 (pytest.public_cert_bytes, pytest.private_key_bytes),
-                OSError("transient read error"),
+                reload_error,
             ]
         )
         manager = _mtls_helper._MtlsCertManager(client_cert_source=source)
         assert manager.refresh() is True
         assert manager.generation_id == 1
+        fingerprint = manager.cert_fingerprint
 
         with mock.patch.object(_mtls_helper._LOGGER, "debug") as mock_debug:
             assert manager.refresh() is False
 
         mock_debug.assert_called_once()
         assert manager.generation_id == 1
+        assert manager.cert_fingerprint == fingerprint
         assert manager.get_credential_snapshot() == (
             pytest.public_cert_bytes,
             pytest.private_key_bytes,
@@ -2530,6 +2543,7 @@ class TestMtlsCertManager(object):
         )
         assert manager.refresh() is True
 
+        assert copy.copy(manager) is manager
         copied = copy.deepcopy(manager)
         assert copied is manager
 
