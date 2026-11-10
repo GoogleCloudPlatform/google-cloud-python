@@ -1008,7 +1008,7 @@ libraries:
       metadata_name_override: clouddeploy
       default_version: v1
   - name: google-cloud-designcenter
-    version: 0.0.0
+    version: 0.1.0
     apis:
       - path: google/cloud/designcenter/v1
     copyright_year: "2026"

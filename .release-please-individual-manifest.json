@@ -7,7 +7,7 @@
   "packages/google-cloud-bigquery-storage": "2.43.0",
   "packages/google-cloud-bigtable": "2.50.2",
   "packages/google-cloud-datastore": "2.27.0",
-  "packages/google-cloud-designcenter": "0.0.0",
+  "packages/google-cloud-designcenter": "0.1.0",
   "packages/google-cloud-firestore": "2.34.1",
   "packages/google-cloud-logging": "3.17.0",
   "packages/google-cloud-ndb": "2.7.1",
