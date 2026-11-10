@@ -932,6 +932,43 @@ class TestStartAccelerator:
             "GOOGLE_APPLICATION_CREDENTIALS": "/path/to/creds.json"
         }
 
+    def test_health_monitor_base_exception_closes_daemon(self):
+        from google.cloud.bigtable.data._accelerator._daemon import AcceleratorDaemon
+
+        t = _bare_target()
+        c = t.client
+        c._accelerator_daemon = None
+        c._accelerator_client = None
+        c._accelerator_health = None
+
+        fake_daemon = mock.Mock(spec=AcceleratorDaemon)
+        fake_daemon.uds_path = "/tmp/fake-sock"
+        fake_daemon.auth_secret = "secret-token"
+        fake_client = mock.Mock()
+
+        with (
+            mock.patch(
+                "google.cloud.bigtable.data._async.client.AcceleratorDaemon",
+                return_value=fake_daemon,
+            ),
+            mock.patch(
+                "google.cloud.bigtable.data._async.client.AcceleratorClientType",
+                return_value=fake_client,
+            ),
+            mock.patch.object(c, "_verify_daemon_identity"),
+            mock.patch(
+                "google.cloud.bigtable.data._async.client.AcceleratorHealthMonitorType",
+                side_effect=KeyboardInterrupt,
+            ),
+            pytest.raises(KeyboardInterrupt),
+        ):
+            c._start_accelerator()
+
+        fake_daemon.close.assert_called_once()
+        assert c._accelerator_daemon is None
+        assert c._accelerator_client is None
+        assert c._accelerator_health is None
+
 
 # ---------------------------------------------------------------------------
 # Client-level daemon sharing across Table / AuthorizedView / MaterializedView

@@ -350,8 +350,14 @@ class BigtableDataClient(ClientWithProject):
                     RuntimeWarning,
                     stacklevel=2,
                 )
-        if self._use_accelerator is not False and has_event_loop:
-            self._maybe_start_accelerator(explicit=self._use_accelerator is True)
+        if self._use_accelerator is not False:
+            if not has_event_loop:
+                if self._use_accelerator is True:
+                    raise RuntimeError(
+                        "use_accelerator=True is not supported when there is no active asyncio event loop."
+                    )
+            else:
+                self._maybe_start_accelerator(explicit=self._use_accelerator is True)
 
     def _init_accelerator_config(
         self,
@@ -593,6 +599,7 @@ class BigtableDataClient(ClientWithProject):
         On any failure the daemon is torn down before the error propagates."""
         flags = ["--project", self.project, *self._accelerator_flags]
         server = AcceleratorDaemon(cli_flags=flags, extra_env=self._accelerator_env)
+        health: AcceleratorHealthMonitorType | None = None
         try:
             server.start()
             self._verify_daemon_identity(server)
@@ -600,22 +607,30 @@ class BigtableDataClient(ClientWithProject):
                 server.uds_path, server.auth_secret
             )
             self._accelerator_daemon = server
+            try:
+                health = AcceleratorHealthMonitorType(
+                    self._accelerator_client, self._accelerator_breaker
+                )
+                self._accelerator_health = health
+                health.start()
+                weakref.finalize(self, health.request_stop)
+            except Exception as exc:
+                if health is not None:
+                    health.request_stop()
+                warnings.warn(
+                    f"Could not start the accelerator health monitor; the accelerator will run without health-based fallback: {exc}",
+                    RuntimeWarning,
+                    stacklevel=2,
+                )
+                self._accelerator_health = None
         except BaseException:
-            server.close()
-            raise
-        try:
-            self._accelerator_health = AcceleratorHealthMonitorType(
-                self._accelerator_client, self._accelerator_breaker
-            )
-            self._accelerator_health.start()
-            weakref.finalize(self, self._accelerator_health.request_stop)
-        except Exception as exc:
-            warnings.warn(
-                f"Could not start the accelerator health monitor; the accelerator will run without health-based fallback: {exc}",
-                RuntimeWarning,
-                stacklevel=2,
-            )
+            if health is not None:
+                health.request_stop()
             self._accelerator_health = None
+            server.close()
+            self._accelerator_daemon = None
+            self._accelerator_client = None
+            raise
 
     def _verify_daemon_identity(self, server: AcceleratorDaemon) -> None:
         """Confirm the daemon resolved the same identity this client did.

@@ -1225,6 +1225,19 @@ class TestBigtableDataClientAsync:
         assert client.project == "project-id"
         assert client._channel_refresh_task is None
 
+    @CrossSync.drop
+    def test_client_ctor_sync_explicit_accelerator_raises(self):
+        with (
+            pytest.warns(RuntimeWarning, match="asyncio event loop"),
+            pytest.raises(
+                RuntimeError,
+                match="use_accelerator=True is not supported when there is no active asyncio event loop",
+            ),
+        ):
+            self._make_client(
+                project="project-id", use_emulator=False, use_accelerator=True
+            )
+
     @CrossSync.pytest
     @pytest.mark.parametrize(
         "use_mtls, expected_domain",
