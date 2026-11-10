@@ -56,10 +56,11 @@ class CreateServiceRequest(proto.Message):
         service (google.cloud.run_v2.types.Service):
             Required. The Service instance to create.
         service_id (str):
-            Required. The unique identifier for the Service. It must
+            Optional. The unique identifier for the Service. It must
             begin with letter, and cannot end with hyphen; must contain
             fewer than 50 characters. The name of the service becomes
-            {parent}/services/{service_id}.
+            {parent}/services/{service_id}. If not provided, the server
+            will generate a unique ``service_id``.
         validate_only (bool):
             Indicates that the request should be
             validated and default values populated, without
@@ -105,6 +106,19 @@ class UpdateServiceRequest(proto.Message):
             caller must have 'run.services.create'
             permissions if this is set to true and the
             Service does not exist.
+        force_new_revision (bool):
+            Optional. If set to true, a new revision will
+            be created from the template even if the system
+            doesn't detect any changes from the previously
+            deployed revision.
+
+            This may be useful for cases where the
+            underlying resources need to be recreated or
+            reinitialized. For example if the image is
+            specified by label, but the underlying image
+            digest has changed) or if the container performs
+            deployment initialization work that needs to be
+            performed again.
     """
 
     update_mask: field_mask_pb2.FieldMask = proto.Field(
@@ -124,6 +138,10 @@ class UpdateServiceRequest(proto.Message):
     allow_missing: bool = proto.Field(
         proto.BOOL,
         number=4,
+    )
+    force_new_revision: bool = proto.Field(
+        proto.BOOL,
+        number=5,
     )
 
 
@@ -258,6 +276,9 @@ class Service(proto.Message):
     software lifecycle decisions such as rollout policy and team
     resource ownership.
 
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
     Attributes:
         name (str):
             Identifier. The fully qualified name of this Service. In
@@ -377,6 +398,10 @@ class Service(proto.Message):
             this Service.
         iap_enabled (bool):
             Optional. IAP settings on the Service.
+        ssh_enabled (bool):
+            Optional. Enables SSH access to the Service.
+
+            This field is a member of `oneof`_ ``_ssh_enabled``.
         multi_region_settings (google.cloud.run_v2.types.Service.MultiRegionSettings):
             Optional. Settings for multi-region
             deployment.
@@ -431,6 +456,8 @@ class Service(proto.Message):
         build_config (google.cloud.run_v2.types.BuildConfig):
             Optional. Configuration for building a Cloud
             Run function.
+        functional_type (google.cloud.run_v2.types.FunctionalType):
+            Optional. The functional type of the Service.
         reconciling (bool):
             Output only. Returns true if the Service is currently being
             acted upon by the system to bring it into the desired state.
@@ -594,6 +621,11 @@ class Service(proto.Message):
         proto.BOOL,
         number=25,
     )
+    ssh_enabled: bool = proto.Field(
+        proto.BOOL,
+        number=29,
+        optional=True,
+    )
     multi_region_settings: MultiRegionSettings = proto.Field(
         proto.MESSAGE,
         number=26,
@@ -648,6 +680,11 @@ class Service(proto.Message):
         proto.MESSAGE,
         number=41,
         message=vendor_settings.BuildConfig,
+    )
+    functional_type: vendor_settings.FunctionalType = proto.Field(
+        proto.ENUM,
+        number=42,
+        enum=vendor_settings.FunctionalType,
     )
     reconciling: bool = proto.Field(
         proto.BOOL,

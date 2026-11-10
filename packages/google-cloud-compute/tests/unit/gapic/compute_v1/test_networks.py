@@ -197,7 +197,7 @@ def test_add_peering_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -232,7 +232,7 @@ def test_cancel_request_remove_peering_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -265,7 +265,7 @@ def test_delete_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -298,7 +298,7 @@ def test_get_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -333,7 +333,7 @@ def test_get_effective_firewalls_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -366,7 +366,7 @@ def test_insert_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -399,7 +399,7 @@ def test_list_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -434,7 +434,7 @@ def test_list_peering_routes_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -467,7 +467,7 @@ def test_patch_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -502,7 +502,7 @@ def test_remove_peering_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -537,7 +537,7 @@ def test_request_remove_peering_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -572,7 +572,7 @@ def test_switch_to_custom_mode_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -607,7 +607,7 @@ def test_update_peering_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -6379,6 +6379,7 @@ def test_get_rest_call_success(request_type):
         # Designate an appropriate value for the returned response.
         return_value = compute.Network(
             I_pv4_range="I_pv4_range_value",
+            additional_tags=["additional_tags_value"],
             auto_create_subnetworks=True,
             creation_timestamp="creation_timestamp_value",
             description="description_value",
@@ -6412,6 +6413,7 @@ def test_get_rest_call_success(request_type):
     # Establish that the response is the type that we expect.
     assert isinstance(response, compute.Network)
     assert response.I_pv4_range == "I_pv4_range_value"
+    assert response.additional_tags == ["additional_tags_value"]
     assert response.auto_create_subnetworks is True
     assert response.creation_timestamp == "creation_timestamp_value"
     assert response.description == "description_value"
@@ -6660,6 +6662,7 @@ def test_insert_rest_call_success(request_type):
     request_init = {"project": "sample1"}
     request_init["network_resource"] = {
         "I_pv4_range": "I_pv4_range_value",
+        "additional_tags": ["additional_tags_value1", "additional_tags_value2"],
         "auto_create_subnetworks": True,
         "creation_timestamp": "creation_timestamp_value",
         "description": "description_value",
@@ -7210,6 +7213,7 @@ def test_patch_rest_call_success(request_type):
     request_init = {"project": "sample1", "network": "sample2"}
     request_init["network_resource"] = {
         "I_pv4_range": "I_pv4_range_value",
+        "additional_tags": ["additional_tags_value1", "additional_tags_value2"],
         "auto_create_subnetworks": True,
         "creation_timestamp": "creation_timestamp_value",
         "description": "description_value",

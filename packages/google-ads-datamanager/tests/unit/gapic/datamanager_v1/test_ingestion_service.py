@@ -62,6 +62,7 @@ from google.ads.datamanager_v1.services.ingestion_service import (
 from google.ads.datamanager_v1.types import (
     ad_event,
     audience,
+    call_info,
     cart_data,
     consent,
     destination,

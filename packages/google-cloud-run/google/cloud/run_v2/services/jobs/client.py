@@ -764,7 +764,6 @@ class JobsClient(metaclass=JobsClientMeta):
                 request = run_v2.CreateJobRequest(
                     parent="parent_value",
                     job=job,
-                    job_id="job_id_value",
                 )
 
                 # Make the request
@@ -797,8 +796,9 @@ class JobsClient(metaclass=JobsClientMeta):
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             job_id (str):
-                Required. The unique identifier for the Job. The name of
-                the job becomes {parent}/jobs/{job_id}.
+                Optional. The unique identifier for the Job. The name of
+                the job becomes {parent}/jobs/{job_id}. If not provided,
+                the server will generate a unique ``job_id``.
 
                 This corresponds to the ``job_id`` field
                 on the ``request`` instance; if ``request`` is provided, this

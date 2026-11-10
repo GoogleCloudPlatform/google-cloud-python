@@ -61,6 +61,17 @@ from .database_character_set import (
     ListDatabaseCharacterSetsRequest,
     ListDatabaseCharacterSetsResponse,
 )
+from .database_connection import (
+    CreateDatabaseConnectionRequest,
+    DatabaseConnection,
+    DeleteDatabaseConnectionRequest,
+    GetDatabaseConnectionRequest,
+    ListDatabaseConnectionsRequest,
+    ListDatabaseConnectionsResponse,
+    TestDatabaseConnectionRequest,
+    TestDatabaseConnectionResponse,
+    UpdateDatabaseConnectionRequest,
+)
 from .db_node import (
     DbNode,
     DbNodeProperties,
@@ -80,6 +91,13 @@ from .db_system import (
     GetDbSystemRequest,
     ListDbSystemsRequest,
     ListDbSystemsResponse,
+    UpdateDbSystemRequest,
+)
+from .db_system_compute_performance import (
+    ComputePerformance,
+    DbSystemComputePerformance,
+    ListDbSystemComputePerformancesRequest,
+    ListDbSystemComputePerformancesResponse,
 )
 from .db_system_initial_storage_size import (
     DbSystemInitialStorageSize,
@@ -122,6 +140,20 @@ from .exascale_db_storage_vault import (
     GetExascaleDbStorageVaultRequest,
     ListExascaleDbStorageVaultsRequest,
     ListExascaleDbStorageVaultsResponse,
+    UpdateExascaleDbStorageVaultRequest,
+)
+from .execute_sql import (
+    ExecuteSqlMetadata,
+    ExecuteSqlRequest,
+    ExecuteSqlResponse,
+    SqlParameter,
+    SqlResult,
+)
+from .flex_component import (
+    FlexComponent,
+    FlexComponentProperties,
+    ListFlexComponentsRequest,
+    ListFlexComponentsResponse,
 )
 from .gi_version import (
     GiVersion,
@@ -174,6 +206,7 @@ from .goldengate_connection import (
     NessieIcebergCatalog,
     PolarisIcebergCatalog,
     RestIcebergCatalog,
+    UpdateGoldengateConnectionRequest,
 )
 from .goldengate_connection_assignment import (
     CreateGoldengateConnectionAssignmentRequest,
@@ -186,6 +219,7 @@ from .goldengate_connection_assignment import (
     TestConnectionAssignmentError,
     TestGoldengateConnectionAssignmentRequest,
     TestGoldengateConnectionAssignmentResponse,
+    UpdateGoldengateConnectionAssignmentRequest,
 )
 from .goldengate_connection_type import (
     GoldengateConnectionType,
@@ -211,6 +245,7 @@ from .goldengate_deployment import (
     ListGoldengateDeploymentsResponse,
     StartGoldengateDeploymentRequest,
     StopGoldengateDeploymentRequest,
+    UpdateGoldengateDeploymentRequest,
 )
 from .goldengate_deployment_environment import (
     GoldengateDeploymentEnvironment,
@@ -251,6 +286,9 @@ from .odb_network import (
     ListOdbNetworksRequest,
     ListOdbNetworksResponse,
     OdbNetwork,
+    PscInterfaceConfig,
+    ServiceConnectivityConfig,
+    UpdateOdbNetworkRequest,
 )
 from .odb_subnet import (
     CreateOdbSubnetRequest,
@@ -259,6 +297,7 @@ from .odb_subnet import (
     ListOdbSubnetsRequest,
     ListOdbSubnetsResponse,
     OdbSubnet,
+    UpdateOdbSubnetRequest,
 )
 from .oracledatabase import (
     AutonomousDatabaseRefreshableClones,
@@ -270,6 +309,10 @@ from .oracledatabase import (
     DeleteCloudExadataInfrastructureRequest,
     DeleteCloudVmClusterRequest,
     DeleteExadbVmClusterRequest,
+    DisableCloudVmClusterIdentityConnectorRequest,
+    DisableExadbVmClusterIdentityConnectorRequest,
+    EnableCloudVmClusterIdentityConnectorRequest,
+    EnableExadbVmClusterIdentityConnectorRequest,
     FailoverAutonomousDatabaseRequest,
     GenerateAutonomousDatabaseWalletRequest,
     GenerateAutonomousDatabaseWalletResponse,
@@ -311,6 +354,8 @@ from .oracledatabase import (
     StopAutonomousDatabaseRequest,
     SwitchoverAutonomousDatabaseRequest,
     UpdateAutonomousDatabaseRequest,
+    UpdateCloudExadataInfrastructureRequest,
+    UpdateCloudVmClusterRequest,
     UpdateExadbVmClusterRequest,
 )
 from .pluggable_database import (
@@ -364,6 +409,15 @@ __all__ = (
     "DatabaseCharacterSet",
     "ListDatabaseCharacterSetsRequest",
     "ListDatabaseCharacterSetsResponse",
+    "CreateDatabaseConnectionRequest",
+    "DatabaseConnection",
+    "DeleteDatabaseConnectionRequest",
+    "GetDatabaseConnectionRequest",
+    "ListDatabaseConnectionsRequest",
+    "ListDatabaseConnectionsResponse",
+    "TestDatabaseConnectionRequest",
+    "TestDatabaseConnectionResponse",
+    "UpdateDatabaseConnectionRequest",
     "DbNode",
     "DbNodeProperties",
     "DbServer",
@@ -378,6 +432,11 @@ __all__ = (
     "GetDbSystemRequest",
     "ListDbSystemsRequest",
     "ListDbSystemsResponse",
+    "UpdateDbSystemRequest",
+    "ComputePerformance",
+    "DbSystemComputePerformance",
+    "ListDbSystemComputePerformancesRequest",
+    "ListDbSystemComputePerformancesResponse",
     "DbSystemInitialStorageSize",
     "DbSystemInitialStorageSizeProperties",
     "ListDbSystemInitialStorageSizesRequest",
@@ -406,6 +465,16 @@ __all__ = (
     "GetExascaleDbStorageVaultRequest",
     "ListExascaleDbStorageVaultsRequest",
     "ListExascaleDbStorageVaultsResponse",
+    "UpdateExascaleDbStorageVaultRequest",
+    "ExecuteSqlMetadata",
+    "ExecuteSqlRequest",
+    "ExecuteSqlResponse",
+    "SqlParameter",
+    "SqlResult",
+    "FlexComponent",
+    "FlexComponentProperties",
+    "ListFlexComponentsRequest",
+    "ListFlexComponentsResponse",
     "GiVersion",
     "AmazonS3IcebergStorage",
     "AzureDataLakeStorageIcebergStorage",
@@ -454,6 +523,7 @@ __all__ = (
     "NessieIcebergCatalog",
     "PolarisIcebergCatalog",
     "RestIcebergCatalog",
+    "UpdateGoldengateConnectionRequest",
     "CreateGoldengateConnectionAssignmentRequest",
     "DeleteGoldengateConnectionAssignmentRequest",
     "GetGoldengateConnectionAssignmentRequest",
@@ -464,6 +534,7 @@ __all__ = (
     "TestConnectionAssignmentError",
     "TestGoldengateConnectionAssignmentRequest",
     "TestGoldengateConnectionAssignmentResponse",
+    "UpdateGoldengateConnectionAssignmentRequest",
     "GoldengateConnectionType",
     "ListGoldengateConnectionTypesRequest",
     "ListGoldengateConnectionTypesResponse",
@@ -485,6 +556,7 @@ __all__ = (
     "ListGoldengateDeploymentsResponse",
     "StartGoldengateDeploymentRequest",
     "StopGoldengateDeploymentRequest",
+    "UpdateGoldengateDeploymentRequest",
     "GoldengateDeploymentEnvironment",
     "ListGoldengateDeploymentEnvironmentsRequest",
     "ListGoldengateDeploymentEnvironmentsResponse",
@@ -511,12 +583,16 @@ __all__ = (
     "ListOdbNetworksRequest",
     "ListOdbNetworksResponse",
     "OdbNetwork",
+    "PscInterfaceConfig",
+    "ServiceConnectivityConfig",
+    "UpdateOdbNetworkRequest",
     "CreateOdbSubnetRequest",
     "DeleteOdbSubnetRequest",
     "GetOdbSubnetRequest",
     "ListOdbSubnetsRequest",
     "ListOdbSubnetsResponse",
     "OdbSubnet",
+    "UpdateOdbSubnetRequest",
     "AutonomousDatabaseRefreshableClones",
     "CreateAutonomousDatabaseRequest",
     "CreateCloudExadataInfrastructureRequest",
@@ -526,6 +602,10 @@ __all__ = (
     "DeleteCloudExadataInfrastructureRequest",
     "DeleteCloudVmClusterRequest",
     "DeleteExadbVmClusterRequest",
+    "DisableCloudVmClusterIdentityConnectorRequest",
+    "DisableExadbVmClusterIdentityConnectorRequest",
+    "EnableCloudVmClusterIdentityConnectorRequest",
+    "EnableExadbVmClusterIdentityConnectorRequest",
     "FailoverAutonomousDatabaseRequest",
     "GenerateAutonomousDatabaseWalletRequest",
     "GenerateAutonomousDatabaseWalletResponse",
@@ -567,6 +647,8 @@ __all__ = (
     "StopAutonomousDatabaseRequest",
     "SwitchoverAutonomousDatabaseRequest",
     "UpdateAutonomousDatabaseRequest",
+    "UpdateCloudExadataInfrastructureRequest",
+    "UpdateCloudVmClusterRequest",
     "UpdateExadbVmClusterRequest",
     "DatabaseManagementConfig",
     "GetPluggableDatabaseRequest",

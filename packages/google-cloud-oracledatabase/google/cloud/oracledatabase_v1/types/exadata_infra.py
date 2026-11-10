@@ -46,19 +46,20 @@ class CloudExadataInfrastructure(proto.Message):
             with the format:
             projects/{project}/locations/{region}/cloudExadataInfrastructures/{cloud_exadata_infrastructure}
         display_name (str):
-            Optional. User friendly name for this
-            resource.
+            Optional. Immutable. User friendly name for
+            this resource.
         gcp_oracle_zone (str):
-            Optional. The GCP Oracle zone where Oracle
-            Exadata Infrastructure is hosted. Example:
-            us-east4-b-r2. If not specified, the system will
-            pick a zone based on availability.
+            Optional. Immutable. The GCP Oracle zone
+            where Oracle Exadata Infrastructure is hosted.
+            Example: us-east4-b-r2. If not specified, the
+            system will pick a zone based on availability.
         entitlement_id (str):
             Output only. Entitlement ID of the private
             offer against which this infrastructure resource
             is provisioned.
         properties (google.cloud.oracledatabase_v1.types.CloudExadataInfrastructureProperties):
-            Optional. Various properties of the infra.
+            Optional. Immutable. Various properties of
+            the infra.
         labels (MutableMapping[str, str]):
             Optional. Labels or tags associated with the
             resource.

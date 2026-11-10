@@ -20,7 +20,7 @@ from typing import MutableMapping, MutableSequence
 import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
 import proto  # type: ignore
 
-from google.cloud.run_v2.types import k8s_min, vendor_settings
+from google.cloud.run_v2.types import k8s_min, sandbox, vendor_settings
 
 __protobuf__ = proto.module(
     package="google.cloud.run.v2",
@@ -92,8 +92,10 @@ class RevisionTemplate(proto.Message):
             provided, the revision will use the project's
             default service account.
         containers (MutableSequence[google.cloud.run_v2.types.Container]):
-            Holds the single container that defines the
-            unit of execution for this Revision.
+            Holds the list which define the units of
+            execution for this Revision.
+        sandboxes (google.cloud.run_v2.types.SandboxConfiguration):
+            Optional. Configuration for sandboxes.
         volumes (MutableSequence[google.cloud.run_v2.types.Volume]):
             Optional. A list of Volumes to make available
             to containers.
@@ -127,11 +129,23 @@ class RevisionTemplate(proto.Message):
         node_selector (google.cloud.run_v2.types.NodeSelector):
             Optional. The node selector for the revision
             template.
+        workload_identity_config (google.cloud.run_v2.types.WorkloadIdentityConfig):
+            Optional. The Revision's workload identity
+            settings.
         gpu_zonal_redundancy_disabled (bool):
             Optional. True if GPU zonal redundancy is
             disabled on this revision.
 
             This field is a member of `oneof`_ ``_gpu_zonal_redundancy_disabled``.
+        client (str):
+            Optional. Arbitrary identifier for the API
+            client.
+        client_version (str):
+            Optional. Arbitrary version identifier for
+            the API client.
+        ambient_networking (google.cloud.run_v2.types.AmbientNetworking):
+            Optional. The ambient networking
+            configuration for this revision.
     """
 
     revision: str = proto.Field(
@@ -171,6 +185,11 @@ class RevisionTemplate(proto.Message):
         proto.MESSAGE,
         number=10,
         message=k8s_min.Container,
+    )
+    sandboxes: sandbox.SandboxConfiguration = proto.Field(
+        proto.MESSAGE,
+        number=31,
+        message=sandbox.SandboxConfiguration,
     )
     volumes: MutableSequence[k8s_min.Volume] = proto.RepeatedField(
         proto.MESSAGE,
@@ -220,10 +239,28 @@ class RevisionTemplate(proto.Message):
         number=21,
         message=vendor_settings.NodeSelector,
     )
+    workload_identity_config: vendor_settings.WorkloadIdentityConfig = proto.Field(
+        proto.MESSAGE,
+        number=27,
+        message=vendor_settings.WorkloadIdentityConfig,
+    )
     gpu_zonal_redundancy_disabled: bool = proto.Field(
         proto.BOOL,
         number=24,
         optional=True,
+    )
+    client: str = proto.Field(
+        proto.STRING,
+        number=28,
+    )
+    client_version: str = proto.Field(
+        proto.STRING,
+        number=29,
+    )
+    ambient_networking: vendor_settings.AmbientNetworking = proto.Field(
+        proto.MESSAGE,
+        number=33,
+        message=vendor_settings.AmbientNetworking,
     )
 
 

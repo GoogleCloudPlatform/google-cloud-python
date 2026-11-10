@@ -1035,7 +1035,11 @@ def test_executions_client_create_channel_credentials_file(
             credentials=file_creds,
             credentials_file=None,
             quota_project_id=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             scopes=None,
             default_host="run.googleapis.com",
             ssl_credentials=None,
@@ -1084,6 +1088,8 @@ def test_get_execution(request_type, transport: str = "grpc"):
             retried_count=1399,
             log_uri="log_uri_value",
             satisfies_pzs=True,
+            client="client_value",
+            client_version="client_version_value",
             etag="etag_value",
         )
         response = client.get_execution(request)
@@ -1113,6 +1119,8 @@ def test_get_execution(request_type, transport: str = "grpc"):
     assert response.retried_count == 1399
     assert response.log_uri == "log_uri_value"
     assert response.satisfies_pzs is True
+    assert response.client == "client_value"
+    assert response.client_version == "client_version_value"
     assert response.etag == "etag_value"
 
 
@@ -1262,6 +1270,8 @@ async def test_get_execution_async(request_type, transport: str = "grpc_asyncio"
                 retried_count=1399,
                 log_uri="log_uri_value",
                 satisfies_pzs=True,
+                client="client_value",
+                client_version="client_version_value",
                 etag="etag_value",
             )
         )
@@ -1292,6 +1302,8 @@ async def test_get_execution_async(request_type, transport: str = "grpc_asyncio"
     assert response.retried_count == 1399
     assert response.log_uri == "log_uri_value"
     assert response.satisfies_pzs is True
+    assert response.client == "client_value"
+    assert response.client_version == "client_version_value"
     assert response.etag == "etag_value"
 
 
@@ -3614,6 +3626,8 @@ async def test_get_execution_empty_call_grpc_asyncio():
                 retried_count=1399,
                 log_uri="log_uri_value",
                 satisfies_pzs=True,
+                client="client_value",
+                client_version="client_version_value",
                 etag="etag_value",
             )
         )
@@ -3772,6 +3786,8 @@ def test_get_execution_rest_call_success(request_type):
             retried_count=1399,
             log_uri="log_uri_value",
             satisfies_pzs=True,
+            client="client_value",
+            client_version="client_version_value",
             etag="etag_value",
         )
 
@@ -3806,6 +3822,8 @@ def test_get_execution_rest_call_success(request_type):
     assert response.retried_count == 1399
     assert response.log_uri == "log_uri_value"
     assert response.satisfies_pzs is True
+    assert response.client == "client_value"
+    assert response.client_version == "client_version_value"
     assert response.etag == "etag_value"
 
 
@@ -4693,7 +4711,11 @@ def test_executions_base_transport_with_credentials_file():
         load_creds.assert_called_once_with(
             "credentials.json",
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             quota_project_id="octopus",
         )
 
@@ -4719,7 +4741,11 @@ def test_executions_auth_adc():
         ExecutionsClient()
         adc.assert_called_once_with(
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             quota_project_id=None,
         )
 
@@ -4739,7 +4765,11 @@ def test_executions_transport_auth_adc(transport_class):
         transport_class(quota_project_id="octopus", scopes=["1", "2"])
         adc.assert_called_once_with(
             scopes=["1", "2"],
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             quota_project_id="octopus",
         )
 
@@ -4792,7 +4822,11 @@ def test_executions_transport_create_channel(transport_class, grpc_helpers):
             credentials=creds,
             credentials_file=None,
             quota_project_id="octopus",
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             scopes=["1", "2"],
             default_host="run.googleapis.com",
             ssl_credentials=None,

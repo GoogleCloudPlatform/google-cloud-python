@@ -22,7 +22,7 @@ import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import google.rpc.status_pb2 as status_pb2  # type: ignore
 import proto  # type: ignore
 
-from google.cloud.run_v2.types import condition, k8s_min, vendor_settings
+from google.cloud.run_v2.types import condition, k8s_min, sandbox, vendor_settings
 
 __protobuf__ = proto.module(
     package="google.cloud.run.v2",
@@ -191,6 +191,8 @@ class Task(proto.Message):
         containers (MutableSequence[google.cloud.run_v2.types.Container]):
             Holds the single container that defines the
             unit of execution for this task.
+        sandboxes (google.cloud.run_v2.types.SandboxConfiguration):
+            Configuration for sandboxes.
         volumes (MutableSequence[google.cloud.run_v2.types.Volume]):
             A list of Volumes to make available to
             containers.
@@ -259,6 +261,9 @@ class Task(proto.Message):
             redundancy is disabled on this task.
 
             This field is a member of `oneof`_ ``_gpu_zonal_redundancy_disabled``.
+        workload_identity_config (google.cloud.run_v2.types.WorkloadIdentityConfig):
+            Optional. The Task's workload identity
+            settings.
         etag (str):
             Output only. A system-generated fingerprint
             for this version of the resource. May be used to
@@ -335,6 +340,11 @@ class Task(proto.Message):
         number=14,
         message=k8s_min.Container,
     )
+    sandboxes: sandbox.SandboxConfiguration = proto.Field(
+        proto.MESSAGE,
+        number=40,
+        message=sandbox.SandboxConfiguration,
+    )
     volumes: MutableSequence[k8s_min.Volume] = proto.RepeatedField(
         proto.MESSAGE,
         number=15,
@@ -410,6 +420,11 @@ class Task(proto.Message):
         proto.BOOL,
         number=37,
         optional=True,
+    )
+    workload_identity_config: vendor_settings.WorkloadIdentityConfig = proto.Field(
+        proto.MESSAGE,
+        number=38,
+        message=vendor_settings.WorkloadIdentityConfig,
     )
     etag: str = proto.Field(
         proto.STRING,

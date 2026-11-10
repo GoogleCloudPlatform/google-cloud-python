@@ -22,7 +22,13 @@ import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
 
-from google.cloud.run_v2.types import condition, k8s_min, status, vendor_settings
+from google.cloud.run_v2.types import (
+    condition,
+    k8s_min,
+    sandbox,
+    status,
+    vendor_settings,
+)
 
 __protobuf__ = proto.module(
     package="google.cloud.run.v2",
@@ -213,7 +219,7 @@ class Revision(proto.Message):
 
             Note that this value might not be what was used as input.
             For example, if ALPHA was provided as input in the parent
-            resource, but only BETA and GA-level features are were, this
+            resource, but only BETA and GA-level features are used, this
             field will be BETA.
         service (str):
             Output only. The name of the parent service.
@@ -236,8 +242,10 @@ class Revision(proto.Message):
             running revision, and determines what
             permissions the revision has.
         containers (MutableSequence[google.cloud.run_v2.types.Container]):
-            Holds the single container that defines the
-            unit of execution for this Revision.
+            Holds the list which define the units of
+            execution for this Revision.
+        sandboxes (google.cloud.run_v2.types.SandboxConfiguration):
+            Output only. Configuration for sandboxes.
         volumes (MutableSequence[google.cloud.run_v2.types.Volume]):
             A list of Volumes to make available to
             containers.
@@ -285,6 +293,9 @@ class Revision(proto.Message):
             settings for the revision.
         node_selector (google.cloud.run_v2.types.NodeSelector):
             The node selector for the revision.
+        workload_identity_config (google.cloud.run_v2.types.WorkloadIdentityConfig):
+            Optional. The Revision's workload identity
+            settings.
         gpu_zonal_redundancy_disabled (bool):
             Optional. Output only. True if GPU zonal
             redundancy is disabled on this revision.
@@ -293,6 +304,15 @@ class Revision(proto.Message):
         creator (str):
             Output only. Email address of the
             authenticated creator.
+        client (str):
+            Output only. Arbitrary identifier for the API
+            client.
+        client_version (str):
+            Output only. Arbitrary version identifier for
+            the API client.
+        ambient_networking (google.cloud.run_v2.types.AmbientNetworking):
+            Output only. The ambient networking
+            configuration for this revision.
         etag (str):
             Output only. A system-generated fingerprint
             for this version of the resource. May be used to
@@ -378,6 +398,11 @@ class Revision(proto.Message):
         number=17,
         message=k8s_min.Container,
     )
+    sandboxes: sandbox.SandboxConfiguration = proto.Field(
+        proto.MESSAGE,
+        number=56,
+        message=sandbox.SandboxConfiguration,
+    )
     volumes: MutableSequence[k8s_min.Volume] = proto.RepeatedField(
         proto.MESSAGE,
         number=18,
@@ -444,6 +469,11 @@ class Revision(proto.Message):
         number=40,
         message=vendor_settings.NodeSelector,
     )
+    workload_identity_config: vendor_settings.WorkloadIdentityConfig = proto.Field(
+        proto.MESSAGE,
+        number=52,
+        message=vendor_settings.WorkloadIdentityConfig,
+    )
     gpu_zonal_redundancy_disabled: bool = proto.Field(
         proto.BOOL,
         number=48,
@@ -452,6 +482,19 @@ class Revision(proto.Message):
     creator: str = proto.Field(
         proto.STRING,
         number=49,
+    )
+    client: str = proto.Field(
+        proto.STRING,
+        number=53,
+    )
+    client_version: str = proto.Field(
+        proto.STRING,
+        number=54,
+    )
+    ambient_networking: vendor_settings.AmbientNetworking = proto.Field(
+        proto.MESSAGE,
+        number=59,
+        message=vendor_settings.AmbientNetworking,
     )
     etag: str = proto.Field(
         proto.STRING,

@@ -532,11 +532,15 @@ class KeyOperationAttestation(proto.Message):
                 Cavium HSM attestation V2 compressed with
                 gzip. This is a new format introduced in
                 Cavium's version 3.2-08.
+            CAVIUM_V209 (5):
+                Cavium HSM attestation V209, introduced in
+                Cavium's version 2.09-0702.
         """
 
         ATTESTATION_FORMAT_UNSPECIFIED = 0
         CAVIUM_V1_COMPRESSED = 3
         CAVIUM_V2_COMPRESSED = 4
+        CAVIUM_V209 = 5
 
     class CertificateChains(proto.Message):
         r"""Certificate chains needed to verify the attestation.

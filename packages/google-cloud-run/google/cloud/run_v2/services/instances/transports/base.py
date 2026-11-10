@@ -18,6 +18,8 @@ from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 
 import google.api_core
 import google.auth  # type: ignore
+import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
+import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
 import google.protobuf
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1, operations_v1
@@ -40,7 +42,11 @@ DEFAULT_CLIENT_INFO.protobuf_runtime_version = google.protobuf.__version__
 class InstancesTransport(abc.ABC):
     """Abstract transport class for Instances."""
 
-    AUTH_SCOPES = ("https://www.googleapis.com/auth/cloud-platform",)
+    AUTH_SCOPES = (
+        "https://www.googleapis.com/auth/cloud-platform",
+        "https://www.googleapis.com/auth/run",
+        "https://www.googleapis.com/auth/run.readonly",
+    )
 
     DEFAULT_HOST: str = "run.googleapis.com"
 
@@ -148,6 +154,11 @@ class InstancesTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.update_instance: gapic_v1.method.wrap_method(
+                self.update_instance,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.delete_instance: gapic_v1.method.wrap_method(
                 self.delete_instance,
                 default_timeout=None,
@@ -170,6 +181,21 @@ class InstancesTransport(abc.ABC):
             ),
             self.start_instance: gapic_v1.method.wrap_method(
                 self.start_instance,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.get_iam_policy: gapic_v1.method.wrap_method(
+                self.get_iam_policy,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.set_iam_policy: gapic_v1.method.wrap_method(
+                self.set_iam_policy,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.test_iam_permissions: gapic_v1.method.wrap_method(
+                self.test_iam_permissions,
                 default_timeout=None,
                 client_info=client_info,
             ),
@@ -219,6 +245,15 @@ class InstancesTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def update_instance(
+        self,
+    ) -> Callable[
+        [gcr_instance.UpdateInstanceRequest],
+        Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def delete_instance(
         self,
     ) -> Callable[
@@ -262,6 +297,36 @@ class InstancesTransport(abc.ABC):
     ) -> Callable[
         [instance.StartInstanceRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def get_iam_policy(
+        self,
+    ) -> Callable[
+        [iam_policy_pb2.GetIamPolicyRequest],
+        Union[policy_pb2.Policy, Awaitable[policy_pb2.Policy]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def set_iam_policy(
+        self,
+    ) -> Callable[
+        [iam_policy_pb2.SetIamPolicyRequest],
+        Union[policy_pb2.Policy, Awaitable[policy_pb2.Policy]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def test_iam_permissions(
+        self,
+    ) -> Callable[
+        [iam_policy_pb2.TestIamPermissionsRequest],
+        Union[
+            iam_policy_pb2.TestIamPermissionsResponse,
+            Awaitable[iam_policy_pb2.TestIamPermissionsResponse],
+        ],
     ]:
         raise NotImplementedError()
 

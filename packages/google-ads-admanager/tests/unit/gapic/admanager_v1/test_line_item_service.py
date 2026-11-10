@@ -42,7 +42,10 @@ import google.auth
 import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
 import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
+import google.type.dayofweek_pb2 as dayofweek_pb2  # type: ignore
+import google.type.interval_pb2 as interval_pb2  # type: ignore
 import google.type.money_pb2 as money_pb2  # type: ignore
+import google.type.timeofday_pb2 as timeofday_pb2  # type: ignore
 from google.api_core import (
     client_options,
     gapic_v1,
@@ -71,6 +74,7 @@ from google.ads.admanager_v1.types import (
     custom_field_value,
     custom_pacing_curve,
     custom_pacing_goal_unit_enum,
+    dayparting_time_zone_enum,
     delivery_enums,
     delivery_indicator,
     discount_type_enum,
@@ -4071,6 +4075,7 @@ def test_get_line_item_rest_call_success(request_type):
             allowed_formats=[
                 line_item_allowed_format_enum.LineItemAllowedFormatEnum.LineItemAllowedFormat.AUDIO
             ],
+            allocation_delivery_profile="allocation_delivery_profile_value",
         )
 
         # Wrap the value into a proper Response obj
@@ -4167,6 +4172,7 @@ def test_get_line_item_rest_call_success(request_type):
     assert response.allowed_formats == [
         line_item_allowed_format_enum.LineItemAllowedFormatEnum.LineItemAllowedFormat.AUDIO
     ]
+    assert response.allocation_delivery_profile == "allocation_delivery_profile_value"
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -4540,6 +4546,16 @@ def test_create_line_item_rest_call_success(request_type):
         "sponsorship_exclusivity_enabled": True,
         "repeated_creative_serving_enabled": True,
         "targeting": {
+            "inventory_url_targeting": {
+                "targeted_inventory_urls": [
+                    "targeted_inventory_urls_value1",
+                    "targeted_inventory_urls_value2",
+                ],
+                "excluded_inventory_urls": [
+                    "excluded_inventory_urls_value1",
+                    "excluded_inventory_urls_value2",
+                ],
+            },
             "geo_targeting": {
                 "targeted_geos": ["targeted_geos_value1", "targeted_geos_value2"],
                 "excluded_geos": ["excluded_geos_value1", "excluded_geos_value2"],
@@ -4650,6 +4666,10 @@ def test_create_line_item_rest_call_success(request_type):
                     ],
                 },
             },
+            "inventory_size_targeting": {
+                "targeted_inventory_sizes": {},
+                "excluded_inventory_sizes": {},
+            },
             "inventory_targeting": {
                 "targeted_ad_units": [
                     {"include_descendants": True, "ad_unit": "ad_unit_value"}
@@ -4695,6 +4715,19 @@ def test_create_line_item_rest_call_success(request_type):
                     }
                 ]
             },
+            "date_time_range_targeting": {
+                "targeted_range": [{"start_time": {}, "end_time": {}}]
+            },
+            "publisher_provided_signals_targeting": {
+                "targeted_taxonomy_categories": [
+                    "targeted_taxonomy_categories_value1",
+                    "targeted_taxonomy_categories_value2",
+                ],
+                "excluded_taxonomy_categories": [
+                    "excluded_taxonomy_categories_value1",
+                    "excluded_taxonomy_categories_value2",
+                ],
+            },
             "user_domain_targeting": {
                 "targeted_user_domains": [
                     "targeted_user_domains_value1",
@@ -4705,12 +4738,27 @@ def test_create_line_item_rest_call_success(request_type):
                     "excluded_user_domains_value2",
                 ],
             },
+            "contextual_targeting": {
+                "targeted_verticals": [
+                    "targeted_verticals_value1",
+                    "targeted_verticals_value2",
+                ],
+                "excluded_verticals": [
+                    "excluded_verticals_value1",
+                    "excluded_verticals_value2",
+                ],
+                "excluded_content_labels": [
+                    "excluded_content_labels_value1",
+                    "excluded_content_labels_value2",
+                ],
+            },
             "video_position_targeting": {
                 "video_positions": [
                     {
                         "midroll_index": 1386,
                         "reverse_midroll_index": 2245,
                         "pod_position": 1303,
+                        "ad_spot": "ad_spot_value",
                         "position_type": 1,
                         "bumper_type": 1,
                     }
@@ -4758,6 +4806,22 @@ def test_create_line_item_rest_call_success(request_type):
                     ],
                 }
             },
+            "day_part_targeting": {
+                "targeted_day_parts": [
+                    {
+                        "day_of_week": 1,
+                        "start_time": {
+                            "hours": 561,
+                            "minutes": 773,
+                            "seconds": 751,
+                            "nanos": 543,
+                        },
+                        "end_time": {},
+                    }
+                ],
+                "dayparting_time_zone": 1,
+            },
+            "buyer_user_list_targeting": {"has_buyer_user_list_targeting": True},
         },
         "creative_targetings": [
             {
@@ -4766,6 +4830,7 @@ def test_create_line_item_rest_call_success(request_type):
             }
         ],
         "allowed_formats": [1],
+        "allocation_delivery_profile": "allocation_delivery_profile_value",
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -4880,6 +4945,7 @@ def test_create_line_item_rest_call_success(request_type):
             allowed_formats=[
                 line_item_allowed_format_enum.LineItemAllowedFormatEnum.LineItemAllowedFormat.AUDIO
             ],
+            allocation_delivery_profile="allocation_delivery_profile_value",
         )
 
         # Wrap the value into a proper Response obj
@@ -4976,6 +5042,7 @@ def test_create_line_item_rest_call_success(request_type):
     assert response.allowed_formats == [
         line_item_allowed_format_enum.LineItemAllowedFormatEnum.LineItemAllowedFormat.AUDIO
     ]
+    assert response.allocation_delivery_profile == "allocation_delivery_profile_value"
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -5344,6 +5411,16 @@ def test_update_line_item_rest_call_success(request_type):
         "sponsorship_exclusivity_enabled": True,
         "repeated_creative_serving_enabled": True,
         "targeting": {
+            "inventory_url_targeting": {
+                "targeted_inventory_urls": [
+                    "targeted_inventory_urls_value1",
+                    "targeted_inventory_urls_value2",
+                ],
+                "excluded_inventory_urls": [
+                    "excluded_inventory_urls_value1",
+                    "excluded_inventory_urls_value2",
+                ],
+            },
             "geo_targeting": {
                 "targeted_geos": ["targeted_geos_value1", "targeted_geos_value2"],
                 "excluded_geos": ["excluded_geos_value1", "excluded_geos_value2"],
@@ -5454,6 +5531,10 @@ def test_update_line_item_rest_call_success(request_type):
                     ],
                 },
             },
+            "inventory_size_targeting": {
+                "targeted_inventory_sizes": {},
+                "excluded_inventory_sizes": {},
+            },
             "inventory_targeting": {
                 "targeted_ad_units": [
                     {"include_descendants": True, "ad_unit": "ad_unit_value"}
@@ -5499,6 +5580,19 @@ def test_update_line_item_rest_call_success(request_type):
                     }
                 ]
             },
+            "date_time_range_targeting": {
+                "targeted_range": [{"start_time": {}, "end_time": {}}]
+            },
+            "publisher_provided_signals_targeting": {
+                "targeted_taxonomy_categories": [
+                    "targeted_taxonomy_categories_value1",
+                    "targeted_taxonomy_categories_value2",
+                ],
+                "excluded_taxonomy_categories": [
+                    "excluded_taxonomy_categories_value1",
+                    "excluded_taxonomy_categories_value2",
+                ],
+            },
             "user_domain_targeting": {
                 "targeted_user_domains": [
                     "targeted_user_domains_value1",
@@ -5509,12 +5603,27 @@ def test_update_line_item_rest_call_success(request_type):
                     "excluded_user_domains_value2",
                 ],
             },
+            "contextual_targeting": {
+                "targeted_verticals": [
+                    "targeted_verticals_value1",
+                    "targeted_verticals_value2",
+                ],
+                "excluded_verticals": [
+                    "excluded_verticals_value1",
+                    "excluded_verticals_value2",
+                ],
+                "excluded_content_labels": [
+                    "excluded_content_labels_value1",
+                    "excluded_content_labels_value2",
+                ],
+            },
             "video_position_targeting": {
                 "video_positions": [
                     {
                         "midroll_index": 1386,
                         "reverse_midroll_index": 2245,
                         "pod_position": 1303,
+                        "ad_spot": "ad_spot_value",
                         "position_type": 1,
                         "bumper_type": 1,
                     }
@@ -5562,6 +5671,22 @@ def test_update_line_item_rest_call_success(request_type):
                     ],
                 }
             },
+            "day_part_targeting": {
+                "targeted_day_parts": [
+                    {
+                        "day_of_week": 1,
+                        "start_time": {
+                            "hours": 561,
+                            "minutes": 773,
+                            "seconds": 751,
+                            "nanos": 543,
+                        },
+                        "end_time": {},
+                    }
+                ],
+                "dayparting_time_zone": 1,
+            },
+            "buyer_user_list_targeting": {"has_buyer_user_list_targeting": True},
         },
         "creative_targetings": [
             {
@@ -5570,6 +5695,7 @@ def test_update_line_item_rest_call_success(request_type):
             }
         ],
         "allowed_formats": [1],
+        "allocation_delivery_profile": "allocation_delivery_profile_value",
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -5684,6 +5810,7 @@ def test_update_line_item_rest_call_success(request_type):
             allowed_formats=[
                 line_item_allowed_format_enum.LineItemAllowedFormatEnum.LineItemAllowedFormat.AUDIO
             ],
+            allocation_delivery_profile="allocation_delivery_profile_value",
         )
 
         # Wrap the value into a proper Response obj
@@ -5780,6 +5907,7 @@ def test_update_line_item_rest_call_success(request_type):
     assert response.allowed_formats == [
         line_item_allowed_format_enum.LineItemAllowedFormatEnum.LineItemAllowedFormat.AUDIO
     ]
+    assert response.allocation_delivery_profile == "allocation_delivery_profile_value"
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -8001,9 +8129,55 @@ def test_line_item_service_client_transport_session_collision(transport_name):
     assert session1 != session2
 
 
-def test_ad_unit_path():
+def test_ad_category_path():
     network_code = "squid"
-    ad_unit = "clam"
+    ad_category = "clam"
+    expected = "networks/{network_code}/adCategories/{ad_category}".format(
+        network_code=network_code,
+        ad_category=ad_category,
+    )
+    actual = LineItemServiceClient.ad_category_path(network_code, ad_category)
+    assert expected == actual
+
+
+def test_parse_ad_category_path():
+    expected = {
+        "network_code": "whelk",
+        "ad_category": "octopus",
+    }
+    path = LineItemServiceClient.ad_category_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = LineItemServiceClient.parse_ad_category_path(path)
+    assert expected == actual
+
+
+def test_ad_spot_path():
+    network_code = "oyster"
+    ad_spot = "nudibranch"
+    expected = "networks/{network_code}/adSpots/{ad_spot}".format(
+        network_code=network_code,
+        ad_spot=ad_spot,
+    )
+    actual = LineItemServiceClient.ad_spot_path(network_code, ad_spot)
+    assert expected == actual
+
+
+def test_parse_ad_spot_path():
+    expected = {
+        "network_code": "cuttlefish",
+        "ad_spot": "mussel",
+    }
+    path = LineItemServiceClient.ad_spot_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = LineItemServiceClient.parse_ad_spot_path(path)
+    assert expected == actual
+
+
+def test_ad_unit_path():
+    network_code = "winkle"
+    ad_unit = "nautilus"
     expected = "networks/{network_code}/adUnits/{ad_unit}".format(
         network_code=network_code,
         ad_unit=ad_unit,
@@ -8014,13 +8188,38 @@ def test_ad_unit_path():
 
 def test_parse_ad_unit_path():
     expected = {
-        "network_code": "whelk",
-        "ad_unit": "octopus",
+        "network_code": "scallop",
+        "ad_unit": "abalone",
     }
     path = LineItemServiceClient.ad_unit_path(**expected)
 
     # Check that the path construction is reversible.
     actual = LineItemServiceClient.parse_ad_unit_path(path)
+    assert expected == actual
+
+
+def test_allocation_delivery_profile_path():
+    network_code = "squid"
+    allocation_delivery_profile = "clam"
+    expected = "networks/{network_code}/allocationDeliveryProfiles/{allocation_delivery_profile}".format(
+        network_code=network_code,
+        allocation_delivery_profile=allocation_delivery_profile,
+    )
+    actual = LineItemServiceClient.allocation_delivery_profile_path(
+        network_code, allocation_delivery_profile
+    )
+    assert expected == actual
+
+
+def test_parse_allocation_delivery_profile_path():
+    expected = {
+        "network_code": "whelk",
+        "allocation_delivery_profile": "octopus",
+    }
+    path = LineItemServiceClient.allocation_delivery_profile_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = LineItemServiceClient.parse_allocation_delivery_profile_path(path)
     assert expected == actual
 
 
@@ -8233,9 +8432,32 @@ def test_parse_content_bundle_path():
     assert expected == actual
 
 
-def test_custom_field_path():
+def test_content_label_path():
     network_code = "oyster"
-    custom_field = "nudibranch"
+    content_label = "nudibranch"
+    expected = "networks/{network_code}/contentLabels/{content_label}".format(
+        network_code=network_code,
+        content_label=content_label,
+    )
+    actual = LineItemServiceClient.content_label_path(network_code, content_label)
+    assert expected == actual
+
+
+def test_parse_content_label_path():
+    expected = {
+        "network_code": "cuttlefish",
+        "content_label": "mussel",
+    }
+    path = LineItemServiceClient.content_label_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = LineItemServiceClient.parse_content_label_path(path)
+    assert expected == actual
+
+
+def test_custom_field_path():
+    network_code = "winkle"
+    custom_field = "nautilus"
     expected = "networks/{network_code}/customFields/{custom_field}".format(
         network_code=network_code,
         custom_field=custom_field,
@@ -8246,8 +8468,8 @@ def test_custom_field_path():
 
 def test_parse_custom_field_path():
     expected = {
-        "network_code": "cuttlefish",
-        "custom_field": "mussel",
+        "network_code": "scallop",
+        "custom_field": "abalone",
     }
     path = LineItemServiceClient.custom_field_path(**expected)
 
@@ -8257,8 +8479,8 @@ def test_parse_custom_field_path():
 
 
 def test_custom_targeting_key_path():
-    network_code = "winkle"
-    custom_targeting_key = "nautilus"
+    network_code = "squid"
+    custom_targeting_key = "clam"
     expected = (
         "networks/{network_code}/customTargetingKeys/{custom_targeting_key}".format(
             network_code=network_code,
@@ -8273,8 +8495,8 @@ def test_custom_targeting_key_path():
 
 def test_parse_custom_targeting_key_path():
     expected = {
-        "network_code": "scallop",
-        "custom_targeting_key": "abalone",
+        "network_code": "whelk",
+        "custom_targeting_key": "octopus",
     }
     path = LineItemServiceClient.custom_targeting_key_path(**expected)
 
@@ -8284,8 +8506,8 @@ def test_parse_custom_targeting_key_path():
 
 
 def test_custom_targeting_value_path():
-    network_code = "squid"
-    custom_targeting_value = "clam"
+    network_code = "oyster"
+    custom_targeting_value = "nudibranch"
     expected = (
         "networks/{network_code}/customTargetingValues/{custom_targeting_value}".format(
             network_code=network_code,
@@ -8300,8 +8522,8 @@ def test_custom_targeting_value_path():
 
 def test_parse_custom_targeting_value_path():
     expected = {
-        "network_code": "whelk",
-        "custom_targeting_value": "octopus",
+        "network_code": "cuttlefish",
+        "custom_targeting_value": "mussel",
     }
     path = LineItemServiceClient.custom_targeting_value_path(**expected)
 
@@ -8311,8 +8533,8 @@ def test_parse_custom_targeting_value_path():
 
 
 def test_device_capability_path():
-    network_code = "oyster"
-    device_capability = "nudibranch"
+    network_code = "winkle"
+    device_capability = "nautilus"
     expected = "networks/{network_code}/deviceCapabilities/{device_capability}".format(
         network_code=network_code,
         device_capability=device_capability,
@@ -8325,8 +8547,8 @@ def test_device_capability_path():
 
 def test_parse_device_capability_path():
     expected = {
-        "network_code": "cuttlefish",
-        "device_capability": "mussel",
+        "network_code": "scallop",
+        "device_capability": "abalone",
     }
     path = LineItemServiceClient.device_capability_path(**expected)
 
@@ -8336,8 +8558,8 @@ def test_parse_device_capability_path():
 
 
 def test_device_category_path():
-    network_code = "winkle"
-    device_category = "nautilus"
+    network_code = "squid"
+    device_category = "clam"
     expected = "networks/{network_code}/deviceCategories/{device_category}".format(
         network_code=network_code,
         device_category=device_category,
@@ -8348,8 +8570,8 @@ def test_device_category_path():
 
 def test_parse_device_category_path():
     expected = {
-        "network_code": "scallop",
-        "device_category": "abalone",
+        "network_code": "whelk",
+        "device_category": "octopus",
     }
     path = LineItemServiceClient.device_category_path(**expected)
 
@@ -8359,8 +8581,8 @@ def test_parse_device_category_path():
 
 
 def test_device_manufacturer_path():
-    network_code = "squid"
-    device_manufacturer = "clam"
+    network_code = "oyster"
+    device_manufacturer = "nudibranch"
     expected = (
         "networks/{network_code}/deviceManufacturers/{device_manufacturer}".format(
             network_code=network_code,
@@ -8375,8 +8597,8 @@ def test_device_manufacturer_path():
 
 def test_parse_device_manufacturer_path():
     expected = {
-        "network_code": "whelk",
-        "device_manufacturer": "octopus",
+        "network_code": "cuttlefish",
+        "device_manufacturer": "mussel",
     }
     path = LineItemServiceClient.device_manufacturer_path(**expected)
 
@@ -8386,8 +8608,8 @@ def test_parse_device_manufacturer_path():
 
 
 def test_geo_target_path():
-    network_code = "oyster"
-    geo_target = "nudibranch"
+    network_code = "winkle"
+    geo_target = "nautilus"
     expected = "networks/{network_code}/geoTargets/{geo_target}".format(
         network_code=network_code,
         geo_target=geo_target,
@@ -8398,8 +8620,8 @@ def test_geo_target_path():
 
 def test_parse_geo_target_path():
     expected = {
-        "network_code": "cuttlefish",
-        "geo_target": "mussel",
+        "network_code": "scallop",
+        "geo_target": "abalone",
     }
     path = LineItemServiceClient.geo_target_path(**expected)
 
@@ -8408,9 +8630,32 @@ def test_parse_geo_target_path():
     assert expected == actual
 
 
+def test_inventory_url_path():
+    network_code = "squid"
+    inventory_url = "clam"
+    expected = "networks/{network_code}/inventoryUrls/{inventory_url}".format(
+        network_code=network_code,
+        inventory_url=inventory_url,
+    )
+    actual = LineItemServiceClient.inventory_url_path(network_code, inventory_url)
+    assert expected == actual
+
+
+def test_parse_inventory_url_path():
+    expected = {
+        "network_code": "whelk",
+        "inventory_url": "octopus",
+    }
+    path = LineItemServiceClient.inventory_url_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = LineItemServiceClient.parse_inventory_url_path(path)
+    assert expected == actual
+
+
 def test_label_path():
-    network_code = "winkle"
-    label = "nautilus"
+    network_code = "oyster"
+    label = "nudibranch"
     expected = "networks/{network_code}/labels/{label}".format(
         network_code=network_code,
         label=label,
@@ -8421,8 +8666,8 @@ def test_label_path():
 
 def test_parse_label_path():
     expected = {
-        "network_code": "scallop",
-        "label": "abalone",
+        "network_code": "cuttlefish",
+        "label": "mussel",
     }
     path = LineItemServiceClient.label_path(**expected)
 
@@ -8432,8 +8677,8 @@ def test_parse_label_path():
 
 
 def test_line_item_path():
-    network_code = "squid"
-    line_item = "clam"
+    network_code = "winkle"
+    line_item = "nautilus"
     expected = "networks/{network_code}/lineItems/{line_item}".format(
         network_code=network_code,
         line_item=line_item,
@@ -8444,8 +8689,8 @@ def test_line_item_path():
 
 def test_parse_line_item_path():
     expected = {
-        "network_code": "whelk",
-        "line_item": "octopus",
+        "network_code": "scallop",
+        "line_item": "abalone",
     }
     path = LineItemServiceClient.line_item_path(**expected)
 
@@ -8455,8 +8700,8 @@ def test_parse_line_item_path():
 
 
 def test_mobile_carrier_path():
-    network_code = "oyster"
-    mobile_carrier = "nudibranch"
+    network_code = "squid"
+    mobile_carrier = "clam"
     expected = "networks/{network_code}/mobileCarriers/{mobile_carrier}".format(
         network_code=network_code,
         mobile_carrier=mobile_carrier,
@@ -8467,8 +8712,8 @@ def test_mobile_carrier_path():
 
 def test_parse_mobile_carrier_path():
     expected = {
-        "network_code": "cuttlefish",
-        "mobile_carrier": "mussel",
+        "network_code": "whelk",
+        "mobile_carrier": "octopus",
     }
     path = LineItemServiceClient.mobile_carrier_path(**expected)
 
@@ -8478,8 +8723,8 @@ def test_parse_mobile_carrier_path():
 
 
 def test_mobile_device_path():
-    network_code = "winkle"
-    mobile_device = "nautilus"
+    network_code = "oyster"
+    mobile_device = "nudibranch"
     expected = "networks/{network_code}/mobileDevices/{mobile_device}".format(
         network_code=network_code,
         mobile_device=mobile_device,
@@ -8490,8 +8735,8 @@ def test_mobile_device_path():
 
 def test_parse_mobile_device_path():
     expected = {
-        "network_code": "scallop",
-        "mobile_device": "abalone",
+        "network_code": "cuttlefish",
+        "mobile_device": "mussel",
     }
     path = LineItemServiceClient.mobile_device_path(**expected)
 
@@ -8501,8 +8746,8 @@ def test_parse_mobile_device_path():
 
 
 def test_mobile_device_submodel_path():
-    network_code = "squid"
-    mobile_device_submodel = "clam"
+    network_code = "winkle"
+    mobile_device_submodel = "nautilus"
     expected = (
         "networks/{network_code}/mobileDeviceSubmodels/{mobile_device_submodel}".format(
             network_code=network_code,
@@ -8517,8 +8762,8 @@ def test_mobile_device_submodel_path():
 
 def test_parse_mobile_device_submodel_path():
     expected = {
-        "network_code": "whelk",
-        "mobile_device_submodel": "octopus",
+        "network_code": "scallop",
+        "mobile_device_submodel": "abalone",
     }
     path = LineItemServiceClient.mobile_device_submodel_path(**expected)
 
@@ -8528,7 +8773,7 @@ def test_parse_mobile_device_submodel_path():
 
 
 def test_network_path():
-    network_code = "oyster"
+    network_code = "squid"
     expected = "networks/{network_code}".format(
         network_code=network_code,
     )
@@ -8538,7 +8783,7 @@ def test_network_path():
 
 def test_parse_network_path():
     expected = {
-        "network_code": "nudibranch",
+        "network_code": "clam",
     }
     path = LineItemServiceClient.network_path(**expected)
 
@@ -8548,8 +8793,8 @@ def test_parse_network_path():
 
 
 def test_operating_system_path():
-    network_code = "cuttlefish"
-    operating_system = "mussel"
+    network_code = "whelk"
+    operating_system = "octopus"
     expected = "networks/{network_code}/operatingSystems/{operating_system}".format(
         network_code=network_code,
         operating_system=operating_system,
@@ -8560,8 +8805,8 @@ def test_operating_system_path():
 
 def test_parse_operating_system_path():
     expected = {
-        "network_code": "winkle",
-        "operating_system": "nautilus",
+        "network_code": "oyster",
+        "operating_system": "nudibranch",
     }
     path = LineItemServiceClient.operating_system_path(**expected)
 
@@ -8571,8 +8816,8 @@ def test_parse_operating_system_path():
 
 
 def test_operating_system_version_path():
-    network_code = "scallop"
-    operating_system_version = "abalone"
+    network_code = "cuttlefish"
+    operating_system_version = "mussel"
     expected = "networks/{network_code}/operatingSystemVersions/{operating_system_version}".format(
         network_code=network_code,
         operating_system_version=operating_system_version,
@@ -8585,8 +8830,8 @@ def test_operating_system_version_path():
 
 def test_parse_operating_system_version_path():
     expected = {
-        "network_code": "squid",
-        "operating_system_version": "clam",
+        "network_code": "winkle",
+        "operating_system_version": "nautilus",
     }
     path = LineItemServiceClient.operating_system_version_path(**expected)
 
@@ -8596,8 +8841,8 @@ def test_parse_operating_system_version_path():
 
 
 def test_order_path():
-    network_code = "whelk"
-    order = "octopus"
+    network_code = "scallop"
+    order = "abalone"
     expected = "networks/{network_code}/orders/{order}".format(
         network_code=network_code,
         order=order,
@@ -8608,8 +8853,8 @@ def test_order_path():
 
 def test_parse_order_path():
     expected = {
-        "network_code": "oyster",
-        "order": "nudibranch",
+        "network_code": "squid",
+        "order": "clam",
     }
     path = LineItemServiceClient.order_path(**expected)
 
@@ -8619,8 +8864,8 @@ def test_parse_order_path():
 
 
 def test_placement_path():
-    network_code = "cuttlefish"
-    placement = "mussel"
+    network_code = "whelk"
+    placement = "octopus"
     expected = "networks/{network_code}/placements/{placement}".format(
         network_code=network_code,
         placement=placement,
@@ -8631,13 +8876,38 @@ def test_placement_path():
 
 def test_parse_placement_path():
     expected = {
-        "network_code": "winkle",
-        "placement": "nautilus",
+        "network_code": "oyster",
+        "placement": "nudibranch",
     }
     path = LineItemServiceClient.placement_path(**expected)
 
     # Check that the path construction is reversible.
     actual = LineItemServiceClient.parse_placement_path(path)
+    assert expected == actual
+
+
+def test_taxonomy_category_path():
+    network_code = "cuttlefish"
+    taxonomy_category = "mussel"
+    expected = "networks/{network_code}/taxonomyCategories/{taxonomy_category}".format(
+        network_code=network_code,
+        taxonomy_category=taxonomy_category,
+    )
+    actual = LineItemServiceClient.taxonomy_category_path(
+        network_code, taxonomy_category
+    )
+    assert expected == actual
+
+
+def test_parse_taxonomy_category_path():
+    expected = {
+        "network_code": "winkle",
+        "taxonomy_category": "nautilus",
+    }
+    path = LineItemServiceClient.taxonomy_category_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = LineItemServiceClient.parse_taxonomy_category_path(path)
     assert expected == actual
 
 

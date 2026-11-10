@@ -44,6 +44,7 @@ from .instance import (
     ListInstancesResponse,
     StartInstanceRequest,
     StopInstanceRequest,
+    UpdateInstanceRequest,
 )
 from .instance_split import (
     InstanceSplit,
@@ -94,6 +95,10 @@ from .revision import (
 from .revision_template import (
     RevisionTemplate,
 )
+from .sandbox import (
+    SandboxConfiguration,
+    SandboxTemplate,
+)
 from .service import (
     CreateServiceRequest,
     DeleteServiceRequest,
@@ -102,6 +107,10 @@ from .service import (
     ListServicesResponse,
     Service,
     UpdateServiceRequest,
+)
+from .source_upload import (
+    UploadSourceRequest,
+    UploadSourceResponse,
 )
 from .status import (
     RevisionScalingStatus,
@@ -122,10 +131,14 @@ from .traffic_target import (
     TrafficTargetStatus,
 )
 from .vendor_settings import (
+    AmbientNetworking,
+    AmbientScope,
     BinaryAuthorization,
     BuildConfig,
     EncryptionKeyRevocationAction,
     ExecutionEnvironment,
+    FunctionalType,
+    IdentityType,
     IngressTraffic,
     NodeSelector,
     RevisionScaling,
@@ -133,6 +146,7 @@ from .vendor_settings import (
     ServiceScaling,
     VpcAccess,
     WorkerPoolScaling,
+    WorkloadIdentityConfig,
 )
 from .worker_pool import (
     CreateWorkerPoolRequest,
@@ -168,6 +182,7 @@ __all__ = (
     "ListInstancesResponse",
     "StartInstanceRequest",
     "StopInstanceRequest",
+    "UpdateInstanceRequest",
     "InstanceSplit",
     "InstanceSplitStatus",
     "InstanceSplitAllocationType",
@@ -207,6 +222,8 @@ __all__ = (
     "ListRevisionsResponse",
     "Revision",
     "RevisionTemplate",
+    "SandboxConfiguration",
+    "SandboxTemplate",
     "CreateServiceRequest",
     "DeleteServiceRequest",
     "GetServiceRequest",
@@ -214,6 +231,8 @@ __all__ = (
     "ListServicesResponse",
     "Service",
     "UpdateServiceRequest",
+    "UploadSourceRequest",
+    "UploadSourceResponse",
     "RevisionScalingStatus",
     "GetTaskRequest",
     "ListTasksRequest",
@@ -224,6 +243,7 @@ __all__ = (
     "TrafficTarget",
     "TrafficTargetStatus",
     "TrafficTargetAllocationType",
+    "AmbientNetworking",
     "BinaryAuthorization",
     "BuildConfig",
     "NodeSelector",
@@ -232,8 +252,12 @@ __all__ = (
     "ServiceScaling",
     "VpcAccess",
     "WorkerPoolScaling",
+    "WorkloadIdentityConfig",
+    "AmbientScope",
     "EncryptionKeyRevocationAction",
     "ExecutionEnvironment",
+    "FunctionalType",
+    "IdentityType",
     "IngressTraffic",
     "CreateWorkerPoolRequest",
     "DeleteWorkerPoolRequest",

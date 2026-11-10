@@ -39,8 +39,13 @@ except ImportError:  # pragma: NO COVER
     HAS_GOOGLE_AUTH_AIO = False
 
 import google.auth
+import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import google.type.date_pb2 as date_pb2  # type: ignore
+import google.type.dayofweek_pb2 as dayofweek_pb2  # type: ignore
+import google.type.interval_pb2 as interval_pb2  # type: ignore
+import google.type.money_pb2 as money_pb2  # type: ignore
+import google.type.timeofday_pb2 as timeofday_pb2  # type: ignore
 from google.api_core import (
     client_options,
     gapic_v1,
@@ -61,16 +66,48 @@ from google.ads.admanager_v1.services.forecast_service import (
 )
 from google.ads.admanager_v1.types import (
     applied_label,
+    brand_lift_partner_enum,
+    child_content_eligibility_enum,
     creative_placeholder,
+    creative_targeting,
+    custom_field_value,
+    custom_pacing_curve,
+    custom_pacing_goal_unit_enum,
     date_range,
+    dayparting_time_zone_enum,
+    delivery_enums,
+    delivery_indicator,
+    discount_type_enum,
+    environment_type_enum,
+    exclusion_scope_enum,
     forecast_messages,
     forecast_service,
+    frequency_cap,
+    goal,
+    goal_enums,
+    grp_provider_enum,
+    grp_settings,
+    grp_target_gender_enum,
+    line_item_allowed_format_enum,
+    line_item_deal_info,
+    line_item_delivery_forecast_source_enum,
+    line_item_discount,
+    line_item_enums,
+    line_item_messages,
+    line_item_stats,
+    nielsen_ctv_pacing_enum,
+    pacing_device_categorization_enum,
+    reach_partner_enum,
     request_platform_enum,
     size,
     size_type_enum,
+    skippable_ad_type_enum,
     targeted_video_bumper_type_enum,
     targeting,
+    third_party_measurement_settings,
+    time_unit_enum,
     video_position_enum,
+    viewability_partner_enum,
 )
 
 CRED_INFO_JSON = {
@@ -2301,9 +2338,55 @@ def test_forecast_service_client_transport_session_collision(transport_name):
     assert session1 != session2
 
 
-def test_ad_unit_path():
+def test_ad_category_path():
     network_code = "squid"
-    ad_unit = "clam"
+    ad_category = "clam"
+    expected = "networks/{network_code}/adCategories/{ad_category}".format(
+        network_code=network_code,
+        ad_category=ad_category,
+    )
+    actual = ForecastServiceClient.ad_category_path(network_code, ad_category)
+    assert expected == actual
+
+
+def test_parse_ad_category_path():
+    expected = {
+        "network_code": "whelk",
+        "ad_category": "octopus",
+    }
+    path = ForecastServiceClient.ad_category_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = ForecastServiceClient.parse_ad_category_path(path)
+    assert expected == actual
+
+
+def test_ad_spot_path():
+    network_code = "oyster"
+    ad_spot = "nudibranch"
+    expected = "networks/{network_code}/adSpots/{ad_spot}".format(
+        network_code=network_code,
+        ad_spot=ad_spot,
+    )
+    actual = ForecastServiceClient.ad_spot_path(network_code, ad_spot)
+    assert expected == actual
+
+
+def test_parse_ad_spot_path():
+    expected = {
+        "network_code": "cuttlefish",
+        "ad_spot": "mussel",
+    }
+    path = ForecastServiceClient.ad_spot_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = ForecastServiceClient.parse_ad_spot_path(path)
+    assert expected == actual
+
+
+def test_ad_unit_path():
+    network_code = "winkle"
+    ad_unit = "nautilus"
     expected = "networks/{network_code}/adUnits/{ad_unit}".format(
         network_code=network_code,
         ad_unit=ad_unit,
@@ -2314,13 +2397,38 @@ def test_ad_unit_path():
 
 def test_parse_ad_unit_path():
     expected = {
-        "network_code": "whelk",
-        "ad_unit": "octopus",
+        "network_code": "scallop",
+        "ad_unit": "abalone",
     }
     path = ForecastServiceClient.ad_unit_path(**expected)
 
     # Check that the path construction is reversible.
     actual = ForecastServiceClient.parse_ad_unit_path(path)
+    assert expected == actual
+
+
+def test_allocation_delivery_profile_path():
+    network_code = "squid"
+    allocation_delivery_profile = "clam"
+    expected = "networks/{network_code}/allocationDeliveryProfiles/{allocation_delivery_profile}".format(
+        network_code=network_code,
+        allocation_delivery_profile=allocation_delivery_profile,
+    )
+    actual = ForecastServiceClient.allocation_delivery_profile_path(
+        network_code, allocation_delivery_profile
+    )
+    assert expected == actual
+
+
+def test_parse_allocation_delivery_profile_path():
+    expected = {
+        "network_code": "whelk",
+        "allocation_delivery_profile": "octopus",
+    }
+    path = ForecastServiceClient.allocation_delivery_profile_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = ForecastServiceClient.parse_allocation_delivery_profile_path(path)
     assert expected == actual
 
 
@@ -2464,9 +2572,32 @@ def test_parse_cms_metadata_value_path():
     assert expected == actual
 
 
-def test_content_path():
+def test_company_path():
     network_code = "oyster"
-    content = "nudibranch"
+    company = "nudibranch"
+    expected = "networks/{network_code}/companies/{company}".format(
+        network_code=network_code,
+        company=company,
+    )
+    actual = ForecastServiceClient.company_path(network_code, company)
+    assert expected == actual
+
+
+def test_parse_company_path():
+    expected = {
+        "network_code": "cuttlefish",
+        "company": "mussel",
+    }
+    path = ForecastServiceClient.company_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = ForecastServiceClient.parse_company_path(path)
+    assert expected == actual
+
+
+def test_content_path():
+    network_code = "winkle"
+    content = "nautilus"
     expected = "networks/{network_code}/content/{content}".format(
         network_code=network_code,
         content=content,
@@ -2477,8 +2608,8 @@ def test_content_path():
 
 def test_parse_content_path():
     expected = {
-        "network_code": "cuttlefish",
-        "content": "mussel",
+        "network_code": "scallop",
+        "content": "abalone",
     }
     path = ForecastServiceClient.content_path(**expected)
 
@@ -2488,8 +2619,8 @@ def test_parse_content_path():
 
 
 def test_content_bundle_path():
-    network_code = "winkle"
-    content_bundle = "nautilus"
+    network_code = "squid"
+    content_bundle = "clam"
     expected = "networks/{network_code}/contentBundles/{content_bundle}".format(
         network_code=network_code,
         content_bundle=content_bundle,
@@ -2500,13 +2631,59 @@ def test_content_bundle_path():
 
 def test_parse_content_bundle_path():
     expected = {
-        "network_code": "scallop",
-        "content_bundle": "abalone",
+        "network_code": "whelk",
+        "content_bundle": "octopus",
     }
     path = ForecastServiceClient.content_bundle_path(**expected)
 
     # Check that the path construction is reversible.
     actual = ForecastServiceClient.parse_content_bundle_path(path)
+    assert expected == actual
+
+
+def test_content_label_path():
+    network_code = "oyster"
+    content_label = "nudibranch"
+    expected = "networks/{network_code}/contentLabels/{content_label}".format(
+        network_code=network_code,
+        content_label=content_label,
+    )
+    actual = ForecastServiceClient.content_label_path(network_code, content_label)
+    assert expected == actual
+
+
+def test_parse_content_label_path():
+    expected = {
+        "network_code": "cuttlefish",
+        "content_label": "mussel",
+    }
+    path = ForecastServiceClient.content_label_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = ForecastServiceClient.parse_content_label_path(path)
+    assert expected == actual
+
+
+def test_custom_field_path():
+    network_code = "winkle"
+    custom_field = "nautilus"
+    expected = "networks/{network_code}/customFields/{custom_field}".format(
+        network_code=network_code,
+        custom_field=custom_field,
+    )
+    actual = ForecastServiceClient.custom_field_path(network_code, custom_field)
+    assert expected == actual
+
+
+def test_parse_custom_field_path():
+    expected = {
+        "network_code": "scallop",
+        "custom_field": "abalone",
+    }
+    path = ForecastServiceClient.custom_field_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = ForecastServiceClient.parse_custom_field_path(path)
     assert expected == actual
 
 
@@ -2662,9 +2839,32 @@ def test_parse_geo_target_path():
     assert expected == actual
 
 
-def test_label_path():
+def test_inventory_url_path():
     network_code = "squid"
-    label = "clam"
+    inventory_url = "clam"
+    expected = "networks/{network_code}/inventoryUrls/{inventory_url}".format(
+        network_code=network_code,
+        inventory_url=inventory_url,
+    )
+    actual = ForecastServiceClient.inventory_url_path(network_code, inventory_url)
+    assert expected == actual
+
+
+def test_parse_inventory_url_path():
+    expected = {
+        "network_code": "whelk",
+        "inventory_url": "octopus",
+    }
+    path = ForecastServiceClient.inventory_url_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = ForecastServiceClient.parse_inventory_url_path(path)
+    assert expected == actual
+
+
+def test_label_path():
+    network_code = "oyster"
+    label = "nudibranch"
     expected = "networks/{network_code}/labels/{label}".format(
         network_code=network_code,
         label=label,
@@ -2675,8 +2875,8 @@ def test_label_path():
 
 def test_parse_label_path():
     expected = {
-        "network_code": "whelk",
-        "label": "octopus",
+        "network_code": "cuttlefish",
+        "label": "mussel",
     }
     path = ForecastServiceClient.label_path(**expected)
 
@@ -2686,8 +2886,8 @@ def test_parse_label_path():
 
 
 def test_line_item_path():
-    network_code = "oyster"
-    line_item = "nudibranch"
+    network_code = "winkle"
+    line_item = "nautilus"
     expected = "networks/{network_code}/lineItems/{line_item}".format(
         network_code=network_code,
         line_item=line_item,
@@ -2698,8 +2898,8 @@ def test_line_item_path():
 
 def test_parse_line_item_path():
     expected = {
-        "network_code": "cuttlefish",
-        "line_item": "mussel",
+        "network_code": "scallop",
+        "line_item": "abalone",
     }
     path = ForecastServiceClient.line_item_path(**expected)
 
@@ -2709,8 +2909,8 @@ def test_parse_line_item_path():
 
 
 def test_mobile_carrier_path():
-    network_code = "winkle"
-    mobile_carrier = "nautilus"
+    network_code = "squid"
+    mobile_carrier = "clam"
     expected = "networks/{network_code}/mobileCarriers/{mobile_carrier}".format(
         network_code=network_code,
         mobile_carrier=mobile_carrier,
@@ -2721,8 +2921,8 @@ def test_mobile_carrier_path():
 
 def test_parse_mobile_carrier_path():
     expected = {
-        "network_code": "scallop",
-        "mobile_carrier": "abalone",
+        "network_code": "whelk",
+        "mobile_carrier": "octopus",
     }
     path = ForecastServiceClient.mobile_carrier_path(**expected)
 
@@ -2732,8 +2932,8 @@ def test_parse_mobile_carrier_path():
 
 
 def test_mobile_device_path():
-    network_code = "squid"
-    mobile_device = "clam"
+    network_code = "oyster"
+    mobile_device = "nudibranch"
     expected = "networks/{network_code}/mobileDevices/{mobile_device}".format(
         network_code=network_code,
         mobile_device=mobile_device,
@@ -2744,8 +2944,8 @@ def test_mobile_device_path():
 
 def test_parse_mobile_device_path():
     expected = {
-        "network_code": "whelk",
-        "mobile_device": "octopus",
+        "network_code": "cuttlefish",
+        "mobile_device": "mussel",
     }
     path = ForecastServiceClient.mobile_device_path(**expected)
 
@@ -2755,8 +2955,8 @@ def test_parse_mobile_device_path():
 
 
 def test_mobile_device_submodel_path():
-    network_code = "oyster"
-    mobile_device_submodel = "nudibranch"
+    network_code = "winkle"
+    mobile_device_submodel = "nautilus"
     expected = (
         "networks/{network_code}/mobileDeviceSubmodels/{mobile_device_submodel}".format(
             network_code=network_code,
@@ -2771,8 +2971,8 @@ def test_mobile_device_submodel_path():
 
 def test_parse_mobile_device_submodel_path():
     expected = {
-        "network_code": "cuttlefish",
-        "mobile_device_submodel": "mussel",
+        "network_code": "scallop",
+        "mobile_device_submodel": "abalone",
     }
     path = ForecastServiceClient.mobile_device_submodel_path(**expected)
 
@@ -2782,7 +2982,7 @@ def test_parse_mobile_device_submodel_path():
 
 
 def test_network_path():
-    network_code = "winkle"
+    network_code = "squid"
     expected = "networks/{network_code}".format(
         network_code=network_code,
     )
@@ -2792,7 +2992,7 @@ def test_network_path():
 
 def test_parse_network_path():
     expected = {
-        "network_code": "nautilus",
+        "network_code": "clam",
     }
     path = ForecastServiceClient.network_path(**expected)
 
@@ -2802,8 +3002,8 @@ def test_parse_network_path():
 
 
 def test_operating_system_path():
-    network_code = "scallop"
-    operating_system = "abalone"
+    network_code = "whelk"
+    operating_system = "octopus"
     expected = "networks/{network_code}/operatingSystems/{operating_system}".format(
         network_code=network_code,
         operating_system=operating_system,
@@ -2814,8 +3014,8 @@ def test_operating_system_path():
 
 def test_parse_operating_system_path():
     expected = {
-        "network_code": "squid",
-        "operating_system": "clam",
+        "network_code": "oyster",
+        "operating_system": "nudibranch",
     }
     path = ForecastServiceClient.operating_system_path(**expected)
 
@@ -2825,8 +3025,8 @@ def test_parse_operating_system_path():
 
 
 def test_operating_system_version_path():
-    network_code = "whelk"
-    operating_system_version = "octopus"
+    network_code = "cuttlefish"
+    operating_system_version = "mussel"
     expected = "networks/{network_code}/operatingSystemVersions/{operating_system_version}".format(
         network_code=network_code,
         operating_system_version=operating_system_version,
@@ -2839,8 +3039,8 @@ def test_operating_system_version_path():
 
 def test_parse_operating_system_version_path():
     expected = {
-        "network_code": "oyster",
-        "operating_system_version": "nudibranch",
+        "network_code": "winkle",
+        "operating_system_version": "nautilus",
     }
     path = ForecastServiceClient.operating_system_version_path(**expected)
 
@@ -2850,8 +3050,8 @@ def test_parse_operating_system_version_path():
 
 
 def test_order_path():
-    network_code = "cuttlefish"
-    order = "mussel"
+    network_code = "scallop"
+    order = "abalone"
     expected = "networks/{network_code}/orders/{order}".format(
         network_code=network_code,
         order=order,
@@ -2862,8 +3062,8 @@ def test_order_path():
 
 def test_parse_order_path():
     expected = {
-        "network_code": "winkle",
-        "order": "nautilus",
+        "network_code": "squid",
+        "order": "clam",
     }
     path = ForecastServiceClient.order_path(**expected)
 
@@ -2873,8 +3073,8 @@ def test_parse_order_path():
 
 
 def test_placement_path():
-    network_code = "scallop"
-    placement = "abalone"
+    network_code = "whelk"
+    placement = "octopus"
     expected = "networks/{network_code}/placements/{placement}".format(
         network_code=network_code,
         placement=placement,
@@ -2885,8 +3085,8 @@ def test_placement_path():
 
 def test_parse_placement_path():
     expected = {
-        "network_code": "squid",
-        "placement": "clam",
+        "network_code": "oyster",
+        "placement": "nudibranch",
     }
     path = ForecastServiceClient.placement_path(**expected)
 
@@ -2895,8 +3095,33 @@ def test_parse_placement_path():
     assert expected == actual
 
 
+def test_taxonomy_category_path():
+    network_code = "cuttlefish"
+    taxonomy_category = "mussel"
+    expected = "networks/{network_code}/taxonomyCategories/{taxonomy_category}".format(
+        network_code=network_code,
+        taxonomy_category=taxonomy_category,
+    )
+    actual = ForecastServiceClient.taxonomy_category_path(
+        network_code, taxonomy_category
+    )
+    assert expected == actual
+
+
+def test_parse_taxonomy_category_path():
+    expected = {
+        "network_code": "winkle",
+        "taxonomy_category": "nautilus",
+    }
+    path = ForecastServiceClient.taxonomy_category_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = ForecastServiceClient.parse_taxonomy_category_path(path)
+    assert expected == actual
+
+
 def test_common_billing_account_path():
-    billing_account = "whelk"
+    billing_account = "scallop"
     expected = "billingAccounts/{billing_account}".format(
         billing_account=billing_account,
     )
@@ -2906,7 +3131,7 @@ def test_common_billing_account_path():
 
 def test_parse_common_billing_account_path():
     expected = {
-        "billing_account": "octopus",
+        "billing_account": "abalone",
     }
     path = ForecastServiceClient.common_billing_account_path(**expected)
 
@@ -2916,7 +3141,7 @@ def test_parse_common_billing_account_path():
 
 
 def test_common_folder_path():
-    folder = "oyster"
+    folder = "squid"
     expected = "folders/{folder}".format(
         folder=folder,
     )
@@ -2926,7 +3151,7 @@ def test_common_folder_path():
 
 def test_parse_common_folder_path():
     expected = {
-        "folder": "nudibranch",
+        "folder": "clam",
     }
     path = ForecastServiceClient.common_folder_path(**expected)
 
@@ -2936,7 +3161,7 @@ def test_parse_common_folder_path():
 
 
 def test_common_organization_path():
-    organization = "cuttlefish"
+    organization = "whelk"
     expected = "organizations/{organization}".format(
         organization=organization,
     )
@@ -2946,7 +3171,7 @@ def test_common_organization_path():
 
 def test_parse_common_organization_path():
     expected = {
-        "organization": "mussel",
+        "organization": "octopus",
     }
     path = ForecastServiceClient.common_organization_path(**expected)
 
@@ -2956,7 +3181,7 @@ def test_parse_common_organization_path():
 
 
 def test_common_project_path():
-    project = "winkle"
+    project = "oyster"
     expected = "projects/{project}".format(
         project=project,
     )
@@ -2966,7 +3191,7 @@ def test_common_project_path():
 
 def test_parse_common_project_path():
     expected = {
-        "project": "nautilus",
+        "project": "nudibranch",
     }
     path = ForecastServiceClient.common_project_path(**expected)
 
@@ -2976,8 +3201,8 @@ def test_parse_common_project_path():
 
 
 def test_common_location_path():
-    project = "scallop"
-    location = "abalone"
+    project = "cuttlefish"
+    location = "mussel"
     expected = "projects/{project}/locations/{location}".format(
         project=project,
         location=location,
@@ -2988,8 +3213,8 @@ def test_common_location_path():
 
 def test_parse_common_location_path():
     expected = {
-        "project": "squid",
-        "location": "clam",
+        "project": "winkle",
+        "location": "nautilus",
     }
     path = ForecastServiceClient.common_location_path(**expected)
 

@@ -831,7 +831,6 @@ class ServicesClient(metaclass=ServicesClientMeta):
                 # Initialize request argument(s)
                 request = run_v2.CreateServiceRequest(
                     parent="parent_value",
-                    service_id="service_id_value",
                 )
 
                 # Make the request
@@ -868,10 +867,12 @@ class ServicesClient(metaclass=ServicesClientMeta):
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             service_id (str):
-                Required. The unique identifier for the Service. It must
+                Optional. The unique identifier for the Service. It must
                 begin with letter, and cannot end with hyphen; must
                 contain fewer than 50 characters. The name of the
-                service becomes {parent}/services/{service_id}.
+                service becomes {parent}/services/{service_id}. If not
+                provided, the server will generate a unique
+                ``service_id``.
 
                 This corresponds to the ``service_id`` field
                 on the ``request`` instance; if ``request`` is provided, this

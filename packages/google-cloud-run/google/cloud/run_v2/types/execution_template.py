@@ -33,6 +33,9 @@ class ExecutionTemplate(proto.Message):
     r"""ExecutionTemplate describes the data an execution should have
     when created from a template.
 
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
     Attributes:
         labels (MutableMapping[str, str]):
             Unstructured key value map that can be used to organize and
@@ -84,6 +87,18 @@ class ExecutionTemplate(proto.Message):
         template (google.cloud.run_v2.types.TaskTemplate):
             Required. Describes the task(s) that will be
             created when executing an execution.
+        delay_execution (bool):
+            Optional. If true, the system will start the
+            execution within the next 12 hours depending on
+            available capacity.
+
+            This field is a member of `oneof`_ ``_delay_execution``.
+        client (str):
+            Optional. Arbitrary identifier for the API
+            client.
+        client_version (str):
+            Optional. Arbitrary version identifier for
+            the API client.
     """
 
     labels: MutableMapping[str, str] = proto.MapField(
@@ -108,6 +123,19 @@ class ExecutionTemplate(proto.Message):
         proto.MESSAGE,
         number=5,
         message=task_template.TaskTemplate,
+    )
+    delay_execution: bool = proto.Field(
+        proto.BOOL,
+        number=8,
+        optional=True,
+    )
+    client: str = proto.Field(
+        proto.STRING,
+        number=9,
+    )
+    client_version: str = proto.Field(
+        proto.STRING,
+        number=10,
     )
 
 

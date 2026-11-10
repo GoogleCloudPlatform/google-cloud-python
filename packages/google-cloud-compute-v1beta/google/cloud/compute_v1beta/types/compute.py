@@ -29699,7 +29699,9 @@ class ConfidentialInstanceConfig(proto.Message):
             This field is a member of `oneof`_ ``_confidential_instance_type``.
         enable_confidential_compute (bool):
             Defines whether the instance should have
-            confidential compute enabled.
+            confidential compute enabled. When enabled, the
+            technology used defaults to AMD SEV unless
+            confidentialInstanceType is specified.
 
             This field is a member of `oneof`_ ``_enable_confidential_compute``.
     """
@@ -109419,11 +109421,13 @@ class MachineImageParams(proto.Message):
 
     Attributes:
         excluded_disks (MutableSequence[str]):
-            Input only. [Input Only] Specifies the list of disk device
-            names that must be excluded from the new machine image.
+            Input only. Specifies the list of disk device
+            names that must be excluded from the new machine
+            image.
         included_disks (MutableSequence[str]):
-            Input only. [Input Only] Specifies the list of disk device
-            names that must be included with the new machine image.
+            Input only. Specifies the list of disk device
+            names that must be included with the new machine
+            image.
         resource_manager_tags (MutableMapping[str, str]):
             Input only. Resource manager tags to be bound to the machine
             image. Tag keys and values have the same definition as
@@ -132153,7 +132157,8 @@ class RecoverableSnapshotOriginalSnapshot(proto.Message):
 
             This field is a member of `oneof`_ ``_snapshot_group_name``.
         snapshot_type (str):
-            Indicates the type of the snapshot.
+            Indicates the type of the snapshot. Valid
+            values are ARCHIVE or STANDARD.
             Check the SnapshotType enum for the list of
             possible values.
 
@@ -132254,16 +132259,19 @@ class RecoverableSnapshotOriginalSnapshot(proto.Message):
         X86_64 = 425300551
 
     class SnapshotType(proto.Enum):
-        r"""Indicates the type of the snapshot.
+        r"""Indicates the type of the snapshot. Valid values are ARCHIVE
+        or STANDARD.
 
         Values:
             UNDEFINED_SNAPSHOT_TYPE (0):
                 A value indicating that the enum field is not
                 set.
             ARCHIVE (506752162):
-                No description available.
+                Indicates that the original snapshot is an
+                archive snapshot.
             STANDARD (484642493):
-                No description available.
+                Indicates that the original snapshot is a
+                standard snapshot.
         """
 
         UNDEFINED_SNAPSHOT_TYPE = 0
@@ -157879,9 +157887,10 @@ class Snapshot(proto.Message):
 
             This field is a member of `oneof`_ ``_snapshot_group_name``.
         snapshot_type (str):
-            Indicates the type of the snapshot.
-            Check the SnapshotType enum for the list of
-            possible values.
+            Indicates the type of the snapshot. Valid
+            values are ARCHIVE or STANDARD. The default is
+            STANDARD. Check the SnapshotType enum for the
+            list of possible values.
 
             This field is a member of `oneof`_ ``_snapshot_type``.
         source_disk (str):
@@ -158000,16 +158009,20 @@ class Snapshot(proto.Message):
         X86_64 = 425300551
 
     class SnapshotType(proto.Enum):
-        r"""Indicates the type of the snapshot.
+        r"""Indicates the type of the snapshot. Valid values are ARCHIVE
+        or STANDARD. The default is STANDARD.
 
         Values:
             UNDEFINED_SNAPSHOT_TYPE (0):
                 A value indicating that the enum field is not
                 set.
             ARCHIVE (506752162):
-                No description available.
+                Indicates an archive snapshot, which is
+                recommended for long-term retention and
+                compliance.
             STANDARD (484642493):
-                No description available.
+                Indicates a standard snapshot, which is
+                recommended for frequent restores.
         """
 
         UNDEFINED_SNAPSHOT_TYPE = 0
@@ -165756,7 +165769,7 @@ class TargetHttpsProxy(proto.Message):
             ::
 
                - //certificatemanager.googleapis.com/projects/{project}/locations/{location}/certificates/{resourceName}.
-               - https://certificatemanager.googleapis.com/v1alpha1/projects/{project}/locations/{location}/certificates/{resourceName}.
+               - https://certificatemanager.{universeDomain}/v1alpha1/projects/{project}/locations/{location}/certificates/{resourceName}.
         ssl_policy (str):
             URL of SslPolicy resource that will be
             associated with the TargetHttpsProxy resource.

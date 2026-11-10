@@ -41,7 +41,6 @@ def sample_create_worker_pool():
     # Initialize request argument(s)
     request = run_v2.CreateWorkerPoolRequest(
         parent="parent_value",
-        worker_pool_id="worker_pool_id_value",
     )
 
     # Make the request

@@ -108,8 +108,8 @@ class CmekConfig(proto.Message):
             ``projects/{project}/locations/{location}/cmekConfig`` or
             ``projects/{project}/locations/{location}/cmekConfigs/{cmek_config}``.
         kms_key (str):
-            KMS key resource name which will be used to encrypt
-            resources
+            Required. KMS key resource name which will be used to
+            encrypt resources
             ``projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{keyId}``.
         kms_key_version (str):
             Output only. KMS key version resource name which will be

@@ -81,11 +81,35 @@ class CreativeServiceRestInterceptor:
                 logging.log(f"Received response: {response}")
                 return response
 
+            def pre_batch_create_creatives(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_create_creatives(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
             def pre_batch_deactivate_creatives(self, request, metadata):
                 logging.log(f"Received request: {request}")
                 return request, metadata
 
             def post_batch_deactivate_creatives(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_batch_update_creatives(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_batch_update_creatives(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_create_creative(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_create_creative(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -102,6 +126,14 @@ class CreativeServiceRestInterceptor:
                 return request, metadata
 
             def post_list_creatives(self, response):
+                logging.log(f"Received response: {response}")
+                return response
+
+            def pre_update_creative(self, request, metadata):
+                logging.log(f"Received request: {request}")
+                return request, metadata
+
+            def post_update_creative(self, response):
                 logging.log(f"Received response: {response}")
                 return response
 
@@ -163,6 +195,58 @@ class CreativeServiceRestInterceptor:
         """
         return response, metadata
 
+    def pre_batch_create_creatives(
+        self,
+        request: creative_service.BatchCreateCreativesRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        creative_service.BatchCreateCreativesRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_create_creatives
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the CreativeService server.
+        """
+        return request, metadata
+
+    def post_batch_create_creatives(
+        self, response: creative_service.BatchCreateCreativesResponse
+    ) -> creative_service.BatchCreateCreativesResponse:
+        """Post-rpc interceptor for batch_create_creatives
+
+        DEPRECATED. Please use the `post_batch_create_creatives_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the CreativeService server but before
+        it is returned to user code. This `post_batch_create_creatives` interceptor runs
+        before the `post_batch_create_creatives_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_create_creatives_with_metadata(
+        self,
+        response: creative_service.BatchCreateCreativesResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        creative_service.BatchCreateCreativesResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for batch_create_creatives
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the CreativeService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_create_creatives_with_metadata`
+        interceptor in new development instead of the `post_batch_create_creatives` interceptor.
+        When both interceptors are used, this `post_batch_create_creatives_with_metadata` interceptor runs after the
+        `post_batch_create_creatives` interceptor. The (possibly modified) response returned by
+        `post_batch_create_creatives` will be passed to
+        `post_batch_create_creatives_with_metadata`.
+        """
+        return response, metadata
+
     def pre_batch_deactivate_creatives(
         self,
         request: creative_service.BatchDeactivateCreativesRequest,
@@ -212,6 +296,106 @@ class CreativeServiceRestInterceptor:
         `post_batch_deactivate_creatives` interceptor. The (possibly modified) response returned by
         `post_batch_deactivate_creatives` will be passed to
         `post_batch_deactivate_creatives_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_batch_update_creatives(
+        self,
+        request: creative_service.BatchUpdateCreativesRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        creative_service.BatchUpdateCreativesRequest,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Pre-rpc interceptor for batch_update_creatives
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the CreativeService server.
+        """
+        return request, metadata
+
+    def post_batch_update_creatives(
+        self, response: creative_service.BatchUpdateCreativesResponse
+    ) -> creative_service.BatchUpdateCreativesResponse:
+        """Post-rpc interceptor for batch_update_creatives
+
+        DEPRECATED. Please use the `post_batch_update_creatives_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the CreativeService server but before
+        it is returned to user code. This `post_batch_update_creatives` interceptor runs
+        before the `post_batch_update_creatives_with_metadata` interceptor.
+        """
+        return response
+
+    def post_batch_update_creatives_with_metadata(
+        self,
+        response: creative_service.BatchUpdateCreativesResponse,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        creative_service.BatchUpdateCreativesResponse,
+        Sequence[Tuple[str, Union[str, bytes]]],
+    ]:
+        """Post-rpc interceptor for batch_update_creatives
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the CreativeService server but before it is returned to user code.
+
+        We recommend only using this `post_batch_update_creatives_with_metadata`
+        interceptor in new development instead of the `post_batch_update_creatives` interceptor.
+        When both interceptors are used, this `post_batch_update_creatives_with_metadata` interceptor runs after the
+        `post_batch_update_creatives` interceptor. The (possibly modified) response returned by
+        `post_batch_update_creatives` will be passed to
+        `post_batch_update_creatives_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_create_creative(
+        self,
+        request: creative_service.CreateCreativeRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        creative_service.CreateCreativeRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for create_creative
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the CreativeService server.
+        """
+        return request, metadata
+
+    def post_create_creative(
+        self, response: creative_messages.Creative
+    ) -> creative_messages.Creative:
+        """Post-rpc interceptor for create_creative
+
+        DEPRECATED. Please use the `post_create_creative_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the CreativeService server but before
+        it is returned to user code. This `post_create_creative` interceptor runs
+        before the `post_create_creative_with_metadata` interceptor.
+        """
+        return response
+
+    def post_create_creative_with_metadata(
+        self,
+        response: creative_messages.Creative,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[creative_messages.Creative, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for create_creative
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the CreativeService server but before it is returned to user code.
+
+        We recommend only using this `post_create_creative_with_metadata`
+        interceptor in new development instead of the `post_create_creative` interceptor.
+        When both interceptors are used, this `post_create_creative_with_metadata` interceptor runs after the
+        `post_create_creative` interceptor. The (possibly modified) response returned by
+        `post_create_creative` will be passed to
+        `post_create_creative_with_metadata`.
         """
         return response, metadata
 
@@ -310,6 +494,54 @@ class CreativeServiceRestInterceptor:
         `post_list_creatives` interceptor. The (possibly modified) response returned by
         `post_list_creatives` will be passed to
         `post_list_creatives_with_metadata`.
+        """
+        return response, metadata
+
+    def pre_update_creative(
+        self,
+        request: creative_service.UpdateCreativeRequest,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[
+        creative_service.UpdateCreativeRequest, Sequence[Tuple[str, Union[str, bytes]]]
+    ]:
+        """Pre-rpc interceptor for update_creative
+
+        Override in a subclass to manipulate the request or metadata
+        before they are sent to the CreativeService server.
+        """
+        return request, metadata
+
+    def post_update_creative(
+        self, response: creative_messages.Creative
+    ) -> creative_messages.Creative:
+        """Post-rpc interceptor for update_creative
+
+        DEPRECATED. Please use the `post_update_creative_with_metadata`
+        interceptor instead.
+
+        Override in a subclass to read or manipulate the response
+        after it is returned by the CreativeService server but before
+        it is returned to user code. This `post_update_creative` interceptor runs
+        before the `post_update_creative_with_metadata` interceptor.
+        """
+        return response
+
+    def post_update_creative_with_metadata(
+        self,
+        response: creative_messages.Creative,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]],
+    ) -> Tuple[creative_messages.Creative, Sequence[Tuple[str, Union[str, bytes]]]]:
+        """Post-rpc interceptor for update_creative
+
+        Override in a subclass to read or manipulate the response or metadata after it
+        is returned by the CreativeService server but before it is returned to user code.
+
+        We recommend only using this `post_update_creative_with_metadata`
+        interceptor in new development instead of the `post_update_creative` interceptor.
+        When both interceptors are used, this `post_update_creative_with_metadata` interceptor runs after the
+        `post_update_creative` interceptor. The (possibly modified) response returned by
+        `post_update_creative` will be passed to
+        `post_update_creative_with_metadata`.
         """
         return response, metadata
 
@@ -609,6 +841,156 @@ class CreativeServiceRestTransport(_BaseCreativeServiceRestTransport):
                 )
             return resp
 
+    class _BatchCreateCreatives(
+        _BaseCreativeServiceRestTransport._BaseBatchCreateCreatives,
+        CreativeServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("CreativeServiceRestTransport.BatchCreateCreatives")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: creative_service.BatchCreateCreativesRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> creative_service.BatchCreateCreativesResponse:
+            r"""Call the batch create creatives method over HTTP.
+
+            Args:
+                request (~.creative_service.BatchCreateCreativesRequest):
+                    The request object. Request object for ``BatchCreateCreatives`` method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.creative_service.BatchCreateCreativesResponse:
+                    Response object for ``BatchCreateCreatives`` method.
+            """
+
+            http_options = _BaseCreativeServiceRestTransport._BaseBatchCreateCreatives._get_http_options()
+            request, metadata = self._interceptor.pre_batch_create_creatives(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCreativeServiceRestTransport._BaseBatchCreateCreatives,
+                    "_BaseBatchCreateCreatives__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.CreativeServiceClient.BatchCreateCreatives",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.CreativeService",
+                        "rpcName": "BatchCreateCreatives",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = CreativeServiceRestTransport._BatchCreateCreatives._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = creative_service.BatchCreateCreativesResponse()
+            pb_resp = creative_service.BatchCreateCreativesResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_create_creatives(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_batch_create_creatives_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        creative_service.BatchCreateCreativesResponse.to_json(response)
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.CreativeServiceClient.batch_create_creatives",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.CreativeService",
+                        "rpcName": "BatchCreateCreatives",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     class _BatchDeactivateCreatives(
         _BaseCreativeServiceRestTransport._BaseBatchDeactivateCreatives,
         CreativeServiceRestStub,
@@ -758,6 +1140,301 @@ class CreativeServiceRestTransport(_BaseCreativeServiceRestTransport):
                     extra={
                         "serviceName": "google.ads.admanager.v1.CreativeService",
                         "rpcName": "BatchDeactivateCreatives",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _BatchUpdateCreatives(
+        _BaseCreativeServiceRestTransport._BaseBatchUpdateCreatives,
+        CreativeServiceRestStub,
+    ):
+        def __hash__(self):
+            return hash("CreativeServiceRestTransport.BatchUpdateCreatives")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: creative_service.BatchUpdateCreativesRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> creative_service.BatchUpdateCreativesResponse:
+            r"""Call the batch update creatives method over HTTP.
+
+            Args:
+                request (~.creative_service.BatchUpdateCreativesRequest):
+                    The request object. Request object for ``BatchUpdateCreatives`` method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.creative_service.BatchUpdateCreativesResponse:
+                    Response object for ``BatchUpdateCreatives`` method.
+            """
+
+            http_options = _BaseCreativeServiceRestTransport._BaseBatchUpdateCreatives._get_http_options()
+            request, metadata = self._interceptor.pre_batch_update_creatives(
+                request, metadata
+            )
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCreativeServiceRestTransport._BaseBatchUpdateCreatives,
+                    "_BaseBatchUpdateCreatives__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.CreativeServiceClient.BatchUpdateCreatives",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.CreativeService",
+                        "rpcName": "BatchUpdateCreatives",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = CreativeServiceRestTransport._BatchUpdateCreatives._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = creative_service.BatchUpdateCreativesResponse()
+            pb_resp = creative_service.BatchUpdateCreativesResponse.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_batch_update_creatives(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_batch_update_creatives_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = (
+                        creative_service.BatchUpdateCreativesResponse.to_json(response)
+                    )
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.CreativeServiceClient.batch_update_creatives",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.CreativeService",
+                        "rpcName": "BatchUpdateCreatives",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
+    class _CreateCreative(
+        _BaseCreativeServiceRestTransport._BaseCreateCreative, CreativeServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("CreativeServiceRestTransport.CreateCreative")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: creative_service.CreateCreativeRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> creative_messages.Creative:
+            r"""Call the create creative method over HTTP.
+
+            Args:
+                request (~.creative_service.CreateCreativeRequest):
+                    The request object. Request object for ``CreateCreative`` method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.creative_messages.Creative:
+                    The Creative resource.
+            """
+
+            http_options = _BaseCreativeServiceRestTransport._BaseCreateCreative._get_http_options()
+            request, metadata = self._interceptor.pre_create_creative(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCreativeServiceRestTransport._BaseCreateCreative,
+                    "_BaseCreateCreative__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.CreativeServiceClient.CreateCreative",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.CreativeService",
+                        "rpcName": "CreateCreative",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = CreativeServiceRestTransport._CreateCreative._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = creative_messages.Creative()
+            pb_resp = creative_messages.Creative.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_create_creative(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_create_creative_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = creative_messages.Creative.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.CreativeServiceClient.create_creative",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.CreativeService",
+                        "rpcName": "CreateCreative",
                         "metadata": http_response["headers"],
                         "httpResponse": http_response,
                     },
@@ -1058,6 +1735,151 @@ class CreativeServiceRestTransport(_BaseCreativeServiceRestTransport):
                 )
             return resp
 
+    class _UpdateCreative(
+        _BaseCreativeServiceRestTransport._BaseUpdateCreative, CreativeServiceRestStub
+    ):
+        def __hash__(self):
+            return hash("CreativeServiceRestTransport.UpdateCreative")
+
+        @staticmethod
+        def _get_response(
+            host,
+            metadata,
+            query_params,
+            session,
+            timeout,
+            transcoded_request,
+            body=None,
+        ):
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+            headers = dict(metadata)
+            headers["Content-Type"] = "application/json"
+            response = getattr(session, method)(
+                "{host}{uri}".format(host=host, uri=uri),
+                timeout=timeout,
+                headers=headers,
+                params=rest_helpers.flatten_query_params(query_params, strict=True),
+                data=body,
+            )
+            return response
+
+        def __call__(
+            self,
+            request: creative_service.UpdateCreativeRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+        ) -> creative_messages.Creative:
+            r"""Call the update creative method over HTTP.
+
+            Args:
+                request (~.creative_service.UpdateCreativeRequest):
+                    The request object. Request object for ``UpdateCreative`` method.
+                retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                    should be retried.
+                timeout (float): The timeout for this request.
+                metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                    sent along with the request as metadata. Normally, each value must be of type `str`,
+                    but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                    be of type `bytes`.
+
+            Returns:
+                ~.creative_messages.Creative:
+                    The Creative resource.
+            """
+
+            http_options = _BaseCreativeServiceRestTransport._BaseUpdateCreative._get_http_options()
+            request, metadata = self._interceptor.pre_update_creative(request, metadata)
+            transcoded_request, body, query_params = transcode_request(
+                http_options,
+                request,
+                required_fields_default_values=getattr(
+                    _BaseCreativeServiceRestTransport._BaseUpdateCreative,
+                    "_BaseUpdateCreative__REQUIRED_FIELDS_DEFAULT_VALUES",
+                    None,
+                ),
+                rest_numeric_enums=True,
+            )
+
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                request_url = "{host}{uri}".format(
+                    host=self._host, uri=transcoded_request["uri"]
+                )
+                method = transcoded_request["method"]
+                try:
+                    request_payload = type(request).to_json(request)
+                except:
+                    request_payload = None
+                http_request = {
+                    "payload": request_payload,
+                    "requestMethod": method,
+                    "requestUrl": request_url,
+                    "headers": dict(metadata),
+                }
+                _LOGGER.debug(
+                    f"Sending request for google.ads.admanager_v1.CreativeServiceClient.UpdateCreative",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.CreativeService",
+                        "rpcName": "UpdateCreative",
+                        "httpRequest": http_request,
+                        "metadata": http_request["headers"],
+                    },
+                )
+
+            # Send the request
+            response = CreativeServiceRestTransport._UpdateCreative._get_response(
+                self._host,
+                metadata,
+                query_params,
+                self._session,
+                timeout,
+                transcoded_request,
+                body,
+            )
+
+            # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
+            # subclass.
+            if response.status_code >= 400:
+                raise core_exceptions.from_http_response(response)
+
+            # Return the response
+            resp = creative_messages.Creative()
+            pb_resp = creative_messages.Creative.pb(resp)
+
+            json_format.Parse(response.content, pb_resp, ignore_unknown_fields=True)
+
+            resp = self._interceptor.post_update_creative(resp)
+            response_metadata = [(k, str(v)) for k, v in response.headers.items()]
+            resp, _ = self._interceptor.post_update_creative_with_metadata(
+                resp, response_metadata
+            )
+            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(
+                logging.DEBUG
+            ):  # pragma: NO COVER
+                try:
+                    response_payload = creative_messages.Creative.to_json(response)
+                except:
+                    response_payload = None
+                http_response = {
+                    "payload": response_payload,
+                    "headers": dict(response.headers),
+                    "status": response.status_code,
+                }
+                _LOGGER.debug(
+                    "Received response for google.ads.admanager_v1.CreativeServiceClient.update_creative",
+                    extra={
+                        "serviceName": "google.ads.admanager.v1.CreativeService",
+                        "rpcName": "UpdateCreative",
+                        "metadata": http_response["headers"],
+                        "httpResponse": http_response,
+                    },
+                )
+            return resp
+
     @property
     def batch_activate_creatives(
         self,
@@ -1072,6 +1894,17 @@ class CreativeServiceRestTransport(_BaseCreativeServiceRestTransport):
         )  # type: ignore
 
     @property
+    def batch_create_creatives(
+        self,
+    ) -> Callable[
+        [creative_service.BatchCreateCreativesRequest],
+        creative_service.BatchCreateCreativesResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchCreateCreatives(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
     def batch_deactivate_creatives(
         self,
     ) -> Callable[
@@ -1083,6 +1916,25 @@ class CreativeServiceRestTransport(_BaseCreativeServiceRestTransport):
         return self._BatchDeactivateCreatives(
             self._session, self._host, self._interceptor
         )  # type: ignore
+
+    @property
+    def batch_update_creatives(
+        self,
+    ) -> Callable[
+        [creative_service.BatchUpdateCreativesRequest],
+        creative_service.BatchUpdateCreativesResponse,
+    ]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._BatchUpdateCreatives(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def create_creative(
+        self,
+    ) -> Callable[[creative_service.CreateCreativeRequest], creative_messages.Creative]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._CreateCreative(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def get_creative(
@@ -1101,6 +1953,14 @@ class CreativeServiceRestTransport(_BaseCreativeServiceRestTransport):
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
         return self._ListCreatives(self._session, self._host, self._interceptor)  # type: ignore
+
+    @property
+    def update_creative(
+        self,
+    ) -> Callable[[creative_service.UpdateCreativeRequest], creative_messages.Creative]:
+        # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
+        # In C++ this would require a dynamic_cast
+        return self._UpdateCreative(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def cancel_operation(self):

@@ -116,7 +116,7 @@ class GlobalOperationsClientMeta(type):
 
 
 class GlobalOperationsClient(metaclass=GlobalOperationsClientMeta):
-    """The GlobalOperations API.    This class implements API version 2026-09-01."""
+    """The GlobalOperations API.    This class implements API version 2026-11-01."""
 
     # Note: DEFAULT_ENDPOINT is deprecated. Use _DEFAULT_ENDPOINT_TEMPLATE instead.
     DEFAULT_ENDPOINT = "compute.googleapis.com"
@@ -679,7 +679,7 @@ class GlobalOperationsClient(metaclass=GlobalOperationsClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.
@@ -820,7 +820,7 @@ class GlobalOperationsClient(metaclass=GlobalOperationsClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.
@@ -971,7 +971,7 @@ class GlobalOperationsClient(metaclass=GlobalOperationsClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.
@@ -1088,7 +1088,7 @@ class GlobalOperationsClient(metaclass=GlobalOperationsClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.
@@ -1266,7 +1266,7 @@ class GlobalOperationsClient(metaclass=GlobalOperationsClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.

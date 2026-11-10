@@ -22072,6 +22072,7 @@ def test_create_instance_rest_call_success(request_type):
                 "service_attachment": "service_attachment_value",
                 "psc_connection_status": 1,
                 "connection_type": 1,
+                "ip_version": 1,
             }
         ],
         "psc_attachment_details": [
@@ -22638,6 +22639,7 @@ def test_update_instance_rest_call_success(request_type):
                 "service_attachment": "service_attachment_value",
                 "psc_connection_status": 1,
                 "connection_type": 1,
+                "ip_version": 1,
             }
         ],
         "psc_attachment_details": [

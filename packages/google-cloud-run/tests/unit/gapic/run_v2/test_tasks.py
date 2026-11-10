@@ -62,7 +62,7 @@ from google.cloud.run_v2.services.tasks import (
     pagers,
     transports,
 )
-from google.cloud.run_v2.types import condition, k8s_min, task, vendor_settings
+from google.cloud.run_v2.types import condition, k8s_min, sandbox, task, vendor_settings
 
 CRED_INFO_JSON = {
     "credential_source": "/path/to/file",
@@ -1012,7 +1012,11 @@ def test_tasks_client_create_channel_credentials_file(
             credentials=file_creds,
             credentials_file=None,
             quota_project_id=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             scopes=None,
             default_host="run.googleapis.com",
             ssl_credentials=None,
@@ -3233,7 +3237,11 @@ def test_tasks_base_transport_with_credentials_file():
         load_creds.assert_called_once_with(
             "credentials.json",
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             quota_project_id="octopus",
         )
 
@@ -3259,7 +3267,11 @@ def test_tasks_auth_adc():
         TasksClient()
         adc.assert_called_once_with(
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             quota_project_id=None,
         )
 
@@ -3279,7 +3291,11 @@ def test_tasks_transport_auth_adc(transport_class):
         transport_class(quota_project_id="octopus", scopes=["1", "2"])
         adc.assert_called_once_with(
             scopes=["1", "2"],
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             quota_project_id="octopus",
         )
 
@@ -3332,7 +3348,11 @@ def test_tasks_transport_create_channel(transport_class, grpc_helpers):
             credentials=creds,
             credentials_file=None,
             quota_project_id="octopus",
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             scopes=["1", "2"],
             default_host="run.googleapis.com",
             ssl_credentials=None,

@@ -22,19 +22,41 @@ import proto  # type: ignore
 __protobuf__ = proto.module(
     package="google.cloud.run.v2",
     manifest={
+        "AmbientScope",
         "IngressTraffic",
         "ExecutionEnvironment",
         "EncryptionKeyRevocationAction",
+        "IdentityType",
+        "FunctionalType",
         "VpcAccess",
         "BinaryAuthorization",
         "RevisionScaling",
         "ServiceMesh",
+        "AmbientNetworking",
         "ServiceScaling",
         "WorkerPoolScaling",
         "NodeSelector",
         "BuildConfig",
+        "WorkloadIdentityConfig",
     },
 )
+
+
+class AmbientScope(proto.Enum):
+    r"""The ambient networking scopes of the instance.
+
+    Values:
+        AMBIENT_SCOPE_UNSPECIFIED (0):
+            Unspecified.
+        AMBIENT_SCOPE_REGIONAL (1):
+            Regional ambient networking.
+        AMBIENT_SCOPE_GLOBAL (2):
+            Global ambient networking.
+    """
+
+    AMBIENT_SCOPE_UNSPECIFIED = 0
+    AMBIENT_SCOPE_REGIONAL = 1
+    AMBIENT_SCOPE_GLOBAL = 2
 
 
 class IngressTraffic(proto.Enum):
@@ -95,6 +117,41 @@ class EncryptionKeyRevocationAction(proto.Enum):
     ENCRYPTION_KEY_REVOCATION_ACTION_UNSPECIFIED = 0
     PREVENT_NEW = 1
     SHUTDOWN = 2
+
+
+class IdentityType(proto.Enum):
+    r"""Identity type.
+
+    Values:
+        IDENTITY_TYPE_UNSPECIFIED (0):
+            Unspecified
+        IDENTITY_TYPE_SERVICE_ACCOUNT (1):
+            Service account identity.
+        IDENTITY_TYPE_AGENT_IDENTITY (3):
+            Agent identity.
+    """
+
+    IDENTITY_TYPE_UNSPECIFIED = 0
+    IDENTITY_TYPE_SERVICE_ACCOUNT = 1
+    IDENTITY_TYPE_AGENT_IDENTITY = 3
+
+
+class FunctionalType(proto.Enum):
+    r"""Represents the functional type.
+
+    Values:
+        FUNCTIONAL_TYPE_UNSPECIFIED (0):
+            Specifies that the functional type is
+            unspecified.
+        FUNCTIONAL_TYPE_AGENT (1):
+            Represents an AGENT functional type.
+        FUNCTIONAL_TYPE_MCP_SERVER (2):
+            Represents an MCP_SERVER functional type.
+    """
+
+    FUNCTIONAL_TYPE_UNSPECIFIED = 0
+    FUNCTIONAL_TYPE_AGENT = 1
+    FUNCTIONAL_TYPE_MCP_SERVER = 2
 
 
 class VpcAccess(proto.Message):
@@ -241,6 +298,8 @@ class BinaryAuthorization(proto.Message):
 class RevisionScaling(proto.Message):
     r"""Settings for revision-level scaling settings.
 
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
     Attributes:
         min_instance_count (int):
             Optional. Minimum number of serving instances
@@ -252,6 +311,22 @@ class RevisionScaling(proto.Message):
             default value of
             100. For more information see
             https://cloud.google.com/run/docs/configuring/max-instances
+        cpu_utilization (float):
+            Optional. Determines a threshold for CPU utilization before
+            scaling begins. Accepted values are between ``0.1`` and
+            ``0.90`` (inclusive) or ``0.0`` to disable CPU utilization
+            as threshold for scaling. CPU and concurrency scaling cannot
+            both be disabled.
+
+            This field is a member of `oneof`_ ``_cpu_utilization``.
+        concurrency_utilization (float):
+            Optional. Determines a threshold for concurrency utilization
+            before scaling begins. Accepted values are between ``0.1``
+            and ``0.95`` (inclusive) or ``0.0`` to disable concurrency
+            utilization as threshold for scaling. CPU and concurrency
+            scaling cannot both be disabled.
+
+            This field is a member of `oneof`_ ``_concurrency_utilization``.
     """
 
     min_instance_count: int = proto.Field(
@@ -261,6 +336,16 @@ class RevisionScaling(proto.Message):
     max_instance_count: int = proto.Field(
         proto.INT32,
         number=2,
+    )
+    cpu_utilization: float = proto.Field(
+        proto.FLOAT,
+        number=4,
+        optional=True,
+    )
+    concurrency_utilization: float = proto.Field(
+        proto.FLOAT,
+        number=5,
+        optional=True,
     )
 
 
@@ -278,6 +363,33 @@ class ServiceMesh(proto.Message):
     mesh: str = proto.Field(
         proto.STRING,
         number=1,
+    )
+
+
+class AmbientNetworking(proto.Message):
+    r"""Configuration for Ambient Networking.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        enabled (bool):
+            Optional. Whether ambient networking is
+            enabled.
+
+            This field is a member of `oneof`_ ``_enabled``.
+        ambient_scope (google.cloud.run_v2.types.AmbientScope):
+            The ambient networking scope of the instance.
+    """
+
+    enabled: bool = proto.Field(
+        proto.BOOL,
+        number=1,
+        optional=True,
+    )
+    ambient_scope: "AmbientScope" = proto.Field(
+        proto.ENUM,
+        number=2,
+        enum="AmbientScope",
     )
 
 
@@ -414,9 +526,9 @@ class BuildConfig(proto.Message):
             Optional. Sets whether the function will
             receive automatic base image updates.
         worker_pool (str):
-            Optional. Name of the Cloud Build Custom Worker Pool that
-            should be used to build the Cloud Run function. The format
-            of this field is
+            Optional. Name of the Cloud Build private pool that should
+            be used to build the Cloud Run function. The format of this
+            field is
             ``projects/{project}/locations/{region}/workerPools/{workerPool}``
             where ``{project}`` and ``{region}`` are the project id and
             region respectively where the worker pool is defined and
@@ -466,6 +578,42 @@ class BuildConfig(proto.Message):
     service_account: str = proto.Field(
         proto.STRING,
         number=9,
+    )
+
+
+class WorkloadIdentityConfig(proto.Message):
+    r"""Workload identity settings.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        identity (str):
+            Optional. The Revision's SPIFFE workload
+            identity. Enables provisioning of SPIFFE
+            workload certificates.
+        identity_type (google.cloud.run_v2.types.IdentityType):
+            Optional. The type of identity to use.
+        identity_certificate_enabled (bool):
+            Optional. Controls whether an instance receives a MWLID
+            certificate. Corresponds to the intention of the original
+            --[no-]identity-certificate flag.
+
+            This field is a member of `oneof`_ ``_identity_certificate_enabled``.
+    """
+
+    identity: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    identity_type: "IdentityType" = proto.Field(
+        proto.ENUM,
+        number=2,
+        enum="IdentityType",
+    )
+    identity_certificate_enabled: bool = proto.Field(
+        proto.BOOL,
+        number=3,
+        optional=True,
     )
 
 
