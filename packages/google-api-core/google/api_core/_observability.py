@@ -1374,12 +1374,65 @@ class _TraceContext:
         self._parent_span: Any = None
         self._cm: Any = None
 
+    def _log_http_attempt(
+        self,
+        status_code: int | str | None = None,
+        exc: BaseException | None = None,
+        status_message: str | None = None,
+    ) -> None:
+        """Emits a DEBUG transport attempt log for a failed HTTP request (fail-open).
+
+        Note:
+            In GAPIC REST transports (``_shared_macros.j2``), ``trace_http_request``
+            only wraps the raw ``session`` dispatch and ``record_response(response)``,
+            while HTTP status exceptions are raised outside the ``with`` block after
+            it exits. Because ``record_response`` and ``__exit__`` (``record_error``)
+            are mutually exclusive in transport execution, deduplication state is
+            not required here.
+
+        Args:
+            status_code (int | str | None): HTTP response status code or error code.
+            exc (BaseException | None): Exception raised during HTTP dispatch, if any.
+            status_message (str | None): Extracted HTTP error message fallback.
+        """
+        try:
+            resolved_url = (
+                getattr(self._request, "url", None)
+                if self._request is not None
+                else self._url
+            )
+            resolved_method = (
+                getattr(self._request, "method", None)
+                if self._request is not None
+                else self._method
+            )
+            log_transport_attempt(
+                span=self._span,
+                target=resolved_url,
+                status_code=status_code,
+                kind="http",
+                http_method=resolved_method,
+                exc=exc,
+                client_options=self._client_options,
+                status_message=status_message,
+            )
+        # Intentionally catch broad Exception so telemetry logging fails open
+        # and never disrupts the caller's RPC flow.
+        except Exception:
+            pass
+
     def record_response(self, response: Any) -> None:
-        """Record HTTP response attributes on the active span.
+        """Record HTTP response attributes on the active span and log failed attempts.
 
         Args:
             response (Any): The HTTP response object (e.g. requests.Response).
         """
+        code_int = _extract_http_status_code(response)
+        error_msg: str | None = None
+        if code_int is not None and code_int >= 400:
+            error_msg = self._extract_http_error_message(response)
+            self._log_http_attempt(status_code=code_int, status_message=error_msg)
+
         span = self._span
         if span is None or not hasattr(span, "set_attribute"):
             return
@@ -1390,7 +1443,6 @@ class _TraceContext:
                 StatusCode,
             )
 
-            code_int = _extract_http_status_code(response)
             if code_int is not None:
                 span.set_attribute("http.response.status_code", code_int)
                 if self._parent_span is not None:
@@ -1400,7 +1452,6 @@ class _TraceContext:
                 if code_int >= 400:
                     span.set_status(Status(StatusCode.ERROR))
                     span.set_attribute("error.type", str(code_int))
-                    error_msg = self._extract_http_error_message(response)
                     if error_msg:
                         span.set_attribute("status.message", error_msg)
 
@@ -1423,7 +1474,7 @@ class _TraceContext:
     record_http_response = record_response
 
     def record_error(self, exc: BaseException | None) -> None:
-        """Record supplemental Cloud Observability error attributes on the active span.
+        """Record supplemental Cloud Observability error attributes on the active span and log failed attempts.
 
         Upstream OpenTelemetry's ``start_as_current_span`` context manager automatically
         records the exception event and marks the span status as ERROR when an unhandled
@@ -1439,14 +1490,17 @@ class _TraceContext:
         Args:
             exc (BaseException | None): The exception raised during dispatch.
         """
+        if exc is None:
+            return
+
+        status_code = getattr(exc, "code", None) or getattr(exc, "status_code", None)
+        self._log_http_attempt(status_code=status_code, exc=exc)
+
         span = self._span
-        if span is None or exc is None:
+        if span is None:
             return
 
         try:
-            status_code = getattr(exc, "code", None) or getattr(
-                exc, "status_code", None
-            )
             if status_code:
                 span.set_attribute("error.type", str(status_code))
             else:
@@ -1529,10 +1583,12 @@ class _TraceContext:
     def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
         if self._cm is not None:
             try:
-                if exc_val is not None and self._span is not None:
+                if exc_val is not None:
                     self.record_error(exc_val)
             finally:
                 self._cm.__exit__(exc_type, exc_val, exc_tb)
+        elif exc_val is not None:
+            self.record_error(exc_val)
         # Always return None so caller exceptions are never suppressed
         return None
 
