@@ -261,12 +261,11 @@ class BigtableDataClient(ClientWithProject):
         if (
             project is None
             and credentials is None
-            and client_options is not None
+            and (client_options is not None)
             and client_options.credentials_file
         ):
             project = os.getenv(
-                environment_vars.PROJECT,
-                os.getenv(environment_vars.LEGACY_PROJECT),
+                environment_vars.PROJECT, os.getenv(environment_vars.LEGACY_PROJECT)
             )
             if project is None:
                 _, project = google.auth.load_credentials_from_file(
@@ -1151,6 +1150,10 @@ class _DataApiTarget(abc.ABC):
             )
             return
         if self.client._accelerator_blocked_reason is not None:
+            if explicit:
+                raise RuntimeError(
+                    f"use_accelerator=True is not supported: {self.client._accelerator_blocked_reason}; pass credentials_file via client_options, or pass use_accelerator=False."
+                )
             warnings.warn(
                 f"Accelerator disabled: {self.client._accelerator_blocked_reason}; using the native client instead.",
                 RuntimeWarning,
