@@ -16,6 +16,7 @@
 
 __CROSS_SYNC_OUTPUT__ = "google.cloud.spanner_v1.snapshot"
 import functools
+import time
 from typing import List, Optional, Union
 
 from google.api_core import gapic_v1
@@ -23,7 +24,13 @@ from google.api_core.exceptions import (
     Aborted,
     InternalServerError,
     InvalidArgument,
+    ResourceExhausted,
     ServiceUnavailable,
+)
+from google.api_core.retry import (
+    RetryFailureReason,
+    build_retry_error,
+    exponential_sleep_generator,
 )
 from google.protobuf.struct_pb2 import Struct
 
@@ -89,6 +96,7 @@ async def _restart_on_unavailable(
     observability_options=None,
     request_id_manager=None,
     resource_info=None,
+    retry=None,
 ):
     """Restart iteration after :exc:`.ServiceUnavailable`.
 
@@ -122,6 +130,39 @@ async def _restart_on_unavailable(
     nth_request = getattr(request_id_manager, "_next_nth_request", 0)
     current_request_id = None
     stream_finished = False
+
+    deadline = None
+    sleep_iter = None
+    retry_predicate = None
+    timeout = None
+    # GAPIC has no default retry for streaming reads/queries, so without an
+    # explicit ``Retry`` the stream is resumed on UNAVAILABLE as before.
+    if retry is not None and retry is not gapic_v1.method.DEFAULT:
+        # api_core's Retry exposes only `timeout` publicly; the backoff
+        # settings and predicate have no public accessors.
+        timeout = retry.timeout
+        retry_predicate = retry._predicate
+        if timeout is not None:
+            deadline = time.monotonic() + timeout
+        sleep_iter = exponential_sleep_generator(
+            retry._initial, retry._maximum, multiplier=retry._multiplier
+        )
+
+    async def sleep_or_raise(exc):
+        if sleep_iter is not None:
+            next_sleep = next(sleep_iter)
+            if deadline is not None and time.monotonic() + next_sleep > deadline:
+                final_exc, source_exc = build_retry_error(
+                    [exc], RetryFailureReason.TIMEOUT, timeout
+                )
+                final_exc = _augment_error_with_request_id(
+                    final_exc, current_request_id
+                )
+                source_exc = _augment_error_with_request_id(
+                    source_exc, current_request_id
+                )
+                raise final_exc from source_exc
+            await CrossSync.sleep(next_sleep)
 
     metrics_tracer = None
     factory = SpannerMetricsTracerFactory()
@@ -203,7 +244,15 @@ async def _restart_on_unavailable(
                         resume_token = item.resume_token
                         break
 
-            except ServiceUnavailable:
+            except (ServiceUnavailable, ResourceExhausted) as exc:
+                if retry_predicate is None:
+                    # No explicit Retry: resume on UNAVAILABLE only, as before.
+                    if isinstance(exc, ResourceExhausted):
+                        raise _augment_error_with_request_id(exc, current_request_id)
+                elif not retry_predicate(exc):
+                    raise _augment_error_with_request_id(exc, current_request_id)
+                await sleep_or_raise(exc)
+
                 del item_buffer[:]
                 request.resume_token = resume_token
                 if transaction is not None:
@@ -220,6 +269,8 @@ async def _restart_on_unavailable(
                 )
                 if not resumable_error:
                     raise _augment_error_with_request_id(exc, current_request_id)
+                await sleep_or_raise(exc)
+
                 del item_buffer[:]
                 request.resume_token = resume_token
                 if transaction is not None:
@@ -502,7 +553,7 @@ class _SnapshotBase(_SessionWrapper):
             api.streaming_read,
             request=read_request,
             metadata=metadata,
-            retry=retry,
+            retry=None,
             timeout=timeout,
         )
 
@@ -517,6 +568,7 @@ class _SnapshotBase(_SessionWrapper):
             },
             column_info=column_info,
             lazy_decode=lazy_decode,
+            retry=retry,
         )
 
     @CrossSync.convert
@@ -698,7 +750,7 @@ class _SnapshotBase(_SessionWrapper):
             api.execute_streaming_sql,
             request=execute_sql_request,
             metadata=metadata,
-            retry=retry,
+            retry=None,
             timeout=timeout,
         )
 
@@ -709,11 +761,19 @@ class _SnapshotBase(_SessionWrapper):
             trace_attributes={"db.statement": sql, "request_options": request_options},
             column_info=column_info,
             lazy_decode=lazy_decode,
+            retry=retry,
         )
 
     @CrossSync.convert
     async def _get_streamed_result_set(
-        self, method, request, metadata, trace_attributes, column_info, lazy_decode
+        self,
+        method,
+        request,
+        metadata,
+        trace_attributes,
+        column_info,
+        lazy_decode,
+        retry=None,
     ):
         """Returns the streamed result set for a read or execute SQL request."""
         session = self._session
@@ -740,6 +800,7 @@ class _SnapshotBase(_SessionWrapper):
                 observability_options=getattr(database, "observability_options", None),
                 request_id_manager=database,
                 resource_info=self._resource_info,
+                retry=retry,
             )
 
             if is_execute_sql_request:

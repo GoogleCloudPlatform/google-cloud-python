@@ -19,7 +19,6 @@ import copy
 import functools
 import logging
 import re
-import threading
 from typing import Optional
 
 import google.auth.credentials
@@ -62,6 +61,7 @@ from google.cloud.spanner_v1._helpers import (
 from google.cloud.spanner_v1.keyset import KeySet
 from google.cloud.spanner_v1.merged_result_set import MergedResultSet
 from google.cloud.spanner_v1.request_id_header import (
+    REQ_CHANNEL_ID,
     REQ_ID_HEADER_KEY,
     X_GOOG_SPANNER_REQUEST_ID_SPAN_ATTR,
     _CachedPrefixDescriptor,
@@ -184,9 +184,7 @@ class Database(object):
 
     _spanner_api: SpannerClient = None
 
-    __transport_lock = threading.Lock()
-    __transports_to_channel_id = dict()
-    _channel_id_val = 0
+    _channel_id_val = REQ_CHANNEL_ID
     _req_id_prefix = _CachedPrefixDescriptor()
 
     def __init__(
@@ -235,7 +233,7 @@ class Database(object):
             self._directed_read_options = None
             self.default_transaction_options = None
         self._proto_descriptors = proto_descriptors
-        self._channel_id = 0  # It'll be created when _spanner_api is created.
+        self._channel_id = REQ_CHANNEL_ID
 
         if pool is None:
             pool = BurstyPool(database_role=database_role)
@@ -560,14 +558,6 @@ class Database(object):
                 client_info=client_info,
                 client_options=client_options,
             )
-
-            with self.__transport_lock:
-                transport = self._spanner_api.transport
-                channel_id = self.__transports_to_channel_id.get(transport, None)
-                if channel_id is None:
-                    channel_id = len(self.__transports_to_channel_id) + 1
-                    self.__transports_to_channel_id[transport] = channel_id
-                self._channel_id = channel_id
 
         return self._spanner_api
 

@@ -3290,7 +3290,7 @@ class TestRequestIdHelpers(unittest.TestCase):
         from google.cloud.spanner_v1.request_id_header import parse_request_id
 
         parsed = parse_request_id("1.12345.2.3.4.5")
-        self.assertEqual(parsed, (1, 12345, 2, 3, 4, 5))
+        self.assertEqual(parsed, (1, "12345", 2, 3, 4, 5))
 
     def test_with_request_id_metadata_only_span_recording(self):
         from unittest import mock

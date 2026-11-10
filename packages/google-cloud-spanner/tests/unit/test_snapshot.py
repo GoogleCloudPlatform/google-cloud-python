@@ -1804,7 +1804,8 @@ class Test_SnapshotBase(OpenTelemetryBase):
         api.streaming_read.assert_called_once_with(
             request=expected_request,
             metadata=expected_metadata,
-            retry=retry,
+            # Retries are handled by _restart_on_unavailable, not the GAPIC call.
+            retry=None,
             timeout=timeout,
         )
         expected_attributes = dict(
@@ -2230,7 +2231,8 @@ class Test_SnapshotBase(OpenTelemetryBase):
             request=expected_request,
             metadata=expected_metadata,
             timeout=timeout,
-            retry=retry,
+            # Retries are handled by _restart_on_unavailable, not the GAPIC call.
+            retry=None,
         )
 
         self.assertEqual(derived._execute_sql_request_count, sql_count + 1)

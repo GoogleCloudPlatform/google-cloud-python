@@ -16,13 +16,30 @@ import os
 
 REQ_ID_VERSION = 1  # The version of the x-goog-spanner-request-id spec.
 REQ_ID_HEADER_KEY = "x-goog-spanner-request-id"
+# Python clients always report channel 1.
+REQ_CHANNEL_ID = 1
 
 
 def generate_rand_uint64():
     return int.from_bytes(os.urandom(8), "big")
 
 
-REQ_RAND_PROCESS_ID = generate_rand_uint64()
+def _get_process_id():
+    """Return the process ID used in every request ID of this process.
+
+    Users can override it with the ``SPANNER_PROCESS_ID`` or
+    ``GOOGLE_CLOUD_SPANNER_PROCESS_ID`` environment variable. Otherwise it is a
+    64-bit random value formatted as 16 lower-case hexadecimal characters,
+    matching the Java and Go clients.
+    """
+    return (
+        os.environ.get("SPANNER_PROCESS_ID")
+        or os.environ.get("GOOGLE_CLOUD_SPANNER_PROCESS_ID")
+        or f"{generate_rand_uint64():016x}"
+    )
+
+
+REQ_RAND_PROCESS_ID = _get_process_id()
 _REQ_ID_PROCESS_PREFIX = f"{REQ_ID_VERSION}.{REQ_RAND_PROCESS_ID}."
 X_GOOG_SPANNER_REQUEST_ID_SPAN_ATTR = "x_goog_spanner_request_id"
 
@@ -78,14 +95,23 @@ def build_request_id(client_id, channel_id, nth_request, attempt):
 
 
 def parse_request_id(request_id_str):
-    version, rand_process_id, client_id, channel_id, nth_request, nth_attempt = map(
-        int, request_id_str.split(".")
-    )
+    """Parse ``<version>.<process>.<client>.<channel>.<request>.<attempt>``.
+
+    Returns a 6-tuple. The process ID is returned as its hexadecimal string;
+    the other five components are returned as ints.
+    """
+    splits = request_id_str.split(".")
+    if len(splits) != 6:
+        raise ValueError(
+            f"Request ID must have 6 dot-separated components, got {len(splits)}: "
+            f"{request_id_str!r}"
+        )
+    version, rand_process_id, client_id, channel_id, nth_request, nth_attempt = splits
     return (
-        version,
+        int(version),
         rand_process_id,
-        client_id,
-        channel_id,
-        nth_request,
-        nth_attempt,
+        int(client_id),
+        int(channel_id),
+        int(nth_request),
+        int(nth_attempt),
     )

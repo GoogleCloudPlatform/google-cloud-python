@@ -586,7 +586,7 @@ class TestTransaction(OpenTelemetryBase):
                 ),
             ],
             timeout=TIMEOUT,
-            retry=RETRY,
+            retry=None,
         )
 
     def test_transaction_should_include_begin_with_first_read(self):
@@ -606,7 +606,7 @@ class TestTransaction(OpenTelemetryBase):
                     f"1.{REQ_RAND_PROCESS_ID}.{database._nth_client_id}.{database._channel_id}.1.1",
                 ),
             ],
-            retry=RETRY,
+            retry=None,
             timeout=TIMEOUT,
         )
 
@@ -797,7 +797,7 @@ class TestTransaction(OpenTelemetryBase):
         self._execute_sql_helper(transaction=transaction, api=api)
         api.execute_streaming_sql.assert_called_once_with(
             request=self._execute_sql_expected_request(database=database),
-            retry=gapic_v1.method.DEFAULT,
+            retry=None,
             timeout=gapic_v1.method.DEFAULT,
             metadata=[
                 ("google-cloud-resource-prefix", database.name),
@@ -851,7 +851,7 @@ class TestTransaction(OpenTelemetryBase):
             request=self._execute_sql_expected_request(
                 database=database, begin=False, transaction_tag=True
             ),
-            retry=gapic_v1.method.DEFAULT,
+            retry=None,
             timeout=gapic_v1.method.DEFAULT,
             metadata=[
                 ("google-cloud-resource-prefix", database.name),
@@ -886,7 +886,7 @@ class TestTransaction(OpenTelemetryBase):
                     f"1.{REQ_RAND_PROCESS_ID}.{database._nth_client_id}.{database._channel_id}.1.1",
                 ),
             ],
-            retry=gapic_v1.method.DEFAULT,
+            retry=None,
             timeout=gapic_v1.method.DEFAULT,
         )
 
@@ -913,7 +913,7 @@ class TestTransaction(OpenTelemetryBase):
                     f"1.{REQ_RAND_PROCESS_ID}.{database._nth_client_id}.{database._channel_id}.1.1",
                 ),
             ],
-            retry=RETRY,
+            retry=None,
             timeout=TIMEOUT,
         )
 
@@ -933,7 +933,7 @@ class TestTransaction(OpenTelemetryBase):
                     f"1.{REQ_RAND_PROCESS_ID}.{database._nth_client_id}.{database._channel_id}.1.1",
                 ),
             ],
-            retry=RETRY,
+            retry=None,
             timeout=TIMEOUT,
         )
 
@@ -984,7 +984,7 @@ class TestTransaction(OpenTelemetryBase):
                     f"1.{REQ_RAND_PROCESS_ID}.{database._nth_client_id}.{database._channel_id}.2.1",
                 ),
             ],
-            retry=RETRY,
+            retry=None,
             timeout=TIMEOUT,
         )
 
@@ -1139,7 +1139,7 @@ class TestTransaction(OpenTelemetryBase):
                 ),
             ],
             timeout=TIMEOUT,
-            retry=RETRY,
+            retry=None,
         )
 
 
