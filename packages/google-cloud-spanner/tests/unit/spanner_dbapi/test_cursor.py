@@ -24,6 +24,7 @@ from google.rpc.code_pb2 import ABORTED
 
 from google.cloud.spanner_dbapi.connection import connect
 from google.cloud.spanner_dbapi.parsed_statement import (
+    AutocommitDmlMode,
     ParsedStatement,
     Statement,
     StatementType,
@@ -313,7 +314,7 @@ class TestCursor(unittest.TestCase):
             mock_db.run_in_transaction = mock_run_in = mock.MagicMock()
             cursor.execute(sql="sql")
             mock_run_in.assert_called_once_with(
-                cursor._do_execute_update_in_autocommit, "sql", None
+                cursor._do_execute_update_in_autocommit, "sql WHERE 1=1", None
             )
 
     def test_execute_statement_with_cursor_not_in_retry_mode(self):
@@ -1622,3 +1623,271 @@ class TestCursor(unittest.TestCase):
         cursor.execute(sql="SELECT 1")
         connection.commit()
         mock_database.update_ddl.assert_not_called()
+
+    def test_execute_partitioned_dml_passes_statement_params(self):
+        from google.cloud.spanner_v1 import Type, TypeCode
+
+        mock_database = mock.MagicMock()
+        mock_database.execute_partitioned_dml.return_value = 10
+        connection = self._make_connection(self.INSTANCE, mock_database)
+        connection.autocommit = True
+        connection.set_autocommit_dml_mode(AutocommitDmlMode.PARTITIONED_NON_ATOMIC)
+        cursor = self._make_one(connection)
+
+        # 1. Pyformat positional parameters (list)
+        cursor.execute("DELETE FROM users WHERE id = %s", [42])
+        self.assertEqual(cursor.rowcount, 10)
+        mock_database.execute_partitioned_dml.assert_called_once_with(
+            "DELETE FROM users WHERE id = @a0",
+            params={"a0": 42},
+            param_types={"a0": Type(code=TypeCode.INT64)},
+            request_options=None,
+        )
+
+        # 2. Pyformat positional parameters (tuple)
+        mock_database.reset_mock()
+        cursor.execute("DELETE FROM users WHERE id = %s", (42,))
+        self.assertEqual(cursor.rowcount, 10)
+        mock_database.execute_partitioned_dml.assert_called_once_with(
+            "DELETE FROM users WHERE id = @a0",
+            params={"a0": 42},
+            param_types={"a0": Type(code=TypeCode.INT64)},
+            request_options=None,
+        )
+
+        # 3. Named Spanner parameters
+        mock_database.reset_mock()
+        mock_database.execute_partitioned_dml.return_value = 5
+        cursor.execute(
+            "UPDATE users SET active = @status WHERE id = @user_id",
+            {"status": False, "user_id": 100},
+        )
+        self.assertEqual(cursor.rowcount, 5)
+        mock_database.execute_partitioned_dml.assert_called_once_with(
+            "UPDATE users SET active = @status WHERE id = @user_id",
+            params={"status": False, "user_id": 100},
+            param_types={
+                "status": Type(code=TypeCode.BOOL),
+                "user_id": Type(code=TypeCode.INT64),
+            },
+            request_options=None,
+        )
+
+        # 4. Pyformat named parameters (%(key)s)
+        mock_database.reset_mock()
+        mock_database.execute_partitioned_dml.return_value = 7
+        cursor.execute(
+            "UPDATE users SET active = %(status)s WHERE id = %(user_id)s",
+            {"status": True, "user_id": 200},
+        )
+        self.assertEqual(cursor.rowcount, 7)
+        mock_database.execute_partitioned_dml.assert_called_once_with(
+            "UPDATE users SET active = @a0 WHERE id = @a1",
+            params={"a0": "True", "a1": "200"},
+            param_types={
+                "a0": Type(code=TypeCode.STRING),
+                "a1": Type(code=TypeCode.STRING),
+            },
+            request_options=None,
+        )
+
+        # 5. Parameterless query with explicit WHERE 1=1
+        mock_database.reset_mock()
+        mock_database.execute_partitioned_dml.return_value = 100
+        cursor.execute("DELETE FROM users WHERE 1=1")
+        self.assertEqual(cursor.rowcount, 100)
+        mock_database.execute_partitioned_dml.assert_called_once_with(
+            "DELETE FROM users WHERE 1=1",
+            params=None,
+            param_types=None,
+            request_options=None,
+        )
+
+    def test_execute_partitioned_dml_does_not_add_dummy_where(self):
+        """Partitioned DML statements must NOT automatically receive a dummy WHERE 1=1."""
+        from google.cloud.spanner_v1 import Type, TypeCode
+
+        mock_database = mock.MagicMock()
+        mock_database.execute_partitioned_dml.return_value = 50
+        connection = self._make_connection(self.INSTANCE, mock_database)
+        connection.autocommit = True
+        connection.set_autocommit_dml_mode(AutocommitDmlMode.PARTITIONED_NON_ATOMIC)
+        cursor = self._make_one(connection)
+
+        # Unqualified UPDATE with parameters must NOT have WHERE 1=1 appended
+        cursor.execute("UPDATE users SET active = %s", [True])
+        self.assertEqual(cursor.rowcount, 50)
+        mock_database.execute_partitioned_dml.assert_called_once_with(
+            "UPDATE users SET active = @a0",
+            params={"a0": True},
+            param_types={"a0": Type(code=TypeCode.BOOL)},
+            request_options=None,
+        )
+
+        # Unqualified DELETE must NOT have WHERE 1=1 appended
+        mock_database.reset_mock()
+        cursor.execute("DELETE FROM users")
+        self.assertEqual(cursor.rowcount, 50)
+        mock_database.execute_partitioned_dml.assert_called_once_with(
+            "DELETE FROM users",
+            params=None,
+            param_types=None,
+            request_options=None,
+        )
+
+    def test_execute_partitioned_dml_skipped_when_in_transaction(self):
+        """Statements executed in an explicit transaction must not run as Partitioned DML."""
+        mock_database = mock.MagicMock()
+        connection = self._make_connection(self.INSTANCE, mock_database)
+        connection.autocommit = True
+        connection.set_autocommit_dml_mode(AutocommitDmlMode.PARTITIONED_NON_ATOMIC)
+        # Transaction started at client side
+        connection.autocommit = False
+        cursor = self._make_one(connection)
+        connection.run_statement = mock.MagicMock()
+
+        cursor.execute("UPDATE users SET active = true WHERE id = 1")
+        mock_database.execute_partitioned_dml.assert_not_called()
+
+    def test_executemany_unqualified_update_adds_dummy_where(self):
+        """Unqualified updates/deletes in executemany should receive a dummy WHERE 1=1."""
+        connection = self._make_connection(self.INSTANCE, mock.MagicMock())
+        cursor = self._make_one(connection)
+
+        with mock.patch(
+            "google.cloud.spanner_dbapi.batch_dml_executor.run_batch_dml"
+        ) as mock_batch:
+            cursor.executemany("UPDATE users SET active = %s", [(True,), (False,)])
+            statements = mock_batch.call_args[0][1]
+            self.assertEqual(len(statements), 2)
+            self.assertEqual(
+                statements[0].sql, "UPDATE users SET active = @a0 WHERE 1=1"
+            )
+            self.assertEqual(
+                statements[1].sql, "UPDATE users SET active = @a0 WHERE 1=1"
+            )
+
+    def test_execute_unqualified_update_in_transaction_adds_dummy_where(self):
+        """Unqualified UPDATE in an explicit transaction must receive a dummy WHERE 1=1."""
+        connection = self._make_connection(self.INSTANCE, mock.MagicMock())
+        connection.autocommit = False
+        cursor = self._make_one(connection)
+        connection.run_statement = mock.MagicMock()
+
+        cursor.execute("UPDATE users SET active = true")
+        connection.run_statement.assert_called_once()
+        statement = connection.run_statement.call_args[0][0]
+        self.assertEqual(statement.sql, "UPDATE users SET active = true WHERE 1=1")
+
+    def test_execute_batch_mode_dml_unqualified_update_adds_dummy_where(self):
+        """Unqualified UPDATE in batch DML mode must receive a dummy WHERE 1=1."""
+        from google.cloud.spanner_dbapi.connection import BatchMode
+
+        connection = self._make_connection(self.INSTANCE, mock.MagicMock())
+        connection._batch_mode = BatchMode.DML
+        connection.execute_batch_dml_statement = mock.MagicMock()
+        cursor = self._make_one(connection)
+
+        cursor.execute("UPDATE users SET active = true")
+        connection.execute_batch_dml_statement.assert_called_once()
+        parsed_statement = connection.execute_batch_dml_statement.call_args[0][0]
+        self.assertEqual(
+            parsed_statement.statement.sql, "UPDATE users SET active = true WHERE 1=1"
+        )
+
+    def test_transaction_retry_unqualified_dml_does_not_duplicate_where_clause(self):
+        """Transaction retry of an unqualified UPDATE must not add WHERE 1=1 a second time."""
+        connection = self._make_connection(self.INSTANCE, mock.MagicMock())
+        connection.autocommit = False
+        cursor = self._make_one(connection)
+
+        update_1_sql = "UPDATE table_name SET col = 1"
+        update_2_sql = "UPDATE table_name SET col = 2"
+
+        metadata_mock = mock.Mock()
+        metadata_mock.trailing_metadata.return_value = {}
+
+        mock_result_set = mock.MagicMock()
+        mock_result_set.metadata.row_type = None
+
+        connection.run_statement = mock.Mock(
+            side_effect=[
+                mock_result_set,  # update_1 (attempt 1 -> succeeds)
+                Aborted(
+                    "Aborted", errors=[metadata_mock]
+                ),  # update_2 (attempt 1 -> aborts)
+                mock_result_set,  # update_1 (replayed by retry_transaction)
+                mock_result_set,  # update_2 (attempt 2 -> succeeds)
+            ]
+        )
+
+        cursor.execute(sql=update_1_sql)
+        cursor.execute(sql=update_2_sql)
+
+        self.assertEqual(connection.run_statement.call_count, 4)
+        # Attempt 1 of update_1
+        statement_attempt_1 = connection.run_statement.call_args_list[0][0][0]
+        self.assertEqual(
+            statement_attempt_1.sql, "UPDATE table_name SET col = 1 WHERE 1=1"
+        )
+
+        # Retry replay of update_1
+        statement_retry = connection.run_statement.call_args_list[2][0][0]
+        self.assertEqual(statement_retry.sql, "UPDATE table_name SET col = 1 WHERE 1=1")
+        self.assertNotIn("WHERE 1=1 WHERE 1=1", statement_retry.sql)
+
+    def test_transaction_retry_unqualified_executemany_does_not_duplicate_where_clause(
+        self,
+    ):
+        """Transaction retry of an unqualified executemany must not add WHERE 1=1 a second time."""
+        connection = self._make_connection(self.INSTANCE, mock.MagicMock())
+        connection.autocommit = False
+        cursor = self._make_one(connection)
+
+        operation = "UPDATE table_name SET col = %s"
+        params_seq = [(1,), (2,)]
+
+        metadata_mock = mock.Mock()
+        metadata_mock.trailing_metadata.return_value = {}
+
+        mock_result_set = mock.MagicMock()
+
+        # Step 1: executemany succeeds
+        with mock.patch(
+            "google.cloud.spanner_dbapi.batch_dml_executor.run_batch_dml",
+            return_value=mock_result_set,
+        ) as mock_batch:
+            cursor.executemany(operation, params_seq)
+            first_statements = mock_batch.call_args[0][1]
+            self.assertEqual(
+                first_statements[0].sql, "UPDATE table_name SET col = @a0 WHERE 1=1"
+            )
+            self.assertEqual(
+                first_statements[1].sql, "UPDATE table_name SET col = @a0 WHERE 1=1"
+            )
+
+        # Step 2: a subsequent execute aborts, triggering retry of executemany and the subsequent execute
+        connection.run_statement = mock.Mock(
+            side_effect=[
+                Aborted("Aborted", errors=[metadata_mock]),  # aborts
+                mock.MagicMock(),  # retry succeeds
+            ]
+        )
+
+        with mock.patch(
+            "google.cloud.spanner_dbapi.batch_dml_executor.run_batch_dml",
+            return_value=mock_result_set,
+        ) as mock_batch_retry:
+            cursor.execute("UPDATE other_table SET col = 3")
+
+            # Verify that executemany was replayed by retry_transaction
+            mock_batch_retry.assert_called_once()
+            retried_statements = mock_batch_retry.call_args[0][1]
+            self.assertEqual(
+                retried_statements[0].sql, "UPDATE table_name SET col = @a0 WHERE 1=1"
+            )
+            self.assertEqual(
+                retried_statements[1].sql, "UPDATE table_name SET col = @a0 WHERE 1=1"
+            )
+            self.assertNotIn("WHERE 1=1 WHERE 1=1", retried_statements[0].sql)
+            self.assertNotIn("WHERE 1=1 WHERE 1=1", retried_statements[1].sql)

@@ -112,6 +112,110 @@ class TestBasics(MockServerTestBase):
             TransactionOptions(dict(partitioned_dml={})), begin_request.options
         )
 
+    def test_dbapi_partitioned_dml_with_parameters(self):
+        sql = "UPDATE singers SET foo = %s WHERE active = %s"
+        expected_sql = "UPDATE singers SET foo = @a0 WHERE active = @a1"
+        add_update_count(expected_sql, 42, AutocommitDmlMode.PARTITIONED_NON_ATOMIC)
+        connection = Connection(self.instance, self.database)
+        connection.autocommit = True
+        connection.set_autocommit_dml_mode(AutocommitDmlMode.PARTITIONED_NON_ATOMIC)
+        with connection.cursor() as cursor:
+            cursor.execute(sql, ["bar", True])
+            self.assertEqual(42, cursor.rowcount)
+        requests = self.spanner_service.requests
+        self.assert_requests_sequence(
+            requests,
+            [BeginTransactionRequest, ExecuteSqlRequest],
+            TransactionType.PARTITIONED,
+            allow_multiple_batch_create=True,
+        )
+        execute_requests = [
+            request for request in requests if isinstance(request, ExecuteSqlRequest)
+        ]
+        self.assertEqual(len(execute_requests), 1)
+        self.assertEqual(execute_requests[0].sql, expected_sql)
+        self.assertEqual(execute_requests[0].params["a0"], "bar")
+        self.assertEqual(execute_requests[0].params["a1"], True)
+        self.assertEqual(execute_requests[0].param_types["a0"].code, TypeCode.STRING)
+        self.assertEqual(execute_requests[0].param_types["a1"].code, TypeCode.BOOL)
+
+    def test_dbapi_partitioned_dml_does_not_add_dummy_where(self):
+        sql = "UPDATE singers SET foo = %s"
+        expected_sql = "UPDATE singers SET foo = @a0"
+        add_update_count(expected_sql, 15, AutocommitDmlMode.PARTITIONED_NON_ATOMIC)
+        connection = Connection(self.instance, self.database)
+        connection.autocommit = True
+        connection.set_autocommit_dml_mode(AutocommitDmlMode.PARTITIONED_NON_ATOMIC)
+        with connection.cursor() as cursor:
+            cursor.execute(sql, ["baz"])
+            self.assertEqual(15, cursor.rowcount)
+        requests = self.spanner_service.requests
+        execute_requests = [
+            request for request in requests if isinstance(request, ExecuteSqlRequest)
+        ]
+        self.assertEqual(len(execute_requests), 1)
+        self.assertEqual(execute_requests[0].sql, expected_sql)
+        self.assertNotIn("WHERE", execute_requests[0].sql)
+
+    def test_dbapi_transactional_dml_adds_dummy_where(self):
+        sql = "UPDATE singers SET foo = %s"
+        expected_sql = "UPDATE singers SET foo = @a0 WHERE 1=1"
+        add_update_count(expected_sql, 1)
+        connection = Connection(self.instance, self.database)
+        connection.autocommit = True
+        with connection.cursor() as cursor:
+            cursor.execute(sql, ["baz"])
+            self.assertEqual(1, cursor.rowcount)
+        requests = self.spanner_service.requests
+        execute_requests = [
+            request for request in requests if isinstance(request, ExecuteSqlRequest)
+        ]
+        self.assertEqual(len(execute_requests), 1)
+        self.assertEqual(execute_requests[0].sql, expected_sql)
+
+    def test_dbapi_executemany_unqualified_update_adds_dummy_where(self):
+        sql = "UPDATE singers SET foo = %s"
+        expected_sql = "UPDATE singers SET foo = @a0 WHERE 1=1"
+        add_update_count(expected_sql, 1)
+        connection = Connection(self.instance, self.database)
+        connection.autocommit = True
+        with connection.cursor() as cursor:
+            cursor.executemany(sql, [("bar",), ("baz",)])
+            self.assertEqual(2, cursor.rowcount)
+        requests = self.spanner_service.requests
+        batch_requests = [
+            request
+            for request in requests
+            if isinstance(request, ExecuteBatchDmlRequest)
+        ]
+        self.assertEqual(len(batch_requests), 1)
+        self.assertEqual(len(batch_requests[0].statements), 2)
+        self.assertEqual(batch_requests[0].statements[0].sql, expected_sql)
+        self.assertEqual(batch_requests[0].statements[1].sql, expected_sql)
+
+    def test_dbapi_batch_dml_unqualified_update_adds_dummy_where(self):
+        sql = "UPDATE singers SET foo = 'bar'"
+        expected_sql = "UPDATE singers SET foo = 'bar' WHERE 1=1"
+        add_update_count(expected_sql, 1)
+        connection = Connection(self.instance, self.database)
+        connection.autocommit = True
+        with connection.cursor() as cursor:
+            cursor.execute("start batch dml")
+            cursor.execute(sql)
+            cursor.execute(sql)
+            cursor.execute("run batch")
+            self.assertEqual(2, cursor.rowcount)
+        requests = self.spanner_service.requests
+        batch_requests = [
+            request
+            for request in requests
+            if isinstance(request, ExecuteBatchDmlRequest)
+        ]
+        self.assertEqual(len(batch_requests), 1)
+        self.assertEqual(len(batch_requests[0].statements), 2)
+        self.assertEqual(batch_requests[0].statements[0].sql, expected_sql)
+        self.assertEqual(batch_requests[0].statements[1].sql, expected_sql)
+
     def test_batch_create_sessions_unavailable(self):
         add_select1_result()
         add_error(SpannerServicer.BatchCreateSessions.__name__, unavailable_status())

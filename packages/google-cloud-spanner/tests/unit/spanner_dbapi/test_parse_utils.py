@@ -532,3 +532,26 @@ class TestParseUtils(unittest.TestCase):
             with self.subTest(name=name):
                 got = escape_name(name)
                 self.assertEqual(got, want)
+
+    def test_classify_statement_does_not_add_dummy_where(self):
+        """classify_statement must classify statements without mutating them or adding WHERE 1=1."""
+        query = "UPDATE users SET active = true"
+        parsed = classify_statement(query)
+        self.assertEqual(parsed.statement.sql, query)
+        self.assertEqual(parsed.statement_type, StatementType.UPDATE)
+
+        delete_query = "DELETE FROM users"
+        parsed = classify_statement(delete_query)
+        self.assertEqual(parsed.statement.sql, delete_query)
+        self.assertEqual(parsed.statement_type, StatementType.UPDATE)
+
+    def test_ensure_where_clause_is_idempotent(self):
+        """ensure_where_clause must not append duplicate WHERE clauses if called repeatedly."""
+        from google.cloud.spanner_dbapi.parse_utils import ensure_where_clause
+
+        sql = "UPDATE users SET active = true"
+        with_where = ensure_where_clause(sql)
+        self.assertEqual(with_where, "UPDATE users SET active = true WHERE 1=1")
+        # Second invocation must be a no-op
+        self.assertEqual(ensure_where_clause(with_where), with_where)
+        self.assertNotIn("WHERE 1=1 WHERE 1=1", ensure_where_clause(with_where))

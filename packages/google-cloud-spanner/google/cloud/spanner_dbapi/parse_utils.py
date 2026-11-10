@@ -255,12 +255,11 @@ def classify_statement(query, args=None):
         args,
         get_param_types(args or None),
     )
-    statement_type = _get_statement_type(statement)
+    statement_type = _get_statement_type(query)
     return ParsedStatement(statement_type, statement)
 
 
-def _get_statement_type(statement):
-    query = statement.sql
+def _get_statement_type(query):
     if RE_DDL.match(query):
         return StatementType.DDL
     if RE_IS_INSERT.match(query):
@@ -271,9 +270,6 @@ def _get_statement_type(statement):
         return StatementType.QUERY
 
     if RE_IS_UPDATE.match(query) or RE_IS_DELETE.match(query):
-        # TODO: Remove this? It makes more sense to have this in SQLAlchemy and
-        #       Django than here.
-        statement.sql = ensure_where_clause(query)
         return StatementType.UPDATE
 
     return StatementType.UNKNOWN
