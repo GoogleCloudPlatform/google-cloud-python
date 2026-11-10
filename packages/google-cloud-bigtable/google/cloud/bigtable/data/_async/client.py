@@ -236,10 +236,16 @@ def _normalize_scopes(scopes: Any) -> frozenset[str]:
     if not scopes:
         return frozenset()
     if isinstance(scopes, str):
-        scopes = scopes.replace(",", " ").split()
-    elif not isinstance(scopes, (list, tuple, set, frozenset)):
+        return frozenset(scopes.replace(",", " ").split())
+    if not isinstance(scopes, (list, tuple, set, frozenset)):
         return frozenset()
-    return frozenset(s.strip() for s in scopes if isinstance(s, str) and s.strip())
+    return frozenset(
+        part.strip()
+        for s in scopes
+        if isinstance(s, str)
+        for part in s.split(",")
+        if part.strip()
+    )
 
 
 def _credential_type(creds: Any) -> str | None:
@@ -498,7 +504,12 @@ class BigtableDataClientAsync(ClientWithProject):
         # Forward the effective auth scopes so the daemon's token audience
         # matches the native client (whose default is TransportType.AUTH_SCOPES),
         # rather than the daemon's single hardcoded data scope.
-        effective_scopes = list(scopes) if scopes else list(TransportType.AUTH_SCOPES)
+        normalized_scopes = _normalize_scopes(scopes)
+        effective_scopes = (
+            sorted(normalized_scopes)
+            if normalized_scopes
+            else list(TransportType.AUTH_SCOPES)
+        )
         # Remember the scopes we forwarded so the identity handshake can confirm
         # the daemon actually resolved a token for the same effective scope.
         self._accelerator_scopes: list[str] = effective_scopes
