@@ -17,6 +17,7 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import google.type.datetime_pb2 as datetime_pb2  # type: ignore
 import proto  # type: ignore
@@ -33,6 +34,7 @@ __protobuf__ = proto.module(
         "DbHome",
         "CreateDbSystemRequest",
         "DeleteDbSystemRequest",
+        "UpdateDbSystemRequest",
         "GetDbSystemRequest",
         "ListDbSystemsRequest",
         "ListDbSystemsResponse",
@@ -50,32 +52,33 @@ class DbSystem(proto.Message):
             following format:
             projects/{project}/locations/{region}/dbSystems/{db_system}
         properties (google.cloud.oracledatabase_v1.types.DbSystemProperties):
-            Optional. The properties of the DbSystem.
+            Optional. Immutable. The properties of the
+            DbSystem.
         gcp_oracle_zone (str):
-            Optional. The GCP Oracle zone where Oracle
-            DbSystem is hosted. Example: us-east4-b-r2.
-            If not specified, the system will pick a zone
-            based on availability.
+            Optional. Immutable. The GCP Oracle zone
+            where Oracle DbSystem is hosted. Example:
+            us-east4-b-r2. If not specified, the system will
+            pick a zone based on availability.
         labels (MutableMapping[str, str]):
             Optional. The labels or tags associated with
             the DbSystem.
         odb_network (str):
-            Optional. The name of the OdbNetwork associated with the
-            DbSystem. Format:
+            Optional. Immutable. The name of the OdbNetwork associated
+            with the DbSystem. Format:
             projects/{project}/locations/{location}/odbNetworks/{odb_network}
             It is optional but if specified, this should match the
             parent ODBNetwork of the OdbSubnet.
         odb_subnet (str):
-            Required. The name of the OdbSubnet associated with the
-            DbSystem for IP allocation. Format:
+            Required. Immutable. The name of the OdbSubnet associated
+            with the DbSystem for IP allocation. Format:
             projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
         entitlement_id (str):
             Output only. The ID of the subscription
             entitlement associated with the DbSystem
         display_name (str):
-            Required. The display name for the System db.
-            The name does not have to be unique within your
-            project.
+            Required. Immutable. The display name for the
+            System db. The name does not have to be unique
+            within your project.
         create_time (google.protobuf.timestamp_pb2.Timestamp):
             Output only. The date and time that the
             DbSystem was created.
@@ -568,6 +571,58 @@ class DeleteDbSystemRequest(proto.Message):
     request_id: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+
+
+class UpdateDbSystemRequest(proto.Message):
+    r"""The request for ``DbSystem.Update``.
+
+    Attributes:
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. A mask specifying which fields in
+            the DbSystem should be updated. A field
+            specified in the mask is updated. If a mask
+            isn't provided, the service treats this as an
+            implied field mask equivalent to all fields that
+            are populated (have a non-empty value).
+        db_system (google.cloud.oracledatabase_v1.types.DbSystem):
+            Required. The resource being updated. Note only labels can
+            be updated. The provided labels will completely replace the
+            existing labels. Any existing label keys that are not
+            included in the update request will be deleted. Not
+            providing labels and update_mask will not update the labels.
+            To clear all labels, specify ``labels`` in the
+            ``update_mask`` and omit or leave the ``labels`` field empty
+            in the update request. To clear or unset a field, the field
+            must be explicitly specified in the ``update_mask``.
+        request_id (str):
+            Optional. An optional ID to identify the
+            request. This value is used to identify
+            duplicate requests. If you make a request with
+            the same request ID and the original request is
+            still in progress or completed, the server
+            ignores the second request. This prevents
+            clients from accidentally creating duplicate
+            commitments.
+
+            The request ID must be a valid UUID with the
+            exception that zero UUID is not supported
+            (00000000-0000-0000-0000-000000000000).
+    """
+
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=field_mask_pb2.FieldMask,
+    )
+    db_system: "DbSystem" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="DbSystem",
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 

@@ -9,5 +9,6 @@ Services for Google Cloud Run v2 API
     jobs
     revisions
     services
+    source_upload
     tasks
     worker_pools

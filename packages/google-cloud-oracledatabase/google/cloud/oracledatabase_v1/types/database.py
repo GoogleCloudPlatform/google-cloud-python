@@ -55,24 +55,25 @@ class Database(proto.Message):
             Optional. The DB_UNIQUE_NAME of the Oracle Database being
             backed up.
         admin_password (str):
-            Optional. The password for the default ADMIN user. Note:
-            Only one of ``admin_password_secret_version`` or
+            Optional. Input only. The password for the default ADMIN
+            user. Note: Only one of ``admin_password_secret_version`` or
             ``admin_password`` can be populated.
         admin_password_secret_version (str):
-            Optional. The resource name of a secret version in Secret
-            Manager which contains the database admin user's password.
-            Format:
+            Optional. Input only. The resource name of a secret version
+            in Secret Manager which contains the database admin user's
+            password. Format:
             projects/{project}/secrets/{secret}/versions/{version}.
             Note: Only one of ``admin_password_secret_version`` or
             ``admin_password`` can be populated.
         tde_wallet_password (str):
-            Optional. The TDE wallet password for the database. Note:
-            Only one of ``tde_wallet_password_secret_version`` or
+            Optional. Input only. The TDE wallet password for the
+            database. Note: Only one of
+            ``tde_wallet_password_secret_version`` or
             ``tde_wallet_password`` can be populated.
         tde_wallet_password_secret_version (str):
-            Optional. The resource name of a secret version in Secret
-            Manager which contains the TDE wallet password for the
-            database. Format:
+            Optional. Input only. The resource name of a secret version
+            in Secret Manager which contains the TDE wallet password for
+            the database. Format:
             projects/{project}/secrets/{secret}/versions/{version}.
             Note: Only one of ``tde_wallet_password_secret_version`` or
             ``tde_wallet_password`` can be populated.

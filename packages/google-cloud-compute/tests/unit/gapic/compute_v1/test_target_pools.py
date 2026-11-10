@@ -204,7 +204,7 @@ def test_add_health_check_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -237,7 +237,7 @@ def test_add_instance_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -272,7 +272,7 @@ def test_aggregated_list_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -305,7 +305,7 @@ def test_delete_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -338,7 +338,7 @@ def test_get_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -371,7 +371,7 @@ def test_get_health_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -404,7 +404,7 @@ def test_insert_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -437,7 +437,7 @@ def test_list_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -472,7 +472,7 @@ def test_remove_health_check_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -507,7 +507,7 @@ def test_remove_instance_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -540,7 +540,7 @@ def test_set_backup_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -575,7 +575,7 @@ def test_set_security_policy_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -610,7 +610,7 @@ def test_test_iam_permissions_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(

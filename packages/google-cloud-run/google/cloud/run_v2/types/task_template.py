@@ -20,7 +20,7 @@ from typing import MutableMapping, MutableSequence
 import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
 import proto  # type: ignore
 
-from google.cloud.run_v2.types import k8s_min, vendor_settings
+from google.cloud.run_v2.types import k8s_min, sandbox, vendor_settings
 
 __protobuf__ = proto.module(
     package="google.cloud.run.v2",
@@ -41,6 +41,8 @@ class TaskTemplate(proto.Message):
         containers (MutableSequence[google.cloud.run_v2.types.Container]):
             Holds the single container that defines the
             unit of execution for this task.
+        sandboxes (google.cloud.run_v2.types.SandboxConfiguration):
+            Optional. Configuration for sandboxes.
         volumes (MutableSequence[google.cloud.run_v2.types.Volume]):
             Optional. A list of Volumes to make available
             to containers.
@@ -83,12 +85,20 @@ class TaskTemplate(proto.Message):
             disabled on this task template.
 
             This field is a member of `oneof`_ ``_gpu_zonal_redundancy_disabled``.
+        workload_identity_config (google.cloud.run_v2.types.WorkloadIdentityConfig):
+            Optional. The Task's workload identity
+            settings.
     """
 
     containers: MutableSequence[k8s_min.Container] = proto.RepeatedField(
         proto.MESSAGE,
         number=1,
         message=k8s_min.Container,
+    )
+    sandboxes: sandbox.SandboxConfiguration = proto.Field(
+        proto.MESSAGE,
+        number=15,
+        message=sandbox.SandboxConfiguration,
     )
     volumes: MutableSequence[k8s_min.Volume] = proto.RepeatedField(
         proto.MESSAGE,
@@ -132,6 +142,11 @@ class TaskTemplate(proto.Message):
         proto.BOOL,
         number=12,
         optional=True,
+    )
+    workload_identity_config: vendor_settings.WorkloadIdentityConfig = proto.Field(
+        proto.MESSAGE,
+        number=13,
+        message=vendor_settings.WorkloadIdentityConfig,
     )
 
 

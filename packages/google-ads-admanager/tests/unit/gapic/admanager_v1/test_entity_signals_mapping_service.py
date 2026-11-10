@@ -2283,7 +2283,9 @@ def test_get_entity_signals_mapping_rest_call_success(request_type):
             name="name_value",
             entity_signals_mapping_id=2660,
             taxonomy_category_ids=[2267],
+            taxonomy_categories=["taxonomy_categories_value"],
             audience_segment_id=1980,
+            audience_segment="audience_segment_value",
         )
 
         # Wrap the value into a proper Response obj
@@ -2305,6 +2307,7 @@ def test_get_entity_signals_mapping_rest_call_success(request_type):
     assert response.name == "name_value"
     assert response.entity_signals_mapping_id == 2660
     assert response.taxonomy_category_ids == [2267]
+    assert response.taxonomy_categories == ["taxonomy_categories_value"]
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -2571,9 +2574,16 @@ def test_create_entity_signals_mapping_rest_call_success(request_type):
         "audience_segment_id": 1980,
         "content_bundle_id": 1792,
         "custom_targeting_value_id": 2663,
+        "audience_segment": "audience_segment_value",
+        "content_bundle": "content_bundle_value",
+        "custom_targeting_value": "custom_targeting_value_value",
         "name": "name_value",
         "entity_signals_mapping_id": 2660,
         "taxonomy_category_ids": [2268, 2269],
+        "taxonomy_categories": [
+            "taxonomy_categories_value1",
+            "taxonomy_categories_value2",
+        ],
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -2657,7 +2667,9 @@ def test_create_entity_signals_mapping_rest_call_success(request_type):
             name="name_value",
             entity_signals_mapping_id=2660,
             taxonomy_category_ids=[2267],
+            taxonomy_categories=["taxonomy_categories_value"],
             audience_segment_id=1980,
+            audience_segment="audience_segment_value",
         )
 
         # Wrap the value into a proper Response obj
@@ -2679,6 +2691,7 @@ def test_create_entity_signals_mapping_rest_call_success(request_type):
     assert response.name == "name_value"
     assert response.entity_signals_mapping_id == 2660
     assert response.taxonomy_category_ids == [2267]
+    assert response.taxonomy_categories == ["taxonomy_categories_value"]
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -2807,9 +2820,16 @@ def test_update_entity_signals_mapping_rest_call_success(request_type):
         "audience_segment_id": 1980,
         "content_bundle_id": 1792,
         "custom_targeting_value_id": 2663,
+        "audience_segment": "audience_segment_value",
+        "content_bundle": "content_bundle_value",
+        "custom_targeting_value": "custom_targeting_value_value",
         "name": "networks/sample1/entitySignalsMappings/sample2",
         "entity_signals_mapping_id": 2660,
         "taxonomy_category_ids": [2268, 2269],
+        "taxonomy_categories": [
+            "taxonomy_categories_value1",
+            "taxonomy_categories_value2",
+        ],
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
     # Delete any fields which are not present in the current runtime dependency
@@ -2893,7 +2913,9 @@ def test_update_entity_signals_mapping_rest_call_success(request_type):
             name="name_value",
             entity_signals_mapping_id=2660,
             taxonomy_category_ids=[2267],
+            taxonomy_categories=["taxonomy_categories_value"],
             audience_segment_id=1980,
+            audience_segment="audience_segment_value",
         )
 
         # Wrap the value into a proper Response obj
@@ -2915,6 +2937,7 @@ def test_update_entity_signals_mapping_rest_call_success(request_type):
     assert response.name == "name_value"
     assert response.entity_signals_mapping_id == 2660
     assert response.taxonomy_category_ids == [2267]
+    assert response.taxonomy_categories == ["taxonomy_categories_value"]
 
 
 @pytest.mark.parametrize("null_interceptor", [True, False])
@@ -3749,6 +3772,83 @@ def test_entity_signals_mapping_service_client_transport_session_collision(
     assert session1 != session2
 
 
+def test_audience_segment_path():
+    network_code = "squid"
+    audience_segment = "clam"
+    expected = "networks/{network_code}/audienceSegments/{audience_segment}".format(
+        network_code=network_code,
+        audience_segment=audience_segment,
+    )
+    actual = EntitySignalsMappingServiceClient.audience_segment_path(
+        network_code, audience_segment
+    )
+    assert expected == actual
+
+
+def test_parse_audience_segment_path():
+    expected = {
+        "network_code": "whelk",
+        "audience_segment": "octopus",
+    }
+    path = EntitySignalsMappingServiceClient.audience_segment_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = EntitySignalsMappingServiceClient.parse_audience_segment_path(path)
+    assert expected == actual
+
+
+def test_content_bundle_path():
+    network_code = "oyster"
+    content_bundle = "nudibranch"
+    expected = "networks/{network_code}/contentBundles/{content_bundle}".format(
+        network_code=network_code,
+        content_bundle=content_bundle,
+    )
+    actual = EntitySignalsMappingServiceClient.content_bundle_path(
+        network_code, content_bundle
+    )
+    assert expected == actual
+
+
+def test_parse_content_bundle_path():
+    expected = {
+        "network_code": "cuttlefish",
+        "content_bundle": "mussel",
+    }
+    path = EntitySignalsMappingServiceClient.content_bundle_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = EntitySignalsMappingServiceClient.parse_content_bundle_path(path)
+    assert expected == actual
+
+
+def test_custom_targeting_value_path():
+    network_code = "winkle"
+    custom_targeting_value = "nautilus"
+    expected = (
+        "networks/{network_code}/customTargetingValues/{custom_targeting_value}".format(
+            network_code=network_code,
+            custom_targeting_value=custom_targeting_value,
+        )
+    )
+    actual = EntitySignalsMappingServiceClient.custom_targeting_value_path(
+        network_code, custom_targeting_value
+    )
+    assert expected == actual
+
+
+def test_parse_custom_targeting_value_path():
+    expected = {
+        "network_code": "scallop",
+        "custom_targeting_value": "abalone",
+    }
+    path = EntitySignalsMappingServiceClient.custom_targeting_value_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = EntitySignalsMappingServiceClient.parse_custom_targeting_value_path(path)
+    assert expected == actual
+
+
 def test_entity_signals_mapping_path():
     network_code = "squid"
     entity_signals_mapping = "clam"
@@ -3796,8 +3896,33 @@ def test_parse_network_path():
     assert expected == actual
 
 
+def test_taxonomy_category_path():
+    network_code = "cuttlefish"
+    taxonomy_category = "mussel"
+    expected = "networks/{network_code}/taxonomyCategories/{taxonomy_category}".format(
+        network_code=network_code,
+        taxonomy_category=taxonomy_category,
+    )
+    actual = EntitySignalsMappingServiceClient.taxonomy_category_path(
+        network_code, taxonomy_category
+    )
+    assert expected == actual
+
+
+def test_parse_taxonomy_category_path():
+    expected = {
+        "network_code": "winkle",
+        "taxonomy_category": "nautilus",
+    }
+    path = EntitySignalsMappingServiceClient.taxonomy_category_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = EntitySignalsMappingServiceClient.parse_taxonomy_category_path(path)
+    assert expected == actual
+
+
 def test_common_billing_account_path():
-    billing_account = "cuttlefish"
+    billing_account = "scallop"
     expected = "billingAccounts/{billing_account}".format(
         billing_account=billing_account,
     )
@@ -3809,7 +3934,7 @@ def test_common_billing_account_path():
 
 def test_parse_common_billing_account_path():
     expected = {
-        "billing_account": "mussel",
+        "billing_account": "abalone",
     }
     path = EntitySignalsMappingServiceClient.common_billing_account_path(**expected)
 
@@ -3819,7 +3944,7 @@ def test_parse_common_billing_account_path():
 
 
 def test_common_folder_path():
-    folder = "winkle"
+    folder = "squid"
     expected = "folders/{folder}".format(
         folder=folder,
     )
@@ -3829,7 +3954,7 @@ def test_common_folder_path():
 
 def test_parse_common_folder_path():
     expected = {
-        "folder": "nautilus",
+        "folder": "clam",
     }
     path = EntitySignalsMappingServiceClient.common_folder_path(**expected)
 
@@ -3839,7 +3964,7 @@ def test_parse_common_folder_path():
 
 
 def test_common_organization_path():
-    organization = "scallop"
+    organization = "whelk"
     expected = "organizations/{organization}".format(
         organization=organization,
     )
@@ -3849,7 +3974,7 @@ def test_common_organization_path():
 
 def test_parse_common_organization_path():
     expected = {
-        "organization": "abalone",
+        "organization": "octopus",
     }
     path = EntitySignalsMappingServiceClient.common_organization_path(**expected)
 
@@ -3859,7 +3984,7 @@ def test_parse_common_organization_path():
 
 
 def test_common_project_path():
-    project = "squid"
+    project = "oyster"
     expected = "projects/{project}".format(
         project=project,
     )
@@ -3869,7 +3994,7 @@ def test_common_project_path():
 
 def test_parse_common_project_path():
     expected = {
-        "project": "clam",
+        "project": "nudibranch",
     }
     path = EntitySignalsMappingServiceClient.common_project_path(**expected)
 
@@ -3879,8 +4004,8 @@ def test_parse_common_project_path():
 
 
 def test_common_location_path():
-    project = "whelk"
-    location = "octopus"
+    project = "cuttlefish"
+    location = "mussel"
     expected = "projects/{project}/locations/{location}".format(
         project=project,
         location=location,
@@ -3891,8 +4016,8 @@ def test_common_location_path():
 
 def test_parse_common_location_path():
     expected = {
-        "project": "oyster",
-        "location": "nudibranch",
+        "project": "winkle",
+        "location": "nautilus",
     }
     path = EntitySignalsMappingServiceClient.common_location_path(**expected)
 

@@ -115,10 +115,15 @@ class Order(proto.Message):
 
             This field is a member of `oneof`_ ``_end_time``.
         unlimited_end_time (bool):
+            Output only. Deprecated: Indicates whether or
+            not this Order has an end time.
+
+            This field is a member of `oneof`_ ``_unlimited_end_time``.
+        end_time_unlimited (bool):
             Output only. Indicates whether or not this
             Order has an end time.
 
-            This field is a member of `oneof`_ ``_unlimited_end_time``.
+            This field is a member of `oneof`_ ``_end_time_unlimited``.
         external_order_id (int):
             Optional. An arbitrary ID to associate to the
             Order, which can be used as a key to an external
@@ -277,6 +282,11 @@ class Order(proto.Message):
     unlimited_end_time: bool = proto.Field(
         proto.BOOL,
         number=45,
+        optional=True,
+    )
+    end_time_unlimited: bool = proto.Field(
+        proto.BOOL,
+        number=82,
         optional=True,
     )
     external_order_id: int = proto.Field(

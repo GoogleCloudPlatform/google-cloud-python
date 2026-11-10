@@ -133,6 +133,11 @@
                 "delete_instance"
               ]
             },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
             "GetInstance": {
               "methods": [
                 "get_instance"
@@ -143,6 +148,11 @@
                 "list_instances"
               ]
             },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
             "StartInstance": {
               "methods": [
                 "start_instance"
@@ -151,6 +161,16 @@
             "StopInstance": {
               "methods": [
                 "stop_instance"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
               ]
             }
           }
@@ -168,6 +188,11 @@
                 "delete_instance"
               ]
             },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
             "GetInstance": {
               "methods": [
                 "get_instance"
@@ -178,6 +203,11 @@
                 "list_instances"
               ]
             },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
             "StartInstance": {
               "methods": [
                 "start_instance"
@@ -186,6 +216,16 @@
             "StopInstance": {
               "methods": [
                 "stop_instance"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
               ]
             }
           }
@@ -203,6 +243,11 @@
                 "delete_instance"
               ]
             },
+            "GetIamPolicy": {
+              "methods": [
+                "get_iam_policy"
+              ]
+            },
             "GetInstance": {
               "methods": [
                 "get_instance"
@@ -213,6 +258,11 @@
                 "list_instances"
               ]
             },
+            "SetIamPolicy": {
+              "methods": [
+                "set_iam_policy"
+              ]
+            },
             "StartInstance": {
               "methods": [
                 "start_instance"
@@ -221,6 +271,16 @@
             "StopInstance": {
               "methods": [
                 "stop_instance"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "test_iam_permissions"
+              ]
+            },
+            "UpdateInstance": {
+              "methods": [
+                "update_instance"
               ]
             }
           }
@@ -578,6 +638,40 @@
             "UpdateService": {
               "methods": [
                 "update_service"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "SourceUpload": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "SourceUploadClient",
+          "rpcs": {
+            "UploadSource": {
+              "methods": [
+                "upload_source"
+              ]
+            }
+          }
+        },
+        "grpc-async": {
+          "libraryClient": "SourceUploadAsyncClient",
+          "rpcs": {
+            "UploadSource": {
+              "methods": [
+                "upload_source"
+              ]
+            }
+          }
+        },
+        "rest": {
+          "libraryClient": "SourceUploadClient",
+          "rpcs": {
+            "UploadSource": {
+              "methods": [
+                "upload_source"
               ]
             }
           }

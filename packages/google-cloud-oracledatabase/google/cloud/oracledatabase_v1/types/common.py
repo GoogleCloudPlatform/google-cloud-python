@@ -82,6 +82,22 @@ class IdentityConnector(proto.Message):
         connection_state (google.cloud.oracledatabase_v1.types.IdentityConnector.ConnectionState):
             Output only. The connection state of the
             identity connector.
+        workload_identity_pool (str):
+            Output only. The resource name of the Workload Identity Pool
+            configured for identity federation with OCI. This exact pool
+            name can be used to configure VPC Service Controls (VPC-SC)
+            egress rules. Format:
+            ``projects/{project}/locations/global/workloadIdentityPools/{workload_identity_pool}``
+        identity_connector_id (str):
+            Output only. The unique partner identifier
+            for the Identity Connector, used to establish
+            secure cross-cloud access between Google Cloud
+            and OCI. This corresponds directly to the ID of
+            the OracleDbGcpIdentityConnector resource in
+            Oracle Cloud Infrastructure (OCI).
+        lifecycle_state_details (str):
+            Output only. Additional information about the
+            current lifecycle state.
     """
 
     class ConnectionState(proto.Enum):
@@ -117,6 +133,18 @@ class IdentityConnector(proto.Message):
         proto.ENUM,
         number=2,
         enum=ConnectionState,
+    )
+    workload_identity_pool: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    identity_connector_id: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    lifecycle_state_details: str = proto.Field(
+        proto.STRING,
+        number=5,
     )
 
 

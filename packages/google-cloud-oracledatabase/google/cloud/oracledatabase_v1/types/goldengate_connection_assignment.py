@@ -17,6 +17,7 @@ from __future__ import annotations
 
 from typing import MutableMapping, MutableSequence
 
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import proto  # type: ignore
 
@@ -32,6 +33,7 @@ __protobuf__ = proto.module(
         "TestGoldengateConnectionAssignmentRequest",
         "TestConnectionAssignmentError",
         "TestGoldengateConnectionAssignmentResponse",
+        "UpdateGoldengateConnectionAssignmentRequest",
         "DeleteGoldengateConnectionAssignmentRequest",
     },
 )
@@ -47,7 +49,7 @@ class GoldengateConnectionAssignment(proto.Message):
             resource in the following format:
             projects/{project}/locations/{region}/goldengateConnectionAssignments/{goldengate_connection_assignment}
         properties (google.cloud.oracledatabase_v1.types.GoldengateConnectionAssignmentProperties):
-            Required. The properties of the
+            Required. Immutable. The properties of the
             GoldengateConnectionAssignment.
         create_time (google.protobuf.timestamp_pb2.Timestamp):
             Output only. The time when the connection
@@ -56,7 +58,7 @@ class GoldengateConnectionAssignment(proto.Message):
             Optional. The labels or tags associated with
             the GoldengateConnectionAssignment.
         display_name (str):
-            Optional. The display name for the
+            Optional. Immutable. The display name for the
             GoldengateConnectionAssignment.
         entitlement_id (str):
             Output only. The OCID of the entitlement
@@ -449,6 +451,59 @@ class TestGoldengateConnectionAssignmentResponse(proto.Message):
         proto.MESSAGE,
         number=3,
         message="TestConnectionAssignmentError",
+    )
+
+
+class UpdateGoldengateConnectionAssignmentRequest(proto.Message):
+    r"""Request message for updating a
+    GoldengateConnectionAssignment.
+
+    Attributes:
+        update_mask (google.protobuf.field_mask_pb2.FieldMask):
+            Optional. A mask specifying which fields in the
+            GoldengateConnectionAssignment should be updated. A field
+            specified in the mask is updated. If a mask isn't provided,
+            the service treats this as an implied field mask equivalent
+            to all fields that are populated (have a non-empty value).
+            To clear or unset a field, the field must be explicitly
+            specified in the ``update_mask``.
+        goldengate_connection_assignment (google.cloud.oracledatabase_v1.types.GoldengateConnectionAssignment):
+            Required. The resource being updated. Note only labels can
+            be updated. The provided labels will completely replace the
+            existing labels. Any existing label keys that are not
+            included in the update request will be deleted. Not
+            providing labels and update_mask will not update the labels.
+            To clear all labels, specify ``labels`` in the
+            ``update_mask`` and omit or leave the ``labels`` field empty
+            in the update request.
+        request_id (str):
+            Optional. An optional ID to identify the
+            request. This value is used to identify
+            duplicate requests. If you make a request with
+            the same request ID and the original request is
+            still in progress or completed, the server
+            ignores the second request. This prevents
+            clients from accidentally creating duplicate
+            commitments.
+
+            The request ID must be a valid UUID with the
+            exception that zero UUID is not supported
+            (00000000-0000-0000-0000-000000000000).
+    """
+
+    update_mask: field_mask_pb2.FieldMask = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=field_mask_pb2.FieldMask,
+    )
+    goldengate_connection_assignment: "GoldengateConnectionAssignment" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="GoldengateConnectionAssignment",
+    )
+    request_id: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 

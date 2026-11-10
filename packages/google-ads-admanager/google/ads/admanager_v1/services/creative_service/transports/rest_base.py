@@ -105,6 +105,23 @@ class _BaseCreativeServiceRestTransport(CreativeServiceTransport):
             ]
             return http_options
 
+    class _BaseBatchCreateCreatives:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=networks/*}/creatives:batchCreate",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
     class _BaseBatchDeactivateCreatives:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -118,6 +135,40 @@ class _BaseCreativeServiceRestTransport(CreativeServiceTransport):
                     "method": "post",
                     "uri": "/v1/{parent=networks/*}/creatives:batchDeactivate",
                     "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseBatchUpdateCreatives:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=networks/*}/creatives:batchUpdate",
+                    "body": "*",
+                },
+            ]
+            return http_options
+
+    class _BaseCreateCreative:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=networks/*}/creatives",
+                    "body": "creative",
                 },
             ]
             return http_options
@@ -150,6 +201,23 @@ class _BaseCreativeServiceRestTransport(CreativeServiceTransport):
                 {
                     "method": "get",
                     "uri": "/v1/{parent=networks/*}/creatives",
+                },
+            ]
+            return http_options
+
+    class _BaseUpdateCreative:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{creative.name=networks/*/creatives/*}",
+                    "body": "creative",
                 },
             ]
             return http_options

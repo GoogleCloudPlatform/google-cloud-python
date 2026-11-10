@@ -32,6 +32,8 @@ __protobuf__ = proto.module(
         "CreateClusterRequest",
         "UpdateClusterRequest",
         "DeleteClusterRequest",
+        "ListNodesRequest",
+        "ListNodesResponse",
         "NetworkResource",
         "NetworkReference",
         "NetworkResourceConfig",
@@ -51,6 +53,7 @@ __protobuf__ = proto.module(
         "ExistingBucketConfig",
         "NewLustreConfig",
         "ExistingLustreConfig",
+        "ExistingNfsConfig",
         "ComputeResource",
         "ComputeResourceConfig",
         "NewOnDemandInstancesConfig",
@@ -62,10 +65,19 @@ __protobuf__ = proto.module(
         "SlurmOrchestrator",
         "SlurmNodeSet",
         "ComputeInstanceSlurmNodeSet",
+        "ResourcePolicyConfig",
         "SlurmPartition",
         "SlurmLoginNodes",
+        "ServiceAccount",
         "StorageConfig",
         "ComputeInstance",
+        "Node",
+        "SlurmNodeDetails",
+        "ComputeEngineNodeDetails",
+        "ComputeEngineOrchestrator",
+        "ManagedInstanceGroup",
+        "Disk",
+        "ExistingInstances",
     },
 )
 
@@ -86,8 +98,8 @@ class Cluster(proto.Message):
             format
             ``projects/{project}/locations/{location}/clusters/{cluster}``.
         description (str):
-            Optional. User-provided description of the
-            cluster.
+            Optional. A description for your cluster. You
+            can use up to 2,048 characters.
         labels (MutableMapping[str, str]):
             Optional.
             `Labels <https://cloud.google.com/compute/docs/labeling-resources>`__
@@ -105,7 +117,7 @@ class Cluster(proto.Message):
             state might not match the cluster's intended state.
         network_resources (MutableMapping[str, google.cloud.hypercomputecluster_v1beta.types.NetworkResource]):
             Optional. Network resources available to the cluster. Must
-            contain at most one value. Keys specify the ID of the
+            contain exactly one value. Keys specify the ID of the
             network resource by which it can be referenced elsewhere,
             and must conform to
             `RFC-1034 <https://datatracker.ietf.org/doc/html/rfc1034>`__
@@ -125,6 +137,9 @@ class Cluster(proto.Message):
         orchestrator (google.cloud.hypercomputecluster_v1beta.types.Orchestrator):
             Optional. Orchestrator that is responsible
             for scheduling and running jobs on the cluster.
+        uid (str):
+            Output only. The globally unique identifier
+            for this Cluster.
     """
 
     name: str = proto.Field(
@@ -176,6 +191,10 @@ class Cluster(proto.Message):
         proto.MESSAGE,
         number=8,
         message="Orchestrator",
+    )
+    uid: str = proto.Field(
+        proto.STRING,
+        number=16,
     )
 
 
@@ -295,9 +314,10 @@ class CreateClusterRequest(proto.Message):
             created, in the format
             ``projects/{project}/locations/{location}``.
         cluster_id (str):
-            Required. ID of the cluster to create. Must conform to
-            `RFC-1034 <https://datatracker.ietf.org/doc/html/rfc1034>`__
-            (lower-case, alphanumeric, and at most 63 characters).
+            Required. The ID of the cluster to create. The cluster ID
+            must start with a lowercase letter (``a``-``z``), use only
+            lowercase letters or numbers, and contain up to 10
+            characters. For example, specify ``cluster001``.
         cluster (google.cloud.hypercomputecluster_v1beta.types.Cluster):
             Required. Cluster to create.
         request_id (str):
@@ -383,6 +403,87 @@ class DeleteClusterRequest(proto.Message):
     )
 
 
+class ListNodesRequest(proto.Message):
+    r"""Request message for
+    [ListNodes][google.cloud.hypercomputecluster.v1beta.HypercomputeCluster.ListNodes].
+
+    Attributes:
+        parent (str):
+            Required. Parent cluster of the nodes to list, in the format
+            ``projects/{project}/locations/{location}/clusters/{cluster}``.
+        page_size (int):
+            Optional. Maximum number of nodes to return.
+            The service may return fewer than this value.
+        page_token (str):
+            Optional. A page token received from a previous
+            ``ListNodes`` call. Provide this to retrieve the subsequent
+            page. When paginating, all other parameters provided to
+            ``ListNodes`` must match the call that provided the page
+            token.
+        filter (str):
+            Optional. `Filter <https://google.aip.dev/160>`__ to apply
+            to the returned results.
+        order_by (str):
+            Optional. How to order the resulting nodes. Must be one of
+            the following strings:
+
+            - ``name``
+            - ``name desc``
+
+            If not specified, nodes will be returned in an arbitrary
+            order.
+    """
+
+    parent: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    page_size: int = proto.Field(
+        proto.INT32,
+        number=2,
+    )
+    page_token: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    filter: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    order_by: str = proto.Field(
+        proto.STRING,
+        number=5,
+    )
+
+
+class ListNodesResponse(proto.Message):
+    r"""Response message for
+    [ListNodes][google.cloud.hypercomputecluster.v1beta.HypercomputeCluster.ListNodes].
+
+    Attributes:
+        nodes (MutableSequence[google.cloud.hypercomputecluster_v1beta.types.Node]):
+            Nodes in the specified cluster.
+        next_page_token (str):
+            A token that can be sent as ``page_token`` to retrieve the
+            next page. If this field is absent, there are no subsequent
+            pages.
+    """
+
+    @property
+    def raw_page(self):
+        return self
+
+    nodes: MutableSequence["Node"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="Node",
+    )
+    next_page_token: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
 class NetworkResource(proto.Message):
     r"""A resource representing a network that connects the various
     components of a cluster together.
@@ -392,8 +493,8 @@ class NetworkResource(proto.Message):
 
     Attributes:
         network (google.cloud.hypercomputecluster_v1beta.types.NetworkReference):
-            Reference to a network in Google Compute
-            Engine.
+            Output only. A reference to a network in
+            Google Compute Engine.
 
             This field is a member of `oneof`_ ``reference``.
         config (google.cloud.hypercomputecluster_v1beta.types.NetworkResourceConfig):
@@ -533,8 +634,8 @@ class ExistingNetworkConfig(proto.Message):
 
 
 class StorageResource(proto.Message):
-    r"""A resource representing a form of persistent storage that is
-    accessible to compute resources in the cluster.
+    r"""Represents a form of persistent storage that you can mount
+    onto compute resources in the cluster.
 
     This message has `oneof`_ fields (mutually exclusive fields).
     For each oneof, at most one member field can be set at the same time.
@@ -545,21 +646,22 @@ class StorageResource(proto.Message):
 
     Attributes:
         filestore (google.cloud.hypercomputecluster_v1beta.types.FilestoreReference):
-            Reference to a Filestore instance. Populated
-            if and only if the storage resource was
-            configured to use Filestore.
+            Output only. A reference to a Filestore
+            instance. Populated if and only if the storage
+            resource was configured to use Filestore.
 
             This field is a member of `oneof`_ ``reference``.
         bucket (google.cloud.hypercomputecluster_v1beta.types.BucketReference):
-            Reference to a Google Cloud Storage bucket.
-            Populated if and only if the storage resource
-            was configured to use Google Cloud Storage.
+            Output only. A reference to a Google Cloud
+            Storage bucket. Populated if and only if the
+            storage resource was configured to use Google
+            Cloud Storage.
 
             This field is a member of `oneof`_ ``reference``.
         lustre (google.cloud.hypercomputecluster_v1beta.types.LustreReference):
-            Reference to a Managed Lustre instance.
-            Populated if and only if the storage resource
-            was configured to use Managed Lustre.
+            Output only. A reference to a Managed Lustre
+            instance. Populated if and only if the storage
+            resource was configured to use Managed Lustre.
 
             This field is a member of `oneof`_ ``reference``.
         config (google.cloud.hypercomputecluster_v1beta.types.StorageResourceConfig):
@@ -692,6 +794,11 @@ class StorageResourceConfig(proto.Message):
             imported.
 
             This field is a member of `oneof`_ ``config``.
+        existing_nfs (google.cloud.hypercomputecluster_v1beta.types.ExistingNfsConfig):
+            Optional. Immutable. If set, indicates that
+            an existing NFS share should be imported.
+
+            This field is a member of `oneof`_ ``config``.
     """
 
     new_filestore: "NewFilestoreConfig" = proto.Field(
@@ -730,6 +837,12 @@ class StorageResourceConfig(proto.Message):
         oneof="config",
         message="ExistingLustreConfig",
     )
+    existing_nfs: "ExistingNfsConfig" = proto.Field(
+        proto.MESSAGE,
+        number=7,
+        oneof="config",
+        message="ExistingNfsConfig",
+    )
 
 
 class NewFilestoreConfig(proto.Message):
@@ -743,7 +856,7 @@ class NewFilestoreConfig(proto.Message):
         filestore (str):
             Required. Immutable. Name of the Filestore instance to
             create, in the format
-            ``projects/{project}/locations/{location}/instances/{instance}``
+            ``projects/{project}/locations/{location}/instances/{instance}``.
         description (str):
             Optional. Immutable. Description of the
             instance. Maximum of 2048 characters.
@@ -922,6 +1035,9 @@ class NewBucketConfig(proto.Message):
             ARCHIVE (4):
                 Lowest-cost storage for data archiving,
                 online backup, and disaster recovery.
+            RAPID (5):
+                Storage class optimized for I/O intensive
+                workloads.
         """
 
         STORAGE_CLASS_UNSPECIFIED = 0
@@ -929,6 +1045,7 @@ class NewBucketConfig(proto.Message):
         NEARLINE = 2
         COLDLINE = 3
         ARCHIVE = 4
+        RAPID = 5
 
     autoclass: "GcsAutoclassConfig" = proto.Field(
         proto.MESSAGE,
@@ -971,9 +1088,15 @@ class GcsAutoclassConfig(proto.Message):
         Values:
             TERMINAL_STORAGE_CLASS_UNSPECIFIED (0):
                 Unspecified terminal storage class
+            NEARLINE (1):
+                Nearline terminal storage class
+            ARCHIVE (2):
+                Archive terminal storage class
         """
 
         TERMINAL_STORAGE_CLASS_UNSPECIFIED = 0
+        NEARLINE = 1
+        ARCHIVE = 2
 
     enabled: bool = proto.Field(
         proto.BOOL,
@@ -1047,6 +1170,12 @@ class NewLustreConfig(proto.Message):
             Required. Immutable. Storage capacity of the
             instance in gibibytes (GiB). Allowed values are
             between 18000 and 7632000.
+        per_unit_storage_throughput (int):
+            Optional. Immutable. Throughput of the instance in MB/s/TiB.
+            Valid values are 125, 250, 500, 1000. See `Performance tiers
+            and maximum storage
+            capacities <https://cloud.google.com/managed-lustre/docs/create-instance#performance-tiers>`__
+            for more information.
     """
 
     lustre: str = proto.Field(
@@ -1064,6 +1193,10 @@ class NewLustreConfig(proto.Message):
     capacity_gb: int = proto.Field(
         proto.INT64,
         number=4,
+    )
+    per_unit_storage_throughput: int = proto.Field(
+        proto.INT64,
+        number=5,
     )
 
 
@@ -1084,6 +1217,38 @@ class ExistingLustreConfig(proto.Message):
     lustre: str = proto.Field(
         proto.STRING,
         number=1,
+    )
+
+
+class ExistingNfsConfig(proto.Message):
+    r"""When set in a
+    [StorageResourceConfig][google.cloud.hypercomputecluster.v1beta.StorageResourceConfig],
+    indicates that an existing NFS share should be imported.
+
+    Attributes:
+        server_ip_address (str):
+            Required. Immutable. Server IP address of the
+            NFS share.
+        remote_mount (str):
+            Required. Immutable. Remote mount path of the
+            NFS share.
+        mount_options (str):
+            Optional. Immutable. Options to mount the NFS share, as
+            expected by fs_mntops field infstab(5), for example:
+            "rw,vers=4.1,nconnect=2,noatime".
+    """
+
+    server_ip_address: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    remote_mount: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    mount_options: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 
@@ -1181,6 +1346,10 @@ class NewOnDemandInstancesConfig(proto.Message):
             Required. Immutable. Name of the Compute Engine `machine
             type <https://cloud.google.com/compute/docs/machine-resource>`__
             to use, e.g. ``n2-standard-2``.
+        network_tags (MutableSequence[str]):
+            Optional. Immutable. A list of network tags
+            to attach to the VM instances. A maximum of 64
+            network tags are allowed.
     """
 
     zone: str = proto.Field(
@@ -1190,6 +1359,10 @@ class NewOnDemandInstancesConfig(proto.Message):
     machine_type: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+    network_tags: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=4,
     )
 
 
@@ -1210,7 +1383,33 @@ class NewSpotInstancesConfig(proto.Message):
             Required. Immutable. Name of the Compute Engine `machine
             type <https://cloud.google.com/compute/docs/machine-resource>`__
             to use, e.g. ``n2-standard-2``.
+        termination_action (google.cloud.hypercomputecluster_v1beta.types.NewSpotInstancesConfig.TerminationAction):
+            Optional. Termination action for the
+            instance. If not specified, Compute Engine sets
+            the termination action to DELETE.
+        network_tags (MutableSequence[str]):
+            Optional. Immutable. A list of network tags
+            to attach to the VM instances. A maximum of 64
+            network tags are allowed.
     """
+
+    class TerminationAction(proto.Enum):
+        r"""Specifies the termination action of the instance.
+
+        Values:
+            TERMINATION_ACTION_UNSPECIFIED (0):
+                Not set.
+            STOP (1):
+                Compute Engine stops the Spot VM on
+                preemption.
+            DELETE (2):
+                Compute Engine deletes the Spot VM on
+                preemption.
+        """
+
+        TERMINATION_ACTION_UNSPECIFIED = 0
+        STOP = 1
+        DELETE = 2
 
     zone: str = proto.Field(
         proto.STRING,
@@ -1220,6 +1419,15 @@ class NewSpotInstancesConfig(proto.Message):
         proto.STRING,
         number=2,
     )
+    termination_action: TerminationAction = proto.Field(
+        proto.ENUM,
+        number=5,
+        enum=TerminationAction,
+    )
+    network_tags: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=6,
+    )
 
 
 class NewReservedInstancesConfig(proto.Message):
@@ -1228,6 +1436,10 @@ class NewReservedInstancesConfig(proto.Message):
     indicates that VM instances should be created from a
     `reservation <https://cloud.google.com/compute/docs/instances/reservations-overview>`__.
 
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
 
     .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
@@ -1238,12 +1450,42 @@ class NewReservedInstancesConfig(proto.Message):
             ``projects/{project}/zones/{zone}/reservations/{reservation}``.
 
             This field is a member of `oneof`_ ``source``.
+        reservation_block (str):
+            Optional. Immutable. Name of the reservation block from
+            which VM instances should be created, in the format
+            ``projects/{project}/zones/{zone}/reservations/{reservation}/reservationBlocks/{reservation_block}``.
+
+            This field is a member of `oneof`_ ``source``.
+        reservation_sub_block (str):
+            Optional. Immutable. Name of the reservation sub block from
+            which VM instances should be created, in the format
+            ``projects/{project}/zones/{zone}/reservations/{reservation}/reservationBlocks/{reservation_block}/reservationSubBlocks/{reservation_sub_block}``.
+
+            This field is a member of `oneof`_ ``source``.
+        network_tags (MutableSequence[str]):
+            Optional. Immutable. A list of network tags
+            to attach to the VM instances. A maximum of 64
+            network tags are allowed.
     """
 
     reservation: str = proto.Field(
         proto.STRING,
         number=1,
         oneof="source",
+    )
+    reservation_block: str = proto.Field(
+        proto.STRING,
+        number=7,
+        oneof="source",
+    )
+    reservation_sub_block: str = proto.Field(
+        proto.STRING,
+        number=8,
+        oneof="source",
+    )
+    network_tags: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=9,
     )
 
 
@@ -1267,6 +1509,10 @@ class NewFlexStartInstancesConfig(proto.Message):
             Required. Immutable. Specifies the time limit
             for created instances. Instances will be
             terminated at the end of this duration.
+        network_tags (MutableSequence[str]):
+            Optional. Immutable. A list of network tags
+            to attach to the VM instances. A maximum of 64
+            network tags are allowed.
     """
 
     zone: str = proto.Field(
@@ -1282,6 +1528,10 @@ class NewFlexStartInstancesConfig(proto.Message):
         number=3,
         message=duration_pb2.Duration,
     )
+    network_tags: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=7,
+    )
 
 
 class BootDisk(proto.Message):
@@ -1290,13 +1540,22 @@ class BootDisk(proto.Message):
 
     Attributes:
         type_ (str):
-            Required. Immutable. `Persistent disk
+            Optional. `Persistent disk
             type <https://cloud.google.com/compute/docs/disks#disk-types>`__,
             in the format
             ``projects/{project}/zones/{zone}/diskTypes/{disk_type}``.
         size_gb (int):
-            Required. Immutable. Size of the disk in
-            gigabytes. Must be at least 10GB.
+            Optional. The size of the disk in gigabytes
+            (GB), which must be at least 40 GB.
+        storage_pools (MutableSequence[str]):
+            Optional. The `storage
+            pools <https://docs.cloud.google.com/compute/docs/disks/storage-pools>`__
+            used for creating the boot disk, in the format:
+            ``projects/{project}/zones/{zone}/storagePools/{storage_pool}``.
+
+            Currently, only one Hyperdisk Balanced storage pool is
+            supported. The storage pool must reside in the same zone as
+            the compute instance.
     """
 
     type_: str = proto.Field(
@@ -1307,6 +1566,10 @@ class BootDisk(proto.Message):
         proto.INT64,
         number=2,
     )
+    storage_pools: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=5,
+    )
 
 
 class Orchestrator(proto.Message):
@@ -1314,6 +1577,10 @@ class Orchestrator(proto.Message):
     workloads on the cluster as well as providing the user interface
     for interacting with the cluster at runtime.
 
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
 
     .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
@@ -1323,6 +1590,11 @@ class Orchestrator(proto.Message):
             should use Slurm as the orchestrator.
 
             This field is a member of `oneof`_ ``option``.
+        compute_engine (google.cloud.hypercomputecluster_v1beta.types.ComputeEngineOrchestrator):
+            Optional. If set, indicates that the cluster
+            should use Compute Engine as the orchestrator.
+
+            This field is a member of `oneof`_ ``option``.
     """
 
     slurm: "SlurmOrchestrator" = proto.Field(
@@ -1330,6 +1602,12 @@ class Orchestrator(proto.Message):
         number=1,
         oneof="option",
         message="SlurmOrchestrator",
+    )
+    compute_engine: "ComputeEngineOrchestrator" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        oneof="option",
+        message="ComputeEngineOrchestrator",
     )
 
 
@@ -1345,15 +1623,16 @@ class SlurmOrchestrator(proto.Message):
             which allow users to access the cluster over
             SSH.
         node_sets (MutableSequence[google.cloud.hypercomputecluster_v1beta.types.SlurmNodeSet]):
-            Required. Configuration of Slurm nodesets,
-            which define groups of compute resources that
-            can be used by Slurm. At least one compute node
-            is required.
+            Optional. Compute resource configuration for
+            the Slurm nodesets in your cluster. If not
+            specified, the cluster won't create any nodes.
         partitions (MutableSequence[google.cloud.hypercomputecluster_v1beta.types.SlurmPartition]):
-            Required. Configuration of Slurm partitions,
-            which group one or more nodesets. Acts as a
-            queue against which jobs can be submitted. At
-            least one partition is required.
+            Optional. Configuration for the Slurm
+            partitions in your cluster. Each partition can
+            contain one or more nodesets, and you can submit
+            separate jobs on each partition. If you don't
+            specify at least one partition in your cluster,
+            you can't submit jobs to the cluster.
         default_partition (str):
             Optional. Default partition to use for
             submitted jobs that do not explicitly specify a
@@ -1416,14 +1695,15 @@ class SlurmNodeSet(proto.Message):
 
             This field is a member of `oneof`_ ``type``.
         id (str):
-            Required. Identifier for the nodeset, which allows it to be
-            referenced by partitions. Must conform to
-            `RFC-1034 <https://datatracker.ietf.org/doc/html/rfc1034>`__
-            (lower-case, alphanumeric, and at most 63 characters).
+            Required. The ID for the nodeset, which allows it to be
+            referenced by cluster partitions. The nodeset ID must start
+            with a lowercase letter (``a``-``z``), use only lowercase
+            letters or numbers, and contain up to 15 characters. For
+            example, specify ``nodeset001``.
         compute_id (str):
-            Optional. ID of the compute resource on which this nodeset
-            will run. Must match a key in the cluster's
-            `compute_resources <Cluster.compute_resources>`__.
+            Required. The ID of the compute resource on which this
+            nodeset runs. Must match a key in the cluster's
+            [compute_resources][google.cloud.hypercomputecluster.v1beta.Cluster.compute_resources].
         storage_configs (MutableSequence[google.cloud.hypercomputecluster_v1beta.types.StorageConfig]):
             Optional. How [storage
             resources][google.cloud.hypercomputecluster.v1beta.StorageResource]
@@ -1442,6 +1722,9 @@ class SlurmNodeSet(proto.Message):
             not want the cluster to create nodes
             dynamically, and instead rely only on static
             nodes.
+        resource_policy_config (google.cloud.hypercomputecluster_v1beta.types.ResourcePolicyConfig):
+            Optional. Resource policy configuration for
+            the nodeset.
     """
 
     compute_instance: "ComputeInstanceSlurmNodeSet" = proto.Field(
@@ -1470,6 +1753,11 @@ class SlurmNodeSet(proto.Message):
     max_dynamic_node_count: int = proto.Field(
         proto.INT64,
         number=5,
+    )
+    resource_policy_config: "ResourcePolicyConfig" = proto.Field(
+        proto.MESSAGE,
+        number=19,
+        message="ResourcePolicyConfig",
     )
 
 
@@ -1505,6 +1793,23 @@ class ComputeInstanceSlurmNodeSet(proto.Message):
         proto.MESSAGE,
         number=3,
         message="BootDisk",
+    )
+
+
+class ResourcePolicyConfig(proto.Message):
+    r"""Policy describing how VM instances should be created.
+
+    Attributes:
+        accelerator_topology (str):
+            Optional. Specifies the topology required to create a
+            partition for VMs that have interconnected accelerators, in
+            the format ``AxB`` or ``AxBxC``, where ``A``, ``B``, and
+            ``C`` are integers.
+    """
+
+    accelerator_topology: str = proto.Field(
+        proto.STRING,
+        number=2,
     )
 
 
@@ -1557,7 +1862,11 @@ class SlurmLoginNodes(proto.Message):
         startup_script (str):
             Optional. `Startup
             script <https://cloud.google.com/compute/docs/instances/startup-scripts/linux>`__
-            to be run on each login node instance. Max 256KB.
+            to be run on each login node instance. Max 256KB. The script
+            must complete within the system-defined default timeout of 5
+            minutes. For tasks that require more time, consider running
+            them in the background using methods such as ``&`` or
+            ``nohup``.
         enable_os_login (bool):
             Optional. Whether `OS
             Login <https://cloud.google.com/compute/docs/oslogin>`__
@@ -1579,6 +1888,10 @@ class SlurmLoginNodes(proto.Message):
             instances that were created in Compute Engine.
         boot_disk (google.cloud.hypercomputecluster_v1beta.types.BootDisk):
             Optional. Boot disk for the login node.
+        network_tags (MutableSequence[str]):
+            Optional. Network tags to be applied to each
+            login node instance. A maximum of 64 network
+            tags are allowed.
     """
 
     count: int = proto.Field(
@@ -1625,6 +1938,30 @@ class SlurmLoginNodes(proto.Message):
         number=13,
         message="BootDisk",
     )
+    network_tags: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=14,
+    )
+
+
+class ServiceAccount(proto.Message):
+    r"""Service account email and scopes
+
+    Attributes:
+        email (str):
+            Optional. Service account email
+        scopes (MutableSequence[str]):
+            Optional. Service account scopes
+    """
+
+    email: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    scopes: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=2,
+    )
 
 
 class StorageConfig(proto.Message):
@@ -1636,7 +1973,7 @@ class StorageConfig(proto.Message):
         id (str):
             Required. ID of the storage resource to mount, which must
             match a key in the cluster's
-            `storage_resources <Cluster.storage_resources>`__.
+            [storage_resources][google.cloud.hypercomputecluster.v1beta.Cluster.storage_resources].
         local_mount (str):
             Required. A directory inside the VM instance's file system
             where the storage resource should be mounted (e.g.,
@@ -1666,6 +2003,593 @@ class ComputeInstance(proto.Message):
     instance: str = proto.Field(
         proto.STRING,
         number=1,
+    )
+
+
+class Node(proto.Message):
+    r"""A resource representing a compute node managed by Cluster
+    Director.
+
+    Attributes:
+        name (str):
+            Identifier. `Relative resource
+            name <https://google.aip.dev/122>`__ of the node, in the
+            format
+            ``projects/{project}/locations/{location}/clusters/{cluster}/nodes/{node}``.
+        zone (str):
+            Output only. Name of the zone in which the node is running,
+            e.g. ``us-central1-a``.
+        state (google.cloud.hypercomputecluster_v1beta.types.Node.State):
+            Output only. High-level lifecycle state of
+            the node.
+        state_message (str):
+            Output only. Human-readable message providing
+            extra information about the current state.
+        running_jobs (bool):
+            Output only. Indicates whether the node is
+            currently executing workloads.
+        accepting_jobs (bool):
+            Output only. Indicates whether the node is
+            available for new job allocations.
+        provisioning_model (google.cloud.hypercomputecluster_v1beta.types.Node.ProvisioningModel):
+            Output only. Provisioning model of the node.
+        slurm_details (google.cloud.hypercomputecluster_v1beta.types.SlurmNodeDetails):
+            Output only. Slurm-specific details for the
+            node.
+        compute_engine_details (google.cloud.hypercomputecluster_v1beta.types.ComputeEngineNodeDetails):
+            Output only. Compute Engine-specific details
+            for the node.
+        create_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. Time that the node was
+            originally created.
+        update_time (google.protobuf.timestamp_pb2.Timestamp):
+            Output only. Time that the node was most
+            recently updated.
+    """
+
+    class State(proto.Enum):
+        r"""High-level lifecycle state of the node.
+
+        Values:
+            STATE_UNSPECIFIED (0):
+                Not set.
+            CREATING (1):
+                The node is being provisioned at the
+                infrastructure layer or initialized by the
+                orchestrator.
+            ACTIVE (2):
+                The node is healthy and operational.
+            SUSPENDING (3):
+                The node is transitioning to a stopped or
+                suspended state.
+            SUSPENDED (4):
+                The node is suspended or stopped and not
+                consuming compute resources.
+            REPAIRING (5):
+                The node is undergoing maintenance or
+                automatic recovery.
+            FAILED (6):
+                The node is in an unhealthy or terminal error
+                state.
+            DELETING (7):
+                The node is being deleted.
+            UNPROVISIONED (8):
+                The node has no VM assigned to it.
+        """
+
+        STATE_UNSPECIFIED = 0
+        CREATING = 1
+        ACTIVE = 2
+        SUSPENDING = 3
+        SUSPENDED = 4
+        REPAIRING = 5
+        FAILED = 6
+        DELETING = 7
+        UNPROVISIONED = 8
+
+    class ProvisioningModel(proto.Enum):
+        r"""Provisioning model of the node.
+
+        Values:
+            PROVISIONING_MODEL_UNSPECIFIED (0):
+                Not set.
+            ON_DEMAND (1):
+                The node is provisioned on demand. User
+                controlled runtime, no discounts.
+            SPOT (2):
+                The node is provisioned as a spot VM. Heavily
+                discounted, no guaranteed runtime.
+            RESERVATION_BOUND (3):
+                The node is provisioned as a
+                reservation-bound VM. Bound to the lifecycle of
+                the reservation in which it is provisioned.
+            FLEX_START (4):
+                The node is provisioned as a flex-start VM.
+                Has a limited runtime.
+        """
+
+        PROVISIONING_MODEL_UNSPECIFIED = 0
+        ON_DEMAND = 1
+        SPOT = 2
+        RESERVATION_BOUND = 3
+        FLEX_START = 4
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    zone: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    state: State = proto.Field(
+        proto.ENUM,
+        number=3,
+        enum=State,
+    )
+    state_message: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    running_jobs: bool = proto.Field(
+        proto.BOOL,
+        number=5,
+    )
+    accepting_jobs: bool = proto.Field(
+        proto.BOOL,
+        number=6,
+    )
+    provisioning_model: ProvisioningModel = proto.Field(
+        proto.ENUM,
+        number=12,
+        enum=ProvisioningModel,
+    )
+    slurm_details: "SlurmNodeDetails" = proto.Field(
+        proto.MESSAGE,
+        number=7,
+        message="SlurmNodeDetails",
+    )
+    compute_engine_details: "ComputeEngineNodeDetails" = proto.Field(
+        proto.MESSAGE,
+        number=8,
+        message="ComputeEngineNodeDetails",
+    )
+    create_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=10,
+        message=timestamp_pb2.Timestamp,
+    )
+    update_time: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=11,
+        message=timestamp_pb2.Timestamp,
+    )
+
+
+class SlurmNodeDetails(proto.Message):
+    r"""Slurm-specific details for a Node.
+
+    Attributes:
+        states (MutableSequence[str]):
+            Output only. Raw state flags directly from
+            Slurm.
+        reason (str):
+            Output only. User-readable reason for the
+            current state.
+        partitions (MutableSequence[str]):
+            Output only. Slurm partitions this node
+            belongs to.
+        nodeset (str):
+            Output only. The ID of the nodeset this node
+            belongs to.
+        comment (str):
+            Output only. System comments from Slurm.
+    """
+
+    states: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=1,
+    )
+    reason: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    partitions: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=3,
+    )
+    nodeset: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    comment: str = proto.Field(
+        proto.STRING,
+        number=5,
+    )
+
+
+class ComputeEngineNodeDetails(proto.Message):
+    r"""Compute Engine-specific details for a Node.
+
+    Attributes:
+        instance (str):
+            Output only. `Relative resource
+            name <https://google.aip.dev/122>`__ of the VM instance, in
+            the format
+            ``projects/{project}/zones/{zone}/instances/{instance}``.
+        machine_type (str):
+            Output only. Name of the Compute Engine `machine
+            type <https://cloud.google.com/compute/docs/machine-resource>`__
+            to use, e.g. ``n2-standard-2``.
+        state (str):
+            Output only. The Compute Engine VM `instance lifecycle
+            state <https://cloud.google.com/compute/docs/instances/instance-lifecycle>`__.
+        instance_group_manager (str):
+            Output only. `Relative resource
+            name <https://google.aip.dev/122>`__ of the managed instance
+            group, in the format
+            ``projects/{project}/zones/{zone}/instanceGroupManagers/{instance_group_manager}``.
+            or
+            ``projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}``
+    """
+
+    instance: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    machine_type: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    state: str = proto.Field(
+        proto.STRING,
+        number=3,
+    )
+    instance_group_manager: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+
+
+class ComputeEngineOrchestrator(proto.Message):
+    r"""When set in
+    [Orchestrator][google.cloud.hypercomputecluster.v1beta.Orchestrator],
+    indicates that the cluster should create nodes using Compute Engine.
+
+    Attributes:
+        managed_instance_groups (MutableMapping[str, google.cloud.hypercomputecluster_v1beta.types.ManagedInstanceGroup]):
+            Optional. Managed instance groups that should be created by
+            the orchestrator. Keys must conform to
+            `RFC-1034 <https://datatracker.ietf.org/doc/html/rfc1034>`__
+            (lower-case, alphanumeric, and at most 63 characters).
+        existing_instances (MutableMapping[str, google.cloud.hypercomputecluster_v1beta.types.ExistingInstances]):
+            Optional. Existing instances that will be governed by the
+            orchestrator. Keys must conform to
+            `RFC-1034 <https://datatracker.ietf.org/doc/html/rfc1034>`__
+            (lower-case, alphanumeric, and at most 63 characters).
+    """
+
+    managed_instance_groups: MutableMapping[str, "ManagedInstanceGroup"] = (
+        proto.MapField(
+            proto.STRING,
+            proto.MESSAGE,
+            number=1,
+            message="ManagedInstanceGroup",
+        )
+    )
+    existing_instances: MutableMapping[str, "ExistingInstances"] = proto.MapField(
+        proto.STRING,
+        proto.MESSAGE,
+        number=2,
+        message="ExistingInstances",
+    )
+
+
+class ManagedInstanceGroup(proto.Message):
+    r"""A managed instance group based on a compute resource.
+
+    Attributes:
+        instance_group_manager (str):
+            Output only. Name of the managed instance group, in the
+            format
+            ``projects/{project}/zones/{zone}/instanceGroupManagers/{instance_group_manager}``.
+            or
+            ``projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}``
+        compute_id (str):
+            Required. ID of the compute resource used to
+            create this managed instance group.
+        target_size (int):
+            Optional. Target number of running instances
+            for this managed instance group.
+        storage_configs (MutableSequence[google.cloud.hypercomputecluster_v1beta.types.StorageConfig]):
+            Optional. How [storage
+            resources][google.cloud.hypercomputecluster.v1beta.StorageResource]
+            should be mounted on each instance in this managed instance
+            group.
+        instance_template (str):
+            Output only. Instance template used to create
+            instances in this group.
+        resource_policy_config (google.cloud.hypercomputecluster_v1beta.types.ResourcePolicyConfig):
+            Optional. Resource policy configuration for
+            this managed instance group.
+        boot_disk (google.cloud.hypercomputecluster_v1beta.types.BootDisk):
+            Optional. Boot disk for the managed instance
+            group.
+        additional_disks (MutableMapping[str, google.cloud.hypercomputecluster_v1beta.types.Disk]):
+            Optional. Additional disks for the managed instance group.
+            Each VM of the MIG will have its own clone of each disk
+            described in the additional_disks map. The disks themselves
+            live as long as the MIG and if a VM is replaced by a new VM
+            of the same name then the replacement VM attaches to the
+            same disks as the VM it replaced. Each disk has a custom
+            device name matching the key in the map.
+        startup_script (str):
+            Optional. Startup script to be run on each VM
+            instance in the nodeset.
+        enable_public_ips (bool):
+            Optional. Whether to enable public IPs for
+            the instances in the managed instance group.
+        enable_os_login (bool):
+            Optional. Whether `OS
+            Login <https://cloud.google.com/compute/docs/oslogin>`__
+            should be enabled on instances in this managed instance
+            group.
+        startup_script_timeout (google.protobuf.duration_pb2.Duration):
+            Optional. The maximum time to wait for the
+            startup script to complete. If the script
+            exceeds this duration, the instance setup will
+            be considered failed. This value must be
+            positive. If this value is unset, a default
+            timeout of 5 minutes (300 seconds) will be used
+            by the system.
+        metadata (MutableMapping[str, str]):
+            Optional. Custom
+            `metadata <https://cloud.google.com/compute/docs/metadata/overview>`__
+            key-value pairs to be applied to each VM instance in the
+            managed instance group.
+        service_account (google.cloud.hypercomputecluster_v1beta.types.ServiceAccount):
+            Required. Immutable. Service account to be
+            used by the instances in the managed instance
+            group.
+        labels (MutableMapping[str, str]):
+            Optional.
+            `Labels <https://cloud.google.com/compute/docs/labeling-resources>`__
+            that should be applied to each VM instance in the managed
+            instance group.
+    """
+
+    instance_group_manager: str = proto.Field(
+        proto.STRING,
+        number=7,
+    )
+    compute_id: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    target_size: int = proto.Field(
+        proto.INT64,
+        number=2,
+    )
+    storage_configs: MutableSequence["StorageConfig"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=3,
+        message="StorageConfig",
+    )
+    instance_template: str = proto.Field(
+        proto.STRING,
+        number=4,
+    )
+    resource_policy_config: "ResourcePolicyConfig" = proto.Field(
+        proto.MESSAGE,
+        number=5,
+        message="ResourcePolicyConfig",
+    )
+    boot_disk: "BootDisk" = proto.Field(
+        proto.MESSAGE,
+        number=6,
+        message="BootDisk",
+    )
+    additional_disks: MutableMapping[str, "Disk"] = proto.MapField(
+        proto.STRING,
+        proto.MESSAGE,
+        number=15,
+        message="Disk",
+    )
+    startup_script: str = proto.Field(
+        proto.STRING,
+        number=8,
+    )
+    enable_public_ips: bool = proto.Field(
+        proto.BOOL,
+        number=9,
+    )
+    enable_os_login: bool = proto.Field(
+        proto.BOOL,
+        number=10,
+    )
+    startup_script_timeout: duration_pb2.Duration = proto.Field(
+        proto.MESSAGE,
+        number=11,
+        message=duration_pb2.Duration,
+    )
+    metadata: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=12,
+    )
+    service_account: "ServiceAccount" = proto.Field(
+        proto.MESSAGE,
+        number=13,
+        message="ServiceAccount",
+    )
+    labels: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=14,
+    )
+
+
+class Disk(proto.Message):
+    r"""Additional disk for managed instance groups.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        image (str):
+            Optional. Source image for the disk.
+
+            This field is a member of `oneof`_ ``source``.
+        snapshot (str):
+            Optional. Source snapshot for the disk.
+
+            This field is a member of `oneof`_ ``source``.
+        existing_disk (str):
+            Optional. An existing persistent disk to attach read-only to
+            all VMs in the managed instance group, in the format
+            ``projects/{project}/zones/{zone}/disks/{disk}``.
+
+            This field is a member of `oneof`_ ``source``.
+        type_ (str):
+            Optional. `Persistent disk
+            type <https://cloud.google.com/compute/docs/disks#disk-types>`__,
+            in the format
+            ``projects/{project}/zones/{zone}/diskTypes/{disk_type}``.
+            This field is required when creating a new disk.
+        size_gb (int):
+            Optional. Size of the disk in GB.
+            This field is required when creating a new disk.
+    """
+
+    image: str = proto.Field(
+        proto.STRING,
+        number=3,
+        oneof="source",
+    )
+    snapshot: str = proto.Field(
+        proto.STRING,
+        number=4,
+        oneof="source",
+    )
+    existing_disk: str = proto.Field(
+        proto.STRING,
+        number=5,
+        oneof="source",
+    )
+    type_: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    size_gb: int = proto.Field(
+        proto.INT64,
+        number=2,
+    )
+
+
+class ExistingInstances(proto.Message):
+    r"""ExistingInstances defines a list of existing VM instances to
+    include in the cluster.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        project (str):
+            Optional. Immutable. Project containing the instances, in
+            the format ``projects/{project}``.
+
+            This field is a member of `oneof`_ ``source``.
+        instance_group_manager (str):
+            Optional. Immutable. Managed instance group containing the
+            instances, in the format
+            ``projects/{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}``.
+
+            This field is a member of `oneof`_ ``source``.
+        region_instance_group_manager (str):
+            Optional. Immutable. Regional managed instance group
+            containing the instances, in the format
+            ``projects/{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}``.
+
+            This field is a member of `oneof`_ ``source``.
+        reservation (str):
+            Optional. Immutable. Reservation containing the instances,
+            in the format
+            ``projects/{project}/zones/{zone}/reservations/{reservation}``.
+
+            This field is a member of `oneof`_ ``source``.
+        reservation_block (str):
+            Optional. Immutable. Reservation block containing the
+            instances, in the format
+            ``projects/{project}/zones/{zone}/reservations/{reservation}/reservationBlocks/{reservationBlock}``.
+
+            This field is a member of `oneof`_ ``source``.
+        reservation_sub_block (str):
+            Optional. Immutable. Reservation sub block containing the
+            instances, in the format
+            ``projects/{project}/zones/{zone}/reservations/{reservation}/reservationBlocks/{reservationBlock}/reservationSubBlocks/{reservationSubBlock}``.
+
+            This field is a member of `oneof`_ ``source``.
+        labels (MutableMapping[str, str]):
+            Optional. Immutable. Labels specifying the
+            instances to include. Instances from the source
+            will be included only if they contain each of
+            these labels. If no labels are specified, all
+            instances from the source will be included.
+            Example: {"env": "prod", "app": "worker"}
+        networks (MutableSequence[google.cloud.hypercomputecluster_v1beta.types.NetworkReference]):
+            Output only. Networks stores the list of `VPC
+            networks <https://cloud.google.com/vpc/docs/vpc>`__ attached
+            to these existing instances, discovered during the cluster
+            creation and update.
+    """
+
+    project: str = proto.Field(
+        proto.STRING,
+        number=7,
+        oneof="source",
+    )
+    instance_group_manager: str = proto.Field(
+        proto.STRING,
+        number=1,
+        oneof="source",
+    )
+    region_instance_group_manager: str = proto.Field(
+        proto.STRING,
+        number=2,
+        oneof="source",
+    )
+    reservation: str = proto.Field(
+        proto.STRING,
+        number=3,
+        oneof="source",
+    )
+    reservation_block: str = proto.Field(
+        proto.STRING,
+        number=4,
+        oneof="source",
+    )
+    reservation_sub_block: str = proto.Field(
+        proto.STRING,
+        number=5,
+        oneof="source",
+    )
+    labels: MutableMapping[str, str] = proto.MapField(
+        proto.STRING,
+        proto.STRING,
+        number=6,
+    )
+    networks: MutableSequence["NetworkReference"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=8,
+        message="NetworkReference",
     )
 
 

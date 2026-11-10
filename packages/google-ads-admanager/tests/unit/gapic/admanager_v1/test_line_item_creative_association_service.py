@@ -39,6 +39,7 @@ except ImportError:  # pragma: NO COVER
     HAS_GOOGLE_AUTH_AIO = False
 
 import google.auth
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 from google.api_core import (
     client_options,
@@ -64,6 +65,7 @@ from google.ads.admanager_v1.types import (
     line_item_creative_association_messages,
     line_item_creative_association_service,
     size,
+    size_type_enum,
 )
 
 CRED_INFO_JSON = {
@@ -1404,6 +1406,1520 @@ def test_list_line_item_creative_associations_rest_pager(transport: str = "rest"
             assert page_.raw_page.next_page_token == token
 
 
+def test_create_line_item_creative_association_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemCreativeAssociationServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.create_line_item_creative_association
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.create_line_item_creative_association
+        ] = mock_rpc
+
+        request = {}
+        client.create_line_item_creative_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.create_line_item_creative_association(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_create_line_item_creative_association_rest_required_fields(
+    request_type=line_item_creative_association_service.CreateLineItemCreativeAssociationRequest,
+):
+    transport_class = transports.LineItemCreativeAssociationServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseCreateLineItemCreativeAssociation,
+        "_BaseCreateLineItemCreativeAssociation__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_creative_association_messages.LineItemCreativeAssociation()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = (
+                line_item_creative_association_messages.LineItemCreativeAssociation.pb(
+                    return_value
+                )
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.create_line_item_creative_association(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_create_line_item_creative_association_rest_flattened():
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = (
+            line_item_creative_association_messages.LineItemCreativeAssociation()
+        )
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1/lineItems/sample2"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            line_item_creative_association=line_item_creative_association_messages.LineItemCreativeAssociation(
+                name="name_value"
+            ),
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = (
+            line_item_creative_association_messages.LineItemCreativeAssociation.pb(
+                return_value
+            )
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.create_line_item_creative_association(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*/lineItems/*}/creatives" % client.transport._host,
+            args[1],
+        )
+
+
+def test_create_line_item_creative_association_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.create_line_item_creative_association(
+            line_item_creative_association_service.CreateLineItemCreativeAssociationRequest(),
+            parent="parent_value",
+            line_item_creative_association=line_item_creative_association_messages.LineItemCreativeAssociation(
+                name="name_value"
+            ),
+        )
+
+
+def test_batch_create_line_item_creative_associations_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemCreativeAssociationServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_create_line_item_creative_associations
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.batch_create_line_item_creative_associations
+        ] = mock_rpc
+
+        request = {}
+        client.batch_create_line_item_creative_associations(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_create_line_item_creative_associations(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_create_line_item_creative_associations_rest_required_fields(
+    request_type=line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsRequest,
+):
+    transport_class = transports.LineItemCreativeAssociationServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchCreateLineItemCreativeAssociations,
+        "_BaseBatchCreateLineItemCreativeAssociations__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_create_line_item_creative_associations(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_create_line_item_creative_associations_rest_flattened():
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1/lineItems/sample2"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            requests=[
+                line_item_creative_association_service.CreateLineItemCreativeAssociationRequest(
+                    parent="parent_value"
+                )
+            ],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_create_line_item_creative_associations(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*/lineItems/*}/creatives:batchCreate"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_create_line_item_creative_associations_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_create_line_item_creative_associations(
+            line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsRequest(),
+            parent="parent_value",
+            requests=[
+                line_item_creative_association_service.CreateLineItemCreativeAssociationRequest(
+                    parent="parent_value"
+                )
+            ],
+        )
+
+
+def test_update_line_item_creative_association_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemCreativeAssociationServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.update_line_item_creative_association
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.update_line_item_creative_association
+        ] = mock_rpc
+
+        request = {}
+        client.update_line_item_creative_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.update_line_item_creative_association(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_update_line_item_creative_association_rest_required_fields(
+    request_type=line_item_creative_association_service.UpdateLineItemCreativeAssociationRequest,
+):
+    transport_class = transports.LineItemCreativeAssociationServiceRestTransport
+
+    request_init = {}
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseUpdateLineItemCreativeAssociation,
+        "_BaseUpdateLineItemCreativeAssociation__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    # Check that path parameters and body parameters are not mixing in.
+    assert not set(unset_fields) - set(("updateMask",))
+
+    # verify required fields with non-default values are left alone
+
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_creative_association_messages.LineItemCreativeAssociation()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "patch",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = (
+                line_item_creative_association_messages.LineItemCreativeAssociation.pb(
+                    return_value
+                )
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.update_line_item_creative_association(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_update_line_item_creative_association_rest_flattened():
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = (
+            line_item_creative_association_messages.LineItemCreativeAssociation()
+        )
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "line_item_creative_association": {
+                "name": "networks/sample1/lineItems/sample2/creatives/sample3"
+            }
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            line_item_creative_association=line_item_creative_association_messages.LineItemCreativeAssociation(
+                name="name_value"
+            ),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = (
+            line_item_creative_association_messages.LineItemCreativeAssociation.pb(
+                return_value
+            )
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.update_line_item_creative_association(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{line_item_creative_association.name=networks/*/lineItems/*/creatives/*}"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_update_line_item_creative_association_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.update_line_item_creative_association(
+            line_item_creative_association_service.UpdateLineItemCreativeAssociationRequest(),
+            line_item_creative_association=line_item_creative_association_messages.LineItemCreativeAssociation(
+                name="name_value"
+            ),
+            update_mask=field_mask_pb2.FieldMask(paths=["paths_value"]),
+        )
+
+
+def test_batch_update_line_item_creative_associations_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemCreativeAssociationServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_update_line_item_creative_associations
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.batch_update_line_item_creative_associations
+        ] = mock_rpc
+
+        request = {}
+        client.batch_update_line_item_creative_associations(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_update_line_item_creative_associations(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_update_line_item_creative_associations_rest_required_fields(
+    request_type=line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsRequest,
+):
+    transport_class = transports.LineItemCreativeAssociationServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchUpdateLineItemCreativeAssociations,
+        "_BaseBatchUpdateLineItemCreativeAssociations__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_update_line_item_creative_associations(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_update_line_item_creative_associations_rest_flattened():
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1/lineItems/sample2"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            requests=[
+                line_item_creative_association_service.UpdateLineItemCreativeAssociationRequest(
+                    line_item_creative_association=line_item_creative_association_messages.LineItemCreativeAssociation(
+                        name="name_value"
+                    )
+                )
+            ],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_update_line_item_creative_associations(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*/lineItems/*}/creatives:batchUpdate"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_update_line_item_creative_associations_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_update_line_item_creative_associations(
+            line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsRequest(),
+            parent="parent_value",
+            requests=[
+                line_item_creative_association_service.UpdateLineItemCreativeAssociationRequest(
+                    line_item_creative_association=line_item_creative_association_messages.LineItemCreativeAssociation(
+                        name="name_value"
+                    )
+                )
+            ],
+        )
+
+
+def test_batch_activate_line_item_creative_associations_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemCreativeAssociationServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_activate_line_item_creative_associations
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.batch_activate_line_item_creative_associations
+        ] = mock_rpc
+
+        request = {}
+        client.batch_activate_line_item_creative_associations(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_activate_line_item_creative_associations(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_activate_line_item_creative_associations_rest_required_fields(
+    request_type=line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsRequest,
+):
+    transport_class = transports.LineItemCreativeAssociationServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request_init["names"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchActivateLineItemCreativeAssociations,
+        "_BaseBatchActivateLineItemCreativeAssociations__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+    jsonified_request["names"] = "names_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+    assert "names" in jsonified_request
+    assert jsonified_request["names"] == "names_value"
+
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_activate_line_item_creative_associations(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_activate_line_item_creative_associations_rest_flattened():
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1/lineItems/sample2"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            names=["names_value"],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_activate_line_item_creative_associations(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*/lineItems/*}/creatives:batchActivate"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_activate_line_item_creative_associations_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_activate_line_item_creative_associations(
+            line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsRequest(),
+            parent="parent_value",
+            names=["names_value"],
+        )
+
+
+def test_batch_deactivate_line_item_creative_associations_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemCreativeAssociationServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_deactivate_line_item_creative_associations
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.batch_deactivate_line_item_creative_associations
+        ] = mock_rpc
+
+        request = {}
+        client.batch_deactivate_line_item_creative_associations(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_deactivate_line_item_creative_associations(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_deactivate_line_item_creative_associations_rest_required_fields(
+    request_type=line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsRequest,
+):
+    transport_class = transports.LineItemCreativeAssociationServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request_init["names"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchDeactivateLineItemCreativeAssociations,
+        "_BaseBatchDeactivateLineItemCreativeAssociations__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+    jsonified_request["names"] = "names_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+    assert "names" in jsonified_request
+    assert jsonified_request["names"] == "names_value"
+
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_deactivate_line_item_creative_associations(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_deactivate_line_item_creative_associations_rest_flattened():
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1/lineItems/sample2"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            names=["names_value"],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_deactivate_line_item_creative_associations(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*/lineItems/*}/creatives:batchDeactivate"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_deactivate_line_item_creative_associations_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_deactivate_line_item_creative_associations(
+            line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsRequest(),
+            parent="parent_value",
+            names=["names_value"],
+        )
+
+
+def test_batch_delete_line_item_creative_associations_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemCreativeAssociationServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.batch_delete_line_item_creative_associations
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.batch_delete_line_item_creative_associations
+        ] = mock_rpc
+
+        request = {}
+        client.batch_delete_line_item_creative_associations(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.batch_delete_line_item_creative_associations(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_batch_delete_line_item_creative_associations_rest_required_fields(
+    request_type=line_item_creative_association_service.BatchDeleteLineItemCreativeAssociationsRequest,
+):
+    transport_class = transports.LineItemCreativeAssociationServiceRestTransport
+
+    request_init = {}
+    request_init["parent"] = ""
+    request_init["names"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BaseBatchDeleteLineItemCreativeAssociations,
+        "_BaseBatchDeleteLineItemCreativeAssociations__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["parent"] = "parent_value"
+    jsonified_request["names"] = "names_value"
+
+    # verify required fields with non-default values are left alone
+    assert "parent" in jsonified_request
+    assert jsonified_request["parent"] == "parent_value"
+    assert "names" in jsonified_request
+    assert jsonified_request["names"] == "names_value"
+
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = None
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+            json_return_value = ""
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.batch_delete_line_item_creative_associations(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_batch_delete_line_item_creative_associations_rest_flattened():
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = None
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {"parent": "networks/sample1/lineItems/sample2"}
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            parent="parent_value",
+            names=["names_value"],
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        json_return_value = ""
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.batch_delete_line_item_creative_associations(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{parent=networks/*/lineItems/*}/creatives:batchDelete"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_batch_delete_line_item_creative_associations_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.batch_delete_line_item_creative_associations(
+            line_item_creative_association_service.BatchDeleteLineItemCreativeAssociationsRequest(),
+            parent="parent_value",
+            names=["names_value"],
+        )
+
+
+def test_preview_line_item_creative_association_rest_use_cached_wrapped_rpc():
+    # Clients should use _prep_wrapped_messages to create cached wrapped rpcs,
+    # instead of constructing them on each call
+    with mock.patch("google.api_core.gapic_v1.method.wrap_method") as wrapper_fn:
+        client = LineItemCreativeAssociationServiceClient(
+            credentials=ga_credentials.AnonymousCredentials(),
+            transport="rest",
+        )
+
+        # Should wrap all calls on client creation
+        assert wrapper_fn.call_count > 0
+        wrapper_fn.reset_mock()
+
+        # Ensure method has been cached
+        assert (
+            client._transport.preview_line_item_creative_association
+            in client._transport._wrapped_methods
+        )
+
+        # Replace cached wrapped function with mock
+        mock_rpc = mock.Mock()
+        mock_rpc.return_value.name = (
+            "foo"  # operation_request.operation in compute client(s) expect a string.
+        )
+        client._transport._wrapped_methods[
+            client._transport.preview_line_item_creative_association
+        ] = mock_rpc
+
+        request = {}
+        client.preview_line_item_creative_association(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert mock_rpc.call_count == 1
+
+        client.preview_line_item_creative_association(request)
+
+        # Establish that a new wrapper was not created for this call
+        assert wrapper_fn.call_count == 0
+        assert mock_rpc.call_count == 2
+
+
+def test_preview_line_item_creative_association_rest_required_fields(
+    request_type=line_item_creative_association_service.PreviewLineItemCreativeAssociationRequest,
+):
+    transport_class = transports.LineItemCreativeAssociationServiceRestTransport
+
+    request_init = {}
+    request_init["name"] = ""
+    request_init["site_url"] = ""
+    request = request_type(**request_init)
+    pb_request = request_type.pb(request)
+    jsonified_request = json.loads(
+        json_format.MessageToJson(pb_request, use_integers_for_enums=False)
+    )
+
+    # verify fields with default values are dropped
+
+    default_values = getattr(
+        transport_class._BasePreviewLineItemCreativeAssociation,
+        "_BasePreviewLineItemCreativeAssociation__REQUIRED_FIELDS_DEFAULT_VALUES",
+        {},
+    )
+    unset_fields = {
+        k: v for k, v in default_values.items() if k not in jsonified_request
+    }
+    jsonified_request.update(unset_fields)
+
+    # verify required fields with default values are now present
+
+    jsonified_request["name"] = "name_value"
+    jsonified_request["siteUrl"] = "site_url_value"
+
+    # verify required fields with non-default values are left alone
+    assert "name" in jsonified_request
+    assert jsonified_request["name"] == "name_value"
+    assert "siteUrl" in jsonified_request
+    assert jsonified_request["siteUrl"] == "site_url_value"
+
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+    request = request_type(**request_init)
+
+    # Designate an appropriate value for the returned response.
+    return_value = line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse()
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(Session, "request") as req:
+        # We need to mock transcode() because providing default values
+        # for required fields will fail the real version if the http_options
+        # expect actual values for those fields.
+        with mock.patch.object(path_template, "transcode") as transcode:
+            # A uri without fields and an empty body will force all the
+            # request fields to show up in the query_params.
+            pb_request = request_type.pb(request)
+            transcode_result = {
+                "uri": "v1/sample_method",
+                "method": "post",
+                "query_params": pb_request,
+            }
+            transcode_result["body"] = pb_request
+            transcode.return_value = transcode_result
+
+            response_value = Response()
+            response_value.status_code = 200
+
+            # Convert return value to protobuf type
+            return_value = line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse.pb(
+                return_value
+            )
+            json_return_value = json_format.MessageToJson(return_value)
+
+            response_value._content = json_return_value.encode("UTF-8")
+            req.return_value = response_value
+            req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+            response = client.preview_line_item_creative_association(request)
+
+            expected_params = [("$alt", "json;enum-encoding=int")]
+            actual_params = req.call_args.kwargs["params"]
+            assert sorted(expected_params) == sorted(actual_params)
+
+
+def test_preview_line_item_creative_association_rest_flattened():
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse()
+
+        # get arguments that satisfy an http rule for this method
+        sample_request = {
+            "name": "networks/sample1/lineItems/sample2/creatives/sample3"
+        }
+
+        # get truthy value for each flattened field
+        mock_args = dict(
+            name="name_value",
+            site_url="site_url_value",
+        )
+        mock_args.update(sample_request)
+
+        # Wrap the value into a proper Response obj
+        response_value = Response()
+        response_value.status_code = 200
+        # Convert return value to protobuf type
+        return_value = line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value._content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        client.preview_line_item_creative_association(**mock_args)
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(req.mock_calls) == 1
+        _, args, _ = req.mock_calls[0]
+        assert path_template.validate(
+            "%s/v1/{name=networks/*/lineItems/*/creatives/*}:preview"
+            % client.transport._host,
+            args[1],
+        )
+
+
+def test_preview_line_item_creative_association_rest_flattened_error(
+    transport: str = "rest",
+):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.preview_line_item_creative_association(
+            line_item_creative_association_service.PreviewLineItemCreativeAssociationRequest(),
+            name="name_value",
+            site_url="site_url_value",
+        )
+
+
 def test_credentials_transport_error():
     # It is an error to provide credentials and a transport instance.
     transport = transports.LineItemCreativeAssociationServiceRestTransport(
@@ -1795,6 +3311,1363 @@ def test_list_line_item_creative_associations_rest_interceptors(null_interceptor
         post_with_metadata.assert_called_once()
 
 
+def test_create_line_item_creative_association_rest_bad_request(
+    request_type=line_item_creative_association_service.CreateLineItemCreativeAssociationRequest,
+):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1/lineItems/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.create_line_item_creative_association(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_creative_association_service.CreateLineItemCreativeAssociationRequest,
+        dict,
+    ],
+)
+def test_create_line_item_creative_association_rest_call_success(request_type):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1/lineItems/sample2"}
+    request_init["line_item_creative_association"] = {
+        "name": "name_value",
+        "line_item": "line_item_value",
+        "creative": "creative_value",
+        "creative_set": "creative_set_value",
+        "status": 1,
+        "start_time": {"seconds": 751, "nanos": 543},
+        "end_time": {},
+        "sizes": [{"width": 544, "height": 633, "size_type": 1}],
+        "destination_url": "destination_url_value",
+        "manual_creative_rotation_weight": 0.3302,
+        "sequential_creative_rotation_index": 3635,
+        "targeting_display_name": "targeting_display_name_value",
+        "update_time": {},
+        "stats": {
+            "impressions_delivered": 2255,
+            "clicks_delivered": 1676,
+            "viewable_impressions_delivered": 3197,
+            "creative_set_stats": {},
+        },
+    }
+    # The version of a generated dependency at test runtime may differ from the version used during generation.
+    # Delete any fields which are not present in the current runtime dependency
+    # See https://github.com/googleapis/gapic-generator-python/issues/1748
+
+    # Determine if the message type is proto-plus or protobuf
+    test_field = line_item_creative_association_service.CreateLineItemCreativeAssociationRequest.meta.fields[
+        "line_item_creative_association"
+    ]
+
+    def get_message_fields(field):
+        # Given a field which is a message (composite type), return a list with
+        # all the fields of the message.
+        # If the field is not a composite type, return an empty list.
+        message_fields = []
+
+        if hasattr(field, "message") and field.message:
+            is_field_type_proto_plus_type = not hasattr(field.message, "DESCRIPTOR")
+
+            if is_field_type_proto_plus_type:
+                message_fields = field.message.meta.fields.values()
+            # Add `# pragma: NO COVER` because there may not be any `*_pb2` field types
+            else:  # pragma: NO COVER
+                message_fields = field.message.DESCRIPTOR.fields
+        return message_fields
+
+    runtime_nested_fields = [
+        (field.name, nested_field.name)
+        for field in get_message_fields(test_field)
+        for nested_field in get_message_fields(field)
+    ]
+
+    subfields_not_in_runtime = []
+
+    # For each item in the sample request, create a list of sub fields which are not present at runtime
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for field, value in request_init[
+        "line_item_creative_association"
+    ].items():  # pragma: NO COVER
+        result = None
+        is_repeated = False
+        # For repeated fields
+        if isinstance(value, list) and len(value):
+            is_repeated = True
+            result = value[0]
+        # For fields where the type is another message
+        if isinstance(value, dict):
+            result = value
+
+        if result and hasattr(result, "keys"):
+            for subfield in result.keys():
+                if (field, subfield) not in runtime_nested_fields:
+                    subfields_not_in_runtime.append(
+                        {
+                            "field": field,
+                            "subfield": subfield,
+                            "is_repeated": is_repeated,
+                        }
+                    )
+
+    # Remove fields from the sample request which are not present in the runtime version of the dependency
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for subfield_to_delete in subfields_not_in_runtime:  # pragma: NO COVER
+        field = subfield_to_delete.get("field")
+        field_repeated = subfield_to_delete.get("is_repeated")
+        subfield = subfield_to_delete.get("subfield")
+        if subfield:
+            if field_repeated:
+                for i in range(
+                    0, len(request_init["line_item_creative_association"][field])
+                ):
+                    del request_init["line_item_creative_association"][field][i][
+                        subfield
+                    ]
+            else:
+                del request_init["line_item_creative_association"][field][subfield]
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_creative_association_messages.LineItemCreativeAssociation(
+            name="name_value",
+            line_item="line_item_value",
+            creative="creative_value",
+            creative_set="creative_set_value",
+            status=line_item_creative_association_enums.LineItemCreativeAssociationStatusEnum.LineItemCreativeAssociationStatus.ACTIVE,
+            destination_url="destination_url_value",
+            manual_creative_rotation_weight=0.3302,
+            sequential_creative_rotation_index=3635,
+            targeting_display_name="targeting_display_name_value",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = (
+            line_item_creative_association_messages.LineItemCreativeAssociation.pb(
+                return_value
+            )
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.create_line_item_creative_association(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response, line_item_creative_association_messages.LineItemCreativeAssociation
+    )
+    assert response.name == "name_value"
+    assert response.line_item == "line_item_value"
+    assert response.creative == "creative_value"
+    assert response.creative_set == "creative_set_value"
+    assert (
+        response.status
+        == line_item_creative_association_enums.LineItemCreativeAssociationStatusEnum.LineItemCreativeAssociationStatus.ACTIVE
+    )
+    assert response.destination_url == "destination_url_value"
+    assert math.isclose(response.manual_creative_rotation_weight, 0.3302, rel_tol=1e-6)
+    assert response.sequential_creative_rotation_index == 3635
+    assert response.targeting_display_name == "targeting_display_name_value"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_create_line_item_creative_association_rest_interceptors(null_interceptor):
+    transport = transports.LineItemCreativeAssociationServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemCreativeAssociationServiceRestInterceptor(),
+    )
+    client = LineItemCreativeAssociationServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "post_create_line_item_creative_association",
+        ) as post,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "post_create_line_item_creative_association_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "pre_create_line_item_creative_association",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_creative_association_service.CreateLineItemCreativeAssociationRequest.pb(
+            line_item_creative_association_service.CreateLineItemCreativeAssociationRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = (
+            line_item_creative_association_messages.LineItemCreativeAssociation.to_json(
+                line_item_creative_association_messages.LineItemCreativeAssociation()
+            )
+        )
+        req.return_value.content = return_value
+
+        request = line_item_creative_association_service.CreateLineItemCreativeAssociationRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = (
+            line_item_creative_association_messages.LineItemCreativeAssociation()
+        )
+        post_with_metadata.return_value = (
+            line_item_creative_association_messages.LineItemCreativeAssociation(),
+            metadata,
+        )
+
+        client.create_line_item_creative_association(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_create_line_item_creative_associations_rest_bad_request(
+    request_type=line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsRequest,
+):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1/lineItems/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_create_line_item_creative_associations(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsRequest,
+        dict,
+    ],
+)
+def test_batch_create_line_item_creative_associations_rest_call_success(request_type):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1/lineItems/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_create_line_item_creative_associations(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response,
+        line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse,
+    )
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_create_line_item_creative_associations_rest_interceptors(
+    null_interceptor,
+):
+    transport = transports.LineItemCreativeAssociationServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemCreativeAssociationServiceRestInterceptor(),
+    )
+    client = LineItemCreativeAssociationServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "post_batch_create_line_item_creative_associations",
+        ) as post,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "post_batch_create_line_item_creative_associations_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "pre_batch_create_line_item_creative_associations",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsRequest.pb(
+            line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse.to_json(
+            line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse()
+        )
+        req.return_value.content = return_value
+
+        request = line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse()
+        post_with_metadata.return_value = (
+            line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse(),
+            metadata,
+        )
+
+        client.batch_create_line_item_creative_associations(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_update_line_item_creative_association_rest_bad_request(
+    request_type=line_item_creative_association_service.UpdateLineItemCreativeAssociationRequest,
+):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {
+        "line_item_creative_association": {
+            "name": "networks/sample1/lineItems/sample2/creatives/sample3"
+        }
+    }
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.update_line_item_creative_association(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_creative_association_service.UpdateLineItemCreativeAssociationRequest,
+        dict,
+    ],
+)
+def test_update_line_item_creative_association_rest_call_success(request_type):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {
+        "line_item_creative_association": {
+            "name": "networks/sample1/lineItems/sample2/creatives/sample3"
+        }
+    }
+    request_init["line_item_creative_association"] = {
+        "name": "networks/sample1/lineItems/sample2/creatives/sample3",
+        "line_item": "line_item_value",
+        "creative": "creative_value",
+        "creative_set": "creative_set_value",
+        "status": 1,
+        "start_time": {"seconds": 751, "nanos": 543},
+        "end_time": {},
+        "sizes": [{"width": 544, "height": 633, "size_type": 1}],
+        "destination_url": "destination_url_value",
+        "manual_creative_rotation_weight": 0.3302,
+        "sequential_creative_rotation_index": 3635,
+        "targeting_display_name": "targeting_display_name_value",
+        "update_time": {},
+        "stats": {
+            "impressions_delivered": 2255,
+            "clicks_delivered": 1676,
+            "viewable_impressions_delivered": 3197,
+            "creative_set_stats": {},
+        },
+    }
+    # The version of a generated dependency at test runtime may differ from the version used during generation.
+    # Delete any fields which are not present in the current runtime dependency
+    # See https://github.com/googleapis/gapic-generator-python/issues/1748
+
+    # Determine if the message type is proto-plus or protobuf
+    test_field = line_item_creative_association_service.UpdateLineItemCreativeAssociationRequest.meta.fields[
+        "line_item_creative_association"
+    ]
+
+    def get_message_fields(field):
+        # Given a field which is a message (composite type), return a list with
+        # all the fields of the message.
+        # If the field is not a composite type, return an empty list.
+        message_fields = []
+
+        if hasattr(field, "message") and field.message:
+            is_field_type_proto_plus_type = not hasattr(field.message, "DESCRIPTOR")
+
+            if is_field_type_proto_plus_type:
+                message_fields = field.message.meta.fields.values()
+            # Add `# pragma: NO COVER` because there may not be any `*_pb2` field types
+            else:  # pragma: NO COVER
+                message_fields = field.message.DESCRIPTOR.fields
+        return message_fields
+
+    runtime_nested_fields = [
+        (field.name, nested_field.name)
+        for field in get_message_fields(test_field)
+        for nested_field in get_message_fields(field)
+    ]
+
+    subfields_not_in_runtime = []
+
+    # For each item in the sample request, create a list of sub fields which are not present at runtime
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for field, value in request_init[
+        "line_item_creative_association"
+    ].items():  # pragma: NO COVER
+        result = None
+        is_repeated = False
+        # For repeated fields
+        if isinstance(value, list) and len(value):
+            is_repeated = True
+            result = value[0]
+        # For fields where the type is another message
+        if isinstance(value, dict):
+            result = value
+
+        if result and hasattr(result, "keys"):
+            for subfield in result.keys():
+                if (field, subfield) not in runtime_nested_fields:
+                    subfields_not_in_runtime.append(
+                        {
+                            "field": field,
+                            "subfield": subfield,
+                            "is_repeated": is_repeated,
+                        }
+                    )
+
+    # Remove fields from the sample request which are not present in the runtime version of the dependency
+    # Add `# pragma: NO COVER` because this test code will not run if all subfields are present at runtime
+    for subfield_to_delete in subfields_not_in_runtime:  # pragma: NO COVER
+        field = subfield_to_delete.get("field")
+        field_repeated = subfield_to_delete.get("is_repeated")
+        subfield = subfield_to_delete.get("subfield")
+        if subfield:
+            if field_repeated:
+                for i in range(
+                    0, len(request_init["line_item_creative_association"][field])
+                ):
+                    del request_init["line_item_creative_association"][field][i][
+                        subfield
+                    ]
+            else:
+                del request_init["line_item_creative_association"][field][subfield]
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_creative_association_messages.LineItemCreativeAssociation(
+            name="name_value",
+            line_item="line_item_value",
+            creative="creative_value",
+            creative_set="creative_set_value",
+            status=line_item_creative_association_enums.LineItemCreativeAssociationStatusEnum.LineItemCreativeAssociationStatus.ACTIVE,
+            destination_url="destination_url_value",
+            manual_creative_rotation_weight=0.3302,
+            sequential_creative_rotation_index=3635,
+            targeting_display_name="targeting_display_name_value",
+        )
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = (
+            line_item_creative_association_messages.LineItemCreativeAssociation.pb(
+                return_value
+            )
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.update_line_item_creative_association(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response, line_item_creative_association_messages.LineItemCreativeAssociation
+    )
+    assert response.name == "name_value"
+    assert response.line_item == "line_item_value"
+    assert response.creative == "creative_value"
+    assert response.creative_set == "creative_set_value"
+    assert (
+        response.status
+        == line_item_creative_association_enums.LineItemCreativeAssociationStatusEnum.LineItemCreativeAssociationStatus.ACTIVE
+    )
+    assert response.destination_url == "destination_url_value"
+    assert math.isclose(response.manual_creative_rotation_weight, 0.3302, rel_tol=1e-6)
+    assert response.sequential_creative_rotation_index == 3635
+    assert response.targeting_display_name == "targeting_display_name_value"
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_update_line_item_creative_association_rest_interceptors(null_interceptor):
+    transport = transports.LineItemCreativeAssociationServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemCreativeAssociationServiceRestInterceptor(),
+    )
+    client = LineItemCreativeAssociationServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "post_update_line_item_creative_association",
+        ) as post,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "post_update_line_item_creative_association_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "pre_update_line_item_creative_association",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_creative_association_service.UpdateLineItemCreativeAssociationRequest.pb(
+            line_item_creative_association_service.UpdateLineItemCreativeAssociationRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = (
+            line_item_creative_association_messages.LineItemCreativeAssociation.to_json(
+                line_item_creative_association_messages.LineItemCreativeAssociation()
+            )
+        )
+        req.return_value.content = return_value
+
+        request = line_item_creative_association_service.UpdateLineItemCreativeAssociationRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = (
+            line_item_creative_association_messages.LineItemCreativeAssociation()
+        )
+        post_with_metadata.return_value = (
+            line_item_creative_association_messages.LineItemCreativeAssociation(),
+            metadata,
+        )
+
+        client.update_line_item_creative_association(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_update_line_item_creative_associations_rest_bad_request(
+    request_type=line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsRequest,
+):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1/lineItems/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_update_line_item_creative_associations(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsRequest,
+        dict,
+    ],
+)
+def test_batch_update_line_item_creative_associations_rest_call_success(request_type):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1/lineItems/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_update_line_item_creative_associations(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response,
+        line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse,
+    )
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_update_line_item_creative_associations_rest_interceptors(
+    null_interceptor,
+):
+    transport = transports.LineItemCreativeAssociationServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemCreativeAssociationServiceRestInterceptor(),
+    )
+    client = LineItemCreativeAssociationServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "post_batch_update_line_item_creative_associations",
+        ) as post,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "post_batch_update_line_item_creative_associations_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "pre_batch_update_line_item_creative_associations",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsRequest.pb(
+            line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse.to_json(
+            line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse()
+        )
+        req.return_value.content = return_value
+
+        request = line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse()
+        post_with_metadata.return_value = (
+            line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse(),
+            metadata,
+        )
+
+        client.batch_update_line_item_creative_associations(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_activate_line_item_creative_associations_rest_bad_request(
+    request_type=line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsRequest,
+):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1/lineItems/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_activate_line_item_creative_associations(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsRequest,
+        dict,
+    ],
+)
+def test_batch_activate_line_item_creative_associations_rest_call_success(request_type):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1/lineItems/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_activate_line_item_creative_associations(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response,
+        line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse,
+    )
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_activate_line_item_creative_associations_rest_interceptors(
+    null_interceptor,
+):
+    transport = transports.LineItemCreativeAssociationServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemCreativeAssociationServiceRestInterceptor(),
+    )
+    client = LineItemCreativeAssociationServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "post_batch_activate_line_item_creative_associations",
+        ) as post,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "post_batch_activate_line_item_creative_associations_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "pre_batch_activate_line_item_creative_associations",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsRequest.pb(
+            line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse.to_json(
+            line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse()
+        )
+        req.return_value.content = return_value
+
+        request = line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse()
+        post_with_metadata.return_value = (
+            line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse(),
+            metadata,
+        )
+
+        client.batch_activate_line_item_creative_associations(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_deactivate_line_item_creative_associations_rest_bad_request(
+    request_type=line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsRequest,
+):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1/lineItems/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_deactivate_line_item_creative_associations(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsRequest,
+        dict,
+    ],
+)
+def test_batch_deactivate_line_item_creative_associations_rest_call_success(
+    request_type,
+):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1/lineItems/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_deactivate_line_item_creative_associations(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response,
+        line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse,
+    )
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_deactivate_line_item_creative_associations_rest_interceptors(
+    null_interceptor,
+):
+    transport = transports.LineItemCreativeAssociationServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemCreativeAssociationServiceRestInterceptor(),
+    )
+    client = LineItemCreativeAssociationServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "post_batch_deactivate_line_item_creative_associations",
+        ) as post,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "post_batch_deactivate_line_item_creative_associations_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "pre_batch_deactivate_line_item_creative_associations",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsRequest.pb(
+            line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse.to_json(
+            line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse()
+        )
+        req.return_value.content = return_value
+
+        request = line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse()
+        post_with_metadata.return_value = (
+            line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse(),
+            metadata,
+        )
+
+        client.batch_deactivate_line_item_creative_associations(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
+def test_batch_delete_line_item_creative_associations_rest_bad_request(
+    request_type=line_item_creative_association_service.BatchDeleteLineItemCreativeAssociationsRequest,
+):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1/lineItems/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.batch_delete_line_item_creative_associations(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_creative_association_service.BatchDeleteLineItemCreativeAssociationsRequest,
+        dict,
+    ],
+)
+def test_batch_delete_line_item_creative_associations_rest_call_success(request_type):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"parent": "networks/sample1/lineItems/sample2"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = None
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+        json_return_value = ""
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.batch_delete_line_item_creative_associations(request)
+
+    # Establish that the response is the type that we expect.
+    assert response is None
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_batch_delete_line_item_creative_associations_rest_interceptors(
+    null_interceptor,
+):
+    transport = transports.LineItemCreativeAssociationServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemCreativeAssociationServiceRestInterceptor(),
+    )
+    client = LineItemCreativeAssociationServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "pre_batch_delete_line_item_creative_associations",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        pb_message = line_item_creative_association_service.BatchDeleteLineItemCreativeAssociationsRequest.pb(
+            line_item_creative_association_service.BatchDeleteLineItemCreativeAssociationsRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+
+        request = line_item_creative_association_service.BatchDeleteLineItemCreativeAssociationsRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+
+        client.batch_delete_line_item_creative_associations(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+
+
+def test_preview_line_item_creative_association_rest_bad_request(
+    request_type=line_item_creative_association_service.PreviewLineItemCreativeAssociationRequest,
+):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+    # send a request that will satisfy transcoding
+    request_init = {"name": "networks/sample1/lineItems/sample2/creatives/sample3"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a BadRequest error.
+    with (
+        mock.patch.object(Session, "request") as req,
+        pytest.raises(core_exceptions.BadRequest),
+    ):
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        json_return_value = ""
+        response_value.json = mock.Mock(return_value={})
+        response_value.status_code = 400
+        response_value.request = mock.Mock()
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        client.preview_line_item_creative_association(request)
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        line_item_creative_association_service.PreviewLineItemCreativeAssociationRequest,
+        dict,
+    ],
+)
+def test_preview_line_item_creative_association_rest_call_success(request_type):
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(), transport="rest"
+    )
+
+    # send a request that will satisfy transcoding
+    request_init = {"name": "networks/sample1/lineItems/sample2/creatives/sample3"}
+    request = request_type(**request_init)
+
+    # Mock the http request call within the method and fake a response.
+    with mock.patch.object(type(client.transport._session), "request") as req:
+        # Designate an appropriate value for the returned response.
+        return_value = line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse()
+
+        # Wrap the value into a proper Response obj
+        response_value = mock.Mock()
+        response_value.status_code = 200
+
+        # Convert return value to protobuf type
+        return_value = line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse.pb(
+            return_value
+        )
+        json_return_value = json_format.MessageToJson(return_value)
+        response_value.content = json_return_value.encode("UTF-8")
+        req.return_value = response_value
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        response = client.preview_line_item_creative_association(request)
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(
+        response,
+        line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse,
+    )
+
+
+@pytest.mark.parametrize("null_interceptor", [True, False])
+def test_preview_line_item_creative_association_rest_interceptors(null_interceptor):
+    transport = transports.LineItemCreativeAssociationServiceRestTransport(
+        credentials=ga_credentials.AnonymousCredentials(),
+        interceptor=None
+        if null_interceptor
+        else transports.LineItemCreativeAssociationServiceRestInterceptor(),
+    )
+    client = LineItemCreativeAssociationServiceClient(transport=transport)
+
+    with (
+        mock.patch.object(type(client.transport._session), "request") as req,
+        mock.patch.object(path_template, "transcode") as transcode,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "post_preview_line_item_creative_association",
+        ) as post,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "post_preview_line_item_creative_association_with_metadata",
+        ) as post_with_metadata,
+        mock.patch.object(
+            transports.LineItemCreativeAssociationServiceRestInterceptor,
+            "pre_preview_line_item_creative_association",
+        ) as pre,
+    ):
+        pre.assert_not_called()
+        post.assert_not_called()
+        post_with_metadata.assert_not_called()
+        pb_message = line_item_creative_association_service.PreviewLineItemCreativeAssociationRequest.pb(
+            line_item_creative_association_service.PreviewLineItemCreativeAssociationRequest()
+        )
+        transcode.return_value = {
+            "method": "post",
+            "uri": "my_uri",
+            "body": pb_message,
+            "query_params": pb_message,
+        }
+
+        req.return_value = mock.Mock()
+        req.return_value.status_code = 200
+        req.return_value.headers = {"header-1": "value-1", "header-2": "value-2"}
+        return_value = line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse.to_json(
+            line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse()
+        )
+        req.return_value.content = return_value
+
+        request = line_item_creative_association_service.PreviewLineItemCreativeAssociationRequest()
+        metadata = [
+            ("key", "val"),
+            ("cephalopod", "squid"),
+        ]
+        pre.return_value = request, metadata
+        post.return_value = line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse()
+        post_with_metadata.return_value = (
+            line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse(),
+            metadata,
+        )
+
+        client.preview_line_item_creative_association(
+            request,
+            metadata=[
+                ("key", "val"),
+                ("cephalopod", "squid"),
+            ],
+        )
+
+        pre.assert_called_once()
+        post.assert_called_once()
+        post_with_metadata.assert_called_once()
+
+
 def test_cancel_operation_rest_bad_request(
     request_type=operations_pb2.CancelOperationRequest,
 ):
@@ -1970,6 +4843,176 @@ def test_list_line_item_creative_associations_empty_call_rest():
         assert args[0] == request_msg
 
 
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_create_line_item_creative_association_empty_call_rest():
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.create_line_item_creative_association), "__call__"
+    ) as call:
+        client.create_line_item_creative_association(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_creative_association_service.CreateLineItemCreativeAssociationRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_create_line_item_creative_associations_empty_call_rest():
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_create_line_item_creative_associations), "__call__"
+    ) as call:
+        client.batch_create_line_item_creative_associations(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_update_line_item_creative_association_empty_call_rest():
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.update_line_item_creative_association), "__call__"
+    ) as call:
+        client.update_line_item_creative_association(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_creative_association_service.UpdateLineItemCreativeAssociationRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_update_line_item_creative_associations_empty_call_rest():
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_update_line_item_creative_associations), "__call__"
+    ) as call:
+        client.batch_update_line_item_creative_associations(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_activate_line_item_creative_associations_empty_call_rest():
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_activate_line_item_creative_associations),
+        "__call__",
+    ) as call:
+        client.batch_activate_line_item_creative_associations(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_deactivate_line_item_creative_associations_empty_call_rest():
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_deactivate_line_item_creative_associations),
+        "__call__",
+    ) as call:
+        client.batch_deactivate_line_item_creative_associations(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_batch_delete_line_item_creative_associations_empty_call_rest():
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.batch_delete_line_item_creative_associations), "__call__"
+    ) as call:
+        client.batch_delete_line_item_creative_associations(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_creative_association_service.BatchDeleteLineItemCreativeAssociationsRequest()
+        assert args[0] == request_msg
+
+
+# This test is a coverage failsafe to make sure that totally empty calls,
+# i.e. request == None and no flattened fields passed, work.
+def test_preview_line_item_creative_association_empty_call_rest():
+    client = LineItemCreativeAssociationServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.preview_line_item_creative_association), "__call__"
+    ) as call:
+        client.preview_line_item_creative_association(request=None)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        request_msg = line_item_creative_association_service.PreviewLineItemCreativeAssociationRequest()
+        assert args[0] == request_msg
+
+
 def test_line_item_creative_association_service_base_transport_error():
     # Passing both a credentials object and credentials_file should raise an error
     with pytest.raises(core_exceptions.DuplicateCredentialArgs):
@@ -1994,6 +5037,14 @@ def test_line_item_creative_association_service_base_transport():
     methods = (
         "get_line_item_creative_association",
         "list_line_item_creative_associations",
+        "create_line_item_creative_association",
+        "batch_create_line_item_creative_associations",
+        "update_line_item_creative_association",
+        "batch_update_line_item_creative_associations",
+        "batch_activate_line_item_creative_associations",
+        "batch_deactivate_line_item_creative_associations",
+        "batch_delete_line_item_creative_associations",
+        "preview_line_item_creative_association",
         "get_operation",
         "cancel_operation",
     )
@@ -2146,6 +5197,34 @@ def test_line_item_creative_association_service_client_transport_session_collisi
     assert session1 != session2
     session1 = client1.transport.list_line_item_creative_associations._session
     session2 = client2.transport.list_line_item_creative_associations._session
+    assert session1 != session2
+    session1 = client1.transport.create_line_item_creative_association._session
+    session2 = client2.transport.create_line_item_creative_association._session
+    assert session1 != session2
+    session1 = client1.transport.batch_create_line_item_creative_associations._session
+    session2 = client2.transport.batch_create_line_item_creative_associations._session
+    assert session1 != session2
+    session1 = client1.transport.update_line_item_creative_association._session
+    session2 = client2.transport.update_line_item_creative_association._session
+    assert session1 != session2
+    session1 = client1.transport.batch_update_line_item_creative_associations._session
+    session2 = client2.transport.batch_update_line_item_creative_associations._session
+    assert session1 != session2
+    session1 = client1.transport.batch_activate_line_item_creative_associations._session
+    session2 = client2.transport.batch_activate_line_item_creative_associations._session
+    assert session1 != session2
+    session1 = (
+        client1.transport.batch_deactivate_line_item_creative_associations._session
+    )
+    session2 = (
+        client2.transport.batch_deactivate_line_item_creative_associations._session
+    )
+    assert session1 != session2
+    session1 = client1.transport.batch_delete_line_item_creative_associations._session
+    session2 = client2.transport.batch_delete_line_item_creative_associations._session
+    assert session1 != session2
+    session1 = client1.transport.preview_line_item_creative_association._session
+    session2 = client2.transport.preview_line_item_creative_association._session
     assert session1 != session2
 
 

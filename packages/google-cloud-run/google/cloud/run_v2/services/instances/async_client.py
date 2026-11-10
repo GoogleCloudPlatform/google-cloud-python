@@ -47,7 +47,10 @@ except AttributeError:  # pragma: NO COVER
 import google.api.launch_stage_pb2 as launch_stage_pb2  # type: ignore
 import google.api_core.operation as operation  # type: ignore
 import google.api_core.operation_async as operation_async  # type: ignore
+import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
+import google.iam.v1.policy_pb2 as policy_pb2  # type: ignore
 import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
+import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 from google.cloud.location import locations_pb2  # type: ignore
 from google.longrunning import operations_pb2  # type: ignore
@@ -58,6 +61,7 @@ from google.cloud.run_v2.types import (
     container_status,
     instance,
     k8s_min,
+    sandbox,
     vendor_settings,
 )
 from google.cloud.run_v2.types import instance as gcr_instance
@@ -348,7 +352,6 @@ class InstancesAsyncClient:
                 request = run_v2.CreateInstanceRequest(
                     parent="parent_value",
                     instance=instance,
-                    instance_id="instance_id_value",
                 )
 
                 # Make the request
@@ -365,6 +368,8 @@ class InstancesAsyncClient:
             request (Optional[Union[google.cloud.run_v2.types.CreateInstanceRequest, dict]]):
                 The request object.
             parent (:class:`str`):
+                Required. The location and project in
+                which this Instance should be created.
 
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -457,6 +462,150 @@ class InstancesAsyncClient:
         # Done; return the response.
         return response
 
+    async def update_instance(
+        self,
+        request: Optional[Union[gcr_instance.UpdateInstanceRequest, dict]] = None,
+        *,
+        instance: Optional[gcr_instance.Instance] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> operation_async.AsyncOperation:
+        r"""Updates an Instance.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import run_v2
+
+            async def sample_update_instance():
+                # Create a client
+                client = run_v2.InstancesAsyncClient()
+
+                # Initialize request argument(s)
+                instance = run_v2.Instance()
+                instance.containers.image = "image_value"
+
+                request = run_v2.UpdateInstanceRequest(
+                    instance=instance,
+                )
+
+                # Make the request
+                operation = await client.update_instance(request=request)
+
+                print("Waiting for operation to complete...")
+
+                response = await operation.result()
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.run_v2.types.UpdateInstanceRequest, dict]]):
+                The request object. Request message for updating an
+                Instance.
+            instance (:class:`google.cloud.run_v2.types.Instance`):
+                Required. The Instance to be updated.
+                This corresponds to the ``instance`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
+                Optional. The list of fields to be
+                updated.
+
+                This corresponds to the ``update_mask`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.api_core.operation_async.AsyncOperation:
+                An object representing a long-running operation.
+
+                The result type for the operation will be :class:`google.cloud.run_v2.types.Instance` A Cloud Run Instance represents a single group of containers running in a
+                   region.
+
+        """
+        # Create or coerce a protobuf request object.
+        # - Quick check: If we got a request object, we should *not* have
+        #   gotten any keyword arguments that map to the request.
+        flattened_params = [instance, update_mask]
+        has_flattened_params = (
+            len([param for param in flattened_params if param is not None]) > 0
+        )
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        # - Use the request object if provided (there's no risk of modifying the input as
+        #   there are no flattened fields), or create one.
+        if not isinstance(request, gcr_instance.UpdateInstanceRequest):
+            request = gcr_instance.UpdateInstanceRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if instance is not None:
+            request.instance = instance
+        if update_mask is not None:
+            request.update_mask = update_mask
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.update_instance
+        ]
+
+        header_params: dict[str, str] = {}
+
+        routing_param_regex = re.compile(
+            "^projects/[^/]+/locations/(?P<location>[^/]+)(?:/.*)?$"
+        )
+        regex_match = routing_param_regex.match(request.instance.name)
+        if regex_match and regex_match.group("location"):
+            header_params["location"] = regex_match.group("location")
+
+        if header_params:
+            metadata = tuple(metadata) + (
+                gapic_v1.routing_header.to_grpc_metadata(header_params),
+            )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Wrap the response in an operation future.
+        response = operation_async.from_gapic(
+            response,
+            self._client._transport.operations_client,
+            gcr_instance.Instance,
+            metadata_type=gcr_instance.Instance,
+        )
+
+        # Done; return the response.
+        return response
+
     async def delete_instance(
         self,
         request: Optional[Union[instance.DeleteInstanceRequest, dict]] = None,
@@ -466,7 +615,7 @@ class InstancesAsyncClient:
         timeout: Union[float, object] = gapic_v1.method.DEFAULT,
         metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
     ) -> operation_async.AsyncOperation:
-        r"""Deletes a Instance
+        r"""Deletes an Instance
 
         .. code-block:: python
 
@@ -502,6 +651,8 @@ class InstancesAsyncClient:
             request (Optional[Union[google.cloud.run_v2.types.DeleteInstanceRequest, dict]]):
                 The request object.
             name (:class:`str`):
+                Required. The name of the Instance to
+                delete.
 
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -596,7 +747,7 @@ class InstancesAsyncClient:
         timeout: Union[float, object] = gapic_v1.method.DEFAULT,
         metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
     ) -> instance.Instance:
-        r"""Gets a Instance
+        r"""Gets an Instance
 
         .. code-block:: python
 
@@ -628,6 +779,8 @@ class InstancesAsyncClient:
             request (Optional[Union[google.cloud.run_v2.types.GetInstanceRequest, dict]]):
                 The request object.
             name (:class:`str`):
+                Required. The name of the Instance to
+                retrieve.
 
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -749,10 +902,7 @@ class InstancesAsyncClient:
                 of Instances.
             parent (:class:`str`):
                 Required. The location and project to
-                list resources on. Format:
-                projects/{project}/locations/{location},
-                where {project} can be project id or
-                number.
+                list resources on.
 
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -888,9 +1038,8 @@ class InstancesAsyncClient:
                 The request object. Request message for deleting an
                 Instance.
             name (:class:`str`):
-                Required. The name of the Instance to stop. Format:
-                ``projects/{project}/locations/{location}/instances/{instance}``,
-                where ``{project}`` can be project id or number.
+                Required. The name of the Instance to
+                stop.
 
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -1014,9 +1163,8 @@ class InstancesAsyncClient:
                 The request object. Request message for starting an
                 Instance.
             name (:class:`str`):
-                Required. The name of the Instance to stop. Format:
-                ``projects/{project}/locations/{location}/instances/{instance}``,
-                where ``{project}`` can be project id or number.
+                Required. The name of the Instance to
+                start.
 
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -1089,6 +1237,331 @@ class InstancesAsyncClient:
             self._client._transport.operations_client,
             instance.Instance,
             metadata_type=instance.Instance,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def get_iam_policy(
+        self,
+        request: Optional[Union[iam_policy_pb2.GetIamPolicyRequest, dict]] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> policy_pb2.Policy:
+        r"""Gets the IAM Access Control policy currently in
+        effect for the given Instance. This result does not
+        include any inherited policies.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import run_v2
+            import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
+
+            async def sample_get_iam_policy():
+                # Create a client
+                client = run_v2.InstancesAsyncClient()
+
+                # Initialize request argument(s)
+                request = iam_policy_pb2.GetIamPolicyRequest(
+                    resource="resource_value",
+                )
+
+                # Make the request
+                response = await client.get_iam_policy(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.iam.v1.iam_policy_pb2.GetIamPolicyRequest, dict]]):
+                The request object. Request message for ``GetIamPolicy`` method.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.iam.v1.policy_pb2.Policy:
+                An Identity and Access Management (IAM) policy, which specifies access
+                   controls for Google Cloud resources.
+
+                   A Policy is a collection of bindings. A binding binds
+                   one or more members, or principals, to a single role.
+                   Principals can be user accounts, service accounts,
+                   Google groups, and domains (such as G Suite). A role
+                   is a named list of permissions; each role can be an
+                   IAM predefined role or a user-created custom role.
+
+                   For some types of Google Cloud resources, a binding
+                   can also specify a condition, which is a logical
+                   expression that allows access to a resource only if
+                   the expression evaluates to true. A condition can add
+                   constraints based on attributes of the request, the
+                   resource, or both. To learn which resources support
+                   conditions in their IAM policies, see the [IAM
+                   documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
+
+                   **JSON example:**
+
+                   :literal:``     {       "bindings": [         {           "role": "roles/resourcemanager.organizationAdmin",           "members": [             "user:mike@example.com",             "group:admins@example.com",             "domain:google.com",             "serviceAccount:my-project-id@appspot.gserviceaccount.com"           ]         },         {           "role": "roles/resourcemanager.organizationViewer",           "members": [             "user:eve@example.com"           ],           "condition": {             "title": "expirable access",             "description": "Does not grant access after Sep 2020",             "expression": "request.time <             timestamp('2020-10-01T00:00:00.000Z')",           }         }       ],       "etag": "BwWWja0YfJA=",       "version": 3     }`\ \`
+
+                   **YAML example:**
+
+                   :literal:``     bindings:     - members:       - user:mike@example.com       - group:admins@example.com       - domain:google.com       - serviceAccount:my-project-id@appspot.gserviceaccount.com       role: roles/resourcemanager.organizationAdmin     - members:       - user:eve@example.com       role: roles/resourcemanager.organizationViewer       condition:         title: expirable access         description: Does not grant access after Sep 2020         expression: request.time < timestamp('2020-10-01T00:00:00.000Z')     etag: BwWWja0YfJA=     version: 3`\ \`
+
+                   For a description of IAM and its features, see the
+                   [IAM
+                   documentation](https://cloud.google.com/iam/docs/).
+
+        """
+        # Create or coerce a protobuf request object.
+        # - The request isn't a proto-plus wrapped type,
+        #   so it must be constructed via keyword expansion.
+        if isinstance(request, dict):
+            request = iam_policy_pb2.GetIamPolicyRequest(**request)
+        elif not request:
+            request = iam_policy_pb2.GetIamPolicyRequest()
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.get_iam_policy
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("resource", request.resource),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def set_iam_policy(
+        self,
+        request: Optional[Union[iam_policy_pb2.SetIamPolicyRequest, dict]] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> policy_pb2.Policy:
+        r"""Sets the IAM Access control policy for the specified
+        Instance. Overwrites any existing policy.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import run_v2
+            import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
+
+            async def sample_set_iam_policy():
+                # Create a client
+                client = run_v2.InstancesAsyncClient()
+
+                # Initialize request argument(s)
+                request = iam_policy_pb2.SetIamPolicyRequest(
+                    resource="resource_value",
+                )
+
+                # Make the request
+                response = await client.set_iam_policy(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.iam.v1.iam_policy_pb2.SetIamPolicyRequest, dict]]):
+                The request object. Request message for ``SetIamPolicy`` method.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.iam.v1.policy_pb2.Policy:
+                An Identity and Access Management (IAM) policy, which specifies access
+                   controls for Google Cloud resources.
+
+                   A Policy is a collection of bindings. A binding binds
+                   one or more members, or principals, to a single role.
+                   Principals can be user accounts, service accounts,
+                   Google groups, and domains (such as G Suite). A role
+                   is a named list of permissions; each role can be an
+                   IAM predefined role or a user-created custom role.
+
+                   For some types of Google Cloud resources, a binding
+                   can also specify a condition, which is a logical
+                   expression that allows access to a resource only if
+                   the expression evaluates to true. A condition can add
+                   constraints based on attributes of the request, the
+                   resource, or both. To learn which resources support
+                   conditions in their IAM policies, see the [IAM
+                   documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
+
+                   **JSON example:**
+
+                   :literal:``     {       "bindings": [         {           "role": "roles/resourcemanager.organizationAdmin",           "members": [             "user:mike@example.com",             "group:admins@example.com",             "domain:google.com",             "serviceAccount:my-project-id@appspot.gserviceaccount.com"           ]         },         {           "role": "roles/resourcemanager.organizationViewer",           "members": [             "user:eve@example.com"           ],           "condition": {             "title": "expirable access",             "description": "Does not grant access after Sep 2020",             "expression": "request.time <             timestamp('2020-10-01T00:00:00.000Z')",           }         }       ],       "etag": "BwWWja0YfJA=",       "version": 3     }`\ \`
+
+                   **YAML example:**
+
+                   :literal:``     bindings:     - members:       - user:mike@example.com       - group:admins@example.com       - domain:google.com       - serviceAccount:my-project-id@appspot.gserviceaccount.com       role: roles/resourcemanager.organizationAdmin     - members:       - user:eve@example.com       role: roles/resourcemanager.organizationViewer       condition:         title: expirable access         description: Does not grant access after Sep 2020         expression: request.time < timestamp('2020-10-01T00:00:00.000Z')     etag: BwWWja0YfJA=     version: 3`\ \`
+
+                   For a description of IAM and its features, see the
+                   [IAM
+                   documentation](https://cloud.google.com/iam/docs/).
+
+        """
+        # Create or coerce a protobuf request object.
+        # - The request isn't a proto-plus wrapped type,
+        #   so it must be constructed via keyword expansion.
+        if isinstance(request, dict):
+            request = iam_policy_pb2.SetIamPolicyRequest(**request)
+        elif not request:
+            request = iam_policy_pb2.SetIamPolicyRequest()
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.set_iam_policy
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("resource", request.resource),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
+    async def test_iam_permissions(
+        self,
+        request: Optional[Union[iam_policy_pb2.TestIamPermissionsRequest, dict]] = None,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ) -> iam_policy_pb2.TestIamPermissionsResponse:
+        r"""Returns permissions that a caller has on the
+        specified Instance.
+        There are no permissions required for making this API
+        call.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import run_v2
+            import google.iam.v1.iam_policy_pb2 as iam_policy_pb2  # type: ignore
+
+            async def sample_test_iam_permissions():
+                # Create a client
+                client = run_v2.InstancesAsyncClient()
+
+                # Initialize request argument(s)
+                request = iam_policy_pb2.TestIamPermissionsRequest(
+                    resource="resource_value",
+                    permissions=['permissions_value1', 'permissions_value2'],
+                )
+
+                # Make the request
+                response = await client.test_iam_permissions(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest, dict]]):
+                The request object. Request message for ``TestIamPermissions`` method.
+            retry (google.api_core.retry_async.AsyncRetry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+
+        Returns:
+            google.iam.v1.iam_policy_pb2.TestIamPermissionsResponse:
+                Response message for TestIamPermissions method.
+        """
+        # Create or coerce a protobuf request object.
+        # - The request isn't a proto-plus wrapped type,
+        #   so it must be constructed via keyword expansion.
+        if isinstance(request, dict):
+            request = iam_policy_pb2.TestIamPermissionsRequest(**request)
+        elif not request:
+            request = iam_policy_pb2.TestIamPermissionsRequest()
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = self._client._transport._wrapped_methods[
+            self._client._transport.test_iam_permissions
+        ]
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("resource", request.resource),)),
+        )
+
+        # Validate the universe domain.
+        self._client._validate_universe_domain()
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
         )
 
         # Done; return the response.

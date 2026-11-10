@@ -41,6 +41,7 @@ def sample_update_entity_signals_mapping():
     # Initialize request argument(s)
     entity_signals_mapping = admanager_v1.EntitySignalsMapping()
     entity_signals_mapping.audience_segment_id = 1980
+    entity_signals_mapping.audience_segment = "audience_segment_value"
 
     request = admanager_v1.UpdateEntitySignalsMappingRequest(
         entity_signals_mapping=entity_signals_mapping,

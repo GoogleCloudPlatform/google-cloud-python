@@ -103,6 +103,22 @@ class _BaseSqlSslCertsServiceRestTransport(SqlSslCertsServiceTransport):
             ]
             return http_options
 
+    class _BaseDeleteCustomerManagedCertificate:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "delete",
+                    "uri": "/sql/v1beta4/projects/{project}/instances/{instance}/customerManagedCertificates/{certificate_bundle}",
+                },
+            ]
+            return http_options
+
     class _BaseGet:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")
@@ -142,6 +158,39 @@ class _BaseSqlSslCertsServiceRestTransport(SqlSslCertsServiceTransport):
                 {
                     "method": "get",
                     "uri": "/sql/v1beta4/projects/{project}/instances/{instance}/sslCerts",
+                },
+            ]
+            return http_options
+
+    class _BaseListCustomerManagedCertificates:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/sql/v1beta4/projects/{project}/instances/{instance}/customerManagedCertificates",
+                },
+            ]
+            return http_options
+
+    class _BaseUpdateCustomerManagedCertificate:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/sql/v1beta4/projects/{project}/instances/{instance}/customerManagedCertificates/{certificate_bundle}",
+                    "body": "*",
                 },
             ]
             return http_options

@@ -441,7 +441,7 @@ class ForecastServiceRestTransport(_BaseForecastServiceRestTransport):
 
             Args:
                 request (~.forecast_service.RunAvailabilityForecastRequest):
-                    The request object. Request object for [RunAvailabilityForecast][] method.
+                    The request object. Request object for ``RunAvailabilityForecast`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -452,7 +452,7 @@ class ForecastServiceRestTransport(_BaseForecastServiceRestTransport):
 
             Returns:
                 ~.forecast_service.RunAvailabilityForecastResponse:
-                    Response object for [RunAvailabilityForecast][] method.
+                    Response object for ``RunAvailabilityForecast`` method.
             """
 
             http_options = _BaseForecastServiceRestTransport._BaseRunAvailabilityForecast._get_http_options()
@@ -595,7 +595,7 @@ class ForecastServiceRestTransport(_BaseForecastServiceRestTransport):
 
             Args:
                 request (~.forecast_service.RunDeliveryForecastRequest):
-                    The request object. Request object for [RunDeliveryForecast][] method.
+                    The request object. Request object for ``RunDeliveryForecast`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -606,7 +606,7 @@ class ForecastServiceRestTransport(_BaseForecastServiceRestTransport):
 
             Returns:
                 ~.forecast_service.RunDeliveryForecastResponse:
-                    Response object for [RunDeliveryForecast][] method.
+                    Response object for ``RunDeliveryForecast`` method.
             """
 
             http_options = _BaseForecastServiceRestTransport._BaseRunDeliveryForecast._get_http_options()
@@ -744,7 +744,7 @@ class ForecastServiceRestTransport(_BaseForecastServiceRestTransport):
 
             Args:
                 request (~.forecast_service.RunTrafficDataRequest):
-                    The request object. Request object for [RunTrafficData][] method.
+                    The request object. Request object for ``RunTrafficData`` method.
                 retry (google.api_core.retry.Retry): Designation of what errors, if any,
                     should be retried.
                 timeout (float): The timeout for this request.
@@ -755,7 +755,7 @@ class ForecastServiceRestTransport(_BaseForecastServiceRestTransport):
 
             Returns:
                 ~.forecast_service.RunTrafficDataResponse:
-                    Response object for [RunTrafficData][] method.
+                    Response object for ``RunTrafficData`` method.
             """
 
             http_options = _BaseForecastServiceRestTransport._BaseRunTrafficData._get_http_options()

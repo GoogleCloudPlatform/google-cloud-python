@@ -98,6 +98,10 @@ class DataDocumentationResult(proto.Message):
             Output only. Insights for a Table resource.
 
             This field is a member of `oneof`_ ``result``.
+        data_product_result (google.cloud.dataplex_v1.types.DataDocumentationResult.DataProductResult):
+            Output only. Insights for a data product.
+
+            This field is a member of `oneof`_ ``result``.
     """
 
     class DatasetResult(proto.Message):
@@ -168,6 +172,63 @@ class DataDocumentationResult(proto.Message):
             proto.MESSAGE,
             number=4,
             message="DataDocumentationResult.Query",
+        )
+
+    class DataProductResult(proto.Message):
+        r"""Generated metadata about a data product.
+
+        Attributes:
+            overview (str):
+                Output only. A detailed description for the
+                data product.
+            queries (MutableSequence[google.cloud.dataplex_v1.types.DataDocumentationResult.Query]):
+                Output only. Unordered list. Sample SQL
+                queries for the data product.
+            asset_descriptions (MutableSequence[google.cloud.dataplex_v1.types.DataDocumentationResult.DataProductResult.AssetDescription]):
+                Output only. Unordered list. Generated
+                descriptions for assets in the data product.
+                Note that some assets may not have a generated
+                description. Such assets will not be included in
+                this list.
+        """
+
+        class AssetDescription(proto.Message):
+            r"""Description for an asset in the data product.
+
+            Attributes:
+                resource (str):
+                    Output only. The service-qualified full resource name of the
+                    asset. Example:
+                    //bigquery.googleapis.com/projects/PROJECT_ID/datasets/DATASET_ID/tables/TABLE_ID
+                overview (str):
+                    Output only. A generated description for the
+                    asset.
+            """
+
+            resource: str = proto.Field(
+                proto.STRING,
+                number=1,
+            )
+            overview: str = proto.Field(
+                proto.STRING,
+                number=2,
+            )
+
+        overview: str = proto.Field(
+            proto.STRING,
+            number=1,
+        )
+        queries: MutableSequence["DataDocumentationResult.Query"] = proto.RepeatedField(
+            proto.MESSAGE,
+            number=2,
+            message="DataDocumentationResult.Query",
+        )
+        asset_descriptions: MutableSequence[
+            "DataDocumentationResult.DataProductResult.AssetDescription"
+        ] = proto.RepeatedField(
+            proto.MESSAGE,
+            number=3,
+            message="DataDocumentationResult.DataProductResult.AssetDescription",
         )
 
     class SchemaRelationship(proto.Message):
@@ -357,6 +418,12 @@ class DataDocumentationResult(proto.Message):
         number=8,
         oneof="result",
         message=TableResult,
+    )
+    data_product_result: DataProductResult = proto.Field(
+        proto.MESSAGE,
+        number=9,
+        oneof="result",
+        message=DataProductResult,
     )
 
 

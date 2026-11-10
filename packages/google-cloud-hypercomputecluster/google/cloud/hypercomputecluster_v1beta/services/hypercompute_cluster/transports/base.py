@@ -185,6 +185,11 @@ class HypercomputeClusterTransport(abc.ABC):
                 default_timeout=3600.0,
                 client_info=client_info,
             ),
+            self.list_nodes: gapic_v1.method.wrap_method(
+                self.list_nodes,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.get_location: gapic_v1.method.wrap_method(
                 self.get_location,
                 default_timeout=None,
@@ -276,6 +281,18 @@ class HypercomputeClusterTransport(abc.ABC):
     ) -> Callable[
         [hypercompute_cluster.DeleteClusterRequest],
         Union[operations_pb2.Operation, Awaitable[operations_pb2.Operation]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def list_nodes(
+        self,
+    ) -> Callable[
+        [hypercompute_cluster.ListNodesRequest],
+        Union[
+            hypercompute_cluster.ListNodesResponse,
+            Awaitable[hypercompute_cluster.ListNodesResponse],
+        ],
     ]:
         raise NotImplementedError()
 

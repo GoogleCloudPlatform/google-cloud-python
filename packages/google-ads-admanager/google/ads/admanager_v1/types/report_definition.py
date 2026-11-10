@@ -398,6 +398,73 @@ class ReportDefinition(proto.Message):
                 Compatible with the following report types: ``HISTORICAL``
 
                 Data format: ``STRING``
+            AD_PRODUCT_ADD_ON_ID (846):
+                The ID of an ad product add-on.
+
+                Corresponds to "Ad product add-on ID" in the Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``IDENTIFIER``
+            AD_PRODUCT_ADD_ON_ID_ALL (847):
+                The list of IDs of ad product add-ons.
+
+                Corresponds to "Ad product add-on ID (all)" in the Ad
+                Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``IDENTIFIER_LIST``
+            AD_PRODUCT_ADD_ON_NAME (848):
+                The name of an ad product add-on.
+
+                Corresponds to "Ad product add-on" in the Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``STRING``
+            AD_PRODUCT_ADD_ON_NAME_ALL (849):
+                The list of names of ad product add-ons.
+
+                Corresponds to "Ad product add-on (all)" in the Ad Manager
+                UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``STRING_LIST``
+            AD_PRODUCT_ID (850):
+                The ID of an ad product.
+
+                Corresponds to "Ad product ID" in the Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``IDENTIFIER``
+            AD_PRODUCT_NAME (851):
+                The name of an ad product.
+
+                Corresponds to "Ad product" in the Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``STRING``
+            AD_PRODUCT_RATE_CARD_ID (852):
+                The ID of an ad product rate card.
+
+                Corresponds to "Ad product rate card ID" in the Ad Manager
+                UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``IDENTIFIER``
+            AD_PRODUCT_RATE_CARD_NAME (853):
+                The name of an ad product rate card.
+
+                Corresponds to "Ad product rate card" in the Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``STRING``
             AD_REQUEST_SIZES (541):
                 Multi-size inventory in an ad request.
 
@@ -3450,6 +3517,39 @@ class ReportDefinition(proto.Message):
 
                 Values:
                 [LineItemType][google.ads.admanager.v1.LineItemTypeEnum.LineItemType]
+            LINE_ITEM_TYPE_EXTENDED (874):
+                Expanded line item type ENUM value in the Ads traffic
+                navigator report.
+
+                Corresponds to "Expanded line item type value" in the Ad
+                Manager UI (when showing API fields).
+
+                Compatible with the following report types:
+                ``ADS_TRAFFIC_NAVIGATOR``
+
+                Data format: ``ENUM``
+            LINE_ITEM_TYPE_EXTENDED_ALL (875):
+                List of expanded line item types considered at auction in
+                the Ads traffic navigator report.
+
+                Corresponds to "Expanded line item type (all)" in the Ad
+                Manager UI.
+
+                Compatible with the following report types:
+                ``ADS_TRAFFIC_NAVIGATOR``
+
+                Data format: ``STRING_LIST``
+            LINE_ITEM_TYPE_EXTENDED_NAME (876):
+                Localized expanded line item type name in the Ads traffic
+                navigator report.
+
+                Corresponds to "Expanded line item type" in the Ad Manager
+                UI.
+
+                Compatible with the following report types:
+                ``ADS_TRAFFIC_NAVIGATOR``
+
+                Data format: ``STRING``
             LINE_ITEM_TYPE_NAME (194):
                 Localized line item type name.
 
@@ -4769,6 +4869,140 @@ class ReportDefinition(proto.Message):
                 ``PRIVACY_AND_MESSAGING``
 
                 Data format: ``STRING``
+            SPONSORED_PRODUCT_BRAND (807):
+                The brand of the sponsored product.
+
+                Corresponds to "Sponsored product brand" in the Ad Manager
+                UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``STRING``
+            SPONSORED_PRODUCT_CATEGORY (808):
+                The category of the sponsored product.
+
+                Corresponds to "Sponsored product category" in the Ad
+                Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``STRING``
+            SPONSORED_PRODUCT_CATEGORY_LEVEL1 (809):
+                The level 1 category of the sponsored product.
+
+                Corresponds to "Sponsored product category level 1" in the
+                Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``STRING``
+            SPONSORED_PRODUCT_CATEGORY_LEVEL2 (810):
+                The level 2 category of the sponsored product.
+
+                Corresponds to "Sponsored product category level 2" in the
+                Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``STRING``
+            SPONSORED_PRODUCT_CATEGORY_LEVEL3 (811):
+                The level 3 category of the sponsored product.
+
+                Corresponds to "Sponsored product category level 3" in the
+                Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``STRING``
+            SPONSORED_PRODUCT_CATEGORY_LEVEL4 (812):
+                The level 4 category of the sponsored product.
+
+                Corresponds to "Sponsored product category level 4" in the
+                Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``STRING``
+            SPONSORED_PRODUCT_CATEGORY_LEVEL5 (813):
+                The level 5 category of the sponsored product.
+
+                Corresponds to "Sponsored product category level 5" in the
+                Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``STRING``
+            SPONSORED_PRODUCT_GTIN (814):
+                The GTIN of the sponsored product.
+
+                Corresponds to "Sponsored product GTIN" in the Ad Manager
+                UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``STRING``
+            SPONSORED_PRODUCT_ID (815):
+                The ID of the sponsored product.
+
+                Corresponds to "Sponsored product ID" in the Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``STRING``
+            SPONSORED_PRODUCT_INVENTORY (822):
+                Enum value of the sponsored product inventory.
+
+                Corresponds to "Sponsored product inventory value" in the Ad
+                Manager UI (when showing API fields).
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``ENUM``
+            SPONSORED_PRODUCT_INVENTORY_NAME (823):
+                The name of the sponsored product inventory.
+
+                Corresponds to "Sponsored product inventory" in the Ad
+                Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``STRING``
+            SPONSORED_PRODUCT_ITEM_GROUP_ID (816):
+                The item group ID of the sponsored product.
+
+                Corresponds to "Sponsored product item group ID" in the Ad
+                Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``STRING``
+            SPONSORED_PRODUCT_MERCHANT_ID (817):
+                The merchant ID of the sponsored product.
+
+                Corresponds to "Sponsored product merchant ID" in the Ad
+                Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``IDENTIFIER``
+            SPONSORED_PRODUCT_TITLE (818):
+                The title of the sponsored product.
+
+                Corresponds to "Sponsored product title" in the Ad Manager
+                UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``STRING``
+            SPONSORED_PRODUCT_UPDATE_TIME (819):
+                The update time of the sponsored product.
+
+                Corresponds to "Sponsored product update time" in the Ad
+                Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``TIMESTAMP``
             TARGETING_ID (232):
                 The ID of the browser, device or other environment into
                 which a line item or creative was served.
@@ -6623,6 +6857,14 @@ class ReportDefinition(proto.Message):
         AD_EXPERIENCES_TYPE_NAME = 642
         AD_LOCATION = 390
         AD_LOCATION_NAME = 391
+        AD_PRODUCT_ADD_ON_ID = 846
+        AD_PRODUCT_ADD_ON_ID_ALL = 847
+        AD_PRODUCT_ADD_ON_NAME = 848
+        AD_PRODUCT_ADD_ON_NAME_ALL = 849
+        AD_PRODUCT_ID = 850
+        AD_PRODUCT_NAME = 851
+        AD_PRODUCT_RATE_CARD_ID = 852
+        AD_PRODUCT_RATE_CARD_NAME = 853
         AD_REQUEST_SIZES = 541
         AD_TECHNOLOGY_PROVIDER_DOMAIN = 620
         AD_TECHNOLOGY_PROVIDER_ID = 621
@@ -6934,6 +7176,9 @@ class ReportDefinition(proto.Message):
         LINE_ITEM_START_DATE_TIME = 84
         LINE_ITEM_TRAFFICKER = 677
         LINE_ITEM_TYPE = 193
+        LINE_ITEM_TYPE_EXTENDED = 874
+        LINE_ITEM_TYPE_EXTENDED_ALL = 875
+        LINE_ITEM_TYPE_EXTENDED_NAME = 876
         LINE_ITEM_TYPE_NAME = 194
         LINE_ITEM_UNLIMITED_END = 187
         LINE_ITEM_VALUE_COST_PER_UNIT = 88
@@ -7073,6 +7318,21 @@ class ReportDefinition(proto.Message):
         SERVING_RESTRICTION = 631
         SERVING_RESTRICTION_NAME = 632
         SITE = 387
+        SPONSORED_PRODUCT_BRAND = 807
+        SPONSORED_PRODUCT_CATEGORY = 808
+        SPONSORED_PRODUCT_CATEGORY_LEVEL1 = 809
+        SPONSORED_PRODUCT_CATEGORY_LEVEL2 = 810
+        SPONSORED_PRODUCT_CATEGORY_LEVEL3 = 811
+        SPONSORED_PRODUCT_CATEGORY_LEVEL4 = 812
+        SPONSORED_PRODUCT_CATEGORY_LEVEL5 = 813
+        SPONSORED_PRODUCT_GTIN = 814
+        SPONSORED_PRODUCT_ID = 815
+        SPONSORED_PRODUCT_INVENTORY = 822
+        SPONSORED_PRODUCT_INVENTORY_NAME = 823
+        SPONSORED_PRODUCT_ITEM_GROUP_ID = 816
+        SPONSORED_PRODUCT_MERCHANT_ID = 817
+        SPONSORED_PRODUCT_TITLE = 818
+        SPONSORED_PRODUCT_UPDATE_TIME = 819
         TARGETING_ID = 232
         TARGETING_NAME = 233
         TARGETING_TYPE = 385
@@ -7771,6 +8031,16 @@ class ReportDefinition(proto.Message):
                 Compatible with the following report types: ``HISTORICAL``
 
                 Data format: ``MONEY``
+            ADSENSE_BEGIN_TO_RENDER_IMPRESSIONS (749):
+                Total impressions counted when creative begins to render for
+                AdSense.
+
+                Corresponds to "AdSense begin to render impressions" in the
+                Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``INTEGER``
             ADSENSE_CLICKS (23):
                 Number of clicks delivered by AdSense demand channel.
 
@@ -7987,6 +8257,16 @@ class ReportDefinition(proto.Message):
                 Compatible with the following report types: ``HISTORICAL``
 
                 Data format: ``MONEY``
+            AD_EXCHANGE_BEGIN_TO_RENDER_IMPRESSIONS (706):
+                The impressions counted when creative begins to render for
+                Ad Exchange.
+
+                Corresponds to "Ad Exchange begin to render impressions" in
+                the Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``INTEGER``
             AD_EXCHANGE_CLICKS (15):
                 Number of clicks delivered by the Ad Exchange.
 
@@ -9442,6 +9722,15 @@ class ReportDefinition(proto.Message):
                 Compatible with the following report types: ``HISTORICAL``
 
                 Data format: ``DOUBLE``
+            BEGIN_TO_RENDER_IMPRESSIONS (751):
+                Total impressions counted when creative begins to render.
+
+                Corresponds to "Total begin to render impressions" in the Ad
+                Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``INTEGER``
             BIDS (443):
                 The number of bids.
 
@@ -9804,12 +10093,34 @@ class ReportDefinition(proto.Message):
                 ``PRIVACY_AND_MESSAGING``
 
                 Data format: ``PERCENT``
+            EUROPEAN_REGULATIONS_FALLBACK_MESSAGES_SHOWN (766):
+                Number of times a European regulations fallback message was
+                shown to users.
+
+                Corresponds to "European regulations fallback messages
+                shown" in the Ad Manager UI.
+
+                Compatible with the following report types:
+                ``PRIVACY_AND_MESSAGING``
+
+                Data format: ``INTEGER``
             EUROPEAN_REGULATIONS_MESSAGES_SHOWN (272):
                 Number of times a European regulations message was shown to
                 users.
 
                 Corresponds to "European regulations messages shown" in the
                 Ad Manager UI.
+
+                Compatible with the following report types:
+                ``PRIVACY_AND_MESSAGING``
+
+                Data format: ``INTEGER``
+            EUROPEAN_REGULATIONS_NON_BLOCKING_MESSAGES_SHOWN (767):
+                Number of times a non-blocking European regulations message
+                was shown to users.
+
+                Corresponds to "European regulations non-blocking messages
+                shown" in the Ad Manager UI.
 
                 Compatible with the following report types:
                 ``PRIVACY_AND_MESSAGING``
@@ -11169,6 +11480,56 @@ class ReportDefinition(proto.Message):
                 Compatible with the following report types: ``HISTORICAL``
 
                 Data format: ``INTEGER``
+            SPONSORED_PLACEMENT_MATCHED_AD_REQUESTS (725):
+                The number of successfully matched ad requests for sponsored
+                placement.
+
+                Corresponds to "Sponsored placement matched ad requests" in
+                the Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``INTEGER``
+            SPONSORED_PLACEMENT_SLOT_FILL_RATE (726):
+                The number of successfully matched requests for sponsored
+                placement divided by the total number of requests for
+                sponsored placement.
+
+                Corresponds to "Sponsored placement slot fill rate" in the
+                Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``PERCENT``
+            SPONSORED_PLACEMENT_TOTAL_AD_REQUESTS (727):
+                The total number of ad requests for sponsored placement.
+
+                Corresponds to "Sponsored placement total ad requests" in
+                the Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``INTEGER``
+            SPONSORED_PLACEMENT_UNMATCHED_AD_REQUESTS (728):
+                The number of unmatched ad requests for sponsored placement.
+
+                Corresponds to "Sponsored placement unmatched ad requests"
+                in the Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``INTEGER``
+            SPONSORED_PRODUCT_MATCH_RATE (729):
+                The number of successfully matched requests for sponsored
+                product divided by the total number of requests for
+                sponsored product.
+
+                Corresponds to "Sponsored product match rate" in the Ad
+                Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``PERCENT``
             TAG_LOAD_TO_FIRST_AD_REQUEST_0_500_PERCENT (455):
                 Percent of tag load time to 1st ad request in [0, 500ms)
                 range.
@@ -12585,6 +12946,16 @@ class ReportDefinition(proto.Message):
                 Compatible with the following report types: ``HISTORICAL``
 
                 Data format: ``INTEGER``
+            YIELD_GROUP_BEGIN_TO_RENDER_IMPRESSIONS (743):
+                Total yield group impressions counted when creative begins
+                to render.
+
+                Corresponds to "Yield group begin to render impressions" in
+                the Ad Manager UI.
+
+                Compatible with the following report types: ``HISTORICAL``
+
+                Data format: ``INTEGER``
             YIELD_GROUP_BIDS (81):
                 Number of bids received from Open Bidding buyers, regardless
                 of whether the returned bid competes in an auction.
@@ -12748,6 +13119,7 @@ class ReportDefinition(proto.Message):
         ADSENSE_ACTIVE_VIEW_VIEWABLE_IMPRESSIONS_DISTRIBUTION = 646
         ADSENSE_ACTIVE_VIEW_VIEWABLE_IMPRESSIONS_RATE = 71
         ADSENSE_AVERAGE_ECPM = 26
+        ADSENSE_BEGIN_TO_RENDER_IMPRESSIONS = 749
         ADSENSE_CLICKS = 23
         ADSENSE_CTR = 24
         ADSENSE_IMPRESSIONS = 22
@@ -12770,6 +13142,7 @@ class ReportDefinition(proto.Message):
         AD_EXCHANGE_ACTIVE_VIEW_VIEWABLE_IMPRESSIONS_DISTRIBUTION = 658
         AD_EXCHANGE_ACTIVE_VIEW_VIEWABLE_IMPRESSIONS_RATE = 77
         AD_EXCHANGE_AVERAGE_ECPM = 18
+        AD_EXCHANGE_BEGIN_TO_RENDER_IMPRESSIONS = 706
         AD_EXCHANGE_CLICKS = 15
         AD_EXCHANGE_CPC = 244
         AD_EXCHANGE_CTR = 16
@@ -12910,6 +13283,7 @@ class ReportDefinition(proto.Message):
         AVERAGE_PURCHASE_REVENUE_PER_PAYING_USER = 226
         AVERAGE_REVENUE_PER_USER = 227
         AVERAGE_SESSION_SECONDS = 228
+        BEGIN_TO_RENDER_IMPRESSIONS = 751
         BIDS = 443
         BID_AVERAGE_CPM = 444
         BOUNCE_RATE = 433
@@ -12948,7 +13322,9 @@ class ReportDefinition(proto.Message):
         ENGAGEMENT_RATE = 426
         EUROPEAN_REGULATIONS_CONSENT_RATE = 270
         EUROPEAN_REGULATIONS_CUSTOM_CONSENT_RATE = 271
+        EUROPEAN_REGULATIONS_FALLBACK_MESSAGES_SHOWN = 766
         EUROPEAN_REGULATIONS_MESSAGES_SHOWN = 272
+        EUROPEAN_REGULATIONS_NON_BLOCKING_MESSAGES_SHOWN = 767
         EUROPEAN_REGULATIONS_NO_CONSENT_RATE = 273
         FILL_RATE = 258
         GOOGLE_ANALYTICS_CLICKS = 231
@@ -13087,6 +13463,11 @@ class ReportDefinition(proto.Message):
         SERVER_SIDE_UNWRAPPING_SUCCESSFUL_RESPONSES = 438
         SERVER_SIDE_UNWRAPPING_TIMEOUTS = 439
         SESSIONS = 239
+        SPONSORED_PLACEMENT_MATCHED_AD_REQUESTS = 725
+        SPONSORED_PLACEMENT_SLOT_FILL_RATE = 726
+        SPONSORED_PLACEMENT_TOTAL_AD_REQUESTS = 727
+        SPONSORED_PLACEMENT_UNMATCHED_AD_REQUESTS = 728
+        SPONSORED_PRODUCT_MATCH_RATE = 729
         TAG_LOAD_TO_FIRST_AD_REQUEST_0_500_PERCENT = 455
         TAG_LOAD_TO_FIRST_AD_REQUEST_1000_2000_PERCENT = 457
         TAG_LOAD_TO_FIRST_AD_REQUEST_2000_4000_PERCENT = 458
@@ -13239,6 +13620,7 @@ class ReportDefinition(proto.Message):
         VIDEO_VIEWERSHIP_VIDEO_LENGTH = 116
         VIDEO_VIEWERSHIP_VIEW_THROUGH_RATE = 117
         YIELD_GROUP_AUCTIONS_WON = 80
+        YIELD_GROUP_BEGIN_TO_RENDER_IMPRESSIONS = 743
         YIELD_GROUP_BIDS = 81
         YIELD_GROUP_BIDS_IN_AUCTION = 82
         YIELD_GROUP_CALLOUTS = 83

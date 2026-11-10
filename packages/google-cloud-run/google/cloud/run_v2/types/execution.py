@@ -252,7 +252,7 @@ class Execution(proto.Message):
 
             Note that this value might not be what was used as input.
             For example, if ALPHA was provided as input in the parent
-            resource, but only BETA and GA-level features are were, this
+            resource, but only BETA and GA-level features are used, this
             field will be BETA.
         job (str):
             Output only. The name of the parent Job.
@@ -306,6 +306,12 @@ class Execution(proto.Message):
             execution can be found in Cloud Console.
         satisfies_pzs (bool):
             Output only. Reserved for future use.
+        client (str):
+            Output only. Arbitrary identifier for the API
+            client.
+        client_version (str):
+            Output only. Arbitrary version identifier for
+            the API client.
         etag (str):
             Output only. A system-generated fingerprint
             for this version of the resource. May be used to
@@ -430,6 +436,14 @@ class Execution(proto.Message):
     satisfies_pzs: bool = proto.Field(
         proto.BOOL,
         number=27,
+    )
+    client: str = proto.Field(
+        proto.STRING,
+        number=33,
+    )
+    client_version: str = proto.Field(
+        proto.STRING,
+        number=34,
     )
     etag: str = proto.Field(
         proto.STRING,

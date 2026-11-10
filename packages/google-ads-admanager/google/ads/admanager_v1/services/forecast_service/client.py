@@ -171,6 +171,42 @@ class ForecastServiceClient(metaclass=ForecastServiceClientMeta):
         return self._transport
 
     @staticmethod
+    def ad_category_path(
+        network_code: str,
+        ad_category: str,
+    ) -> str:
+        """Returns a fully-qualified ad_category string."""
+        return "networks/{network_code}/adCategories/{ad_category}".format(
+            network_code=network_code,
+            ad_category=ad_category,
+        )
+
+    @staticmethod
+    def parse_ad_category_path(path: str) -> Dict[str, str]:
+        """Parses a ad_category path into its component segments."""
+        m = re.match(
+            r"^networks/(?P<network_code>.+?)/adCategories/(?P<ad_category>.+?)$", path
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def ad_spot_path(
+        network_code: str,
+        ad_spot: str,
+    ) -> str:
+        """Returns a fully-qualified ad_spot string."""
+        return "networks/{network_code}/adSpots/{ad_spot}".format(
+            network_code=network_code,
+            ad_spot=ad_spot,
+        )
+
+    @staticmethod
+    def parse_ad_spot_path(path: str) -> Dict[str, str]:
+        """Parses a ad_spot path into its component segments."""
+        m = re.match(r"^networks/(?P<network_code>.+?)/adSpots/(?P<ad_spot>.+?)$", path)
+        return m.groupdict() if m else {}
+
+    @staticmethod
     def ad_unit_path(
         network_code: str,
         ad_unit: str,
@@ -185,6 +221,26 @@ class ForecastServiceClient(metaclass=ForecastServiceClientMeta):
     def parse_ad_unit_path(path: str) -> Dict[str, str]:
         """Parses a ad_unit path into its component segments."""
         m = re.match(r"^networks/(?P<network_code>.+?)/adUnits/(?P<ad_unit>.+?)$", path)
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def allocation_delivery_profile_path(
+        network_code: str,
+        allocation_delivery_profile: str,
+    ) -> str:
+        """Returns a fully-qualified allocation_delivery_profile string."""
+        return "networks/{network_code}/allocationDeliveryProfiles/{allocation_delivery_profile}".format(
+            network_code=network_code,
+            allocation_delivery_profile=allocation_delivery_profile,
+        )
+
+    @staticmethod
+    def parse_allocation_delivery_profile_path(path: str) -> Dict[str, str]:
+        """Parses a allocation_delivery_profile path into its component segments."""
+        m = re.match(
+            r"^networks/(?P<network_code>.+?)/allocationDeliveryProfiles/(?P<allocation_delivery_profile>.+?)$",
+            path,
+        )
         return m.groupdict() if m else {}
 
     @staticmethod
@@ -306,6 +362,25 @@ class ForecastServiceClient(metaclass=ForecastServiceClientMeta):
         return m.groupdict() if m else {}
 
     @staticmethod
+    def company_path(
+        network_code: str,
+        company: str,
+    ) -> str:
+        """Returns a fully-qualified company string."""
+        return "networks/{network_code}/companies/{company}".format(
+            network_code=network_code,
+            company=company,
+        )
+
+    @staticmethod
+    def parse_company_path(path: str) -> Dict[str, str]:
+        """Parses a company path into its component segments."""
+        m = re.match(
+            r"^networks/(?P<network_code>.+?)/companies/(?P<company>.+?)$", path
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
     def content_path(
         network_code: str,
         content: str,
@@ -339,6 +414,45 @@ class ForecastServiceClient(metaclass=ForecastServiceClientMeta):
         m = re.match(
             r"^networks/(?P<network_code>.+?)/contentBundles/(?P<content_bundle>.+?)$",
             path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def content_label_path(
+        network_code: str,
+        content_label: str,
+    ) -> str:
+        """Returns a fully-qualified content_label string."""
+        return "networks/{network_code}/contentLabels/{content_label}".format(
+            network_code=network_code,
+            content_label=content_label,
+        )
+
+    @staticmethod
+    def parse_content_label_path(path: str) -> Dict[str, str]:
+        """Parses a content_label path into its component segments."""
+        m = re.match(
+            r"^networks/(?P<network_code>.+?)/contentLabels/(?P<content_label>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def custom_field_path(
+        network_code: str,
+        custom_field: str,
+    ) -> str:
+        """Returns a fully-qualified custom_field string."""
+        return "networks/{network_code}/customFields/{custom_field}".format(
+            network_code=network_code,
+            custom_field=custom_field,
+        )
+
+    @staticmethod
+    def parse_custom_field_path(path: str) -> Dict[str, str]:
+        """Parses a custom_field path into its component segments."""
+        m = re.match(
+            r"^networks/(?P<network_code>.+?)/customFields/(?P<custom_field>.+?)$", path
         )
         return m.groupdict() if m else {}
 
@@ -462,6 +576,26 @@ class ForecastServiceClient(metaclass=ForecastServiceClientMeta):
         """Parses a geo_target path into its component segments."""
         m = re.match(
             r"^networks/(?P<network_code>.+?)/geoTargets/(?P<geo_target>.+?)$", path
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def inventory_url_path(
+        network_code: str,
+        inventory_url: str,
+    ) -> str:
+        """Returns a fully-qualified inventory_url string."""
+        return "networks/{network_code}/inventoryUrls/{inventory_url}".format(
+            network_code=network_code,
+            inventory_url=inventory_url,
+        )
+
+    @staticmethod
+    def parse_inventory_url_path(path: str) -> Dict[str, str]:
+        """Parses a inventory_url path into its component segments."""
+        m = re.match(
+            r"^networks/(?P<network_code>.+?)/inventoryUrls/(?P<inventory_url>.+?)$",
+            path,
         )
         return m.groupdict() if m else {}
 
@@ -649,6 +783,26 @@ class ForecastServiceClient(metaclass=ForecastServiceClientMeta):
         """Parses a placement path into its component segments."""
         m = re.match(
             r"^networks/(?P<network_code>.+?)/placements/(?P<placement>.+?)$", path
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def taxonomy_category_path(
+        network_code: str,
+        taxonomy_category: str,
+    ) -> str:
+        """Returns a fully-qualified taxonomy_category string."""
+        return "networks/{network_code}/taxonomyCategories/{taxonomy_category}".format(
+            network_code=network_code,
+            taxonomy_category=taxonomy_category,
+        )
+
+    @staticmethod
+    def parse_taxonomy_category_path(path: str) -> Dict[str, str]:
+        """Parses a taxonomy_category path into its component segments."""
+        m = re.match(
+            r"^networks/(?P<network_code>.+?)/taxonomyCategories/(?P<taxonomy_category>.+?)$",
+            path,
         )
         return m.groupdict() if m else {}
 
@@ -1099,7 +1253,7 @@ class ForecastServiceClient(metaclass=ForecastServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.RunAvailabilityForecastRequest, dict]):
-                The request object. Request object for [RunAvailabilityForecast][] method.
+                The request object. Request object for ``RunAvailabilityForecast`` method.
             parent (str):
                 Required. Format: ``networks/{network_code}``
                 This corresponds to the ``parent`` field
@@ -1115,7 +1269,7 @@ class ForecastServiceClient(metaclass=ForecastServiceClientMeta):
 
         Returns:
             google.ads.admanager_v1.types.RunAvailabilityForecastResponse:
-                Response object for [RunAvailabilityForecast][] method.
+                Response object for RunAvailabilityForecast method.
         """
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
@@ -1215,7 +1369,7 @@ class ForecastServiceClient(metaclass=ForecastServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.RunDeliveryForecastRequest, dict]):
-                The request object. Request object for [RunDeliveryForecast][] method.
+                The request object. Request object for ``RunDeliveryForecast`` method.
             parent (str):
                 Required. Format: ``networks/{network_code}``
                 This corresponds to the ``parent`` field
@@ -1231,7 +1385,7 @@ class ForecastServiceClient(metaclass=ForecastServiceClientMeta):
 
         Returns:
             google.ads.admanager_v1.types.RunDeliveryForecastResponse:
-                Response object for [RunDeliveryForecast][] method.
+                Response object for RunDeliveryForecast method.
         """
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have
@@ -1319,7 +1473,7 @@ class ForecastServiceClient(metaclass=ForecastServiceClientMeta):
 
         Args:
             request (Union[google.ads.admanager_v1.types.RunTrafficDataRequest, dict]):
-                The request object. Request object for [RunTrafficData][] method.
+                The request object. Request object for ``RunTrafficData`` method.
             parent (str):
                 Required. Format: ``networks/{network_code}``
                 This corresponds to the ``parent`` field
@@ -1335,7 +1489,7 @@ class ForecastServiceClient(metaclass=ForecastServiceClientMeta):
 
         Returns:
             google.ads.admanager_v1.types.RunTrafficDataResponse:
-                Response object for [RunTrafficData][] method.
+                Response object for RunTrafficData method.
         """
         # Create or coerce a protobuf request object.
         # - Quick check: If we got a request object, we should *not* have

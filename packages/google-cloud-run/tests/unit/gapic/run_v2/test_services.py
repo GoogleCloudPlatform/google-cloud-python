@@ -76,6 +76,7 @@ from google.cloud.run_v2.types import (
     condition,
     k8s_min,
     revision_template,
+    sandbox,
     service,
     traffic_target,
     vendor_settings,
@@ -1038,7 +1039,11 @@ def test_services_client_create_channel_credentials_file(
             credentials=file_creds,
             credentials_file=None,
             quota_project_id=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             scopes=None,
             default_host="run.googleapis.com",
             ssl_credentials=None,
@@ -1373,6 +1378,7 @@ def test_get_service(request_type, transport: str = "grpc"):
             default_uri_disabled=True,
             urls=["urls_value"],
             iap_enabled=True,
+            ssh_enabled=True,
             custom_audiences=["custom_audiences_value"],
             observed_generation=2021,
             latest_ready_revision="latest_ready_revision_value",
@@ -1380,6 +1386,7 @@ def test_get_service(request_type, transport: str = "grpc"):
             uri="uri_value",
             satisfies_pzs=True,
             threat_detection_enabled=True,
+            functional_type=vendor_settings.FunctionalType.FUNCTIONAL_TYPE_AGENT,
             reconciling=True,
             etag="etag_value",
         )
@@ -1407,6 +1414,7 @@ def test_get_service(request_type, transport: str = "grpc"):
     assert response.default_uri_disabled is True
     assert response.urls == ["urls_value"]
     assert response.iap_enabled is True
+    assert response.ssh_enabled is True
     assert response.custom_audiences == ["custom_audiences_value"]
     assert response.observed_generation == 2021
     assert response.latest_ready_revision == "latest_ready_revision_value"
@@ -1414,6 +1422,9 @@ def test_get_service(request_type, transport: str = "grpc"):
     assert response.uri == "uri_value"
     assert response.satisfies_pzs is True
     assert response.threat_detection_enabled is True
+    assert (
+        response.functional_type == vendor_settings.FunctionalType.FUNCTIONAL_TYPE_AGENT
+    )
     assert response.reconciling is True
     assert response.etag == "etag_value"
 
@@ -1561,6 +1572,7 @@ async def test_get_service_async(request_type, transport: str = "grpc_asyncio"):
                 default_uri_disabled=True,
                 urls=["urls_value"],
                 iap_enabled=True,
+                ssh_enabled=True,
                 custom_audiences=["custom_audiences_value"],
                 observed_generation=2021,
                 latest_ready_revision="latest_ready_revision_value",
@@ -1568,6 +1580,7 @@ async def test_get_service_async(request_type, transport: str = "grpc_asyncio"):
                 uri="uri_value",
                 satisfies_pzs=True,
                 threat_detection_enabled=True,
+                functional_type=vendor_settings.FunctionalType.FUNCTIONAL_TYPE_AGENT,
                 reconciling=True,
                 etag="etag_value",
             )
@@ -1596,6 +1609,7 @@ async def test_get_service_async(request_type, transport: str = "grpc_asyncio"):
     assert response.default_uri_disabled is True
     assert response.urls == ["urls_value"]
     assert response.iap_enabled is True
+    assert response.ssh_enabled is True
     assert response.custom_audiences == ["custom_audiences_value"]
     assert response.observed_generation == 2021
     assert response.latest_ready_revision == "latest_ready_revision_value"
@@ -1603,6 +1617,9 @@ async def test_get_service_async(request_type, transport: str = "grpc_asyncio"):
     assert response.uri == "uri_value"
     assert response.satisfies_pzs is True
     assert response.threat_detection_enabled is True
+    assert (
+        response.functional_type == vendor_settings.FunctionalType.FUNCTIONAL_TYPE_AGENT
+    )
     assert response.reconciling is True
     assert response.etag == "etag_value"
 
@@ -3537,7 +3554,6 @@ def test_create_service_rest_required_fields(
 
     request_init = {}
     request_init["parent"] = ""
-    request_init["service_id"] = ""
     request = request_type(**request_init)
     pb_request = request_type.pb(request)
     jsonified_request = json.loads(
@@ -3545,7 +3561,6 @@ def test_create_service_rest_required_fields(
     )
 
     # verify fields with default values are dropped
-    assert "serviceId" not in jsonified_request
 
     default_values = getattr(
         transport_class._BaseCreateService,
@@ -3558,11 +3573,8 @@ def test_create_service_rest_required_fields(
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
-    assert "serviceId" in jsonified_request
-    assert jsonified_request["serviceId"] == request_init["service_id"]
 
     jsonified_request["parent"] = "parent_value"
-    jsonified_request["serviceId"] = "service_id_value"
 
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
@@ -3575,8 +3587,6 @@ def test_create_service_rest_required_fields(
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
     assert jsonified_request["parent"] == "parent_value"
-    assert "serviceId" in jsonified_request
-    assert jsonified_request["serviceId"] == "service_id_value"
 
     client = ServicesClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -3613,13 +3623,7 @@ def test_create_service_rest_required_fields(
 
             response = client.create_service(request)
 
-            expected_params = [
-                (
-                    "serviceId",
-                    "",
-                ),
-                ("$alt", "json;enum-encoding=int"),
-            ]
+            expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
 
@@ -4158,6 +4162,7 @@ def test_update_service_rest_required_fields(
     assert not set(unset_fields) - set(
         (
             "allowMissing",
+            "forceNewRevision",
             "updateMask",
             "validateOnly",
         )
@@ -5243,6 +5248,7 @@ async def test_get_service_empty_call_grpc_asyncio():
                 default_uri_disabled=True,
                 urls=["urls_value"],
                 iap_enabled=True,
+                ssh_enabled=True,
                 custom_audiences=["custom_audiences_value"],
                 observed_generation=2021,
                 latest_ready_revision="latest_ready_revision_value",
@@ -5250,6 +5256,7 @@ async def test_get_service_empty_call_grpc_asyncio():
                 uri="uri_value",
                 satisfies_pzs=True,
                 threat_detection_enabled=True,
+                functional_type=vendor_settings.FunctionalType.FUNCTIONAL_TYPE_AGENT,
                 reconciling=True,
                 etag="etag_value",
             )
@@ -5477,6 +5484,7 @@ async def test_get_service_routing_parameters_request_1_grpc_asyncio():
                 default_uri_disabled=True,
                 urls=["urls_value"],
                 iap_enabled=True,
+                ssh_enabled=True,
                 custom_audiences=["custom_audiences_value"],
                 observed_generation=2021,
                 latest_ready_revision="latest_ready_revision_value",
@@ -5484,6 +5492,7 @@ async def test_get_service_routing_parameters_request_1_grpc_asyncio():
                 uri="uri_value",
                 satisfies_pzs=True,
                 threat_detection_enabled=True,
+                functional_type=vendor_settings.FunctionalType.FUNCTIONAL_TYPE_AGENT,
                 reconciling=True,
                 etag="etag_value",
             )
@@ -5673,7 +5682,12 @@ def test_create_service_rest_call_success(request_type):
             "revision": "revision_value",
             "labels": {},
             "annotations": {},
-            "scaling": {"min_instance_count": 1920, "max_instance_count": 1922},
+            "scaling": {
+                "min_instance_count": 1920,
+                "max_instance_count": 1922,
+                "cpu_utilization": 0.1635,
+                "concurrency_utilization": 0.25020000000000003,
+            },
             "vpc_access": {
                 "connector": "connector_value",
                 "egress": 1,
@@ -5696,7 +5710,15 @@ def test_create_service_rest_call_success(request_type):
                             "bucket": "bucket_value",
                             "object_": "object__value",
                             "generation": 1068,
-                        }
+                        },
+                        "inlined_source": {
+                            "sources": [
+                                {
+                                    "filename": "filename_value",
+                                    "content": "content_value",
+                                }
+                            ]
+                        },
                     },
                     "command": ["command_value1", "command_value2"],
                     "args": ["args_value1", "args_value2"],
@@ -5749,8 +5771,22 @@ def test_create_service_rest_call_success(request_type):
                         "function_target": "function_target_value",
                         "source_location": "source_location_value",
                     },
+                    "sandbox_launcher": True,
                 }
             ],
+            "sandboxes": {
+                "templates": [
+                    {
+                        "name": "name_value",
+                        "image": "image_value",
+                        "command": ["command_value1", "command_value2"],
+                        "args": ["args_value1", "args_value2"],
+                        "env": {},
+                        "volume_mounts": {},
+                        "working_dir": "working_dir_value",
+                    }
+                ]
+            },
             "volumes": [
                 {
                     "name": "name_value",
@@ -5793,7 +5829,15 @@ def test_create_service_rest_call_success(request_type):
             "session_affinity": True,
             "health_check_disabled": True,
             "node_selector": {"accelerator": "accelerator_value"},
+            "workload_identity_config": {
+                "identity": "identity_value",
+                "identity_type": 1,
+                "identity_certificate_enabled": True,
+            },
             "gpu_zonal_redundancy_disabled": True,
+            "client": "client_value",
+            "client_version": "client_version_value",
+            "ambient_networking": {"enabled": True, "ambient_scope": 1},
         },
         "traffic": [
             {
@@ -5813,6 +5857,7 @@ def test_create_service_rest_call_success(request_type):
         "default_uri_disabled": True,
         "urls": ["urls_value1", "urls_value2"],
         "iap_enabled": True,
+        "ssh_enabled": True,
         "multi_region_settings": {
             "regions": ["regions_value1", "regions_value2"],
             "multi_region_id": "multi_region_id_value",
@@ -5828,6 +5873,7 @@ def test_create_service_rest_call_success(request_type):
             "reason": 1,
             "revision_reason": 1,
             "execution_reason": 1,
+            "instance_reason": 1,
         },
         "conditions": {},
         "latest_ready_revision": "latest_ready_revision_value",
@@ -5855,6 +5901,7 @@ def test_create_service_rest_call_success(request_type):
             "environment_variables": {},
             "service_account": "service_account_value",
         },
+        "functional_type": 1,
         "reconciling": True,
         "etag": "etag_value",
     }
@@ -6066,6 +6113,7 @@ def test_get_service_rest_call_success(request_type):
             default_uri_disabled=True,
             urls=["urls_value"],
             iap_enabled=True,
+            ssh_enabled=True,
             custom_audiences=["custom_audiences_value"],
             observed_generation=2021,
             latest_ready_revision="latest_ready_revision_value",
@@ -6073,6 +6121,7 @@ def test_get_service_rest_call_success(request_type):
             uri="uri_value",
             satisfies_pzs=True,
             threat_detection_enabled=True,
+            functional_type=vendor_settings.FunctionalType.FUNCTIONAL_TYPE_AGENT,
             reconciling=True,
             etag="etag_value",
         )
@@ -6105,6 +6154,7 @@ def test_get_service_rest_call_success(request_type):
     assert response.default_uri_disabled is True
     assert response.urls == ["urls_value"]
     assert response.iap_enabled is True
+    assert response.ssh_enabled is True
     assert response.custom_audiences == ["custom_audiences_value"]
     assert response.observed_generation == 2021
     assert response.latest_ready_revision == "latest_ready_revision_value"
@@ -6112,6 +6162,9 @@ def test_get_service_rest_call_success(request_type):
     assert response.uri == "uri_value"
     assert response.satisfies_pzs is True
     assert response.threat_detection_enabled is True
+    assert (
+        response.functional_type == vendor_settings.FunctionalType.FUNCTIONAL_TYPE_AGENT
+    )
     assert response.reconciling is True
     assert response.etag == "etag_value"
 
@@ -6370,7 +6423,12 @@ def test_update_service_rest_call_success(request_type):
             "revision": "revision_value",
             "labels": {},
             "annotations": {},
-            "scaling": {"min_instance_count": 1920, "max_instance_count": 1922},
+            "scaling": {
+                "min_instance_count": 1920,
+                "max_instance_count": 1922,
+                "cpu_utilization": 0.1635,
+                "concurrency_utilization": 0.25020000000000003,
+            },
             "vpc_access": {
                 "connector": "connector_value",
                 "egress": 1,
@@ -6393,7 +6451,15 @@ def test_update_service_rest_call_success(request_type):
                             "bucket": "bucket_value",
                             "object_": "object__value",
                             "generation": 1068,
-                        }
+                        },
+                        "inlined_source": {
+                            "sources": [
+                                {
+                                    "filename": "filename_value",
+                                    "content": "content_value",
+                                }
+                            ]
+                        },
                     },
                     "command": ["command_value1", "command_value2"],
                     "args": ["args_value1", "args_value2"],
@@ -6446,8 +6512,22 @@ def test_update_service_rest_call_success(request_type):
                         "function_target": "function_target_value",
                         "source_location": "source_location_value",
                     },
+                    "sandbox_launcher": True,
                 }
             ],
+            "sandboxes": {
+                "templates": [
+                    {
+                        "name": "name_value",
+                        "image": "image_value",
+                        "command": ["command_value1", "command_value2"],
+                        "args": ["args_value1", "args_value2"],
+                        "env": {},
+                        "volume_mounts": {},
+                        "working_dir": "working_dir_value",
+                    }
+                ]
+            },
             "volumes": [
                 {
                     "name": "name_value",
@@ -6490,7 +6570,15 @@ def test_update_service_rest_call_success(request_type):
             "session_affinity": True,
             "health_check_disabled": True,
             "node_selector": {"accelerator": "accelerator_value"},
+            "workload_identity_config": {
+                "identity": "identity_value",
+                "identity_type": 1,
+                "identity_certificate_enabled": True,
+            },
             "gpu_zonal_redundancy_disabled": True,
+            "client": "client_value",
+            "client_version": "client_version_value",
+            "ambient_networking": {"enabled": True, "ambient_scope": 1},
         },
         "traffic": [
             {
@@ -6510,6 +6598,7 @@ def test_update_service_rest_call_success(request_type):
         "default_uri_disabled": True,
         "urls": ["urls_value1", "urls_value2"],
         "iap_enabled": True,
+        "ssh_enabled": True,
         "multi_region_settings": {
             "regions": ["regions_value1", "regions_value2"],
             "multi_region_id": "multi_region_id_value",
@@ -6525,6 +6614,7 @@ def test_update_service_rest_call_success(request_type):
             "reason": 1,
             "revision_reason": 1,
             "execution_reason": 1,
+            "instance_reason": 1,
         },
         "conditions": {},
         "latest_ready_revision": "latest_ready_revision_value",
@@ -6552,6 +6642,7 @@ def test_update_service_rest_call_success(request_type):
             "environment_variables": {},
             "service_account": "service_account_value",
         },
+        "functional_type": 1,
         "reconciling": True,
         "etag": "etag_value",
     }
@@ -7845,7 +7936,11 @@ def test_services_base_transport_with_credentials_file():
         load_creds.assert_called_once_with(
             "credentials.json",
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             quota_project_id="octopus",
         )
 
@@ -7871,7 +7966,11 @@ def test_services_auth_adc():
         ServicesClient()
         adc.assert_called_once_with(
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             quota_project_id=None,
         )
 
@@ -7891,7 +7990,11 @@ def test_services_transport_auth_adc(transport_class):
         transport_class(quota_project_id="octopus", scopes=["1", "2"])
         adc.assert_called_once_with(
             scopes=["1", "2"],
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             quota_project_id="octopus",
         )
 
@@ -7944,7 +8047,11 @@ def test_services_transport_create_channel(transport_class, grpc_helpers):
             credentials=creds,
             credentials_file=None,
             quota_project_id="octopus",
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             scopes=["1", "2"],
             default_host="run.googleapis.com",
             ssl_credentials=None,

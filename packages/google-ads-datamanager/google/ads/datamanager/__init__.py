@@ -36,6 +36,12 @@ from google.ads.datamanager_v1.services.partner_link_service.async_client import
 from google.ads.datamanager_v1.services.partner_link_service.client import (
     PartnerLinkServiceClient,
 )
+from google.ads.datamanager_v1.services.reporting_service.async_client import (
+    ReportingServiceAsyncClient,
+)
+from google.ads.datamanager_v1.services.reporting_service.client import (
+    ReportingServiceClient,
+)
 from google.ads.datamanager_v1.services.user_list_direct_license_service.async_client import (
     UserListDirectLicenseServiceAsyncClient,
 )
@@ -76,6 +82,7 @@ from google.ads.datamanager_v1.types.audience import (
     PpidData,
     UserIdData,
 )
+from google.ads.datamanager_v1.types.call_info import CallInfo
 from google.ads.datamanager_v1.types.cart_data import CartData, Item, ItemCustomVariable
 from google.ads.datamanager_v1.types.consent import Consent, ConsentStatus
 from google.ads.datamanager_v1.types.destination import (
@@ -138,6 +145,14 @@ from google.ads.datamanager_v1.types.partner_link_service import (
     SearchPartnerLinksRequest,
     SearchPartnerLinksResponse,
 )
+from google.ads.datamanager_v1.types.partner_match_report_entry import (
+    PartnerMatchAdGroup,
+    PartnerMatchAdvertiserAccount,
+    PartnerMatchCampaign,
+    PartnerMatchLineItem,
+    PartnerMatchReportEntry,
+    PartnerMatchUserList,
+)
 from google.ads.datamanager_v1.types.processing_errors import (
     ErrorCount,
     ErrorInfo,
@@ -147,6 +162,10 @@ from google.ads.datamanager_v1.types.processing_errors import (
     WarningCount,
     WarningInfo,
     WarningReason,
+)
+from google.ads.datamanager_v1.types.reporting_service import (
+    RetrievePartnerMatchReportRequest,
+    RetrievePartnerMatchReportResponse,
 )
 from google.ads.datamanager_v1.types.request_status_per_destination import (
     RequestStatusPerDestination,
@@ -239,6 +258,8 @@ __all__ = (
     "MarketingDataInsightsServiceAsyncClient",
     "PartnerLinkServiceClient",
     "PartnerLinkServiceAsyncClient",
+    "ReportingServiceClient",
+    "ReportingServiceAsyncClient",
     "UserListDirectLicenseServiceClient",
     "UserListDirectLicenseServiceAsyncClient",
     "UserListGlobalLicenseServiceClient",
@@ -263,6 +284,7 @@ __all__ = (
     "PartnerProvidedIdData",
     "PpidData",
     "UserIdData",
+    "CallInfo",
     "CartData",
     "Item",
     "ItemCustomVariable",
@@ -316,6 +338,12 @@ __all__ = (
     "SearchPartnerLinksRequest",
     "SearchPartnerLinksResponse",
     "FeatureSet",
+    "PartnerMatchAdGroup",
+    "PartnerMatchAdvertiserAccount",
+    "PartnerMatchCampaign",
+    "PartnerMatchLineItem",
+    "PartnerMatchReportEntry",
+    "PartnerMatchUserList",
     "ErrorCount",
     "ErrorInfo",
     "FieldWarning",
@@ -324,6 +352,8 @@ __all__ = (
     "ProcessingErrorReason",
     "ProcessingWarningReason",
     "WarningReason",
+    "RetrievePartnerMatchReportRequest",
+    "RetrievePartnerMatchReportResponse",
     "RequestStatusPerDestination",
     "TermsOfService",
     "TermsOfServiceStatus",

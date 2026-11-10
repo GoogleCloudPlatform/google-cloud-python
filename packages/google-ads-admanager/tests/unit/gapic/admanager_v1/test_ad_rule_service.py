@@ -42,6 +42,9 @@ import google.auth
 import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
 import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
+import google.type.dayofweek_pb2 as dayofweek_pb2  # type: ignore
+import google.type.interval_pb2 as interval_pb2  # type: ignore
+import google.type.timeofday_pb2 as timeofday_pb2  # type: ignore
 from google.api_core import (
     client_options,
     gapic_v1,
@@ -68,7 +71,10 @@ from google.ads.admanager_v1.types import (
     ad_rule_slot_behavior_enum,
     ad_rule_slot_bumper_enum,
     ad_rule_slot_midroll_frequency_type_enum,
+    dayparting_time_zone_enum,
     request_platform_enum,
+    size,
+    size_type_enum,
     targeted_video_bumper_type_enum,
     targeting,
     video_position_enum,
@@ -2987,6 +2993,16 @@ def test_create_ad_rule_rest_call_success(request_type):
         "midrolls": {},
         "postroll": {},
         "targeting": {
+            "inventory_url_targeting": {
+                "targeted_inventory_urls": [
+                    "targeted_inventory_urls_value1",
+                    "targeted_inventory_urls_value2",
+                ],
+                "excluded_inventory_urls": [
+                    "excluded_inventory_urls_value1",
+                    "excluded_inventory_urls_value2",
+                ],
+            },
             "geo_targeting": {
                 "targeted_geos": ["targeted_geos_value1", "targeted_geos_value2"],
                 "excluded_geos": ["excluded_geos_value1", "excluded_geos_value2"],
@@ -3097,6 +3113,12 @@ def test_create_ad_rule_rest_call_success(request_type):
                     ],
                 },
             },
+            "inventory_size_targeting": {
+                "targeted_inventory_sizes": [
+                    {"width": 544, "height": 633, "size_type": 1}
+                ],
+                "excluded_inventory_sizes": {},
+            },
             "inventory_targeting": {
                 "targeted_ad_units": [
                     {"include_descendants": True, "ad_unit": "ad_unit_value"}
@@ -3142,6 +3164,19 @@ def test_create_ad_rule_rest_call_success(request_type):
                     }
                 ]
             },
+            "date_time_range_targeting": {
+                "targeted_range": [{"start_time": {}, "end_time": {}}]
+            },
+            "publisher_provided_signals_targeting": {
+                "targeted_taxonomy_categories": [
+                    "targeted_taxonomy_categories_value1",
+                    "targeted_taxonomy_categories_value2",
+                ],
+                "excluded_taxonomy_categories": [
+                    "excluded_taxonomy_categories_value1",
+                    "excluded_taxonomy_categories_value2",
+                ],
+            },
             "user_domain_targeting": {
                 "targeted_user_domains": [
                     "targeted_user_domains_value1",
@@ -3152,12 +3187,27 @@ def test_create_ad_rule_rest_call_success(request_type):
                     "excluded_user_domains_value2",
                 ],
             },
+            "contextual_targeting": {
+                "targeted_verticals": [
+                    "targeted_verticals_value1",
+                    "targeted_verticals_value2",
+                ],
+                "excluded_verticals": [
+                    "excluded_verticals_value1",
+                    "excluded_verticals_value2",
+                ],
+                "excluded_content_labels": [
+                    "excluded_content_labels_value1",
+                    "excluded_content_labels_value2",
+                ],
+            },
             "video_position_targeting": {
                 "video_positions": [
                     {
                         "midroll_index": 1386,
                         "reverse_midroll_index": 2245,
                         "pod_position": 1303,
+                        "ad_spot": "ad_spot_value",
                         "position_type": 1,
                         "bumper_type": 1,
                     }
@@ -3205,6 +3255,22 @@ def test_create_ad_rule_rest_call_success(request_type):
                     ],
                 }
             },
+            "day_part_targeting": {
+                "targeted_day_parts": [
+                    {
+                        "day_of_week": 1,
+                        "start_time": {
+                            "hours": 561,
+                            "minutes": 773,
+                            "seconds": 751,
+                            "nanos": 543,
+                        },
+                        "end_time": {},
+                    }
+                ],
+                "dayparting_time_zone": 1,
+            },
+            "buyer_user_list_targeting": {"has_buyer_user_list_targeting": True},
         },
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
@@ -3578,6 +3644,16 @@ def test_update_ad_rule_rest_call_success(request_type):
         "midrolls": {},
         "postroll": {},
         "targeting": {
+            "inventory_url_targeting": {
+                "targeted_inventory_urls": [
+                    "targeted_inventory_urls_value1",
+                    "targeted_inventory_urls_value2",
+                ],
+                "excluded_inventory_urls": [
+                    "excluded_inventory_urls_value1",
+                    "excluded_inventory_urls_value2",
+                ],
+            },
             "geo_targeting": {
                 "targeted_geos": ["targeted_geos_value1", "targeted_geos_value2"],
                 "excluded_geos": ["excluded_geos_value1", "excluded_geos_value2"],
@@ -3688,6 +3764,12 @@ def test_update_ad_rule_rest_call_success(request_type):
                     ],
                 },
             },
+            "inventory_size_targeting": {
+                "targeted_inventory_sizes": [
+                    {"width": 544, "height": 633, "size_type": 1}
+                ],
+                "excluded_inventory_sizes": {},
+            },
             "inventory_targeting": {
                 "targeted_ad_units": [
                     {"include_descendants": True, "ad_unit": "ad_unit_value"}
@@ -3733,6 +3815,19 @@ def test_update_ad_rule_rest_call_success(request_type):
                     }
                 ]
             },
+            "date_time_range_targeting": {
+                "targeted_range": [{"start_time": {}, "end_time": {}}]
+            },
+            "publisher_provided_signals_targeting": {
+                "targeted_taxonomy_categories": [
+                    "targeted_taxonomy_categories_value1",
+                    "targeted_taxonomy_categories_value2",
+                ],
+                "excluded_taxonomy_categories": [
+                    "excluded_taxonomy_categories_value1",
+                    "excluded_taxonomy_categories_value2",
+                ],
+            },
             "user_domain_targeting": {
                 "targeted_user_domains": [
                     "targeted_user_domains_value1",
@@ -3743,12 +3838,27 @@ def test_update_ad_rule_rest_call_success(request_type):
                     "excluded_user_domains_value2",
                 ],
             },
+            "contextual_targeting": {
+                "targeted_verticals": [
+                    "targeted_verticals_value1",
+                    "targeted_verticals_value2",
+                ],
+                "excluded_verticals": [
+                    "excluded_verticals_value1",
+                    "excluded_verticals_value2",
+                ],
+                "excluded_content_labels": [
+                    "excluded_content_labels_value1",
+                    "excluded_content_labels_value2",
+                ],
+            },
             "video_position_targeting": {
                 "video_positions": [
                     {
                         "midroll_index": 1386,
                         "reverse_midroll_index": 2245,
                         "pod_position": 1303,
+                        "ad_spot": "ad_spot_value",
                         "position_type": 1,
                         "bumper_type": 1,
                     }
@@ -3796,6 +3906,22 @@ def test_update_ad_rule_rest_call_success(request_type):
                     ],
                 }
             },
+            "day_part_targeting": {
+                "targeted_day_parts": [
+                    {
+                        "day_of_week": 1,
+                        "start_time": {
+                            "hours": 561,
+                            "minutes": 773,
+                            "seconds": 751,
+                            "nanos": 543,
+                        },
+                        "end_time": {},
+                    }
+                ],
+                "dayparting_time_zone": 1,
+            },
+            "buyer_user_list_targeting": {"has_buyer_user_list_targeting": True},
         },
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
@@ -5000,9 +5126,32 @@ def test_ad_rule_service_client_transport_session_collision(transport_name):
     assert session1 != session2
 
 
-def test_ad_rule_path():
+def test_ad_category_path():
     network_code = "squid"
-    ad_rule = "clam"
+    ad_category = "clam"
+    expected = "networks/{network_code}/adCategories/{ad_category}".format(
+        network_code=network_code,
+        ad_category=ad_category,
+    )
+    actual = AdRuleServiceClient.ad_category_path(network_code, ad_category)
+    assert expected == actual
+
+
+def test_parse_ad_category_path():
+    expected = {
+        "network_code": "whelk",
+        "ad_category": "octopus",
+    }
+    path = AdRuleServiceClient.ad_category_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = AdRuleServiceClient.parse_ad_category_path(path)
+    assert expected == actual
+
+
+def test_ad_rule_path():
+    network_code = "oyster"
+    ad_rule = "nudibranch"
     expected = "networks/{network_code}/adRules/{ad_rule}".format(
         network_code=network_code,
         ad_rule=ad_rule,
@@ -5013,8 +5162,8 @@ def test_ad_rule_path():
 
 def test_parse_ad_rule_path():
     expected = {
-        "network_code": "whelk",
-        "ad_rule": "octopus",
+        "network_code": "cuttlefish",
+        "ad_rule": "mussel",
     }
     path = AdRuleServiceClient.ad_rule_path(**expected)
 
@@ -5023,9 +5172,32 @@ def test_parse_ad_rule_path():
     assert expected == actual
 
 
+def test_ad_spot_path():
+    network_code = "winkle"
+    ad_spot = "nautilus"
+    expected = "networks/{network_code}/adSpots/{ad_spot}".format(
+        network_code=network_code,
+        ad_spot=ad_spot,
+    )
+    actual = AdRuleServiceClient.ad_spot_path(network_code, ad_spot)
+    assert expected == actual
+
+
+def test_parse_ad_spot_path():
+    expected = {
+        "network_code": "scallop",
+        "ad_spot": "abalone",
+    }
+    path = AdRuleServiceClient.ad_spot_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = AdRuleServiceClient.parse_ad_spot_path(path)
+    assert expected == actual
+
+
 def test_ad_unit_path():
-    network_code = "oyster"
-    ad_unit = "nudibranch"
+    network_code = "squid"
+    ad_unit = "clam"
     expected = "networks/{network_code}/adUnits/{ad_unit}".format(
         network_code=network_code,
         ad_unit=ad_unit,
@@ -5036,8 +5208,8 @@ def test_ad_unit_path():
 
 def test_parse_ad_unit_path():
     expected = {
-        "network_code": "cuttlefish",
-        "ad_unit": "mussel",
+        "network_code": "whelk",
+        "ad_unit": "octopus",
     }
     path = AdRuleServiceClient.ad_unit_path(**expected)
 
@@ -5047,8 +5219,8 @@ def test_parse_ad_unit_path():
 
 
 def test_application_path():
-    network_code = "winkle"
-    application = "nautilus"
+    network_code = "oyster"
+    application = "nudibranch"
     expected = "networks/{network_code}/applications/{application}".format(
         network_code=network_code,
         application=application,
@@ -5059,8 +5231,8 @@ def test_application_path():
 
 def test_parse_application_path():
     expected = {
-        "network_code": "scallop",
-        "application": "abalone",
+        "network_code": "cuttlefish",
+        "application": "mussel",
     }
     path = AdRuleServiceClient.application_path(**expected)
 
@@ -5070,8 +5242,8 @@ def test_parse_application_path():
 
 
 def test_audience_segment_path():
-    network_code = "squid"
-    audience_segment = "clam"
+    network_code = "winkle"
+    audience_segment = "nautilus"
     expected = "networks/{network_code}/audienceSegments/{audience_segment}".format(
         network_code=network_code,
         audience_segment=audience_segment,
@@ -5082,8 +5254,8 @@ def test_audience_segment_path():
 
 def test_parse_audience_segment_path():
     expected = {
-        "network_code": "whelk",
-        "audience_segment": "octopus",
+        "network_code": "scallop",
+        "audience_segment": "abalone",
     }
     path = AdRuleServiceClient.audience_segment_path(**expected)
 
@@ -5093,8 +5265,8 @@ def test_parse_audience_segment_path():
 
 
 def test_bandwidth_group_path():
-    network_code = "oyster"
-    bandwidth_group = "nudibranch"
+    network_code = "squid"
+    bandwidth_group = "clam"
     expected = "networks/{network_code}/bandwidthGroups/{bandwidth_group}".format(
         network_code=network_code,
         bandwidth_group=bandwidth_group,
@@ -5105,8 +5277,8 @@ def test_bandwidth_group_path():
 
 def test_parse_bandwidth_group_path():
     expected = {
-        "network_code": "cuttlefish",
-        "bandwidth_group": "mussel",
+        "network_code": "whelk",
+        "bandwidth_group": "octopus",
     }
     path = AdRuleServiceClient.bandwidth_group_path(**expected)
 
@@ -5116,8 +5288,8 @@ def test_parse_bandwidth_group_path():
 
 
 def test_browser_path():
-    network_code = "winkle"
-    browser = "nautilus"
+    network_code = "oyster"
+    browser = "nudibranch"
     expected = "networks/{network_code}/browsers/{browser}".format(
         network_code=network_code,
         browser=browser,
@@ -5128,8 +5300,8 @@ def test_browser_path():
 
 def test_parse_browser_path():
     expected = {
-        "network_code": "scallop",
-        "browser": "abalone",
+        "network_code": "cuttlefish",
+        "browser": "mussel",
     }
     path = AdRuleServiceClient.browser_path(**expected)
 
@@ -5139,8 +5311,8 @@ def test_parse_browser_path():
 
 
 def test_browser_language_path():
-    network_code = "squid"
-    browser_language = "clam"
+    network_code = "winkle"
+    browser_language = "nautilus"
     expected = "networks/{network_code}/browserLanguages/{browser_language}".format(
         network_code=network_code,
         browser_language=browser_language,
@@ -5151,8 +5323,8 @@ def test_browser_language_path():
 
 def test_parse_browser_language_path():
     expected = {
-        "network_code": "whelk",
-        "browser_language": "octopus",
+        "network_code": "scallop",
+        "browser_language": "abalone",
     }
     path = AdRuleServiceClient.browser_language_path(**expected)
 
@@ -5162,8 +5334,8 @@ def test_parse_browser_language_path():
 
 
 def test_cms_metadata_value_path():
-    network_code = "oyster"
-    cms_metadata_value = "nudibranch"
+    network_code = "squid"
+    cms_metadata_value = "clam"
     expected = "networks/{network_code}/cmsMetadataValues/{cms_metadata_value}".format(
         network_code=network_code,
         cms_metadata_value=cms_metadata_value,
@@ -5176,8 +5348,8 @@ def test_cms_metadata_value_path():
 
 def test_parse_cms_metadata_value_path():
     expected = {
-        "network_code": "cuttlefish",
-        "cms_metadata_value": "mussel",
+        "network_code": "whelk",
+        "cms_metadata_value": "octopus",
     }
     path = AdRuleServiceClient.cms_metadata_value_path(**expected)
 
@@ -5187,8 +5359,8 @@ def test_parse_cms_metadata_value_path():
 
 
 def test_content_path():
-    network_code = "winkle"
-    content = "nautilus"
+    network_code = "oyster"
+    content = "nudibranch"
     expected = "networks/{network_code}/content/{content}".format(
         network_code=network_code,
         content=content,
@@ -5199,8 +5371,8 @@ def test_content_path():
 
 def test_parse_content_path():
     expected = {
-        "network_code": "scallop",
-        "content": "abalone",
+        "network_code": "cuttlefish",
+        "content": "mussel",
     }
     path = AdRuleServiceClient.content_path(**expected)
 
@@ -5210,8 +5382,8 @@ def test_parse_content_path():
 
 
 def test_content_bundle_path():
-    network_code = "squid"
-    content_bundle = "clam"
+    network_code = "winkle"
+    content_bundle = "nautilus"
     expected = "networks/{network_code}/contentBundles/{content_bundle}".format(
         network_code=network_code,
         content_bundle=content_bundle,
@@ -5222,13 +5394,36 @@ def test_content_bundle_path():
 
 def test_parse_content_bundle_path():
     expected = {
-        "network_code": "whelk",
-        "content_bundle": "octopus",
+        "network_code": "scallop",
+        "content_bundle": "abalone",
     }
     path = AdRuleServiceClient.content_bundle_path(**expected)
 
     # Check that the path construction is reversible.
     actual = AdRuleServiceClient.parse_content_bundle_path(path)
+    assert expected == actual
+
+
+def test_content_label_path():
+    network_code = "squid"
+    content_label = "clam"
+    expected = "networks/{network_code}/contentLabels/{content_label}".format(
+        network_code=network_code,
+        content_label=content_label,
+    )
+    actual = AdRuleServiceClient.content_label_path(network_code, content_label)
+    assert expected == actual
+
+
+def test_parse_content_label_path():
+    expected = {
+        "network_code": "whelk",
+        "content_label": "octopus",
+    }
+    path = AdRuleServiceClient.content_label_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = AdRuleServiceClient.parse_content_label_path(path)
     assert expected == actual
 
 
@@ -5382,9 +5577,32 @@ def test_parse_geo_target_path():
     assert expected == actual
 
 
-def test_mobile_carrier_path():
+def test_inventory_url_path():
     network_code = "oyster"
-    mobile_carrier = "nudibranch"
+    inventory_url = "nudibranch"
+    expected = "networks/{network_code}/inventoryUrls/{inventory_url}".format(
+        network_code=network_code,
+        inventory_url=inventory_url,
+    )
+    actual = AdRuleServiceClient.inventory_url_path(network_code, inventory_url)
+    assert expected == actual
+
+
+def test_parse_inventory_url_path():
+    expected = {
+        "network_code": "cuttlefish",
+        "inventory_url": "mussel",
+    }
+    path = AdRuleServiceClient.inventory_url_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = AdRuleServiceClient.parse_inventory_url_path(path)
+    assert expected == actual
+
+
+def test_mobile_carrier_path():
+    network_code = "winkle"
+    mobile_carrier = "nautilus"
     expected = "networks/{network_code}/mobileCarriers/{mobile_carrier}".format(
         network_code=network_code,
         mobile_carrier=mobile_carrier,
@@ -5395,8 +5613,8 @@ def test_mobile_carrier_path():
 
 def test_parse_mobile_carrier_path():
     expected = {
-        "network_code": "cuttlefish",
-        "mobile_carrier": "mussel",
+        "network_code": "scallop",
+        "mobile_carrier": "abalone",
     }
     path = AdRuleServiceClient.mobile_carrier_path(**expected)
 
@@ -5406,8 +5624,8 @@ def test_parse_mobile_carrier_path():
 
 
 def test_mobile_device_path():
-    network_code = "winkle"
-    mobile_device = "nautilus"
+    network_code = "squid"
+    mobile_device = "clam"
     expected = "networks/{network_code}/mobileDevices/{mobile_device}".format(
         network_code=network_code,
         mobile_device=mobile_device,
@@ -5418,8 +5636,8 @@ def test_mobile_device_path():
 
 def test_parse_mobile_device_path():
     expected = {
-        "network_code": "scallop",
-        "mobile_device": "abalone",
+        "network_code": "whelk",
+        "mobile_device": "octopus",
     }
     path = AdRuleServiceClient.mobile_device_path(**expected)
 
@@ -5429,8 +5647,8 @@ def test_parse_mobile_device_path():
 
 
 def test_mobile_device_submodel_path():
-    network_code = "squid"
-    mobile_device_submodel = "clam"
+    network_code = "oyster"
+    mobile_device_submodel = "nudibranch"
     expected = (
         "networks/{network_code}/mobileDeviceSubmodels/{mobile_device_submodel}".format(
             network_code=network_code,
@@ -5445,8 +5663,8 @@ def test_mobile_device_submodel_path():
 
 def test_parse_mobile_device_submodel_path():
     expected = {
-        "network_code": "whelk",
-        "mobile_device_submodel": "octopus",
+        "network_code": "cuttlefish",
+        "mobile_device_submodel": "mussel",
     }
     path = AdRuleServiceClient.mobile_device_submodel_path(**expected)
 
@@ -5456,7 +5674,7 @@ def test_parse_mobile_device_submodel_path():
 
 
 def test_network_path():
-    network_code = "oyster"
+    network_code = "winkle"
     expected = "networks/{network_code}".format(
         network_code=network_code,
     )
@@ -5466,7 +5684,7 @@ def test_network_path():
 
 def test_parse_network_path():
     expected = {
-        "network_code": "nudibranch",
+        "network_code": "nautilus",
     }
     path = AdRuleServiceClient.network_path(**expected)
 
@@ -5476,8 +5694,8 @@ def test_parse_network_path():
 
 
 def test_operating_system_path():
-    network_code = "cuttlefish"
-    operating_system = "mussel"
+    network_code = "scallop"
+    operating_system = "abalone"
     expected = "networks/{network_code}/operatingSystems/{operating_system}".format(
         network_code=network_code,
         operating_system=operating_system,
@@ -5488,8 +5706,8 @@ def test_operating_system_path():
 
 def test_parse_operating_system_path():
     expected = {
-        "network_code": "winkle",
-        "operating_system": "nautilus",
+        "network_code": "squid",
+        "operating_system": "clam",
     }
     path = AdRuleServiceClient.operating_system_path(**expected)
 
@@ -5499,8 +5717,8 @@ def test_parse_operating_system_path():
 
 
 def test_operating_system_version_path():
-    network_code = "scallop"
-    operating_system_version = "abalone"
+    network_code = "whelk"
+    operating_system_version = "octopus"
     expected = "networks/{network_code}/operatingSystemVersions/{operating_system_version}".format(
         network_code=network_code,
         operating_system_version=operating_system_version,
@@ -5513,8 +5731,8 @@ def test_operating_system_version_path():
 
 def test_parse_operating_system_version_path():
     expected = {
-        "network_code": "squid",
-        "operating_system_version": "clam",
+        "network_code": "oyster",
+        "operating_system_version": "nudibranch",
     }
     path = AdRuleServiceClient.operating_system_version_path(**expected)
 
@@ -5524,8 +5742,8 @@ def test_parse_operating_system_version_path():
 
 
 def test_placement_path():
-    network_code = "whelk"
-    placement = "octopus"
+    network_code = "cuttlefish"
+    placement = "mussel"
     expected = "networks/{network_code}/placements/{placement}".format(
         network_code=network_code,
         placement=placement,
@@ -5536,8 +5754,8 @@ def test_placement_path():
 
 def test_parse_placement_path():
     expected = {
-        "network_code": "oyster",
-        "placement": "nudibranch",
+        "network_code": "winkle",
+        "placement": "nautilus",
     }
     path = AdRuleServiceClient.placement_path(**expected)
 
@@ -5546,8 +5764,31 @@ def test_parse_placement_path():
     assert expected == actual
 
 
+def test_taxonomy_category_path():
+    network_code = "scallop"
+    taxonomy_category = "abalone"
+    expected = "networks/{network_code}/taxonomyCategories/{taxonomy_category}".format(
+        network_code=network_code,
+        taxonomy_category=taxonomy_category,
+    )
+    actual = AdRuleServiceClient.taxonomy_category_path(network_code, taxonomy_category)
+    assert expected == actual
+
+
+def test_parse_taxonomy_category_path():
+    expected = {
+        "network_code": "squid",
+        "taxonomy_category": "clam",
+    }
+    path = AdRuleServiceClient.taxonomy_category_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = AdRuleServiceClient.parse_taxonomy_category_path(path)
+    assert expected == actual
+
+
 def test_common_billing_account_path():
-    billing_account = "cuttlefish"
+    billing_account = "whelk"
     expected = "billingAccounts/{billing_account}".format(
         billing_account=billing_account,
     )
@@ -5557,7 +5798,7 @@ def test_common_billing_account_path():
 
 def test_parse_common_billing_account_path():
     expected = {
-        "billing_account": "mussel",
+        "billing_account": "octopus",
     }
     path = AdRuleServiceClient.common_billing_account_path(**expected)
 
@@ -5567,7 +5808,7 @@ def test_parse_common_billing_account_path():
 
 
 def test_common_folder_path():
-    folder = "winkle"
+    folder = "oyster"
     expected = "folders/{folder}".format(
         folder=folder,
     )
@@ -5577,7 +5818,7 @@ def test_common_folder_path():
 
 def test_parse_common_folder_path():
     expected = {
-        "folder": "nautilus",
+        "folder": "nudibranch",
     }
     path = AdRuleServiceClient.common_folder_path(**expected)
 
@@ -5587,7 +5828,7 @@ def test_parse_common_folder_path():
 
 
 def test_common_organization_path():
-    organization = "scallop"
+    organization = "cuttlefish"
     expected = "organizations/{organization}".format(
         organization=organization,
     )
@@ -5597,7 +5838,7 @@ def test_common_organization_path():
 
 def test_parse_common_organization_path():
     expected = {
-        "organization": "abalone",
+        "organization": "mussel",
     }
     path = AdRuleServiceClient.common_organization_path(**expected)
 
@@ -5607,7 +5848,7 @@ def test_parse_common_organization_path():
 
 
 def test_common_project_path():
-    project = "squid"
+    project = "winkle"
     expected = "projects/{project}".format(
         project=project,
     )
@@ -5617,7 +5858,7 @@ def test_common_project_path():
 
 def test_parse_common_project_path():
     expected = {
-        "project": "clam",
+        "project": "nautilus",
     }
     path = AdRuleServiceClient.common_project_path(**expected)
 
@@ -5627,8 +5868,8 @@ def test_parse_common_project_path():
 
 
 def test_common_location_path():
-    project = "whelk"
-    location = "octopus"
+    project = "scallop"
+    location = "abalone"
     expected = "projects/{project}/locations/{location}".format(
         project=project,
         location=location,
@@ -5639,8 +5880,8 @@ def test_common_location_path():
 
 def test_parse_common_location_path():
     expected = {
-        "project": "oyster",
-        "location": "nudibranch",
+        "project": "squid",
+        "location": "clam",
     }
     path = AdRuleServiceClient.common_location_path(**expected)
 

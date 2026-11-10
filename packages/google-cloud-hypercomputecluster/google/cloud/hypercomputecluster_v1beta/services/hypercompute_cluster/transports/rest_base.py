@@ -156,6 +156,22 @@ class _BaseHypercomputeClusterRestTransport(HypercomputeClusterTransport):
             ]
             return http_options
 
+    class _BaseListNodes:
+        def __hash__(self):  # pragma: NO COVER
+            return NotImplementedError("__hash__ must be implemented.")
+
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
+
+        @staticmethod
+        def _get_http_options():
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1beta/{parent=projects/*/locations/*/clusters/*}/nodes",
+                },
+            ]
+            return http_options
+
     class _BaseUpdateCluster:
         def __hash__(self):  # pragma: NO COVER
             return NotImplementedError("__hash__ must be implemented.")

@@ -39,7 +39,11 @@ DEFAULT_CLIENT_INFO.protobuf_runtime_version = google.protobuf.__version__
 class VectorSearchServiceTransport(abc.ABC):
     """Abstract transport class for VectorSearchService."""
 
-    AUTH_SCOPES = ("https://www.googleapis.com/auth/cloud-platform",)
+    AUTH_SCOPES = (
+        "https://www.googleapis.com/auth/cloud-platform",
+        "https://www.googleapis.com/auth/vectorsearch",
+        "https://www.googleapis.com/auth/vectorsearch.readonly",
+    )
 
     DEFAULT_HOST: str = "vectorsearch.googleapis.com"
 
