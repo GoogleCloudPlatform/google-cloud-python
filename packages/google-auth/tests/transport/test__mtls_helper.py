@@ -20,6 +20,7 @@ import re
 import sys
 import tempfile
 import threading
+import time
 from unittest import mock
 
 import pytest  # type: ignore
@@ -2446,6 +2447,93 @@ class TestMtlsCertManager(object):
         assert results == [True, True, True, True]
         assert manager.generation_id == 2
         assert source.call_count == 2
+
+    @pytest.mark.parametrize(
+        "reload_result",
+        [
+            (pytest.public_cert_bytes, pytest.private_key_bytes),
+            OSError("transient read error"),
+        ],
+        ids=["unchanged", "transient_error"],
+    )
+    def test_expected_generation_deduplicates_unchanged_and_failed_reloads(
+        self, reload_result
+    ):
+        source = mock.Mock(
+            side_effect=[
+                OSError("initial failure"),
+                (pytest.public_cert_bytes, pytest.private_key_bytes),
+            ]
+        )
+        manager = _mtls_helper._MtlsCertManager(client_cert_source=source)
+
+        # A failed first load must not stop later bursts from sharing a reload.
+        with pytest.raises(exceptions.ClientCertError):
+            manager.refresh(expected_generation=0)
+        assert manager.refresh(expected_generation=0) is True
+        assert manager.generation_id == 1
+
+        reload_source = mock.Mock(side_effect=[reload_result] * 2)
+
+        def slow_source():
+            time.sleep(0.1)
+            return reload_source()
+
+        source.side_effect = slow_source
+        barrier = threading.Barrier(6)
+        results = [None] * 6
+
+        def worker(idx):
+            barrier.wait()
+            results[idx] = manager.refresh(expected_generation=1)
+
+        threads = [threading.Thread(target=worker, args=(i,)) for i in range(6)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
+
+        assert results == [False] * 6
+        assert manager.generation_id == 1
+        assert 1 <= reload_source.call_count <= 2
+
+    def test_mid_reload_arrival_does_not_reuse_earlier_read(self):
+        entered = threading.Event()
+        release = threading.Event()
+
+        def hold_reload():
+            entered.set()
+            release.wait(timeout=5)
+            return pytest.public_cert_bytes, pytest.private_key_bytes
+
+        steps = [
+            lambda: (pytest.public_cert_bytes, pytest.private_key_bytes),
+            hold_reload,
+            lambda: (OTHER_CERT_BYTES, pytest.private_key_bytes),
+        ]
+        manager = _mtls_helper._MtlsCertManager(
+            client_cert_source=lambda: steps.pop(0)()
+        )
+        assert manager.refresh() is True
+
+        results = [None, None]
+
+        def worker(idx):
+            results[idx] = manager.refresh(expected_generation=1)
+
+        t1 = threading.Thread(target=worker, args=(0,))
+        t1.start()
+        assert entered.wait(timeout=5)
+
+        t2 = threading.Thread(target=worker, args=(1,))
+        t2.start()
+        time.sleep(0.02)
+        release.set()
+
+        t1.join()
+        t2.join()
+        assert results == [False, True]
+        assert manager.generation_id == 2
 
     def test_initial_load_no_default_cert_returns_false(self, tmp_path, monkeypatch):
         monkeypatch.setenv("HOME", str(tmp_path))

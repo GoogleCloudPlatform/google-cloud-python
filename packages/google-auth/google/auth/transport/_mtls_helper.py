@@ -998,6 +998,8 @@ class _MtlsCertManager:
         self._key: Optional[bytes] = None
         self._cert_fingerprint: Optional[str] = None
         self._generation_id: int = 0
+        self._reload_id: int = 0
+        self._completed_reload_id: int = 0
         self._lock = threading.Lock()
 
     @property
@@ -1044,12 +1046,12 @@ class _MtlsCertManager:
         """Loads the client certificate and increments ``generation_id`` if it changed.
 
         Args:
-            expected_generation (Optional[int]): If provided and the manager's
-                ``generation_id`` is already greater than ``expected_generation``,
-                returns ``True`` immediately without reading the certificate
-                source again. This can be set to the ``generation_id`` a caller
-                was using when a request failed so concurrent callers do not
-                load the certificate multiple times.
+            expected_generation (Optional[int]): Generation ID the caller was
+                using when a request failed. If ``generation_id`` is already
+                greater than ``expected_generation``, returns ``True`` without
+                reloading. If another thread started and finished a reload while
+                this call waited for the lock and the certificate did not change,
+                returns ``False`` without reloading. If ``None``, always reloads.
 
         Returns:
             bool: ``True`` if the certificate changed (or ``generation_id`` is
@@ -1060,13 +1062,16 @@ class _MtlsCertManager:
             google.auth.exceptions.ClientCertError: If loading or parsing the
                 certificate fails on the initial load (``generation_id == 0``).
         """
+        reload_id_at_entry = self._reload_id
         with self._lock:
-            if (
-                expected_generation is not None
-                and self._generation_id > expected_generation
-            ):
-                return True
+            if expected_generation is not None:
+                if self._generation_id > expected_generation:
+                    return True
+                # Only reuse a reload that started after entry and did not raise.
+                if self._completed_reload_id > reload_id_at_entry:
+                    return False
 
+            self._reload_id += 1
             try:
                 cert_bytes, key_bytes, fingerprint = self._load_cert_and_fingerprint()
             except (
@@ -1083,22 +1088,21 @@ class _MtlsCertManager:
                         self._generation_id,
                         caught_exc,
                     )
+                    self._completed_reload_id = self._reload_id
                     return False
                 if isinstance(caught_exc, exceptions.ClientCertError):
                     raise
                 raise exceptions.ClientCertError(caught_exc) from caught_exc
 
-            if cert_bytes is None:
-                return False
-
-            if fingerprint != self._cert_fingerprint:
+            changed = cert_bytes is not None and fingerprint != self._cert_fingerprint
+            if changed:
                 self._cert = cert_bytes
                 self._key = key_bytes
                 self._cert_fingerprint = fingerprint
                 self._generation_id += 1
-                return True
 
-            return False
+            self._completed_reload_id = self._reload_id
+            return changed
 
     def __copy__(self):
         # Share the same thread-safe manager instance across shallow copies.
