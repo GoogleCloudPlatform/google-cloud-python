@@ -61,24 +61,24 @@ def _col():
 @pytest.mark.parametrize(
     "expr,sql",
     [
-        (_col()["name"], "`t`.`person`.name"),
-        (_col()["Name"], "`t`.`person`.Name"),
-        (_col().NAME, "`t`.`person`.NAME"),
-        (_col().children, "`t`.`person`.children"),
+        (_col()["name"], "`t`.`person`.`name`"),
+        (_col()["Name"], "`t`.`person`.`Name`"),
+        (_col().NAME, "`t`.`person`.`NAME`"),
+        (_col().children, "`t`.`person`.`children`"),
         (
             # SQLAlchemy doesn't add the label in this case for some reason.
             # TODO: why?
             # https://github.com/googleapis/python-bigquery-sqlalchemy/issues/336
             _col().children[0].label("anon_1"),
-            "(`t`.`person`.children)[OFFSET(%(param_1:INT64)s)]",
+            "(`t`.`person`.`children`)[OFFSET(%(param_1:INT64)s)]",
         ),
         (
             _col().children[0]["bdate"],
-            "((`t`.`person`.children)[OFFSET(%(param_1:INT64)s)]).bdate",
+            "((`t`.`person`.`children`)[OFFSET(%(param_1:INT64)s)]).`bdate`",
         ),
         (
             _col().children[0].bdate,
-            "((`t`.`person`.children)[OFFSET(%(param_1:INT64)s)]).bdate",
+            "((`t`.`person`.`children`)[OFFSET(%(param_1:INT64)s)]).`bdate`",
         ),
     ],
 )
@@ -92,34 +92,34 @@ def test_struct_traversal_project(faux_conn, expr, sql):
     [
         (
             _col()["name"] == "bob",
-            "`t`.`person`.name = %(param_1:STRING)s",
+            "`t`.`person`.`name` = %(param_1:STRING)s",
         ),
         (
             _col()["Name"] == "bob",
-            "`t`.`person`.Name = %(param_1:STRING)s",
+            "`t`.`person`.`Name` = %(param_1:STRING)s",
         ),
         (
             _col()["NAME"] == "bob",
-            "`t`.`person`.NAME = %(param_1:STRING)s",
+            "`t`.`person`.`NAME` = %(param_1:STRING)s",
         ),
         (
             _col().children[0] == dict(name="foo", bdate=datetime.date(2020, 1, 1)),
-            "(`t`.`person`.children)[OFFSET(%(param_1:INT64)s)]"
+            "(`t`.`person`.`children`)[OFFSET(%(param_1:INT64)s)]"
             " = %(param_2:STRUCT<name STRING, bdate DATE>)s",
         ),
         (
             _col().children[0] == dict(name="foo", bdate=datetime.date(2020, 1, 1)),
-            "(`t`.`person`.children)[OFFSET(%(param_1:INT64)s)]"
+            "(`t`.`person`.`children`)[OFFSET(%(param_1:INT64)s)]"
             " = %(param_2:STRUCT<name STRING, bdate DATE>)s",
         ),
         (
             _col().children[0]["bdate"] == datetime.date(2021, 8, 30),
-            "((`t`.`person`.children)[OFFSET(%(param_1:INT64)s)]).bdate"
+            "((`t`.`person`.`children`)[OFFSET(%(param_1:INT64)s)]).`bdate`"
             " = %(param_2:DATE)s",
         ),
         (
             _col().children[0].bdate == datetime.date(2021, 8, 30),
-            "((`t`.`person`.children)[OFFSET(%(param_1:INT64)s)]).bdate"
+            "((`t`.`person`.`children`)[OFFSET(%(param_1:INT64)s)]).`bdate`"
             " = %(param_2:DATE)s",
         ),
     ],
@@ -161,3 +161,49 @@ def test_struct_non_string_field_access(faux_conn):
 def test_struct_bad_name(faux_conn):
     with pytest.raises(KeyError, match="42"):
         _col()["42"]
+
+
+def test_struct_compiler_rejects_invalid_direct_json_getitem_op(faux_conn):
+    from sqlalchemy.sql import operators
+    from sqlalchemy.sql.elements import BinaryExpression
+
+    col = _col()
+    bad_field_expr = BinaryExpression(
+        col, sqlalchemy.bindparam("field", "not_a_field"), operators.json_getitem_op
+    )
+    with pytest.raises(
+        sqlalchemy.exc.CompileError,
+        match="Invalid STRUCT field name: 'not_a_field'",
+    ):
+        sqlalchemy.select(bad_field_expr).compile(faux_conn.engine)
+
+    non_str_expr = BinaryExpression(
+        col, sqlalchemy.bindparam("field", 123), operators.json_getitem_op
+    )
+    with pytest.raises(
+        sqlalchemy.exc.CompileError,
+        match="Invalid STRUCT field name: 123",
+    ):
+        sqlalchemy.select(non_str_expr).compile(faux_conn.engine)
+
+
+def test_struct_type_decorator_and_identifier_escaping(faux_conn):
+    from sqlalchemy.sql import operators
+    from sqlalchemy.sql.elements import BinaryExpression
+    from sqlalchemy_bigquery import STRUCT
+
+    class WrappedStruct(sqlalchemy.types.TypeDecorator):
+        impl = STRUCT(("a`b\\c%d", sqlalchemy.String))
+        cache_ok = True
+
+    t = sqlalchemy.Table(
+        "t",
+        sqlalchemy.MetaData(),
+        sqlalchemy.Column("s", WrappedStruct()),
+    )
+
+    expr = BinaryExpression(
+        t.c.s, sqlalchemy.bindparam("field", "a`b\\c%d"), operators.json_getitem_op
+    )
+    got = str(sqlalchemy.select(expr).compile(faux_conn.engine))
+    assert got == "SELECT `t`.`s`.`a\\`b\\\\c%%d` AS `anon_1` \nFROM `t`"
