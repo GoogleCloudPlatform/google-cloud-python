@@ -28,7 +28,6 @@ from . import client_side_statement_parser
 from .exceptions import Error
 from .parsed_statement import ParsedStatement, Statement, StatementType
 from .types import DateStr, TimestampStr
-from .utils import sanitize_literals_for_upload
 
 # Note: This mapping deliberately does not contain a value for float.
 # The reason for that is that it is better to just let Spanner determine
@@ -309,14 +308,14 @@ def sql_pyformat_args_to_spanner(sql, params):
               arguments.
     """
     if not params:
-        return sanitize_literals_for_upload(sql), None
+        return sql.replace("%%", "%"), None
 
     found_pyformat_placeholders = RE_PYFORMAT.findall(sql)
     params_is_dict = isinstance(params, dict)
 
     if params_is_dict:
         if not found_pyformat_placeholders:
-            return sanitize_literals_for_upload(sql), params
+            return sql.replace("%%", "%"), params
     else:
         n_params = len(params) if params else 0
         n_matches = len(found_pyformat_placeholders)
@@ -343,7 +342,7 @@ def sql_pyformat_args_to_spanner(sql, params):
         else:
             named_args[key] = params[i]
 
-    return sanitize_literals_for_upload(sql), named_args
+    return sql.replace("%%", "%"), named_args
 
 
 def get_param_types(params):

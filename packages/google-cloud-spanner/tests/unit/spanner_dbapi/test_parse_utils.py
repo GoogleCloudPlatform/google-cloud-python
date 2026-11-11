@@ -402,6 +402,61 @@ class TestParseUtils(unittest.TestCase):
                 ("SELECT * from t WHERE id=10", {"f1": "app", "f2": "name"}),
                 ("SELECT * from t WHERE id=10", {"f1": "app", "f2": "name"}),
             ),
+            (
+                # Preserves Unicode in identifiers and trailing WHERE predicates
+                (
+                    "SELECT * FROM `Tëst` WHERE tenant_id = %s",
+                    ("tenant_1",),
+                ),
+                (
+                    "SELECT * FROM `Tëst` WHERE tenant_id = @a0",
+                    {"a0": "tenant_1"},
+                ),
+            ),
+            (
+                # Preserves Unicode in string literals without backticking or truncating
+                (
+                    "SELECT * FROM users WHERE dept = 'café' AND tenant_id = %s",
+                    ("tenant_1",),
+                ),
+                (
+                    "SELECT * FROM users WHERE dept = 'café' AND tenant_id = @a0",
+                    {"a0": "tenant_1"},
+                ),
+            ),
+            (
+                # Preserves percent escaping (%% -> %) alongside parameters
+                (
+                    "SELECT * FROM users WHERE name LIKE 'A%%' AND age > %s",
+                    (21,),
+                ),
+                (
+                    "SELECT * FROM users WHERE name LIKE 'A%' AND age > @a0",
+                    {"a0": 21},
+                ),
+            ),
+            (
+                # Preserves Unicode in unparameterized queries (params=None)
+                (
+                    "SELECT * FROM users WHERE city = 'München' AND active = true",
+                    None,
+                ),
+                (
+                    "SELECT * FROM users WHERE city = 'München' AND active = true",
+                    None,
+                ),
+            ),
+            (
+                # Preserves Unicode in dict-based named parameters and literals
+                (
+                    "SELECT * FROM users WHERE name = %(name)s AND dept = 'café'",
+                    {"name": "Alice"},
+                ),
+                (
+                    "SELECT * FROM users WHERE name = @a0 AND dept = 'café'",
+                    {"a0": "Alice"},
+                ),
+            ),
         ]
         for (sql_in, params), sql_want in cases:
             with self.subTest(sql=sql_in):
@@ -532,3 +587,51 @@ class TestParseUtils(unittest.TestCase):
             with self.subTest(name=name):
                 got = escape_name(name)
                 self.assertEqual(got, want)
+
+    def test_classify_statement_preserves_unicode_and_predicates(self):
+        # Scoped SELECT with Unicode identifier preserves WHERE clause
+        query = "SELECT * FROM `Tëst` WHERE tenant_id = %s"
+        parsed = classify_statement(query, ("tenant_1",))
+        self.assertEqual(
+            parsed.statement.sql, "SELECT * FROM `Tëst` WHERE tenant_id = @a0"
+        )
+        self.assertEqual(parsed.statement.params, {"a0": "tenant_1"})
+        self.assertEqual(parsed.statement_type, StatementType.QUERY)
+
+        # Scoped DELETE with Unicode identifier does not drop WHERE or append WHERE 1=1
+        query = "DELETE FROM `Tëst` WHERE id = %s"
+        parsed = classify_statement(query, (42,))
+        self.assertEqual(parsed.statement.sql, "DELETE FROM `Tëst` WHERE id = @a0")
+        self.assertEqual(parsed.statement.params, {"a0": 42})
+        self.assertEqual(parsed.statement_type, StatementType.UPDATE)
+        self.assertNotIn("WHERE 1=1", parsed.statement.sql)
+
+        # Scoped UPDATE with Unicode in SET clause does not convert WHERE clause to WHERE 1=1
+        query = "UPDATE users SET note = 'Café' WHERE id = %s"
+        parsed = classify_statement(query, (42,))
+        self.assertEqual(
+            parsed.statement.sql, "UPDATE users SET note = 'Café' WHERE id = @a0"
+        )
+        self.assertEqual(parsed.statement.params, {"a0": 42})
+        self.assertEqual(parsed.statement_type, StatementType.UPDATE)
+        self.assertNotIn("WHERE 1=1", parsed.statement.sql)
+
+        # Scoped UPDATE with Unicode literal preserves literal and WHERE clause
+        query = "UPDATE users SET status = 'active' WHERE name = 'José' AND id = %s"
+        parsed = classify_statement(query, (1,))
+        self.assertEqual(
+            parsed.statement.sql,
+            "UPDATE users SET status = 'active' WHERE name = 'José' AND id = @a0",
+        )
+        self.assertEqual(parsed.statement.params, {"a0": 1})
+        self.assertEqual(parsed.statement_type, StatementType.UPDATE)
+        self.assertNotIn("WHERE 1=1", parsed.statement.sql)
+
+        # Adjacent punctuation with Unicode identifiers does not swallow punctuation
+        query = "SELECT `tätä`, id FROM users WHERE id = %s"
+        parsed = classify_statement(query, (1,))
+        self.assertEqual(
+            parsed.statement.sql,
+            "SELECT `tätä`, id FROM users WHERE id = @a0",
+        )
+        self.assertEqual(parsed.statement.params, {"a0": 1})
