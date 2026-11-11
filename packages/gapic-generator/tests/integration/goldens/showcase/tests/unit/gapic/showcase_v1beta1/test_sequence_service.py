@@ -4779,7 +4779,14 @@ def test_list_locations_rest(request_type):
     assert isinstance(response, locations_pb2.ListLocationsResponse)
 
 
-def test_list_locations_empty_call_rest():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_list_locations_empty_call_rest(request_val):
     client = SequenceServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport="rest",
@@ -4787,14 +4794,17 @@ def test_list_locations_empty_call_rest():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.list_locations), "__call__"
+        type(client.transport.list_locations),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        client.list_locations(request=None)
+        client.list_locations(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == locations_pb2.ListLocationsRequest()
+        assert args[1] == locations_pb2.ListLocationsRequest()
 
 
 def test_get_location_rest_bad_request(request_type=locations_pb2.GetLocationRequest):
@@ -4850,7 +4860,14 @@ def test_get_location_rest(request_type):
     assert isinstance(response, locations_pb2.Location)
 
 
-def test_get_location_empty_call_rest():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_get_location_empty_call_rest(request_val):
     client = SequenceServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport="rest",
@@ -4858,14 +4875,17 @@ def test_get_location_empty_call_rest():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.get_location), "__call__"
+        type(client.transport.get_location),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        client.get_location(request=None)
+        client.get_location(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == locations_pb2.GetLocationRequest()
+        assert args[1] == locations_pb2.GetLocationRequest()
 
 
 def test_set_iam_policy_rest_bad_request(request_type=iam_policy_pb2.SetIamPolicyRequest):
@@ -4921,7 +4941,14 @@ def test_set_iam_policy_rest(request_type):
     assert isinstance(response, policy_pb2.Policy)
 
 
-def test_set_iam_policy_empty_call_rest():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_set_iam_policy_empty_call_rest(request_val):
     client = SequenceServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport="rest",
@@ -4929,14 +4956,17 @@ def test_set_iam_policy_empty_call_rest():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.set_iam_policy), "__call__"
+        type(client.transport.set_iam_policy),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        client.set_iam_policy(request=None)
+        client.set_iam_policy(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == iam_policy_pb2.SetIamPolicyRequest()
+        assert args[1] == iam_policy_pb2.SetIamPolicyRequest()
 
 
 def test_get_iam_policy_rest_bad_request(request_type=iam_policy_pb2.GetIamPolicyRequest):
@@ -4992,7 +5022,14 @@ def test_get_iam_policy_rest(request_type):
     assert isinstance(response, policy_pb2.Policy)
 
 
-def test_get_iam_policy_empty_call_rest():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_get_iam_policy_empty_call_rest(request_val):
     client = SequenceServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport="rest",
@@ -5000,14 +5037,17 @@ def test_get_iam_policy_empty_call_rest():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.get_iam_policy), "__call__"
+        type(client.transport.get_iam_policy),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        client.get_iam_policy(request=None)
+        client.get_iam_policy(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == iam_policy_pb2.GetIamPolicyRequest()
+        assert args[1] == iam_policy_pb2.GetIamPolicyRequest()
 
 
 def test_test_iam_permissions_rest_bad_request(request_type=iam_policy_pb2.TestIamPermissionsRequest):
@@ -5063,7 +5103,14 @@ def test_test_iam_permissions_rest(request_type):
     assert isinstance(response, iam_policy_pb2.TestIamPermissionsResponse)
 
 
-def test_test_iam_permissions_empty_call_rest():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_test_iam_permissions_empty_call_rest(request_val):
     client = SequenceServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport="rest",
@@ -5071,14 +5118,17 @@ def test_test_iam_permissions_empty_call_rest():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.test_iam_permissions), "__call__"
+        type(client.transport.test_iam_permissions),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        client.test_iam_permissions(request=None)
+        client.test_iam_permissions(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == iam_policy_pb2.TestIamPermissionsRequest()
+        assert args[1] == iam_policy_pb2.TestIamPermissionsRequest()
 
 
 def test_list_operations_rest_bad_request(request_type=operations_pb2.ListOperationsRequest):
@@ -5134,7 +5184,14 @@ def test_list_operations_rest(request_type):
     assert isinstance(response, operations_pb2.ListOperationsResponse)
 
 
-def test_list_operations_empty_call_rest():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_list_operations_empty_call_rest(request_val):
     client = SequenceServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport="rest",
@@ -5142,14 +5199,17 @@ def test_list_operations_empty_call_rest():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.list_operations), "__call__"
+        type(client.transport.list_operations),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        client.list_operations(request=None)
+        client.list_operations(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == operations_pb2.ListOperationsRequest()
+        assert args[1] == operations_pb2.ListOperationsRequest()
 
 
 def test_get_operation_rest_bad_request(request_type=operations_pb2.GetOperationRequest):
@@ -5205,7 +5265,14 @@ def test_get_operation_rest(request_type):
     assert isinstance(response, operations_pb2.Operation)
 
 
-def test_get_operation_empty_call_rest():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_get_operation_empty_call_rest(request_val):
     client = SequenceServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport="rest",
@@ -5213,14 +5280,17 @@ def test_get_operation_empty_call_rest():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.get_operation), "__call__"
+        type(client.transport.get_operation),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        client.get_operation(request=None)
+        client.get_operation(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == operations_pb2.GetOperationRequest()
+        assert args[1] == operations_pb2.GetOperationRequest()
 
 
 def test_delete_operation_rest_bad_request(request_type=operations_pb2.DeleteOperationRequest):
@@ -5276,7 +5346,14 @@ def test_delete_operation_rest(request_type):
     assert response is None
 
 
-def test_delete_operation_empty_call_rest():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_delete_operation_empty_call_rest(request_val):
     client = SequenceServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport="rest",
@@ -5284,14 +5361,17 @@ def test_delete_operation_empty_call_rest():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.delete_operation), "__call__"
+        type(client.transport.delete_operation),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        client.delete_operation(request=None)
+        client.delete_operation(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == operations_pb2.DeleteOperationRequest()
+        assert args[1] == operations_pb2.DeleteOperationRequest()
 
 
 def test_cancel_operation_rest_bad_request(request_type=operations_pb2.CancelOperationRequest):
@@ -5347,7 +5427,14 @@ def test_cancel_operation_rest(request_type):
     assert response is None
 
 
-def test_cancel_operation_empty_call_rest():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_cancel_operation_empty_call_rest(request_val):
     client = SequenceServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport="rest",
@@ -5355,14 +5442,17 @@ def test_cancel_operation_empty_call_rest():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.cancel_operation), "__call__"
+        type(client.transport.cancel_operation),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        client.cancel_operation(request=None)
+        client.cancel_operation(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == operations_pb2.CancelOperationRequest()
+        assert args[1] == operations_pb2.CancelOperationRequest()
 
 def test_initialize_client_w_rest():
     client = SequenceServiceClient(

@@ -8795,7 +8795,14 @@ def test_get_location_rest(request_type):
     assert isinstance(response, locations_pb2.Location)
 
 
-def test_get_location_empty_call_rest():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_get_location_empty_call_rest(request_val):
     client = CloudRedisClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport="rest",
@@ -8803,14 +8810,17 @@ def test_get_location_empty_call_rest():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.get_location), "__call__"
+        type(client.transport.get_location),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        client.get_location(request=None)
+        client.get_location(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == locations_pb2.GetLocationRequest()
+        assert args[1] == locations_pb2.GetLocationRequest()
 
 
 def test_list_locations_rest_bad_request(request_type=locations_pb2.ListLocationsRequest):
@@ -8866,7 +8876,14 @@ def test_list_locations_rest(request_type):
     assert isinstance(response, locations_pb2.ListLocationsResponse)
 
 
-def test_list_locations_empty_call_rest():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_list_locations_empty_call_rest(request_val):
     client = CloudRedisClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport="rest",
@@ -8874,14 +8891,17 @@ def test_list_locations_empty_call_rest():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.list_locations), "__call__"
+        type(client.transport.list_locations),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        client.list_locations(request=None)
+        client.list_locations(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == locations_pb2.ListLocationsRequest()
+        assert args[1] == locations_pb2.ListLocationsRequest()
 
 
 def test_cancel_operation_rest_bad_request(request_type=operations_pb2.CancelOperationRequest):
@@ -8937,7 +8957,14 @@ def test_cancel_operation_rest(request_type):
     assert response is None
 
 
-def test_cancel_operation_empty_call_rest():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_cancel_operation_empty_call_rest(request_val):
     client = CloudRedisClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport="rest",
@@ -8945,14 +8972,17 @@ def test_cancel_operation_empty_call_rest():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.cancel_operation), "__call__"
+        type(client.transport.cancel_operation),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        client.cancel_operation(request=None)
+        client.cancel_operation(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == operations_pb2.CancelOperationRequest()
+        assert args[1] == operations_pb2.CancelOperationRequest()
 
 
 def test_delete_operation_rest_bad_request(request_type=operations_pb2.DeleteOperationRequest):
@@ -9008,7 +9038,14 @@ def test_delete_operation_rest(request_type):
     assert response is None
 
 
-def test_delete_operation_empty_call_rest():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_delete_operation_empty_call_rest(request_val):
     client = CloudRedisClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport="rest",
@@ -9016,14 +9053,17 @@ def test_delete_operation_empty_call_rest():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.delete_operation), "__call__"
+        type(client.transport.delete_operation),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        client.delete_operation(request=None)
+        client.delete_operation(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == operations_pb2.DeleteOperationRequest()
+        assert args[1] == operations_pb2.DeleteOperationRequest()
 
 
 def test_get_operation_rest_bad_request(request_type=operations_pb2.GetOperationRequest):
@@ -9079,7 +9119,14 @@ def test_get_operation_rest(request_type):
     assert isinstance(response, operations_pb2.Operation)
 
 
-def test_get_operation_empty_call_rest():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_get_operation_empty_call_rest(request_val):
     client = CloudRedisClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport="rest",
@@ -9087,14 +9134,17 @@ def test_get_operation_empty_call_rest():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.get_operation), "__call__"
+        type(client.transport.get_operation),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        client.get_operation(request=None)
+        client.get_operation(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == operations_pb2.GetOperationRequest()
+        assert args[1] == operations_pb2.GetOperationRequest()
 
 
 def test_list_operations_rest_bad_request(request_type=operations_pb2.ListOperationsRequest):
@@ -9150,7 +9200,14 @@ def test_list_operations_rest(request_type):
     assert isinstance(response, operations_pb2.ListOperationsResponse)
 
 
-def test_list_operations_empty_call_rest():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_list_operations_empty_call_rest(request_val):
     client = CloudRedisClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport="rest",
@@ -9158,14 +9215,17 @@ def test_list_operations_empty_call_rest():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.list_operations), "__call__"
+        type(client.transport.list_operations),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        client.list_operations(request=None)
+        client.list_operations(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == operations_pb2.ListOperationsRequest()
+        assert args[1] == operations_pb2.ListOperationsRequest()
 
 
 def test_wait_operation_rest_bad_request(request_type=operations_pb2.WaitOperationRequest):
@@ -9221,7 +9281,14 @@ def test_wait_operation_rest(request_type):
     assert isinstance(response, operations_pb2.Operation)
 
 
-def test_wait_operation_empty_call_rest():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_wait_operation_empty_call_rest(request_val):
     client = CloudRedisClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport="rest",
@@ -9229,14 +9296,17 @@ def test_wait_operation_empty_call_rest():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.wait_operation), "__call__"
+        type(client.transport.wait_operation),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        client.wait_operation(request=None)
+        client.wait_operation(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == operations_pb2.WaitOperationRequest()
+        assert args[1] == operations_pb2.WaitOperationRequest()
 
 def test_initialize_client_w_rest():
     client = CloudRedisClient(
@@ -10944,7 +11014,14 @@ async def test_get_location_rest_asyncio(request_type):
     assert isinstance(response, locations_pb2.Location)
 
 @pytest.mark.asyncio
-async def test_get_location_empty_call_rest_asyncio():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+async def test_get_location_empty_call_rest_asyncio(request_val):
     if not HAS_ASYNC_REST_EXTRA:
         pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
     client = CloudRedisAsyncClient(
@@ -10954,14 +11031,17 @@ async def test_get_location_empty_call_rest_asyncio():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.get_location), "__call__"
+        type(client.transport.get_location),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        await client.get_location(request=None)
+        await client.get_location(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == locations_pb2.GetLocationRequest()
+        assert args[1] == locations_pb2.GetLocationRequest()
 
 @pytest.mark.asyncio
 async def test_list_locations_rest_asyncio_bad_request(request_type=locations_pb2.ListLocationsRequest):
@@ -11020,7 +11100,14 @@ async def test_list_locations_rest_asyncio(request_type):
     assert isinstance(response, locations_pb2.ListLocationsResponse)
 
 @pytest.mark.asyncio
-async def test_list_locations_empty_call_rest_asyncio():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+async def test_list_locations_empty_call_rest_asyncio(request_val):
     if not HAS_ASYNC_REST_EXTRA:
         pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
     client = CloudRedisAsyncClient(
@@ -11030,14 +11117,17 @@ async def test_list_locations_empty_call_rest_asyncio():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.list_locations), "__call__"
+        type(client.transport.list_locations),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        await client.list_locations(request=None)
+        await client.list_locations(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == locations_pb2.ListLocationsRequest()
+        assert args[1] == locations_pb2.ListLocationsRequest()
 
 @pytest.mark.asyncio
 async def test_cancel_operation_rest_asyncio_bad_request(request_type=operations_pb2.CancelOperationRequest):
@@ -11096,7 +11186,14 @@ async def test_cancel_operation_rest_asyncio(request_type):
     assert response is None
 
 @pytest.mark.asyncio
-async def test_cancel_operation_empty_call_rest_asyncio():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+async def test_cancel_operation_empty_call_rest_asyncio(request_val):
     if not HAS_ASYNC_REST_EXTRA:
         pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
     client = CloudRedisAsyncClient(
@@ -11106,14 +11203,17 @@ async def test_cancel_operation_empty_call_rest_asyncio():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.cancel_operation), "__call__"
+        type(client.transport.cancel_operation),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        await client.cancel_operation(request=None)
+        await client.cancel_operation(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == operations_pb2.CancelOperationRequest()
+        assert args[1] == operations_pb2.CancelOperationRequest()
 
 @pytest.mark.asyncio
 async def test_delete_operation_rest_asyncio_bad_request(request_type=operations_pb2.DeleteOperationRequest):
@@ -11172,7 +11272,14 @@ async def test_delete_operation_rest_asyncio(request_type):
     assert response is None
 
 @pytest.mark.asyncio
-async def test_delete_operation_empty_call_rest_asyncio():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+async def test_delete_operation_empty_call_rest_asyncio(request_val):
     if not HAS_ASYNC_REST_EXTRA:
         pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
     client = CloudRedisAsyncClient(
@@ -11182,14 +11289,17 @@ async def test_delete_operation_empty_call_rest_asyncio():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.delete_operation), "__call__"
+        type(client.transport.delete_operation),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        await client.delete_operation(request=None)
+        await client.delete_operation(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == operations_pb2.DeleteOperationRequest()
+        assert args[1] == operations_pb2.DeleteOperationRequest()
 
 @pytest.mark.asyncio
 async def test_get_operation_rest_asyncio_bad_request(request_type=operations_pb2.GetOperationRequest):
@@ -11248,7 +11358,14 @@ async def test_get_operation_rest_asyncio(request_type):
     assert isinstance(response, operations_pb2.Operation)
 
 @pytest.mark.asyncio
-async def test_get_operation_empty_call_rest_asyncio():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+async def test_get_operation_empty_call_rest_asyncio(request_val):
     if not HAS_ASYNC_REST_EXTRA:
         pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
     client = CloudRedisAsyncClient(
@@ -11258,14 +11375,17 @@ async def test_get_operation_empty_call_rest_asyncio():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.get_operation), "__call__"
+        type(client.transport.get_operation),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        await client.get_operation(request=None)
+        await client.get_operation(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == operations_pb2.GetOperationRequest()
+        assert args[1] == operations_pb2.GetOperationRequest()
 
 @pytest.mark.asyncio
 async def test_list_operations_rest_asyncio_bad_request(request_type=operations_pb2.ListOperationsRequest):
@@ -11324,7 +11444,14 @@ async def test_list_operations_rest_asyncio(request_type):
     assert isinstance(response, operations_pb2.ListOperationsResponse)
 
 @pytest.mark.asyncio
-async def test_list_operations_empty_call_rest_asyncio():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+async def test_list_operations_empty_call_rest_asyncio(request_val):
     if not HAS_ASYNC_REST_EXTRA:
         pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
     client = CloudRedisAsyncClient(
@@ -11334,14 +11461,17 @@ async def test_list_operations_empty_call_rest_asyncio():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.list_operations), "__call__"
+        type(client.transport.list_operations),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        await client.list_operations(request=None)
+        await client.list_operations(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == operations_pb2.ListOperationsRequest()
+        assert args[1] == operations_pb2.ListOperationsRequest()
 
 @pytest.mark.asyncio
 async def test_wait_operation_rest_asyncio_bad_request(request_type=operations_pb2.WaitOperationRequest):
@@ -11400,7 +11530,14 @@ async def test_wait_operation_rest_asyncio(request_type):
     assert isinstance(response, operations_pb2.Operation)
 
 @pytest.mark.asyncio
-async def test_wait_operation_empty_call_rest_asyncio():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+async def test_wait_operation_empty_call_rest_asyncio(request_val):
     if not HAS_ASYNC_REST_EXTRA:
         pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
     client = CloudRedisAsyncClient(
@@ -11410,14 +11547,17 @@ async def test_wait_operation_empty_call_rest_asyncio():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.wait_operation), "__call__"
+        type(client.transport.wait_operation),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        await client.wait_operation(request=None)
+        await client.wait_operation(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == operations_pb2.WaitOperationRequest()
+        assert args[1] == operations_pb2.WaitOperationRequest()
 
 def test_initialize_client_w_rest_asyncio():
     if not HAS_ASYNC_REST_EXTRA:

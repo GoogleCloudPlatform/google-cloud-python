@@ -2299,7 +2299,14 @@ def test_initialize_client_w_{{transport_name}}():
 {% set transport_name = get_transport_name(transport, is_async) %}
 {% set method_name = name|snake_case %}
 {{ async_decorator }}
-{{ async_prefix }}def test_{{ method_name }}_empty_call_{{ transport_name }}():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+{{ async_prefix }}def test_{{ method_name }}_empty_call_{{ transport_name }}(request_val):
     {% if transport_name == 'rest_asyncio' %}
     if not HAS_ASYNC_REST_EXTRA:
         pytest.skip("the library must be installed with the `async_rest` extra to test this feature.")
@@ -2311,14 +2318,17 @@ def test_initialize_client_w_{{transport_name}}():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.{{ method_name }}), "__call__"
+        type(client.transport.{{ method_name }}),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        {{ await_prefix }}client.{{ method_name }}(request=None)
+        {{ await_prefix }}client.{{ method_name }}(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == {{ sig.request_type }}()
+        assert args[1] == {{ sig.request_type }}()
 {% endmacro %}{# empty_call_mixins_test #}
 
 {% macro empty_call_test(service, api, transport, is_async) %}

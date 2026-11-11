@@ -16925,7 +16925,14 @@ def test_get_operation_rest(request_type):
     assert isinstance(response, operations_pb2.Operation)
 
 
-def test_get_operation_empty_call_rest():
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_get_operation_empty_call_rest(request_val):
     client = AssetServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport="rest",
@@ -16933,14 +16940,17 @@ def test_get_operation_empty_call_rest():
 
     # Mock the actual call, and fake the request.
     with mock.patch.object(
-        type(client.transport.get_operation), "__call__"
+        type(client.transport.get_operation),
+        "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
-        client.get_operation(request=None)
+        client.get_operation(request=request_val)
 
         # Establish that the underlying stub method was called.
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-        assert args[0] == operations_pb2.GetOperationRequest()
+        assert args[1] == operations_pb2.GetOperationRequest()
 
 def test_initialize_client_w_rest():
     client = AssetServiceClient(
