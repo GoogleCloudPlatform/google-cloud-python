@@ -601,6 +601,11 @@ def _check_spiffe_file_ready(file_path):
         raise exceptions.ClientCertError("File {} is empty".format(file_path))
 
 
+# Prevents lazy callers (such as requests.Request) from blocking for 30s on
+# every subsequent request once the initial startup poll has already timed out.
+_spiffe_poll_timed_out = False
+
+
 def _poll_spiffe_workload_paths(spiffe_config_path):
     """Polls up to 30s for the SPIFFE workload config, cert, and key to be ready.
 
@@ -610,7 +615,8 @@ def _poll_spiffe_workload_paths(spiffe_config_path):
     right away. Cert and key contents are not read here, so a non-empty but
     invalid PEM, or a path that is not a regular file, is reported by the
     caller's read without polling. Cert and key paths outside the well-known
-    SPIFFE directory are returned without any check.
+    SPIFFE directory are returned without any check. If an earlier call already
+    timed out after 30s, this makes one attempt without waiting.
 
     Args:
         spiffe_config_path (str): The expanded SPIFFE certificate config path.
@@ -625,8 +631,9 @@ def _poll_spiffe_workload_paths(spiffe_config_path):
             other than not existing yet, such as PermissionError or
             IsADirectoryError.
         google.auth.exceptions.ClientCertError: If the config schema is
-            invalid, or the files are not ready after 30s.
+            invalid, or the files are not ready.
     """
+    global _spiffe_poll_timed_out
     last_error = None
     for attempt, interval in enumerate(_agent_identity_utils._POLLING_INTERVALS):
         try:
@@ -654,6 +661,14 @@ def _poll_spiffe_workload_paths(spiffe_config_path):
             except (FileNotFoundError, exceptions.ClientCertError) as caught_exc:
                 last_error = caught_exc
 
+        if _spiffe_poll_timed_out:
+            raise exceptions.ClientCertError(
+                "Identity certificate configuration or certificate/key files at {} are "
+                "still not ready; an earlier {}s wait already timed out".format(
+                    spiffe_config_path, _agent_identity_utils._TOTAL_TIMEOUT
+                )
+            ) from last_error
+
         if attempt + 1 == _agent_identity_utils._FAST_POLL_CYCLES:
             _LOGGER.debug(
                 "Identity certificate files are taking longer than 5 seconds to mount at %s. Retrying...",
@@ -661,6 +676,7 @@ def _poll_spiffe_workload_paths(spiffe_config_path):
             )
         time.sleep(interval)
 
+    _spiffe_poll_timed_out = True
     raise exceptions.ClientCertError(
         "Identity certificate configuration or certificate/key files at {} were not ready after {}s".format(
             spiffe_config_path, _agent_identity_utils._TOTAL_TIMEOUT

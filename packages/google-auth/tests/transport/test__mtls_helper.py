@@ -2633,6 +2633,7 @@ class TestSpiffeWorkloadPolling(object):
             _mtls_helper._get_workload_cert_and_key(str(config_file))
 
         assert isinstance(exc_info.value.__cause__, FileNotFoundError)
+        assert _mtls_helper._spiffe_poll_timed_out is True
         assert mock_sleep.call_count == len(_agent_identity_utils._POLLING_INTERVALS)
         mock_debug.assert_called_once_with(
             "Identity certificate files are taking longer than 5 seconds to mount at %s. Retrying...",
@@ -2660,6 +2661,7 @@ class TestSpiffeWorkloadPolling(object):
             _mtls_helper._get_workload_cert_and_key()
 
         assert isinstance(exc_info.value.__cause__, FileNotFoundError)
+        assert _mtls_helper._spiffe_poll_timed_out is True
 
         assert mock_sleep.call_count == len(_agent_identity_utils._POLLING_INTERVALS)
         mock_debug.assert_called_once_with(
@@ -2689,7 +2691,57 @@ class TestSpiffeWorkloadPolling(object):
         cause = exc_info.value.__cause__
         assert isinstance(cause, exceptions.ClientCertError)
         assert "is empty" in str(cause)
+        assert _mtls_helper._spiffe_poll_timed_out is True
         assert mock_sleep.call_count == len(_agent_identity_utils._POLLING_INTERVALS)
+
+    @mock.patch("google.auth.transport._mtls_helper._LOGGER.debug")
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_poll_after_timeout_fails_immediately(
+        self, mock_sleep, mock_debug, spiffe_dir
+    ):
+        config_file = spiffe_dir / "credentials.json"
+
+        with pytest.raises(exceptions.ClientCertError, match="not ready after 30s"):
+            _mtls_helper._get_workload_cert_and_key(str(config_file))
+
+        assert mock_sleep.call_count == len(_agent_identity_utils._POLLING_INTERVALS)
+        mock_sleep.reset_mock()
+        mock_debug.reset_mock()
+
+        with pytest.raises(
+            exceptions.ClientCertError,
+            match="still not ready; an earlier 30s wait already timed out",
+        ) as exc_info:
+            _mtls_helper._get_workload_cert_and_key(str(config_file))
+
+        assert isinstance(exc_info.value.__cause__, FileNotFoundError)
+        mock_sleep.assert_not_called()
+        mock_debug.assert_not_called()
+
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_poll_after_timeout_succeeds_once_files_appear(
+        self, mock_sleep, spiffe_dir
+    ):
+        cert_file = spiffe_dir / "certificates.pem"
+        key_file = spiffe_dir / "private_key.pem"
+        config_file = spiffe_dir / "credentials.json"
+
+        with pytest.raises(exceptions.ClientCertError, match="not ready after 30s"):
+            _mtls_helper._get_workload_cert_and_key(str(config_file))
+
+        assert _mtls_helper._spiffe_poll_timed_out is True
+        mock_sleep.reset_mock()
+
+        cert_file.write_bytes(pytest.public_cert_bytes)
+        key_file.write_bytes(pytest.private_key_bytes)
+        self._write_workload_config(config_file, cert_file, key_file)
+
+        assert _mtls_helper._get_workload_cert_and_key(str(config_file)) == (
+            pytest.public_cert_bytes,
+            pytest.private_key_bytes,
+        )
+        assert _mtls_helper._spiffe_poll_timed_out is True
+        mock_sleep.assert_not_called()
 
     @pytest.mark.parametrize(
         "config_relpath,expected_error",
@@ -2794,6 +2846,7 @@ class TestSpiffeWorkloadPolling(object):
         with pytest.raises(exceptions.ClientCertError):
             _mtls_helper._get_workload_cert_and_key()
 
+        assert _mtls_helper._spiffe_poll_timed_out is False
         mock_sleep.assert_not_called()
 
     @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)

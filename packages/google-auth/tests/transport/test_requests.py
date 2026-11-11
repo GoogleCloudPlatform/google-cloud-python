@@ -31,7 +31,7 @@ import google.auth.credentials
 import google.auth.transport._custom_tls_signer
 import google.auth.transport._mtls_helper
 import google.auth.transport.requests
-from google.auth import environment_vars, exceptions
+from google.auth import _agent_identity_utils, environment_vars, exceptions
 from google.oauth2 import service_account
 from tests.transport import compliance
 
@@ -392,6 +392,63 @@ class TestRequestResponse(compliance.RequestResponseTests):
             google.auth.transport.requests._MutualTlsAdapter,
         )
         assert mock_send.call_args.kwargs["verify"] is False
+
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    @mock.patch.object(requests.adapters.HTTPAdapter, "send", autospec=True)
+    def test_mtls_spiffe_poll_timeout_waits_once_and_recovers(
+        self, mock_send, mock_sleep, tmp_path, monkeypatch
+    ):
+        mock_send.return_value = make_response()
+        spiffe_dir = tmp_path / "workload-spiffe-credentials"
+        spiffe_dir.mkdir()
+        cert_file = spiffe_dir / "certificates.pem"
+        key_file = spiffe_dir / "private_key.pem"
+        config_file = spiffe_dir / "credentials.json"
+        monkeypatch.setattr(
+            _agent_identity_utils, "_WELL_KNOWN_CERT_PATH", str(cert_file)
+        )
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file)
+        )
+
+        request = google.auth.transport.requests.Request(requests.Session())
+        url = "https://iamcredentials.mtls.googleapis.com/v1/token"
+
+        with pytest.raises(exceptions.TransportError) as first_exc:
+            request(url)
+        assert isinstance(first_exc.value.__cause__, exceptions.ClientCertError)
+        assert "not ready after 30s" in str(first_exc.value.__cause__)
+        assert mock_sleep.call_count == len(_agent_identity_utils._POLLING_INTERVALS)
+        assert request._mtls_unavailable is False
+
+        with pytest.raises(exceptions.TransportError) as second_exc:
+            request(url)
+        assert isinstance(second_exc.value.__cause__, exceptions.ClientCertError)
+        assert "still not ready" in str(second_exc.value.__cause__)
+        assert mock_sleep.call_count == len(_agent_identity_utils._POLLING_INTERVALS)
+
+        cert_file.write_bytes(pytest.public_cert_bytes)
+        key_file.write_bytes(pytest.private_key_bytes)
+        config_file.write_text(
+            json.dumps(
+                {
+                    "cert_configs": {
+                        "workload": {
+                            "cert_path": str(cert_file),
+                            "key_path": str(key_file),
+                        }
+                    }
+                }
+            )
+        )
+
+        response = request(url)
+        assert response.status == http_client.OK
+        assert isinstance(
+            request._mtls_adapter,
+            google.auth.transport.requests._MutualTlsAdapter,
+        )
+        assert mock_send.call_args.args[0] is request._mtls_adapter
 
 
 class TestTimeoutGuard(object):

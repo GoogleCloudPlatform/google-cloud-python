@@ -60,6 +60,7 @@ def clean_cert_config_env(monkeypatch, tmp_path):
         "_GKE_CREDENTIAL_BUNDLE_PATH",
         str(tmp_path / "gke" / "credential" / "bundle" / "path"),
     )
+    monkeypatch.setattr(_mtls_helper, "_spiffe_poll_timed_out", False)
 
 
 @pytest.fixture
