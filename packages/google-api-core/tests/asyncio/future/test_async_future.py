@@ -17,6 +17,7 @@ from unittest import mock
 
 import pytest
 
+# isort: split
 from google.api_core import exceptions
 from google.api_core.future import async_future
 
@@ -225,3 +226,76 @@ async def test_double_callback_concurrency():
     assert future.poll_count == 1
     await callback_called.wait()
     await callback_called2.wait()
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("error_type", [exceptions.Forbidden, ValueError])
+async def test_callback_polling_error(error_type):
+    future = AsyncFuture()
+    error = error_type("polling failed")
+    future.done = mock.AsyncMock(side_effect=error)
+    callback = mock.Mock()
+
+    future.add_done_callback(callback)
+    await asyncio.gather(future._background_task, return_exceptions=True)
+    await asyncio.sleep(0)
+
+    callback.assert_called_once_with(future._future)
+    assert await future.exception() is error
+    with pytest.raises(error_type) as exc_info:
+        await future.result()
+    assert exc_info.value is error
+    future.done.assert_awaited_once()
+
+
+@pytest.mark.asyncio
+async def test_background_polling_error_after_result():
+    future = AsyncFuture()
+    polling_started = asyncio.Event()
+    finish_polling = asyncio.Event()
+
+    async def done():
+        polling_started.set()
+        await finish_polling.wait()
+        raise ValueError("polling failed after completion")
+
+    future.done = done
+    callback = mock.Mock()
+    future.add_done_callback(callback)
+    await polling_started.wait()
+    future.set_result(42)
+    finish_polling.set()
+    outcomes = await asyncio.gather(future._background_task, return_exceptions=True)
+    await asyncio.sleep(0)
+
+    assert outcomes == [None]
+    callback.assert_called_once_with(future._future)
+    assert await future.result() == 42
+
+
+@pytest.mark.asyncio
+async def test_background_polling_cancelled():
+    future = AsyncFutureWithPoll()
+    callback = mock.Mock()
+    future.add_done_callback(callback)
+    await asyncio.sleep(0)
+    future._background_task.cancel()
+
+    with pytest.raises(asyncio.CancelledError):
+        await future._background_task
+
+    callback.assert_not_called()
+    assert not future._future.done()
+
+
+@pytest.mark.asyncio
+async def test_foreground_polling_error():
+    future = AsyncFuture()
+    error = exceptions.Forbidden("polling failed")
+    future.done = mock.AsyncMock(side_effect=error)
+
+    with pytest.raises(exceptions.Forbidden) as exc_info:
+        await future.result()
+
+    assert exc_info.value is error
+    assert not future._future.done()

@@ -13,6 +13,8 @@
 # limitations under the License.
 
 
+import asyncio
+
 import pytest
 
 try:
@@ -30,6 +32,7 @@ from google.longrunning import operations_pb2
 from google.protobuf import struct_pb2
 from google.rpc import code_pb2, status_pb2
 
+# isort: split
 from google.api_core import exceptions, operation_async, operations_v1, retry_async
 
 TEST_OPERATION_NAME = "test/operation"
@@ -79,6 +82,25 @@ async def test_constructor():
     assert future.operation.name == TEST_OPERATION_NAME
     assert future.metadata is None
     assert await future.running()
+
+
+@pytest.mark.asyncio
+async def test_callback_refresh_error():
+    future, refresh, _ = make_operation_future()
+    error = exceptions.Forbidden("polling permission denied")
+    refresh.side_effect = error
+    callback = mock.Mock()
+
+    future.add_done_callback(callback)
+    await asyncio.gather(future._background_task, return_exceptions=True)
+    await asyncio.sleep(0)
+
+    callback.assert_called_once_with(future._future)
+    assert await future.exception() is error
+    with pytest.raises(exceptions.Forbidden) as exc_info:
+        await future.result()
+    assert exc_info.value is error
+    refresh.assert_awaited_once()
 
 
 @pytest.mark.asyncio

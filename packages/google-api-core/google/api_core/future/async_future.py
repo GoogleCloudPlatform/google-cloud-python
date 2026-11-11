@@ -134,6 +134,14 @@ class AsyncFuture(base.Future):
         await self._blocking_poll(timeout=timeout)
         return self._future.exception()
 
+    async def _background_poll(self):
+        """Poll in the background and report failures through the future."""
+        try:
+            await self._blocking_poll()
+        except Exception as exc:
+            if not self._future.done():
+                self.set_exception(exc)
+
     def add_done_callback(self, fn):
         """Add a callback to be executed when the operation is complete.
 
@@ -141,13 +149,16 @@ class AsyncFuture(base.Future):
         event loop. Otherwise, the callback will be stored and invoked when the
         future is done.
 
+        A background polling failure is stored as the future's exception and
+        also causes the callbacks to be invoked.
+
         Args:
             fn (Callable[Future]): The callback to execute when the operation
                 is complete.
         """
         if self._background_task is None:
             self._background_task = asyncio.get_event_loop().create_task(
-                self._blocking_poll()
+                self._background_poll()
             )
         self._future.add_done_callback(fn)
 
