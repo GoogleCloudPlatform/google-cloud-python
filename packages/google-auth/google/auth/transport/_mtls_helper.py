@@ -417,13 +417,7 @@ def _get_workload_cert_and_key(
         the certificate or key information.
     """
 
-    spiffe_config_path = _get_spiffe_polling_config_path(certificate_config_path)
-    if spiffe_config_path is not None:
-        cert_path, key_path, _ = _poll_spiffe_workload_paths(spiffe_config_path)
-        if cert_path is not None:
-            return _read_cert_and_key_files(cert_path, key_path)
-
-    cert_path, key_path, config_file_path = _get_non_spiffe_workload_cert_and_key_paths(
+    cert_path, key_path, config_file_path = _get_workload_cert_and_key_paths(
         certificate_config_path, include_context_aware
     )
 
