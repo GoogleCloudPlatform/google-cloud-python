@@ -326,8 +326,13 @@ def _merge_markdown_content(
 def move_markdown_pages(
     app: sphinx.application,
     outdir: Path,
-    cwd: list[str] | None = [],
+    cwd: list[str] | None = None,
 ) -> None:
+    if cwd is None:
+        # Materialize a fresh list per top-level call: the recursion below
+        # mutates ``cwd`` in place (append/pop), which would otherwise keep
+        # state in the shared default across calls.
+        cwd = []
     """Moves markdown pages to be added to the generated reference documentation.
 
     Markdown pages may be hand written or auto generated. They're processed
