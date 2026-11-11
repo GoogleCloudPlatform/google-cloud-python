@@ -1288,6 +1288,50 @@ class TestSharedAcceleratorPerClient:
 
         self._run(_coro())
 
+    def test_async_client_close_cancelled_at_health_monitor_still_closes_daemon(self):
+        """Regression test for b/578435865: asyncio.CancelledError during
+        await _accelerator_health.close() must still close _accelerator_daemon."""
+        fake_client = self._make_shared_fake_client(is_async=True)
+        daemon = mock.Mock()
+        accel_client = mock.AsyncMock()
+        health = mock.AsyncMock()
+        health.close.side_effect = asyncio.CancelledError()
+
+        fake_client._accelerator_daemon = daemon
+        fake_client._accelerator_client = accel_client
+        fake_client._accelerator_health = health
+
+        with pytest.raises(asyncio.CancelledError):
+            self._run(fake_client.close())
+
+        health.close.assert_awaited_once()
+        daemon.close.assert_called_once()
+        assert fake_client._accelerator_health is None
+        assert fake_client._accelerator_daemon is None
+
+    def test_async_client_close_cancelled_at_accel_client_still_closes_daemon(self):
+        """Regression test for b/578435865: asyncio.CancelledError during
+        await _accelerator_client.close() must still close _accelerator_daemon."""
+        fake_client = self._make_shared_fake_client(is_async=True)
+        daemon = mock.Mock()
+        accel_client = mock.AsyncMock()
+        accel_client.close.side_effect = asyncio.CancelledError()
+        health = mock.AsyncMock()
+
+        fake_client._accelerator_daemon = daemon
+        fake_client._accelerator_client = accel_client
+        fake_client._accelerator_health = health
+
+        with pytest.raises(asyncio.CancelledError):
+            self._run(fake_client.close())
+
+        health.close.assert_awaited_once()
+        accel_client.close.assert_awaited_once()
+        daemon.close.assert_called_once()
+        assert fake_client._accelerator_health is None
+        assert fake_client._accelerator_client is None
+        assert fake_client._accelerator_daemon is None
+
 
 # ---------------------------------------------------------------------------
 # Event loop fixture so run_until_complete works
