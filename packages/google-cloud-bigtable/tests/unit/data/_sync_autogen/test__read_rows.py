@@ -359,3 +359,55 @@ class TestReadRowsOperation:
         with pytest.raises(InvalidChunk) as exc:
             stream.__next__()
         assert "row keys should be strictly increasing" in str(exc.value)
+
+    def test_merge_rows_without_metric(self):
+        """_ReadRowsOperation with metric=None should merge rows and handle
+        GeneratorExit without touching ActiveOperationMetric._active_operation_context."""
+        from google.protobuf import wrappers_pb2
+
+        from google.cloud.bigtable.data import ReadRowsQuery
+        from google.cloud.bigtable_v2.types import ReadRowsResponse
+
+        ActiveOperationMetric._active_operation_context.set(None)
+        query = ReadRowsQuery(row_keys=b"k1", limit=1)
+        table = mock.Mock()
+        table._request_path = {"table_name": "test_table"}
+        table.app_profile_id = "test_profile"
+        instance = self._make_one(query, table, 10, 10)
+        assert instance._operation_metric is None
+        assert ActiveOperationMetric.from_context() is None
+        empty_rows = [r for r in instance.merge_rows(None)]
+        assert empty_rows == []
+        assert ActiveOperationMetric.from_context() is None
+
+        def _chunks():
+            yield ReadRowsResponse.CellChunk(
+                row_key=b"k1",
+                family_name=wrappers_pb2.StringValue(value="cf1"),
+                qualifier=wrappers_pb2.BytesValue(value=b"q1"),
+                timestamp_micros=1000,
+                value=b"v1",
+                commit_row=True,
+            )._pb
+
+        rows = [r for r in instance.merge_rows(_chunks())]
+        assert len(rows) == 1
+        assert rows[0].row_key == b"k1"
+        assert ActiveOperationMetric.from_context() is None
+
+        def _two_row_chunks():
+            for rk in (b"k1", b"k2"):
+                yield ReadRowsResponse.CellChunk(
+                    row_key=rk,
+                    family_name=wrappers_pb2.StringValue(value="cf1"),
+                    qualifier=wrappers_pb2.BytesValue(value=b"q1"),
+                    timestamp_micros=1000,
+                    value=b"v1",
+                    commit_row=True,
+                )._pb
+
+        gen = instance.merge_rows(_two_row_chunks())
+        first = gen.__next__()
+        assert first.row_key == b"k1"
+        gen.close()
+        assert ActiveOperationMetric.from_context() is None
