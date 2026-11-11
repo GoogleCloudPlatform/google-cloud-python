@@ -685,6 +685,15 @@ class TestImpersonatedCredentials(object):
         quota_project_creds = credentials.with_quota_project("project-foo")
         assert quota_project_creds._quota_project_id == "project-foo"
 
+    def test_with_quota_project_preserves_subject(self):
+        credentials = self.make_credentials(subject="user@example.com")
+
+        quota_project_creds = credentials.with_quota_project("project-foo")
+        assert quota_project_creds._subject == "user@example.com"
+        # Domain-wide delegation still disables the Regional Access Boundary
+        # lookup on the copy.
+        assert quota_project_creds._build_regional_access_boundary_lookup_url() is None
+
     @pytest.mark.parametrize("use_data_bytes", [True, False])
     def test_with_quota_project_iam_endpoint_override(
         self, use_data_bytes, mock_donor_credentials
@@ -722,6 +731,36 @@ class TestImpersonatedCredentials(object):
         credentials = credentials.with_scopes(["fake_scope1", "fake_scope2"])
         assert credentials.requires_scopes is False
         assert credentials._target_scopes == ["fake_scope1", "fake_scope2"]
+
+    def test_with_scopes_preserves_subject(self):
+        credentials = self.make_credentials(subject="user@example.com")
+
+        scoped_credentials = credentials.with_scopes(["fake_scope1"])
+        assert scoped_credentials._subject == "user@example.com"
+
+    @pytest.mark.parametrize("use_data_bytes", [True, False])
+    def test_with_scopes_refresh_with_subject_success(
+        self, use_data_bytes, mock_dwd_credentials
+    ):
+        credentials = self.make_credentials(
+            subject="test@email.com", lifetime=None
+        ).with_scopes(["fake_scope1"])
+
+        response_body = {"signedJwt": "example_signed_jwt"}
+
+        request = self.make_request(
+            data=json.dumps(response_body),
+            status=http_client.OK,
+            use_data_bytes=use_data_bytes,
+        )
+
+        credentials.refresh(request)
+
+        assert credentials.valid
+        assert credentials.token == "1/fFAGRNJasdfz70BzhT3Zg"
+        # The copy still runs the domain-wide delegation flow instead of
+        # falling back to plain service account impersonation.
+        assert request.call_args.kwargs["url"].endswith(":signJwt")
 
     def test_build_regional_access_boundary_lookup_url_no_email(self):
         credentials = self.make_credentials(target_principal=None)

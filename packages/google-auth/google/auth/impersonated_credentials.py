@@ -446,6 +446,7 @@ class Credentials(
             target_principal=self._target_principal,
             target_scopes=self._target_scopes,
             delegates=self._delegates,
+            subject=self._subject,
             lifetime=self._lifetime,
             quota_project_id=self._quota_project_id,
             iam_endpoint_override=self._iam_endpoint_override,
