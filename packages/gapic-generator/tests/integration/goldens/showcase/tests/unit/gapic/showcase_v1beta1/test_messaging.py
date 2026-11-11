@@ -5709,6 +5709,8 @@ def test_create_blurb_rest_flattened():
     with mock.patch.object(
         type(client.transport.create_blurb),
         "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
         call.return_value = messaging.Blurb()
         client.create_blurb(
@@ -5719,7 +5721,7 @@ def test_create_blurb_rest_flattened():
         )
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
-        assert args[0].blurb.image == b'image_blob'
+        assert args[1].blurb.image == b'image_blob'
 
 
 def test_create_blurb_rest_flattened_error(transport: str = 'rest'):

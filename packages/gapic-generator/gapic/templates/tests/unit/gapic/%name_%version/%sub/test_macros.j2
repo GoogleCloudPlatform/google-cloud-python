@@ -1329,6 +1329,8 @@ def test_{{ method_name }}_rest_flattened():
     with mock.patch.object(
         type(client.transport.{{ method.transport_safe_name|snake_case }}),
         "__call__",
+        autospec=True,
+        spec_set=True,
     ) as call:
         {% if method.void %}
         call.return_value = None
@@ -1350,7 +1352,7 @@ def test_{{ method_name }}_rest_flattened():
         _, args, _ = call.mock_calls[0]
         {% for oneofs in method.flattened_oneof_fields().values() %}
         {% with field = oneofs[-1] %}
-        assert args[0].{{ method.flattened_field_to_key[field.name] }} == {{ field.mock_value }}
+        assert args[1].{{ method.flattened_field_to_key[field.name] }} == {{ field.mock_value }}
         {% endwith %}
         {% endfor %}
     {% endif %}
