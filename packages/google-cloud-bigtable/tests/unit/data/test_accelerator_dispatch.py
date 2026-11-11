@@ -22,7 +22,6 @@ lifecycle. Tests cover:
 from __future__ import annotations
 
 import asyncio
-from types import SimpleNamespace
 from unittest import mock
 
 import grpc as _grpc
@@ -34,8 +33,8 @@ from google.cloud.bigtable.data._accelerator._fallback import (
     AcceleratorBreaker,
     _AcceleratorFallback,
 )
-from google.cloud.bigtable.data._accelerator._routing import is_supported
 from google.cloud.bigtable.data._async.client import (
+    BigtableDataClientAsync,
     _AcceleratorIdentityError,
     _DataApiTargetAsync,
 )
@@ -83,17 +82,30 @@ def _bare_target(
     """
     from google.cloud.bigtable.data._metrics import BigtableClientSideMetricsController
 
+    c = object.__new__(BigtableDataClientAsync)
+    c.project = "p"
+    c._emulator_host = None
+    c._accelerator_blocked_reason = None
+    c._accelerator_flags = []
+    c._accelerator_env = {}
+    c._use_accelerator = None
+    c._metrics = BigtableClientSideMetricsController(handlers=[])
+    c._gapic_client = mock.Mock()
+    c._accelerator_client = accel_client
+    c._accelerator_daemon = accel_daemon
+    c._accelerator_health = None
+    c._accelerator_breaker = breaker if breaker is not None else AcceleratorBreaker()
+    c._is_closed = mock.Mock()
+    c._channel_refresh_task = None
+    c._executor = None
+    c._active_instances = set()
+    c._instance_owners = {}
+    c._remove_instance_registration = mock.Mock()
+    c.transport = mock.AsyncMock()
+    c._metrics.close = mock.Mock()
+
     t = object.__new__(_ConcreteTarget)
-    t.client = SimpleNamespace(
-        project="p",
-        _emulator_host=None,
-        _accelerator_blocked_reason=None,
-        _accelerator_flags=[],
-        _accelerator_env={},
-        _use_accelerator=None,
-        _metrics=BigtableClientSideMetricsController(handlers=[]),
-        _gapic_client=mock.Mock(),
-    )
+    t.client = c
     t.instance_id = "i"
     t.app_profile_id = None
     t.default_operation_timeout = 60.0
@@ -105,9 +117,6 @@ def _bare_target(
     t.default_read_rows_retryable_errors = ()
     t.default_mutate_rows_retryable_errors = ()
     t.default_retryable_errors = ()
-    t._accelerator_client = accel_client
-    t._accelerator_daemon = accel_daemon
-    t._accelerator_breaker = breaker if breaker is not None else AcceleratorBreaker()
     return t
 
 
@@ -146,11 +155,8 @@ class TestUseAccelerator:
 
     def test_close_trips_breaker_before_teardown(self):
         t = _bare_target(accel_client=mock.AsyncMock(), accel_daemon=mock.Mock())
-        t._accelerator_health = None
-        t._register_instance_future = None
-        t.client._remove_instance_registration = mock.Mock()
         assert t._accelerator_breaker.is_tripped is False
-        asyncio.get_event_loop().run_until_complete(t.close())
+        asyncio.get_event_loop().run_until_complete(t.client.close())
         assert t._accelerator_breaker.is_tripped is True
 
 
@@ -203,7 +209,8 @@ class TestMutateRowViaAccelerator:
         req = MutateRowRequest()
         with pytest.raises(_AcceleratorFallback):
             self._run(t._mutate_row_via_accelerator(req, 30.0))
-        assert t._accelerator_breaker.bypass()
+        assert t._accelerator_breaker.bypass(t.instance_id)
+        assert not t._accelerator_breaker.bypass("other-instance")
 
     def test_dead_daemon_trips_breaker_and_raises_fallback(self):
         from google.cloud.bigtable_v2.types.bigtable import MutateRowRequest
@@ -327,7 +334,8 @@ class TestReadRowViaAccelerator:
         query = ReadRowsQuery(row_keys=b"key1", limit=1)
         with pytest.raises(_AcceleratorFallback):
             self._run(t._read_row_via_accelerator(query, 30.0))
-        assert t._accelerator_breaker.bypass()
+        assert t._accelerator_breaker.bypass(t.instance_id)
+        assert not t._accelerator_breaker.bypass("other-instance")
 
     def test_dead_daemon_trips_breaker_and_raises_fallback(self):
         from google.cloud.bigtable.data.read_rows_query import ReadRowsQuery
@@ -792,15 +800,17 @@ class TestMutateRowAcceleratorDispatch:
 
 
 class TestStartAccelerator:
-    """Tests for _start_accelerator() — the method that spawns the daemon and
-    wires up the AcceleratorClient. These use mocks to avoid real subprocesses."""
+    """Tests for _start_accelerator() — the method on the client that spawns
+    the daemon and wires up the AcceleratorClient. These use mocks to avoid
+    real subprocesses."""
 
     def test_success_sets_daemon_and_client(self):
         from google.cloud.bigtable.data._accelerator._daemon import AcceleratorDaemon
 
         t = _bare_target()
-        t._accelerator_daemon = None
-        t._accelerator_client = None
+        c = t.client
+        c._accelerator_daemon = None
+        c._accelerator_client = None
 
         fake_daemon = mock.Mock(spec=AcceleratorDaemon)
         fake_daemon.uds_path = "/tmp/fake-sock"
@@ -816,11 +826,13 @@ class TestStartAccelerator:
                 "google.cloud.bigtable.data._async.client.AcceleratorClientType",
                 return_value=fake_client,
             ),
-            mock.patch.object(t, "_verify_daemon_identity"),
+            mock.patch.object(c, "_verify_daemon_identity"),
         ):
-            t._start_accelerator()
+            c._start_accelerator()
 
         fake_daemon.start.assert_called_once()
+        assert c._accelerator_daemon is fake_daemon
+        assert c._accelerator_client is fake_client
         assert t._accelerator_daemon is fake_daemon
         assert t._accelerator_client is fake_client
 
@@ -828,8 +840,9 @@ class TestStartAccelerator:
         from google.cloud.bigtable.data._accelerator._daemon import AcceleratorDaemon
 
         t = _bare_target()
-        t._accelerator_daemon = None
-        t._accelerator_client = None
+        c = t.client
+        c._accelerator_daemon = None
+        c._accelerator_client = None
 
         fake_daemon = mock.Mock(spec=AcceleratorDaemon)
         fake_daemon.start.side_effect = RuntimeError("binary missing")
@@ -841,11 +854,11 @@ class TestStartAccelerator:
             ),
             pytest.raises(RuntimeError, match="binary missing"),
         ):
-            t._start_accelerator()
+            c._start_accelerator()
 
         fake_daemon.close.assert_called_once()
-        assert t._accelerator_daemon is None
-        assert t._accelerator_client is None
+        assert c._accelerator_daemon is None
+        assert c._accelerator_client is None
 
     def test_identity_verify_failure_closes_daemon_and_propagates(self):
         """Identity mismatches propagate from _start_accelerator so
@@ -855,8 +868,9 @@ class TestStartAccelerator:
         from google.cloud.bigtable.data._accelerator._daemon import AcceleratorDaemon
 
         t = _bare_target()
-        t._accelerator_daemon = None
-        t._accelerator_client = None
+        c = t.client
+        c._accelerator_daemon = None
+        c._accelerator_client = None
 
         fake_daemon = mock.Mock(spec=AcceleratorDaemon)
         fake_daemon.uds_path = "/tmp/fake-sock"
@@ -868,27 +882,26 @@ class TestStartAccelerator:
                 return_value=fake_daemon,
             ),
             mock.patch.object(
-                t,
+                c,
                 "_verify_daemon_identity",
                 side_effect=_AcceleratorIdentityError("mismatch"),
             ),
             pytest.raises(_AcceleratorIdentityError, match="mismatch"),
         ):
-            t._start_accelerator()
+            c._start_accelerator()
 
         fake_daemon.close.assert_called_once()
 
-    def test_passes_project_instance_flags(self):
+    def test_passes_project_flag(self):
         from google.cloud.bigtable.data._accelerator._daemon import AcceleratorDaemon
 
         t = _bare_target()
-        t.client.project = "my-project"
-        t.instance_id = "my-instance"
-        t.app_profile_id = None
-        t.client._accelerator_flags = []
-        t.client._accelerator_env = {}
-        t._accelerator_daemon = None
-        t._accelerator_client = None
+        c = t.client
+        c.project = "my-project"
+        c._accelerator_flags = ["--scopes", "scope-a"]
+        c._accelerator_env = {"GOOGLE_APPLICATION_CREDENTIALS": "/path/to/creds.json"}
+        c._accelerator_daemon = None
+        c._accelerator_client = None
 
         fake_daemon = mock.Mock(spec=AcceleratorDaemon)
         fake_daemon.uds_path = "/tmp/fake-sock"
@@ -907,85 +920,359 @@ class TestStartAccelerator:
             mock.patch(
                 "google.cloud.bigtable.data._async.client.AcceleratorClientType",
             ),
-            mock.patch.object(t, "_verify_daemon_identity"),
+            mock.patch.object(c, "_verify_daemon_identity"),
         ):
-            t._start_accelerator()
+            c._start_accelerator()
 
         flags = captured["cli_flags"]
         assert "--project" in flags
         assert flags[flags.index("--project") + 1] == "my-project"
-        assert "--instance" in flags
-        assert flags[flags.index("--instance") + 1] == "my-instance"
+        assert "--scopes" in flags
+        assert "--instance" not in flags
+        assert "--app-profile" not in flags
+        assert captured["extra_env"] == {
+            "GOOGLE_APPLICATION_CREDENTIALS": "/path/to/creds.json"
+        }
 
-    def test_passes_app_profile_flag_when_set(self):
+    def test_health_monitor_base_exception_closes_daemon(self):
         from google.cloud.bigtable.data._accelerator._daemon import AcceleratorDaemon
 
         t = _bare_target()
-        t.client.project = "p"
-        t.instance_id = "i"
-        t.app_profile_id = "my-app-profile"
-        t.client._accelerator_flags = []
-        t.client._accelerator_env = {}
-        t._accelerator_daemon = None
-        t._accelerator_client = None
+        c = t.client
+        c._accelerator_daemon = None
+        c._accelerator_client = None
+        c._accelerator_health = None
 
         fake_daemon = mock.Mock(spec=AcceleratorDaemon)
         fake_daemon.uds_path = "/tmp/fake-sock"
-        captured = {}
-
-        def capture_daemon(cli_flags=(), **kwargs):
-            captured["cli_flags"] = list(cli_flags)
-            return fake_daemon
+        fake_daemon.auth_secret = "secret-token"
+        fake_client = mock.Mock()
 
         with (
             mock.patch(
                 "google.cloud.bigtable.data._async.client.AcceleratorDaemon",
-                side_effect=capture_daemon,
+                return_value=fake_daemon,
             ),
             mock.patch(
                 "google.cloud.bigtable.data._async.client.AcceleratorClientType",
+                return_value=fake_client,
             ),
-            mock.patch.object(t, "_verify_daemon_identity"),
+            mock.patch.object(c, "_verify_daemon_identity"),
+            mock.patch(
+                "google.cloud.bigtable.data._async.client.AcceleratorHealthMonitorType",
+                side_effect=KeyboardInterrupt,
+            ),
+            pytest.raises(KeyboardInterrupt),
         ):
-            t._start_accelerator()
+            c._start_accelerator()
 
-        flags = captured["cli_flags"]
-        assert "--app-profile" in flags
-        assert flags[flags.index("--app-profile") + 1] == "my-app-profile"
+        fake_daemon.close.assert_called_once()
+        assert c._accelerator_daemon is None
+        assert c._accelerator_client is None
+        assert c._accelerator_health is None
 
-    def test_no_app_profile_flag_when_none(self):
+
+# ---------------------------------------------------------------------------
+# Client-level daemon sharing across Table / AuthorizedView / MaterializedView
+# ---------------------------------------------------------------------------
+
+
+class TestSharedAcceleratorPerClient:
+    """Verify that a client initializes at most one ``AcceleratorDaemon`` and
+    that all ``Table`` / ``AuthorizedView`` / ``MaterializedView`` instances
+    created from that client share its daemon, UDS client, health monitor, and
+    ``AcceleratorBreaker`` until the client itself is closed.
+    """
+
+    def _run(self, coro):
+        return asyncio.get_event_loop().run_until_complete(coro)
+
+    @staticmethod
+    def _make_shared_fake_client(is_async: bool):
+        from google.cloud.bigtable.data._async import client as async_mod
+        from google.cloud.bigtable.data._metrics import (
+            BigtableClientSideMetricsController,
+        )
+        from google.cloud.bigtable.data._sync_autogen import client as sync_mod
+
+        cls = (
+            async_mod.BigtableDataClientAsync
+            if is_async
+            else sync_mod.BigtableDataClient
+        )
+        c = object.__new__(cls)
+        gapic = mock.Mock()
+        gapic.instance_path.side_effect = lambda p, i: f"projects/{p}/instances/{i}"
+        gapic.table_path.side_effect = (
+            lambda p, i, t: f"projects/{p}/instances/{i}/tables/{t}"
+        )
+        gapic.authorized_view_path.side_effect = (
+            lambda p,
+            i,
+            t,
+            v: f"projects/{p}/instances/{i}/tables/{t}/authorizedViews/{v}"
+        )
+        gapic.materialized_view_path.side_effect = (
+            lambda p, i, mv: f"projects/{p}/instances/{i}/materializedViews/{mv}"
+        )
+        c.project = "test-project"
+        c._emulator_host = None
+        c._accelerator_blocked_reason = None
+        c._accelerator_flags = []
+        c._accelerator_env = {}
+        c._accelerator_scopes = ["https://www.googleapis.com/auth/bigtable.data"]
+        c._use_accelerator = True
+        c._accelerator_daemon = None
+        c._accelerator_client = None
+        c._accelerator_health = None
+        c._accelerator_breaker = AcceleratorBreaker()
+        c._is_closed = mock.Mock()
+        c._metrics = BigtableClientSideMetricsController(handlers=[])
+        c._gapic_client = gapic
+        c._executor = None if is_async else mock.Mock()
+        c._channel_refresh_task = None
+        c._active_instances = set()
+        c._instance_owners = {}
+        c._register_instance = mock.AsyncMock() if is_async else mock.Mock()
+        c._remove_instance_registration = mock.Mock()
+        c._resolve_principal = lambda: "svc@test-project.iam.gserviceaccount.com"
+        c._resolve_credential_type = lambda: "service_account"
+        c.transport = mock.AsyncMock() if is_async else mock.Mock()
+        return c
+
+    @staticmethod
+    def _make_daemon_factory():
         from google.cloud.bigtable.data._accelerator._daemon import AcceleratorDaemon
 
-        t = _bare_target()
-        t.client.project = "p"
-        t.instance_id = "i"
-        t.app_profile_id = None
-        t.client._accelerator_flags = []
-        t.client._accelerator_env = {}
-        t._accelerator_daemon = None
-        t._accelerator_client = None
+        daemons = []
 
-        fake_daemon = mock.Mock(spec=AcceleratorDaemon)
-        fake_daemon.uds_path = "/tmp/fake-sock"
-        captured = {}
+        def _factory(cli_flags=(), **kwargs):
+            d = mock.Mock(spec=AcceleratorDaemon)
+            idx = len(daemons) + 1
+            d.pid = 1000 + idx
+            d.uds_path = f"/tmp/fake-sock-{idx}"
+            d.auth_secret = f"secret-{idx}"
+            d.is_running = True
+            d._cli_flags = list(cli_flags)
+            d.read_identity.return_value = {
+                "principal": "svc@test-project.iam.gserviceaccount.com",
+                "type": "service_account",
+                "scopes": ["https://www.googleapis.com/auth/bigtable.data"],
+            }
+            daemons.append(d)
+            return d
 
-        def capture_daemon(cli_flags=(), **kwargs):
-            captured["cli_flags"] = list(cli_flags)
-            return fake_daemon
+        return daemons, _factory
+
+    def test_sync_client_shares_single_daemon_across_all_targets(self):
+        from google.cloud.bigtable.data._sync_autogen import client as sync_mod
+
+        fake_client = self._make_shared_fake_client(is_async=False)
+        daemons, daemon_factory = self._make_daemon_factory()
+        clients = []
+        monitors = []
+
+        def client_factory(uds_path, secret):
+            c = mock.Mock(uds_path=uds_path)
+            clients.append(c)
+            return c
+
+        def monitor_factory(accel_client, breaker):
+            m = mock.Mock()
+            m._closed = mock.Mock()
+            m._closed.is_set.return_value = False
+            monitors.append(m)
+            return m
 
         with (
-            mock.patch(
-                "google.cloud.bigtable.data._async.client.AcceleratorDaemon",
-                side_effect=capture_daemon,
+            mock.patch.object(
+                sync_mod, "AcceleratorDaemon", side_effect=daemon_factory
             ),
-            mock.patch(
-                "google.cloud.bigtable.data._async.client.AcceleratorClientType",
+            mock.patch.object(
+                sync_mod, "AcceleratorClientType", side_effect=client_factory
             ),
-            mock.patch.object(t, "_verify_daemon_identity"),
+            mock.patch.object(
+                sync_mod, "AcceleratorHealthMonitorType", side_effect=monitor_factory
+            ),
         ):
-            t._start_accelerator()
+            fake_client._maybe_start_accelerator(explicit=True)
+            t1 = sync_mod.Table(
+                fake_client, "instance-a", "table-1", app_profile_id="prof-1"
+            )
+            t2 = sync_mod.Table(
+                fake_client, "instance-a", "table-2", app_profile_id="prof-2"
+            )
+            t3 = sync_mod.Table(fake_client, "instance-b", "table-1")
+            v1 = sync_mod.AuthorizedView(
+                fake_client,
+                "instance-a",
+                "table-1",
+                "view-1",
+                app_profile_id="prof-1",
+            )
+            mv1 = sync_mod.MaterializedView(
+                fake_client, "instance-a", "mat-view-1", app_profile_id="prof-1"
+            )
 
-        assert "--app-profile" not in captured["cli_flags"]
+        assert len(daemons) == 1
+        assert len(clients) == 1
+        assert len(monitors) == 1
+        shared_daemon = daemons[0]
+        shared_client = clients[0]
+        shared_monitor = monitors[0]
+        shared_daemon.start.assert_called_once()
+        shared_monitor.start.assert_called_once()
+
+        for target in (t1, t2, t3, v1, mv1):
+            assert target._accelerator_daemon is shared_daemon
+            assert target._accelerator_client is shared_client
+            assert target._accelerator_health is shared_monitor
+            assert target._accelerator_breaker is fake_client._accelerator_breaker
+            assert target._use_accelerator("read_row") is True
+
+        # Closing individual targets does NOT tear down the client's daemon or
+        # trip the client-level breaker.
+        for target in (t1, t2, v1, mv1):
+            target.close()
+
+        assert t3._accelerator_breaker.is_tripped is False
+        assert t3._use_accelerator("read_row") is True
+        shared_daemon.close.assert_not_called()
+        shared_client.close.assert_not_called()
+        shared_monitor.close.assert_not_called()
+
+        # Closing the client trips the breaker and tears down the daemon.
+        fake_client.close()
+        assert fake_client._accelerator_breaker.is_tripped is True
+        assert t3._use_accelerator("read_row") is False
+        shared_monitor.close.assert_called_once()
+        shared_client.close.assert_called_once()
+        shared_daemon.close.assert_called_once()
+
+    def test_async_client_shares_single_daemon_across_all_targets(self):
+        from google.cloud.bigtable.data._async import client as async_mod
+
+        async def _coro():
+            fake_client = self._make_shared_fake_client(is_async=True)
+            daemons, daemon_factory = self._make_daemon_factory()
+
+            def client_factory(uds_path, secret):
+                c = mock.AsyncMock()
+                c.uds_path = uds_path
+                return c
+
+            def monitor_factory(accel_client, breaker):
+                m = mock.AsyncMock()
+                m.start = mock.Mock()
+                m.request_stop = mock.Mock()
+                m._closed = mock.Mock()
+                m._closed.is_set.return_value = False
+                return m
+
+            with (
+                mock.patch.object(
+                    async_mod, "AcceleratorDaemon", side_effect=daemon_factory
+                ),
+                mock.patch.object(
+                    async_mod, "AcceleratorClientType", side_effect=client_factory
+                ),
+                mock.patch.object(
+                    async_mod,
+                    "AcceleratorHealthMonitorType",
+                    side_effect=monitor_factory,
+                ),
+            ):
+                fake_client._maybe_start_accelerator(explicit=True)
+                t1 = async_mod.TableAsync(fake_client, "instance-a", "table-1")
+                t2 = async_mod.TableAsync(
+                    fake_client, "instance-a", "table-2", app_profile_id="prof-2"
+                )
+                v1 = async_mod.AuthorizedViewAsync(
+                    fake_client, "instance-a", "table-1", "view-1"
+                )
+                mv1 = async_mod.MaterializedViewAsync(
+                    fake_client, "instance-b", "mat-view-1"
+                )
+
+            assert len(daemons) == 1
+            shared_daemon = daemons[0]
+            for target in (t1, t2, v1, mv1):
+                assert target._accelerator_daemon is shared_daemon
+                assert target._accelerator_client is fake_client._accelerator_client
+                assert target._accelerator_breaker is fake_client._accelerator_breaker
+
+            # Closing targets leaves the client's daemon running.
+            for target in (t1, t2, v1, mv1):
+                await target.close()
+            shared_daemon.close.assert_not_called()
+
+            # Closing the client tears down the daemon once.
+            await fake_client.close()
+            shared_daemon.close.assert_called_once()
+
+        self._run(_coro())
+
+    def test_unimplemented_on_one_instance_does_not_disable_other_instances(self):
+        from google.cloud.bigtable.data._accelerator._fallback import (
+            _AcceleratorFallback,
+        )
+        from google.cloud.bigtable.data._sync_autogen import client as sync_mod
+        from google.cloud.bigtable.data.read_rows_query import ReadRowsQuery
+
+        fake_client = self._make_shared_fake_client(is_async=False)
+        daemons, daemon_factory = self._make_daemon_factory()
+
+        def client_factory(uds_path, secret):
+            c = mock.Mock(uds_path=uds_path)
+            c.read_rows.side_effect = _FakeRpcError(
+                StatusCode.UNIMPLEMENTED, "no working sessions"
+            )
+            return c
+
+        def monitor_factory(accel_client, breaker):
+            m = mock.Mock()
+            m._closed = mock.Mock()
+            m._closed.is_set.return_value = False
+            return m
+
+        with (
+            mock.patch.object(
+                sync_mod, "AcceleratorDaemon", side_effect=daemon_factory
+            ),
+            mock.patch.object(
+                sync_mod, "AcceleratorClientType", side_effect=client_factory
+            ),
+            mock.patch.object(
+                sync_mod,
+                "AcceleratorHealthMonitorType",
+                side_effect=monitor_factory,
+            ),
+        ):
+            fake_client._maybe_start_accelerator(explicit=True)
+            t_a = sync_mod.Table(fake_client, "instance-a", "table-a")
+            t_a2 = sync_mod.Table(fake_client, "instance-a", "table-a2")
+            t_b = sync_mod.Table(fake_client, "instance-b", "table-b")
+
+        assert t_a._use_accelerator("read_row") is True
+        assert t_a2._use_accelerator("read_row") is True
+        assert t_b._use_accelerator("read_row") is True
+
+        query = ReadRowsQuery(row_keys=b"key1", limit=1)
+        with pytest.raises(_AcceleratorFallback):
+            t_a._read_row_via_accelerator(query, 30.0)
+
+        # Both tables on instance-a fall back, while instance-b stays enabled.
+        assert t_a._use_accelerator("read_row") is False
+        assert t_a2._use_accelerator("read_row") is False
+        assert t_b._use_accelerator("read_row") is True
+        assert fake_client._accelerator_breaker.is_tripped is False
+
+        # Daemon death still trips all instances on the client.
+        daemons[0].is_running = False
+        with pytest.raises(_AcceleratorFallback):
+            t_b._read_row_via_accelerator(query, 30.0)
+        assert t_b._use_accelerator("read_row") is False
+        assert fake_client._accelerator_breaker.is_tripped is True
 
 
 # ---------------------------------------------------------------------------

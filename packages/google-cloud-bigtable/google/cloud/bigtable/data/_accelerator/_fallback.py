@@ -62,36 +62,41 @@ class _AcceleratorFallback(Exception):
 class AcceleratorBreaker:
     """Tracks accelerator health and decides when to stop using it.
 
-    One instance per Table. Thread-safe so the generated sync client can share a
-    Table across threads. There are two independent reasons to bypass, and they
-    differ in whether they can be undone:
+    One instance per client. Thread-safe so the generated sync client can share
+    a client across threads. There are three independent reasons to bypass, and
+    they differ in scope and whether they can be undone:
 
-    * **Tripped** — permanent. The first ``UNIMPLEMENTED`` reply (the daemon
-      understands the RPC shape but has no working sessions), or an explicit
-      :meth:`trip` when the daemon subprocess is found dead. Neither condition
-      recovers, so the accelerator is abandoned for the life of the Table.
-    * **Degraded** — reversible. Set by the health monitor when the daemon stops
-      answering its own health check promptly (see
+    * **Tripped (client-wide)** — permanent. An explicit :meth:`trip` when the
+      daemon subprocess is found dead, an :class:`InvalidChunk` error, or
+      client shutdown. Never recovers, so the accelerator is abandoned for the
+      life of the client.
+    * **Tripped (per-instance)** — permanent for one ``instance_id``. The first
+      ``UNIMPLEMENTED`` reply for an instance (session serving is configured
+      per instance, so another instance on the same client can still be
+      accelerated).
+    * **Degraded (client-wide)** — reversible. Set by the health monitor when
+      the daemon stops answering its own health check promptly (see
       ``_async/_accelerator_health.py``). A daemon starved of CPU recovers when
       the load that starved it goes away, so this must clear again — routing
       permanently away from the accelerator on one bad minute would be a far
       worse outcome than the slow calls it avoided.
 
-    Keeping the two flags separate is what makes that safe: :meth:`set_degraded`
-    can never resurrect an accelerator that :meth:`trip` has given up on. Each
-    flag is its own :class:`threading.Event`, so :meth:`bypass` — which runs on
-    every routed RPC — stays a pair of lock-free reads. The two are never read
-    as a pair: either one being set already means bypass.
+    Keeping these flags separate is what makes that safe: :meth:`set_degraded`
+    can never resurrect an accelerator (or instance) that :meth:`trip` or
+    :meth:`trip_instance` has given up on.
     """
 
     def __init__(self):
         self._tripped = threading.Event()
         self._degraded = threading.Event()
         self._trip_lock = threading.Lock()
+        self._tripped_instances: frozenset[str] = frozenset()
 
-    def bypass(self) -> bool:
+    def bypass(self, instance_id: str | None = None) -> bool:
         """Whether the accelerator should be skipped for calls made right now."""
-        return self._tripped.is_set() or self._degraded.is_set()
+        if self._tripped.is_set() or self._degraded.is_set():
+            return True
+        return instance_id is not None and instance_id in self._tripped_instances
 
     def trip(self) -> bool:
         """Permanently bypass the accelerator (e.g. the daemon process died).
@@ -106,6 +111,24 @@ class AcceleratorBreaker:
                 return False
             self._tripped.set()
             return True
+
+    def trip_instance(self, instance_id: str) -> bool:
+        """Permanently bypass the accelerator for ``instance_id`` only.
+
+        Returns ``True`` on the first call that trips ``instance_id``, and
+        ``False`` if ``instance_id`` was already tripped.
+        """
+        if instance_id in self._tripped_instances:
+            return False
+        with self._trip_lock:
+            if instance_id in self._tripped_instances:
+                return False
+            self._tripped_instances = self._tripped_instances | {instance_id}
+            return True
+
+    def is_instance_tripped(self, instance_id: str) -> bool:
+        """Whether ``instance_id`` has been permanently bypassed."""
+        return instance_id in self._tripped_instances
 
     @property
     def is_tripped(self) -> bool:
@@ -154,6 +177,7 @@ def handle_accelerator_error(
     daemon: "AcceleratorDaemon | None",
     breaker: AcceleratorBreaker,
     is_idempotent: bool = True,
+    instance_id: str | None = None,
 ) -> None:
     """Classify an exception raised by an accelerator-routed RPC.
 
@@ -199,10 +223,19 @@ def handle_accelerator_error(
         # as a fallback; let it propagate unchanged.
         raise exc
     if _grpc_code(exc) == StatusCode.UNIMPLEMENTED:
-        # The daemon only replies UNIMPLEMENTED once it has no working sessions,
-        # a persistent condition, so trip the breaker and fall back immediately
-        # rather than re-dialing on every subsequent call.
-        if breaker.trip():
+        # The daemon replies UNIMPLEMENTED when it has no working sessions for
+        # the target instance, a persistent condition, so trip the breaker for
+        # that instance (or client-wide if no instance_id was provided) and
+        # fall back immediately rather than re-dialing on every subsequent call.
+        if instance_id is not None:
+            if breaker.trip_instance(instance_id):
+                _LOGGER.warning(
+                    "Accelerator daemon replied UNIMPLEMENTED for instance %s; "
+                    "permanently falling back to the native Bigtable client for "
+                    "this instance.",
+                    instance_id,
+                )
+        elif breaker.trip():
             _LOGGER.warning(
                 "Accelerator daemon replied UNIMPLEMENTED; permanently falling back "
                 "to the native Bigtable client for this table."

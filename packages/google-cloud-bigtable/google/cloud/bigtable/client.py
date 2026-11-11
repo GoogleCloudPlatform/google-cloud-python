@@ -365,6 +365,7 @@ class Client(ClientWithProject):
                 project=self.project,
                 credentials=self._credentials,
                 client_options=self._client_options,
+                use_accelerator=False,
                 _client_info=client_info,
                 _disable_background_refresh=True,
             )
