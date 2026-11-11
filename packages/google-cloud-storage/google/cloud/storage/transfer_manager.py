@@ -20,6 +20,7 @@ import copyreg
 import functools
 import inspect
 import io
+import logging
 import os
 import pickle
 import struct
@@ -35,6 +36,8 @@ from google.cloud.storage.blob import _get_host_name, _quote
 from google.cloud.storage.constants import _DEFAULT_TIMEOUT
 from google.cloud.storage.exceptions import DataCorruption, InvalidPathError
 from google.cloud.storage.retry import DEFAULT_RETRY
+
+_logger = logging.getLogger(__name__)
 
 TM_DEFAULT_CHUNK_SIZE = 32 * 1024 * 1024
 DEFAULT_MAX_WORKERS = 8
@@ -1198,7 +1201,7 @@ def upload_chunks_concurrently(
 
     container = XMLMPUContainer(url, filename, headers=headers, retry=retry)
 
-    container.initiate(transport=transport, content_type=content_type)
+    container.initiate(transport=transport, content_type=content_type, timeout=timeout)
     upload_id = container.upload_id
 
     size = os.path.getsize(filename)
@@ -1228,6 +1231,7 @@ def upload_chunks_concurrently(
                     checksum=checksum,
                     headers=headers.copy(),
                     retry=retry,
+                    timeout=timeout,
                 )
             )
 
@@ -1241,9 +1245,13 @@ def upload_chunks_concurrently(
             part_number, etag = future.result()
             container.register_part(part_number, etag)
 
-        container.finalize(blob._get_transport(client))
+        container.finalize(blob._get_transport(client), timeout=timeout)
     except Exception:
-        container.cancel(blob._get_transport(client))
+        # A failed cleanup must not hide the error that caused it.
+        try:
+            container.cancel(blob._get_transport(client), timeout=timeout)
+        except Exception as exc:
+            _logger.warning("Failed to cancel multipart upload %s: %s", upload_id, exc)
         raise
 
 
@@ -1258,6 +1266,7 @@ def _upload_part(
     checksum,
     headers,
     retry,
+    timeout,
 ):
     """Helper function that runs inside a thread or subprocess to upload a part.
 
@@ -1280,7 +1289,7 @@ def _upload_part(
         headers=headers,
         retry=retry,
     )
-    part.upload(client._http)
+    part.upload(client._http, timeout=timeout)
     return (part_number, part.etag)
 
 

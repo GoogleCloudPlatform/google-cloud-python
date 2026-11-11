@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import logging
 import os
 import pickle
 import tempfile
@@ -21,6 +22,7 @@ import pytest
 from google.api_core import exceptions
 
 from google.cloud.storage import Blob, Client, transfer_manager
+from google.cloud.storage.constants import _DEFAULT_TIMEOUT
 from google.cloud.storage.exceptions import DataCorruption
 from google.cloud.storage.retry import DEFAULT_RETRY
 
@@ -1031,13 +1033,17 @@ def test_upload_chunks_concurrently():
             worker_type=transfer_manager.THREAD,
         )
         container_mock.initiate.assert_called_once_with(
-            transport=transport, content_type=blob.content_type
+            transport=transport,
+            content_type=blob.content_type,
+            timeout=_DEFAULT_TIMEOUT,
         )
         container_mock.register_part.assert_any_call(1, ETAG)
         container_mock.register_part.assert_any_call(2, ETAG)
-        container_mock.finalize.assert_called_once_with(bucket.client._http)
+        container_mock.finalize.assert_called_once_with(
+            bucket.client._http, timeout=_DEFAULT_TIMEOUT
+        )
 
-        part_mock.upload.assert_called_with(transport)
+        part_mock.upload.assert_called_with(transport, timeout=_DEFAULT_TIMEOUT)
 
 
 def test_upload_chunks_concurrently_quotes_urls():
@@ -1079,17 +1085,21 @@ def test_upload_chunks_concurrently_quotes_urls():
         )
 
         container_mock.initiate.assert_called_once_with(
-            transport=transport, content_type=blob.content_type
+            transport=transport,
+            content_type=blob.content_type,
+            timeout=_DEFAULT_TIMEOUT,
         )
         container_mock.register_part.assert_any_call(1, ETAG)
         container_mock.register_part.assert_any_call(2, ETAG)
-        container_mock.finalize.assert_called_once_with(bucket.client._http)
+        container_mock.finalize.assert_called_once_with(
+            bucket.client._http, timeout=_DEFAULT_TIMEOUT
+        )
 
         container_cls_mock.assert_called_once_with(
             quoted_url, FILENAME, headers=mock.ANY, retry=DEFAULT_RETRY
         )
 
-        part_mock.upload.assert_called_with(transport)
+        part_mock.upload.assert_called_with(transport, timeout=_DEFAULT_TIMEOUT)
 
 
 def test_upload_chunks_concurrently_passes_concurrency_options():
@@ -1133,10 +1143,139 @@ def test_upload_chunks_concurrently_passes_concurrency_options():
             pass  # The futures don't actually work, so we expect this to abort.
             # Conveniently, that gives us a chance to test the auto-delete
             # exception handling feature.
-        container_mock.cancel.assert_called_once_with(transport)
+        container_mock.cancel.assert_called_once_with(
+            transport, timeout=_DEFAULT_TIMEOUT
+        )
 
         pool_patch.assert_called_with(max_workers=MAX_WORKERS)
         wait_patch.assert_called_with(mock.ANY, timeout=DEADLINE, return_when=mock.ANY)
+
+
+def test_upload_chunks_concurrently_passes_timeout():
+    bucket = mock.Mock()
+    bucket.name = "bucket"
+    bucket.client = _PickleableMockClient(identify_as_client=True)
+    transport = bucket.client._http
+    bucket.user_project = None
+
+    blob = Blob("blob", bucket)
+    blob.content_type = FAKE_CONTENT_TYPE
+
+    FILENAME = "file_a.txt"
+    SIZE = 2048
+    TIMEOUT = (3, 7)
+
+    container_mock = mock.Mock()
+    container_mock.upload_id = "abcd"
+    part_mock = mock.Mock()
+    part_mock.etag = "efgh"
+
+    with (
+        mock.patch("os.path.getsize", return_value=SIZE),
+        mock.patch(
+            "google.cloud.storage.transfer_manager.XMLMPUContainer",
+            return_value=container_mock,
+        ),
+        mock.patch(
+            "google.cloud.storage.transfer_manager.XMLMPUPart", return_value=part_mock
+        ),
+    ):
+        transfer_manager.upload_chunks_concurrently(
+            FILENAME,
+            blob,
+            chunk_size=SIZE // 2,
+            worker_type=transfer_manager.THREAD,
+            timeout=TIMEOUT,
+        )
+        container_mock.initiate.assert_called_once_with(
+            transport=transport, content_type=blob.content_type, timeout=TIMEOUT
+        )
+        assert part_mock.upload.call_args_list == [
+            mock.call(transport, timeout=TIMEOUT),
+            mock.call(transport, timeout=TIMEOUT),
+        ]
+        container_mock.finalize.assert_called_once_with(transport, timeout=TIMEOUT)
+
+
+def test_upload_chunks_concurrently_passes_timeout_to_cancel():
+    bucket = mock.Mock()
+    bucket.name = "bucket"
+    bucket.client = _PickleableMockClient(identify_as_client=True)
+    transport = bucket.client._http
+    bucket.user_project = None
+
+    blob = Blob("blob", bucket)
+
+    FILENAME = "file_a.txt"
+    SIZE = 2048
+    TIMEOUT = 15
+
+    container_mock = mock.Mock()
+    container_mock.upload_id = "abcd"
+    part_mock = mock.Mock()
+    part_mock.upload.side_effect = exceptions.ServiceUnavailable("part failed")
+
+    with (
+        mock.patch("os.path.getsize", return_value=SIZE),
+        mock.patch(
+            "google.cloud.storage.transfer_manager.XMLMPUContainer",
+            return_value=container_mock,
+        ),
+        mock.patch(
+            "google.cloud.storage.transfer_manager.XMLMPUPart", return_value=part_mock
+        ),
+    ):
+        with pytest.raises(exceptions.ServiceUnavailable):
+            transfer_manager.upload_chunks_concurrently(
+                FILENAME,
+                blob,
+                chunk_size=SIZE // 2,
+                worker_type=transfer_manager.THREAD,
+                timeout=TIMEOUT,
+            )
+        container_mock.cancel.assert_called_once_with(transport, timeout=TIMEOUT)
+        container_mock.finalize.assert_not_called()
+
+
+def test_upload_chunks_concurrently_keeps_original_error_when_cancel_fails(caplog):
+    bucket = mock.Mock()
+    bucket.name = "bucket"
+    bucket.client = _PickleableMockClient(identify_as_client=True)
+    bucket.user_project = None
+
+    blob = Blob("blob", bucket)
+
+    FILENAME = "file_a.txt"
+    SIZE = 2048
+
+    container_mock = mock.Mock()
+    container_mock.upload_id = "abcd"
+    container_mock.cancel.side_effect = exceptions.DeadlineExceeded("cancel failed")
+    part_mock = mock.Mock()
+    part_mock.upload.side_effect = exceptions.ServiceUnavailable("part failed")
+
+    with (
+        mock.patch("os.path.getsize", return_value=SIZE),
+        mock.patch(
+            "google.cloud.storage.transfer_manager.XMLMPUContainer",
+            return_value=container_mock,
+        ),
+        mock.patch(
+            "google.cloud.storage.transfer_manager.XMLMPUPart", return_value=part_mock
+        ),
+    ):
+        with caplog.at_level(logging.WARNING, logger=transfer_manager.__name__):
+            with pytest.raises(exceptions.ServiceUnavailable):
+                transfer_manager.upload_chunks_concurrently(
+                    FILENAME,
+                    blob,
+                    chunk_size=SIZE // 2,
+                    worker_type=transfer_manager.THREAD,
+                )
+
+    container_mock.cancel.assert_called_once()
+    assert "abcd" in caplog.text
+    assert "cancel failed" in caplog.text
 
 
 def test_upload_chunks_concurrently_with_metadata_and_encryption():
@@ -1239,12 +1378,16 @@ def test_upload_chunks_concurrently_with_metadata_and_encryption():
             URL, FILENAME, headers=expected_headers, retry=DEFAULT_RETRY
         )
         container_mock.initiate.assert_called_once_with(
-            transport=transport, content_type=blob.content_type
+            transport=transport,
+            content_type=blob.content_type,
+            timeout=_DEFAULT_TIMEOUT,
         )
         container_mock.register_part.assert_any_call(1, ETAG)
         container_mock.register_part.assert_any_call(2, ETAG)
-        container_mock.finalize.assert_called_once_with(transport)
-        part_mock.upload.assert_called_with(blob.client._http)
+        container_mock.finalize.assert_called_once_with(
+            transport, timeout=_DEFAULT_TIMEOUT
+        )
+        part_mock.upload.assert_called_with(blob.client._http, timeout=_DEFAULT_TIMEOUT)
 
 
 class _PickleableMockBlob:
@@ -1387,8 +1530,9 @@ def test__upload_part():
             None,
             {"key", "value"},
             retry=DEFAULT_RETRY,
+            timeout=(3, 7),
         )
-        part.upload.assert_called_once()
+        part.upload.assert_called_once_with(mock.ANY, timeout=(3, 7))
 
         assert result == (1, ETAG)
 
