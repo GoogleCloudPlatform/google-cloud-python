@@ -5779,15 +5779,28 @@ def test_testing_base_transport_with_adc():
         transport = transports.TestingTransport()
         adc.assert_called_once()
 
-    # Test _ignore_credentials=True skips ADC and host without port defaults to :443.
+
+# Test _ignore_credentials=True skips Application Default Credentials (ADC)
+# and a host without a port defaults to :443.
+
+@pytest.mark.parametrize(
+    "host,expected_host",
+    [
+        pytest.param("squid.clam.whelk", "squid.clam.whelk:443", id="host_without_port_defaults_to_443"),
+        pytest.param("squid.clam.whelk:8080", "squid.clam.whelk:8080", id="host_with_port_preserved"),
+    ],
+)
+def test_testing_base_transport_ignore_credentials(host, expected_host):
     class IgnoreCredsTransport(transports.TestingTransport):
         _ignore_credentials = True
 
-    with mock.patch.object(google.auth, 'default', autospec=True) as adc:
-        transport = IgnoreCredsTransport(host="squid.clam.whelk")
+    with mock.patch.object(
+        google.auth, "default", autospec=True, spec_set=True
+    ) as adc:
+        transport = IgnoreCredsTransport(host=host)
         adc.assert_not_called()
         assert transport._credentials is None
-        assert transport.host == "squid.clam.whelk:443"
+        assert transport.host == expected_host
 
 
 def test_testing_auth_adc():
