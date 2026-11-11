@@ -940,27 +940,31 @@ class BigtableDataClientAsync(ClientWithProject):
         # Accelerator teardown goes first, so that nothing that can raise runs
         # ahead of it and strands the daemon subprocess. Within it, the monitor
         # stops before the channel it probes over goes away.
-        if self._accelerator_health is not None:
-            try:
-                await self._accelerator_health.close()
-            except Exception as exc:
-                _LOGGER.warning("Failed to close accelerator health monitor: %s", exc)
-            finally:
-                self._accelerator_health = None
-        if self._accelerator_client is not None:
-            try:
-                await self._accelerator_client.close()
-            except Exception as exc:
-                _LOGGER.warning("Failed to close accelerator client: %s", exc)
-            finally:
-                self._accelerator_client = None
-        if self._accelerator_daemon is not None:
-            try:
-                self._accelerator_daemon.close()
-            except Exception as exc:
-                _LOGGER.warning("Failed to close accelerator daemon: %s", exc)
-            finally:
-                self._accelerator_daemon = None
+        try:
+            if self._accelerator_health is not None:
+                try:
+                    await self._accelerator_health.close()
+                except Exception as exc:
+                    _LOGGER.warning(
+                        "Failed to close accelerator health monitor: %s", exc
+                    )
+                finally:
+                    self._accelerator_health = None
+            if self._accelerator_client is not None:
+                try:
+                    await self._accelerator_client.close()
+                except Exception as exc:
+                    _LOGGER.warning("Failed to close accelerator client: %s", exc)
+                finally:
+                    self._accelerator_client = None
+        finally:
+            if self._accelerator_daemon is not None:
+                try:
+                    self._accelerator_daemon.close()
+                except Exception as exc:
+                    _LOGGER.warning("Failed to close accelerator daemon: %s", exc)
+                finally:
+                    self._accelerator_daemon = None
         if self._channel_refresh_task is not None:
             self._channel_refresh_task.cancel()
             await CrossSync.wait([self._channel_refresh_task], timeout=timeout)
