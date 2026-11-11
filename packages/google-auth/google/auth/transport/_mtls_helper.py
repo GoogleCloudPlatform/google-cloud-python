@@ -953,8 +953,9 @@ def check_use_client_cert():
     /var/run/secrets/workload-spiffe-credentials/x509.credential-bundle.private-key.pem.
     When GOOGLE_API_CERTIFICATE_CONFIG points to the well-known SPIFFE
     directory (/var/run/secrets/workload-spiffe-credentials), this returns True
-    without waiting for the file to exist on disk so startup polling can run
-    when credentials are loaded.
+    while the file is missing, empty, or not yet valid JSON so startup polling
+    can run when credentials are loaded. Once it parses, the "workload" check
+    above applies.
     Otherwise, it returns False.
 
     Returns:
@@ -965,7 +966,10 @@ def check_use_client_cert():
         return env_override
 
     # Auto-enablement checks (when GOOGLE_API_USE_CLIENT_CERTIFICATE is not set)
-    if _get_spiffe_polling_config_path() is not None:
+    spiffe_config_path = _get_spiffe_polling_config_path()
+    # Before the SPIFFE config is mounted, assume it will provide a cert and let
+    # the loader poll for it.
+    if spiffe_config_path is not None and not path.exists(spiffe_config_path):
         return True
 
     # Check if a workload config file exists.
@@ -976,6 +980,10 @@ def check_use_client_cert():
             with open(cert_path, "r") as f:
                 content = json.load(f)
         except (FileNotFoundError, OSError, json.JSONDecodeError) as e:
+            if spiffe_config_path is not None and isinstance(e, json.JSONDecodeError):
+                # The SPIFFE config is written in place, so it can be empty or
+                # partially written at startup. Let the loader poll for it.
+                return True
             _LOGGER.debug(
                 "mTLS auto-enablement failed: Could not read/parse certificate file at %s. Error: %s",
                 cert_path,
