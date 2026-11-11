@@ -14,20 +14,19 @@
 #
 """Client-side fallback policy for accelerator-routed RPCs.
 
-A daemon that cannot open any sessions replies ``UNIMPLEMENTED``, and the routing
-layer transparently retries the call on the native client. The first
-``UNIMPLEMENTED`` reply trips a sticky breaker so a persistently-degraded daemon
-stops being dialed at all. A daemon whose subprocess has died mid-flight trips
-the breaker immediately — it will never recover.
+The accelerator daemon handles session-to-classic fallback internally (for
+instance, when ``session_load <= 1`` or when the session backend replies
+``UNIMPLEMENTED``). On the Python side, fallback to the native client only
+occurs when the Go binary cannot be started or when the healthcheck to the
+daemon fails (including when the daemon subprocess dies mid-flight).
 
-The same breaker also carries a reversible "degraded" flag, set by the health
-monitor when the daemon is up but too starved to answer its own health check;
-see :class:`AcceleratorBreaker`.
+The breaker carries a permanent "tripped" flag (set when the daemon subprocess
+dies or on client teardown) and a reversible "degraded" flag (set by the health
+monitor when the daemon fails consecutive health checks); see
+:class:`AcceleratorBreaker`.
 
-Any other gRPC error is a real, daemon-served result the native client would
-reproduce (the daemon owns retries, so it has already exhausted them), so it is
-translated to the corresponding ``google.api_core`` exception and raised without
-falling back.
+Any gRPC error returned by a running daemon is translated to the corresponding
+``google.api_core`` exception and raised without falling back.
 
 This module is plain sync-only logic shared verbatim by the async and generated
 sync clients; ``grpc.RpcError`` is the common base of both ``grpc.RpcError`` and
@@ -42,8 +41,6 @@ from typing import TYPE_CHECKING
 
 from google.api_core import exceptions as core_exceptions
 from grpc import RpcError, StatusCode
-
-from google.cloud.bigtable.data.exceptions import InvalidChunk
 
 if TYPE_CHECKING:
     from google.cloud.bigtable.data._accelerator._daemon import AcceleratorDaemon
@@ -63,40 +60,34 @@ class AcceleratorBreaker:
     """Tracks accelerator health and decides when to stop using it.
 
     One instance per client. Thread-safe so the generated sync client can share
-    a client across threads. There are three independent reasons to bypass, and
-    they differ in scope and whether they can be undone:
+    a client across threads. There are two independent reasons to bypass, and
+    they differ in whether they can be undone:
 
-    * **Tripped (client-wide)** — permanent. An explicit :meth:`trip` when the
-      daemon subprocess is found dead, an :class:`InvalidChunk` error, or
-      client shutdown. Never recovers, so the accelerator is abandoned for the
-      life of the client.
-    * **Tripped (per-instance)** — permanent for one ``instance_id``. The first
-      ``UNIMPLEMENTED`` reply for an instance (session serving is configured
-      per instance, so another instance on the same client can still be
-      accelerated).
-    * **Degraded (client-wide)** — reversible. Set by the health monitor when
-      the daemon stops answering its own health check promptly (see
+    * **Tripped** — permanent. Set via :meth:`trip` when the daemon subprocess
+      is found dead or when the client closes. Never recovers, so the
+      accelerator is abandoned for the life of the client.
+    * **Degraded** — reversible. Set by the health monitor when the daemon stops
+      answering its own health check promptly (see
       ``_async/_accelerator_health.py``). A daemon starved of CPU recovers when
       the load that starved it goes away, so this must clear again — routing
       permanently away from the accelerator on one bad minute would be a far
       worse outcome than the slow calls it avoided.
 
-    Keeping these flags separate is what makes that safe: :meth:`set_degraded`
-    can never resurrect an accelerator (or instance) that :meth:`trip` or
-    :meth:`trip_instance` has given up on.
+    Keeping the two flags separate is what makes that safe: :meth:`set_degraded`
+    can never resurrect an accelerator that :meth:`trip` has given up on. Each
+    flag is its own :class:`threading.Event`, so :meth:`bypass` — which runs on
+    every routed RPC — stays a pair of lock-free reads. The two are never read
+    as a pair: either one being set already means bypass.
     """
 
     def __init__(self):
         self._tripped = threading.Event()
         self._degraded = threading.Event()
         self._trip_lock = threading.Lock()
-        self._tripped_instances: frozenset[str] = frozenset()
 
-    def bypass(self, instance_id: str | None = None) -> bool:
+    def bypass(self) -> bool:
         """Whether the accelerator should be skipped for calls made right now."""
-        if self._tripped.is_set() or self._degraded.is_set():
-            return True
-        return instance_id is not None and instance_id in self._tripped_instances
+        return self._tripped.is_set() or self._degraded.is_set()
 
     def trip(self) -> bool:
         """Permanently bypass the accelerator (e.g. the daemon process died).
@@ -111,24 +102,6 @@ class AcceleratorBreaker:
                 return False
             self._tripped.set()
             return True
-
-    def trip_instance(self, instance_id: str) -> bool:
-        """Permanently bypass the accelerator for ``instance_id`` only.
-
-        Returns ``True`` on the first call that trips ``instance_id``, and
-        ``False`` if ``instance_id`` was already tripped.
-        """
-        if instance_id in self._tripped_instances:
-            return False
-        with self._trip_lock:
-            if instance_id in self._tripped_instances:
-                return False
-            self._tripped_instances = self._tripped_instances | {instance_id}
-            return True
-
-    def is_instance_tripped(self, instance_id: str) -> bool:
-        """Whether ``instance_id`` has been permanently bypassed."""
-        return instance_id in self._tripped_instances
 
     @property
     def is_tripped(self) -> bool:
@@ -177,7 +150,6 @@ def handle_accelerator_error(
     daemon: "AcceleratorDaemon | None",
     breaker: AcceleratorBreaker,
     is_idempotent: bool = True,
-    instance_id: str | None = None,
 ) -> None:
     """Classify an exception raised by an accelerator-routed RPC.
 
@@ -187,14 +159,10 @@ def handle_accelerator_error(
 
     * daemon subprocess dead -> trip the breaker; fall back if idempotent, else
       translate and raise (a mid-flight crash may have already committed)
-    * :class:`InvalidChunk` -> trip the breaker, fall back immediately
-    * ``UNIMPLEMENTED`` -> trip the breaker, fall back immediately
-    * any other gRPC error -> translate and raise
+    * any gRPC error -> translate and raise (the daemon handles ``UNIMPLEMENTED``
+      and session load fallback internally)
     * a non-gRPC exception -> re-raise unchanged (never masked as a fallback)
     """
-    # TODO(accelerator): emit a metric here (e.g. a fallback/error counter keyed
-    # by reason: dead-daemon / unimplemented / translated-error) once client-side
-    # accelerator metrics are wired up.
     # A dead subprocess can surface as a channel error under any status code, so
     # check liveness first: the "daemon died mid-flight" case always wins and is
     # never recoverable.
@@ -202,7 +170,7 @@ def handle_accelerator_error(
         if breaker.trip():
             _LOGGER.warning(
                 "Accelerator daemon is no longer running; permanently falling back "
-                "to the native Bigtable client for this table."
+                "to the native Bigtable client."
             )
             _LOGGER.debug("Accelerator daemon failure details", exc_info=exc)
         if not is_idempotent:
@@ -210,35 +178,8 @@ def handle_accelerator_error(
                 raise core_exceptions.from_grpc_error(exc) from exc
             raise exc
         raise _AcceleratorFallback() from exc
-    if isinstance(exc, InvalidChunk):
-        if breaker.trip():
-            _LOGGER.warning(
-                "Accelerator daemon returned an invalid ReadRows chunk; permanently "
-                "falling back to the native Bigtable client for this table."
-            )
-            _LOGGER.debug("Accelerator daemon failure details", exc_info=exc)
-        raise _AcceleratorFallback() from exc
     if not isinstance(exc, RpcError):
         # A bug in our own merge machinery, not a daemon result. Do not mask it
         # as a fallback; let it propagate unchanged.
         raise exc
-    if _grpc_code(exc) == StatusCode.UNIMPLEMENTED:
-        # The daemon replies UNIMPLEMENTED when it has no working sessions for
-        # the target instance, a persistent condition, so trip the breaker for
-        # that instance (or client-wide if no instance_id was provided) and
-        # fall back immediately rather than re-dialing on every subsequent call.
-        if instance_id is not None:
-            if breaker.trip_instance(instance_id):
-                _LOGGER.warning(
-                    "Accelerator daemon replied UNIMPLEMENTED for instance %s; "
-                    "permanently falling back to the native Bigtable client for "
-                    "this instance.",
-                    instance_id,
-                )
-        elif breaker.trip():
-            _LOGGER.warning(
-                "Accelerator daemon replied UNIMPLEMENTED; permanently falling back "
-                "to the native Bigtable client for this table."
-            )
-        raise _AcceleratorFallback() from exc
     raise core_exceptions.from_grpc_error(exc) from exc

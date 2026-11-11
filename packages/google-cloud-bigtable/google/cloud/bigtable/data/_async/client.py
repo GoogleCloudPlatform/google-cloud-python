@@ -1722,7 +1722,7 @@ class _DataApiTargetAsync(abc.ABC):
         return (
             self._accelerator_client is not None
             and is_supported(method_name)
-            and not self._accelerator_breaker.bypass(self.instance_id)
+            and not self._accelerator_breaker.bypass()
         )
 
     def _create_operation(
@@ -1887,7 +1887,6 @@ class _DataApiTargetAsync(abc.ABC):
                 exc,
                 daemon=daemon,
                 breaker=self._accelerator_breaker,
-                instance_id=self.instance_id,
             )
             raise  # unreachable: handle_accelerator_error always raises
         try:
@@ -2268,7 +2267,6 @@ class _DataApiTargetAsync(abc.ABC):
                 daemon=daemon,
                 breaker=self._accelerator_breaker,
                 is_idempotent=_is_mutate_row_idempotent(request),
-                instance_id=self.instance_id,
             )
             raise  # unreachable: handle_accelerator_error always raises
 

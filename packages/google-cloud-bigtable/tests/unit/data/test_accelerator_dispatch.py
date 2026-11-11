@@ -197,7 +197,7 @@ class TestMutateRowViaAccelerator:
         assert result == resp
         client_mock.mutate_row.assert_awaited_once_with(req, timeout=30.0)
 
-    def test_unimplemented_trips_breaker_and_raises_fallback(self):
+    def test_unimplemented_translates_and_raises(self):
         from google.cloud.bigtable_v2.types.bigtable import MutateRowRequest
 
         rpc_exc = _FakeRpcError(StatusCode.UNIMPLEMENTED, "no sessions")
@@ -207,10 +207,9 @@ class TestMutateRowViaAccelerator:
         t = _bare_target(accel_client=client_mock, accel_daemon=daemon)
 
         req = MutateRowRequest()
-        with pytest.raises(_AcceleratorFallback):
+        with pytest.raises(core_exceptions.MethodNotImplemented):
             self._run(t._mutate_row_via_accelerator(req, 30.0))
-        assert t._accelerator_breaker.bypass(t.instance_id)
-        assert not t._accelerator_breaker.bypass("other-instance")
+        assert not t._accelerator_breaker.bypass()
 
     def test_dead_daemon_trips_breaker_and_raises_fallback(self):
         from google.cloud.bigtable_v2.types.bigtable import MutateRowRequest
@@ -322,7 +321,7 @@ class TestReadRowViaAccelerator:
         assert row is None
         client_mock.read_rows.assert_awaited_once()
 
-    def test_unimplemented_trips_breaker_and_raises_fallback(self):
+    def test_unimplemented_translates_and_raises(self):
         from google.cloud.bigtable.data.read_rows_query import ReadRowsQuery
 
         rpc_exc = _FakeRpcError(StatusCode.UNIMPLEMENTED, "no sessions")
@@ -332,10 +331,9 @@ class TestReadRowViaAccelerator:
         t = _bare_target(accel_client=client_mock, accel_daemon=daemon)
 
         query = ReadRowsQuery(row_keys=b"key1", limit=1)
-        with pytest.raises(_AcceleratorFallback):
+        with pytest.raises(core_exceptions.MethodNotImplemented):
             self._run(t._read_row_via_accelerator(query, 30.0))
-        assert t._accelerator_breaker.bypass(t.instance_id)
-        assert not t._accelerator_breaker.bypass("other-instance")
+        assert not t._accelerator_breaker.bypass()
 
     def test_dead_daemon_trips_breaker_and_raises_fallback(self):
         from google.cloud.bigtable.data.read_rows_query import ReadRowsQuery
@@ -378,9 +376,10 @@ class TestReadRowViaAccelerator:
             self._run(t._read_row_via_accelerator(query, 30.0))
         assert not t._accelerator_breaker.bypass()
 
-    def test_invalid_chunk_trips_breaker_and_raises_fallback(self):
+    def test_invalid_chunk_reraises_without_fallback(self):
         from google.protobuf import wrappers_pb2
 
+        from google.cloud.bigtable.data.exceptions import InvalidChunk
         from google.cloud.bigtable.data.read_rows_query import ReadRowsQuery
         from google.cloud.bigtable_v2.types.bigtable import ReadRowsResponse
 
@@ -404,9 +403,9 @@ class TestReadRowViaAccelerator:
         t = _bare_target(accel_client=client_mock, accel_daemon=daemon)
 
         query = ReadRowsQuery(row_keys=b"", limit=1)
-        with pytest.raises(_AcceleratorFallback):
+        with pytest.raises(InvalidChunk):
             self._run(t._read_row_via_accelerator(query, 30.0))
-        assert t._accelerator_breaker.bypass()
+        assert not t._accelerator_breaker.bypass()
 
 
 # ---------------------------------------------------------------------------
@@ -1211,68 +1210,6 @@ class TestSharedAcceleratorPerClient:
             shared_daemon.close.assert_called_once()
 
         self._run(_coro())
-
-    def test_unimplemented_on_one_instance_does_not_disable_other_instances(self):
-        from google.cloud.bigtable.data._accelerator._fallback import (
-            _AcceleratorFallback,
-        )
-        from google.cloud.bigtable.data._sync_autogen import client as sync_mod
-        from google.cloud.bigtable.data.read_rows_query import ReadRowsQuery
-
-        fake_client = self._make_shared_fake_client(is_async=False)
-        daemons, daemon_factory = self._make_daemon_factory()
-
-        def client_factory(uds_path, secret):
-            c = mock.Mock(uds_path=uds_path)
-            c.read_rows.side_effect = _FakeRpcError(
-                StatusCode.UNIMPLEMENTED, "no working sessions"
-            )
-            return c
-
-        def monitor_factory(accel_client, breaker):
-            m = mock.Mock()
-            m._closed = mock.Mock()
-            m._closed.is_set.return_value = False
-            return m
-
-        with (
-            mock.patch.object(
-                sync_mod, "AcceleratorDaemon", side_effect=daemon_factory
-            ),
-            mock.patch.object(
-                sync_mod, "AcceleratorClientType", side_effect=client_factory
-            ),
-            mock.patch.object(
-                sync_mod,
-                "AcceleratorHealthMonitorType",
-                side_effect=monitor_factory,
-            ),
-        ):
-            fake_client._maybe_start_accelerator(explicit=True)
-            t_a = sync_mod.Table(fake_client, "instance-a", "table-a")
-            t_a2 = sync_mod.Table(fake_client, "instance-a", "table-a2")
-            t_b = sync_mod.Table(fake_client, "instance-b", "table-b")
-
-        assert t_a._use_accelerator("read_row") is True
-        assert t_a2._use_accelerator("read_row") is True
-        assert t_b._use_accelerator("read_row") is True
-
-        query = ReadRowsQuery(row_keys=b"key1", limit=1)
-        with pytest.raises(_AcceleratorFallback):
-            t_a._read_row_via_accelerator(query, 30.0)
-
-        # Both tables on instance-a fall back, while instance-b stays enabled.
-        assert t_a._use_accelerator("read_row") is False
-        assert t_a2._use_accelerator("read_row") is False
-        assert t_b._use_accelerator("read_row") is True
-        assert fake_client._accelerator_breaker.is_tripped is False
-
-        # Daemon death still trips all instances on the client.
-        daemons[0].is_running = False
-        with pytest.raises(_AcceleratorFallback):
-            t_b._read_row_via_accelerator(query, 30.0)
-        assert t_b._use_accelerator("read_row") is False
-        assert fake_client._accelerator_breaker.is_tripped is True
 
 
 # ---------------------------------------------------------------------------
