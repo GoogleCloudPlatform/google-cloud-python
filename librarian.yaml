@@ -2477,67 +2477,51 @@ libraries:
     version: 1.7.0
     apis:
       - path: google/shopping/merchant/accounts/v1
-      - path: google/shopping/merchant/accounts/v1beta
     python:
       opt_args_by_api:
         google/shopping/merchant/accounts/v1:
-          - proto-plus-deps=google.shopping.type
-        google/shopping/merchant/accounts/v1beta:
           - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-conversions
     version: 1.5.0
     apis:
       - path: google/shopping/merchant/conversions/v1
-      - path: google/shopping/merchant/conversions/v1beta
     python:
       default_version: v1
   - name: google-shopping-merchant-datasources
     version: 1.6.0
     apis:
       - path: google/shopping/merchant/datasources/v1
-      - path: google/shopping/merchant/datasources/v1beta
     python:
       opt_args_by_api:
         google/shopping/merchant/datasources/v1:
-          - proto-plus-deps=google.shopping.type
-        google/shopping/merchant/datasources/v1beta:
           - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-inventories
     version: 1.7.0
     apis:
       - path: google/shopping/merchant/inventories/v1
-      - path: google/shopping/merchant/inventories/v1beta
     python:
       opt_args_by_api:
         google/shopping/merchant/inventories/v1:
-          - proto-plus-deps=google.shopping.type
-        google/shopping/merchant/inventories/v1beta:
           - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-issueresolution
     version: 1.5.0
     apis:
       - path: google/shopping/merchant/issueresolution/v1
-      - path: google/shopping/merchant/issueresolution/v1beta
     python:
       opt_args_by_api:
         google/shopping/merchant/issueresolution/v1:
-          - proto-plus-deps=google.shopping.type
-        google/shopping/merchant/issueresolution/v1beta:
           - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-lfp
     version: 1.5.0
     apis:
       - path: google/shopping/merchant/lfp/v1
-      - path: google/shopping/merchant/lfp/v1beta
     python:
       opt_args_by_api:
         google/shopping/merchant/lfp/v1:
-          - proto-plus-deps=google.shopping.type
-        google/shopping/merchant/lfp/v1beta:
           - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-loyaltycustomers
@@ -2551,34 +2535,24 @@ libraries:
     version: 1.5.0
     apis:
       - path: google/shopping/merchant/notifications/v1
-      - path: google/shopping/merchant/notifications/v1beta
     python:
-      opt_args_by_api:
-        google/shopping/merchant/notifications/v1beta:
-          - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-ordertracking
     version: 1.5.0
     apis:
       - path: google/shopping/merchant/ordertracking/v1
-      - path: google/shopping/merchant/ordertracking/v1beta
     python:
       opt_args_by_api:
         google/shopping/merchant/ordertracking/v1:
-          - proto-plus-deps=google.shopping.type
-        google/shopping/merchant/ordertracking/v1beta:
           - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-products
     version: 1.9.0
     apis:
       - path: google/shopping/merchant/products/v1
-      - path: google/shopping/merchant/products/v1beta
     python:
       opt_args_by_api:
         google/shopping/merchant/products/v1:
-          - proto-plus-deps=google.shopping.type
-        google/shopping/merchant/products/v1beta:
           - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-productstudio
@@ -2591,26 +2565,21 @@ libraries:
     version: 1.5.0
     apis:
       - path: google/shopping/merchant/promotions/v1
-      - path: google/shopping/merchant/promotions/v1beta
     python:
       opt_args_by_api:
         google/shopping/merchant/promotions/v1:
-          - proto-plus-deps=google.shopping.type
-        google/shopping/merchant/promotions/v1beta:
           - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-quota
     version: 1.7.0
     apis:
       - path: google/shopping/merchant/quota/v1
-      - path: google/shopping/merchant/quota/v1beta
     python:
       default_version: v1
   - name: google-shopping-merchant-reports
     version: 1.6.0
     apis:
       - path: google/shopping/merchant/reports/v1
-      - path: google/shopping/merchant/reports/v1beta
       - path: google/shopping/merchant/reports/v1alpha
     python:
       opt_args_by_api:
@@ -2618,21 +2587,16 @@ libraries:
           - proto-plus-deps=google.shopping.type
         google/shopping/merchant/reports/v1alpha:
           - proto-plus-deps=google.shopping.type
-        google/shopping/merchant/reports/v1beta:
-          - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-reviews
     version: 0.6.2
     apis:
       - path: google/shopping/merchant/reviews/v1
-      - path: google/shopping/merchant/reviews/v1beta
     python:
       opt_args_by_api:
         google/shopping/merchant/reviews/v1:
           - proto-plus-deps=google.shopping.type
-        google/shopping/merchant/reviews/v1beta:
-          - proto-plus-deps=google.shopping.type
-      default_version: v1beta
+      default_version: v1
   - name: google-shopping-type
     version: 1.6.0
     apis:

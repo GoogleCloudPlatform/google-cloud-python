@@ -18,31 +18,13 @@ from google.shopping.merchant_reviews import gapic_version as package_version
 __version__ = package_version.__version__
 
 
-from google.shopping.merchant_reviews_v1beta.services.merchant_reviews_service.async_client import (
-    MerchantReviewsServiceAsyncClient,
-)
-from google.shopping.merchant_reviews_v1beta.services.merchant_reviews_service.client import (
-    MerchantReviewsServiceClient,
-)
-from google.shopping.merchant_reviews_v1beta.services.product_reviews_service.async_client import (
+from google.shopping.merchant_reviews_v1.services.product_reviews_service.async_client import (
     ProductReviewsServiceAsyncClient,
 )
-from google.shopping.merchant_reviews_v1beta.services.product_reviews_service.client import (
+from google.shopping.merchant_reviews_v1.services.product_reviews_service.client import (
     ProductReviewsServiceClient,
 )
-from google.shopping.merchant_reviews_v1beta.types.merchantreviews import (
-    DeleteMerchantReviewRequest,
-    GetMerchantReviewRequest,
-    InsertMerchantReviewRequest,
-    ListMerchantReviewsRequest,
-    ListMerchantReviewsResponse,
-    MerchantReview,
-)
-from google.shopping.merchant_reviews_v1beta.types.merchantreviews_common import (
-    MerchantReviewAttributes,
-    MerchantReviewStatus,
-)
-from google.shopping.merchant_reviews_v1beta.types.productreviews import (
+from google.shopping.merchant_reviews_v1.types.productreviews import (
     DeleteProductReviewRequest,
     GetProductReviewRequest,
     InsertProductReviewRequest,
@@ -50,24 +32,14 @@ from google.shopping.merchant_reviews_v1beta.types.productreviews import (
     ListProductReviewsResponse,
     ProductReview,
 )
-from google.shopping.merchant_reviews_v1beta.types.productreviews_common import (
+from google.shopping.merchant_reviews_v1.types.productreviews_common import (
     ProductReviewAttributes,
     ProductReviewStatus,
 )
 
 __all__ = (
-    "MerchantReviewsServiceClient",
-    "MerchantReviewsServiceAsyncClient",
     "ProductReviewsServiceClient",
     "ProductReviewsServiceAsyncClient",
-    "DeleteMerchantReviewRequest",
-    "GetMerchantReviewRequest",
-    "InsertMerchantReviewRequest",
-    "ListMerchantReviewsRequest",
-    "ListMerchantReviewsResponse",
-    "MerchantReview",
-    "MerchantReviewAttributes",
-    "MerchantReviewStatus",
     "DeleteProductReviewRequest",
     "GetProductReviewRequest",
     "InsertProductReviewRequest",

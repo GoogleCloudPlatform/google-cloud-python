@@ -22,14 +22,6 @@ API Reference
     merchant_reports_v1alpha/services_
     merchant_reports_v1alpha/types_
 
-API Reference
--------------
-.. toctree::
-    :maxdepth: 2
-
-    merchant_reports_v1beta/services_
-    merchant_reports_v1beta/types_
-
 
 Changelog
 ---------
