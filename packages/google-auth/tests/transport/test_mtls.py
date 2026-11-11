@@ -154,7 +154,17 @@ def test_default_client_cert_source(
     # Test bad callback which throws ClientCertError.
     get_client_cert_and_key.side_effect = exceptions.ClientCertError()
     callback = mtls.default_client_cert_source()
-    with pytest.raises(exceptions.ClientCertError):
+    with pytest.raises(exceptions.MutualTLSChannelError) as exc_info:
+        callback()
+    assert isinstance(exc_info.value.__cause__, exceptions.ClientCertError)
+
+    # Test callback when no cert is found.
+    get_client_cert_and_key.side_effect = None
+    get_client_cert_and_key.return_value = (False, None, None)
+    callback = mtls.default_client_cert_source()
+    with pytest.raises(
+        exceptions.MutualTLSChannelError, match="did not provide a certificate"
+    ):
         callback()
 
 
@@ -639,3 +649,41 @@ def test_has_default_client_cert_source_spiffe_config_without_workload(
 
     assert mtls.has_default_client_cert_source() is False
     mock_sleep.assert_not_called()
+
+
+@mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+def test_default_client_cert_source_spiffe_poll_timeout_raises_mtls_channel_error(
+    mock_sleep, spiffe_config_file
+):
+    callback = mtls.default_client_cert_source()
+
+    with pytest.raises(exceptions.MutualTLSChannelError) as exc_info:
+        callback()
+
+    assert isinstance(exc_info.value.__cause__, exceptions.ClientCertError)
+    assert "not ready after 30s" in str(exc_info.value.__cause__)
+    assert mock_sleep.call_count == len(_agent_identity_utils._POLLING_INTERVALS)
+
+
+@mock.patch(
+    "google.auth.transport._mtls_helper._check_config_path",
+    return_value=None,
+    autospec=True,
+)
+@mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+def test_default_client_cert_source_spiffe_config_without_workload_mounts_during_poll(
+    mock_sleep, mock_check_config_path, spiffe_config_file
+):
+    callback = mtls.default_client_cert_source()
+
+    def write_config_without_workload(*args, **kwargs):
+        spiffe_config_file.write_text('{"cert_configs": {}}')
+
+    mock_sleep.side_effect = write_config_without_workload
+
+    with pytest.raises(
+        exceptions.MutualTLSChannelError, match="did not provide a certificate"
+    ):
+        callback()
+
+    assert mock_sleep.call_count == 1

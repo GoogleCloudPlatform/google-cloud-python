@@ -90,7 +90,7 @@ def default_client_cert_source():
             client certificate bytes and private key bytes, both in PEM format.
 
     Raises:
-        google.auth.exceptions.DefaultClientCertSourceError: If the default
+        google.auth.exceptions.MutualTLSChannelError: If the default
             client SSL credentials don't exist or are malformed.
     """
     if not google.auth.transport.mtls.has_default_client_cert_source(
@@ -102,10 +102,19 @@ def default_client_cert_source():
 
     async def callback():
         try:
-            _, cert_bytes, key_bytes = await get_client_cert_and_key()
-        except (OSError, RuntimeError, ValueError) as caught_exc:
+            has_cert, cert_bytes, key_bytes = await get_client_cert_and_key()
+        except (
+            exceptions.ClientCertError,
+            OSError,
+            RuntimeError,
+            ValueError,
+        ) as caught_exc:
             new_exc = exceptions.MutualTLSChannelError(caught_exc)
             raise new_exc from caught_exc
+        if not has_cert:
+            raise exceptions.MutualTLSChannelError(
+                "Default client cert source did not provide a certificate"
+            )
 
         return cert_bytes, key_bytes
 

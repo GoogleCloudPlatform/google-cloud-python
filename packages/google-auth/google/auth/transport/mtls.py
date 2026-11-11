@@ -92,10 +92,19 @@ def default_client_cert_source():
 
     def callback():
         try:
-            _, cert_bytes, key_bytes = _mtls_helper.get_client_cert_and_key()
-        except (OSError, RuntimeError, ValueError) as caught_exc:
+            has_cert, cert_bytes, key_bytes = _mtls_helper.get_client_cert_and_key()
+        except (
+            exceptions.ClientCertError,
+            OSError,
+            RuntimeError,
+            ValueError,
+        ) as caught_exc:
             new_exc = exceptions.MutualTLSChannelError(caught_exc)
             raise new_exc from caught_exc
+        if not has_cert:
+            raise exceptions.MutualTLSChannelError(
+                "Default client cert source did not provide a certificate"
+            )
 
         return cert_bytes, key_bytes
 
