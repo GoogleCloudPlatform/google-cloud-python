@@ -591,22 +591,26 @@ def _extract_workload_paths_from_config(data, absolute_path):
 
 
 def _check_spiffe_file_ready(file_path):
-    """Raises if file_path is missing, not a regular file, or empty."""
+    """Raises if file_path is missing or is an empty regular file.
+
+    A path that exists but is not a regular file is left for the caller's read
+    to report.
+    """
     file_stat = os.stat(file_path)
-    if not stat.S_ISREG(file_stat.st_mode) or file_stat.st_size == 0:
-        raise exceptions.ClientCertError(
-            "File {} is empty or not a regular file".format(file_path)
-        )
+    if stat.S_ISREG(file_stat.st_mode) and file_stat.st_size == 0:
+        raise exceptions.ClientCertError("File {} is empty".format(file_path))
 
 
 def _poll_spiffe_workload_paths(spiffe_config_path):
     """Polls up to 30s for the SPIFFE workload config, cert, and key to be ready.
 
     The config is retried while it is missing, empty, or not yet valid JSON.
-    The cert and key are retried while either is missing, empty, or not a
-    regular file. Their contents are not read here, so a non-empty but invalid
-    PEM is reported by the caller's read without polling. Cert and key paths
-    outside the well-known SPIFFE directory are returned without any check.
+    The cert and key are retried while either is missing or empty. Any other
+    error, such as a permission error or a path that is a directory, is raised
+    right away. Cert and key contents are not read here, so a non-empty but
+    invalid PEM, or a path that is not a regular file, is reported by the
+    caller's read without polling. Cert and key paths outside the well-known
+    SPIFFE directory are returned without any check.
 
     Args:
         spiffe_config_path (str): The expanded SPIFFE certificate config path.
@@ -617,7 +621,9 @@ def _poll_spiffe_workload_paths(spiffe_config_path):
             "workload" section.
 
     Raises:
-        PermissionError: If the config, cert, or key cannot be accessed.
+        OSError: If the config, cert, or key cannot be accessed for a reason
+            other than not existing yet, such as PermissionError or
+            IsADirectoryError.
         google.auth.exceptions.ClientCertError: If the config schema is
             invalid, or the files are not ready after 30s.
     """
@@ -625,9 +631,7 @@ def _poll_spiffe_workload_paths(spiffe_config_path):
     for attempt, interval in enumerate(_agent_identity_utils._POLLING_INTERVALS):
         try:
             data = _load_json_file(spiffe_config_path)
-        except PermissionError:
-            raise
-        except (OSError, exceptions.ClientCertError) as caught_exc:
+        except (FileNotFoundError, exceptions.ClientCertError) as caught_exc:
             last_error = caught_exc
         else:
             cert_path, key_path = _extract_workload_paths_from_config(
@@ -647,9 +651,7 @@ def _poll_spiffe_workload_paths(spiffe_config_path):
                 _check_spiffe_file_ready(cert_path)
                 _check_spiffe_file_ready(key_path)
                 return cert_path, key_path, spiffe_config_path
-            except PermissionError:
-                raise
-            except (OSError, exceptions.ClientCertError) as caught_exc:
+            except (FileNotFoundError, exceptions.ClientCertError) as caught_exc:
                 last_error = caught_exc
 
         if attempt + 1 == _agent_identity_utils._FAST_POLL_CYCLES:

@@ -2688,8 +2688,47 @@ class TestSpiffeWorkloadPolling(object):
 
         cause = exc_info.value.__cause__
         assert isinstance(cause, exceptions.ClientCertError)
-        assert "empty or not a regular file" in str(cause)
+        assert "is empty" in str(cause)
         assert mock_sleep.call_count == len(_agent_identity_utils._POLLING_INTERVALS)
+
+    @pytest.mark.parametrize(
+        "config_relpath,expected_error",
+        [
+            ("", IsADirectoryError),
+            ("certificates.pem/credentials.json", NotADirectoryError),
+        ],
+        ids=["config_is_spiffe_dir", "config_parent_is_file"],
+    )
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_permanent_config_os_error_fails_immediately_without_polling(
+        self, mock_sleep, spiffe_dir, config_relpath, expected_error
+    ):
+        (spiffe_dir / "certificates.pem").write_bytes(pytest.public_cert_bytes)
+        config_path = spiffe_dir / config_relpath if config_relpath else spiffe_dir
+
+        with pytest.raises(expected_error):
+            _mtls_helper._get_workload_cert_and_key(str(config_path))
+
+        mock_sleep.assert_not_called()
+
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_cert_path_is_directory_fails_immediately_without_polling(
+        self, mock_sleep, spiffe_dir, monkeypatch
+    ):
+        cert_dir = spiffe_dir / "certificates.pem"
+        cert_dir.mkdir()
+        key_file = spiffe_dir / "private_key.pem"
+        key_file.write_bytes(pytest.private_key_bytes)
+        config_file = spiffe_dir / "credentials.json"
+        self._write_workload_config(config_file, cert_dir, key_file)
+        monkeypatch.setenv(
+            environment_vars.GOOGLE_API_CERTIFICATE_CONFIG, str(config_file)
+        )
+
+        with pytest.raises(IsADirectoryError):
+            _mtls_helper._get_workload_cert_and_key()
+
+        mock_sleep.assert_not_called()
 
     @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
     def test_config_without_workload_section_does_not_poll(
