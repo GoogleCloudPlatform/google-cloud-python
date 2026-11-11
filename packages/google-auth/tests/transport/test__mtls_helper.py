@@ -799,15 +799,98 @@ class TestGetWorkloadCertAndKey(object):
 
 
 class TestReadCertAndKeyFile(object):
-    def test_success(self):
-        cert_path = os.path.join(pytest.data_dir, "public_cert.pem")
-        key_path = os.path.join(pytest.data_dir, "privatekey.pem")
+    @pytest.mark.parametrize(
+        "cert_name, key_name",
+        [
+            ("public_cert.pem", "privatekey.pem"),
+            ("es256_public_cert.pem", "es256_privatekey.pem"),
+        ],
+    )
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_success(self, mock_sleep, cert_name, key_name):
+        cert_path = os.path.join(pytest.data_dir, cert_name)
+        key_path = os.path.join(pytest.data_dir, key_name)
 
         actual_cert, actual_key = _mtls_helper._read_cert_and_key_files(
             cert_path, key_path
         )
+        with open(cert_path, "rb") as cert_file:
+            assert actual_cert == cert_file.read()
+        with open(key_path, "rb") as key_file:
+            assert actual_key == key_file.read()
+        mock_sleep.assert_not_called()
+
+    @pytest.mark.parametrize(
+        "cert_names, key_name",
+        [
+            (["es256_public_cert.pem"], "es384_privatekey.pem"),
+            # The key belongs to the second certificate, not the leaf.
+            (["other_cert.pem", "public_cert.pem"], "privatekey.pem"),
+        ],
+        ids=["different_key_pair", "key_matches_non_leaf"],
+    )
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_key_mismatch_raises_after_retries(
+        self, mock_sleep, tmp_path, cert_names, key_name
+    ):
+        cert_file = tmp_path / "cert.pem"
+        cert_chain = b""
+        for cert_name in cert_names:
+            with open(os.path.join(pytest.data_dir, cert_name), "rb") as fh:
+                cert_chain += fh.read()
+        cert_file.write_bytes(cert_chain)
+        key_path = os.path.join(pytest.data_dir, key_name)
+
+        with pytest.raises(
+            exceptions.ClientCertError, match="do not match after 3 attempts"
+        ):
+            _mtls_helper._read_cert_and_key_files(str(cert_file), key_path)
+        assert mock_sleep.call_args_list == [mock.call(0.1), mock.call(0.1)]
+
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_key_mismatch_recovers_after_rotation(self, mock_sleep, tmp_path):
+        cert_file = tmp_path / "cert.pem"
+        key_file = tmp_path / "key.pem"
+        cert_file.write_bytes(pytest.public_cert_bytes)
+        with open(os.path.join(pytest.data_dir, "es256_privatekey.pem"), "rb") as fh:
+            key_file.write_bytes(fh.read())
+        # The key file catches up with the certificate during the first wait.
+        mock_sleep.side_effect = lambda _: key_file.write_bytes(
+            pytest.private_key_bytes
+        )
+
+        actual_cert, actual_key = _mtls_helper._read_cert_and_key_files(
+            str(cert_file), str(key_file)
+        )
         assert actual_cert == pytest.public_cert_bytes
         assert actual_key == pytest.private_key_bytes
+        mock_sleep.assert_called_once_with(0.1)
+
+    @pytest.mark.parametrize(
+        "cert_bytes, key_bytes",
+        [
+            (pytest.public_cert_bytes, ENCRYPTED_EC_PRIVATE_KEY),
+            (
+                b"-----BEGIN CERTIFICATE-----\nMIIB\n-----END CERTIFICATE-----\n",
+                pytest.private_key_bytes,
+            ),
+        ],
+        ids=["encrypted_key", "unparsable_cert"],
+    )
+    @mock.patch("google.auth.transport._mtls_helper.time.sleep", autospec=True)
+    def test_uninspectable_pair_skips_match_check(
+        self, mock_sleep, tmp_path, cert_bytes, key_bytes
+    ):
+        cert_file = tmp_path / "cert.pem"
+        key_file = tmp_path / "key.pem"
+        cert_file.write_bytes(cert_bytes)
+        key_file.write_bytes(key_bytes)
+
+        assert _mtls_helper._read_cert_and_key_files(str(cert_file), str(key_file)) == (
+            cert_bytes,
+            key_bytes,
+        )
+        mock_sleep.assert_not_called()
 
     def test_no_cert_file(self):
         cert_path = "fake/file/path"

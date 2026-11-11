@@ -22,9 +22,14 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
 from os import environ, getenv, path
 from typing import Generator, List, Optional, Tuple, Union, cast
 from urllib.parse import urlsplit
+
+from cryptography import x509
+from cryptography.exceptions import UnsupportedAlgorithm
+from cryptography.hazmat.primitives import serialization
 
 from google.auth import _agent_identity_utils, _cloud_sdk, environment_vars, exceptions
 
@@ -50,6 +55,10 @@ _KEY_REGEX = re.compile(
 
 _LOGGER = logging.getLogger(__name__)
 
+# Separate cert and key files are read up to 3 times, 100ms apart, when the
+# private key does not match the leaf certificate.
+_CERT_KEY_MATCH_MAX_ATTEMPTS = 3
+_CERT_KEY_MATCH_RETRY_INTERVAL = 0.1
 
 _PASSPHRASE_REGEX = re.compile(
     b"-----BEGIN PASSPHRASE-----(.+)-----END PASSPHRASE-----", re.DOTALL
@@ -162,9 +171,6 @@ def _encrypt_key_if_plaintext(
     """
     import secrets
 
-    import cryptography
-    from cryptography.hazmat.primitives import serialization
-
     try:
         pkey = serialization.load_pem_private_key(key_bytes, password=None)
         # It's plaintext, encrypt it.
@@ -182,7 +188,7 @@ def _encrypt_key_if_plaintext(
             ),
         )
         return encrypted_content, target_passphrase
-    except (ValueError, TypeError, cryptography.exceptions.UnsupportedAlgorithm):
+    except (ValueError, TypeError, UnsupportedAlgorithm):
         # Likely already encrypted, invalid, or unsupported algorithm, return as-is.
         return key_bytes, passphrase
 
@@ -568,10 +574,68 @@ def _read_credential_bundle_file(bundle_path):
 
 
 def _read_cert_and_key_files(cert_path, key_path):
-    cert_data = _read_cert_file(cert_path)
-    key_data = _read_key_file(key_path)
+    """Reads the certificate chain and private key from separate files.
 
-    return cert_data, key_data
+    A rotation on disk can briefly leave one file updated before the other, so
+    both files are re-read when the private key does not match the leaf
+    certificate's public key.
+
+    Args:
+        cert_path (str): The certificate chain file path.
+        key_path (str): The private key file path.
+
+    Returns:
+        Tuple[bytes, bytes]: The certificate chain and private key bytes in
+            PEM format.
+
+    Raises:
+        OSError: If either file cannot be read.
+        google.auth.exceptions.ClientCertError: If either file is not in a
+            valid PEM format, or the private key still does not match the
+            certificate after all attempts.
+    """
+    for attempt in range(_CERT_KEY_MATCH_MAX_ATTEMPTS):
+        if attempt:
+            time.sleep(_CERT_KEY_MATCH_RETRY_INTERVAL)
+        cert_data = _read_cert_file(cert_path)
+        key_data = _read_key_file(key_path)
+        if not _has_cert_key_mismatch(cert_data, key_data):
+            return cert_data, key_data
+        _LOGGER.debug(
+            "Private key %s does not match certificate %s (attempt %d of %d)",
+            key_path,
+            cert_path,
+            attempt + 1,
+            _CERT_KEY_MATCH_MAX_ATTEMPTS,
+        )
+
+    raise exceptions.ClientCertError(
+        "Certificate {} and private key {} do not match after {} attempts".format(
+            cert_path, key_path, _CERT_KEY_MATCH_MAX_ATTEMPTS
+        )
+    )
+
+
+def _has_cert_key_mismatch(cert_chain, key):
+    """Checks whether the private key does not belong to the leaf certificate.
+
+    Returns False when either value cannot be parsed (for example, a
+    passphrase-encrypted key) because no mismatch can be detected, leaving
+    validation to the TLS layer as before.
+    """
+    try:
+        cert_public_key = x509.load_pem_x509_certificate(cert_chain).public_key()
+        key_public_key = serialization.load_pem_private_key(
+            key, password=None
+        ).public_key()
+    except (ValueError, TypeError, UnsupportedAlgorithm):
+        return False
+
+    return cert_public_key.public_bytes(
+        serialization.Encoding.DER, serialization.PublicFormat.SubjectPublicKeyInfo
+    ) != key_public_key.public_bytes(
+        serialization.Encoding.DER, serialization.PublicFormat.SubjectPublicKeyInfo
+    )
 
 
 def _join_cert_chain(cert_match):
@@ -802,8 +866,6 @@ def decrypt_private_key(key, passphrase):
         key = key.encode("utf-8")
     if isinstance(passphrase, str):
         passphrase = passphrase.encode("utf-8")
-
-    from cryptography.hazmat.primitives import serialization
 
     # First convert encrypted_key_bytes to PKey object
     pkey = serialization.load_pem_private_key(key, password=passphrase)
