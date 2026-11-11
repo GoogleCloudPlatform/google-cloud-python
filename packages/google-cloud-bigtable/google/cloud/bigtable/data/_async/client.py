@@ -1875,7 +1875,7 @@ class _DataApiTargetAsync(abc.ABC):
             self,
             operation_timeout=operation_timeout,
             attempt_timeout=operation_timeout,
-            metric=ActiveOperationMetric(OperationType.READ_ROWS, is_streaming=False),
+            metric=None,
             retryable_exceptions=(),
         )
         try:

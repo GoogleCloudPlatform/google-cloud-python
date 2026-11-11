@@ -92,7 +92,7 @@ class _ReadRowsOperationAsync:
         target: TargetType,
         operation_timeout: float,
         attempt_timeout: float,
-        metric: ActiveOperationMetric,
+        metric: ActiveOperationMetric | None = None,
         retryable_exceptions: Sequence[type[Exception]] = (),
     ):
         self.attempt_timeout_gen = _attempt_timeout_generator(
@@ -138,7 +138,8 @@ class _ReadRowsOperationAsync:
         Yields:
             Row: The next row in the stream
         """
-        self._operation_metric.start_attempt()
+        if self._operation_metric is not None:
+            self._operation_metric.start_attempt()
         # revise request keys and ranges between attempts
         if self._last_yielded_row_key is not None:
             # if this is a retry, try to trim down the request to avoid ones we've already processed
@@ -232,7 +233,8 @@ class _ReadRowsOperationAsync:
         """
         try:
             if chunks is None:
-                self._operation_metric.end_with_success()
+                if self._operation_metric is not None:
+                    self._operation_metric.end_with_success()
                 return
             it = chunks.__aiter__()
             # For each row
@@ -241,7 +243,8 @@ class _ReadRowsOperationAsync:
                     c = await it.__anext__()
                 except CrossSync.StopIteration:
                     # stream complete
-                    self._operation_metric.end_with_success()
+                    if self._operation_metric is not None:
+                        self._operation_metric.end_with_success()
                     return
                 row_key = c.row_key
 
@@ -322,7 +325,10 @@ class _ReadRowsOperationAsync:
                             yield Row(row_key, cells)
                             # most metric operations use setters, but this one updates
                             # the value directly to avoid extra overhead
-                            if self._operation_metric.active_attempt is not None:
+                            if (
+                                self._operation_metric is not None
+                                and self._operation_metric.active_attempt is not None
+                            ):
                                 self._operation_metric.active_attempt.application_blocking_time_ns += (  # type: ignore
                                     time.monotonic_ns() - block_time
                                 )
@@ -344,7 +350,8 @@ class _ReadRowsOperationAsync:
                     raise InvalidChunk("premature end of stream")
         except GeneratorExit as close_exception:
             # handle aclose()
-            self._operation_metric.end_with_status(StatusCode.CANCELLED)
+            if self._operation_metric is not None:
+                self._operation_metric.end_with_status(StatusCode.CANCELLED)
             raise close_exception
         except Exception as generic_exception:
             # handle exceptions in retry wrapper

@@ -407,6 +407,83 @@ class TestReadRowViaAccelerator:
             self._run(t._read_row_via_accelerator(query, 30.0))
         assert not t._accelerator_breaker.bypass()
 
+    def test_does_not_leak_metric_into_contextvar_on_error_or_fallback(self):
+        from google.cloud.bigtable.data._metrics import ActiveOperationMetric
+        from google.cloud.bigtable.data.read_rows_query import ReadRowsQuery
+
+        ActiveOperationMetric._active_operation_context.set(None)  # type: ignore[arg-type]
+        assert ActiveOperationMetric.from_context() is None
+
+        client_mock = mock.AsyncMock()
+        client_mock.read_rows.side_effect = _FakeRpcError(
+            StatusCode.DEADLINE_EXCEEDED, "timed out"
+        )
+        daemon = mock.Mock(is_running=True)
+        t = _bare_target(accel_client=client_mock, accel_daemon=daemon)
+
+        query = ReadRowsQuery(row_keys=b"key1", limit=1)
+        with pytest.raises(core_exceptions.DeadlineExceeded):
+            self._run(t._read_row_via_accelerator(query, 30.0))
+        assert ActiveOperationMetric.from_context() is None
+
+        daemon.is_running = False
+        client_mock.read_rows.side_effect = _FakeRpcError(
+            StatusCode.UNAVAILABLE, "channel dead"
+        )
+        with pytest.raises(_AcceleratorFallback):
+            self._run(t._read_row_via_accelerator(query, 30.0))
+        assert ActiveOperationMetric.from_context() is None
+
+    def test_preserves_outer_operation_metric_in_contextvar(self):
+        from google.protobuf import wrappers_pb2
+
+        from google.cloud.bigtable.data._metrics import (
+            ActiveOperationMetric,
+            OperationState,
+            OperationType,
+        )
+        from google.cloud.bigtable.data.read_rows_query import ReadRowsQuery
+        from google.cloud.bigtable_v2.types.bigtable import ReadRowsResponse
+
+        outer_op = ActiveOperationMetric(OperationType.READ_ROWS, is_streaming=True)
+        outer_op.start_attempt()
+        assert ActiveOperationMetric.from_context() is outer_op
+
+        async def _stream():
+            yield ReadRowsResponse(
+                chunks=[
+                    ReadRowsResponse.CellChunk(
+                        row_key=b"key1",
+                        family_name=wrappers_pb2.StringValue(value="cf1"),
+                        qualifier=wrappers_pb2.BytesValue(value=b"q1"),
+                        timestamp_micros=1000,
+                        value=b"v1",
+                        commit_row=True,
+                    )
+                ]
+            )
+
+        client_mock = mock.AsyncMock()
+        client_mock.read_rows.return_value = _stream()
+        daemon = mock.Mock(is_running=True)
+        t = _bare_target(accel_client=client_mock, accel_daemon=daemon)
+
+        query = ReadRowsQuery(row_keys=b"key1", limit=1)
+        row = self._run(t._read_row_via_accelerator(query, 30.0))
+        assert row is not None
+        assert ActiveOperationMetric.from_context() is outer_op
+        assert outer_op.state == OperationState.ACTIVE_ATTEMPT
+
+        client_mock.read_rows.side_effect = _FakeRpcError(
+            StatusCode.DEADLINE_EXCEEDED, "timed out"
+        )
+        with pytest.raises(core_exceptions.DeadlineExceeded):
+            self._run(t._read_row_via_accelerator(query, 30.0))
+        assert ActiveOperationMetric.from_context() is outer_op
+        assert outer_op.state == OperationState.ACTIVE_ATTEMPT
+
+        outer_op.end_with_success()
+
 
 # ---------------------------------------------------------------------------
 # read_row: accelerator dispatch and fallback to native
