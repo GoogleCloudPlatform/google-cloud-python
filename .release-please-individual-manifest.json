@@ -18,6 +18,6 @@
   "packages/google-cloud-storage": "3.17.1",
   "packages/google-crc32c": "1.9.0",
   "packages/pandas-gbq": "0.35.3",
-  "packages/sqlalchemy-bigquery": "1.17.3",
+  "packages/sqlalchemy-bigquery": "1.18.0",
   "packages/sqlalchemy-spanner": "1.20.1"
 }
