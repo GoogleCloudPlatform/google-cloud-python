@@ -100,13 +100,13 @@ libraries:
     python:
       library_type: OTHER
   - name: google-ads-admanager
-    version: 0.10.7
+    version: 0.10.8
     apis:
       - path: google/ads/admanager/v1
     python:
       default_version: v1
   - name: google-ads-datamanager
-    version: 0.9.4
+    version: 0.9.5
     apis:
       - path: google/ads/datamanager/v1
     python:
@@ -733,7 +733,7 @@ libraries:
       metadata_name_override: certificatemanager
       default_version: v1
   - name: google-cloud-ces
-    version: 0.7.3
+    version: 0.7.4
     apis:
       - path: google/cloud/ces/v1
       - path: google/cloud/ces/v1beta
@@ -796,7 +796,7 @@ libraries:
       metadata_name_override: common
       default_version: apiVersion
   - name: google-cloud-compute
-    version: 1.57.0
+    version: 1.58.0
     preview:
       version: 1.56.0-preview.2
       apis:
@@ -807,7 +807,7 @@ libraries:
       metadata_name_override: compute
       default_version: v1
   - name: google-cloud-compute-v1beta
-    version: 0.12.10
+    version: 0.12.11
     apis:
       - path: google/cloud/compute/v1beta
     python:
@@ -954,7 +954,7 @@ libraries:
       metadata_name_override: datalabeling
       default_version: v1beta1
   - name: google-cloud-dataplex
-    version: 2.21.0
+    version: 2.22.0
     apis:
       - path: google/cloud/dataplex/v1
     python:
@@ -1056,7 +1056,7 @@ libraries:
       metadata_name_override: dialogflow-cx
       default_version: v3
   - name: google-cloud-discoveryengine
-    version: 0.20.6
+    version: 0.20.7
     apis:
       - path: google/cloud/discoveryengine/v1
       - path: google/cloud/discoveryengine/v1beta
@@ -1236,7 +1236,7 @@ libraries:
     python:
       default_version: v1alpha
   - name: google-cloud-geminidataanalytics
-    version: 0.13.6
+    version: 0.13.7
     apis:
       - path: google/cloud/geminidataanalytics/v1
       - path: google/cloud/geminidataanalytics/v1beta
@@ -1311,7 +1311,7 @@ libraries:
       metadata_name_override: gsuiteaddons
       default_version: v1
   - name: google-cloud-hypercomputecluster
-    version: 0.4.2
+    version: 0.4.3
     apis:
       - path: google/cloud/hypercomputecluster/v1
       - path: google/cloud/hypercomputecluster/v1beta
@@ -1383,7 +1383,7 @@ libraries:
       metadata_name_override: ids
       default_version: v1
   - name: google-cloud-kms
-    version: 3.18.0
+    version: 3.19.0
     apis:
       - path: google/cloud/kms/v1
     python:
@@ -1487,7 +1487,7 @@ libraries:
       metadata_name_override: memcache
       default_version: v1
   - name: google-cloud-memorystore
-    version: 0.5.8
+    version: 0.5.9
     apis:
       - path: google/cloud/memorystore/v1
       - path: google/cloud/memorystore/v1beta
@@ -1565,7 +1565,7 @@ libraries:
       metadata_name_override: networkconnectivity
       default_version: v1
   - name: google-cloud-network-management
-    version: 1.39.0
+    version: 1.40.0
     apis:
       - path: google/cloud/networkmanagement/v1
     python:
@@ -1627,7 +1627,7 @@ libraries:
       metadata_name_override: optimization
       default_version: v1
   - name: google-cloud-oracledatabase
-    version: 0.6.4
+    version: 0.6.5
     apis:
       - path: google/cloud/oracledatabase/v1
     python:
@@ -1841,7 +1841,7 @@ libraries:
       metadata_name_override: retail
       default_version: v2
   - name: google-cloud-run
-    version: 0.16.2
+    version: 0.16.3
     apis:
       - path: google/cloud/run/v2
     python:
@@ -2035,7 +2035,7 @@ libraries:
       metadata_name_override: speech
       default_version: v1
   - name: google-cloud-sql
-    version: 0.1.4
+    version: 0.1.5
     apis:
       - path: google/cloud/sql/v1
       - path: google/cloud/sql/v1beta4
@@ -2174,7 +2174,7 @@ libraries:
       metadata_name_override: translate
       default_version: v3
   - name: google-cloud-vectorsearch
-    version: 0.11.5
+    version: 0.11.6
     apis:
       - path: google/cloud/vectorsearch/v1
       - path: google/cloud/vectorsearch/v1beta
@@ -2474,7 +2474,7 @@ libraries:
           - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-accounts
-    version: 1.7.0
+    version: 2.0.0
     apis:
       - path: google/shopping/merchant/accounts/v1
     python:
@@ -2483,13 +2483,13 @@ libraries:
           - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-conversions
-    version: 1.5.0
+    version: 2.0.0
     apis:
       - path: google/shopping/merchant/conversions/v1
     python:
       default_version: v1
   - name: google-shopping-merchant-datasources
-    version: 1.6.0
+    version: 2.0.0
     apis:
       - path: google/shopping/merchant/datasources/v1
     python:
@@ -2498,7 +2498,7 @@ libraries:
           - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-inventories
-    version: 1.7.0
+    version: 2.0.0
     apis:
       - path: google/shopping/merchant/inventories/v1
     python:
@@ -2507,7 +2507,7 @@ libraries:
           - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-issueresolution
-    version: 1.5.0
+    version: 2.0.0
     apis:
       - path: google/shopping/merchant/issueresolution/v1
     python:
@@ -2516,7 +2516,7 @@ libraries:
           - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-lfp
-    version: 1.5.0
+    version: 2.0.0
     apis:
       - path: google/shopping/merchant/lfp/v1
     python:
@@ -2532,13 +2532,13 @@ libraries:
     python:
       default_version: v1
   - name: google-shopping-merchant-notifications
-    version: 1.5.0
+    version: 2.0.0
     apis:
       - path: google/shopping/merchant/notifications/v1
     python:
       default_version: v1
   - name: google-shopping-merchant-ordertracking
-    version: 1.5.0
+    version: 2.0.0
     apis:
       - path: google/shopping/merchant/ordertracking/v1
     python:
@@ -2547,7 +2547,7 @@ libraries:
           - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-products
-    version: 1.9.0
+    version: 2.0.0
     apis:
       - path: google/shopping/merchant/products/v1
     python:
@@ -2562,7 +2562,7 @@ libraries:
     python:
       default_version: v1alpha
   - name: google-shopping-merchant-promotions
-    version: 1.5.0
+    version: 2.0.0
     apis:
       - path: google/shopping/merchant/promotions/v1
     python:
@@ -2571,13 +2571,13 @@ libraries:
           - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-quota
-    version: 1.7.0
+    version: 2.0.0
     apis:
       - path: google/shopping/merchant/quota/v1
     python:
       default_version: v1
   - name: google-shopping-merchant-reports
-    version: 1.6.0
+    version: 2.0.0
     apis:
       - path: google/shopping/merchant/reports/v1
       - path: google/shopping/merchant/reports/v1alpha
@@ -2589,7 +2589,7 @@ libraries:
           - proto-plus-deps=google.shopping.type
       default_version: v1
   - name: google-shopping-merchant-reviews
-    version: 0.6.2
+    version: 0.7.0
     apis:
       - path: google/shopping/merchant/reviews/v1
     python:
