@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/django-google-spanner/#history
 
+## [5.2.1](https://github.com/googleapis/google-cloud-python/compare/django-google-spanner-v5.2.0...django-google-spanner-v5.2.1) (2026-11-12)
+
+
+### Bug Fixes
+
+* **spanner-django:** add WHERE 1=1 to unqualified DELETE and UPDATE ([8449bc1](https://github.com/googleapis/google-cloud-python/commit/8449bc1ef32e8e953bf3e7a779fb5f5f5bca8b54))
+
 ## [5.2.0](https://github.com/googleapis/google-cloud-python/compare/django-google-spanner-v5.1.0...django-google-spanner-v5.2.0) (2026-09-29)
 
 
