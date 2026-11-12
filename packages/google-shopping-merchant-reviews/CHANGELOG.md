@@ -4,6 +4,17 @@
 
 [1]: https://pypi.org/project/google-shopping-merchant-reviews/#history
 
+## [0.7.0](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-reviews-v0.6.2...google-shopping-merchant-reviews-v0.7.0) (2026-11-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* **merchantapi:** remove discontinued Merchant API v1beta ([#19027](https://github.com/googleapis/google-cloud-python/issues/19027))
+
+### Features
+
+* **merchantapi:** remove discontinued Merchant API v1beta ([#19027](https://github.com/googleapis/google-cloud-python/issues/19027)) ([d750513](https://github.com/googleapis/google-cloud-python/commit/d750513ea8fe8e55a7cdc5b8616f182fa19243bf))
+
 ## [0.6.2](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-reviews-v0.6.1...google-shopping-merchant-reviews-v0.6.2) (2026-10-23)
 
 
