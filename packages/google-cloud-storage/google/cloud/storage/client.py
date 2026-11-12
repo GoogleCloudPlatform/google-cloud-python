@@ -140,6 +140,13 @@ class Client(ClientWithProject):
         metrics. If ``None``, falls back to the
         ``GCP_STORAGE_PYTHON_ENABLE_OTEL_DEBUG_METRICS`` environment variable,
         or ``False`` if unset.
+
+    :type enable_bucket_metadata_cache: bool
+    :param enable_bucket_metadata_cache:
+        (Optional, default True) Enables the background bucket-metadata cache
+        (App-centric Observability / ACO). Setting this to False disables the
+        cache and the background ``storage.buckets.get`` probe it triggers on
+        object-level operations, for principals granted object-only IAM roles.
     """
 
     SCOPE = (
@@ -162,6 +169,7 @@ class Client(ClientWithProject):
         api_key=None,
         enable_metrics=None,
         enable_debug_metrics=None,
+        enable_bucket_metadata_cache: bool = True,
     ):
         self._base_connection = None
 
@@ -316,7 +324,10 @@ class Client(ClientWithProject):
         connection.extra_headers = extra_headers
         self._connection = connection
         self._batch_stack = _LocalStack()
-        self._bucket_metadata_cache = BucketMetadataCache(self)
+        self._enable_bucket_metadata_cache = enable_bucket_metadata_cache
+        self._bucket_metadata_cache = (
+            BucketMetadataCache(self) if enable_bucket_metadata_cache else None
+        )
 
     @property
     def metrics_enabled(self) -> bool:
