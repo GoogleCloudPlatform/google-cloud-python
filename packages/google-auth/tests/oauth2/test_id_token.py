@@ -124,6 +124,55 @@ def test_verify_token_jwk(decode, get_unverified_header, py_jwk_set, _fetch_cert
         mock.sentinel.key,
         algorithms=["mock-alg"],
         audience=None,
+        leeway=0,
+        options={
+            "verify_signature": True,
+            "verify_exp": True,
+            "require": ["exp", "iat"],
+        },
+    )
+
+
+@mock.patch("google.oauth2.id_token._fetch_certs", autospec=True)
+@mock.patch("jwt.api_jwk.PyJWKSet", autospec=True)
+@mock.patch("jwt.get_unverified_header", autospec=True)
+@mock.patch("jwt.decode", autospec=True)
+def test_verify_token_jwk_clock_skew(
+    decode, get_unverified_header, py_jwk_set, _fetch_certs
+):
+    certs_url = "abc123"
+    data = {"keys": [{"alg": "RS256"}]}
+    _fetch_certs.return_value = data
+    get_unverified_header.return_value = {"kid": "mock-kid"}
+
+    mock_key = mock.MagicMock()
+    mock_key.key_id = "mock-kid"
+    mock_key.public_key_use = "sig"
+    mock_key.key = mock.sentinel.key
+    mock_key.algorithm_name = "mock-alg"
+    py_jwk_set.from_dict.return_value.keys = [mock_key]
+    result = id_token.verify_token(
+        mock.sentinel.token,
+        mock.sentinel.request,
+        certs_url=certs_url,
+        clock_skew_in_seconds=10,
+    )
+    assert result == decode.return_value
+    py_jwk_set.from_dict.assert_called_once_with(data)
+    get_unverified_header.assert_called_once_with(mock.sentinel.token)
+
+    _fetch_certs.assert_called_once_with(mock.sentinel.request, certs_url)
+    decode.assert_called_once_with(
+        mock.sentinel.token,
+        mock.sentinel.key,
+        algorithms=["mock-alg"],
+        audience=None,
+        leeway=10,
+        options={
+            "verify_signature": True,
+            "verify_exp": True,
+            "require": ["exp", "iat"],
+        },
     )
 
 

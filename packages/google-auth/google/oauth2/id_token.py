@@ -165,6 +165,12 @@ def verify_token(
             signing_key.key,
             algorithms=[signing_key.algorithm_name],
             audience=audience,
+            leeway=clock_skew_in_seconds,
+            options={
+                "verify_signature": True,
+                "verify_exp": True,
+                "require": ["exp", "iat"],
+            },
         )
     else:
         return jwt.decode(
