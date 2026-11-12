@@ -4,6 +4,17 @@
 
 [1]: https://pypi.org/project/google-shopping-merchant-accounts/#history
 
+## [2.0.0](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-accounts-v1.7.0...google-shopping-merchant-accounts-v2.0.0) (2026-11-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* **merchantapi:** remove discontinued Merchant API v1beta ([#19027](https://github.com/googleapis/google-cloud-python/issues/19027))
+
+### Features
+
+* **merchantapi:** remove discontinued Merchant API v1beta ([#19027](https://github.com/googleapis/google-cloud-python/issues/19027)) ([d750513](https://github.com/googleapis/google-cloud-python/commit/d750513ea8fe8e55a7cdc5b8616f182fa19243bf))
+
 ## [1.7.0](https://github.com/googleapis/google-cloud-python/compare/google-shopping-merchant-accounts-v1.6.0...google-shopping-merchant-accounts-v1.7.0) (2026-10-01)
 
 
