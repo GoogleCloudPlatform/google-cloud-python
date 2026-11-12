@@ -120,6 +120,16 @@ class IAMCredentialsTransport(abc.ABC):
             # Don't apply audience if the credentials file passed from user.
             if hasattr(credentials, "with_gdch_audience"):
                 credentials = credentials.with_gdch_audience(api_audience if api_audience else host)
+        else:
+            credentials = ga_credentials.with_scopes_if_required(
+                credentials,
+                scopes=scopes,
+                default_scopes=self.AUTH_SCOPES,
+            )
+            if quota_project_id and isinstance(
+                credentials, ga_credentials.CredentialsWithQuotaProject
+            ):
+                credentials = credentials.with_quota_project(quota_project_id)
 
         # If the credentials are service account credentials, then always try to use self signed JWT.
         if always_use_jwt_access and isinstance(credentials, service_account.Credentials) and hasattr(service_account.Credentials, "with_always_use_jwt_access"):

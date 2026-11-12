@@ -2081,6 +2081,18 @@ def test_resumable_upload_service_base_transport_with_adc():
         adc.assert_called_once()
 
 
+def test_resumable_upload_service_base_transport_with_credentials():
+    # Test the explicit credentials are scoped and assigned quota_project_id if provided.
+    creds = service_account.Credentials(None, None, None)
+    transport = transports.ResumableUploadServiceTransport(
+        credentials=creds,
+        quota_project_id="octopus",
+        scopes=["1", "2"],
+    )
+    assert transport._credentials.quota_project_id == "octopus"
+    assert transport._credentials.scopes == ["1", "2"]
+
+
 def test_resumable_upload_service_auth_adc():
     # If no credentials are provided, we should use ADC credentials.
     with mock.patch.object(google.auth, 'default', autospec=True) as adc:
@@ -2099,6 +2111,7 @@ def test_resumable_upload_service_auth_adc():
     [
         transports.ResumableUploadServiceGrpcTransport,
         transports.ResumableUploadServiceGrpcAsyncIOTransport,
+        transports.ResumableUploadServiceRestTransport,
     ],
 )
 def test_resumable_upload_service_transport_auth_adc(transport_class):

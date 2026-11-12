@@ -1446,6 +1446,18 @@ def test_{{ service.name|snake_case }}_base_transport_with_adc():
         adc.assert_called_once()
 
 
+def test_{{ service.name|snake_case }}_base_transport_with_credentials():
+    # Test the explicit credentials are scoped and assigned quota_project_id if provided.
+    creds = service_account.Credentials(None, None, None)
+    transport = transports.{{ service.name }}Transport(
+        credentials=creds,
+        quota_project_id="octopus",
+        scopes=["1", "2"],
+    )
+    assert transport._credentials.quota_project_id == "octopus"
+    assert transport._credentials.scopes == ["1", "2"]
+
+
 def test_{{ service.name|snake_case }}_auth_adc():
     # If no credentials are provided, we should use ADC credentials.
     with mock.patch.object(google.auth, 'default', autospec=True) as adc:
@@ -1461,7 +1473,16 @@ def test_{{ service.name|snake_case }}_auth_adc():
         )
 
 
-{% if 'grpc' in opts.transport %}
+{% if 'grpc' in opts.transport and 'rest' in opts.transport %}
+@pytest.mark.parametrize(
+    "transport_class",
+    [
+        transports.{{ service.name }}GrpcTransport,
+        transports.{{ service.name }}GrpcAsyncIOTransport,
+        transports.{{ service.name }}RestTransport,
+    ],
+)
+{% elif 'grpc' in opts.transport %}
 @pytest.mark.parametrize(
     "transport_class",
     [
@@ -1469,6 +1490,14 @@ def test_{{ service.name|snake_case }}_auth_adc():
         transports.{{ service.name }}GrpcAsyncIOTransport,
     ],
 )
+{% elif 'rest' in opts.transport %}
+@pytest.mark.parametrize(
+    "transport_class",
+    [
+        transports.{{ service.name }}RestTransport,
+    ],
+)
+{% endif %}
 def test_{{ service.name|snake_case }}_transport_auth_adc(transport_class):
     # If credentials and host are not provided, the transport class should use
     # ADC credentials.
@@ -1525,6 +1554,7 @@ def test_{{ service.name|snake_case }}_transport_auth_gdch_credentials(transport
             )
 
 
+{% if 'grpc' in opts.transport %}
 @pytest.mark.parametrize(
     "transport_class,grpc_helpers",
     [

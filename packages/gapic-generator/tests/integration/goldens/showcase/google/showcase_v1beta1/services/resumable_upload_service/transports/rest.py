@@ -371,12 +371,12 @@ class ResumableUploadServiceRestTransport(_BaseResumableUploadServiceRestTranspo
                 custom OpenTelemetry tracer providers.
         """
         # Run the base constructor
-        # TODO(yon-mg): resolve other ctor params i.e. scopes, quota, etc.
-        # TODO: When custom host (api_endpoint) is set, `scopes` must *also* be set on the
-        # credentials object
         super().__init__(
             host=host,
             credentials=credentials,
+            credentials_file=credentials_file,
+            scopes=scopes,
+            quota_project_id=quota_project_id,
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             url_scheme=url_scheme,
@@ -384,6 +384,7 @@ class ResumableUploadServiceRestTransport(_BaseResumableUploadServiceRestTranspo
             client_options=client_options,
             **kwargs,
         )
+        self._client_cert_source_for_mtls = client_cert_source_for_mtls
         self._session = AuthorizedSession(
             self._credentials, default_host=self.DEFAULT_HOST)
         if client_cert_source_for_mtls:

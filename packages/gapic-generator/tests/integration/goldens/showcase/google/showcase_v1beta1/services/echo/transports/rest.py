@@ -760,12 +760,12 @@ class EchoRestTransport(_BaseEchoRestTransport):
                 custom OpenTelemetry tracer providers.
         """
         # Run the base constructor
-        # TODO(yon-mg): resolve other ctor params i.e. scopes, quota, etc.
-        # TODO: When custom host (api_endpoint) is set, `scopes` must *also* be set on the
-        # credentials object
         super().__init__(
             host=host,
             credentials=credentials,
+            credentials_file=credentials_file,
+            scopes=scopes,
+            quota_project_id=quota_project_id,
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
             url_scheme=url_scheme,
@@ -773,6 +773,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
             client_options=client_options,
             **kwargs,
         )
+        self._client_cert_source_for_mtls = client_cert_source_for_mtls
         self._session = AuthorizedSession(
             self._credentials, default_host=self.DEFAULT_HOST)
         self._operations_client: Optional[operations_v1.AbstractOperationsClient] = None
@@ -822,6 +823,7 @@ class EchoRestTransport(_BaseEchoRestTransport):
                     # use the credentials which are saved
                     credentials=self._credentials,
                     scopes=self._scopes,
+                    client_cert_source_for_mtls=self._client_cert_source_for_mtls,
                     http_options=http_options,
                     path_prefix="v1beta1")
 
