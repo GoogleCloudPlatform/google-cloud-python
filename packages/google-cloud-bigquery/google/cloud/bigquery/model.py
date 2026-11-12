@@ -24,8 +24,7 @@ import typing
 from typing import Any, Dict, Optional, Sequence, Union
 
 import google.cloud._helpers  # type: ignore
-from google.cloud.bigquery import _helpers
-from google.cloud.bigquery import standard_sql
+from google.cloud.bigquery import _helpers, standard_sql
 from google.cloud.bigquery.encryption_configuration import EncryptionConfiguration
 
 
@@ -252,7 +251,6 @@ class Model:
             value_to_store: Optional[str] = None
         else:
             value_to_store = str(google.cloud._helpers._millis_from_datetime(value))
-        # TODO: Consider using typing.TypedDict when only Python 3.8+ is supported.
         self._properties["expirationTime"] = value_to_store  # type: ignore
 
     @property
@@ -262,7 +260,6 @@ class Model:
 
     @description.setter
     def description(self, value: Optional[str]):
-        # TODO: Consider using typing.TypedDict when only Python 3.8+ is supported.
         self._properties["description"] = value  # type: ignore
 
     @property
@@ -272,7 +269,6 @@ class Model:
 
     @friendly_name.setter
     def friendly_name(self, value: Optional[str]):
-        # TODO: Consider using typing.TypedDict when only Python 3.8+ is supported.
         self._properties["friendlyName"] = value  # type: ignore
 
     @property

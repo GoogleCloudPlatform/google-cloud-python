@@ -4194,11 +4194,7 @@ class TestRowIterator(unittest.TestCase):
         user_warnings = [
             warning for warning in warned if warning.category is UserWarning
         ]
-        # With pandas < 1.5, pandas.ArrowDtype is not supported
-        # and len(user_warnings) = 3.
-        # We raise warnings because range columns have to be converted to object.
-        # With higher pandas versions and noextra tests, len(user_warnings) = 0
-        self.assertIn(len(user_warnings), [0, 3])
+        self.assertEqual(len(user_warnings), 0)
         self.assertEqual(len(df), 4)
 
     @mock.patch("google.cloud.bigquery._tqdm_helpers.tqdm", new=None)
@@ -4229,11 +4225,7 @@ class TestRowIterator(unittest.TestCase):
         user_warnings = [
             warning for warning in warned if warning.category is UserWarning
         ]
-        # With pandas < 1.5, pandas.ArrowDtype is not supported
-        # and len(user_warnings) = 4.
-        # We raise warnings because range columns have to be converted to object.
-        # With higher pandas versions and noextra tests, len(user_warnings) = 1
-        self.assertIn(len(user_warnings), [1, 4])
+        self.assertEqual(len(user_warnings), 1)
 
         # Even though the progress bar won't show, downloading the dataframe
         # should still work.
@@ -4419,64 +4411,30 @@ class TestRowIterator(unittest.TestCase):
             create_bqstorage_client=False,
             bool_dtype=pandas.BooleanDtype(),
             int_dtype=pandas.Int32Dtype(),
-            float_dtype=(
-                pandas.Float64Dtype()
-                if hasattr(pandas, "Float64Dtype")
-                else pandas.StringDtype()
-            ),
+            float_dtype=pandas.Float64Dtype(),
             string_dtype=pandas.StringDtype(),
-            date_dtype=(
-                pandas.ArrowDtype(pyarrow.date32())
-                if hasattr(pandas, "ArrowDtype")
-                else None
+            date_dtype=pandas.ArrowDtype(pyarrow.date32()),
+            datetime_dtype=pandas.ArrowDtype(pyarrow.timestamp("us")),
+            time_dtype=pandas.ArrowDtype(pyarrow.time64("us")),
+            timestamp_dtype=pandas.ArrowDtype(pyarrow.timestamp("us", tz="UTC")),
+            range_date_dtype=pandas.ArrowDtype(
+                pyarrow.struct([("start", pyarrow.date32()), ("end", pyarrow.date32())])
             ),
-            datetime_dtype=(
-                pandas.ArrowDtype(pyarrow.timestamp("us"))
-                if hasattr(pandas, "ArrowDtype")
-                else None
-            ),
-            time_dtype=(
-                pandas.ArrowDtype(pyarrow.time64("us"))
-                if hasattr(pandas, "ArrowDtype")
-                else None
-            ),
-            timestamp_dtype=(
-                pandas.ArrowDtype(pyarrow.timestamp("us", tz="UTC"))
-                if hasattr(pandas, "ArrowDtype")
-                else None
-            ),
-            range_date_dtype=(
-                pandas.ArrowDtype(
-                    pyarrow.struct(
-                        [("start", pyarrow.date32()), ("end", pyarrow.date32())]
-                    )
+            range_datetime_dtype=pandas.ArrowDtype(
+                pyarrow.struct(
+                    [
+                        ("start", pyarrow.timestamp("us")),
+                        ("end", pyarrow.timestamp("us")),
+                    ]
                 )
-                if hasattr(pandas, "ArrowDtype")
-                else None
             ),
-            range_datetime_dtype=(
-                pandas.ArrowDtype(
-                    pyarrow.struct(
-                        [
-                            ("start", pyarrow.timestamp("us")),
-                            ("end", pyarrow.timestamp("us")),
-                        ]
-                    )
+            range_timestamp_dtype=pandas.ArrowDtype(
+                pyarrow.struct(
+                    [
+                        ("start", pyarrow.timestamp("us", tz="UTC")),
+                        ("end", pyarrow.timestamp("us", tz="UTC")),
+                    ]
                 )
-                if hasattr(pandas, "ArrowDtype")
-                else None
-            ),
-            range_timestamp_dtype=(
-                pandas.ArrowDtype(
-                    pyarrow.struct(
-                        [
-                            ("start", pyarrow.timestamp("us", tz="UTC")),
-                            ("end", pyarrow.timestamp("us", tz="UTC")),
-                        ]
-                    )
-                )
-                if hasattr(pandas, "ArrowDtype")
-                else None
             ),
         )
 
@@ -4499,135 +4457,92 @@ class TestRowIterator(unittest.TestCase):
         self.assertEqual(list(df.miles), [1.77, 6.66, 2.0])
         self.assertEqual(df.miles.dtype.name, "Float64")
 
-        if hasattr(pandas, "ArrowDtype"):
-            self.assertEqual(
-                list(df.date),
-                [
-                    datetime.date(1999, 12, 1),
-                    datetime.date(4567, 6, 14),
-                    datetime.date(9999, 12, 31),
-                ],
-            )
-            self.assertEqual(df.date.dtype.name, "date32[day][pyarrow]")
+        self.assertEqual(
+            list(df.date),
+            [
+                datetime.date(1999, 12, 1),
+                datetime.date(4567, 6, 14),
+                datetime.date(9999, 12, 31),
+            ],
+        )
+        self.assertEqual(df.date.dtype.name, "date32[day][pyarrow]")
 
-            self.assertEqual(
-                list(df.datetime),
-                [
-                    datetime.datetime(1999, 12, 31, 0, 0),
-                    datetime.datetime(4567, 12, 31, 0, 0),
-                    datetime.datetime(9999, 12, 31, 23, 59, 59, 999999),
-                ],
-            )
-            self.assertEqual(df.datetime.dtype.name, "timestamp[us][pyarrow]")
+        self.assertEqual(
+            list(df.datetime),
+            [
+                datetime.datetime(1999, 12, 31, 0, 0),
+                datetime.datetime(4567, 12, 31, 0, 0),
+                datetime.datetime(9999, 12, 31, 23, 59, 59, 999999),
+            ],
+        )
+        self.assertEqual(df.datetime.dtype.name, "timestamp[us][pyarrow]")
 
-            self.assertEqual(
-                list(df.time),
-                [
-                    datetime.time(0, 0),
-                    datetime.time(12, 0, 0, 232413),
-                    datetime.time(23, 59, 59, 999999),
-                ],
-            )
-            self.assertEqual(df.time.dtype.name, "time64[us][pyarrow]")
+        self.assertEqual(
+            list(df.time),
+            [
+                datetime.time(0, 0),
+                datetime.time(12, 0, 0, 232413),
+                datetime.time(23, 59, 59, 999999),
+            ],
+        )
+        self.assertEqual(df.time.dtype.name, "time64[us][pyarrow]")
 
-            self.assertEqual(
-                list(df.timestamp),
-                [
-                    datetime.datetime(2015, 6, 9, 8, 0, tzinfo=datetime.timezone.utc),
-                    datetime.datetime(4567, 1, 1, 0, 0, tzinfo=datetime.timezone.utc),
-                    datetime.datetime(
-                        9999, 12, 31, 12, 59, 59, 999999, tzinfo=datetime.timezone.utc
+        self.assertEqual(
+            list(df.timestamp),
+            [
+                datetime.datetime(2015, 6, 9, 8, 0, tzinfo=datetime.timezone.utc),
+                datetime.datetime(4567, 1, 1, 0, 0, tzinfo=datetime.timezone.utc),
+                datetime.datetime(
+                    9999, 12, 31, 12, 59, 59, 999999, tzinfo=datetime.timezone.utc
+                ),
+            ],
+        )
+        self.assertEqual(df.timestamp.dtype.name, "timestamp[us, tz=UTC][pyarrow]")
+
+        self.assertEqual(
+            list(df.range_timestamp),
+            [
+                {
+                    "start": datetime.datetime(
+                        2015, 6, 9, 8, 0, 0, tzinfo=datetime.timezone.utc
                     ),
-                ],
-            )
-            self.assertEqual(df.timestamp.dtype.name, "timestamp[us, tz=UTC][pyarrow]")
-
-            self.assertEqual(
-                list(df.range_timestamp),
-                [
-                    {
-                        "start": datetime.datetime(
-                            2015, 6, 9, 8, 0, 0, tzinfo=datetime.timezone.utc
-                        ),
-                        "end": datetime.datetime(
-                            2015, 6, 11, 5, 18, 20, tzinfo=datetime.timezone.utc
-                        ),
-                    },
-                    {
-                        "start": datetime.datetime(
-                            2015, 6, 9, 8, 0, 0, tzinfo=datetime.timezone.utc
-                        ),
-                        "end": None,
-                    },
-                    {"start": None, "end": None},
-                ],
-            )
-
-            self.assertEqual(
-                list(df.range_datetime),
-                [
-                    {
-                        "start": datetime.datetime(2009, 6, 17, 13, 45, 30),
-                        "end": datetime.datetime(2019, 7, 17, 13, 45, 30),
-                    },
-                    {"start": datetime.datetime(2009, 6, 17, 13, 45, 30), "end": None},
-                    {"start": None, "end": None},
-                ],
-            )
-
-            self.assertEqual(
-                list(df.range_date),
-                [
-                    {
-                        "start": datetime.date(2020, 10, 1),
-                        "end": datetime.date(2021, 10, 2),
-                    },
-                    {"start": datetime.date(2020, 10, 1), "end": None},
-                    {"start": None, "end": None},
-                ],
-            )
-        else:
-            self.assertEqual(
-                list(df.date),
-                [
-                    pandas.Timestamp("1999-12-01 00:00:00"),
-                    pandas.Timestamp("2229-03-27 01:41:45.161793536"),
-                    pandas.Timestamp("1816-03-29 05:56:08.066277376"),
-                ],
-            )
-            self.assertEqual(df.date.dtype.name, "datetime64[ns]")
-
-            self.assertEqual(
-                list(df.datetime),
-                [
-                    datetime.datetime(1999, 12, 31, 0, 0),
-                    datetime.datetime(4567, 12, 31, 0, 0),
-                    datetime.datetime(9999, 12, 31, 23, 59, 59, 999999),
-                ],
-            )
-            self.assertEqual(df.datetime.dtype.name, "object")
-
-            self.assertEqual(
-                list(df.time),
-                [
-                    datetime.time(0, 0),
-                    datetime.time(12, 0, 0, 232413),
-                    datetime.time(23, 59, 59, 999999),
-                ],
-            )
-            self.assertEqual(df.time.dtype.name, "object")
-
-            self.assertEqual(
-                list(df.timestamp),
-                [
-                    datetime.datetime(2015, 6, 9, 8, 0, tzinfo=datetime.timezone.utc),
-                    datetime.datetime(4567, 1, 1, 0, 0, tzinfo=datetime.timezone.utc),
-                    datetime.datetime(
-                        9999, 12, 31, 12, 59, 59, 999999, tzinfo=datetime.timezone.utc
+                    "end": datetime.datetime(
+                        2015, 6, 11, 5, 18, 20, tzinfo=datetime.timezone.utc
                     ),
-                ],
-            )
-            self.assertEqual(df.timestamp.dtype.name, "object")
+                },
+                {
+                    "start": datetime.datetime(
+                        2015, 6, 9, 8, 0, 0, tzinfo=datetime.timezone.utc
+                    ),
+                    "end": None,
+                },
+                {"start": None, "end": None},
+            ],
+        )
+
+        self.assertEqual(
+            list(df.range_datetime),
+            [
+                {
+                    "start": datetime.datetime(2009, 6, 17, 13, 45, 30),
+                    "end": datetime.datetime(2019, 7, 17, 13, 45, 30),
+                },
+                {"start": datetime.datetime(2009, 6, 17, 13, 45, 30), "end": None},
+                {"start": None, "end": None},
+            ],
+        )
+
+        self.assertEqual(
+            list(df.range_date),
+            [
+                {
+                    "start": datetime.date(2020, 10, 1),
+                    "end": datetime.date(2021, 10, 2),
+                },
+                {"start": datetime.date(2020, 10, 1), "end": None},
+                {"start": None, "end": None},
+            ],
+        )
 
     def test_to_dataframe_w_none_dtypes_mapper(self):
         pandas = pytest.importorskip("pandas")

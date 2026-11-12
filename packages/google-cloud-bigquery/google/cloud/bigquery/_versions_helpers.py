@@ -22,9 +22,6 @@ _MIN_PYARROW_VERSION = packaging.version.Version("3.0.0")
 _MIN_BQ_STORAGE_VERSION = packaging.version.Version("2.0.0")
 _BQ_STORAGE_OPTIONAL_READ_SESSION_VERSION = packaging.version.Version("2.6.0")
 _MIN_PANDAS_VERSION = packaging.version.Version("1.1.0")
-
-_MIN_PANDAS_VERSION_RANGE = packaging.version.Version("1.5.0")
-_MIN_PYARROW_VERSION_RANGE = packaging.version.Version("10.0.1")
 _MIN_PANDAS_GBQ_DELEGATION_VERSION = packaging.version.Version("1.0.0")
 
 
@@ -250,17 +247,6 @@ class PandasVersions:
 
 
 PANDAS_VERSIONS = PandasVersions()
-
-# Since RANGE support in pandas requires specific versions
-# of both pyarrow and pandas, we make this a separate
-# constant instead of as a property of PANDAS_VERSIONS
-# or PYARROW_VERSIONS.
-SUPPORTS_RANGE_PYARROW = (
-    PANDAS_VERSIONS.try_import() is not None
-    and PANDAS_VERSIONS.installed_version >= _MIN_PANDAS_VERSION_RANGE
-    and PYARROW_VERSIONS.try_import() is not None
-    and PYARROW_VERSIONS.installed_version >= _MIN_PYARROW_VERSION_RANGE
-)
 
 
 class PandasGBQVersions:

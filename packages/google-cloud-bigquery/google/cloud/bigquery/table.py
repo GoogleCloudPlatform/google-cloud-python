@@ -107,12 +107,6 @@ _NO_SUPPORTED_DTYPE = (
     "because the necessary `__from_arrow__` attribute is missing."
 )
 
-_RANGE_PYARROW_WARNING = (
-    "Unable to represent RANGE schema as struct using pandas ArrowDtype. Using "
-    "`object` instead. To use ArrowDtype, use pandas >= 1.5 and "
-    "pyarrow >= 10.0.1."
-)
-
 _TO_DATAFRAME_DEPRECATED = (
     "Retrieving DataFrames via google-cloud-bigquery is deprecated. "
     "For direct, optimized access, please call 'pandas_gbq.read_gbq()' directly."
@@ -822,7 +816,7 @@ class Table(_TableBase):
             api_repr = value.to_api_repr()
         elif value is not None:
             raise ValueError(
-                "value must be google.cloud.bigquery.table.TimePartitioning " "or None"
+                "value must be google.cloud.bigquery.table.TimePartitioning or None"
             )
         self._properties[self._PROPERTY_TO_API_FIELD["time_partitioning"]] = api_repr
 
@@ -2839,43 +2833,29 @@ class RowIterator(HTTPIterator):
             time_dtype = db_dtypes.TimeDtype()
 
         if range_date_dtype is DefaultPandasDTypes.RANGE_DATE_DTYPE:
-            if _versions_helpers.SUPPORTS_RANGE_PYARROW:
-                range_date_dtype = pandas.ArrowDtype(
-                    pyarrow.struct(
-                        [("start", pyarrow.date32()), ("end", pyarrow.date32())]
-                    )
-                )
-            else:
-                warnings.warn(_RANGE_PYARROW_WARNING)
-                range_date_dtype = None
+            range_date_dtype = pandas.ArrowDtype(
+                pyarrow.struct([("start", pyarrow.date32()), ("end", pyarrow.date32())])
+            )
 
         if range_datetime_dtype is DefaultPandasDTypes.RANGE_DATETIME_DTYPE:
-            if _versions_helpers.SUPPORTS_RANGE_PYARROW:
-                range_datetime_dtype = pandas.ArrowDtype(
-                    pyarrow.struct(
-                        [
-                            ("start", pyarrow.timestamp("us")),
-                            ("end", pyarrow.timestamp("us")),
-                        ]
-                    )
+            range_datetime_dtype = pandas.ArrowDtype(
+                pyarrow.struct(
+                    [
+                        ("start", pyarrow.timestamp("us")),
+                        ("end", pyarrow.timestamp("us")),
+                    ]
                 )
-            else:
-                warnings.warn(_RANGE_PYARROW_WARNING)
-                range_datetime_dtype = None
+            )
 
         if range_timestamp_dtype is DefaultPandasDTypes.RANGE_TIMESTAMP_DTYPE:
-            if _versions_helpers.SUPPORTS_RANGE_PYARROW:
-                range_timestamp_dtype = pandas.ArrowDtype(
-                    pyarrow.struct(
-                        [
-                            ("start", pyarrow.timestamp("us", tz="UTC")),
-                            ("end", pyarrow.timestamp("us", tz="UTC")),
-                        ]
-                    )
+            range_timestamp_dtype = pandas.ArrowDtype(
+                pyarrow.struct(
+                    [
+                        ("start", pyarrow.timestamp("us", tz="UTC")),
+                        ("end", pyarrow.timestamp("us", tz="UTC")),
+                    ]
                 )
-            else:
-                warnings.warn(_RANGE_PYARROW_WARNING)
-                range_timestamp_dtype = None
+            )
 
         if bool_dtype is not None and not hasattr(bool_dtype, "__from_arrow__"):
             raise ValueError("bool_dtype", _NO_SUPPORTED_DTYPE)
@@ -3112,8 +3092,7 @@ class RowIterator(HTTPIterator):
         )
         if not geography_columns:
             raise TypeError(
-                "There must be at least one GEOGRAPHY column"
-                " to create a GeoDataFrame"
+                "There must be at least one GEOGRAPHY column to create a GeoDataFrame"
             )
 
         if geography_column:
