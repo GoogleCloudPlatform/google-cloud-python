@@ -9797,6 +9797,44 @@ class TestClientUpload(object):
         assert sent_config.schema is None
         assert sent_config.autodetect
 
+    def test_load_table_from_dataframe_passes_timeout_to_table_lookup(self):
+        pandas = pytest.importorskip("pandas")
+        pytest.importorskip("pyarrow")
+
+        client = self._make_client()
+        dataframe = pandas.DataFrame({"id": [1]})
+
+        load_patch = mock.patch(
+            "google.cloud.bigquery.client.Client.load_table_from_file", autospec=True
+        )
+        get_table_patch = mock.patch(
+            "google.cloud.bigquery.client.Client.get_table",
+            autospec=True,
+            side_effect=google.api_core.exceptions.NotFound("Table not found"),
+        )
+
+        with load_patch, get_table_patch as get_table:
+            client.load_table_from_dataframe(dataframe, self.TABLE_REF, timeout=7.5)
+
+        get_table.assert_called_once_with(client, self.TABLE_REF, timeout=7.5)
+
+    def test_load_table_from_json_passes_timeout_to_table_lookup(self):
+        client = self._make_client()
+
+        load_patch = mock.patch(
+            "google.cloud.bigquery.client.Client.load_table_from_file", autospec=True
+        )
+        get_table_patch = mock.patch(
+            "google.cloud.bigquery.client.Client.get_table",
+            autospec=True,
+            side_effect=google.api_core.exceptions.NotFound("Table not found"),
+        )
+
+        with load_patch, get_table_patch as get_table:
+            client.load_table_from_json([{"id": 1}], self.TABLE_REF, timeout=7.5)
+
+        get_table.assert_called_once_with(client, self.TABLE_REF, timeout=7.5)
+
     def test_load_table_from_json_non_default_args(self):
         from google.cloud.bigquery import job
         from google.cloud.bigquery.client import _DEFAULT_NUM_RETRIES

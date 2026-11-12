@@ -43,6 +43,7 @@ from typing import (
     Sequence,
     Tuple,
     Union,
+    cast,
 )
 
 import google.api_core.client_options
@@ -2984,7 +2985,9 @@ class Client(ClientWithProject):
             and new_job_config.write_disposition != job.WriteDisposition.WRITE_TRUNCATE
         ):
             try:
-                table = self.get_table(destination)
+                # get_table hands the timeout to requests, which also accepts the
+                # (connect, read) tuple allowed here.
+                table = self.get_table(destination, timeout=cast(TimeoutType, timeout))
             except core_exceptions.NotFound:
                 pass
             else:
@@ -3172,7 +3175,9 @@ class Client(ClientWithProject):
                 new_job_config.autodetect = True
             else:
                 try:
-                    self.get_table(destination)
+                    # get_table hands the timeout to requests, which also accepts the
+                    # (connect, read) tuple allowed here.
+                    self.get_table(destination, timeout=cast(TimeoutType, timeout))
                 except core_exceptions.NotFound:
                     new_job_config.autodetect = True
                 else:
