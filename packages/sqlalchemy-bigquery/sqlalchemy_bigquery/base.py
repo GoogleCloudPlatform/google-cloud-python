@@ -231,14 +231,14 @@ class BigQueryCompiler(vendored_postgresql.PGCompiler, SQLCompiler):
         )
 
     @staticmethod
+    @staticmethod
     def _get_struct_type(type_):
         # Unwrap TypeDecorator.impl so custom types wrapping STRUCT are still
         # recognized as STRUCT columns during compilation.
-        if isinstance(type_, _struct.STRUCT):
-            return type_
-        impl = getattr(type_, "impl", None)
-        if isinstance(impl, _struct.STRUCT):
-            return impl
+        while type_ is not None:
+            if isinstance(type_, _struct.STRUCT):
+                return type_
+            type_ = getattr(type_, "impl", None)
         return None
 
     def visit_json_getitem_op_binary(self, binary, operator_, **kw):
