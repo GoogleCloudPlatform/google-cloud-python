@@ -16,6 +16,7 @@
 
 import asyncio
 import logging
+import ssl
 from typing import TYPE_CHECKING, AsyncGenerator, Mapping, Optional, Union
 
 try:
@@ -244,10 +245,7 @@ class Request(transport.Request):
                 # close the shared resolver, breaking the original session.
                 session_kwargs["connector"] = aiohttp.TCPConnector(
                     ssl=getattr(orig_connector, "_ssl", None),  # type: ignore
-                    limit=getattr(orig_connector, "_limit", 100),
-                    limit_per_host=getattr(orig_connector, "_limit_per_host", 0),
-                    force_close=getattr(orig_connector, "_force_close", False),
-                    local_addr=_helpers_async._get_local_addr(orig_connector),
+                    **_get_tcp_connector_settings(orig_connector),
                 )
             elif getattr(aiohttp, "UnixConnector", None) and isinstance(
                 orig_connector, getattr(aiohttp, "UnixConnector")
@@ -264,21 +262,96 @@ class Request(transport.Request):
                     f"Unsupported connector type for cloning: {type(orig_connector)}"
                 )
 
-        # Preserve distributed tracing configurations.
-        trace_configs = getattr(self._session, "_trace_configs", None)
-        if trace_configs:
-            session_kwargs["trace_configs"] = list(trace_configs)
-
-        # Copy session-level defaults (headers, cookies, auth, timeout).
-        for attr_name, kwarg_name in [
-            ("_default_headers", "headers"),
-            ("_cookie_jar", "cookie_jar"),
-            ("_default_auth", "auth"),
-            ("_timeout", "timeout"),
-            ("_json_serialize", "json_serialize"),
-        ]:
-            val = getattr(self._session, attr_name, None)
-            if val is not None:
-                session_kwargs[kwarg_name] = val
+        session_kwargs.update(_get_session_defaults(self._session))
 
         return Request(session=aiohttp.ClientSession(**session_kwargs))  # type: ignore
+
+    def _with_ssl_context(self, ssl_context: ssl.SSLContext) -> "Request":
+        """Creates a new request adapter that uses the given SSL context.
+
+        This is used to reconfigure the transport for mutual TLS. Only the TLS
+        settings are replaced: the new session keeps the other settings of the
+        current ``aiohttp.ClientSession`` (proxy settings such as ``trust_env``,
+        ``auto_decompress``, session defaults, trace configurations, and the
+        connection pool settings of an ``aiohttp.TCPConnector``). If there is
+        no current session, the aiohttp defaults are used.
+
+        The current session is not closed.
+
+        Args:
+            ssl_context (ssl.SSLContext): The SSL context to use for the new
+                connector.
+
+        Returns:
+            google.auth.aio.transport.aiohttp.Request: A new request adapter.
+        """
+        connector_kwargs: dict = {}
+        session_kwargs: dict = {}
+        # Subclasses may not call Request.__init__, so _session may be missing.
+        session = getattr(self, "_session", None)
+        if session is not None:
+            orig_connector = getattr(session, "_connector", None)
+            if (
+                isinstance(orig_connector, aiohttp.TCPConnector)
+                and not orig_connector.closed
+            ):
+                # The resolver is not copied, see _clone().
+                connector_kwargs = _get_tcp_connector_settings(orig_connector)
+
+            for attr_name, kwarg_name in [
+                ("_trust_env", "trust_env"),
+                ("_auto_decompress", "auto_decompress"),
+                # Session-level proxy settings are available in aiohttp >= 3.10.
+                ("_default_proxy", "proxy"),
+                ("_default_proxy_auth", "proxy_auth"),
+            ]:
+                val = getattr(session, attr_name, None)
+                if val is not None:
+                    session_kwargs[kwarg_name] = val
+            session_kwargs.update(_get_session_defaults(session))
+
+        connector = aiohttp.TCPConnector(ssl=ssl_context, **connector_kwargs)
+        return Request(
+            session=aiohttp.ClientSession(connector=connector, **session_kwargs)
+        )
+
+
+def _get_tcp_connector_settings(connector: aiohttp.TCPConnector) -> dict:
+    """Returns the connection pool settings of a TCP connector.
+
+    The SSL context and the DNS resolver are not included.
+    """
+    return {
+        "limit": getattr(connector, "_limit", 100),
+        "limit_per_host": getattr(connector, "_limit_per_host", 0),
+        "force_close": getattr(connector, "_force_close", False),
+        "local_addr": _helpers_async._get_local_addr(connector),
+    }
+
+
+def _get_session_defaults(session: aiohttp.ClientSession) -> dict:
+    """Returns the trace configurations and session-level defaults of a session.
+
+    The session-level defaults are headers, cookies, basic auth, timeout, and
+    the JSON serializer.
+    """
+    session_kwargs: dict = {}
+
+    # Preserve distributed tracing configurations.
+    trace_configs = getattr(session, "_trace_configs", None)
+    if trace_configs:
+        session_kwargs["trace_configs"] = list(trace_configs)
+
+    # Copy session-level defaults (headers, cookies, auth, timeout).
+    for attr_name, kwarg_name in [
+        ("_default_headers", "headers"),
+        ("_cookie_jar", "cookie_jar"),
+        ("_default_auth", "auth"),
+        ("_timeout", "timeout"),
+        ("_json_serialize", "json_serialize"),
+    ]:
+        val = getattr(session, attr_name, None)
+        if val is not None:
+            session_kwargs[kwarg_name] = val
+
+    return session_kwargs

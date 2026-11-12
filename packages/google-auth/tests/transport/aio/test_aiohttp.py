@@ -323,3 +323,174 @@ class TestRequest:
         assert cloned._session._connector is not connector
         await request.close()
         await cloned.close()
+
+    async def test_request_with_ssl_context_without_session(self):
+        import ssl
+
+        from aiohttp import TCPConnector
+
+        ssl_context = ssl.create_default_context()
+        request = auth_aiohttp.Request()
+
+        new_request = request._with_ssl_context(ssl_context)
+
+        assert new_request is not request
+        assert isinstance(new_request, auth_aiohttp.Request)
+        assert new_request._session is not None
+        connector = new_request._session._connector
+        assert isinstance(connector, TCPConnector)
+        assert connector._ssl is ssl_context
+        # Without an existing session, aiohttp defaults are used.
+        default_session = aiohttp.ClientSession()
+        assert new_request._session._trust_env is default_session._trust_env
+        assert new_request._session._auto_decompress is default_session._auto_decompress
+        await default_session.close()
+        await request.close()
+        await new_request.close()
+
+    async def test_request_with_ssl_context_preserves_session_settings(self):
+        import ssl
+
+        from aiohttp import BasicAuth, ClientTimeout, TCPConnector
+
+        old_ssl = ssl.create_default_context()
+        new_ssl = ssl.create_default_context()
+        custom_connector = TCPConnector(
+            ssl=old_ssl,
+            limit=42,
+            limit_per_host=12,
+            force_close=True,
+            local_addr=("127.0.0.2", 0),
+        )
+        session = aiohttp.ClientSession(
+            connector=custom_connector,
+            headers={"x-custom-header": "value"},
+            cookies={"session": "active"},
+            auth=BasicAuth("user", "secret"),
+            timeout=ClientTimeout(total=84.0),
+            trust_env=True,
+            auto_decompress=False,
+            trace_configs=[aiohttp.TraceConfig()],
+        )
+        request = auth_aiohttp.Request(session=session)
+
+        new_request = request._with_ssl_context(new_ssl)
+
+        assert new_request._session is not None
+        assert new_request._session is not session
+
+        # The TLS settings are replaced, other connector settings are kept.
+        new_connector = new_request._session._connector
+        assert isinstance(new_connector, TCPConnector)
+        assert new_connector is not custom_connector
+        assert new_connector._resolver is not custom_connector._resolver
+        assert new_connector._ssl is new_ssl
+        assert new_connector._limit == 42
+        assert new_connector._limit_per_host == 12
+        assert new_connector._force_close is True
+        assert _helpers_async._get_local_addr(new_connector) == ("127.0.0.2", 0)
+
+        # Session-level settings are kept.
+        assert new_request._session._trust_env is True
+        assert new_request._session._auto_decompress is False
+        assert len(new_request._session._trace_configs) == 1
+        assert new_request._session._default_headers == {"x-custom-header": "value"}
+        assert new_request._session._cookie_jar is session._cookie_jar
+        assert new_request._session._default_auth == session._default_auth
+        assert new_request._session._timeout == ClientTimeout(total=84.0)
+
+        # The original request and session are left untouched.
+        assert not request._closed
+        assert not session.closed
+
+        await request.close()
+        await new_request.close()
+
+    async def test_request_with_ssl_context_preserves_proxy(self):
+        import inspect
+        import ssl
+
+        if "proxy" not in inspect.signature(aiohttp.ClientSession).parameters:
+            pytest.skip("Session-level proxy requires aiohttp >= 3.10")
+
+        proxy_auth = aiohttp.BasicAuth("proxy-user", "proxy-secret")
+        session = aiohttp.ClientSession(
+            proxy="http://proxy.example.com:3128", proxy_auth=proxy_auth
+        )
+        request = auth_aiohttp.Request(session=session)
+
+        new_request = request._with_ssl_context(ssl.create_default_context())
+
+        assert new_request._session is not None
+        assert str(new_request._session._default_proxy) == (
+            "http://proxy.example.com:3128"
+        )
+        assert new_request._session._default_proxy_auth == proxy_auth
+        await request.close()
+        await new_request.close()
+
+    async def test_request_with_ssl_context_with_custom_connector(self):
+        import ssl
+
+        from aiohttp import TCPConnector
+
+        ssl_context = ssl.create_default_context()
+        session = aiohttp.ClientSession(trust_env=True)
+        custom_connector = AsyncMock()
+        custom_connector.closed = False
+        custom_connector.close = AsyncMock()
+        session._connector = custom_connector
+        request = auth_aiohttp.Request(session=session)
+
+        # Unsupported connectors do not raise; only session settings are kept.
+        new_request = request._with_ssl_context(ssl_context)
+
+        assert new_request._session is not None
+        new_connector = new_request._session._connector
+        assert isinstance(new_connector, TCPConnector)
+        assert new_connector._ssl is ssl_context
+        assert new_request._session._trust_env is True
+        await request.close()
+        await new_request.close()
+
+    async def test_request_with_ssl_context_with_closed_connector(self):
+        import ssl
+
+        from aiohttp import TCPConnector
+
+        ssl_context = ssl.create_default_context()
+        session = aiohttp.ClientSession(trust_env=True)
+        request = auth_aiohttp.Request(session=session)
+        await session.close()
+
+        new_request = request._with_ssl_context(ssl_context)
+
+        assert new_request._session is not None
+        new_connector = new_request._session._connector
+        assert isinstance(new_connector, TCPConnector)
+        assert new_connector._ssl is ssl_context
+        assert new_request._session._trust_env is True
+        await request.close()
+        await new_request.close()
+
+    async def test_request_with_ssl_context_subclass_without_session_attribute(self):
+        import ssl
+
+        from aiohttp import TCPConnector
+
+        class CustomRequest(auth_aiohttp.Request):
+            def __init__(self):
+                # Does not call Request.__init__, so there is no _session.
+                pass
+
+        ssl_context = ssl.create_default_context()
+        request = CustomRequest()
+
+        new_request = request._with_ssl_context(ssl_context)
+
+        assert isinstance(new_request, auth_aiohttp.Request)
+        assert new_request._session is not None
+        new_connector = new_request._session._connector
+        assert isinstance(new_connector, TCPConnector)
+        assert new_connector._ssl is ssl_context
+        await new_request.close()

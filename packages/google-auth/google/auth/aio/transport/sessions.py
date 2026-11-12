@@ -32,12 +32,10 @@ from google.auth.aio.transport import mtls
 from google.auth.exceptions import TimeoutError
 
 if TYPE_CHECKING:  # pragma: NO COVER
-    import aiohttp
     from aiohttp import ClientTimeout  # type: ignore
 
 else:
     try:
-        import aiohttp
         from aiohttp import ClientTimeout
     except (ImportError, AttributeError):
         ClientTimeout = None
@@ -321,11 +319,12 @@ class AsyncAuthorizedSession:
                             ssl_context = await mtls._run_in_executor(
                                 mtls.make_client_cert_ssl_context, cert, key
                             )
-                            connector = aiohttp.TCPConnector(ssl=ssl_context)
-                            new_session = aiohttp.ClientSession(connector=connector)
-
+                            # Keep the non-TLS settings of the current session
+                            # (e.g. trust_env, auto_decompress, headers).
                             old_auth_request = self._auth_request
-                            self._auth_request = AiohttpRequest(session=new_session)
+                            self._auth_request = old_auth_request._with_ssl_context(
+                                ssl_context
+                            )
                             self._old_auth_requests.append(old_auth_request)
 
                             while len(self._old_auth_requests) > 2:

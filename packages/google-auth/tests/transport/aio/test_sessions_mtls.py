@@ -83,6 +83,50 @@ class TestSessionsMtls:
             await session.close()
 
     @pytest.mark.asyncio
+    async def test_configure_mtls_channel_preserves_custom_session_config(self):
+        """
+        Tests that configuring mTLS keeps the configuration of a custom
+        aiohttp.ClientSession provided via auth_request.
+        """
+        import aiohttp
+
+        mtls_ssl_context = ssl.create_default_context()
+        custom_session = aiohttp.ClientSession(
+            auto_decompress=False,
+            trust_env=True,
+            headers={"x-custom-header": "value"},
+            connector=aiohttp.TCPConnector(limit=42),
+        )
+        auth_request = sessions.AiohttpRequest(session=custom_session)
+        with (
+            mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}),
+            mock.patch(
+                "google.auth.aio.transport.mtls.get_client_cert_and_key",
+                return_value=(True, b"fake_cert_data", b"fake_key_data"),
+            ),
+            mock.patch(
+                "google.auth.aio.transport.mtls.make_client_cert_ssl_context",
+                return_value=mtls_ssl_context,
+            ),
+        ):
+            mock_creds = mock.AsyncMock(spec=credentials.Credentials)
+            session = sessions.AsyncAuthorizedSession(
+                mock_creds, auth_request=auth_request
+            )
+
+            await session.configure_mtls_channel()
+
+            assert session._is_mtls is True
+            new_session = session._auth_request._session
+            assert new_session is not custom_session
+            assert new_session._connector._ssl is mtls_ssl_context
+            assert new_session._connector._limit == 42
+            assert new_session._auto_decompress is False
+            assert new_session._trust_env is True
+            assert new_session._default_headers == {"x-custom-header": "value"}
+            await session.close()
+
+    @pytest.mark.asyncio
     async def test_configure_mtls_channel_disabled(self):
         """
         Tests behavior when the config file does not exist.
