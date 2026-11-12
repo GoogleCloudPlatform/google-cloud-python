@@ -49,7 +49,7 @@ def readme():
 
 extras = {
     "geography": ["GeoAlchemy2", "shapely"],
-    "alembic": ["alembic"],
+    "alembic": ["alembic >= 1.7.7"],
     "tests": ["packaging", "pytz"],
     # Keep the no-op bqstorage extra for backward compatibility.
     # See: https://github.com/googleapis/python-bigquery/issues/757
@@ -63,7 +63,7 @@ extras = {
         # https://github.com/grpc/grpc/pull/15254
         "grpcio >= 1.59.0, < 2.0.0",
         "grpcio >= 1.75.1, < 2.0.0; python_version >= '3.14'",
-        "pyarrow >= 6.0.0",
+        "pyarrow >= 10.0.1",
     ],
 }
 
@@ -100,7 +100,6 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
@@ -113,12 +112,12 @@ setup(
     install_requires=[
         "google-api-core >= 2.25.0, <3.0.0",
         "google-auth>=2.14.1,<3.0.0",
-        "google-cloud-bigquery>=3.20.0,<4.0.0",
+        "google-cloud-bigquery>=3.20.1,<4.0.0",
         "packaging",
-        "sqlalchemy>=1.4.16,<3.0.0",
+        "sqlalchemy>=1.4.41,<3.0.0",
     ],
     extras_require=extras,
-    python_requires=">=3.10",
+    python_requires=">=3.11",
     tests_require=["packaging", "pytz"],
     entry_points={
         "sqlalchemy.dialects": ["bigquery = sqlalchemy_bigquery:BigQueryDialect"]

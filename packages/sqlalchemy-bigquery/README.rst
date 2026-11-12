@@ -51,11 +51,11 @@ dependencies.
 
 Supported Python Versions
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-Python >= 3.10, <= 3.14
+Python >= 3.11, <= 3.15
 
 Unsupported Python Versions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Python <= 3.9
+Python <= 3.10
 
 
 Mac/Linux

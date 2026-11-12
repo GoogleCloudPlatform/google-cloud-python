@@ -28,7 +28,6 @@ from decimal import Decimal
 from typing import Any
 
 import google.api_core.exceptions
-import packaging.version
 import sqlalchemy
 import sqlalchemy.sql.expression
 import sqlalchemy.sql.functions
@@ -368,14 +367,10 @@ class BigQueryCompiler(vendored_postgresql.PGCompiler, SQLCompiler):
     # no way to tell sqlalchemy that, so it works harder than
     # necessary and makes us do the same.
 
-    __sqlalchemy_version_info = packaging.version.parse(sqlalchemy.__version__)
-
     __expanding_text = "POSTCOMPILE"
 
     # https://github.com/sqlalchemy/sqlalchemy/commit/f79df12bd6d99b8f6f09d4bf07722638c4b4c159
-    __expanding_conflict = (
-        "" if __sqlalchemy_version_info < packaging.version.parse("1.4.27") else "__"
-    )
+    __expanding_conflict = "__"
 
     __in_expanding_bind = _helpers.substitute_string_re_method(
         rf"""
@@ -553,8 +548,6 @@ class BigQueryCompiler(vendored_postgresql.PGCompiler, SQLCompiler):
 
         if bindparam.expanding:  # pragma: NO COVER
             assert_(self.__expanded_param(param), f"Unexpected param: {param}")
-            if self.__sqlalchemy_version_info < packaging.version.parse("1.4.27"):
-                param = param.replace(")", f":{bq_type})")
 
         else:
             m = self.__placeholder(param)
