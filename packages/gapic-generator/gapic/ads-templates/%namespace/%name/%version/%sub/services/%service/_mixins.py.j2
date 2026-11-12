@@ -44,7 +44,6 @@
             gapic_v1.routing_header.to_grpc_metadata(
                 (("name", request_pb.name),)),
         )
-{{ shared_macros.add_api_version_header_to_metadata(service.version) }}
 
         # Send the request.
         response = rpc(
@@ -99,7 +98,6 @@
             gapic_v1.routing_header.to_grpc_metadata(
                 (("name", request_pb.name),)),
         )
-{{ shared_macros.add_api_version_header_to_metadata(service.version) }}
 
         # Send the request.
         response = rpc(
@@ -157,7 +155,6 @@
             gapic_v1.routing_header.to_grpc_metadata(
                 (("name", request_pb.name),)),
         )
-{{ shared_macros.add_api_version_header_to_metadata(service.version) }}
 
         # Send the request.
         rpc(request_pb, retry=retry, timeout=timeout, metadata=metadata,)
@@ -210,7 +207,6 @@
             gapic_v1.routing_header.to_grpc_metadata(
                 (("name", request_pb.name),)),
         )
-{{ shared_macros.add_api_version_header_to_metadata(service.version) }}
 
         # Send the request.
         rpc(request_pb, retry=retry, timeout=timeout, metadata=metadata,)
@@ -261,7 +257,6 @@
         rpc = self._transport._wrapped_methods[self._transport.wait_operation]
 
         metadata = tuple(metadata)
-{{ shared_macros.add_api_version_header_to_metadata(service.version) }}
 
         # Send the request.
         response = rpc(
@@ -386,7 +381,6 @@
             gapic_v1.routing_header.to_grpc_metadata(
                 (("resource", request_pb.resource),)),
         )
-{{ shared_macros.add_api_version_header_to_metadata(service.version) }}
 
         # Send the request.
         response = rpc(
@@ -507,7 +501,6 @@
             gapic_v1.routing_header.to_grpc_metadata(
                 (("resource", request_pb.resource),)),
         )
-{{ shared_macros.add_api_version_header_to_metadata(service.version) }}
 
         # Send the request.
         response = rpc(
@@ -566,7 +559,6 @@
             gapic_v1.routing_header.to_grpc_metadata(
                 (("resource", request_pb.resource),)),
         )
-{{ shared_macros.add_api_version_header_to_metadata(service.version) }}
 
         # Send the request.
         response = rpc(
@@ -624,7 +616,6 @@
             gapic_v1.routing_header.to_grpc_metadata(
                 (("name", request_pb.name),)),
         )
-{{ shared_macros.add_api_version_header_to_metadata(service.version) }}
 
         # Send the request.
         response = rpc(
@@ -678,7 +669,6 @@
             gapic_v1.routing_header.to_grpc_metadata(
                 (("name", request_pb.name),)),
         )
-{{ shared_macros.add_api_version_header_to_metadata(service.version) }}
 
         # Send the request.
         response = rpc(

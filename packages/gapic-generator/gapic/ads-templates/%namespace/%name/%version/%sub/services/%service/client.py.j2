@@ -507,11 +507,6 @@ class {{ service.client_name }}(metaclass={{ service.client_name }}Meta):
             metadata=metadata,
         )
         {% if method.lro %}
-        {% if service.version %}
-        lro_metadata = None
-        if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-            lro_metadata = [version_header.to_api_version_header("{{ service.version }}")]
-        {% endif %}
 
         # Wrap the response in an operation future.
         response = {{ method.client_output.ident.module_alias or method.client_output.ident.module }}.from_gapic(
@@ -519,9 +514,6 @@ class {{ service.client_name }}(metaclass={{ service.client_name }}Meta):
             self._transport.operations_client,
             {{ method.lro.response_type.ident }},
             metadata_type={{ method.lro.metadata_type.ident }},
-            {% if service.version %}
-            grpc_metadata=lro_metadata,
-            {% endif %}
         )
         {% elif method.paged_result_field %}
 
@@ -661,7 +653,6 @@ class {{ service.client_name }}(metaclass={{ service.client_name }}Meta):
             gapic_v1.routing_header.to_grpc_metadata(
                 (("resource", request_pb.resource),)),
         )
-{{ shared_macros.add_api_version_header_to_metadata(service.version) }}
 
         # Send the request.
         response = rpc(
@@ -783,7 +774,6 @@ class {{ service.client_name }}(metaclass={{ service.client_name }}Meta):
             gapic_v1.routing_header.to_grpc_metadata(
                 (("resource", request_pb.resource),)),
         )
-{{ shared_macros.add_api_version_header_to_metadata(service.version) }}
 
         # Send the request.
         response = rpc(
@@ -844,7 +834,6 @@ class {{ service.client_name }}(metaclass={{ service.client_name }}Meta):
             gapic_v1.routing_header.to_grpc_metadata(
                 (("resource", request_pb.resource),)),
         )
-{{ shared_macros.add_api_version_header_to_metadata(service.version) }}
 
         # Send the request.
         response = rpc(

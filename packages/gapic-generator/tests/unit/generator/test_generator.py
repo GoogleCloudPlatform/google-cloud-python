@@ -1024,21 +1024,12 @@ def test_routing_headers_client_streaming(
                 assert '("table_name", request.table_name)' in content
 
 
-@pytest.mark.parametrize("use_ads_templates", (False, True))
 @pytest.mark.parametrize("add_iam_methods", (False, True))
 def test_api_version_header_lro_and_mixins(
-    use_ads_templates: bool,
     add_iam_methods: bool,
 ):
     """Verify x-goog-api-version metadata is passed to LRO from_gapic and mixin methods."""
-    ads_templates_dir = os.path.abspath(
-        os.path.join(
-            os.path.dirname(__file__), "..", "..", "..", "gapic", "ads-templates"
-        )
-    )
     opts_parts = ["autogen-snippets=false"]
-    if use_ads_templates:
-        opts_parts.extend([f"python-gapic-templates={ads_templates_dir}", "old-naming"])
     if add_iam_methods:
         opts_parts.append("add-iam-methods")
     opts = Options.build(",".join(opts_parts))
@@ -1174,7 +1165,7 @@ def test_api_version_header_lro_and_mixins(
         if name.endswith("/services/some_service/client.py")
         or name.endswith("/services/some_service/async_client.py")
     ]
-    assert len(client_files) == (1 if use_ads_templates else 2)
+    assert len(client_files) == 2
 
     expected_Mixin_methods = (
         "def list_operations(",
