@@ -430,10 +430,7 @@ def _merge_request_options(request_options, client_context):
     if request_options is None and client_context is None:
         return None
 
-    if request_options is None:
-        request_options = RequestOptions()
-    elif isinstance(request_options, dict):
-        request_options = RequestOptions(request_options)
+    request_options = RequestOptions(request_options)
 
     if client_context:
         request_options.client_context = _merge_client_context(

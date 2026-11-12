@@ -64,7 +64,11 @@ class TestClientContext(unittest.TestCase):
         self.assertEqual(result.secure_context["c"], "C")
 
     def test__merge_request_options_with_client_context(self):
-        request_options = RequestOptions(priority=RequestOptions.Priority.PRIORITY_LOW)
+        request_options = RequestOptions(
+            priority=RequestOptions.Priority.PRIORITY_LOW,
+            client_context={"secure_context": {"original": "value"}},
+        )
+        original = RequestOptions(request_options)
         client_context = RequestOptions.ClientContext(
             secure_context={"a": struct_pb2.Value(string_value="A")}
         )
@@ -73,6 +77,26 @@ class TestClientContext(unittest.TestCase):
 
         self.assertEqual(result.priority, RequestOptions.Priority.PRIORITY_LOW)
         self.assertEqual(result.client_context.secure_context["a"], "A")
+        self.assertEqual(result.client_context.secure_context["original"], "value")
+        self.assertEqual(request_options, original)
+
+        result.client_context.secure_context["original"] = "changed"
+        self.assertEqual(request_options, original)
+
+    def test__merge_request_options_without_client_context_copies_options(self):
+        for options in (
+            {"request_tag": "tag", "transaction_tag": "transaction"},
+            RequestOptions(request_tag="tag", transaction_tag="transaction"),
+        ):
+            with self.subTest(options=options):
+                original = RequestOptions(options)
+                result = _merge_request_options(options, None)
+                self.assertEqual(result, original)
+                result.transaction_tag = "changed"
+                self.assertEqual(RequestOptions(options), original)
+
+    def test__merge_request_options_both_none(self):
+        self.assertIsNone(_merge_request_options(None, None))
 
     def test_client_init_with_client_context(self):
         from google.cloud.spanner_v1.client import Client

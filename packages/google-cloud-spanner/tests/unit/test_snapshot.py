@@ -1866,12 +1866,25 @@ class Test_SnapshotBase(OpenTelemetryBase):
         return_value="global",
     )
     def test_read_w_request_and_transaction_tag_success(self, mock_region):
-        request_options = {"request_tag": "tag-1", "transaction_tag": "tag-1-1"}
-        self._execute_read(
-            multi_use=False,
-            request_options=request_options,
-            expected_request_options=RequestOptions(request_tag="tag-1"),
-        )
+        for request_options in (
+            {"request_tag": "tag-1", "transaction_tag": "tag-1-1"},
+            RequestOptions(request_tag="tag-1", transaction_tag="tag-1-1"),
+        ):
+            with self.subTest(request_options=request_options):
+                original = RequestOptions(request_options)
+                self._execute_read(
+                    multi_use=False,
+                    request_options=request_options,
+                    expected_request_options=RequestOptions(request_tag="tag-1"),
+                )
+                self.assertEqual(RequestOptions(request_options), original)
+                self._execute_read(
+                    multi_use=False,
+                    read_only=False,
+                    request_options=request_options,
+                    expected_request_options=original,
+                )
+                self.assertEqual(RequestOptions(request_options), original)
 
     @mock.patch(
         "google.cloud.spanner_v1._opentelemetry_tracing._get_cloud_region",
@@ -2372,12 +2385,25 @@ class Test_SnapshotBase(OpenTelemetryBase):
         return_value="global",
     )
     def test_execute_sql_w_request_and_transaction_tag_success(self, mock_region):
-        request_options = {"request_tag": "tag-1", "transaction_tag": "tag-1-1"}
-        self._execute_sql_helper(
-            multi_use=False,
-            request_options=request_options,
-            expected_request_options=RequestOptions(request_tag="tag-1"),
-        )
+        for request_options in (
+            {"request_tag": "tag-1", "transaction_tag": "tag-1-1"},
+            RequestOptions(request_tag="tag-1", transaction_tag="tag-1-1"),
+        ):
+            with self.subTest(request_options=request_options):
+                original = RequestOptions(request_options)
+                self._execute_sql_helper(
+                    multi_use=False,
+                    request_options=request_options,
+                    expected_request_options=RequestOptions(request_tag="tag-1"),
+                )
+                self.assertEqual(RequestOptions(request_options), original)
+                self._execute_sql_helper(
+                    multi_use=False,
+                    read_only=False,
+                    request_options=request_options,
+                    expected_request_options=original,
+                )
+                self.assertEqual(RequestOptions(request_options), original)
 
     @mock.patch(
         "google.cloud.spanner_v1._opentelemetry_tracing._get_cloud_region",

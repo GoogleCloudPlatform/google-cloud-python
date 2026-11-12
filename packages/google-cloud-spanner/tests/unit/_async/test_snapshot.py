@@ -1542,6 +1542,46 @@ class Test_snapshot_coverage(unittest.IsolatedAsyncioTestCase):
         call_args = api.streaming_read.call_args
         self.assertEqual(call_args.kwargs["request"].request_options.priority, 1)
 
+    async def test_read_and_execute_sql_preserve_request_options(self):
+        from google.cloud.spanner_v1.keyset import KeySet
+        from google.cloud.spanner_v1.types import RequestOptions
+
+        for method, args, rpc in (
+            ("read", (TABLE_NAME, COLUMNS, KeySet(all_=True)), "streaming_read"),
+            ("execute_sql", (SQL_QUERY,), "execute_streaming_sql"),
+        ):
+            for options in (
+                {"request_tag": "r-tag", "transaction_tag": "caller-tx-tag"},
+                RequestOptions(request_tag="r-tag", transaction_tag="caller-tx-tag"),
+            ):
+                with self.subTest(method=method, options=options):
+                    original = RequestOptions(options)
+                    for read_only, transaction_tag, expected_tag in (
+                        (True, None, ""),
+                        (False, None, "caller-tx-tag"),
+                        (False, "snapshot-tx-tag", "snapshot-tx-tag"),
+                    ):
+                        database = _Database()
+                        snapshot = self._make_snapshot(_Session(database))
+                        snapshot._transaction_id = TXN_ID
+                        snapshot._read_only = read_only
+                        snapshot.transaction_tag = transaction_tag
+                        api_method = getattr(database.spanner_api, rpc)
+                        api_method.return_value = _MockIterator(PartialResultSet())
+
+                        results = await getattr(snapshot, method)(
+                            *args, request_options=options
+                        )
+                        async for _ in results:
+                            pass
+
+                        sent_options = api_method.call_args.kwargs[
+                            "request"
+                        ].request_options
+                        self.assertEqual(sent_options.request_tag, "r-tag")
+                        self.assertEqual(sent_options.transaction_tag, expected_tag)
+                        self.assertEqual(RequestOptions(options), original)
+
     async def test_read_w_directed_read_options(self):
         from google.cloud.spanner_v1.types import DirectedReadOptions
 
