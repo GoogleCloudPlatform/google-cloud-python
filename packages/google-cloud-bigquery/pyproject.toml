@@ -20,7 +20,7 @@ build-backend = "setuptools.build_meta"
 name = "google-cloud-bigquery"
 authors = [{ name = "Google LLC", email = "googleapis-packages@google.com" }]
 license = { text = "Apache 2.0" }
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 description = "Google BigQuery API client library"
 readme = "README.rst"
 classifiers = [
@@ -32,7 +32,6 @@ classifiers = [
   "Intended Audience :: Developers",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",

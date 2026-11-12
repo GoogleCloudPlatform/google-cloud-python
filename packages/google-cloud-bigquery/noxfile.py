@@ -39,7 +39,7 @@ BLACK_PATHS = (
 
 DEFAULT_PYTHON_VERSION = "3.14"
 ALL_PYTHON = ["3.10", "3.11", "3.12", "3.13", "3.14", "3.15"]
-UNIT_TEST_PYTHON_VERSIONS = ALL_PYTHON
+UNIT_TEST_PYTHON_VERSIONS = ["3.11", "3.12", "3.13", "3.14", "3.15"]
 CURRENT_DIRECTORY = pathlib.Path(__file__).parent.absolute()
 # Path to the centralized mypy configuration file at the repository root.
 # Search upwards to support running nox from both monorepo packages and integration test goldens.
@@ -175,11 +175,14 @@ def default(session, install_extras=True):
     )
 
 
-@nox.session(python=UNIT_TEST_PYTHON_VERSIONS)
+@nox.session(python=ALL_PYTHON)
 @nox.parametrize("test_type", ["unit", "unit_noextras"])
 @_calculate_duration
 def unit(session, test_type):
     """Run the unit test suite."""
+    if session.python not in UNIT_TEST_PYTHON_VERSIONS:
+        session.skip(f"Python {session.python} is not supported.")
+
     install_extras = True
     if test_type == "unit_noextras":
         # unit_noextras only runs on the oldest and newest Python versions
@@ -202,7 +205,7 @@ def unit(session, test_type):
         # so that it continues to be an optional dependency.
         # https://github.com/googleapis/google-cloud-python/issues/1877
         if session.python == UNIT_TEST_PYTHON_VERSIONS[0]:
-            session.install("pyarrow==6.0.0", "numpy==1.22.0")
+            session.install("pyarrow==10.0.1", "numpy==1.23.2")
 
     default(session, install_extras=install_extras)
 
@@ -211,6 +214,8 @@ def unit(session, test_type):
 @_calculate_duration
 def mypy(session):
     """Run type checks with mypy."""
+    if session.python not in UNIT_TEST_PYTHON_VERSIONS:
+        session.skip(f"Python {session.python} is not supported.")
 
     session.install("-e", ".[all]")
     session.install(MYPY_VERSION)
@@ -527,7 +532,7 @@ def blacken(session):
     session.run("black", *BLACK_PATHS)
 
 
-@nox.session(python="3.10")
+@nox.session(python="3.11")
 @_calculate_duration
 def docs(session):
     """Build the docs."""
@@ -566,7 +571,7 @@ def docs(session):
     )
 
 
-@nox.session(python="3.10")
+@nox.session(python="3.11")
 @_calculate_duration
 def docfx(session):
     """Build the docfx yaml files for this library."""

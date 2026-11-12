@@ -27,7 +27,6 @@ The main concepts with this API are:
 - :class:`~google.cloud.bigquery.table.Table` represents a single "relation".
 """
 
-import sys
 import warnings
 
 import google.api_core as api_core
@@ -127,15 +126,6 @@ try:
     import bigquery_magics  # type: ignore
 except ImportError:
     bigquery_magics = None
-
-if sys.version_info < (3, 10):  # pragma: NO COVER
-    warnings.warn(
-        "The python-bigquery library no longer supports Python <= 3.9. "
-        f"Your Python version is {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}. We "
-        "recommend that you update soon to ensure ongoing support. For "
-        "more details, see: [Google Cloud Client Libraries Supported Python Versions policy](https://cloud.google.com/python/docs/supported-python-versions)",
-        FutureWarning,
-    )
 
 api_core.check_python_version(__name__)
 api_core.check_dependency_versions(__name__)
