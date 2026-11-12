@@ -16924,6 +16924,34 @@ def test_get_operation_rest(request_type):
     # Establish that the response is the type that we expect.
     assert isinstance(response, operations_pb2.Operation)
 
+
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_get_operation_empty_call_rest(request_val):
+    client = AssetServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_operation),
+        "__call__",
+        autospec=True,
+        spec_set=True,
+    ) as call:
+        client.get_operation(request=request_val)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[1] == operations_pb2.GetOperationRequest()
+
 def test_initialize_client_w_rest():
     client = AssetServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -17532,6 +17560,29 @@ def test_asset_service_base_transport_with_adc():
         adc.return_value = (ga_credentials.AnonymousCredentials(), None)
         transport = transports.AssetServiceTransport()
         adc.assert_called_once()
+
+
+# Test _ignore_credentials=True skips Application Default Credentials (ADC)
+# and a host without a port defaults to :443.
+
+@pytest.mark.parametrize(
+    "host,expected_host",
+    [
+        pytest.param("squid.clam.whelk", "squid.clam.whelk:443", id="host_without_port_defaults_to_443"),
+        pytest.param("squid.clam.whelk:8080", "squid.clam.whelk:8080", id="host_with_port_preserved"),
+    ],
+)
+def test_asset_service_base_transport_ignore_credentials(host, expected_host):
+    class IgnoreCredsTransport(transports.AssetServiceTransport):
+        _ignore_credentials = True
+
+    with mock.patch.object(
+        google.auth, "default", autospec=True, spec_set=True
+    ) as adc:
+        transport = IgnoreCredsTransport(host=host)
+        adc.assert_not_called()
+        assert transport._credentials is None
+        assert transport.host == expected_host
 
 
 def test_asset_service_auth_adc():

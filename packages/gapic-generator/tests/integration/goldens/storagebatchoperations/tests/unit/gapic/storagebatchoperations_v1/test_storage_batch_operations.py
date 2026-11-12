@@ -6321,6 +6321,34 @@ def test_get_location_rest(request_type):
     assert isinstance(response, locations_pb2.Location)
 
 
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_get_location_empty_call_rest(request_val):
+    client = StorageBatchOperationsClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_location),
+        "__call__",
+        autospec=True,
+        spec_set=True,
+    ) as call:
+        client.get_location(request=request_val)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[1] == locations_pb2.GetLocationRequest()
+
+
 def test_list_locations_rest_bad_request(request_type=locations_pb2.ListLocationsRequest):
     client = StorageBatchOperationsClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -6372,6 +6400,34 @@ def test_list_locations_rest(request_type):
 
     # Establish that the response is the type that we expect.
     assert isinstance(response, locations_pb2.ListLocationsResponse)
+
+
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_list_locations_empty_call_rest(request_val):
+    client = StorageBatchOperationsClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_locations),
+        "__call__",
+        autospec=True,
+        spec_set=True,
+    ) as call:
+        client.list_locations(request=request_val)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[1] == locations_pb2.ListLocationsRequest()
 
 
 def test_cancel_operation_rest_bad_request(request_type=operations_pb2.CancelOperationRequest):
@@ -6427,6 +6483,34 @@ def test_cancel_operation_rest(request_type):
     assert response is None
 
 
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_cancel_operation_empty_call_rest(request_val):
+    client = StorageBatchOperationsClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.cancel_operation),
+        "__call__",
+        autospec=True,
+        spec_set=True,
+    ) as call:
+        client.cancel_operation(request=request_val)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[1] == operations_pb2.CancelOperationRequest()
+
+
 def test_delete_operation_rest_bad_request(request_type=operations_pb2.DeleteOperationRequest):
     client = StorageBatchOperationsClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -6478,6 +6562,34 @@ def test_delete_operation_rest(request_type):
 
     # Establish that the response is the type that we expect.
     assert response is None
+
+
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_delete_operation_empty_call_rest(request_val):
+    client = StorageBatchOperationsClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.delete_operation),
+        "__call__",
+        autospec=True,
+        spec_set=True,
+    ) as call:
+        client.delete_operation(request=request_val)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[1] == operations_pb2.DeleteOperationRequest()
 
 
 def test_get_operation_rest_bad_request(request_type=operations_pb2.GetOperationRequest):
@@ -6533,6 +6645,34 @@ def test_get_operation_rest(request_type):
     assert isinstance(response, operations_pb2.Operation)
 
 
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_get_operation_empty_call_rest(request_val):
+    client = StorageBatchOperationsClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.get_operation),
+        "__call__",
+        autospec=True,
+        spec_set=True,
+    ) as call:
+        client.get_operation(request=request_val)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[1] == operations_pb2.GetOperationRequest()
+
+
 def test_list_operations_rest_bad_request(request_type=operations_pb2.ListOperationsRequest):
     client = StorageBatchOperationsClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -6584,6 +6724,34 @@ def test_list_operations_rest(request_type):
 
     # Establish that the response is the type that we expect.
     assert isinstance(response, operations_pb2.ListOperationsResponse)
+
+
+@pytest.mark.parametrize(
+    "request_val",
+    [
+        pytest.param(None, id="none_request"),
+        pytest.param({}, id="empty_dict_request"),
+    ],
+)
+def test_list_operations_empty_call_rest(request_val):
+    client = StorageBatchOperationsClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="rest",
+    )
+
+    # Mock the actual call, and fake the request.
+    with mock.patch.object(
+        type(client.transport.list_operations),
+        "__call__",
+        autospec=True,
+        spec_set=True,
+    ) as call:
+        client.list_operations(request=request_val)
+
+        # Establish that the underlying stub method was called.
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[1] == operations_pb2.ListOperationsRequest()
 
 def test_initialize_client_w_rest():
     client = StorageBatchOperationsClient(
@@ -6855,6 +7023,29 @@ def test_storage_batch_operations_base_transport_with_adc():
         adc.return_value = (ga_credentials.AnonymousCredentials(), None)
         transport = transports.StorageBatchOperationsTransport()
         adc.assert_called_once()
+
+
+# Test _ignore_credentials=True skips Application Default Credentials (ADC)
+# and a host without a port defaults to :443.
+
+@pytest.mark.parametrize(
+    "host,expected_host",
+    [
+        pytest.param("squid.clam.whelk", "squid.clam.whelk:443", id="host_without_port_defaults_to_443"),
+        pytest.param("squid.clam.whelk:8080", "squid.clam.whelk:8080", id="host_with_port_preserved"),
+    ],
+)
+def test_storage_batch_operations_base_transport_ignore_credentials(host, expected_host):
+    class IgnoreCredsTransport(transports.StorageBatchOperationsTransport):
+        _ignore_credentials = True
+
+    with mock.patch.object(
+        google.auth, "default", autospec=True, spec_set=True
+    ) as adc:
+        transport = IgnoreCredsTransport(host=host)
+        adc.assert_not_called()
+        assert transport._credentials is None
+        assert transport.host == expected_host
 
 
 def test_storage_batch_operations_auth_adc():
