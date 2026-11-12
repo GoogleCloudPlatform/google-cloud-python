@@ -574,7 +574,7 @@ class Credentials(
         # Remove empty entries (those which are None)
         prep = {k: v for k, v in prep.items() if v is not None}
 
-        # Remove entries that explicitely need to be removed
+        # Remove entries that explicitly need to be removed
         if strip is not None:
             prep = {k: v for k, v in prep.items() if k not in strip}
 

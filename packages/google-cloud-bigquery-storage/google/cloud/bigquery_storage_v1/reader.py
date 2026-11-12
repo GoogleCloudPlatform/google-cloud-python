@@ -339,7 +339,7 @@ class ReadRowsStream(object):
     def to_dataframe(self, read_session=None, dtypes=None):
         """Create a :class:`pandas.DataFrame` of all rows in the stream.
 
-        This method requires the pandas libary to create a data frame and the
+        This method requires the pandas library to create a data frame and the
         fastavro library to parse row messages.
 
         .. warning::
@@ -459,7 +459,7 @@ class ReadRowsIterable(object):
     def to_dataframe(self, dtypes=None):
         """Create a :class:`pandas.DataFrame` of all rows in the stream.
 
-        This method requires the pandas libary to create a data frame and the
+        This method requires the pandas library to create a data frame and the
         fastavro library to parse row messages.
 
         .. warning::
@@ -672,7 +672,7 @@ class ReadRowsPage(object):
     def to_dataframe(self, dtypes=None):
         """Create a :class:`pandas.DataFrame` of rows in the page.
 
-        This method requires the pandas libary to create a data frame and the
+        This method requires the pandas library to create a data frame and the
         fastavro library to parse row messages.
 
         .. warning::
@@ -785,7 +785,7 @@ class _AvroStreamParser(_StreamParser):
     def to_dataframe(self, message, dtypes=None):
         """Create a :class:`pandas.DataFrame` of rows in the page.
 
-        This method requires the pandas libary to create a data frame and the
+        This method requires the pandas library to create a data frame and the
         fastavro library to parse row messages.
 
         .. warning::

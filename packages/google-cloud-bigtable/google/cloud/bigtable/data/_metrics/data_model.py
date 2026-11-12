@@ -170,7 +170,7 @@ class ActiveOperationMetric:
     completed_attempts: list[CompletedAttemptMetric] = field(default_factory=list)
     is_streaming: bool = False  # only True for read_rows operations
     handlers: list[MetricsHandler] = field(default_factory=list)
-    # the time it takes to recieve the first response from the server, in nanoseconds
+    # the time it takes to receive the first response from the server, in nanoseconds
     # attached by interceptor
     # currently only tracked for ReadRows
     first_response_latency_ns: int | None = None

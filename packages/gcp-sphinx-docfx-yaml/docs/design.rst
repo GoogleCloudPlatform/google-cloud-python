@@ -8,7 +8,7 @@ Goals
 
 The primary goal of this project is to generate YAML that can be consumed by the ``docfx`` tool.
 It will be rendered from the internal doctree representation in Python.
-This allows for the largest amount of compatability across Python domain implementations,
+This allows for the largest amount of compatibility across Python domain implementations,
 for example supporting both autodoc and manual domain entries.
 
 Architecture

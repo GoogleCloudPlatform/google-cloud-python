@@ -551,7 +551,7 @@ class AsyncAppendableObjectWriter:
         """Appends data to the Appendable object with automatic retries.
 
         calling `self.append` will append bytes at the end of the current size
-        ie. `self.offset` bytes relative to the begining of the object.
+        ie. `self.offset` bytes relative to the beginning of the object.
 
         This method sends the provided `data` to the GCS server in chunks.
         and persists data in GCS at every `_DEFAULT_FLUSH_INTERVAL_BYTES` bytes

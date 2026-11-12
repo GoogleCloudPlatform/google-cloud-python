@@ -133,7 +133,7 @@ class _QueryResultRowReader(_Reader[QueryResultRow]):
                     )
                 else:
                     raise ValueError(
-                        "Unexpected error, recieved bad number of values. "
+                        "Unexpected error, received bad number of values. "
                         f"Expected {num_columns} got {len(row_data)}."
                     )
 
