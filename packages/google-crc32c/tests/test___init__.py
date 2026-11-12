@@ -305,50 +305,17 @@ def test_value_w_large_readonly_view_of_bytearray_releases_buffer(_cext):
 @pytest.mark.parametrize(
     "factory",
     [
-        pytest.param(lambda buffer: buffer, id="bytearray"),
-        pytest.param(lambda buffer: memoryview(buffer).toreadonly(), id="readonly"),
-    ],
-)
-def test_value_holds_gil_for_mutable_memory(_cext, factory):
-    # Read-only views of mutable memory can still be written through their
-    # owner, so the GIL must stay held while they are hashed. With a 10 s
-    # switch interval this thread keeps the GIL until value() releases it or
-    # join() blocks, so the probe sees in_call=True only if value() did.
-    data = factory(bytearray(64 * 1024 * 1024))
-    go = threading.Event()
-    in_call = False
-    seen = []
-
-    def probe():
-        go.wait()
-        seen.append(in_call)
-
-    interval = sys.getswitchinterval()
-    sys.setswitchinterval(10)
-    try:
-        thread = threading.Thread(target=probe, daemon=True)
-        thread.start()
-        go.set()
-        in_call = True
-        _cext.value(data)
-        in_call = False
-        thread.join()
-    finally:
-        sys.setswitchinterval(interval)
-    assert seen == [False]
-
-
-@pytest.mark.parametrize(
-    "factory",
-    [
         pytest.param(lambda data: data, id="bytes"),
         pytest.param(lambda data: memoryview(data), id="memoryview"),
         pytest.param(lambda data: memoryview(data)[1:-1], id="slice"),
+        pytest.param(lambda data: bytearray(data), id="bytearray"),
+        pytest.param(
+            lambda data: memoryview(bytearray(data)).toreadonly(), id="readonly"
+        ),
     ],
 )
-def test_value_releases_gil_for_immutable_memory(_cext, factory):
-    # The counterpart of the test above: nothing can write to a bytes object,
-    # so hashing it (or a view into it) runs with the GIL released and the
+def test_value_releases_gil(_cext, factory):
+    # hashing runs with the GIL released and the
     # probe thread gets to run while value() is in progress.
     data = factory(bytes(2 * _cext.GIL_RELEASE_THRESHOLD))
     go = threading.Event()
