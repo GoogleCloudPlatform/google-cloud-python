@@ -14,20 +14,23 @@ def fresh_bigquery_version(monkeypatch):
 
 
 @pytest.mark.parametrize(
-    ["bigquery_version", "expected"],
+    ["bigquery_version", "should_raise"],
     [
-        ("1.99.100", False),
-        ("2.99.999", False),
-        ("3.13.11", False),
-        ("3.14.0", True),
-        ("4.999.999", True),
+        ("3.4.2", True),
+        ("3.42.9", True),
+        ("3.43.0", False),
+        ("4.0.0", False),
     ],
 )
-def test_bigquery_has_query_and_wait(monkeypatch, bigquery_version, expected):
+def test_bigquery_try_import(monkeypatch, bigquery_version, should_raise):
     import google.cloud.bigquery
 
     monkeypatch.setattr(google.cloud.bigquery, "__version__", bigquery_version)
-    assert FEATURES.bigquery_has_query_and_wait == expected
+    if should_raise:
+        with pytest.raises(ImportError, match="google-cloud-bigquery >= 3.43.0"):
+            FEATURES.bigquery_try_import()
+    else:
+        assert FEATURES.bigquery_try_import() is google.cloud.bigquery
 
 
 @pytest.mark.parametrize(

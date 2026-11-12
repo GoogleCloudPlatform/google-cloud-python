@@ -8,7 +8,6 @@ from unittest import mock
 
 import google.cloud.bigquery
 import google.cloud.bigquery.table
-import packaging.version
 import pytest
 
 
@@ -57,42 +56,8 @@ def test_read_gbq_should_save_credentials(mock_get_credentials):
     mock_get_credentials.assert_not_called()
 
 
-def test_read_gbq_should_use_dialect_with_query(monkeypatch, mock_bigquery_client):
+def test_read_gbq_should_use_dialect_with_query_and_wait(mock_bigquery_client):
     import pandas_gbq
-    import pandas_gbq.features
-
-    monkeypatch.setattr(
-        pandas_gbq.features.FEATURES,
-        "_bigquery_installed_version",
-        packaging.version.parse(pandas_gbq.features.BIGQUERY_MINIMUM_VERSION),
-    )
-
-    assert pandas_gbq.context.dialect is None
-    pandas_gbq.context.dialect = "legacy"
-    pandas_gbq.read_gbq("SELECT 1")
-
-    _, kwargs = mock_bigquery_client.query.call_args
-    assert kwargs["job_config"].use_legacy_sql
-
-    pandas_gbq.context.dialect = "standard"
-    pandas_gbq.read_gbq("SELECT 1")
-
-    _, kwargs = mock_bigquery_client.query.call_args
-    assert not kwargs["job_config"].use_legacy_sql
-    pandas_gbq.context.dialect = None  # Reset the global state.
-
-
-def test_read_gbq_should_use_dialect_with_query_and_wait(
-    monkeypatch, mock_bigquery_client
-):
-    import pandas_gbq
-    import pandas_gbq.features
-
-    monkeypatch.setattr(
-        pandas_gbq.features.FEATURES,
-        "_bigquery_installed_version",
-        packaging.version.parse(pandas_gbq.features.BIGQUERY_QUERY_AND_WAIT_VERSION),
-    )
 
     assert pandas_gbq.context.dialect is None
     pandas_gbq.context.dialect = "legacy"
