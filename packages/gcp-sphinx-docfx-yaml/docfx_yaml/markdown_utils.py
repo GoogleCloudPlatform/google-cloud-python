@@ -326,7 +326,7 @@ def _merge_markdown_content(
 def move_markdown_pages(
     app: sphinx.application,
     outdir: Path,
-    cwd: list[str] | None = [],
+    cwd: list[str] | None = None,
 ) -> None:
     """Moves markdown pages to be added to the generated reference documentation.
 
@@ -338,6 +338,11 @@ def move_markdown_pages(
         app: Sphinx application.
         outdir: The output directory to move markdown pages to.
     """
+    if cwd is None:
+        # Materialize a fresh list per top-level call: the recursion below
+        # mutates ``cwd`` in place (append/pop), which would otherwise keep
+        # state in the shared default across calls.
+        cwd = []
     # Use this to ignore markdown files that are unnecessary.
     files_to_ignore = [
         "index.md",  # use readme.md instead
