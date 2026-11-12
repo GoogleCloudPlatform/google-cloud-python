@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-cloud-datastore/#history
 
+## [2.27.1](https://github.com/googleapis/google-cloud-python/compare/google-cloud-datastore-v2.27.0...google-cloud-datastore-v2.27.1) (2026-11-12)
+
+
+### Bug Fixes
+
+* **datastore:** pass retry and timeout to begin when commit starts the transaction ([#18939](https://github.com/googleapis/google-cloud-python/issues/18939)) ([cad0a39](https://github.com/googleapis/google-cloud-python/commit/cad0a39ee25727ff7313272f5650fb24debef72f))
+
 ## [2.27.0](https://github.com/googleapis/google-cloud-python/compare/google-cloud-datastore-v2.26.1...google-cloud-datastore-v2.27.0) (2026-10-01)
 
 

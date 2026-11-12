@@ -977,7 +977,7 @@ libraries:
       metadata_name_override: metastore
       default_version: v1
   - name: google-cloud-datastore
-    version: 2.27.0
+    version: 2.27.1
     apis:
       - path: google/datastore/v1
       - path: google/datastore/admin/v1
