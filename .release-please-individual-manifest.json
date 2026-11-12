@@ -12,7 +12,7 @@
   "packages/google-cloud-logging": "3.17.0",
   "packages/google-cloud-ndb": "2.7.1",
   "packages/google-cloud-observability": "0.1.0",
-  "packages/google-cloud-pubsub": "2.43.0",
+  "packages/google-cloud-pubsub": "2.44.0",
   "packages/google-cloud-spanner": "3.71.0",
   "packages/google-cloud-spanner-dbapi-driver": "0.0.0",
   "packages/google-cloud-storage": "3.17.1",
