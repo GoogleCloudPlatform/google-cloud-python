@@ -24,7 +24,6 @@ import decimal
 import packaging.version
 import pytest
 import sqlalchemy
-import sqlalchemy_bigquery
 from google.cloud.bigquery import TimePartitioning
 from sqlalchemy import (
     Column,
@@ -43,6 +42,8 @@ from sqlalchemy.exc import NoSuchTableError
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import expression
+
+import sqlalchemy_bigquery
 
 SQLALCHEMY_VERSION = packaging.version.parse(sqlalchemy.__version__)
 
@@ -829,6 +830,7 @@ def test_huge_in():
 )
 def test_unnest(engine, bigquery_dataset):
     from sqlalchemy import String, func, select
+
     from sqlalchemy_bigquery import ARRAY
 
     conn = engine.connect()
@@ -859,6 +861,7 @@ def test_unnest(engine, bigquery_dataset):
 )
 def test_unnest_with_cte(engine, bigquery_dataset):
     from sqlalchemy import String, func, select
+
     from sqlalchemy_bigquery import ARRAY
 
     conn = engine.connect()

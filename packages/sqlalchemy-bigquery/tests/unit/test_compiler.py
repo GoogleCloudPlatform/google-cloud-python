@@ -20,6 +20,7 @@
 import pytest
 import sqlalchemy.exc
 from sqlalchemy.sql.functions import cube, grouping_sets, rollup
+
 from sqlalchemy_bigquery import SafeCast, safe_cast
 
 from .conftest import setup_table, sqlalchemy_2_0_or_higher, sqlalchemy_before_2_0

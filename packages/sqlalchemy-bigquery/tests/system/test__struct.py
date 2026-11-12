@@ -22,6 +22,7 @@ import datetime
 import packaging.version
 import pytest
 import sqlalchemy
+
 import sqlalchemy_bigquery
 
 
@@ -135,6 +136,7 @@ def test_unnest_and_struct_access_233(engine, bigquery_dataset, metadata):
 
     from sqlalchemy import ARRAY, Column, String, Table, func, select
     from sqlalchemy.orm import sessionmaker
+
     from sqlalchemy_bigquery import STRUCT
 
     conn = engine.connect()

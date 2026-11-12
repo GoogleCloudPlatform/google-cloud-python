@@ -190,6 +190,7 @@ def test_struct_compiler_rejects_invalid_direct_json_getitem_op(faux_conn):
 def test_struct_type_decorator_and_identifier_escaping(faux_conn):
     from sqlalchemy.sql import operators
     from sqlalchemy.sql.elements import BinaryExpression
+
     from sqlalchemy_bigquery import STRUCT
 
     class WrappedStruct(sqlalchemy.types.TypeDecorator):
