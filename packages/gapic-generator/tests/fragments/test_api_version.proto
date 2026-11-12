@@ -17,7 +17,9 @@ syntax = "proto3";
 package google.fragment;
 
 import "google/protobuf/struct.proto";
+import "google/api/annotations.proto";
 import "google/api/client.proto";
+import "google/longrunning/operations.proto";
 
 service MyServiceWithVersion {
   option (google.api.api_version) = "v1_20230601";
@@ -25,6 +27,17 @@ service MyServiceWithVersion {
 
   rpc MyMethod(MethodRequest) returns (MethodResponse) {
     option (google.api.method_signature) = "parameter";
+  }
+
+  rpc MyLroMethod(MethodRequest) returns (google.longrunning.Operation) {
+    option (google.api.http) = {
+      post: "/v1/my_lro_method"
+      body: "*"
+    };
+    option (google.longrunning.operation_info) = {
+      response_type: "MethodResponse"
+      metadata_type: "MethodMetadata"
+    };
   }
 }
 
@@ -35,3 +48,5 @@ message MethodRequest {
 message MethodResponse {
   google.protobuf.Value result = 1;
 }
+
+message MethodMetadata {}

@@ -113,6 +113,13 @@ def test_delete_operation_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
+    {% if service.version %}
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "{{ service.version }}",
+        ) in kw["metadata"]
+    {% endif %}
 
 def test_delete_operation_from_dict():
     client = {{ service.client_name }}(
@@ -198,6 +205,13 @@ def test_cancel_operation_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
+    {% if service.version %}
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "{{ service.version }}",
+        ) in kw["metadata"]
+    {% endif %}
 
 def test_cancel_operation_from_dict():
     client = {{ service.client_name }}(
@@ -283,6 +297,13 @@ def test_wait_operation_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
+    {% if service.version %}
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "{{ service.version }}",
+        ) in kw["metadata"]
+    {% endif %}
 
 def test_wait_operation_from_dict():
     client = {{ service.client_name }}(
@@ -369,6 +390,13 @@ def test_get_operation_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
+    {% if service.version %}
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "{{ service.version }}",
+        ) in kw["metadata"]
+    {% endif %}
 
 def test_get_operation_from_dict():
     client = {{ service.client_name }}(
@@ -454,6 +482,13 @@ def test_list_operations_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
+    {% if service.version %}
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "{{ service.version }}",
+        ) in kw["metadata"]
+    {% endif %}
 
 
 def test_list_operations_from_dict():
@@ -544,6 +579,13 @@ def test_list_locations_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
+    {% if service.version %}
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "{{ service.version }}",
+        ) in kw["metadata"]
+    {% endif %}
 
 def test_list_locations_from_dict():
     client = {{ service.client_name }}(
@@ -628,6 +670,13 @@ def test_get_location_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations/abc",) in kw["metadata"]
+    {% if service.version %}
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "{{ service.version }}",
+        ) in kw["metadata"]
+    {% endif %}
 
 def test_get_location_from_dict():
     client = {{ service.client_name }}(
@@ -721,6 +770,13 @@ def test_set_iam_policy_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    {% if service.version %}
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "{{ service.version }}",
+        ) in kw["metadata"]
+    {% endif %}
 
 def test_set_iam_policy_from_dict():
     client = {{ service.client_name }}(
@@ -811,6 +867,13 @@ def test_get_iam_policy_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    {% if service.version %}
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "{{ service.version }}",
+        ) in kw["metadata"]
+    {% endif %}
 
 
 def test_get_iam_policy_from_dict():
@@ -907,6 +970,13 @@ def test_test_iam_permissions_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    {% if service.version %}
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "{{ service.version }}",
+        ) in kw["metadata"]
+    {% endif %}
 
 
 def test_test_iam_permissions_from_dict():
@@ -1002,6 +1072,13 @@ def test_set_iam_policy_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    {% if service.version %}
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "{{ service.version }}",
+        ) in kw["metadata"]
+    {% endif %}
 
 def test_set_iam_policy_from_dict():
     client = {{ service.client_name }}(
@@ -1093,6 +1170,13 @@ def test_get_iam_policy_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    {% if service.version %}
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "{{ service.version }}",
+        ) in kw["metadata"]
+    {% endif %}
 
 
 def test_get_iam_policy_from_dict():
@@ -1190,6 +1274,13 @@ def test_test_iam_permissions_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    {% if service.version %}
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "{{ service.version }}",
+        ) in kw["metadata"]
+    {% endif %}
 
 
 def test_test_iam_permissions_from_dict():

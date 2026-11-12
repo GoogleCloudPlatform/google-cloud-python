@@ -217,9 +217,17 @@ def test_{{ method_name }}_api_version_header(transport_name):
             ) as call:
                 call.return_value = {{ method.output.ident }}()
             {% if mode == "async" %}
+                {% if method.lro %}
+                response = await client.{{ method_name }}()
+                {% else %}
                 await client.{{ method_name }}()
+                {% endif %}
             {% else %}
+                {% if method.lro %}
+                response = client.{{ method_name }}()
+                {% else %}
                 client.{{ method_name }}()
+                {% endif %}
             {% endif %}
 
         # Establish that the api version header was sent.
@@ -228,6 +236,16 @@ def test_{{ method_name }}_api_version_header(transport_name):
             version_header.API_VERSION_METADATA_KEY,
             "{{ service.version }}",
         ) in kw['metadata']
+        {% if method.lro %}
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "{{ service.version }}",
+        ) in response._refresh.keywords["metadata"]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "{{ service.version }}",
+        ) in response._cancel.keywords["metadata"]
+        {% endif %}
     else:
         pytest.skip("google-api-core>=2.19.0 is required for `google.api_core.version_header`")
 {% endfor %}{# mode #}
