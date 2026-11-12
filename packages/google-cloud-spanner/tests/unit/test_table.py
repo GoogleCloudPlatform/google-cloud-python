@@ -37,22 +37,25 @@ class TestTable(_BaseTest):
     def test_ctor(self):
         from google.cloud.spanner_v1.database import Database
 
-        db = mock.create_autospec(Database, instance=True)
-        table = self._make_one(self.TABLE_ID, db)
+        database = mock.create_autospec(Database, instance=True)
+        table = self._make_one(self.TABLE_ID, database)
         self.assertEqual(table.table_id, self.TABLE_ID)
 
     def test_exists_executes_query(self):
+        from google.cloud.spanner_admin_database_v1 import DatabaseDialect
         from google.cloud.spanner_v1.database import Database, SnapshotCheckout
         from google.cloud.spanner_v1.snapshot import Snapshot
         from google.cloud.spanner_v1.table import _EXISTS_TEMPLATE
 
-        db = mock.create_autospec(Database, instance=True)
-        checkout = mock.create_autospec(SnapshotCheckout, instance=True)
+        database = mock.create_autospec(Database, instance=True)
+        database.default_schema_name = ""
+        database.database_dialect = DatabaseDialect.GOOGLE_STANDARD_SQL
+        snapshot_checkout = mock.create_autospec(SnapshotCheckout, instance=True)
         snapshot = mock.create_autospec(Snapshot, instance=True)
-        db.snapshot.return_value = checkout
-        checkout.__enter__.return_value = snapshot
+        database.snapshot.return_value = snapshot_checkout
+        snapshot_checkout.__enter__.return_value = snapshot
         snapshot.execute_sql.return_value = [[False]]
-        table = self._make_one(self.TABLE_ID, db, schema_name=self.TABLE_SCHEMA)
+        table = self._make_one(self.TABLE_ID, database, schema_name=self.TABLE_SCHEMA)
         exists = table.exists()
         self.assertFalse(exists)
         snapshot.execute_sql.assert_called_with(
@@ -66,62 +69,303 @@ class TestTable(_BaseTest):
             },
         )
 
+    def test_exists_executes_query_postgresql(self):
+        from google.cloud.spanner_admin_database_v1 import DatabaseDialect
+        from google.cloud.spanner_v1.database import Database, SnapshotCheckout
+        from google.cloud.spanner_v1.snapshot import Snapshot
+        from google.cloud.spanner_v1.table import _EXISTS_TEMPLATE
+
+        database = mock.create_autospec(Database, instance=True)
+        database.database_dialect = DatabaseDialect.POSTGRESQL
+        database.default_schema_name = "public"
+        snapshot_checkout = mock.create_autospec(SnapshotCheckout, instance=True)
+        snapshot = mock.create_autospec(Snapshot, instance=True)
+        database.snapshot.return_value = snapshot_checkout
+        snapshot_checkout.__enter__.return_value = snapshot
+        snapshot.execute_sql.return_value = [[True]]
+        table = self._make_one(self.TABLE_ID, database, schema_name="public")
+        self.assertTrue(table.exists())
+        snapshot.execute_sql.assert_called_with(
+            _EXISTS_TEMPLATE.format("WHERE TABLE_SCHEMA=$1 AND TABLE_NAME = $2"),
+            params={"p1": "public", "p2": self.TABLE_ID},
+            param_types={
+                "p1": Type(code=TypeCode.STRING),
+                "p2": Type(code=TypeCode.STRING),
+            },
+        )
+
     def test_schema_executes_query(self):
+        from google.cloud.spanner_admin_database_v1 import DatabaseDialect
         from google.cloud.spanner_v1.database import Database, SnapshotCheckout
         from google.cloud.spanner_v1.snapshot import Snapshot
         from google.cloud.spanner_v1.table import _GET_SCHEMA_TEMPLATE
 
-        db = mock.create_autospec(Database, instance=True)
-        db.default_schema_name = ""
-        checkout = mock.create_autospec(SnapshotCheckout, instance=True)
+        database = mock.create_autospec(Database, instance=True)
+        database.default_schema_name = ""
+        database.database_dialect = DatabaseDialect.GOOGLE_STANDARD_SQL
+        snapshot_checkout = mock.create_autospec(SnapshotCheckout, instance=True)
         snapshot = mock.create_autospec(Snapshot, instance=True)
-        db.snapshot.return_value = checkout
-        checkout.__enter__.return_value = snapshot
-        table = self._make_one(self.TABLE_ID, db, schema_name=self.TABLE_SCHEMA)
+        database.snapshot.return_value = snapshot_checkout
+        snapshot_checkout.__enter__.return_value = snapshot
+        table = self._make_one(self.TABLE_ID, database, schema_name=self.TABLE_SCHEMA)
         schema = table.schema
         self.assertIsInstance(schema, list)
-        expected_query = _GET_SCHEMA_TEMPLATE.format("`{}`".format(self.TABLE_ID))
+        expected_query = _GET_SCHEMA_TEMPLATE.format(f"`{self.TABLE_ID}`")
         snapshot.execute_sql.assert_called_with(expected_query)
+
+    def test_schema_executes_query_postgresql(self):
+        from google.cloud.spanner_admin_database_v1 import DatabaseDialect
+        from google.cloud.spanner_v1.database import Database, SnapshotCheckout
+        from google.cloud.spanner_v1.snapshot import Snapshot
+        from google.cloud.spanner_v1.table import _GET_SCHEMA_TEMPLATE
+
+        database = mock.create_autospec(Database, instance=True)
+        database.default_schema_name = "public"
+        database.database_dialect = DatabaseDialect.POSTGRESQL
+        snapshot_checkout = mock.create_autospec(SnapshotCheckout, instance=True)
+        snapshot = mock.create_autospec(Snapshot, instance=True)
+        database.snapshot.return_value = snapshot_checkout
+        snapshot_checkout.__enter__.return_value = snapshot
+        table = self._make_one(self.TABLE_ID, database, schema_name="public")
+        schema = table.schema
+        self.assertIsInstance(schema, list)
+        expected_query = _GET_SCHEMA_TEMPLATE.format(f'"{self.TABLE_ID}"')
+        snapshot.execute_sql.assert_called_with(expected_query)
+
+    def test_schema_with_escaped_identifiers(self):
+        from google.cloud.spanner_admin_database_v1 import DatabaseDialect
+        from google.cloud.spanner_v1.database import Database, SnapshotCheckout
+        from google.cloud.spanner_v1.snapshot import Snapshot
+        from google.cloud.spanner_v1.table import _GET_SCHEMA_TEMPLATE
+
+        database = mock.create_autospec(Database, instance=True)
+        database.default_schema_name = ""
+        database.database_dialect = DatabaseDialect.GOOGLE_STANDARD_SQL
+        snapshot_checkout = mock.create_autospec(SnapshotCheckout, instance=True)
+        snapshot = mock.create_autospec(Snapshot, instance=True)
+        database.snapshot.return_value = snapshot_checkout
+        snapshot_checkout.__enter__.return_value = snapshot
+        table = self._make_one("tab`name\\", database)
+        _ = table.schema
+        expected_query = _GET_SCHEMA_TEMPLATE.format("`tab\\`name\\\\`")
+        snapshot.execute_sql.assert_called_with(expected_query)
+
+    def test_schema_with_control_characters_raises_value_error(self):
+        from google.cloud.spanner_admin_database_v1 import DatabaseDialect
+        from google.cloud.spanner_v1.database import Database
+
+        database = mock.create_autospec(Database, instance=True)
+        database.default_schema_name = ""
+        database.database_dialect = DatabaseDialect.GOOGLE_STANDARD_SQL
+        table = self._make_one("table\nname", database)
+        with self.assertRaises(ValueError):
+            _ = table.schema
 
     def test_schema_returns_cache(self):
         from google.cloud.spanner_v1.database import Database
 
-        db = mock.create_autospec(Database, instance=True)
-        table = self._make_one(self.TABLE_ID, db)
+        database = mock.create_autospec(Database, instance=True)
+        table = self._make_one(self.TABLE_ID, database)
         table._schema = [StructType.Field(name="col1")]
         schema = table.schema
         self.assertEqual(schema, [StructType.Field(name="col1")])
 
     def test_reload_raises_notfound(self):
+        from google.cloud.spanner_admin_database_v1 import DatabaseDialect
         from google.cloud.spanner_v1.database import Database, SnapshotCheckout
         from google.cloud.spanner_v1.snapshot import Snapshot
 
-        db = mock.create_autospec(Database, instance=True)
-        checkout = mock.create_autospec(SnapshotCheckout, instance=True)
+        database = mock.create_autospec(Database, instance=True)
+        database.database_dialect = DatabaseDialect.GOOGLE_STANDARD_SQL
+        snapshot_checkout = mock.create_autospec(SnapshotCheckout, instance=True)
         snapshot = mock.create_autospec(Snapshot, instance=True)
-        db.snapshot.return_value = checkout
-        checkout.__enter__.return_value = snapshot
+        database.snapshot.return_value = snapshot_checkout
+        snapshot_checkout.__enter__.return_value = snapshot
         snapshot.execute_sql.return_value = [[False]]
-        table = self._make_one(self.TABLE_ID, db)
+        table = self._make_one(self.TABLE_ID, database)
         with self.assertRaises(NotFound):
             table.reload()
 
     def test_reload_executes_queries(self):
+        from google.cloud.spanner_admin_database_v1 import DatabaseDialect
         from google.cloud.spanner_v1.database import Database, SnapshotCheckout
         from google.cloud.spanner_v1.snapshot import Snapshot
         from google.cloud.spanner_v1.streamed import StreamedResultSet
 
-        db = mock.create_autospec(Database, instance=True)
-        checkout = mock.create_autospec(SnapshotCheckout, instance=True)
+        database = mock.create_autospec(Database, instance=True)
+        database.default_schema_name = ""
+        database.database_dialect = DatabaseDialect.GOOGLE_STANDARD_SQL
+        snapshot_checkout = mock.create_autospec(SnapshotCheckout, instance=True)
         snapshot = mock.create_autospec(Snapshot, instance=True)
         results = mock.create_autospec(StreamedResultSet, instance=True)
-        db.snapshot.return_value = checkout
-        checkout.__enter__.return_value = snapshot
+        database.snapshot.return_value = snapshot_checkout
+        snapshot_checkout.__enter__.return_value = snapshot
         results.fields = [StructType.Field(name="col1")]
         snapshot.execute_sql.side_effect = [
             [[True]],
             results,
         ]
-        table = self._make_one(self.TABLE_ID, db)
+        table = self._make_one(self.TABLE_ID, database)
         table.reload()
         self.assertEqual(table.schema, [StructType.Field(name="col1")])
+
+    def test_quote_identifier_googlesql(self):
+        from google.cloud.spanner_admin_database_v1 import DatabaseDialect
+        from google.cloud.spanner_v1.database import Database
+
+        database = mock.create_autospec(Database, instance=True)
+        database.database_dialect = DatabaseDialect.GOOGLE_STANDARD_SQL
+        database.default_schema_name = ""
+        table = self._make_one("normal_table", database)
+
+        self.assertEqual(table._quote_identifier("normal"), "`normal`")
+        self.assertEqual(table._quote_identifier("tab`name"), "`tab\\`name`")
+        self.assertEqual(table._quote_identifier("tab\\name"), "`tab\\\\name`")
+        self.assertEqual(table._quote_identifier("tab\\"), "`tab\\\\`")
+        self.assertEqual(table._quote_identifier("tab\\\\"), "`tab\\\\\\\\`")
+        self.assertEqual(
+            table._quote_identifier("tab\\\\`name"), "`tab\\\\\\\\\\`name`"
+        )
+        self.assertEqual(
+            table._quote_identifier("users` WHERE 1=1 UNION ALL SELECT ... --"),
+            "`users\\` WHERE 1=1 UNION ALL SELECT ... --`",
+        )
+
+    def test_quote_identifier_postgresql(self):
+        from google.cloud.spanner_admin_database_v1 import DatabaseDialect
+        from google.cloud.spanner_v1.database import Database
+
+        database = mock.create_autospec(Database, instance=True)
+        database.database_dialect = DatabaseDialect.POSTGRESQL
+        database.default_schema_name = "public"
+        table = self._make_one("normal_table", database)
+
+        self.assertEqual(table._quote_identifier("normal"), '"normal"')
+        self.assertEqual(table._quote_identifier('tab"name'), '"tab""name"')
+        self.assertEqual(
+            table._quote_identifier('users" WHERE 1=1 UNION ALL SELECT ... --'),
+            '"users"" WHERE 1=1 UNION ALL SELECT ... --"',
+        )
+
+    def test_quote_identifier_invalid_control_characters(self):
+        from google.cloud.spanner_admin_database_v1 import DatabaseDialect
+        from google.cloud.spanner_v1.database import Database
+
+        database = mock.create_autospec(Database, instance=True)
+        database.database_dialect = DatabaseDialect.GOOGLE_STANDARD_SQL
+        table = self._make_one("normal_table", database)
+
+        with self.assertRaises(ValueError):
+            table._quote_identifier("table\nname")
+        with self.assertRaises(ValueError):
+            table._quote_identifier("table\rname")
+        with self.assertRaises(ValueError):
+            table._quote_identifier("table\0name")
+        with self.assertRaises(ValueError):
+            table._quote_identifier("table\tname")
+        with self.assertRaises(ValueError):
+            table._quote_identifier("table\x1fname")
+        with self.assertRaises(ValueError):
+            table._quote_identifier("table\x7fname")
+
+    def test_quote_identifier_backslash_before_backtick(self):
+        from google.cloud.spanner_admin_database_v1 import DatabaseDialect
+        from google.cloud.spanner_v1.database import Database
+
+        database = mock.create_autospec(Database, instance=True)
+        database.database_dialect = DatabaseDialect.GOOGLE_STANDARD_SQL
+        table = self._make_one("normal_table", database)
+        self.assertEqual(table._quote_identifier("tab\\`name"), "`tab\\\\\\`name`")
+
+    def test_quote_identifier_invalid_types_and_empty(self):
+        from google.cloud.spanner_admin_database_v1 import DatabaseDialect
+        from google.cloud.spanner_v1.database import Database
+
+        database = mock.create_autospec(Database, instance=True)
+        database.database_dialect = DatabaseDialect.GOOGLE_STANDARD_SQL
+        table = self._make_one("normal_table", database)
+
+        with self.assertRaises(TypeError):
+            table._quote_identifier(None)
+        with self.assertRaises(TypeError):
+            table._quote_identifier(123)
+        with self.assertRaises(TypeError):
+            table._quote_identifier(b"byte_name")
+        with self.assertRaises(ValueError):
+            table._quote_identifier("")
+
+    def test_qualified_table_name_with_custom_schema(self):
+        from google.cloud.spanner_admin_database_v1 import DatabaseDialect
+        from google.cloud.spanner_v1.database import Database
+
+        database = mock.create_autospec(Database, instance=True)
+        database.default_schema_name = ""
+        database.database_dialect = DatabaseDialect.GOOGLE_STANDARD_SQL
+        table = self._make_one("my_table", database, schema_name="my_schema")
+        self.assertEqual(table.qualified_table_name, "`my_schema`.`my_table`")
+
+    def test_qualified_table_name_with_custom_schema_postgresql(self):
+        from google.cloud.spanner_admin_database_v1 import DatabaseDialect
+        from google.cloud.spanner_v1.database import Database
+
+        database = mock.create_autospec(Database, instance=True)
+        database.default_schema_name = "public"
+        database.database_dialect = DatabaseDialect.POSTGRESQL
+        table = self._make_one("my_table", database, schema_name="my_schema")
+        self.assertEqual(table.qualified_table_name, '"my_schema"."my_table"')
+
+    def test_qualified_table_name_with_escaped_schema(self):
+        from google.cloud.spanner_admin_database_v1 import DatabaseDialect
+        from google.cloud.spanner_v1.database import Database
+
+        database_gsql = mock.create_autospec(Database, instance=True)
+        database_gsql.default_schema_name = ""
+        database_gsql.database_dialect = DatabaseDialect.GOOGLE_STANDARD_SQL
+        table_gsql = self._make_one("my_table", database_gsql, schema_name="my`sch\\")
+        self.assertEqual(table_gsql.qualified_table_name, "`my\\`sch\\\\`.`my_table`")
+
+        database_pg = mock.create_autospec(Database, instance=True)
+        database_pg.default_schema_name = "public"
+        database_pg.database_dialect = DatabaseDialect.POSTGRESQL
+        table_pg = self._make_one("my_table", database_pg, schema_name='my"sch')
+        self.assertEqual(table_pg.qualified_table_name, '"my""sch"."my_table"')
+
+    def test_qualified_table_name_with_control_characters_in_schema(self):
+        from google.cloud.spanner_admin_database_v1 import DatabaseDialect
+        from google.cloud.spanner_v1.database import Database
+
+        database = mock.create_autospec(Database, instance=True)
+        database.default_schema_name = ""
+        database.database_dialect = DatabaseDialect.GOOGLE_STANDARD_SQL
+        table = self._make_one("my_table", database, schema_name="my\nschema")
+        with self.assertRaises(ValueError):
+            _ = table.qualified_table_name
+
+    def test_qualified_table_name_with_empty_schema_postgresql(self):
+        from google.cloud.spanner_admin_database_v1 import DatabaseDialect
+        from google.cloud.spanner_v1.database import Database
+
+        database = mock.create_autospec(Database, instance=True)
+        database.default_schema_name = "public"
+        database.database_dialect = DatabaseDialect.POSTGRESQL
+        table = self._make_one("my_table", database, schema_name="")
+        self.assertEqual(table.schema_name, "public")
+        self.assertEqual(table.qualified_table_name, '"my_table"')
+
+    def test_schema_with_escaped_identifiers_postgresql(self):
+        from google.cloud.spanner_admin_database_v1 import DatabaseDialect
+        from google.cloud.spanner_v1.database import Database, SnapshotCheckout
+        from google.cloud.spanner_v1.snapshot import Snapshot
+        from google.cloud.spanner_v1.table import _GET_SCHEMA_TEMPLATE
+
+        database = mock.create_autospec(Database, instance=True)
+        database.default_schema_name = "public"
+        database.database_dialect = DatabaseDialect.POSTGRESQL
+        snapshot_checkout = mock.create_autospec(SnapshotCheckout, instance=True)
+        snapshot = mock.create_autospec(Snapshot, instance=True)
+        database.snapshot.return_value = snapshot_checkout
+        snapshot_checkout.__enter__.return_value = snapshot
+        table = self._make_one('tab"name', database, schema_name="public")
+        _ = table.schema
+        expected_query = _GET_SCHEMA_TEMPLATE.format('"tab""name"')
+        snapshot.execute_sql.assert_called_with(expected_query)
