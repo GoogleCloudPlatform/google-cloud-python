@@ -28,9 +28,7 @@ from typing import Dict, List
 import nox
 
 FLAKE8_VERSION = "flake8==6.1.0"
-BLACK_VERSION = "black[jupyter]==23.7.0"
 RUFF_VERSION = "ruff==0.14.14"
-ISORT_VERSION = "isort==5.11.0"
 # Temporarily pin pytest<9.2 because pytest 9.2.0 applies filterwarnings=error
 # before pytest_configure hooks run, turning pytest-asyncio's unset
 # asyncio_default_fixture_loop_scope warning into an error. Remove once
@@ -141,11 +139,18 @@ def lint(session):
 
 @nox.session(python=DEFAULT_PYTHON_VERSION)
 def blacken(session):
-    """Run black. Format code to uniform standard."""
-    session.install(BLACK_VERSION)
-    session.run("python", "-m", "pip", "freeze")
+    """(Deprecated) Legacy session. Please use 'nox -s format'."""
+    session.log(
+        "WARNING: The 'blacken' session is deprecated and will be removed in a future release. Please use 'nox -s format' in the future."
+    )
+
+    # Just run the ruff formatter (keeping legacy behavior of only formatting, not sorting imports)
+    session.install(RUFF_VERSION)
     session.run(
-        "black",
+        "ruff",
+        "format",
+        f"--target-version=py{UNIT_TEST_PYTHON_VERSIONS[0].replace('.', '')}",
+        "--line-length=88",
         *LINT_PATHS,
     )
 

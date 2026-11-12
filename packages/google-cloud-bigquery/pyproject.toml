@@ -106,3 +106,9 @@ version = { attr = "google.cloud.bigquery.version.__version__" }
 # Only include packages under the 'google' namespace. Do not include tests,
 # benchmarks, etc.
 include = ["google*"]
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+select = ["I"]
