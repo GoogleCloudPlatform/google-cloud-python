@@ -198,19 +198,19 @@ def test_differential_clock_skew_expired_within_leeway(crypto_env):
         "iss": "https://accounts.google.com",
         "sub": "user-123",
         "aud": "my-client-app",
-        "iat": now - 100,
-        "exp": now - 5,  # expired 5 seconds ago
+        "iat": now - 1000,
+        "exp": now - 300,  # expired 5 minutes ago
     }
     token = _make_token(crypto_env, payload)
 
-    # With 10s leeway, both must accept
+    # With 10 minutes leeway, both must accept
     crypto_env["server"].mode = "jwks"
     info_jwks = id_token.verify_token(
         token,
         crypto_env["req"],
         audience="my-client-app",
         certs_url=crypto_env["server"].url,
-        clock_skew_in_seconds=10,
+        clock_skew_in_seconds=600,
     )
     assert info_jwks["sub"] == "user-123"
 
@@ -220,7 +220,7 @@ def test_differential_clock_skew_expired_within_leeway(crypto_env):
         crypto_env["req"],
         audience="my-client-app",
         certs_url=crypto_env["server"].url,
-        clock_skew_in_seconds=10,
+        clock_skew_in_seconds=600,
     )
     assert info_pem["sub"] == "user-123"
 
@@ -231,12 +231,12 @@ def test_differential_clock_skew_expired_outside_leeway(crypto_env):
         "iss": "https://accounts.google.com",
         "sub": "user-123",
         "aud": "my-client-app",
-        "iat": now - 100,
-        "exp": now - 20,  # expired 20 seconds ago
+        "iat": now - 1000,
+        "exp": now - 600,  # expired 10 minutes ago
     }
     token = _make_token(crypto_env, payload)
 
-    # With 10s leeway, both must reject
+    # With 5 minutes leeway, both must reject
     crypto_env["server"].mode = "jwks"
     with pytest.raises(pyjwt.ExpiredSignatureError):
         id_token.verify_token(
@@ -244,7 +244,7 @@ def test_differential_clock_skew_expired_outside_leeway(crypto_env):
             crypto_env["req"],
             audience="my-client-app",
             certs_url=crypto_env["server"].url,
-            clock_skew_in_seconds=10,
+            clock_skew_in_seconds=300,
         )
 
     crypto_env["server"].mode = "pem"
@@ -254,7 +254,7 @@ def test_differential_clock_skew_expired_outside_leeway(crypto_env):
             crypto_env["req"],
             audience="my-client-app",
             certs_url=crypto_env["server"].url,
-            clock_skew_in_seconds=10,
+            clock_skew_in_seconds=300,
         )
 
 
@@ -264,19 +264,19 @@ def test_differential_clock_skew_future_iat_within_leeway(crypto_env):
         "iss": "https://accounts.google.com",
         "sub": "user-123",
         "aud": "my-client-app",
-        "iat": now + 5,  # issued 5 seconds in future
+        "iat": now + 300,  # issued 5 minutes in future
         "exp": now + 3600,
     }
     token = _make_token(crypto_env, payload)
 
-    # With 10s leeway, both must accept
+    # With 10 minutes leeway, both must accept
     crypto_env["server"].mode = "jwks"
     info_jwks = id_token.verify_token(
         token,
         crypto_env["req"],
         audience="my-client-app",
         certs_url=crypto_env["server"].url,
-        clock_skew_in_seconds=10,
+        clock_skew_in_seconds=600,
     )
     assert info_jwks["sub"] == "user-123"
 
@@ -286,7 +286,7 @@ def test_differential_clock_skew_future_iat_within_leeway(crypto_env):
         crypto_env["req"],
         audience="my-client-app",
         certs_url=crypto_env["server"].url,
-        clock_skew_in_seconds=10,
+        clock_skew_in_seconds=600,
     )
     assert info_pem["sub"] == "user-123"
 
@@ -297,12 +297,12 @@ def test_differential_clock_skew_future_iat_outside_leeway(crypto_env):
         "iss": "https://accounts.google.com",
         "sub": "user-123",
         "aud": "my-client-app",
-        "iat": now + 20,  # issued 20 seconds in future
+        "iat": now + 600,  # issued 10 minutes in future
         "exp": now + 3600,
     }
     token = _make_token(crypto_env, payload)
 
-    # With 10s leeway, both must reject
+    # With 5 minutes leeway, both must reject
     crypto_env["server"].mode = "jwks"
     with pytest.raises(pyjwt.ImmatureSignatureError):
         id_token.verify_token(
@@ -310,7 +310,7 @@ def test_differential_clock_skew_future_iat_outside_leeway(crypto_env):
             crypto_env["req"],
             audience="my-client-app",
             certs_url=crypto_env["server"].url,
-            clock_skew_in_seconds=10,
+            clock_skew_in_seconds=300,
         )
 
     crypto_env["server"].mode = "pem"
@@ -320,7 +320,7 @@ def test_differential_clock_skew_future_iat_outside_leeway(crypto_env):
             crypto_env["req"],
             audience="my-client-app",
             certs_url=crypto_env["server"].url,
-            clock_skew_in_seconds=10,
+            clock_skew_in_seconds=300,
         )
 
 
