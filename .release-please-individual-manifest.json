@@ -19,5 +19,5 @@
   "packages/google-crc32c": "1.9.0",
   "packages/pandas-gbq": "0.35.3",
   "packages/sqlalchemy-bigquery": "1.17.3",
-  "packages/sqlalchemy-spanner": "1.20.1"
+  "packages/sqlalchemy-spanner": "1.21.0"
 }
