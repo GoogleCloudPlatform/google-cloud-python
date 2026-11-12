@@ -231,7 +231,6 @@ class BigQueryCompiler(vendored_postgresql.PGCompiler, SQLCompiler):
         )
 
     @staticmethod
-    @staticmethod
     def _get_struct_type(type_):
         # Unwrap TypeDecorator.impl so custom types wrapping STRUCT are still
         # recognized as STRUCT columns during compilation.
@@ -265,12 +264,17 @@ class BigQueryCompiler(vendored_postgresql.PGCompiler, SQLCompiler):
             left = self.process(binary.left, **kw)
             return f"{left}.{self.preparer.quote_identifier(field_name)}"
 
-        # 2. For `JSON`: if a sequence (tuple/list) was passed to
-        #    `json_getitem_op`, delegate to `visit_json_path_getitem_op_binary`
-        #    so it compiles as a multi-step `JSON_QUERY` path lookup.
-        if isinstance(
-            binary.right, sqlalchemy.sql.elements.BindParameter
-        ) and _is_json_path_sequence(binary.right.value):
+        # 2. For `JSON`: if a sequence (tuple/list) or `JSONPathType` parameter
+        #    was passed to `json_getitem_op`, delegate to
+        #    `visit_json_path_getitem_op_binary` so it compiles as a multi-step
+        #    `JSON_QUERY` path lookup.
+        if isinstance(binary.right, sqlalchemy.sql.elements.BindParameter) and (
+            _is_json_path_sequence(binary.right.value)
+            or isinstance(
+                sqlalchemy.sql.type_api.to_instance(binary.right.type),
+                sqlalchemy.sql.sqltypes.JSON.JSONPathType,
+            )
+        ):
             return self.visit_json_path_getitem_op_binary(binary, operator_, **kw)
 
         # Otherwise, compile single-step `JSON` subscripting using BigQuery's
@@ -321,13 +325,17 @@ class BigQueryCompiler(vendored_postgresql.PGCompiler, SQLCompiler):
         # parameterized JSONPath string formatted by `BQJSONPathType`.
         left = self.process(binary.left, **kw)
         right = binary.right
-        if isinstance(right, sqlalchemy.sql.elements.BindParameter) and not isinstance(
-            right.type, sqlalchemy.sql.sqltypes.JSON.JSONPathType
-        ):
-            right = right._clone(maintain_key=True)
-            right.type = (
-                BQJSONPathType() if _is_json_path_sequence(right.value) else BQString()
-            )
+        if isinstance(right, sqlalchemy.sql.elements.BindParameter):
+            right_type = sqlalchemy.sql.type_api.to_instance(right.type)
+            if not isinstance(right_type, sqlalchemy.sql.sqltypes.JSON.JSONPathType):
+                right_type = (
+                    BQJSONPathType()
+                    if _is_json_path_sequence(right.value)
+                    else BQString()
+                )
+            if right_type is not right.type:
+                right = right._clone(maintain_key=True)
+                right.type = right_type
         right_text = self.process(right, **kw)
         return f"JSON_QUERY({left}, {right_text})"
 

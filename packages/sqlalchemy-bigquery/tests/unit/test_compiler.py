@@ -804,6 +804,31 @@ def test_json_getitem_direct_operator_edge_cases(faux_conn, json_events_table):
         == "SELECT JSON_QUERY(`events`.`payload`, `events`.`k`) AS `anon_1` \nFROM `events`"
     )
 
+    # 4. Unbound bindparam with JSONPathType (both as class on .type and via subscript)
+    bp_unbound_cls = sqlalchemy.bindparam("p_cls")
+    bp_unbound_cls.type = sqlalchemy.sql.sqltypes.JSON.JSONPathType
+    expr_unbound_cls = BinaryExpression(
+        json_events_table.c.payload, bp_unbound_cls, operators.json_path_getitem_op
+    )
+    compiled_unbound_cls = sqlalchemy.select(expr_unbound_cls).compile(faux_conn)
+    assert (
+        compiled_unbound_cls.string
+        == "SELECT JSON_QUERY(`events`.`payload`, %(p_cls:STRING)s) AS `anon_1` \nFROM `events`"
+    )
+    assert compiled_unbound_cls._bind_processors["p_cls"](("a", 0)) == '$."a"[0]'
+
+    stmt_unbound_sub = sqlalchemy.select(
+        json_events_table.c.payload[
+            sqlalchemy.bindparam("p_sub", type_=sqlalchemy.JSON.JSONPathType)
+        ]
+    )
+    compiled_unbound_sub = stmt_unbound_sub.compile(faux_conn)
+    assert (
+        compiled_unbound_sub.string
+        == "SELECT JSON_QUERY(`events`.`payload`, %(p_sub:STRING)s) AS `anon_1` \nFROM `events`"
+    )
+    assert compiled_unbound_sub._bind_processors["p_sub"](("a", 0)) == '$."a"[0]'
+
 
 def test_identifier_preparer_escape_unescape():
     import sqlalchemy_bigquery
