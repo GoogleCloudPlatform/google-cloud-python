@@ -41,6 +41,14 @@ from google.oauth2 import gdch_credentials, service_account
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 AUTHORIZED_USER_FILE = os.path.join(DATA_DIR, "authorized_user.json")
 
+
+@pytest.fixture(autouse=True)
+def clear_project_environment_variables(monkeypatch):
+    """Keep default credential tests independent of local project settings."""
+    monkeypatch.delenv(environment_vars.PROJECT, raising=False)
+    monkeypatch.delenv(environment_vars.LEGACY_PROJECT, raising=False)
+
+
 with open(AUTHORIZED_USER_FILE) as fh:
     AUTHORIZED_USER_FILE_DATA = json.load(fh)
 
