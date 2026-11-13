@@ -58,6 +58,7 @@ _USE_GRPC = _HAVE_GRPC and not _DISABLE_GRPC
 _GAE_RESOURCE_TYPE = "gae_app"
 _GKE_RESOURCE_TYPE = "k8s_container"
 _GCF_RESOURCE_TYPE = "cloud_function"
+_JOB_RESOURCE_TYPE = "cloud_run_job"
 _RUN_RESOURCE_TYPE = "cloud_run_revision"
 
 
@@ -380,14 +381,16 @@ class Client(ClientWithProject):
         if isinstance(monitored_resource, Resource):
             if monitored_resource.type == _GAE_RESOURCE_TYPE:
                 return CloudLoggingHandler(self, resource=monitored_resource, **kw)
-            elif monitored_resource.type == _GKE_RESOURCE_TYPE:
-                return StructuredLogHandler(**kw, project_id=self.project)
             elif monitored_resource.type == _GCF_RESOURCE_TYPE:
                 # Bypassing redirects via __stdout__ ensures structured logging
                 # works robustly on Google Cloud Functions even if stdout is redirected.
                 kw["stream"] = kw.get("stream", sys.__stdout__)
                 return StructuredLogHandler(**kw, project_id=self.project)
+            elif monitored_resource.type == _GKE_RESOURCE_TYPE:
+                return StructuredLogHandler(**kw, project_id=self.project)
             elif monitored_resource.type == _RUN_RESOURCE_TYPE:
+                return StructuredLogHandler(**kw, project_id=self.project)
+            elif monitored_resource.type == _JOB_RESOURCE_TYPE:
                 return StructuredLogHandler(**kw, project_id=self.project)
         return CloudLoggingHandler(self, resource=monitored_resource, **kw)
 

@@ -777,6 +777,36 @@ class TestClient(unittest.TestCase):
 
         self.assertIsInstance(handler, CloudLoggingHandler)
 
+    def test_get_default_handler_cloud_run_job(self):
+        import os
+
+        from google.cloud._testing import _Monkey
+
+        from google.cloud.logging.handlers import StructuredLogHandler
+        from google.cloud.logging_v2.handlers._monitored_resources import (
+            _CLOUD_RUN_EXECUTION_ID,
+            _CLOUD_RUN_JOB_ID,
+            _CLOUD_RUN_TASK_ATTEMPT,
+            _CLOUD_RUN_TASK_INDEX,
+        )
+
+        credentials = _make_credentials()
+        client = self._make_one(
+            project=self.PROJECT, credentials=credentials, _use_grpc=False
+        )
+
+        cloud_run_job_env_vars = {
+            _CLOUD_RUN_JOB_ID: "TRUE",
+            _CLOUD_RUN_EXECUTION_ID: "TRUE",
+            _CLOUD_RUN_TASK_INDEX: "0",
+            _CLOUD_RUN_TASK_ATTEMPT: "0",
+        }
+
+        with _Monkey(os, environ=cloud_run_job_env_vars):
+            handler = client.get_default_handler()
+
+        self.assertIsInstance(handler, StructuredLogHandler)
+
     def test_get_default_handler_container_engine(self):
         from google.cloud.logging.handlers import StructuredLogHandler
 
