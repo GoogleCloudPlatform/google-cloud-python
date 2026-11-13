@@ -1362,6 +1362,38 @@ class TestClient(unittest.TestCase):
             ]
         )
 
+    def test_create_routine_w_conflict_exists_ok_w_timeout(self):
+        from google.cloud.bigquery.routine import Routine
+
+        creds = _make_credentials()
+        client = self._make_one(project=self.PROJECT, credentials=creds)
+        resource = {
+            "routineReference": {
+                "projectId": "test-routine-project",
+                "datasetId": "test_routines",
+                "routineId": "minimal_routine",
+            }
+        }
+        path = "/projects/test-routine-project/datasets/test_routines/routines"
+        conn = client._connection = make_connection(
+            google.api_core.exceptions.AlreadyExists("routine already exists"), resource
+        )
+        routine = Routine("test-routine-project.test_routines.minimal_routine")
+
+        client.create_routine(routine, exists_ok=True, timeout=7.5)
+
+        # The lookup after the conflict must keep the caller's timeout.
+        conn.api_request.assert_has_calls(
+            [
+                mock.call(method="POST", path=path, data=resource, timeout=7.5),
+                mock.call(
+                    method="GET",
+                    path="/projects/test-routine-project/datasets/test_routines/routines/minimal_routine",
+                    timeout=7.5,
+                ),
+            ]
+        )
+
     def test_create_table_w_day_partition(self):
         from google.cloud.bigquery.table import Table, TimePartitioning
 
@@ -1812,6 +1844,32 @@ class TestClient(unittest.TestCase):
                     timeout=DEFAULT_TIMEOUT,
                 ),
                 mock.call(method="GET", path=get_path, timeout=DEFAULT_TIMEOUT),
+            ]
+        )
+
+    def test_create_table_alreadyexists_w_exists_ok_true_w_timeout(self):
+        post_path = "/projects/{}/datasets/{}/tables".format(self.PROJECT, self.DS_ID)
+        get_path = "/projects/{}/datasets/{}/tables/{}".format(
+            self.PROJECT, self.DS_ID, self.TABLE_ID
+        )
+        resource = self._make_table_resource()
+        creds = _make_credentials()
+        client = self._make_one(
+            project=self.PROJECT, credentials=creds, location=self.LOCATION
+        )
+        conn = client._connection = make_connection(
+            google.api_core.exceptions.AlreadyExists("table already exists"), resource
+        )
+
+        client.create_table(
+            "{}.{}".format(self.DS_ID, self.TABLE_ID), exists_ok=True, timeout=7.5
+        )
+
+        # The lookup after the conflict must keep the caller's timeout.
+        conn.api_request.assert_has_calls(
+            [
+                mock.call(method="POST", path=post_path, data=mock.ANY, timeout=7.5),
+                mock.call(method="GET", path=get_path, timeout=7.5),
             ]
         )
 

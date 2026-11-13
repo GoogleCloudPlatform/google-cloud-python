@@ -382,6 +382,31 @@ def test_create_dataset_alreadyexists_w_exists_ok_true(PROJECT, DS_ID, LOCATION)
     )
 
 
+def test_create_dataset_alreadyexists_w_exists_ok_true_w_timeout(
+    PROJECT, DS_ID, LOCATION
+):
+    post_path = "/projects/{}/datasets".format(PROJECT)
+    get_path = "/projects/{}/datasets/{}".format(PROJECT, DS_ID)
+    resource = {
+        "datasetReference": {"projectId": PROJECT, "datasetId": DS_ID},
+        "location": LOCATION,
+    }
+    client = make_client(location=LOCATION)
+    conn = client._connection = make_connection(
+        google.api_core.exceptions.AlreadyExists("dataset already exists"), resource
+    )
+
+    client.create_dataset(DS_ID, exists_ok=True, timeout=7.5)
+
+    # The lookup after the conflict must keep the caller's timeout.
+    conn.api_request.assert_has_calls(
+        [
+            mock.call(method="POST", path=post_path, data=mock.ANY, timeout=7.5),
+            mock.call(method="GET", path=get_path, timeout=7.5, query_params={}),
+        ]
+    )
+
+
 def test_create_dataset_with_default_rounding_mode_if_value_is_none(
     PROJECT, DS_ID, LOCATION
 ):
