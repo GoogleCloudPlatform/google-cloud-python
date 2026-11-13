@@ -67,9 +67,12 @@ from google.cloud.storage.constants import (
     _DEFAULT_TIMEOUT,
     ARCHIVE_STORAGE_CLASS,
     COLDLINE_STORAGE_CLASS,
+    LR_STANDARD_ENTERPRISE_STORAGE_CLASS,
     MULTI_REGIONAL_LEGACY_STORAGE_CLASS,
     NEARLINE_STORAGE_CLASS,
     REGIONAL_LEGACY_STORAGE_CLASS,
+    STANDARD_ENTERPRISE_STORAGE_CLASS,
+    STANDARD_FLEXBACKUP_ENTERPRISE_STORAGE_CLASS,
     STANDARD_STORAGE_CLASS,
 )
 from google.cloud.storage.exceptions import DataCorruption, InvalidResponse
@@ -191,9 +194,12 @@ class Blob(_PropertyMixin):
 
     STORAGE_CLASSES = (
         STANDARD_STORAGE_CLASS,
+        STANDARD_ENTERPRISE_STORAGE_CLASS,
+        STANDARD_FLEXBACKUP_ENTERPRISE_STORAGE_CLASS,
         NEARLINE_STORAGE_CLASS,
         COLDLINE_STORAGE_CLASS,
         ARCHIVE_STORAGE_CLASS,
+        LR_STANDARD_ENTERPRISE_STORAGE_CLASS,
         MULTI_REGIONAL_LEGACY_STORAGE_CLASS,
         REGIONAL_LEGACY_STORAGE_CLASS,
     )
@@ -4239,6 +4245,9 @@ class Blob(_PropertyMixin):
             :attr:`~google.cloud.storage.constants.COLDLINE_STORAGE_CLASS`,
             :attr:`~google.cloud.storage.constants.ARCHIVE_STORAGE_CLASS`,
             :attr:`~google.cloud.storage.constants.STANDARD_STORAGE_CLASS`,
+            :attr:`~google.cloud.storage.constants.STANDARD_ENTERPRISE_STORAGE_CLASS`,
+            :attr:`~google.cloud.storage.constants.STANDARD_FLEXBACKUP_ENTERPRISE_STORAGE_CLASS`,
+            :attr:`~google.cloud.storage.constants.LR_STANDARD_ENTERPRISE_STORAGE_CLASS`,
             :attr:`~google.cloud.storage.constants.MULTI_REGIONAL_LEGACY_STORAGE_CLASS`,
             or
             :attr:`~google.cloud.storage.constants.REGIONAL_LEGACY_STORAGE_CLASS`.
@@ -4957,9 +4966,12 @@ class Blob(_PropertyMixin):
     :returns:
         If set, one of
         :attr:`~google.cloud.storage.constants.STANDARD_STORAGE_CLASS`,
+        :attr:`~google.cloud.storage.constants.STANDARD_ENTERPRISE_STORAGE_CLASS`,
+        :attr:`~google.cloud.storage.constants.STANDARD_FLEXBACKUP_ENTERPRISE_STORAGE_CLASS`,
         :attr:`~google.cloud.storage.constants.NEARLINE_STORAGE_CLASS`,
         :attr:`~google.cloud.storage.constants.COLDLINE_STORAGE_CLASS`,
         :attr:`~google.cloud.storage.constants.ARCHIVE_STORAGE_CLASS`,
+        :attr:`~google.cloud.storage.constants.LR_STANDARD_ENTERPRISE_STORAGE_CLASS`,
         :attr:`~google.cloud.storage.constants.MULTI_REGIONAL_LEGACY_STORAGE_CLASS`,
         :attr:`~google.cloud.storage.constants.REGIONAL_LEGACY_STORAGE_CLASS`,
         :attr:`~google.cloud.storage.constants.DURABLE_REDUCED_AVAILABILITY_STORAGE_CLASS`,

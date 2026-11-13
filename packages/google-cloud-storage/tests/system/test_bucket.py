@@ -49,6 +49,41 @@ def test_bucket_create_w_alt_storage_class(storage_client, buckets_to_delete):
     assert created.storage_class == constants.ARCHIVE_STORAGE_CLASS
 
 
+@pytest.mark.parametrize(
+    "storage_class,suffix,location",
+    [
+        ("STANDARD_ENTERPRISE", "std-ent", "us-central1"),
+        ("LR_STANDARD_ENTERPRISE", "lr-std-ent", "us-central1"),
+        ("STANDARD_FLEXBACKUP_ENTERPRISE", "fb-ent", "us"),
+    ],
+)
+def test_bucket_create_w_enterprise_storage_class(
+    storage_client, buckets_to_delete, storage_class, suffix, location
+):
+    from google.cloud.storage import constants
+
+    enterprise_constants = (
+        constants.STANDARD_ENTERPRISE_STORAGE_CLASS,
+        constants.LR_STANDARD_ENTERPRISE_STORAGE_CLASS,
+        constants.STANDARD_FLEXBACKUP_ENTERPRISE_STORAGE_CLASS,
+    )
+    assert storage_class in enterprise_constants
+
+    bucket_name = _helpers.unique_name(f"bucket-w-{suffix}")
+
+    with pytest.raises(exceptions.NotFound):
+        storage_client.get_bucket(bucket_name)
+
+    bucket = storage_client.bucket(bucket_name)
+    bucket.storage_class = storage_class
+
+    _helpers.retry_429_503(bucket.create)(location=location)
+    buckets_to_delete.append(bucket)
+
+    created = storage_client.get_bucket(bucket_name)
+    assert created.storage_class == storage_class
+
+
 def test_bucket_lifecycle_rules(storage_client, buckets_to_delete):
     from google.cloud.storage import constants
     from google.cloud.storage.bucket import (
