@@ -154,6 +154,26 @@ class CreativeServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.create_creative: gapic_v1.method.wrap_method(
+                self.create_creative,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_creative: gapic_v1.method.wrap_method(
+                self.update_creative,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_create_creatives: gapic_v1.method.wrap_method(
+                self.batch_create_creatives,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_update_creatives: gapic_v1.method.wrap_method(
+                self.batch_update_creatives,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.batch_activate_creatives: gapic_v1.method.wrap_method(
                 self.batch_activate_creatives,
                 default_timeout=None,
@@ -202,6 +222,48 @@ class CreativeServiceTransport(abc.ABC):
         Union[
             creative_service.ListCreativesResponse,
             Awaitable[creative_service.ListCreativesResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_creative(
+        self,
+    ) -> Callable[
+        [creative_service.CreateCreativeRequest],
+        Union[creative_messages.Creative, Awaitable[creative_messages.Creative]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_creative(
+        self,
+    ) -> Callable[
+        [creative_service.UpdateCreativeRequest],
+        Union[creative_messages.Creative, Awaitable[creative_messages.Creative]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_create_creatives(
+        self,
+    ) -> Callable[
+        [creative_service.BatchCreateCreativesRequest],
+        Union[
+            creative_service.BatchCreateCreativesResponse,
+            Awaitable[creative_service.BatchCreateCreativesResponse],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_update_creatives(
+        self,
+    ) -> Callable[
+        [creative_service.BatchUpdateCreativesRequest],
+        Union[
+            creative_service.BatchUpdateCreativesResponse,
+            Awaitable[creative_service.BatchUpdateCreativesResponse],
         ],
     ]:
         raise NotImplementedError()

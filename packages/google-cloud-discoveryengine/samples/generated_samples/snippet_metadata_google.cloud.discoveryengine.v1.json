@@ -8,7 +8,7 @@
     ],
     "language": "PYTHON",
     "name": "google-cloud-discoveryengine",
-    "version": "0.20.6"
+    "version": "0.20.7"
   },
   "snippets": [
     {
@@ -1809,12 +1809,12 @@
       "regionTag": "discoveryengine_v1_generated_CmekConfigService_UpdateCmekConfig_async",
       "segments": [
         {
-          "end": 58,
+          "end": 59,
           "start": 27,
           "type": "FULL"
         },
         {
-          "end": 58,
+          "end": 59,
           "start": 27,
           "type": "SHORT"
         },
@@ -1824,18 +1824,18 @@
           "type": "CLIENT_INITIALIZATION"
         },
         {
-          "end": 48,
+          "end": 49,
           "start": 41,
           "type": "REQUEST_INITIALIZATION"
         },
         {
-          "end": 55,
-          "start": 49,
+          "end": 56,
+          "start": 50,
           "type": "REQUEST_EXECUTION"
         },
         {
-          "end": 59,
-          "start": 56,
+          "end": 60,
+          "start": 57,
           "type": "RESPONSE_HANDLING"
         }
       ],
@@ -1889,12 +1889,12 @@
       "regionTag": "discoveryengine_v1_generated_CmekConfigService_UpdateCmekConfig_sync",
       "segments": [
         {
-          "end": 58,
+          "end": 59,
           "start": 27,
           "type": "FULL"
         },
         {
-          "end": 58,
+          "end": 59,
           "start": 27,
           "type": "SHORT"
         },
@@ -1904,18 +1904,18 @@
           "type": "CLIENT_INITIALIZATION"
         },
         {
-          "end": 48,
+          "end": 49,
           "start": 41,
           "type": "REQUEST_INITIALIZATION"
         },
         {
-          "end": 55,
-          "start": 49,
+          "end": 56,
+          "start": 50,
           "type": "REQUEST_EXECUTION"
         },
         {
-          "end": 59,
-          "start": 56,
+          "end": 60,
+          "start": 57,
           "type": "RESPONSE_HANDLING"
         }
       ],

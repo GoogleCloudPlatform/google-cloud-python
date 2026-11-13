@@ -34,3 +34,7 @@ class TestFeatures(SpannerSimpleTestClass):
         self.assertFalse(features.can_rollback_tests)
         self.assertEqual(features.max_query_params, 900)
         self.assertTrue(features.requires_literal_defaults)
+        self.assertTrue(features.has_native_json_field)
+        self.assertTrue(features.supports_json_field)
+        self.assertTrue(features.supports_primitives_in_json_field)
+        self.assertFalse(features.supports_json_field_contains)

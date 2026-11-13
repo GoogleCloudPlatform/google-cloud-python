@@ -208,7 +208,7 @@ def test_delete_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -241,7 +241,7 @@ def test_get_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -274,7 +274,7 @@ def test_insert_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -307,7 +307,7 @@ def test_list_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -340,7 +340,7 @@ def test_patch_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -2955,6 +2955,7 @@ def test_get_rest_call_success(request_type):
             mode="mode_value",
             name="name_value",
             parent_prefix="parent_prefix_value",
+            purpose="purpose_value",
             region="region_value",
             self_link="self_link_value",
             status="status_value",
@@ -2988,6 +2989,7 @@ def test_get_rest_call_success(request_type):
     assert response.mode == "mode_value"
     assert response.name == "name_value"
     assert response.parent_prefix == "parent_prefix_value"
+    assert response.purpose == "purpose_value"
     assert response.region == "region_value"
     assert response.self_link == "self_link_value"
     assert response.status == "status_value"
@@ -3126,10 +3128,12 @@ def test_insert_rest_call_success(request_type):
                 "is_address": True,
                 "mode": "mode_value",
                 "name": "name_value",
+                "purpose": "purpose_value",
                 "region": "region_value",
                 "status": "status_value",
             }
         ],
+        "purpose": "purpose_value",
         "region": "region_value",
         "self_link": "self_link_value",
         "status": "status_value",
@@ -3547,10 +3551,12 @@ def test_patch_rest_call_success(request_type):
                 "is_address": True,
                 "mode": "mode_value",
                 "name": "name_value",
+                "purpose": "purpose_value",
                 "region": "region_value",
                 "status": "status_value",
             }
         ],
+        "purpose": "purpose_value",
         "region": "region_value",
         "self_link": "self_link_value",
         "status": "status_value",

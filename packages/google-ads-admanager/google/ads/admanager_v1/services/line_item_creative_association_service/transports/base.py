@@ -19,6 +19,7 @@ from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 import google.api_core
 import google.auth  # type: ignore
 import google.protobuf
+import google.protobuf.empty_pb2 as empty_pb2  # type: ignore
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
@@ -157,6 +158,46 @@ class LineItemCreativeAssociationServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.create_line_item_creative_association: gapic_v1.method.wrap_method(
+                self.create_line_item_creative_association,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_create_line_item_creative_associations: gapic_v1.method.wrap_method(
+                self.batch_create_line_item_creative_associations,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.update_line_item_creative_association: gapic_v1.method.wrap_method(
+                self.update_line_item_creative_association,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_update_line_item_creative_associations: gapic_v1.method.wrap_method(
+                self.batch_update_line_item_creative_associations,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_activate_line_item_creative_associations: gapic_v1.method.wrap_method(
+                self.batch_activate_line_item_creative_associations,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_deactivate_line_item_creative_associations: gapic_v1.method.wrap_method(
+                self.batch_deactivate_line_item_creative_associations,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.batch_delete_line_item_creative_associations: gapic_v1.method.wrap_method(
+                self.batch_delete_line_item_creative_associations,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.preview_line_item_creative_association: gapic_v1.method.wrap_method(
+                self.preview_line_item_creative_association,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.cancel_operation: gapic_v1.method.wrap_method(
                 self.cancel_operation,
                 default_timeout=None,
@@ -203,6 +244,129 @@ class LineItemCreativeAssociationServiceTransport(abc.ABC):
             line_item_creative_association_service.ListLineItemCreativeAssociationsResponse,
             Awaitable[
                 line_item_creative_association_service.ListLineItemCreativeAssociationsResponse
+            ],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def create_line_item_creative_association(
+        self,
+    ) -> Callable[
+        [
+            line_item_creative_association_service.CreateLineItemCreativeAssociationRequest
+        ],
+        Union[
+            line_item_creative_association_messages.LineItemCreativeAssociation,
+            Awaitable[
+                line_item_creative_association_messages.LineItemCreativeAssociation
+            ],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_create_line_item_creative_associations(
+        self,
+    ) -> Callable[
+        [
+            line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsRequest
+        ],
+        Union[
+            line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse,
+            Awaitable[
+                line_item_creative_association_service.BatchCreateLineItemCreativeAssociationsResponse
+            ],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def update_line_item_creative_association(
+        self,
+    ) -> Callable[
+        [
+            line_item_creative_association_service.UpdateLineItemCreativeAssociationRequest
+        ],
+        Union[
+            line_item_creative_association_messages.LineItemCreativeAssociation,
+            Awaitable[
+                line_item_creative_association_messages.LineItemCreativeAssociation
+            ],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_update_line_item_creative_associations(
+        self,
+    ) -> Callable[
+        [
+            line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsRequest
+        ],
+        Union[
+            line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse,
+            Awaitable[
+                line_item_creative_association_service.BatchUpdateLineItemCreativeAssociationsResponse
+            ],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_activate_line_item_creative_associations(
+        self,
+    ) -> Callable[
+        [
+            line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsRequest
+        ],
+        Union[
+            line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse,
+            Awaitable[
+                line_item_creative_association_service.BatchActivateLineItemCreativeAssociationsResponse
+            ],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_deactivate_line_item_creative_associations(
+        self,
+    ) -> Callable[
+        [
+            line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsRequest
+        ],
+        Union[
+            line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse,
+            Awaitable[
+                line_item_creative_association_service.BatchDeactivateLineItemCreativeAssociationsResponse
+            ],
+        ],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def batch_delete_line_item_creative_associations(
+        self,
+    ) -> Callable[
+        [
+            line_item_creative_association_service.BatchDeleteLineItemCreativeAssociationsRequest
+        ],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def preview_line_item_creative_association(
+        self,
+    ) -> Callable[
+        [
+            line_item_creative_association_service.PreviewLineItemCreativeAssociationRequest
+        ],
+        Union[
+            line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse,
+            Awaitable[
+                line_item_creative_association_service.PreviewLineItemCreativeAssociationResponse
             ],
         ],
     ]:

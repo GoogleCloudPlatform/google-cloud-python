@@ -9,12 +9,14 @@ Services for Google Ads Admanager v1 API
     ad_spot_service
     ad_unit_service
     application_service
+    audience_segment_category_service
     audience_segment_service
     bandwidth_group_service
     break_template_service
     browser_language_service
     browser_service
     cdn_config_service
+    change_event_service
     child_publisher_service
     cms_metadata_key_service
     cms_metadata_value_service
@@ -37,6 +39,7 @@ Services for Google Ads Admanager v1 API
     device_category_service
     device_manufacturer_service
     entity_signals_mapping_service
+    forecast_adjustment_service
     forecast_service
     geo_target_service
     label_service
@@ -59,6 +62,7 @@ Services for Google Ads Admanager v1 API
     private_auction_deal_service
     private_auction_service
     programmatic_buyer_service
+    proposal_service
     report_service
     rich_media_ads_company_service
     role_service
@@ -69,5 +73,8 @@ Services for Google Ads Admanager v1 API
     taxonomy_category_service
     team_service
     third_party_company_service
+    traffic_forecast_segment_service
     user_service
     viewability_provider_service
+    yield_group_service
+    yield_partner_service

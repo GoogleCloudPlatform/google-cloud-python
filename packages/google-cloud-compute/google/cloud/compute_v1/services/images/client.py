@@ -119,7 +119,7 @@ class ImagesClientMeta(type):
 
 
 class ImagesClient(metaclass=ImagesClientMeta):
-    """The Images API.    This class implements API version 2026-09-01."""
+    """The Images API.    This class implements API version 2026-11-01."""
 
     # Note: DEFAULT_ENDPOINT is deprecated. Use _DEFAULT_ENDPOINT_TEMPLATE instead.
     DEFAULT_ENDPOINT = "compute.googleapis.com"
@@ -685,7 +685,7 @@ class ImagesClient(metaclass=ImagesClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.
@@ -810,7 +810,7 @@ class ImagesClient(metaclass=ImagesClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.
@@ -971,7 +971,7 @@ class ImagesClient(metaclass=ImagesClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.
@@ -1108,7 +1108,7 @@ class ImagesClient(metaclass=ImagesClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.
@@ -1260,7 +1260,7 @@ class ImagesClient(metaclass=ImagesClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.
@@ -1397,7 +1397,7 @@ class ImagesClient(metaclass=ImagesClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.
@@ -1554,7 +1554,7 @@ class ImagesClient(metaclass=ImagesClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.
@@ -1674,7 +1674,7 @@ class ImagesClient(metaclass=ImagesClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.
@@ -1794,7 +1794,7 @@ class ImagesClient(metaclass=ImagesClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.
@@ -1941,7 +1941,7 @@ class ImagesClient(metaclass=ImagesClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.
@@ -2087,7 +2087,7 @@ class ImagesClient(metaclass=ImagesClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.
@@ -2222,7 +2222,7 @@ class ImagesClient(metaclass=ImagesClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.
@@ -2415,7 +2415,7 @@ class ImagesClient(metaclass=ImagesClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.
@@ -2556,7 +2556,7 @@ class ImagesClient(metaclass=ImagesClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.
@@ -2697,7 +2697,7 @@ class ImagesClient(metaclass=ImagesClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.
@@ -2860,7 +2860,7 @@ class ImagesClient(metaclass=ImagesClientMeta):
 
         if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
             metadata = tuple(metadata) + (
-                version_header.to_api_version_header("2026-09-01"),
+                version_header.to_api_version_header("2026-11-01"),
             )
 
         # Validate the universe domain.

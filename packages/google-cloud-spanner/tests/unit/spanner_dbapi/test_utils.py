@@ -62,21 +62,6 @@ class TestUtils(unittest.TestCase):
         want = ["a", "b", "c", "d", "e"]
         self.assertEqual(got, want, "Values should be returned unchanged")
 
-    def test_backtick_unicode(self):
-        from google.cloud.spanner_dbapi.utils import backtick_unicode
-
-        cases = [
-            ("SELECT (1) as foo WHERE 1=1", "SELECT (1) as foo WHERE 1=1"),
-            ("SELECT (1) as föö", "SELECT (1) as `föö`"),
-            ("SELECT (1) as `föö`", "SELECT (1) as `föö`"),
-            ("SELECT (1) as `föö` `umläut", "SELECT (1) as `föö` `umläut"),
-            ("SELECT (1) as `föö", "SELECT (1) as `föö"),
-        ]
-        for sql, want in cases:
-            with self.subTest(sql=sql):
-                got = backtick_unicode(sql)
-                self.assertEqual(got, want)
-
     def test_StreamedManyResultSets(self):
         from google.cloud.spanner_dbapi.utils import StreamedManyResultSets
 

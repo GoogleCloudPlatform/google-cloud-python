@@ -698,7 +698,7 @@ class TestDatabase(_BaseTest):
 
         expected_request = CreateDatabaseRequest(
             parent=self.INSTANCE_NAME,
-            create_statement="CREATE DATABASE {}".format(self.DATABASE_ID),
+            create_statement="CREATE DATABASE `{}`".format(self.DATABASE_ID),
             extra_statements=[],
             encryption_config=None,
         )
@@ -765,7 +765,7 @@ class TestDatabase(_BaseTest):
 
         expected_request = CreateDatabaseRequest(
             parent=self.INSTANCE_NAME,
-            create_statement="CREATE DATABASE {}".format(self.DATABASE_ID),
+            create_statement="CREATE DATABASE `{}`".format(self.DATABASE_ID),
             extra_statements=[],
             encryption_config=None,
         )
@@ -809,7 +809,7 @@ class TestDatabase(_BaseTest):
 
         expected_request = CreateDatabaseRequest(
             parent=self.INSTANCE_NAME,
-            create_statement="CREATE DATABASE {}".format(self.DATABASE_ID),
+            create_statement="CREATE DATABASE `{}`".format(self.DATABASE_ID),
             extra_statements=DDL_STATEMENTS,
             encryption_config=encryption_config,
         )
@@ -854,7 +854,7 @@ class TestDatabase(_BaseTest):
         expected_encryption_config = EncryptionConfig(**encryption_config)
         expected_request = CreateDatabaseRequest(
             parent=self.INSTANCE_NAME,
-            create_statement="CREATE DATABASE {}".format(self.DATABASE_ID),
+            create_statement="CREATE DATABASE `{}`".format(self.DATABASE_ID),
             extra_statements=DDL_STATEMENTS,
             encryption_config=expected_encryption_config,
         )
@@ -895,11 +895,250 @@ class TestDatabase(_BaseTest):
 
         expected_request = CreateDatabaseRequest(
             parent=self.INSTANCE_NAME,
-            create_statement="CREATE DATABASE {}".format(self.DATABASE_ID),
+            create_statement="CREATE DATABASE `{}`".format(self.DATABASE_ID),
             extra_statements=DDL_STATEMENTS,
             proto_descriptors=proto_descriptors,
         )
 
+        api.create_database.assert_called_once_with(
+            request=expected_request,
+            metadata=[
+                ("google-cloud-resource-prefix", database.name),
+                (
+                    "x-goog-spanner-request-id",
+                    f"1.{REQ_RAND_PROCESS_ID}.{database._nth_client_id}.{database._channel_id}.1.1",
+                ),
+            ],
+        )
+
+    def test_create_reserved_keyword_googlesql(self):
+        from google.cloud.spanner_admin_database_v1 import CreateDatabaseRequest
+
+        client = _Client()
+        api = client.database_admin_api = self._make_database_admin_api()
+        api.create_database.return_value = None
+        instance = _Instance(self.INSTANCE_NAME, client=client)
+        pool = _Pool()
+        database = self._make_one("default", instance, pool=pool)
+
+        database.create()
+
+        expected_request = CreateDatabaseRequest(
+            parent=self.INSTANCE_NAME,
+            create_statement="CREATE DATABASE `default`",
+            extra_statements=[],
+            encryption_config=None,
+        )
+        api.create_database.assert_called_once_with(
+            request=expected_request,
+            metadata=[
+                ("google-cloud-resource-prefix", database.name),
+                (
+                    "x-goog-spanner-request-id",
+                    f"1.{REQ_RAND_PROCESS_ID}.{database._nth_client_id}.{database._channel_id}.1.1",
+                ),
+            ],
+        )
+
+    def test_create_reserved_keyword_postgresql(self):
+        from google.cloud.spanner_admin_database_v1 import CreateDatabaseRequest
+        from google.cloud.spanner_admin_database_v1.types import DatabaseDialect
+
+        client = _Client()
+        api = client.database_admin_api = self._make_database_admin_api()
+        api.create_database.return_value = None
+        instance = _Instance(self.INSTANCE_NAME, client=client)
+        pool = _Pool()
+        database = self._make_one(
+            "default",
+            instance,
+            pool=pool,
+            database_dialect=DatabaseDialect.POSTGRESQL,
+        )
+
+        database.create()
+
+        expected_request = CreateDatabaseRequest(
+            parent=self.INSTANCE_NAME,
+            create_statement='CREATE DATABASE "default"',
+            extra_statements=[],
+            encryption_config=None,
+            database_dialect=DatabaseDialect.POSTGRESQL,
+        )
+        api.create_database.assert_called_once_with(
+            request=expected_request,
+            metadata=[
+                ("google-cloud-resource-prefix", database.name),
+                (
+                    "x-goog-spanner-request-id",
+                    f"1.{REQ_RAND_PROCESS_ID}.{database._nth_client_id}.{database._channel_id}.1.1",
+                ),
+            ],
+        )
+
+    def test_create_hyphen_postgresql(self):
+        from google.cloud.spanner_admin_database_v1 import CreateDatabaseRequest
+        from google.cloud.spanner_admin_database_v1.types import DatabaseDialect
+
+        DATABASE_ID_HYPHEN = "database-id"
+        client = _Client()
+        api = client.database_admin_api = self._make_database_admin_api()
+        api.create_database.return_value = None
+        instance = _Instance(self.INSTANCE_NAME, client=client)
+        pool = _Pool()
+        database = self._make_one(
+            DATABASE_ID_HYPHEN,
+            instance,
+            pool=pool,
+            database_dialect=DatabaseDialect.POSTGRESQL,
+        )
+
+        database.create()
+
+        expected_request = CreateDatabaseRequest(
+            parent=self.INSTANCE_NAME,
+            create_statement=f'CREATE DATABASE "{DATABASE_ID_HYPHEN}"',
+            extra_statements=[],
+            encryption_config=None,
+            database_dialect=DatabaseDialect.POSTGRESQL,
+        )
+        api.create_database.assert_called_once_with(
+            request=expected_request,
+            metadata=[
+                ("google-cloud-resource-prefix", database.name),
+                (
+                    "x-goog-spanner-request-id",
+                    f"1.{REQ_RAND_PROCESS_ID}.{database._nth_client_id}.{database._channel_id}.1.1",
+                ),
+            ],
+        )
+
+    def test_create_delimiters_escaped_googlesql(self):
+        from google.cloud.spanner_admin_database_v1 import CreateDatabaseRequest
+
+        client = _Client()
+        api = client.database_admin_api = self._make_database_admin_api()
+        api.create_database.return_value = None
+        instance = _Instance(self.INSTANCE_NAME, client=client)
+        pool = _Pool()
+        database = self._make_one("db`name\\", instance, pool=pool)
+
+        database.create()
+
+        expected_request = CreateDatabaseRequest(
+            parent=self.INSTANCE_NAME,
+            create_statement="CREATE DATABASE `db\\`name\\\\`",
+            extra_statements=[],
+            encryption_config=None,
+        )
+        api.create_database.assert_called_once_with(
+            request=expected_request,
+            metadata=[
+                ("google-cloud-resource-prefix", database.name),
+                (
+                    "x-goog-spanner-request-id",
+                    f"1.{REQ_RAND_PROCESS_ID}.{database._nth_client_id}.{database._channel_id}.1.1",
+                ),
+            ],
+        )
+
+    def test_create_delimiters_escaped_postgresql(self):
+        from google.cloud.spanner_admin_database_v1 import CreateDatabaseRequest
+        from google.cloud.spanner_admin_database_v1.types import DatabaseDialect
+
+        client = _Client()
+        api = client.database_admin_api = self._make_database_admin_api()
+        api.create_database.return_value = None
+        instance = _Instance(self.INSTANCE_NAME, client=client)
+        pool = _Pool()
+        database = self._make_one(
+            'db"name',
+            instance,
+            pool=pool,
+            database_dialect=DatabaseDialect.POSTGRESQL,
+        )
+
+        database.create()
+
+        expected_request = CreateDatabaseRequest(
+            parent=self.INSTANCE_NAME,
+            create_statement='CREATE DATABASE "db""name"',
+            extra_statements=[],
+            encryption_config=None,
+            database_dialect=DatabaseDialect.POSTGRESQL,
+        )
+        api.create_database.assert_called_once_with(
+            request=expected_request,
+            metadata=[
+                ("google-cloud-resource-prefix", database.name),
+                (
+                    "x-goog-spanner-request-id",
+                    f"1.{REQ_RAND_PROCESS_ID}.{database._nth_client_id}.{database._channel_id}.1.1",
+                ),
+            ],
+        )
+
+    def test_create_explicit_googlesql(self):
+        from google.cloud.spanner_admin_database_v1 import CreateDatabaseRequest
+        from google.cloud.spanner_admin_database_v1.types import DatabaseDialect
+
+        client = _Client()
+        api = client.database_admin_api = self._make_database_admin_api()
+        api.create_database.return_value = None
+        instance = _Instance(self.INSTANCE_NAME, client=client)
+        pool = _Pool()
+        database = self._make_one(
+            self.DATABASE_ID,
+            instance,
+            pool=pool,
+            database_dialect=DatabaseDialect.GOOGLE_STANDARD_SQL,
+        )
+
+        database.create()
+
+        expected_request = CreateDatabaseRequest(
+            parent=self.INSTANCE_NAME,
+            create_statement=f"CREATE DATABASE `{self.DATABASE_ID}`",
+            extra_statements=[],
+            encryption_config=None,
+            database_dialect=DatabaseDialect.GOOGLE_STANDARD_SQL,
+        )
+        api.create_database.assert_called_once_with(
+            request=expected_request,
+            metadata=[
+                ("google-cloud-resource-prefix", database.name),
+                (
+                    "x-goog-spanner-request-id",
+                    f"1.{REQ_RAND_PROCESS_ID}.{database._nth_client_id}.{database._channel_id}.1.1",
+                ),
+            ],
+        )
+
+    def test_create_standard_postgresql(self):
+        from google.cloud.spanner_admin_database_v1 import CreateDatabaseRequest
+        from google.cloud.spanner_admin_database_v1.types import DatabaseDialect
+
+        client = _Client()
+        api = client.database_admin_api = self._make_database_admin_api()
+        api.create_database.return_value = None
+        instance = _Instance(self.INSTANCE_NAME, client=client)
+        pool = _Pool()
+        database = self._make_one(
+            "standard_db",
+            instance,
+            pool=pool,
+            database_dialect=DatabaseDialect.POSTGRESQL,
+        )
+
+        database.create()
+
+        expected_request = CreateDatabaseRequest(
+            parent=self.INSTANCE_NAME,
+            create_statement='CREATE DATABASE "standard_db"',
+            extra_statements=[],
+            encryption_config=None,
+            database_dialect=DatabaseDialect.POSTGRESQL,
+        )
         api.create_database.assert_called_once_with(
             request=expected_request,
             metadata=[

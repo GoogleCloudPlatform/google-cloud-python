@@ -78,6 +78,7 @@ from google.cloud.run_v2.types import (
     execution_template,
     job,
     k8s_min,
+    sandbox,
     task_template,
     vendor_settings,
 )
@@ -1019,7 +1020,11 @@ def test_jobs_client_create_channel_credentials_file(
             credentials=file_creds,
             credentials_file=None,
             quota_project_id=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             scopes=None,
             default_host="run.googleapis.com",
             ssl_credentials=None,
@@ -1350,6 +1355,7 @@ def test_get_job(request_type, transport: str = "grpc"):
             execution_count=1628,
             reconciling=True,
             satisfies_pzs=True,
+            functional_type=vendor_settings.FunctionalType.FUNCTIONAL_TYPE_AGENT,
             etag="etag_value",
             start_execution_token="start_execution_token_value",
         )
@@ -1375,6 +1381,9 @@ def test_get_job(request_type, transport: str = "grpc"):
     assert response.execution_count == 1628
     assert response.reconciling is True
     assert response.satisfies_pzs is True
+    assert (
+        response.functional_type == vendor_settings.FunctionalType.FUNCTIONAL_TYPE_AGENT
+    )
     assert response.etag == "etag_value"
 
 
@@ -1517,6 +1526,7 @@ async def test_get_job_async(request_type, transport: str = "grpc_asyncio"):
                 execution_count=1628,
                 reconciling=True,
                 satisfies_pzs=True,
+                functional_type=vendor_settings.FunctionalType.FUNCTIONAL_TYPE_AGENT,
                 etag="etag_value",
             )
         )
@@ -1542,6 +1552,9 @@ async def test_get_job_async(request_type, transport: str = "grpc_asyncio"):
     assert response.execution_count == 1628
     assert response.reconciling is True
     assert response.satisfies_pzs is True
+    assert (
+        response.functional_type == vendor_settings.FunctionalType.FUNCTIONAL_TYPE_AGENT
+    )
     assert response.etag == "etag_value"
 
 
@@ -3720,7 +3733,6 @@ def test_create_job_rest_required_fields(request_type=gcr_job.CreateJobRequest):
 
     request_init = {}
     request_init["parent"] = ""
-    request_init["job_id"] = ""
     request = request_type(**request_init)
     pb_request = request_type.pb(request)
     jsonified_request = json.loads(
@@ -3728,7 +3740,6 @@ def test_create_job_rest_required_fields(request_type=gcr_job.CreateJobRequest):
     )
 
     # verify fields with default values are dropped
-    assert "jobId" not in jsonified_request
 
     default_values = getattr(
         transport_class._BaseCreateJob,
@@ -3741,11 +3752,8 @@ def test_create_job_rest_required_fields(request_type=gcr_job.CreateJobRequest):
     jsonified_request.update(unset_fields)
 
     # verify required fields with default values are now present
-    assert "jobId" in jsonified_request
-    assert jsonified_request["jobId"] == request_init["job_id"]
 
     jsonified_request["parent"] = "parent_value"
-    jsonified_request["jobId"] = "job_id_value"
 
     # Check that path parameters and body parameters are not mixing in.
     assert not set(unset_fields) - set(
@@ -3758,8 +3766,6 @@ def test_create_job_rest_required_fields(request_type=gcr_job.CreateJobRequest):
     # verify required fields with non-default values are left alone
     assert "parent" in jsonified_request
     assert jsonified_request["parent"] == "parent_value"
-    assert "jobId" in jsonified_request
-    assert jsonified_request["jobId"] == "job_id_value"
 
     client = JobsClient(
         credentials=ga_credentials.AnonymousCredentials(),
@@ -3796,13 +3802,7 @@ def test_create_job_rest_required_fields(request_type=gcr_job.CreateJobRequest):
 
             response = client.create_job(request)
 
-            expected_params = [
-                (
-                    "jobId",
-                    "",
-                ),
-                ("$alt", "json;enum-encoding=int"),
-            ]
+            expected_params = [("$alt", "json;enum-encoding=int")]
             actual_params = req.call_args.kwargs["params"]
             assert sorted(expected_params) == sorted(actual_params)
 
@@ -5627,6 +5627,7 @@ async def test_get_job_empty_call_grpc_asyncio():
                 execution_count=1628,
                 reconciling=True,
                 satisfies_pzs=True,
+                functional_type=vendor_settings.FunctionalType.FUNCTIONAL_TYPE_AGENT,
                 etag="etag_value",
             )
         )
@@ -5874,6 +5875,7 @@ async def test_get_job_routing_parameters_request_1_grpc_asyncio():
                 execution_count=1628,
                 reconciling=True,
                 satisfies_pzs=True,
+                functional_type=vendor_settings.FunctionalType.FUNCTIONAL_TYPE_AGENT,
                 etag="etag_value",
             )
         )
@@ -6099,7 +6101,15 @@ def test_create_job_rest_call_success(request_type):
                                 "bucket": "bucket_value",
                                 "object_": "object__value",
                                 "generation": 1068,
-                            }
+                            },
+                            "inlined_source": {
+                                "sources": [
+                                    {
+                                        "filename": "filename_value",
+                                        "content": "content_value",
+                                    }
+                                ]
+                            },
                         },
                         "command": ["command_value1", "command_value2"],
                         "args": ["args_value1", "args_value2"],
@@ -6152,8 +6162,22 @@ def test_create_job_rest_call_success(request_type):
                             "function_target": "function_target_value",
                             "source_location": "source_location_value",
                         },
+                        "sandbox_launcher": True,
                     }
                 ],
+                "sandboxes": {
+                    "templates": [
+                        {
+                            "name": "name_value",
+                            "image": "image_value",
+                            "command": ["command_value1", "command_value2"],
+                            "args": ["args_value1", "args_value2"],
+                            "env": {},
+                            "volume_mounts": {},
+                            "working_dir": "working_dir_value",
+                        }
+                    ]
+                },
                 "volumes": [
                     {
                         "name": "name_value",
@@ -6205,7 +6229,15 @@ def test_create_job_rest_call_success(request_type):
                 },
                 "node_selector": {"accelerator": "accelerator_value"},
                 "gpu_zonal_redundancy_disabled": True,
+                "workload_identity_config": {
+                    "identity": "identity_value",
+                    "identity_type": 1,
+                    "identity_certificate_enabled": True,
+                },
             },
+            "delay_execution": True,
+            "client": "client_value",
+            "client_version": "client_version_value",
         },
         "observed_generation": 2021,
         "terminal_condition": {
@@ -6217,6 +6249,7 @@ def test_create_job_rest_call_success(request_type):
             "reason": 1,
             "revision_reason": 1,
             "execution_reason": 1,
+            "instance_reason": 1,
         },
         "conditions": {},
         "execution_count": 1628,
@@ -6231,6 +6264,7 @@ def test_create_job_rest_call_success(request_type):
         "satisfies_pzs": True,
         "start_execution_token": "start_execution_token_value",
         "run_execution_token": "run_execution_token_value",
+        "functional_type": 1,
         "etag": "etag_value",
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
@@ -6433,6 +6467,7 @@ def test_get_job_rest_call_success(request_type):
             execution_count=1628,
             reconciling=True,
             satisfies_pzs=True,
+            functional_type=vendor_settings.FunctionalType.FUNCTIONAL_TYPE_AGENT,
             etag="etag_value",
             start_execution_token="start_execution_token_value",
         )
@@ -6463,6 +6498,9 @@ def test_get_job_rest_call_success(request_type):
     assert response.execution_count == 1628
     assert response.reconciling is True
     assert response.satisfies_pzs is True
+    assert (
+        response.functional_type == vendor_settings.FunctionalType.FUNCTIONAL_TYPE_AGENT
+    )
     assert response.etag == "etag_value"
 
 
@@ -6715,7 +6753,15 @@ def test_update_job_rest_call_success(request_type):
                                 "bucket": "bucket_value",
                                 "object_": "object__value",
                                 "generation": 1068,
-                            }
+                            },
+                            "inlined_source": {
+                                "sources": [
+                                    {
+                                        "filename": "filename_value",
+                                        "content": "content_value",
+                                    }
+                                ]
+                            },
                         },
                         "command": ["command_value1", "command_value2"],
                         "args": ["args_value1", "args_value2"],
@@ -6768,8 +6814,22 @@ def test_update_job_rest_call_success(request_type):
                             "function_target": "function_target_value",
                             "source_location": "source_location_value",
                         },
+                        "sandbox_launcher": True,
                     }
                 ],
+                "sandboxes": {
+                    "templates": [
+                        {
+                            "name": "name_value",
+                            "image": "image_value",
+                            "command": ["command_value1", "command_value2"],
+                            "args": ["args_value1", "args_value2"],
+                            "env": {},
+                            "volume_mounts": {},
+                            "working_dir": "working_dir_value",
+                        }
+                    ]
+                },
                 "volumes": [
                     {
                         "name": "name_value",
@@ -6821,7 +6881,15 @@ def test_update_job_rest_call_success(request_type):
                 },
                 "node_selector": {"accelerator": "accelerator_value"},
                 "gpu_zonal_redundancy_disabled": True,
+                "workload_identity_config": {
+                    "identity": "identity_value",
+                    "identity_type": 1,
+                    "identity_certificate_enabled": True,
+                },
             },
+            "delay_execution": True,
+            "client": "client_value",
+            "client_version": "client_version_value",
         },
         "observed_generation": 2021,
         "terminal_condition": {
@@ -6833,6 +6901,7 @@ def test_update_job_rest_call_success(request_type):
             "reason": 1,
             "revision_reason": 1,
             "execution_reason": 1,
+            "instance_reason": 1,
         },
         "conditions": {},
         "execution_count": 1628,
@@ -6847,6 +6916,7 @@ def test_update_job_rest_call_success(request_type):
         "satisfies_pzs": True,
         "start_execution_token": "start_execution_token_value",
         "run_execution_token": "run_execution_token_value",
+        "functional_type": 1,
         "etag": "etag_value",
     }
     # The version of a generated dependency at test runtime may differ from the version used during generation.
@@ -8281,7 +8351,11 @@ def test_jobs_base_transport_with_credentials_file():
         load_creds.assert_called_once_with(
             "credentials.json",
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             quota_project_id="octopus",
         )
 
@@ -8307,7 +8381,11 @@ def test_jobs_auth_adc():
         JobsClient()
         adc.assert_called_once_with(
             scopes=None,
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             quota_project_id=None,
         )
 
@@ -8327,7 +8405,11 @@ def test_jobs_transport_auth_adc(transport_class):
         transport_class(quota_project_id="octopus", scopes=["1", "2"])
         adc.assert_called_once_with(
             scopes=["1", "2"],
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             quota_project_id="octopus",
         )
 
@@ -8380,7 +8462,11 @@ def test_jobs_transport_create_channel(transport_class, grpc_helpers):
             credentials=creds,
             credentials_file=None,
             quota_project_id="octopus",
-            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            default_scopes=(
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/run",
+                "https://www.googleapis.com/auth/run.readonly",
+            ),
             scopes=["1", "2"],
             default_host="run.googleapis.com",
             ssl_credentials=None,

@@ -33,6 +33,11 @@ __protobuf__ = proto.module(
         "VectorSearch",
         "SemanticSearch",
         "TextSearch",
+        "StructuredQuery",
+        "TextQuery",
+        "QueryEnhancement",
+        "UnaryQuery",
+        "CombinedQuery",
         "SearchDataObjectsRequest",
         "SearchResult",
         "SearchDataObjectsResponse",
@@ -65,18 +70,29 @@ class AggregationMethod(proto.Enum):
 
 
 class OutputFields(proto.Message):
-    r"""Defines a output fields struct for data in DataObject.
+    r"""Defines an output fields struct for data in DataObject.
+
+    Output fields are opt-in. A search or query result contains only the
+    data object name and ID, plus the fields listed here. If this
+    message is unset or a list is empty, the corresponding part of the
+    data object (``data``, ``vectors`` or metadata) is omitted from the
+    result; it is not an indication that the stored data object is
+    empty. Use ``"*"`` in a list to return all fields of that kind.
 
     Attributes:
         data_fields (MutableSequence[str]):
-            Optional. The fields from the data fields to
-            include in the output.
+            Optional. The fields from the data fields to include in the
+            output. Use ``"*"`` to include all data fields. If empty,
+            ``data`` is omitted from results.
         vector_fields (MutableSequence[str]):
-            Optional. The fields from the vector fields
-            to include in the output.
+            Optional. The fields from the vector fields to include in
+            the output. Use ``"*"`` to include all vector fields. If
+            empty, ``vectors`` is omitted from results.
         metadata_fields (MutableSequence[str]):
-            Optional. The fields from the DataObject
-            metadata to include in the output.
+            Optional. The DataObject metadata fields to include in the
+            output: ``create_time``, ``update_time`` and ``etag``. Use
+            ``"*"`` to include all metadata fields. If empty, these
+            fields are omitted from results.
     """
 
     data_fields: MutableSequence[str] = proto.RepeatedField(
@@ -253,8 +269,40 @@ class VectorSearch(proto.Message):
             Required. The vector field to search.
         filter (google.protobuf.struct_pb2.Struct):
             Optional. A JSON filter expression, e.g.
-            {"genre": {"$eq": "sci-fi"}}, represented as a
-            google.protobuf.Struct.
+            ``{"genre": {"$eq": "sci-fi"}}``, represented as a
+            ``google.protobuf.Struct``.
+
+            An empty filter (``{}``) matches all data objects.
+            Otherwise, each JSON object in the filter must have exactly
+            one key: either a field name mapped to one operator
+            (``{"price": {"$lt": 100}}``), or a logical operator:
+            ``$and`` or ``$or`` with a list of filters, or ``$not`` with
+            one filter. Field operators and their values: ``$eq`` and
+            ``$ne`` take a string, number or bool; ``$lt``, ``$lte``,
+            ``$gt`` and ``$gte`` take a number; ``$in``, ``$nin`` and
+            ``$all`` take a list of strings; ``$exists`` takes a bool.
+            Several keys in one object (implicit AND) and implicit
+            equality (``{"genre": "sci-fi"}``) are rejected; use
+            ``$and`` and ``$eq`` instead.
+
+            Logical operators can be nested at most 2 levels deep, e.g.
+            ``{"$and": [{"$or": [{"a": {"$eq": 1}}, {"b": {"$eq": 2}}]}]}``.
+            Deeper filters are rejected with ``INVALID_ARGUMENT``.
+
+            Which filters are accepted depends on how the search is
+            served. If it is served by an approximate nearest neighbor
+            (ANN) index (by default when a ready index exists on
+            ``search_field``, or when one is selected via
+            ``search_hint.index_hint``), every filtered field must be
+            listed in ``Index.filter_fields`` at index creation, ``$or``
+            and ``$all`` are accepted only at the top level of the
+            filter, and ``$not`` and ``$exists`` are not supported. Not
+            every unsupported filter is rejected: most produce
+            ``INVALID_ARGUMENT``, but some are silently ignored, so do
+            not rely on the error. If no ready index exists on
+            ``search_field``, or if ``search_hint.knn_hint`` is set, the
+            search is served by K-Nearest Neighbor (KNN) search, which
+            has none of these filter restrictions.
         top_k (int):
             Optional. The number of nearest neighbors to
             return.
@@ -342,8 +390,40 @@ class SemanticSearch(proto.Message):
             results.
         filter (google.protobuf.struct_pb2.Struct):
             Optional. A JSON filter expression, e.g.
-            {"genre": {"$eq": "sci-fi"}}, represented as a
-            google.protobuf.Struct.
+            ``{"genre": {"$eq": "sci-fi"}}``, represented as a
+            ``google.protobuf.Struct``.
+
+            An empty filter (``{}``) matches all data objects.
+            Otherwise, each JSON object in the filter must have exactly
+            one key: either a field name mapped to one operator
+            (``{"price": {"$lt": 100}}``), or a logical operator:
+            ``$and`` or ``$or`` with a list of filters, or ``$not`` with
+            one filter. Field operators and their values: ``$eq`` and
+            ``$ne`` take a string, number or bool; ``$lt``, ``$lte``,
+            ``$gt`` and ``$gte`` take a number; ``$in``, ``$nin`` and
+            ``$all`` take a list of strings; ``$exists`` takes a bool.
+            Several keys in one object (implicit AND) and implicit
+            equality (``{"genre": "sci-fi"}``) are rejected; use
+            ``$and`` and ``$eq`` instead.
+
+            Logical operators can be nested at most 2 levels deep, e.g.
+            ``{"$and": [{"$or": [{"a": {"$eq": 1}}, {"b": {"$eq": 2}}]}]}``.
+            Deeper filters are rejected with ``INVALID_ARGUMENT``.
+
+            Which filters are accepted depends on how the search is
+            served. If it is served by an approximate nearest neighbor
+            (ANN) index (by default when a ready index exists on
+            ``search_field``, or when one is selected via
+            ``search_hint.index_hint``), every filtered field must be
+            listed in ``Index.filter_fields`` at index creation, ``$or``
+            and ``$all`` are accepted only at the top level of the
+            filter, and ``$not`` and ``$exists`` are not supported. Not
+            every unsupported filter is rejected: most produce
+            ``INVALID_ARGUMENT``, but some are silently ignored, so do
+            not rely on the error. If no ready index exists on
+            ``search_field``, or if ``search_hint.knn_hint`` is set, the
+            search is served by K-Nearest Neighbor (KNN) search, which
+            has none of these filter restrictions.
         top_k (int):
             Optional. The number of data objects to
             return.
@@ -415,6 +495,30 @@ class TextSearch(proto.Message):
             Optional. A JSON filter expression, e.g.
             ``{"genre": {"$eq": "sci-fi"}}``, represented as a
             ``google.protobuf.Struct``.
+
+            An empty filter (``{}``) matches all data objects.
+            Otherwise, each JSON object in the filter must have exactly
+            one key: either a field name mapped to one operator
+            (``{"price": {"$lt": 100}}``), or a logical operator:
+            ``$and`` or ``$or`` with a list of filters, or ``$not`` with
+            one filter. Field operators and their values: ``$eq`` and
+            ``$ne`` take a string, number or bool; ``$lt``, ``$lte``,
+            ``$gt`` and ``$gte`` take a number; ``$in``, ``$nin`` and
+            ``$all`` take a list of strings; ``$exists`` takes a bool.
+            Several keys in one object (implicit AND) and implicit
+            equality (``{"genre": "sci-fi"}``) are rejected; use
+            ``$and`` and ``$eq`` instead.
+
+            Logical operators can be nested at most 2 levels deep, e.g.
+            ``{"$and": [{"$or": [{"a": {"$eq": 1}}, {"b": {"$eq": 2}}]}]}``.
+            Deeper filters are rejected with ``INVALID_ARGUMENT``.
+        structured_query (google.cloud.vectorsearch_v1.types.StructuredQuery):
+            Optional. Structured query definition. When set,
+            ``search_text`` and ``data_field_names`` must be left empty;
+            otherwise the request will be rejected with an
+            ``INVALID_ARGUMENT`` error. Conversely, when
+            ``structured_query`` is unset, both ``search_text`` and
+            ``data_field_names`` are required.
     """
 
     search_text: str = proto.Field(
@@ -439,6 +543,232 @@ class TextSearch(proto.Message):
         proto.MESSAGE,
         number=5,
         message=struct_pb2.Struct,
+    )
+    structured_query: "StructuredQuery" = proto.Field(
+        proto.MESSAGE,
+        number=6,
+        message="StructuredQuery",
+    )
+
+
+class StructuredQuery(proto.Message):
+    r"""A structured query for text search. Allows expressing
+    field-targeted text queries combined via boolean operators, with
+    optional per-node boosting.
+
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
+    Attributes:
+        text (google.cloud.vectorsearch_v1.types.TextQuery):
+            Optional. A leaf-level text query.
+
+            This field is a member of `oneof`_ ``query_type``.
+        unary (google.cloud.vectorsearch_v1.types.UnaryQuery):
+            Optional. A query that applies a unary
+            operator to a sub-query.
+
+            This field is a member of `oneof`_ ``query_type``.
+        combine (google.cloud.vectorsearch_v1.types.CombinedQuery):
+            Optional. A query that combines multiple
+            sub-queries with a boolean operator.
+
+            This field is a member of `oneof`_ ``query_type``.
+        boost (float):
+            Optional. Optional multiplier applied to this
+            query node's contribution to the final relevance
+            score. Must be non-negative; if unset or 0,
+            defaults to 1.0. Values greater than 1.0
+            increase its influence on ranking, values
+            between 0.0 and 1.0 decrease it.
+    """
+
+    text: "TextQuery" = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        oneof="query_type",
+        message="TextQuery",
+    )
+    unary: "UnaryQuery" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        oneof="query_type",
+        message="UnaryQuery",
+    )
+    combine: "CombinedQuery" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        oneof="query_type",
+        message="CombinedQuery",
+    )
+    boost: float = proto.Field(
+        proto.FLOAT,
+        number=4,
+    )
+
+
+class TextQuery(proto.Message):
+    r"""A leaf-level text query targeting one or more data fields.
+    When multiple fields are specified, this is equivalent to
+    combining per-field matches with an OR operator (i.e. the query
+    matches if the text is found in any of the listed fields).
+
+    Attributes:
+        text (str):
+            Required. The text to search for.
+        fields (MutableSequence[str]):
+            Required. The data fields to search against.
+        match_type (google.cloud.vectorsearch_v1.types.TextQuery.MatchType):
+            Optional. The matching strategy to apply for this query. If
+            unset, defaults to ``TEXT``.
+        query_enhancement (google.cloud.vectorsearch_v1.types.QueryEnhancement):
+            Optional. The query enhancement settings to
+            apply for this query.
+    """
+
+    class MatchType(proto.Enum):
+        r"""The matching strategy to apply when comparing ``text`` against the
+        content of ``fields``.
+
+        Values:
+            MATCH_TYPE_UNSPECIFIED (0):
+                Defaults to ``TEXT``.
+            TEXT (1):
+                Treats ``text`` as individual search terms combined with an
+                implicit AND: every term must appear in the field, in any
+                order and any position. Case-insensitive.
+            EXACT (2):
+                Matches only when the entire field value is exactly equal to
+                ``text``.
+        """
+
+        MATCH_TYPE_UNSPECIFIED = 0
+        TEXT = 1
+        EXACT = 2
+
+    text: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    fields: MutableSequence[str] = proto.RepeatedField(
+        proto.STRING,
+        number=2,
+    )
+    match_type: MatchType = proto.Field(
+        proto.ENUM,
+        number=3,
+        enum=MatchType,
+    )
+    query_enhancement: "QueryEnhancement" = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message="QueryEnhancement",
+    )
+
+
+class QueryEnhancement(proto.Message):
+    r"""Query enhancement settings. When enabled, expands the search
+    terms with stemming, synonyms, and spelling corrections, and
+    removes stop words.
+
+    Attributes:
+        enabled (bool):
+            Optional. Whether query enhancement is
+            enabled.
+        language_code (str):
+            Optional. The IETF BCP 47 language tag, such as "en-US", for
+            query enhancement. If unset, the language is detected
+            automatically. See
+            https://en.wikipedia.org/wiki/IETF_language_tag.
+    """
+
+    enabled: bool = proto.Field(
+        proto.BOOL,
+        number=1,
+    )
+    language_code: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class UnaryQuery(proto.Message):
+    r"""A query that applies a unary operator to a sub-query.
+
+    Attributes:
+        op (google.cloud.vectorsearch_v1.types.UnaryQuery.Operator):
+            Required. The unary operator to apply.
+        sub_query (google.cloud.vectorsearch_v1.types.StructuredQuery):
+            Required. The sub-query the operator is
+            applied to.
+    """
+
+    class Operator(proto.Enum):
+        r"""Unary operators applicable to a sub-query.
+
+        Values:
+            OPERATOR_UNSPECIFIED (0):
+                Default value. This value is unused.
+            NOT (1):
+                Negates the sub-query.
+        """
+
+        OPERATOR_UNSPECIFIED = 0
+        NOT = 1
+
+    op: Operator = proto.Field(
+        proto.ENUM,
+        number=1,
+        enum=Operator,
+    )
+    sub_query: "StructuredQuery" = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="StructuredQuery",
+    )
+
+
+class CombinedQuery(proto.Message):
+    r"""A query that combines multiple sub-queries with a boolean
+    operator.
+
+    Attributes:
+        op (google.cloud.vectorsearch_v1.types.CombinedQuery.Operator):
+            Required. The boolean operator used to
+            combine the sub-queries.
+        sub_queries (MutableSequence[google.cloud.vectorsearch_v1.types.StructuredQuery]):
+            Required. The sub-queries to be combined.
+    """
+
+    class Operator(proto.Enum):
+        r"""Boolean operators used to combine sub-queries.
+
+        Values:
+            OPERATOR_UNSPECIFIED (0):
+                Default value. This value is unused.
+            AND (1):
+                All sub-queries must match.
+            OR (2):
+                At least one sub-query must match.
+        """
+
+        OPERATOR_UNSPECIFIED = 0
+        AND = 1
+        OR = 2
+
+    op: Operator = proto.Field(
+        proto.ENUM,
+        number=1,
+        enum=Operator,
+    )
+    sub_queries: MutableSequence["StructuredQuery"] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=2,
+        message="StructuredQuery",
     )
 
 
@@ -582,8 +912,25 @@ class AggregateDataObjectsRequest(proto.Message):
             ``projects/{project}/locations/{location}/collections/{collection}``
         filter (google.protobuf.struct_pb2.Struct):
             Optional. A JSON filter expression, e.g.
-            {"genre": {"$eq": "sci-fi"}}, represented as a
-            google.protobuf.Struct.
+            ``{"genre": {"$eq": "sci-fi"}}``, represented as a
+            ``google.protobuf.Struct``.
+
+            An empty filter (``{}``) matches all data objects.
+            Otherwise, each JSON object in the filter must have exactly
+            one key: either a field name mapped to one operator
+            (``{"price": {"$lt": 100}}``), or a logical operator:
+            ``$and`` or ``$or`` with a list of filters, or ``$not`` with
+            one filter. Field operators and their values: ``$eq`` and
+            ``$ne`` take a string, number or bool; ``$lt``, ``$lte``,
+            ``$gt`` and ``$gte`` take a number; ``$in``, ``$nin`` and
+            ``$all`` take a list of strings; ``$exists`` takes a bool.
+            Several keys in one object (implicit AND) and implicit
+            equality (``{"genre": "sci-fi"}``) are rejected; use
+            ``$and`` and ``$eq`` instead.
+
+            Logical operators can be nested at most 2 levels deep, e.g.
+            ``{"$and": [{"$or": [{"a": {"$eq": 1}}, {"b": {"$eq": 2}}]}]}``.
+            Deeper filters are rejected with ``INVALID_ARGUMENT``.
         aggregate (google.cloud.vectorsearch_v1.types.AggregationMethod):
             Required. The aggregation method to apply to
             the query.
@@ -633,8 +980,25 @@ class QueryDataObjectsRequest(proto.Message):
             ``projects/{project}/locations/{location}/collections/{collection}``
         filter (google.protobuf.struct_pb2.Struct):
             Optional. A JSON filter expression, e.g.
-            {"genre": {"$eq": "sci-fi"}}, represented as a
-            google.protobuf.Struct.
+            ``{"genre": {"$eq": "sci-fi"}}``, represented as a
+            ``google.protobuf.Struct``.
+
+            An empty filter (``{}``) matches all data objects.
+            Otherwise, each JSON object in the filter must have exactly
+            one key: either a field name mapped to one operator
+            (``{"price": {"$lt": 100}}``), or a logical operator:
+            ``$and`` or ``$or`` with a list of filters, or ``$not`` with
+            one filter. Field operators and their values: ``$eq`` and
+            ``$ne`` take a string, number or bool; ``$lt``, ``$lte``,
+            ``$gt`` and ``$gte`` take a number; ``$in``, ``$nin`` and
+            ``$all`` take a list of strings; ``$exists`` takes a bool.
+            Several keys in one object (implicit AND) and implicit
+            equality (``{"genre": "sci-fi"}``) are rejected; use
+            ``$and`` and ``$eq`` instead.
+
+            Logical operators can be nested at most 2 levels deep, e.g.
+            ``{"$and": [{"$or": [{"a": {"$eq": 1}}, {"b": {"$eq": 2}}]}]}``.
+            Deeper filters are rejected with ``INVALID_ARGUMENT``.
         output_fields (google.cloud.vectorsearch_v1.types.OutputFields):
             Optional. Mask specifying which fields to
             return.

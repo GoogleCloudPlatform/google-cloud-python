@@ -202,7 +202,7 @@ def test_delete_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -235,7 +235,7 @@ def test_get_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -268,7 +268,7 @@ def test_insert_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -301,7 +301,7 @@ def test_list_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -334,7 +334,7 @@ def test_patch_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -367,7 +367,7 @@ def test_update_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -400,7 +400,7 @@ def test_validate_api_version_header(transport_name):
         _, _, kw = call.mock_calls[0]
         assert (
             version_header.API_VERSION_METADATA_KEY,
-            "2026-09-01",
+            "2026-11-01",
         ) in kw["metadata"]
     else:
         pytest.skip(
@@ -3799,9 +3799,15 @@ def test_insert_rest_call_success(request_type):
                 "expose_headers": ["expose_headers_value1", "expose_headers_value2"],
                 "max_age": 722,
             },
+            "dynamic_compression_policy": {
+                "compression_mode": "compression_mode_value"
+            },
             "fault_injection_policy": {
                 "abort": {"http_status": 1219, "percentage": 0.10540000000000001},
                 "delay": {"fixed_delay": {}, "percentage": 0.10540000000000001},
+            },
+            "image_optimization_policy": {
+                "query_parameter_interpretation": "query_parameter_interpretation_value"
             },
             "max_stream_duration": {},
             "request_mirror_policy": {
@@ -3949,6 +3955,7 @@ def test_insert_rest_call_success(request_type):
         ],
         "region": "region_value",
         "self_link": "self_link_value",
+        "status": {"quota_usage": {"forwarding_rules": 1725, "units": 563}},
         "tests": [
             {
                 "description": "description_value",
@@ -4390,9 +4397,15 @@ def test_patch_rest_call_success(request_type):
                 "expose_headers": ["expose_headers_value1", "expose_headers_value2"],
                 "max_age": 722,
             },
+            "dynamic_compression_policy": {
+                "compression_mode": "compression_mode_value"
+            },
             "fault_injection_policy": {
                 "abort": {"http_status": 1219, "percentage": 0.10540000000000001},
                 "delay": {"fixed_delay": {}, "percentage": 0.10540000000000001},
+            },
+            "image_optimization_policy": {
+                "query_parameter_interpretation": "query_parameter_interpretation_value"
             },
             "max_stream_duration": {},
             "request_mirror_policy": {
@@ -4540,6 +4553,7 @@ def test_patch_rest_call_success(request_type):
         ],
         "region": "region_value",
         "self_link": "self_link_value",
+        "status": {"quota_usage": {"forwarding_rules": 1725, "units": 563}},
         "tests": [
             {
                 "description": "description_value",
@@ -4851,9 +4865,15 @@ def test_update_rest_call_success(request_type):
                 "expose_headers": ["expose_headers_value1", "expose_headers_value2"],
                 "max_age": 722,
             },
+            "dynamic_compression_policy": {
+                "compression_mode": "compression_mode_value"
+            },
             "fault_injection_policy": {
                 "abort": {"http_status": 1219, "percentage": 0.10540000000000001},
                 "delay": {"fixed_delay": {}, "percentage": 0.10540000000000001},
+            },
+            "image_optimization_policy": {
+                "query_parameter_interpretation": "query_parameter_interpretation_value"
             },
             "max_stream_duration": {},
             "request_mirror_policy": {
@@ -5001,6 +5021,7 @@ def test_update_rest_call_success(request_type):
         ],
         "region": "region_value",
         "self_link": "self_link_value",
+        "status": {"quota_usage": {"forwarding_rules": 1725, "units": 563}},
         "tests": [
             {
                 "description": "description_value",
@@ -5316,9 +5337,15 @@ def test_validate_rest_call_success(request_type):
                     ],
                     "max_age": 722,
                 },
+                "dynamic_compression_policy": {
+                    "compression_mode": "compression_mode_value"
+                },
                 "fault_injection_policy": {
                     "abort": {"http_status": 1219, "percentage": 0.10540000000000001},
                     "delay": {"fixed_delay": {}, "percentage": 0.10540000000000001},
+                },
+                "image_optimization_policy": {
+                    "query_parameter_interpretation": "query_parameter_interpretation_value"
                 },
                 "max_stream_duration": {},
                 "request_mirror_policy": {
@@ -5466,6 +5493,7 @@ def test_validate_rest_call_success(request_type):
             ],
             "region": "region_value",
             "self_link": "self_link_value",
+            "status": {"quota_usage": {"forwarding_rules": 1725, "units": 563}},
             "tests": [
                 {
                     "description": "description_value",

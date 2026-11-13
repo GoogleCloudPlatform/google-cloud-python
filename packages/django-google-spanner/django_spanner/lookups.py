@@ -4,6 +4,11 @@
 # license that can be found in the LICENSE file or at
 # https://developers.google.com/open-source/licenses/bsd
 
+from django.db.models.fields.json import (
+    HasKeyLookup,
+    KeyTextTransform,
+    KeyTransform,
+)
 from django.db.models.lookups import (
     Contains,
     EndsWith,
@@ -263,6 +268,42 @@ def cast_param_to_float(self, compiler, connection):
     return sql, tuple(params)
 
 
+def _compile_json_path(connection, key_transforms):
+    if hasattr(connection.ops, "compile_json_path"):
+        return connection.ops.compile_json_path(key_transforms)
+    from django.db.models.fields.json import compile_json_path
+
+    return compile_json_path(key_transforms)
+
+
+def _quote_json_path(json_path):
+    """Inline a compiled JSONPath as a safely escaped GoogleSQL string literal."""
+    escaped = json_path.replace("\\", "\\\\").replace("'", "\\'").replace("%", "%%")
+    return f"'{escaped}'"
+
+
+def key_transform_as_spanner(self, compiler, connection):
+    lhs, params, key_transforms = self.preprocess_lhs(compiler, connection)
+    json_path = _quote_json_path(_compile_json_path(connection, key_transforms))
+    return f"JSON_QUERY({lhs}, {json_path})", tuple(params)
+
+
+def key_text_transform_as_spanner(self, compiler, connection):
+    lhs, params, key_transforms = self.preprocess_lhs(compiler, connection)
+    json_path = _quote_json_path(_compile_json_path(connection, key_transforms))
+    return f"JSON_VALUE({lhs}, {json_path})", tuple(params)
+
+
+def has_key_lookup_as_spanner(self, compiler, connection):
+    sql_parts = []
+    params = []
+    for lhs_sql, lhs_params, rhs_json_path in self._as_sql_parts(compiler, connection):
+        json_path = _quote_json_path(rhs_json_path)
+        sql_parts.append(f"JSON_QUERY({lhs_sql}, {json_path}) IS NOT NULL")
+        params.extend(lhs_params)
+    return self._combine_sql_parts(sql_parts), tuple(params)
+
+
 def register_lookups():
     """Registers the above methods with the corersponding Django classes."""
     Contains.as_spanner = contains
@@ -279,3 +320,6 @@ def register_lookups():
     GreaterThanOrEqual.as_spanner = cast_param_to_float
     LessThan.as_spanner = cast_param_to_float
     LessThanOrEqual.as_spanner = cast_param_to_float
+    KeyTransform.as_spanner = key_transform_as_spanner
+    KeyTextTransform.as_spanner = key_text_transform_as_spanner
+    HasKeyLookup.as_spanner = has_key_lookup_as_spanner

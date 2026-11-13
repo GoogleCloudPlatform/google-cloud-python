@@ -146,12 +146,11 @@ class TestSpannerDialect(fixtures.TestBase):
             "FROM records",
         )
 
-        # 3. Direct call to _generate_generic_binary
+        # 3. Verify OPERATORS is not polluted and direct binary dispatch works
+        assert json_getitem_op not in OPERATORS
         binary_expr = records.c.data[malicious_key]
         direct_compiler = dialect.statement_compiler(dialect, sa.select(records.c.data))
-        direct_sql = direct_compiler._generate_generic_binary(
-            binary_expr, OPERATORS[json_getitem_op]
-        )
+        direct_sql = direct_compiler.process(binary_expr)
         eq_(direct_sql, "JSON_VALUE(records.data, :data_1)")
 
     def test_json_getitem_adversarial_keys_and_types(self):
@@ -201,7 +200,7 @@ class TestSpannerDialect(fixtures.TestBase):
                 "FROM records",
             )
 
-        # Also test non-ClauseElement fallback in _generate_generic_binary
+        # Also test non-ClauseElement fallback in visit_json_getitem_op_binary
         compiler = dialect.statement_compiler(dialect, sa.select(records.c.data))
         for right_obj in (
             SimpleNamespace(value='display") --'),
@@ -213,9 +212,7 @@ class TestSpannerDialect(fixtures.TestBase):
                 operator=json_getitem_op,
             )
             eq_(
-                compiler._generate_generic_binary(
-                    fake_binary, OPERATORS[json_getitem_op]
-                ),
+                compiler.visit_json_getitem_op_binary(fake_binary, json_getitem_op),
                 'JSON_VALUE(records.data, "$.\\"display\\\\\\") --\\"")',
             )
 
@@ -353,4 +350,201 @@ class TestSpannerDialect(fixtures.TestBase):
         eq_(
             compiler.render_literal_value('100% "quoted" mid', sa.String()),
             'r"""100%% "quoted" mid"""',
+        )
+
+    def test_unqualified_delete_compiles_with_dummy_where(self):
+        """Test that unqualified DELETE statements automatically append WHERE 1=1."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"))
+        statement = sa.delete(test_table)
+        compiled = str(statement.compile(dialect=dialect))
+        eq_(compiled, "DELETE FROM my_table WHERE 1=1")
+
+    def test_qualified_delete_compiles_without_dummy_where(self):
+        """Test that qualified DELETE statements do not append extra WHERE 1=1."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"))
+        statement = sa.delete(test_table).where(test_table.c.id == 1)
+        compiled = str(statement.compile(dialect=dialect))
+        eq_(compiled, "DELETE FROM my_table WHERE my_table.id = :id_1")
+
+    def test_unqualified_update_compiles_with_dummy_where(self):
+        """Test that unqualified UPDATE statements automatically append WHERE 1=1."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"))
+        statement = sa.update(test_table).values(id=2)
+        compiled = str(statement.compile(dialect=dialect))
+        eq_(compiled, "UPDATE my_table SET id=:id WHERE 1=1")
+
+    def test_qualified_update_compiles_without_dummy_where(self):
+        """Test that qualified UPDATE statements do not append extra WHERE 1=1."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"))
+        statement = sa.update(test_table).where(test_table.c.id == 1).values(id=2)
+        compiled = str(statement.compile(dialect=dialect))
+        eq_(compiled, "UPDATE my_table SET id=:id WHERE my_table.id = :id_1")
+
+    def test_unqualified_delete_with_returning_compiles_with_dummy_where(
+        self,
+    ):
+        """Test unqualified DELETE with RETURNING has WHERE 1=1 before THEN RETURN."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"))
+        statement = sa.delete(test_table).returning(test_table.c.id)
+        compiled = str(statement.compile(dialect=dialect))
+        eq_(compiled, "DELETE FROM my_table WHERE 1=1 THEN RETURN id")
+
+    def test_unqualified_update_with_returning_compiles_with_dummy_where(
+        self,
+    ):
+        """Test unqualified UPDATE with RETURNING has WHERE 1=1 before THEN RETURN."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"))
+        statement = sa.update(test_table).values(id=2).returning(test_table.c.id)
+        compiled = str(statement.compile(dialect=dialect))
+        eq_(compiled, "UPDATE my_table SET id=:id WHERE 1=1 THEN RETURN id")
+
+    def test_delete_with_comparison_operators_does_not_raise_type_error(self):
+        """Test that DELETE with >, IN, LIKE operators compiles without TypeError."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"), sa.column("val"))
+
+        stmt_gt = sa.delete(test_table).where(test_table.c.id > 1)
+        eq_(
+            str(stmt_gt.compile(dialect=dialect)),
+            "DELETE FROM my_table WHERE my_table.id > :id_1",
+        )
+
+        stmt_in = sa.delete(test_table).where(test_table.c.id.in_([1, 2]))
+        eq_(
+            str(stmt_in.compile(dialect=dialect)),
+            "DELETE FROM my_table WHERE my_table.id IN (__[POSTCOMPILE_id_1])",
+        )
+
+    def test_update_with_comparison_operators_does_not_raise_type_error(self):
+        """Test that UPDATE with >, IN, LIKE operators compiles without TypeError."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"), sa.column("val"))
+
+        stmt_gt = sa.update(test_table).where(test_table.c.id > 1).values(val="x")
+        eq_(
+            str(stmt_gt.compile(dialect=dialect)),
+            "UPDATE my_table SET val=:val WHERE my_table.id > :id_1",
+        )
+
+    def test_manual_raw_sql_compiles_without_dummy_where(self):
+        """Test that manually written raw SQL text constructs compile as written.
+
+        SpannerSQLCompiler injects WHERE 1=1 only for SQLAlchemy Core/ORM ASTs
+        (e.g. delete(table) or update(table)). Manually written raw SQL text
+        constructs (e.g. text("DELETE FROM my_table")) are compiled without
+        modification.
+        """
+        dialect = SpannerDialect()
+
+        # 1. Raw SQL text without WHERE clause is compiled as written
+        raw_delete = sa.text("DELETE FROM my_table")
+        eq_(str(raw_delete.compile(dialect=dialect)), "DELETE FROM my_table")
+
+        raw_update = sa.text("UPDATE my_table SET id = 1")
+        eq_(str(raw_update.compile(dialect=dialect)), "UPDATE my_table SET id = 1")
+
+        # 2. Raw SQL text with explicit WHERE 1=1 or WHERE TRUE is compiled as written
+        raw_delete_with_where = sa.text("DELETE FROM my_table WHERE 1=1")
+        eq_(
+            str(raw_delete_with_where.compile(dialect=dialect)),
+            "DELETE FROM my_table WHERE 1=1",
+        )
+
+        raw_update_with_where = sa.text("UPDATE my_table SET id = 1 WHERE TRUE")
+        eq_(
+            str(raw_update_with_where.compile(dialect=dialect)),
+            "UPDATE my_table SET id = 1 WHERE TRUE",
+        )
+
+        # 3. Contrast with ORM/Core ASTs which automatically generate WHERE 1=1
+        test_table = sa.table("my_table", sa.column("id"))
+        ast_delete = sa.delete(test_table)
+        eq_(str(ast_delete.compile(dialect=dialect)), "DELETE FROM my_table WHERE 1=1")
+
+        ast_update = sa.update(test_table).values(id=1)
+        eq_(
+            str(ast_update.compile(dialect=dialect)),
+            "UPDATE my_table SET id=:id WHERE 1=1",
+        )
+
+    def test_empty_where_appends_dummy_where(self):
+        """Test that calling .where() without criteria appends WHERE 1=1."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"))
+
+        delete_stmt = sa.delete(test_table).where()
+        eq_(str(delete_stmt.compile(dialect=dialect)), "DELETE FROM my_table WHERE 1=1")
+
+        update_stmt = sa.update(test_table).values(id=1).where()
+        eq_(
+            str(update_stmt.compile(dialect=dialect)),
+            "UPDATE my_table SET id=:id WHERE 1=1",
+        )
+
+    def test_explicit_literal_where_does_not_duplicate(self):
+        """Test that explicit WHERE 1=1 does not produce WHERE 1=1 AND 1=1."""
+        dialect = SpannerDialect()
+        test_table = sa.table("my_table", sa.column("id"))
+
+        delete_stmt = sa.delete(test_table).where(sa.literal_column("1=1"))
+        eq_(str(delete_stmt.compile(dialect=dialect)), "DELETE FROM my_table WHERE 1=1")
+
+        update_stmt = sa.update(test_table).values(id=1).where(sa.literal_column("1=1"))
+        eq_(
+            str(update_stmt.compile(dialect=dialect)),
+            "UPDATE my_table SET id=:id WHERE 1=1",
+        )
+
+    def test_json_binary_dispatch_and_operators_table_integrity(self):
+        """Test that JSON binary dispatch uses visitor methods and OPERATORS is pure."""
+        dialect = SpannerDialect()
+        records = sa.Table(
+            "records",
+            sa.MetaData(),
+            sa.Column("id", sa.Integer),
+            sa.Column("data", sa.JSON),
+        )
+
+        # 1. Global OPERATORS table is not mutated and only contains str values
+        assert json_getitem_op not in OPERATORS
+        assert all(isinstance(value, str) for value in OPERATORS.values())
+
+        # 2. JSON indexing dispatches cleanly via visit_binary ->
+        # visit_json_getitem_op_binary
+        compiler = dialect.statement_compiler(dialect, sa.select(records))
+        json_binary = records.c.data["key"]
+        eq_(compiler.visit_binary(json_binary), "JSON_VALUE(records.data, :data_1)")
+
+        # 3. Standard binary operators that rely on base
+        # _generate_generic_binary still work
+        compiler = dialect.statement_compiler(dialect, sa.select(records))
+        generic_binary = records.c.id + 10
+        eq_(compiler.visit_binary(generic_binary), "records.id + :id_1")
+
+        compiler = dialect.statement_compiler(dialect, sa.select(records))
+        comparison_binary = records.c.id == 5
+        eq_(compiler.visit_binary(comparison_binary), "records.id = :id_1")
+
+        # 4. Comparison operators with JSON subscript (exercises both
+        # base _generate_generic_binary and visit_json_getitem_op_binary)
+        stmt_where = sa.select(records).where(records.c.data["type"] == "Stadium")
+        eq_(
+            str(stmt_where.compile(dialect=dialect)),
+            "SELECT records.id, records.data \n"
+            "FROM records \n"
+            "WHERE JSON_VALUE(records.data, :data_1) = :param_1",
+        )
+
+        stmt_is_null = sa.select(records).where(records.c.data["type"].is_(None))
+        eq_(
+            str(stmt_is_null.compile(dialect=dialect)),
+            "SELECT records.id, records.data \n"
+            "FROM records \n"
+            "WHERE JSON_VALUE(records.data, :data_1) IS NULL",
         )

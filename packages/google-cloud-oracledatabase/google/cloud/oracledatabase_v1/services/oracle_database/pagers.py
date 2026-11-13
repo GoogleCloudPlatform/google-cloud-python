@@ -45,9 +45,11 @@ from google.cloud.oracledatabase_v1.types import (
     autonomous_db_version,
     database,
     database_character_set,
+    database_connection,
     db_node,
     db_server,
     db_system,
+    db_system_compute_performance,
     db_system_initial_storage_size,
     db_system_shape,
     db_version,
@@ -55,6 +57,7 @@ from google.cloud.oracledatabase_v1.types import (
     exadata_infra,
     exadb_vm_cluster,
     exascale_db_storage_vault,
+    flex_component,
     gi_version,
     goldengate_connection,
     goldengate_connection_assignment,
@@ -537,6 +540,162 @@ class ListEntitlementsAsyncPager:
         async def async_generator():
             async for page in self.pages:
                 for response in page.entitlements:
+                    yield response
+
+        return async_generator()
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListFlexComponentsPager:
+    """A pager for iterating through ``list_flex_components`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.oracledatabase_v1.types.ListFlexComponentsResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``flex_components`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``ListFlexComponents`` requests and continue to iterate
+    through the ``flex_components`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.oracledatabase_v1.types.ListFlexComponentsResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[..., flex_component.ListFlexComponentsResponse],
+        request: flex_component.ListFlexComponentsRequest,
+        response: flex_component.ListFlexComponentsResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.oracledatabase_v1.types.ListFlexComponentsRequest):
+                The initial request object.
+            response (google.cloud.oracledatabase_v1.types.ListFlexComponentsResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = flex_component.ListFlexComponentsRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(self) -> Iterator[flex_component.ListFlexComponentsResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(self) -> Iterator[flex_component.FlexComponent]:
+        for page in self.pages:
+            yield from page.flex_components
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListFlexComponentsAsyncPager:
+    """A pager for iterating through ``list_flex_components`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.oracledatabase_v1.types.ListFlexComponentsResponse` object, and
+    provides an ``__aiter__`` method to iterate through its
+    ``flex_components`` field.
+
+    If there are more pages, the ``__aiter__`` method will make additional
+    ``ListFlexComponents`` requests and continue to iterate
+    through the ``flex_components`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.oracledatabase_v1.types.ListFlexComponentsResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[..., Awaitable[flex_component.ListFlexComponentsResponse]],
+        request: flex_component.ListFlexComponentsRequest,
+        response: flex_component.ListFlexComponentsResponse,
+        *,
+        retry: OptionalAsyncRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiates the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.oracledatabase_v1.types.ListFlexComponentsRequest):
+                The initial request object.
+            response (google.cloud.oracledatabase_v1.types.ListFlexComponentsResponse):
+                The initial response object.
+            retry (google.api_core.retry.AsyncRetry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = flex_component.ListFlexComponentsRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    async def pages(self) -> AsyncIterator[flex_component.ListFlexComponentsResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = await self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __aiter__(self) -> AsyncIterator[flex_component.FlexComponent]:
+        async def async_generator():
+            async for page in self.pages:
+                for response in page.flex_components:
                     yield response
 
         return async_generator()
@@ -2957,6 +3116,189 @@ class ListDbSystemInitialStorageSizesAsyncPager:
         return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
 
 
+class ListDbSystemComputePerformancesPager:
+    """A pager for iterating through ``list_db_system_compute_performances`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.oracledatabase_v1.types.ListDbSystemComputePerformancesResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``db_system_compute_performances`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``ListDbSystemComputePerformances`` requests and continue to iterate
+    through the ``db_system_compute_performances`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.oracledatabase_v1.types.ListDbSystemComputePerformancesResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ..., db_system_compute_performance.ListDbSystemComputePerformancesResponse
+        ],
+        request: db_system_compute_performance.ListDbSystemComputePerformancesRequest,
+        response: db_system_compute_performance.ListDbSystemComputePerformancesResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.oracledatabase_v1.types.ListDbSystemComputePerformancesRequest):
+                The initial request object.
+            response (google.cloud.oracledatabase_v1.types.ListDbSystemComputePerformancesResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = (
+            db_system_compute_performance.ListDbSystemComputePerformancesRequest(
+                request
+            )
+        )
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(
+        self,
+    ) -> Iterator[
+        db_system_compute_performance.ListDbSystemComputePerformancesResponse
+    ]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(
+        self,
+    ) -> Iterator[db_system_compute_performance.DbSystemComputePerformance]:
+        for page in self.pages:
+            yield from page.db_system_compute_performances
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListDbSystemComputePerformancesAsyncPager:
+    """A pager for iterating through ``list_db_system_compute_performances`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.oracledatabase_v1.types.ListDbSystemComputePerformancesResponse` object, and
+    provides an ``__aiter__`` method to iterate through its
+    ``db_system_compute_performances`` field.
+
+    If there are more pages, the ``__aiter__`` method will make additional
+    ``ListDbSystemComputePerformances`` requests and continue to iterate
+    through the ``db_system_compute_performances`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.oracledatabase_v1.types.ListDbSystemComputePerformancesResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ...,
+            Awaitable[
+                db_system_compute_performance.ListDbSystemComputePerformancesResponse
+            ],
+        ],
+        request: db_system_compute_performance.ListDbSystemComputePerformancesRequest,
+        response: db_system_compute_performance.ListDbSystemComputePerformancesResponse,
+        *,
+        retry: OptionalAsyncRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiates the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.oracledatabase_v1.types.ListDbSystemComputePerformancesRequest):
+                The initial request object.
+            response (google.cloud.oracledatabase_v1.types.ListDbSystemComputePerformancesResponse):
+                The initial response object.
+            retry (google.api_core.retry.AsyncRetry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = (
+            db_system_compute_performance.ListDbSystemComputePerformancesRequest(
+                request
+            )
+        )
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    async def pages(
+        self,
+    ) -> AsyncIterator[
+        db_system_compute_performance.ListDbSystemComputePerformancesResponse
+    ]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = await self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __aiter__(
+        self,
+    ) -> AsyncIterator[db_system_compute_performance.DbSystemComputePerformance]:
+        async def async_generator():
+            async for page in self.pages:
+                for response in page.db_system_compute_performances:
+                    yield response
+
+        return async_generator()
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
 class ListDatabasesPager:
     """A pager for iterating through ``list_databases`` requests.
 
@@ -4958,6 +5300,166 @@ class ListGoldengateConnectionAssignmentsAsyncPager:
         async def async_generator():
             async for page in self.pages:
                 for response in page.goldengate_connection_assignments:
+                    yield response
+
+        return async_generator()
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListDatabaseConnectionsPager:
+    """A pager for iterating through ``list_database_connections`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.oracledatabase_v1.types.ListDatabaseConnectionsResponse` object, and
+    provides an ``__iter__`` method to iterate through its
+    ``database_connections`` field.
+
+    If there are more pages, the ``__iter__`` method will make additional
+    ``ListDatabaseConnections`` requests and continue to iterate
+    through the ``database_connections`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.oracledatabase_v1.types.ListDatabaseConnectionsResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[..., database_connection.ListDatabaseConnectionsResponse],
+        request: database_connection.ListDatabaseConnectionsRequest,
+        response: database_connection.ListDatabaseConnectionsResponse,
+        *,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiate the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.oracledatabase_v1.types.ListDatabaseConnectionsRequest):
+                The initial request object.
+            response (google.cloud.oracledatabase_v1.types.ListDatabaseConnectionsResponse):
+                The initial response object.
+            retry (google.api_core.retry.Retry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = database_connection.ListDatabaseConnectionsRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    def pages(self) -> Iterator[database_connection.ListDatabaseConnectionsResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __iter__(self) -> Iterator[database_connection.DatabaseConnection]:
+        for page in self.pages:
+            yield from page.database_connections
+
+    def __repr__(self) -> str:
+        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+
+
+class ListDatabaseConnectionsAsyncPager:
+    """A pager for iterating through ``list_database_connections`` requests.
+
+    This class thinly wraps an initial
+    :class:`google.cloud.oracledatabase_v1.types.ListDatabaseConnectionsResponse` object, and
+    provides an ``__aiter__`` method to iterate through its
+    ``database_connections`` field.
+
+    If there are more pages, the ``__aiter__`` method will make additional
+    ``ListDatabaseConnections`` requests and continue to iterate
+    through the ``database_connections`` field on the
+    corresponding responses.
+
+    All the usual :class:`google.cloud.oracledatabase_v1.types.ListDatabaseConnectionsResponse`
+    attributes are available on the pager. If multiple requests are made, only
+    the most recent response is retained, and thus used for attribute lookup.
+    """
+
+    def __init__(
+        self,
+        method: Callable[
+            ..., Awaitable[database_connection.ListDatabaseConnectionsResponse]
+        ],
+        request: database_connection.ListDatabaseConnectionsRequest,
+        response: database_connection.ListDatabaseConnectionsResponse,
+        *,
+        retry: OptionalAsyncRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, Union[str, bytes]]] = (),
+    ):
+        """Instantiates the pager.
+
+        Args:
+            method (Callable): The method that was originally called, and
+                which instantiated this pager.
+            request (google.cloud.oracledatabase_v1.types.ListDatabaseConnectionsRequest):
+                The initial request object.
+            response (google.cloud.oracledatabase_v1.types.ListDatabaseConnectionsResponse):
+                The initial response object.
+            retry (google.api_core.retry.AsyncRetry): Designation of what errors,
+                if any, should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, Union[str, bytes]]]): Key/value pairs which should be
+                sent along with the request as metadata. Normally, each value must be of type `str`,
+                but for metadata keys ending with the suffix `-bin`, the corresponding values must
+                be of type `bytes`.
+        """
+        self._method = method
+        self._request = database_connection.ListDatabaseConnectionsRequest(request)
+        self._response = response
+        self._retry = retry
+        self._timeout = timeout
+        self._metadata = metadata
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._response, name)
+
+    @property
+    async def pages(
+        self,
+    ) -> AsyncIterator[database_connection.ListDatabaseConnectionsResponse]:
+        yield self._response
+        while self._response.next_page_token:
+            self._request.page_token = self._response.next_page_token
+            self._response = await self._method(
+                self._request,
+                retry=self._retry,
+                timeout=self._timeout,
+                metadata=self._metadata,
+            )
+            yield self._response
+
+    def __aiter__(self) -> AsyncIterator[database_connection.DatabaseConnection]:
+        async def async_generator():
+            async for page in self.pages:
+                for response in page.database_connections:
                     yield response
 
         return async_generator()

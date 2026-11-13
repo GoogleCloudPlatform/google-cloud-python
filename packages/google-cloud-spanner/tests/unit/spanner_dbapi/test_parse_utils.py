@@ -15,7 +15,11 @@
 import sys
 import unittest
 
-from google.cloud.spanner_dbapi.parse_utils import classify_statement
+from google.cloud.spanner_dbapi.parse_utils import (
+    SPANNER_RESERVED_KEYWORDS,
+    classify_statement,
+    escape_name,
+)
 from google.cloud.spanner_dbapi.parsed_statement import (
     ClientSideStatementType,
     ParsedStatement,
@@ -402,6 +406,61 @@ class TestParseUtils(unittest.TestCase):
                 ("SELECT * from t WHERE id=10", {"f1": "app", "f2": "name"}),
                 ("SELECT * from t WHERE id=10", {"f1": "app", "f2": "name"}),
             ),
+            (
+                # Preserves Unicode in identifiers and trailing WHERE predicates
+                (
+                    "SELECT * FROM `Tëst` WHERE tenant_id = %s",
+                    ("tenant_1",),
+                ),
+                (
+                    "SELECT * FROM `Tëst` WHERE tenant_id = @a0",
+                    {"a0": "tenant_1"},
+                ),
+            ),
+            (
+                # Preserves Unicode in string literals without backticking or truncating
+                (
+                    "SELECT * FROM users WHERE dept = 'café' AND tenant_id = %s",
+                    ("tenant_1",),
+                ),
+                (
+                    "SELECT * FROM users WHERE dept = 'café' AND tenant_id = @a0",
+                    {"a0": "tenant_1"},
+                ),
+            ),
+            (
+                # Preserves percent escaping (%% -> %) alongside parameters
+                (
+                    "SELECT * FROM users WHERE name LIKE 'A%%' AND age > %s",
+                    (21,),
+                ),
+                (
+                    "SELECT * FROM users WHERE name LIKE 'A%' AND age > @a0",
+                    {"a0": 21},
+                ),
+            ),
+            (
+                # Preserves Unicode in unparameterized queries (params=None)
+                (
+                    "SELECT * FROM users WHERE city = 'München' AND active = true",
+                    None,
+                ),
+                (
+                    "SELECT * FROM users WHERE city = 'München' AND active = true",
+                    None,
+                ),
+            ),
+            (
+                # Preserves Unicode in dict-based named parameters and literals
+                (
+                    "SELECT * FROM users WHERE name = %(name)s AND dept = 'café'",
+                    {"name": "Alice"},
+                ),
+                (
+                    "SELECT * FROM users WHERE name = @a0 AND dept = 'café'",
+                    {"a0": "Alice"},
+                ),
+            ),
         ]
         for (sql_in, params), sql_want in cases:
             with self.subTest(sql=sql_in):
@@ -501,27 +560,32 @@ class TestParseUtils(unittest.TestCase):
 
     @unittest.skipIf(skip_condition, skip_message)
     def test_escape_name(self):
-        from google.cloud.spanner_dbapi.parse_utils import escape_name
-
         cases = (
             ("SELECT", "`SELECT`"),
             ("dashed-value", "`dashed-value`"),
             ("with space", "`with space`"),
-            ("name", "name"),
+            ("name", "`name`"),
             ("", ""),
+            ("``", "``"),
             ("col`; DROP TABLE t; -- x", "`col\\`; DROP TABLE t; -- x`"),
             ("table`name", "`table\\`name`"),
             ("`", "`\\``"),
             ("col/*comment*/name", "`col/*comment*/name`"),
             ("123column", "`123column`"),
             ("col;select", "`col;select`"),
-            ("col\nname", "`col\nname`"),
             ("test\\", "`test\\\\`"),
-            ("my_schema.my_table", "my_schema.my_table"),
+            ("my_schema.my_table", "`my_schema`.`my_table`"),
             ("my-schema.my-table", "`my-schema`.`my-table`"),
+            ("catalog.schema.table.column", "`catalog`.`schema`.`table`.`column`"),
             ("`my_table`", "`my_table`"),
             ("`my_schema`.`my_table`", "`my_schema`.`my_table`"),
             ("`table.with.dots`", "`table.with.dots`"),
+            ("`table.with.dots`.col", "`table.with.dots`.`col`"),
+            ("col.`table.with.dots`", "`col`.`table.with.dots`"),
+            ("`my.schema`.`my.table`", "`my.schema`.`my.table`"),
+            ("café", "`café`"),
+            ("col_ñ", "`col_ñ`"),
+            ("`col\\`name`", "`col\\`name`"),
             ("`col\\`; DROP TABLE users; --`", "`col\\`; DROP TABLE users; --`"),
             (
                 "`col\\\\`; DROP TABLE users; --`",
@@ -532,6 +596,103 @@ class TestParseUtils(unittest.TestCase):
             with self.subTest(name=name):
                 got = escape_name(name)
                 self.assertEqual(got, want)
+                # Verify idempotency: escaping an already-escaped output returns the same result.
+                self.assertEqual(escape_name(got), want)
+
+    @unittest.skipIf(skip_condition, skip_message)
+    def test_escape_name_invalid_control_characters(self):
+        invalid_identifiers = (
+            "table\nname",
+            "table\rname",
+            "table\0name",
+            "table\tname",
+            "table\x1fname",
+            "table\x7fname",
+            "schema\n.table",
+            "schema.table\0",
+        )
+        for identifier in invalid_identifiers:
+            with self.subTest(identifier=identifier):
+                with self.assertRaises(ValueError):
+                    escape_name(identifier)
+
+    @unittest.skipIf(skip_condition, skip_message)
+    def test_escape_name_invalid_qualified_identifiers(self):
+        invalid_qualified = (
+            ".",
+            "...",
+            "table.",
+            ".table",
+            "schema..table",
+            "schema.`unclosed.table.`other",
+        )
+        for identifier in invalid_qualified:
+            with self.subTest(identifier=identifier):
+                with self.assertRaises(ValueError):
+                    escape_name(identifier)
+
+    @unittest.skipIf(skip_condition, skip_message)
+    def test_escape_name_invalid_types(self):
+        invalid_types = (None, 123, 45.67, b"bytes_name", ["list"])
+        for identifier in invalid_types:
+            with self.subTest(identifier=identifier):
+                with self.assertRaises(TypeError):
+                    escape_name(identifier)
+
+    @unittest.skipIf(skip_condition, skip_message)
+    def test_spanner_reserved_keywords_compatibility(self):
+        # Verify that SPANNER_RESERVED_KEYWORDS is exported with recent additions
+        # for backwards compatibility with downstream consumers (e.g. sqlalchemy-spanner).
+        self.assertIn("GRAPH_TABLE", SPANNER_RESERVED_KEYWORDS)
+        self.assertIn("QUALIFY", SPANNER_RESERVED_KEYWORDS)
+
+    def test_classify_statement_preserves_unicode_and_predicates(self):
+        # Scoped SELECT with Unicode identifier preserves WHERE clause
+        query = "SELECT * FROM `Tëst` WHERE tenant_id = %s"
+        parsed = classify_statement(query, ("tenant_1",))
+        self.assertEqual(
+            parsed.statement.sql, "SELECT * FROM `Tëst` WHERE tenant_id = @a0"
+        )
+        self.assertEqual(parsed.statement.params, {"a0": "tenant_1"})
+        self.assertEqual(parsed.statement_type, StatementType.QUERY)
+
+        # Scoped DELETE with Unicode identifier does not drop WHERE or append WHERE 1=1
+        query = "DELETE FROM `Tëst` WHERE id = %s"
+        parsed = classify_statement(query, (42,))
+        self.assertEqual(parsed.statement.sql, "DELETE FROM `Tëst` WHERE id = @a0")
+        self.assertEqual(parsed.statement.params, {"a0": 42})
+        self.assertEqual(parsed.statement_type, StatementType.UPDATE)
+        self.assertNotIn("WHERE 1=1", parsed.statement.sql)
+
+        # Scoped UPDATE with Unicode in SET clause does not convert WHERE clause to WHERE 1=1
+        query = "UPDATE users SET note = 'Café' WHERE id = %s"
+        parsed = classify_statement(query, (42,))
+        self.assertEqual(
+            parsed.statement.sql, "UPDATE users SET note = 'Café' WHERE id = @a0"
+        )
+        self.assertEqual(parsed.statement.params, {"a0": 42})
+        self.assertEqual(parsed.statement_type, StatementType.UPDATE)
+        self.assertNotIn("WHERE 1=1", parsed.statement.sql)
+
+        # Scoped UPDATE with Unicode literal preserves literal and WHERE clause
+        query = "UPDATE users SET status = 'active' WHERE name = 'José' AND id = %s"
+        parsed = classify_statement(query, (1,))
+        self.assertEqual(
+            parsed.statement.sql,
+            "UPDATE users SET status = 'active' WHERE name = 'José' AND id = @a0",
+        )
+        self.assertEqual(parsed.statement.params, {"a0": 1})
+        self.assertEqual(parsed.statement_type, StatementType.UPDATE)
+        self.assertNotIn("WHERE 1=1", parsed.statement.sql)
+
+        # Adjacent punctuation with Unicode identifiers does not swallow punctuation
+        query = "SELECT `tätä`, id FROM users WHERE id = %s"
+        parsed = classify_statement(query, (1,))
+        self.assertEqual(
+            parsed.statement.sql,
+            "SELECT `tätä`, id FROM users WHERE id = @a0",
+        )
+        self.assertEqual(parsed.statement.params, {"a0": 1})
 
     def test_classify_statement_does_not_add_dummy_where(self):
         """classify_statement must classify statements without mutating them or adding WHERE 1=1."""

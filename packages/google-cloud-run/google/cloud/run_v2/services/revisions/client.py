@@ -81,6 +81,7 @@ from google.cloud.run_v2.types import (
     condition,
     k8s_min,
     revision,
+    sandbox,
     status,
     vendor_settings,
 )

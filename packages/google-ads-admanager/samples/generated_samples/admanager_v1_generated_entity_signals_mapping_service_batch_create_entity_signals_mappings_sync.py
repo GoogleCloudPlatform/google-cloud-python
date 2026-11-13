@@ -42,6 +42,7 @@ def sample_batch_create_entity_signals_mappings():
     requests = admanager_v1.CreateEntitySignalsMappingRequest()
     requests.parent = "parent_value"
     requests.entity_signals_mapping.audience_segment_id = 1980
+    requests.entity_signals_mapping.audience_segment = "audience_segment_value"
 
     request = admanager_v1.BatchCreateEntitySignalsMappingsRequest(
         parent="parent_value",

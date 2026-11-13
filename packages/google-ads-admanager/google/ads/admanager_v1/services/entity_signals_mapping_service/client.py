@@ -174,6 +174,66 @@ class EntitySignalsMappingServiceClient(
         return self._transport
 
     @staticmethod
+    def audience_segment_path(
+        network_code: str,
+        audience_segment: str,
+    ) -> str:
+        """Returns a fully-qualified audience_segment string."""
+        return "networks/{network_code}/audienceSegments/{audience_segment}".format(
+            network_code=network_code,
+            audience_segment=audience_segment,
+        )
+
+    @staticmethod
+    def parse_audience_segment_path(path: str) -> Dict[str, str]:
+        """Parses a audience_segment path into its component segments."""
+        m = re.match(
+            r"^networks/(?P<network_code>.+?)/audienceSegments/(?P<audience_segment>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def content_bundle_path(
+        network_code: str,
+        content_bundle: str,
+    ) -> str:
+        """Returns a fully-qualified content_bundle string."""
+        return "networks/{network_code}/contentBundles/{content_bundle}".format(
+            network_code=network_code,
+            content_bundle=content_bundle,
+        )
+
+    @staticmethod
+    def parse_content_bundle_path(path: str) -> Dict[str, str]:
+        """Parses a content_bundle path into its component segments."""
+        m = re.match(
+            r"^networks/(?P<network_code>.+?)/contentBundles/(?P<content_bundle>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def custom_targeting_value_path(
+        network_code: str,
+        custom_targeting_value: str,
+    ) -> str:
+        """Returns a fully-qualified custom_targeting_value string."""
+        return "networks/{network_code}/customTargetingValues/{custom_targeting_value}".format(
+            network_code=network_code,
+            custom_targeting_value=custom_targeting_value,
+        )
+
+    @staticmethod
+    def parse_custom_targeting_value_path(path: str) -> Dict[str, str]:
+        """Parses a custom_targeting_value path into its component segments."""
+        m = re.match(
+            r"^networks/(?P<network_code>.+?)/customTargetingValues/(?P<custom_targeting_value>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
     def entity_signals_mapping_path(
         network_code: str,
         entity_signals_mapping: str,
@@ -206,6 +266,26 @@ class EntitySignalsMappingServiceClient(
     def parse_network_path(path: str) -> Dict[str, str]:
         """Parses a network path into its component segments."""
         m = re.match(r"^networks/(?P<network_code>.+?)$", path)
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def taxonomy_category_path(
+        network_code: str,
+        taxonomy_category: str,
+    ) -> str:
+        """Returns a fully-qualified taxonomy_category string."""
+        return "networks/{network_code}/taxonomyCategories/{taxonomy_category}".format(
+            network_code=network_code,
+            taxonomy_category=taxonomy_category,
+        )
+
+    @staticmethod
+    def parse_taxonomy_category_path(path: str) -> Dict[str, str]:
+        """Parses a taxonomy_category path into its component segments."""
+        m = re.match(
+            r"^networks/(?P<network_code>.+?)/taxonomyCategories/(?P<taxonomy_category>.+?)$",
+            path,
+        )
         return m.groupdict() if m else {}
 
     @staticmethod
@@ -897,6 +977,7 @@ class EntitySignalsMappingServiceClient(
                 # Initialize request argument(s)
                 entity_signals_mapping = admanager_v1.EntitySignalsMapping()
                 entity_signals_mapping.audience_segment_id = 1980
+                entity_signals_mapping.audience_segment = "audience_segment_value"
 
                 request = admanager_v1.CreateEntitySignalsMappingRequest(
                     parent="parent_value",
@@ -1030,6 +1111,7 @@ class EntitySignalsMappingServiceClient(
                 # Initialize request argument(s)
                 entity_signals_mapping = admanager_v1.EntitySignalsMapping()
                 entity_signals_mapping.audience_segment_id = 1980
+                entity_signals_mapping.audience_segment = "audience_segment_value"
 
                 request = admanager_v1.UpdateEntitySignalsMappingRequest(
                     entity_signals_mapping=entity_signals_mapping,
@@ -1170,6 +1252,7 @@ class EntitySignalsMappingServiceClient(
                 requests = admanager_v1.CreateEntitySignalsMappingRequest()
                 requests.parent = "parent_value"
                 requests.entity_signals_mapping.audience_segment_id = 1980
+                requests.entity_signals_mapping.audience_segment = "audience_segment_value"
 
                 request = admanager_v1.BatchCreateEntitySignalsMappingsRequest(
                     parent="parent_value",
@@ -1313,6 +1396,7 @@ class EntitySignalsMappingServiceClient(
                 # Initialize request argument(s)
                 requests = admanager_v1.UpdateEntitySignalsMappingRequest()
                 requests.entity_signals_mapping.audience_segment_id = 1980
+                requests.entity_signals_mapping.audience_segment = "audience_segment_value"
 
                 request = admanager_v1.BatchUpdateEntitySignalsMappingsRequest(
                     parent="parent_value",

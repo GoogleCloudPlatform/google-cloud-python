@@ -28,7 +28,6 @@ from . import client_side_statement_parser
 from .exceptions import Error
 from .parsed_statement import ParsedStatement, Statement, StatementType
 from .types import DateStr, TimestampStr
-from .utils import sanitize_literals_for_upload
 
 # Note: This mapping deliberately does not contain a value for float.
 # The reason for that is that it is better to just let Spanner determine
@@ -51,6 +50,9 @@ TYPES_MAP = {
     JsonObject: spanner.param_types.JSON,
 }
 
+# Note: SPANNER_RESERVED_KEYWORDS is retained for backwards compatibility with
+# downstream packages (e.g. sqlalchemy-spanner). The Spanner DB-API driver quotes
+# identifiers unconditionally and does not use this list internally.
 SPANNER_RESERVED_KEYWORDS = {
     "ALL",
     "AND",
@@ -89,6 +91,7 @@ SPANNER_RESERVED_KEYWORDS = {
     "FOR",
     "FROM",
     "FULL",
+    "GRAPH_TABLE",
     "GROUP",
     "GROUPING",
     "GROUPS",
@@ -124,6 +127,7 @@ SPANNER_RESERVED_KEYWORDS = {
     "PARTITION",
     "PRECEDING",
     "PROTO",
+    "QUALIFY",
     "RANGE",
     "RECURSIVE",
     "RESPECT",
@@ -305,14 +309,14 @@ def sql_pyformat_args_to_spanner(sql, params):
               arguments.
     """
     if not params:
-        return sanitize_literals_for_upload(sql), None
+        return sql.replace("%%", "%"), None
 
     found_pyformat_placeholders = RE_PYFORMAT.findall(sql)
     params_is_dict = isinstance(params, dict)
 
     if params_is_dict:
         if not found_pyformat_placeholders:
-            return sanitize_literals_for_upload(sql), params
+            return sql.replace("%%", "%"), params
     else:
         n_params = len(params) if params else 0
         n_matches = len(found_pyformat_placeholders)
@@ -339,7 +343,7 @@ def sql_pyformat_args_to_spanner(sql, params):
         else:
             named_args[key] = params[i]
 
-    return sanitize_literals_for_upload(sql), named_args
+    return sql.replace("%%", "%"), named_args
 
 
 def get_param_types(params):
@@ -379,37 +383,38 @@ def ensure_where_clause(sql):
 
 
 _QUOTED_IDENTIFIER_RE = re.compile(r"\A`(\\.|[^`\\])*`\Z", re.DOTALL)
+_QUALIFIED_PART_RE = re.compile(r"`(?:\\.|[^`\\])*`|[^.]+")
+_CONTROL_CHAR_RE = re.compile(r"[\x00-\x1f\x7f]")
 
 
-def escape_name(name):
-    """
-    Apply backticks to the name if it is not a valid regular ASCII identifier,
-    or if it is a Cloud Spanner's reserved keyword.
+def escape_name(name: str) -> str:
+    """Apply GoogleSQL backticks to the identifier and escape embedded delimiters.
 
     :type name: str
-    :param name: Name to escape.
+    :param name: Identifier name to escape.
 
     :rtype: str
-    :returns: Name escaped if it has to be escaped.
+    :returns: Escaped and quoted identifier.
+    :raises TypeError: if the name is not a string.
+    :raises ValueError: if the name contains ASCII control characters or is
+        an invalid qualified identifier.
     """
+    if not isinstance(name, str):
+        raise TypeError(f"Identifier must be a string, got {type(name).__name__}")
     if not name:
         return name
+
+    if _CONTROL_CHAR_RE.search(name):
+        raise ValueError(f"Invalid identifier: {name!r}")
 
     if _QUOTED_IDENTIFIER_RE.match(name):
         return name
 
     if "." in name:
-        parts = name.split(".")
+        parts = _QUALIFIED_PART_RE.findall(name)
+        if not parts or ".".join(parts) != name:
+            raise ValueError(f"Invalid qualified identifier: {name!r}")
         return ".".join(escape_name(part) for part in parts)
 
-    is_valid_regular_identifier = (
-        (name[0].isalpha() or name[0] == "_")
-        and all(c.isalnum() or c == "_" for c in name)
-        and name.isascii()
-    )
-
-    if not is_valid_regular_identifier or name.upper() in SPANNER_RESERVED_KEYWORDS:
-        escaped = name.replace("\\", "\\\\").replace("`", "\\`")
-        return f"`{escaped}`"
-
-    return name
+    escaped = name.replace("\\", "\\\\").replace("`", "\\`")
+    return f"`{escaped}`"

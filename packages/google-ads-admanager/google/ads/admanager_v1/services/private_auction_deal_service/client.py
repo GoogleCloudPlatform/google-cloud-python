@@ -179,6 +179,42 @@ class PrivateAuctionDealServiceClient(metaclass=PrivateAuctionDealServiceClientM
         return self._transport
 
     @staticmethod
+    def ad_category_path(
+        network_code: str,
+        ad_category: str,
+    ) -> str:
+        """Returns a fully-qualified ad_category string."""
+        return "networks/{network_code}/adCategories/{ad_category}".format(
+            network_code=network_code,
+            ad_category=ad_category,
+        )
+
+    @staticmethod
+    def parse_ad_category_path(path: str) -> Dict[str, str]:
+        """Parses a ad_category path into its component segments."""
+        m = re.match(
+            r"^networks/(?P<network_code>.+?)/adCategories/(?P<ad_category>.+?)$", path
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def ad_spot_path(
+        network_code: str,
+        ad_spot: str,
+    ) -> str:
+        """Returns a fully-qualified ad_spot string."""
+        return "networks/{network_code}/adSpots/{ad_spot}".format(
+            network_code=network_code,
+            ad_spot=ad_spot,
+        )
+
+    @staticmethod
+    def parse_ad_spot_path(path: str) -> Dict[str, str]:
+        """Parses a ad_spot path into its component segments."""
+        m = re.match(r"^networks/(?P<network_code>.+?)/adSpots/(?P<ad_spot>.+?)$", path)
+        return m.groupdict() if m else {}
+
+    @staticmethod
     def ad_unit_path(
         network_code: str,
         ad_unit: str,
@@ -351,6 +387,26 @@ class PrivateAuctionDealServiceClient(metaclass=PrivateAuctionDealServiceClientM
         return m.groupdict() if m else {}
 
     @staticmethod
+    def content_label_path(
+        network_code: str,
+        content_label: str,
+    ) -> str:
+        """Returns a fully-qualified content_label string."""
+        return "networks/{network_code}/contentLabels/{content_label}".format(
+            network_code=network_code,
+            content_label=content_label,
+        )
+
+    @staticmethod
+    def parse_content_label_path(path: str) -> Dict[str, str]:
+        """Parses a content_label path into its component segments."""
+        m = re.match(
+            r"^networks/(?P<network_code>.+?)/contentLabels/(?P<content_label>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
     def custom_targeting_key_path(
         network_code: str,
         custom_targeting_key: str,
@@ -470,6 +526,26 @@ class PrivateAuctionDealServiceClient(metaclass=PrivateAuctionDealServiceClientM
         """Parses a geo_target path into its component segments."""
         m = re.match(
             r"^networks/(?P<network_code>.+?)/geoTargets/(?P<geo_target>.+?)$", path
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def inventory_url_path(
+        network_code: str,
+        inventory_url: str,
+    ) -> str:
+        """Returns a fully-qualified inventory_url string."""
+        return "networks/{network_code}/inventoryUrls/{inventory_url}".format(
+            network_code=network_code,
+            inventory_url=inventory_url,
+        )
+
+    @staticmethod
+    def parse_inventory_url_path(path: str) -> Dict[str, str]:
+        """Parses a inventory_url path into its component segments."""
+        m = re.match(
+            r"^networks/(?P<network_code>.+?)/inventoryUrls/(?P<inventory_url>.+?)$",
+            path,
         )
         return m.groupdict() if m else {}
 
@@ -625,6 +701,26 @@ class PrivateAuctionDealServiceClient(metaclass=PrivateAuctionDealServiceClientM
         """Parses a private_auction_deal path into its component segments."""
         m = re.match(
             r"^networks/(?P<network_code>.+?)/privateAuctionDeals/(?P<private_auction_deal>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def taxonomy_category_path(
+        network_code: str,
+        taxonomy_category: str,
+    ) -> str:
+        """Returns a fully-qualified taxonomy_category string."""
+        return "networks/{network_code}/taxonomyCategories/{taxonomy_category}".format(
+            network_code=network_code,
+            taxonomy_category=taxonomy_category,
+        )
+
+    @staticmethod
+    def parse_taxonomy_category_path(path: str) -> Dict[str, str]:
+        """Parses a taxonomy_category path into its component segments."""
+        m = re.match(
+            r"^networks/(?P<network_code>.+?)/taxonomyCategories/(?P<taxonomy_category>.+?)$",
             path,
         )
         return m.groupdict() if m else {}

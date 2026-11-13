@@ -265,7 +265,7 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
         effective_default = self.effective_default(field)
         if effective_default is not None:
             self.execute(
-                "UPDATE %(table)s SET %(column)s=%%s"
+                "UPDATE %(table)s SET %(column)s=%%s WHERE 1=1"
                 % {
                     "table": self.quote_name(model._meta.db_table),
                     "column": self.quote_name(field.column),

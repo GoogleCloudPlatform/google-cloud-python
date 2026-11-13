@@ -40,6 +40,7 @@ except ImportError:  # pragma: NO COVER
 
 import google.auth
 import google.protobuf.field_mask_pb2 as field_mask_pb2  # type: ignore
+import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 from google.api_core import (
     client_options,
     gapic_v1,
@@ -2662,6 +2663,7 @@ def test_get_dai_authentication_key_rest_call_success(request_type):
         # Designate an appropriate value for the returned response.
         return_value = dai_authentication_key_messages.DaiAuthenticationKey(
             name="name_value",
+            key="key_value",
             status=dai_authentication_key_enums.DaiAuthenticationKeyStatusEnum.DaiAuthenticationKeyStatus.ACTIVE,
             display_name="display_name_value",
             key_type=dai_authentication_key_enums.DaiAuthenticationKeyTypeEnum.DaiAuthenticationKeyType.API,
@@ -2684,6 +2686,7 @@ def test_get_dai_authentication_key_rest_call_success(request_type):
     # Establish that the response is the type that we expect.
     assert isinstance(response, dai_authentication_key_messages.DaiAuthenticationKey)
     assert response.name == "name_value"
+    assert response.key == "key_value"
     assert (
         response.status
         == dai_authentication_key_enums.DaiAuthenticationKeyStatusEnum.DaiAuthenticationKeyStatus.ACTIVE
@@ -2957,6 +2960,8 @@ def test_create_dai_authentication_key_rest_call_success(request_type):
     request_init = {"parent": "networks/sample1"}
     request_init["dai_authentication_key"] = {
         "name": "name_value",
+        "key": "key_value",
+        "create_time": {"seconds": 751, "nanos": 543},
         "status": 1,
         "display_name": "display_name_value",
         "key_type": 1,
@@ -3041,6 +3046,7 @@ def test_create_dai_authentication_key_rest_call_success(request_type):
         # Designate an appropriate value for the returned response.
         return_value = dai_authentication_key_messages.DaiAuthenticationKey(
             name="name_value",
+            key="key_value",
             status=dai_authentication_key_enums.DaiAuthenticationKeyStatusEnum.DaiAuthenticationKeyStatus.ACTIVE,
             display_name="display_name_value",
             key_type=dai_authentication_key_enums.DaiAuthenticationKeyTypeEnum.DaiAuthenticationKeyType.API,
@@ -3063,6 +3069,7 @@ def test_create_dai_authentication_key_rest_call_success(request_type):
     # Establish that the response is the type that we expect.
     assert isinstance(response, dai_authentication_key_messages.DaiAuthenticationKey)
     assert response.name == "name_value"
+    assert response.key == "key_value"
     assert (
         response.status
         == dai_authentication_key_enums.DaiAuthenticationKeyStatusEnum.DaiAuthenticationKeyStatus.ACTIVE
@@ -3348,6 +3355,8 @@ def test_update_dai_authentication_key_rest_call_success(request_type):
     }
     request_init["dai_authentication_key"] = {
         "name": "networks/sample1/daiAuthenticationKeys/sample2",
+        "key": "key_value",
+        "create_time": {"seconds": 751, "nanos": 543},
         "status": 1,
         "display_name": "display_name_value",
         "key_type": 1,
@@ -3432,6 +3441,7 @@ def test_update_dai_authentication_key_rest_call_success(request_type):
         # Designate an appropriate value for the returned response.
         return_value = dai_authentication_key_messages.DaiAuthenticationKey(
             name="name_value",
+            key="key_value",
             status=dai_authentication_key_enums.DaiAuthenticationKeyStatusEnum.DaiAuthenticationKeyStatus.ACTIVE,
             display_name="display_name_value",
             key_type=dai_authentication_key_enums.DaiAuthenticationKeyTypeEnum.DaiAuthenticationKeyType.API,
@@ -3454,6 +3464,7 @@ def test_update_dai_authentication_key_rest_call_success(request_type):
     # Establish that the response is the type that we expect.
     assert isinstance(response, dai_authentication_key_messages.DaiAuthenticationKey)
     assert response.name == "name_value"
+    assert response.key == "key_value"
     assert (
         response.status
         == dai_authentication_key_enums.DaiAuthenticationKeyStatusEnum.DaiAuthenticationKeyStatus.ACTIVE

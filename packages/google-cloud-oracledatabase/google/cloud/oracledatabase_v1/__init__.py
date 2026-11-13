@@ -34,9 +34,11 @@ __lazy_modules__ = {
     "google.cloud.oracledatabase_v1.types.common",
     "google.cloud.oracledatabase_v1.types.database",
     "google.cloud.oracledatabase_v1.types.database_character_set",
+    "google.cloud.oracledatabase_v1.types.database_connection",
     "google.cloud.oracledatabase_v1.types.db_node",
     "google.cloud.oracledatabase_v1.types.db_server",
     "google.cloud.oracledatabase_v1.types.db_system",
+    "google.cloud.oracledatabase_v1.types.db_system_compute_performance",
     "google.cloud.oracledatabase_v1.types.db_system_initial_storage_size",
     "google.cloud.oracledatabase_v1.types.db_system_shape",
     "google.cloud.oracledatabase_v1.types.db_version",
@@ -44,6 +46,8 @@ __lazy_modules__ = {
     "google.cloud.oracledatabase_v1.types.exadata_infra",
     "google.cloud.oracledatabase_v1.types.exadb_vm_cluster",
     "google.cloud.oracledatabase_v1.types.exascale_db_storage_vault",
+    "google.cloud.oracledatabase_v1.types.execute_sql",
+    "google.cloud.oracledatabase_v1.types.flex_component",
     "google.cloud.oracledatabase_v1.types.gi_version",
     "google.cloud.oracledatabase_v1.types.goldengate_connection",
     "google.cloud.oracledatabase_v1.types.goldengate_connection_assignment",
@@ -108,6 +112,17 @@ from .types.database_character_set import (
     ListDatabaseCharacterSetsRequest,
     ListDatabaseCharacterSetsResponse,
 )
+from .types.database_connection import (
+    CreateDatabaseConnectionRequest,
+    DatabaseConnection,
+    DeleteDatabaseConnectionRequest,
+    GetDatabaseConnectionRequest,
+    ListDatabaseConnectionsRequest,
+    ListDatabaseConnectionsResponse,
+    TestDatabaseConnectionRequest,
+    TestDatabaseConnectionResponse,
+    UpdateDatabaseConnectionRequest,
+)
 from .types.db_node import DbNode, DbNodeProperties
 from .types.db_server import DbServer, DbServerProperties
 from .types.db_system import (
@@ -121,6 +136,13 @@ from .types.db_system import (
     GetDbSystemRequest,
     ListDbSystemsRequest,
     ListDbSystemsResponse,
+    UpdateDbSystemRequest,
+)
+from .types.db_system_compute_performance import (
+    ComputePerformance,
+    DbSystemComputePerformance,
+    ListDbSystemComputePerformancesRequest,
+    ListDbSystemComputePerformancesResponse,
 )
 from .types.db_system_initial_storage_size import (
     DbSystemInitialStorageSize,
@@ -158,6 +180,20 @@ from .types.exascale_db_storage_vault import (
     GetExascaleDbStorageVaultRequest,
     ListExascaleDbStorageVaultsRequest,
     ListExascaleDbStorageVaultsResponse,
+    UpdateExascaleDbStorageVaultRequest,
+)
+from .types.execute_sql import (
+    ExecuteSqlMetadata,
+    ExecuteSqlRequest,
+    ExecuteSqlResponse,
+    SqlParameter,
+    SqlResult,
+)
+from .types.flex_component import (
+    FlexComponent,
+    FlexComponentProperties,
+    ListFlexComponentsRequest,
+    ListFlexComponentsResponse,
 )
 from .types.gi_version import GiVersion
 from .types.goldengate_connection import (
@@ -208,6 +244,7 @@ from .types.goldengate_connection import (
     NessieIcebergCatalog,
     PolarisIcebergCatalog,
     RestIcebergCatalog,
+    UpdateGoldengateConnectionRequest,
 )
 from .types.goldengate_connection_assignment import (
     CreateGoldengateConnectionAssignmentRequest,
@@ -220,6 +257,7 @@ from .types.goldengate_connection_assignment import (
     TestConnectionAssignmentError,
     TestGoldengateConnectionAssignmentRequest,
     TestGoldengateConnectionAssignmentResponse,
+    UpdateGoldengateConnectionAssignmentRequest,
 )
 from .types.goldengate_connection_type import (
     GoldengateConnectionType,
@@ -245,6 +283,7 @@ from .types.goldengate_deployment import (
     ListGoldengateDeploymentsResponse,
     StartGoldengateDeploymentRequest,
     StopGoldengateDeploymentRequest,
+    UpdateGoldengateDeploymentRequest,
 )
 from .types.goldengate_deployment_environment import (
     GoldengateDeploymentEnvironment,
@@ -283,6 +322,9 @@ from .types.odb_network import (
     ListOdbNetworksRequest,
     ListOdbNetworksResponse,
     OdbNetwork,
+    PscInterfaceConfig,
+    ServiceConnectivityConfig,
+    UpdateOdbNetworkRequest,
 )
 from .types.odb_subnet import (
     CreateOdbSubnetRequest,
@@ -291,6 +333,7 @@ from .types.odb_subnet import (
     ListOdbSubnetsRequest,
     ListOdbSubnetsResponse,
     OdbSubnet,
+    UpdateOdbSubnetRequest,
 )
 from .types.oracledatabase import (
     AutonomousDatabaseRefreshableClones,
@@ -302,6 +345,10 @@ from .types.oracledatabase import (
     DeleteCloudExadataInfrastructureRequest,
     DeleteCloudVmClusterRequest,
     DeleteExadbVmClusterRequest,
+    DisableCloudVmClusterIdentityConnectorRequest,
+    DisableExadbVmClusterIdentityConnectorRequest,
+    EnableCloudVmClusterIdentityConnectorRequest,
+    EnableExadbVmClusterIdentityConnectorRequest,
     FailoverAutonomousDatabaseRequest,
     GenerateAutonomousDatabaseWalletRequest,
     GenerateAutonomousDatabaseWalletResponse,
@@ -343,6 +390,8 @@ from .types.oracledatabase import (
     StopAutonomousDatabaseRequest,
     SwitchoverAutonomousDatabaseRequest,
     UpdateAutonomousDatabaseRequest,
+    UpdateCloudExadataInfrastructureRequest,
+    UpdateCloudVmClusterRequest,
     UpdateExadbVmClusterRequest,
 )
 from .types.pluggable_database import (
@@ -384,10 +433,12 @@ __all__ = (
     "CloudVmCluster",
     "CloudVmClusterProperties",
     "ComputeModel",
+    "ComputePerformance",
     "ConfigureExascaleCloudExadataInfrastructureRequest",
     "CreateAutonomousDatabaseRequest",
     "CreateCloudExadataInfrastructureRequest",
     "CreateCloudVmClusterRequest",
+    "CreateDatabaseConnectionRequest",
     "CreateDbSystemRequest",
     "CreateExadbVmClusterRequest",
     "CreateExascaleDbStorageVaultRequest",
@@ -404,6 +455,7 @@ __all__ = (
     "DataCollectionOptionsDbSystem",
     "Database",
     "DatabaseCharacterSet",
+    "DatabaseConnection",
     "DatabaseConnectionStringProfile",
     "DatabaseManagementConfig",
     "DatabaseProperties",
@@ -414,6 +466,7 @@ __all__ = (
     "DbServer",
     "DbServerProperties",
     "DbSystem",
+    "DbSystemComputePerformance",
     "DbSystemInitialStorageSize",
     "DbSystemInitialStorageSizeProperties",
     "DbSystemOptions",
@@ -424,6 +477,7 @@ __all__ = (
     "DeleteAutonomousDatabaseRequest",
     "DeleteCloudExadataInfrastructureRequest",
     "DeleteCloudVmClusterRequest",
+    "DeleteDatabaseConnectionRequest",
     "DeleteDbSystemRequest",
     "DeleteExadbVmClusterRequest",
     "DeleteExascaleDbStorageVaultRequest",
@@ -434,6 +488,10 @@ __all__ = (
     "DeleteOdbNetworkRequest",
     "DeleteOdbSubnetRequest",
     "DeploymentDiagnosticData",
+    "DisableCloudVmClusterIdentityConnectorRequest",
+    "DisableExadbVmClusterIdentityConnectorRequest",
+    "EnableCloudVmClusterIdentityConnectorRequest",
+    "EnableExadbVmClusterIdentityConnectorRequest",
     "EncryptionKey",
     "EncryptionKeyHistoryEntry",
     "Entitlement",
@@ -444,7 +502,12 @@ __all__ = (
     "ExascaleDbStorageDetails",
     "ExascaleDbStorageVault",
     "ExascaleDbStorageVaultProperties",
+    "ExecuteSqlMetadata",
+    "ExecuteSqlRequest",
+    "ExecuteSqlResponse",
     "FailoverAutonomousDatabaseRequest",
+    "FlexComponent",
+    "FlexComponentProperties",
     "GenerateAutonomousDatabaseWalletRequest",
     "GenerateAutonomousDatabaseWalletResponse",
     "GenerateType",
@@ -452,6 +515,7 @@ __all__ = (
     "GetAutonomousDatabaseRequest",
     "GetCloudExadataInfrastructureRequest",
     "GetCloudVmClusterRequest",
+    "GetDatabaseConnectionRequest",
     "GetDatabaseRequest",
     "GetDbSystemRequest",
     "GetExadbVmClusterRequest",
@@ -532,12 +596,16 @@ __all__ = (
     "ListCloudVmClustersResponse",
     "ListDatabaseCharacterSetsRequest",
     "ListDatabaseCharacterSetsResponse",
+    "ListDatabaseConnectionsRequest",
+    "ListDatabaseConnectionsResponse",
     "ListDatabasesRequest",
     "ListDatabasesResponse",
     "ListDbNodesRequest",
     "ListDbNodesResponse",
     "ListDbServersRequest",
     "ListDbServersResponse",
+    "ListDbSystemComputePerformancesRequest",
+    "ListDbSystemComputePerformancesResponse",
     "ListDbSystemInitialStorageSizesRequest",
     "ListDbSystemInitialStorageSizesResponse",
     "ListDbSystemShapesRequest",
@@ -552,6 +620,8 @@ __all__ = (
     "ListExadbVmClustersResponse",
     "ListExascaleDbStorageVaultsRequest",
     "ListExascaleDbStorageVaultsResponse",
+    "ListFlexComponentsRequest",
+    "ListFlexComponentsResponse",
     "ListGiVersionsRequest",
     "ListGiVersionsResponse",
     "ListGoldengateConnectionAssignmentsRequest",
@@ -594,13 +664,17 @@ __all__ = (
     "PluggableDatabaseNodeLevelDetails",
     "PluggableDatabaseProperties",
     "PolarisIcebergCatalog",
+    "PscInterfaceConfig",
     "RefreshAutonomousDatabaseRequest",
     "RemoveVirtualMachineExadbVmClusterRequest",
     "RestIcebergCatalog",
     "RestartAutonomousDatabaseRequest",
     "RestoreAutonomousDatabaseRequest",
     "ScheduledOperationDetails",
+    "ServiceConnectivityConfig",
     "SourceConfig",
+    "SqlParameter",
+    "SqlResult",
     "StartAutonomousDatabaseRequest",
     "StartGoldengateDeploymentRequest",
     "State",
@@ -609,10 +683,22 @@ __all__ = (
     "StorageSizeDetails",
     "SwitchoverAutonomousDatabaseRequest",
     "TestConnectionAssignmentError",
+    "TestDatabaseConnectionRequest",
+    "TestDatabaseConnectionResponse",
     "TestGoldengateConnectionAssignmentRequest",
     "TestGoldengateConnectionAssignmentResponse",
     "UpdateAutonomousDatabaseRequest",
+    "UpdateCloudExadataInfrastructureRequest",
+    "UpdateCloudVmClusterRequest",
+    "UpdateDatabaseConnectionRequest",
+    "UpdateDbSystemRequest",
     "UpdateExadbVmClusterRequest",
+    "UpdateExascaleDbStorageVaultRequest",
+    "UpdateGoldengateConnectionAssignmentRequest",
+    "UpdateGoldengateConnectionRequest",
+    "UpdateGoldengateDeploymentRequest",
+    "UpdateOdbNetworkRequest",
+    "UpdateOdbSubnetRequest",
 )
 
 api_core.check_python_version("google.cloud.oracledatabase_v1")

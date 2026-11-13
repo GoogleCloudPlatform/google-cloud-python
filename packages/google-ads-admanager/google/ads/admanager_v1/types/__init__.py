@@ -27,6 +27,9 @@ from .ad_break_service import (
     ListAdBreaksResponse,
     UpdateAdBreakRequest,
 )
+from .ad_category_messages import (
+    AdCategory,
+)
 from .ad_review_center_ad_enums import (
     AdReviewCenterAdStatusEnum,
     ArcCreativeFormatEnum,
@@ -138,6 +141,9 @@ from .ad_unit_service import (
 from .admanager_error import (
     AdManagerError,
 )
+from .allocation_delivery_profile_messages import (
+    AllocationDeliveryProfile,
+)
 from .application_enums import (
     ApplicationApprovalStatusEnum,
     ApplicationPlatformEnum,
@@ -170,6 +176,14 @@ from .asset_enums import (
 )
 from .asset_messages import (
     Asset,
+)
+from .audience_segment_category_messages import (
+    AudienceSegmentCategory,
+)
+from .audience_segment_category_service import (
+    GetAudienceSegmentCategoryRequest,
+    ListAudienceSegmentCategoriesRequest,
+    ListAudienceSegmentCategoriesResponse,
 )
 from .audience_segment_enums import (
     AudienceSegmentApprovalStatusEnum,
@@ -276,6 +290,18 @@ from .cdn_security_policy_enum import (
 )
 from .cdn_security_policy_origin_forwarding_enum import (
     CdnSecurityPolicyOriginForwardingEnum,
+)
+from .change_event_enums import (
+    ChangeEventResourceTypeEnum,
+    OperationTypeEnum,
+)
+from .change_event_messages import (
+    ChangeEvent,
+)
+from .change_event_service import (
+    GetChangeEventRequest,
+    ListChangeEventsRequest,
+    ListChangeEventsResponse,
 )
 from .child_content_eligibility_enum import (
     ChildContentEligibilityEnum,
@@ -455,11 +481,17 @@ from .creative_placeholder import (
 from .creative_service import (
     BatchActivateCreativesRequest,
     BatchActivateCreativesResponse,
+    BatchCreateCreativesRequest,
+    BatchCreateCreativesResponse,
     BatchDeactivateCreativesRequest,
     BatchDeactivateCreativesResponse,
+    BatchUpdateCreativesRequest,
+    BatchUpdateCreativesResponse,
+    CreateCreativeRequest,
     GetCreativeRequest,
     ListCreativesRequest,
     ListCreativesResponse,
+    UpdateCreativeRequest,
 )
 from .creative_set_messages import (
     CreativeSet,
@@ -674,6 +706,9 @@ from .dai_session_service import (
 from .date_range import (
     DateRange,
 )
+from .dayparting_time_zone_enum import (
+    DaypartingTimeZoneEnum,
+)
 from .deal_buyer_permission_type_enum import (
     DealBuyerPermissionTypeEnum,
 )
@@ -742,6 +777,33 @@ from .exchange_syndication_product_enum import (
 from .exclusion_scope_enum import (
     ExclusionScopeEnum,
 )
+from .forecast_adjustment_enums import (
+    ForecastAdjustmentStatusEnum,
+    ForecastAdjustmentVolumeTypeEnum,
+)
+from .forecast_adjustment_messages import (
+    DailyVolumeSettings,
+    ForecastAdjustment,
+    HistoricalBasisVolumeSettings,
+    TotalVolumeSettings,
+)
+from .forecast_adjustment_service import (
+    BatchActivateForecastAdjustmentsRequest,
+    BatchActivateForecastAdjustmentsResponse,
+    BatchCreateForecastAdjustmentsRequest,
+    BatchCreateForecastAdjustmentsResponse,
+    BatchDeactivateForecastAdjustmentsRequest,
+    BatchDeactivateForecastAdjustmentsResponse,
+    BatchUpdateForecastAdjustmentsRequest,
+    BatchUpdateForecastAdjustmentsResponse,
+    CalculateDailyAdOpportunityCountsRequest,
+    CalculateDailyAdOpportunityCountsResponse,
+    CreateForecastAdjustmentRequest,
+    GetForecastAdjustmentRequest,
+    ListForecastAdjustmentsRequest,
+    ListForecastAdjustmentsResponse,
+    UpdateForecastAdjustmentRequest,
+)
 from .forecast_messages import (
     AlternativeUnitTypeForecast,
     AvailabilityForecast,
@@ -755,6 +817,8 @@ from .forecast_messages import (
     ForecastBreakdownEntry,
     ForecastBreakdownOptions,
     ForecastBreakdownTarget,
+    ForecastingLineItem,
+    ForecastingLineItemList,
     GrpDemographicBreakdown,
     LineItemDeliveryForecast,
     TargetingCriteriaBreakdown,
@@ -801,6 +865,9 @@ from .grp_settings import (
 from .grp_target_gender_enum import (
     GrpTargetGenderEnum,
 )
+from .inventory_url_messages import (
+    InventoryUrl,
+)
 from .label_enums import (
     LabelTypeEnum,
 )
@@ -833,9 +900,22 @@ from .line_item_creative_association_messages import (
     LineItemCreativeAssociationStats,
 )
 from .line_item_creative_association_service import (
+    BatchActivateLineItemCreativeAssociationsRequest,
+    BatchActivateLineItemCreativeAssociationsResponse,
+    BatchCreateLineItemCreativeAssociationsRequest,
+    BatchCreateLineItemCreativeAssociationsResponse,
+    BatchDeactivateLineItemCreativeAssociationsRequest,
+    BatchDeactivateLineItemCreativeAssociationsResponse,
+    BatchDeleteLineItemCreativeAssociationsRequest,
+    BatchUpdateLineItemCreativeAssociationsRequest,
+    BatchUpdateLineItemCreativeAssociationsResponse,
+    CreateLineItemCreativeAssociationRequest,
     GetLineItemCreativeAssociationRequest,
     ListLineItemCreativeAssociationsRequest,
     ListLineItemCreativeAssociationsResponse,
+    PreviewLineItemCreativeAssociationRequest,
+    PreviewLineItemCreativeAssociationResponse,
+    UpdateLineItemCreativeAssociationRequest,
 )
 from .line_item_deal_info import (
     LineItemDealInfo,
@@ -1168,6 +1248,58 @@ from .programmatic_buyer_service import (
     ListProgrammaticBuyersRequest,
     ListProgrammaticBuyersResponse,
 )
+from .proposal_enums import (
+    BuyerRfpTypeEnum,
+    ProposalCompanyAssociationTypeEnum,
+)
+from .proposal_environment_type_enum import (
+    ProposalEnvironmentTypeEnum,
+)
+from .proposal_messages import (
+    BuyerRfp,
+    MarketplaceComment,
+    Proposal,
+    ProposalCompanyAssociation,
+    ProposalMarketplaceInfo,
+)
+from .proposal_negotiation_status_enum import (
+    ProposalNegotiationStatusEnum,
+)
+from .proposal_service import (
+    BatchArchiveProposalsRequest,
+    BatchArchiveProposalsResponse,
+    BatchCreateProposalsRequest,
+    BatchCreateProposalsResponse,
+    BatchDiscardDraftProposalsRequest,
+    BatchDiscardDraftProposalsResponse,
+    BatchPauseProposalsRequest,
+    BatchPauseProposalsResponse,
+    BatchPushToOrderProposalsRequest,
+    BatchPushToOrderProposalsResponse,
+    BatchRedraftProposalsRequest,
+    BatchRedraftProposalsResponse,
+    BatchRequestBuyerAcceptProposalsRequest,
+    BatchRequestBuyerAcceptProposalsResponse,
+    BatchRequestBuyerReviewProposalsRequest,
+    BatchRequestBuyerReviewProposalsResponse,
+    BatchReserveProposalsRequest,
+    BatchReserveProposalsResponse,
+    BatchResumeProposalsRequest,
+    BatchResumeProposalsResponse,
+    BatchTerminateProposalsRequest,
+    BatchTerminateProposalsResponse,
+    BatchUnarchiveProposalsRequest,
+    BatchUnarchiveProposalsResponse,
+    BatchUpdateProposalsRequest,
+    BatchUpdateProposalsResponse,
+    CreateProposalRequest,
+    FetchMarketplaceCommentsRequest,
+    FetchMarketplaceCommentsResponse,
+    GetProposalRequest,
+    ListProposalsRequest,
+    ListProposalsResponse,
+    UpdateProposalRequest,
+)
 from .reach_partner_enum import (
     ReachPartnerEnum,
 )
@@ -1296,6 +1428,9 @@ from .suggested_ad_unit_service import (
     ListSuggestedAdUnitsRequest,
     ListSuggestedAdUnitsResponse,
 )
+from .supply_path_type_enum import (
+    SupplyPathTypeEnum,
+)
 from .target_platform_enum import (
     TargetPlatformEnum,
 )
@@ -1308,21 +1443,29 @@ from .targeting import (
     BandwidthTargeting,
     BrowserLanguageTargeting,
     BrowserTargeting,
+    BuyerUserListTargeting,
     CmsMetadataTargeting,
     ContentTargeting,
+    ContextualTargeting,
     CustomTargeting,
     CustomTargetingClause,
     CustomTargetingLiteral,
     DataSegmentTargeting,
+    DateTimeRangeTargeting,
+    DayPart,
+    DayPartTargeting,
     DeviceCapabilityTargeting,
     DeviceCategoryTargeting,
     DeviceManufacturerTargeting,
     FirstPartyMobileApplicationTargeting,
     GeoTargeting,
+    InventorySizeTargeting,
     InventoryTargeting,
+    InventoryUrlTargeting,
     MobileApplicationTargeting,
     MobileCarrierTargeting,
     OperatingSystemTargeting,
+    PublisherProvidedSignalsTargeting,
     RequestFormatTargeting,
     RequestPlatformTargeting,
     Targeting,
@@ -1408,6 +1551,20 @@ from .third_party_measurement_settings import (
 from .time_unit_enum import (
     TimeUnitEnum,
 )
+from .traffic_forecast_segment_messages import (
+    TrafficForecastSegment,
+)
+from .traffic_forecast_segment_service import (
+    BatchCreateTrafficForecastSegmentsRequest,
+    BatchCreateTrafficForecastSegmentsResponse,
+    BatchUpdateTrafficForecastSegmentsRequest,
+    BatchUpdateTrafficForecastSegmentsResponse,
+    CreateTrafficForecastSegmentRequest,
+    GetTrafficForecastSegmentRequest,
+    ListTrafficForecastSegmentsRequest,
+    ListTrafficForecastSegmentsResponse,
+    UpdateTrafficForecastSegmentRequest,
+)
 from .user_messages import (
     User,
 )
@@ -1458,6 +1615,48 @@ from .viewability_provider_service import (
 from .web_property import (
     WebProperty,
 )
+from .yield_enums import (
+    YieldEntityStatusEnum,
+    YieldIntegrationTypeEnum,
+    YieldPartnerSettingStatusEnum,
+    YieldPlatformEnum,
+)
+from .yield_environment_type_enum import (
+    YieldEnvironmentTypeEnum,
+)
+from .yield_format_enum import (
+    YieldFormatEnum,
+)
+from .yield_group_messages import (
+    YieldAdSource,
+    YieldGroup,
+)
+from .yield_group_service import (
+    BatchActivateYieldGroupsRequest,
+    BatchActivateYieldGroupsResponse,
+    BatchArchiveYieldGroupsRequest,
+    BatchArchiveYieldGroupsResponse,
+    BatchCreateYieldGroupsRequest,
+    BatchCreateYieldGroupsResponse,
+    BatchDeactivateYieldGroupsRequest,
+    BatchDeactivateYieldGroupsResponse,
+    BatchUpdateYieldGroupsRequest,
+    BatchUpdateYieldGroupsResponse,
+    CreateYieldGroupRequest,
+    GetYieldGroupRequest,
+    ListYieldGroupsRequest,
+    ListYieldGroupsResponse,
+    UpdateYieldGroupRequest,
+)
+from .yield_partner_messages import (
+    YieldPartner,
+    YieldPartnerSettings,
+)
+from .yield_partner_service import (
+    GetYieldPartnerRequest,
+    ListYieldPartnersRequest,
+    ListYieldPartnersResponse,
+)
 
 __all__ = (
     "AdBreak",
@@ -1468,6 +1667,7 @@ __all__ = (
     "ListAdBreaksRequest",
     "ListAdBreaksResponse",
     "UpdateAdBreakRequest",
+    "AdCategory",
     "AdReviewCenterAdStatusEnum",
     "ArcCreativeFormatEnum",
     "ManualAdReviewCenterAdStatusEnum",
@@ -1543,6 +1743,7 @@ __all__ = (
     "ListAdUnitsResponse",
     "UpdateAdUnitRequest",
     "AdManagerError",
+    "AllocationDeliveryProfile",
     "ApplicationApprovalStatusEnum",
     "ApplicationPlatformEnum",
     "ApplicationStoreEnum",
@@ -1564,6 +1765,10 @@ __all__ = (
     "AppliedLabel",
     "AssetImageDensityEnum",
     "Asset",
+    "AudienceSegmentCategory",
+    "GetAudienceSegmentCategoryRequest",
+    "ListAudienceSegmentCategoriesRequest",
+    "ListAudienceSegmentCategoriesResponse",
     "AudienceSegmentApprovalStatusEnum",
     "AudienceSegmentLicenseTypeEnum",
     "AudienceSegmentStatusEnum",
@@ -1634,6 +1839,12 @@ __all__ = (
     "CdnConfigTypeEnum",
     "CdnSecurityPolicyTypeEnum",
     "CdnSecurityPolicyOriginForwardingEnum",
+    "ChangeEventResourceTypeEnum",
+    "OperationTypeEnum",
+    "ChangeEvent",
+    "GetChangeEventRequest",
+    "ListChangeEventsRequest",
+    "ListChangeEventsResponse",
     "ChildContentEligibilityEnum",
     "ChildPublisher",
     "BatchCreateChildPublishersRequest",
@@ -1755,11 +1966,17 @@ __all__ = (
     "CreativePlaceholderCompanion",
     "BatchActivateCreativesRequest",
     "BatchActivateCreativesResponse",
+    "BatchCreateCreativesRequest",
+    "BatchCreateCreativesResponse",
     "BatchDeactivateCreativesRequest",
     "BatchDeactivateCreativesResponse",
+    "BatchUpdateCreativesRequest",
+    "BatchUpdateCreativesResponse",
+    "CreateCreativeRequest",
     "GetCreativeRequest",
     "ListCreativesRequest",
     "ListCreativesResponse",
+    "UpdateCreativeRequest",
     "CreativeSet",
     "CreateCreativeSetRequest",
     "GetCreativeSetRequest",
@@ -1905,6 +2122,7 @@ __all__ = (
     "DaiSession",
     "GetDaiSessionRequest",
     "DateRange",
+    "DaypartingTimeZoneEnum",
     "DealBuyerPermissionTypeEnum",
     "DealPriorityTierEnum",
     "CompanionDeliveryOptionEnum",
@@ -1939,6 +2157,27 @@ __all__ = (
     "EnvironmentTypeEnum",
     "ExchangeSyndicationProductEnum",
     "ExclusionScopeEnum",
+    "ForecastAdjustmentStatusEnum",
+    "ForecastAdjustmentVolumeTypeEnum",
+    "DailyVolumeSettings",
+    "ForecastAdjustment",
+    "HistoricalBasisVolumeSettings",
+    "TotalVolumeSettings",
+    "BatchActivateForecastAdjustmentsRequest",
+    "BatchActivateForecastAdjustmentsResponse",
+    "BatchCreateForecastAdjustmentsRequest",
+    "BatchCreateForecastAdjustmentsResponse",
+    "BatchDeactivateForecastAdjustmentsRequest",
+    "BatchDeactivateForecastAdjustmentsResponse",
+    "BatchUpdateForecastAdjustmentsRequest",
+    "BatchUpdateForecastAdjustmentsResponse",
+    "CalculateDailyAdOpportunityCountsRequest",
+    "CalculateDailyAdOpportunityCountsResponse",
+    "CreateForecastAdjustmentRequest",
+    "GetForecastAdjustmentRequest",
+    "ListForecastAdjustmentsRequest",
+    "ListForecastAdjustmentsResponse",
+    "UpdateForecastAdjustmentRequest",
     "AlternativeUnitTypeForecast",
     "AvailabilityForecast",
     "AvailabilityForecastOptions",
@@ -1951,6 +2190,8 @@ __all__ = (
     "ForecastBreakdownEntry",
     "ForecastBreakdownOptions",
     "ForecastBreakdownTarget",
+    "ForecastingLineItem",
+    "ForecastingLineItemList",
     "GrpDemographicBreakdown",
     "LineItemDeliveryForecast",
     "TargetingCriteriaBreakdown",
@@ -1976,6 +2217,7 @@ __all__ = (
     "GrpProviderEnum",
     "GrpSettings",
     "GrpTargetGenderEnum",
+    "InventoryUrl",
     "LabelTypeEnum",
     "Label",
     "BatchActivateLabelsRequest",
@@ -1995,9 +2237,22 @@ __all__ = (
     "LineItemCreativeAssociationStatusEnum",
     "LineItemCreativeAssociation",
     "LineItemCreativeAssociationStats",
+    "BatchActivateLineItemCreativeAssociationsRequest",
+    "BatchActivateLineItemCreativeAssociationsResponse",
+    "BatchCreateLineItemCreativeAssociationsRequest",
+    "BatchCreateLineItemCreativeAssociationsResponse",
+    "BatchDeactivateLineItemCreativeAssociationsRequest",
+    "BatchDeactivateLineItemCreativeAssociationsResponse",
+    "BatchDeleteLineItemCreativeAssociationsRequest",
+    "BatchUpdateLineItemCreativeAssociationsRequest",
+    "BatchUpdateLineItemCreativeAssociationsResponse",
+    "CreateLineItemCreativeAssociationRequest",
     "GetLineItemCreativeAssociationRequest",
     "ListLineItemCreativeAssociationsRequest",
     "ListLineItemCreativeAssociationsResponse",
+    "PreviewLineItemCreativeAssociationRequest",
+    "PreviewLineItemCreativeAssociationResponse",
+    "UpdateLineItemCreativeAssociationRequest",
     "LineItemDealInfo",
     "LineItemDeliveryForecastSourceEnum",
     "LineItemDiscount",
@@ -2225,6 +2480,48 @@ __all__ = (
     "GetProgrammaticBuyerRequest",
     "ListProgrammaticBuyersRequest",
     "ListProgrammaticBuyersResponse",
+    "BuyerRfpTypeEnum",
+    "ProposalCompanyAssociationTypeEnum",
+    "ProposalEnvironmentTypeEnum",
+    "BuyerRfp",
+    "MarketplaceComment",
+    "Proposal",
+    "ProposalCompanyAssociation",
+    "ProposalMarketplaceInfo",
+    "ProposalNegotiationStatusEnum",
+    "BatchArchiveProposalsRequest",
+    "BatchArchiveProposalsResponse",
+    "BatchCreateProposalsRequest",
+    "BatchCreateProposalsResponse",
+    "BatchDiscardDraftProposalsRequest",
+    "BatchDiscardDraftProposalsResponse",
+    "BatchPauseProposalsRequest",
+    "BatchPauseProposalsResponse",
+    "BatchPushToOrderProposalsRequest",
+    "BatchPushToOrderProposalsResponse",
+    "BatchRedraftProposalsRequest",
+    "BatchRedraftProposalsResponse",
+    "BatchRequestBuyerAcceptProposalsRequest",
+    "BatchRequestBuyerAcceptProposalsResponse",
+    "BatchRequestBuyerReviewProposalsRequest",
+    "BatchRequestBuyerReviewProposalsResponse",
+    "BatchReserveProposalsRequest",
+    "BatchReserveProposalsResponse",
+    "BatchResumeProposalsRequest",
+    "BatchResumeProposalsResponse",
+    "BatchTerminateProposalsRequest",
+    "BatchTerminateProposalsResponse",
+    "BatchUnarchiveProposalsRequest",
+    "BatchUnarchiveProposalsResponse",
+    "BatchUpdateProposalsRequest",
+    "BatchUpdateProposalsResponse",
+    "CreateProposalRequest",
+    "FetchMarketplaceCommentsRequest",
+    "FetchMarketplaceCommentsResponse",
+    "GetProposalRequest",
+    "ListProposalsRequest",
+    "ListProposalsResponse",
+    "UpdateProposalRequest",
     "ReachPartnerEnum",
     "ReportDefinition",
     "ScheduleOptions",
@@ -2297,6 +2594,7 @@ __all__ = (
     "GetSuggestedAdUnitRequest",
     "ListSuggestedAdUnitsRequest",
     "ListSuggestedAdUnitsResponse",
+    "SupplyPathTypeEnum",
     "TargetPlatformEnum",
     "TargetedVideoBumperTypeEnum",
     "AdUnitTargeting",
@@ -2304,21 +2602,29 @@ __all__ = (
     "BandwidthTargeting",
     "BrowserLanguageTargeting",
     "BrowserTargeting",
+    "BuyerUserListTargeting",
     "CmsMetadataTargeting",
     "ContentTargeting",
+    "ContextualTargeting",
     "CustomTargeting",
     "CustomTargetingClause",
     "CustomTargetingLiteral",
     "DataSegmentTargeting",
+    "DateTimeRangeTargeting",
+    "DayPart",
+    "DayPartTargeting",
     "DeviceCapabilityTargeting",
     "DeviceCategoryTargeting",
     "DeviceManufacturerTargeting",
     "FirstPartyMobileApplicationTargeting",
     "GeoTargeting",
+    "InventorySizeTargeting",
     "InventoryTargeting",
+    "InventoryUrlTargeting",
     "MobileApplicationTargeting",
     "MobileCarrierTargeting",
     "OperatingSystemTargeting",
+    "PublisherProvidedSignalsTargeting",
     "RequestFormatTargeting",
     "RequestPlatformTargeting",
     "Targeting",
@@ -2371,6 +2677,16 @@ __all__ = (
     "ThirdPartyDataDeclarationTypeEnum",
     "ThirdPartyMeasurementSettings",
     "TimeUnitEnum",
+    "TrafficForecastSegment",
+    "BatchCreateTrafficForecastSegmentsRequest",
+    "BatchCreateTrafficForecastSegmentsResponse",
+    "BatchUpdateTrafficForecastSegmentsRequest",
+    "BatchUpdateTrafficForecastSegmentsResponse",
+    "CreateTrafficForecastSegmentRequest",
+    "GetTrafficForecastSegmentRequest",
+    "ListTrafficForecastSegmentsRequest",
+    "ListTrafficForecastSegmentsResponse",
+    "UpdateTrafficForecastSegmentRequest",
     "User",
     "BatchActivateUsersRequest",
     "BatchActivateUsersResponse",
@@ -2401,4 +2717,32 @@ __all__ = (
     "ListViewabilityProvidersResponse",
     "UpdateViewabilityProviderRequest",
     "WebProperty",
+    "YieldEntityStatusEnum",
+    "YieldIntegrationTypeEnum",
+    "YieldPartnerSettingStatusEnum",
+    "YieldPlatformEnum",
+    "YieldEnvironmentTypeEnum",
+    "YieldFormatEnum",
+    "YieldAdSource",
+    "YieldGroup",
+    "BatchActivateYieldGroupsRequest",
+    "BatchActivateYieldGroupsResponse",
+    "BatchArchiveYieldGroupsRequest",
+    "BatchArchiveYieldGroupsResponse",
+    "BatchCreateYieldGroupsRequest",
+    "BatchCreateYieldGroupsResponse",
+    "BatchDeactivateYieldGroupsRequest",
+    "BatchDeactivateYieldGroupsResponse",
+    "BatchUpdateYieldGroupsRequest",
+    "BatchUpdateYieldGroupsResponse",
+    "CreateYieldGroupRequest",
+    "GetYieldGroupRequest",
+    "ListYieldGroupsRequest",
+    "ListYieldGroupsResponse",
+    "UpdateYieldGroupRequest",
+    "YieldPartner",
+    "YieldPartnerSettings",
+    "GetYieldPartnerRequest",
+    "ListYieldPartnersRequest",
+    "ListYieldPartnersResponse",
 )

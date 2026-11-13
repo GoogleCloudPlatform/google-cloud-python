@@ -22,6 +22,7 @@ from google.api_core.exceptions import Aborted
 from google.auth.credentials import AnonymousCredentials
 from google.rpc.code_pb2 import ABORTED
 
+from google.cloud import spanner
 from google.cloud.spanner_dbapi.connection import connect
 from google.cloud.spanner_dbapi.parsed_statement import (
     AutocommitDmlMode,
@@ -1009,9 +1010,30 @@ class TestCursor(unittest.TestCase):
             sql, None, None, request_options=RequestOptions(priority=1)
         )
 
-    def test_execute_query_with_auto_partition_mode(self):
-        from google.cloud import spanner
+    @mock.patch("google.cloud.spanner_dbapi.cursor.PeekIterator")
+    def test_execute_query_with_unicode_identifier_and_literal(
+        self, MockedPeekIterator
+    ):
+        connection = self._make_connection(self.INSTANCE, mock.MagicMock())
+        connection.autocommit = True
+        mock_snapshot = mock.MagicMock()
+        connection.database.snapshot.return_value.__enter__.return_value = mock_snapshot
+        mock_result_set = mock.Mock()
+        mock_snapshot.execute_sql.return_value = mock_result_set
 
+        cursor = self._make_one(connection)
+        sql = "SELECT `tätä`, name FROM `Tëst` WHERE dept = 'café' AND id = %s"
+        cursor.execute(sql, (42,))
+
+        self.assertEqual(cursor._result_set, mock_result_set)
+        mock_snapshot.execute_sql.assert_called_once_with(
+            "SELECT `tätä`, name FROM `Tëst` WHERE dept = 'café' AND id = @a0",
+            {"a0": 42},
+            {"a0": spanner.param_types.INT64},
+            request_options=None,
+        )
+
+    def test_execute_query_with_auto_partition_mode(self):
         connection = self._make_connection(
             self.INSTANCE,
             mock.MagicMock(),
