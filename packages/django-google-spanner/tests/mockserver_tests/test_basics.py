@@ -571,7 +571,8 @@ class TestBasics(MockServerTestBase):
         self.assertTrue(connection.connection.autocommit)
 
     def test_schema_editor_server_side_ddl_error_restores_autocommit(self):
-        from google.api_core.exceptions import InvalidArgument
+        from django.db import IntegrityError, ProgrammingError
+        from google.api_core.exceptions import FailedPrecondition, InvalidArgument
 
         connection.ensure_connection()
         connection.settings_dict["OPTIONS"]["batch_ddl"] = True
@@ -581,7 +582,19 @@ class TestBasics(MockServerTestBase):
                 "update_ddl",
                 side_effect=InvalidArgument("400 Invalid DDL syntax"),
             ):
-                with self.assertRaises(InvalidArgument):
+                with self.assertRaises(ProgrammingError):
+                    with connection.schema_editor() as editor:
+                        editor.create_model(Singer)
+
+            self.assertTrue(transaction.get_autocommit())
+            self.assertTrue(connection.connection.autocommit)
+
+            with mock.patch.object(
+                connection.connection.database,
+                "update_ddl",
+                side_effect=FailedPrecondition("400 Duplicate name in schema"),
+            ):
+                with self.assertRaises(IntegrityError):
                     with connection.schema_editor() as editor:
                         editor.create_model(Singer)
         finally:
@@ -589,3 +602,50 @@ class TestBasics(MockServerTestBase):
 
         self.assertTrue(transaction.get_autocommit())
         self.assertTrue(connection.connection.autocommit)
+
+    def test_schema_editor_add_field_with_default_commits_rw_tx_before_alter_column(
+        self,
+    ):
+        add_update_count("UPDATE tests_singer SET stage_name=@a0 WHERE 1=1", 2)
+        field = models.CharField(max_length=100, default="anon")
+        field.set_attributes_from_name("stage_name")
+
+        event_log = []
+        orig_update_ddl = self.database_admin_service.UpdateDatabaseDdl
+
+        def logged_update_ddl(request, context):
+            event_log.append(("ddl", list(request.statements)))
+            return orig_update_ddl(request, context)
+
+        connection.settings_dict["OPTIONS"]["batch_ddl"] = True
+        try:
+            with connection.schema_editor() as editor:
+                editor.add_field(Singer, field)
+                self.assertFalse(connection.connection._spanner_transaction_started)
+        finally:
+            connection.settings_dict["OPTIONS"].pop("batch_ddl", None)
+
+        ddl_requests = self.database_admin_service.requests
+        self.assertEqual(len(ddl_requests), 2)
+        self.assertTrue(
+            any(isinstance(r, CommitRequest) for r in self.spanner_service.requests)
+        )
+        self.assertTrue(transaction.get_autocommit())
+
+    def test_schema_editor_atomic_false_skips_batch_ddl(self):
+        class NonAtomicModel(models.Model):
+            code = models.CharField(max_length=50, unique=True)
+
+            class Meta:
+                app_label = "tests"
+
+        connection.settings_dict["OPTIONS"]["batch_ddl"] = True
+        try:
+            with connection.schema_editor(atomic=False) as editor:
+                self.assertTrue(transaction.get_autocommit())
+                editor.create_model(NonAtomicModel)
+        finally:
+            connection.settings_dict["OPTIONS"].pop("batch_ddl", None)
+
+        self.assertEqual(len(self.database_admin_service.requests), 2)
+        self.assertTrue(transaction.get_autocommit())

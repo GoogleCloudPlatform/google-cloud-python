@@ -679,3 +679,84 @@ class TestUtils(SpannerSimpleTestClass):
                 pass
 
             mock_conn.set_autocommit.assert_not_called()
+
+    def test_schema_editor_skips_autocommit_toggle_when_atomic_false(self):
+        """Skips batching when schema_editor(atomic=False) is requested."""
+        mock_conn = mock.MagicMock()
+        mock_conn.in_atomic_block = False
+        mock_conn.features.can_rollback_ddl = False
+        mock_conn.get_autocommit.return_value = True
+        mock_conn.settings_dict = {"OPTIONS": {"batch_ddl": True}}
+
+        with DatabaseSchemaEditor(mock_conn, atomic=False):
+            pass
+
+        mock_conn.set_autocommit.assert_not_called()
+
+    def test_schema_editor_execute_commits_open_rw_tx_before_next_statement(self):
+        """Commits an active Spanner RW transaction before executing subsequent DDL."""
+        from django.db.backends.base.schema import BaseDatabaseSchemaEditor
+
+        events = []
+        mock_conn = mock.MagicMock()
+        mock_conn.in_atomic_block = False
+        mock_conn.features.can_rollback_ddl = False
+        mock_conn.get_autocommit.return_value = True
+        mock_conn.settings_dict = {"OPTIONS": {"batch_ddl": True}}
+        mock_conn.connection._spanner_transaction_started = True
+
+        def fake_commit():
+            events.append("commit")
+            mock_conn.connection._spanner_transaction_started = False
+
+        mock_conn.commit.side_effect = fake_commit
+        mock_conn.set_autocommit.side_effect = lambda val: events.append(
+            ("set_autocommit", val)
+        )
+
+        with mock.patch.object(
+            BaseDatabaseSchemaEditor,
+            "execute",
+            side_effect=lambda sql, params=(): events.append(("super_execute", sql)),
+        ):
+            with DatabaseSchemaEditor(mock_conn) as editor:
+                editor.execute("ALTER TABLE t1 ALTER COLUMN c1 INT64 NOT NULL", None)
+
+        self.assertEqual(
+            events,
+            [
+                ("set_autocommit", False),
+                "commit",
+                ("super_execute", "ALTER TABLE t1 ALTER COLUMN c1 INT64 NOT NULL"),
+                "commit",
+                ("set_autocommit", True),
+            ],
+        )
+
+    def test_schema_editor_maps_google_api_errors_to_django_database_errors(self):
+        """Maps GoogleAPICallError subclasses on commit() to django.db DatabaseErrors."""
+        from django.db import IntegrityError, OperationalError, ProgrammingError
+        from google.api_core.exceptions import (
+            FailedPrecondition,
+            InternalServerError,
+            InvalidArgument,
+        )
+
+        cases = [
+            (FailedPrecondition("Duplicate name"), IntegrityError),
+            (InvalidArgument("Invalid syntax"), ProgrammingError),
+            (InternalServerError("Internal failure"), OperationalError),
+        ]
+        for api_exc, expected_django_exc in cases:
+            mock_conn = mock.MagicMock()
+            mock_conn.in_atomic_block = False
+            mock_conn.features.can_rollback_ddl = False
+            mock_conn.get_autocommit.return_value = True
+            mock_conn.settings_dict = {"OPTIONS": {"batch_ddl": True}}
+            mock_conn.commit.side_effect = api_exc
+
+            with self.assertRaises(expected_django_exc):
+                with DatabaseSchemaEditor(mock_conn):
+                    pass
+
+            mock_conn.set_autocommit.assert_called_with(True)

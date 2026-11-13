@@ -7,9 +7,22 @@ import os
 import uuid
 
 import django
-from django.db import NotSupportedError
+from django.db import (
+    IntegrityError,
+    NotSupportedError,
+    OperationalError,
+    ProgrammingError,
+)
 from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 from django.db.models.fields import NOT_PROVIDED
+from google.api_core.exceptions import (
+    AlreadyExists,
+    FailedPrecondition,
+    GoogleAPICallError,
+    InternalServerError,
+    InvalidArgument,
+    OutOfRange,
+)
 
 from django_spanner import USE_EMULATOR
 from django_spanner._opentelemetry_tracing import trace_call
@@ -57,6 +70,20 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
     # sql_create_inline_fk = "CONSTRAINT FK_%(to_table)s_%(to_column)s_%(from_table)s_%(from_column)s FOREIGN KEY (%(from_column_norm)s) REFERENCES %(to_table_norm)s  (%(to_column_norm)s)"  # noqa
     sql_create_inline_fk = None
 
+    def __init__(self, connection, collect_sql=False, atomic=True):
+        self._atomic = atomic
+        super().__init__(connection, collect_sql=collect_sql, atomic=atomic)
+
+    def _commit_ddls(self):
+        try:
+            self.connection.commit()
+        except (AlreadyExists, FailedPrecondition, OutOfRange) as exc:
+            raise IntegrityError(getattr(exc, "details", exc)) from exc
+        except InvalidArgument as exc:
+            raise ProgrammingError(getattr(exc, "details", exc)) from exc
+        except (InternalServerError, GoogleAPICallError) as exc:
+            raise OperationalError(getattr(exc, "details", exc)) from exc
+
     def __enter__(self):
         super().__enter__()
         self._restore_autocommit = False
@@ -65,6 +92,7 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
         )
         if (
             batch_ddl
+            and getattr(self, "_atomic", True)
             and not self.collect_sql
             and not self.connection.in_atomic_block
             and self.connection.get_autocommit()
@@ -83,11 +111,23 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
             if getattr(self, "_restore_autocommit", False):
                 try:
                     if clean_exit:
-                        self.connection.commit()
+                        self._commit_ddls()
                     else:
                         self.connection.rollback()
                 finally:
                     self.connection.set_autocommit(True)
+
+    def execute(self, sql, params=()):
+        if (
+            getattr(self, "_restore_autocommit", False)
+            and not self.collect_sql
+            and getattr(
+                self.connection.connection, "_spanner_transaction_started", False
+            )
+            is True
+        ):
+            self._commit_ddls()
+        return super().execute(sql, params)
 
     def create_model(self, model):
         """
