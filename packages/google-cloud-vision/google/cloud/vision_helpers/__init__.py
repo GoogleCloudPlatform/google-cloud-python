@@ -17,6 +17,8 @@ from __future__ import absolute_import
 import proto  # type: ignore
 from google.api_core import protobuf_helpers as protobuf
 
+# Trigger comment for system tests
+
 
 class VisionHelpers(object):
     """A set of convenience methods to make the Vision GAPIC easier to use.

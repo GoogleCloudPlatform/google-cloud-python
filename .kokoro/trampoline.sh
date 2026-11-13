@@ -18,6 +18,9 @@
 # or zero if all commands in the pipeline exit successfully.
 set -eo pipefail
 
+export KOKORO_ROOT="${KOKORO_ROOT:-/tmpfs}"
+
+
 # Always run the cleanup script, regardless of the success of bouncing into
 # the container.
 function cleanup() {
