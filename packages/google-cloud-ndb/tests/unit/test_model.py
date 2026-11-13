@@ -297,6 +297,17 @@ class TestModelAttribute:
         assert attr._fix_up(model.Model, "birthdate") is None
 
 
+def test__utcnow():
+    before = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
+    value = model._utcnow()
+    after = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
+
+    # ndb stores naive datetimes presumed to be UTC, so the helper must not
+    # leak the tzinfo that datetime.now(timezone.utc) attaches.
+    assert value.tzinfo is None
+    assert before <= value <= after
+
+
 class Test_BaseValue:
     @staticmethod
     def test_constructor():
@@ -2974,7 +2985,7 @@ class TestDateTimeProperty:
 
     @staticmethod
     def test_constructor_explicit():
-        now = datetime.datetime.utcnow()
+        now = model._utcnow()
         prop = model.DateTimeProperty(
             name="dt_val",
             auto_now=True,
@@ -3014,7 +3025,7 @@ class TestDateTimeProperty:
     @staticmethod
     def test__validate():
         prop = model.DateTimeProperty(name="dt_val")
-        value = datetime.datetime.utcnow()
+        value = model._utcnow()
         assert prop._validate(value) is None
 
     @staticmethod
@@ -3150,7 +3161,7 @@ class TestDateProperty:
     @staticmethod
     def test__validate():
         prop = model.DateProperty(name="d_val")
-        value = datetime.datetime.utcnow().date()
+        value = model._utcnow().date()
         assert prop._validate(value) is None
 
     @staticmethod
@@ -3186,7 +3197,7 @@ class TestTimeProperty:
     @staticmethod
     def test__validate():
         prop = model.TimeProperty(name="t_val")
-        value = datetime.datetime.utcnow().time()
+        value = model._utcnow().time()
         assert prop._validate(value) is None
 
     @staticmethod

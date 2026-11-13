@@ -352,6 +352,17 @@ Rollback = exceptions.Rollback
 _getfullargspec = inspect.getfullargspec
 
 
+def _utcnow():
+    """Return the current UTC time as a naive :class:`~datetime.datetime`.
+
+    ``datetime.datetime.utcnow()`` is deprecated since Python 3.12 and
+    scheduled for removal. Its replacement, ``datetime.datetime.now(timezone.utc)``,
+    returns an offset-aware value, but ``ndb`` stores and compares naive
+    datetimes presumed to be UTC, so the offset is stripped again here.
+    """
+    return datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
+
+
 class KindError(exceptions.BadValueError):
     """Raised when an implementation for a kind can't be found.
 
@@ -2092,7 +2103,7 @@ class Property(ModelAttribute):
         # A custom 'meaning' for compressed properties.
         _MEANING_URI_COMPRESSED = "ZLIB"
         # The Epoch (a zero POSIX timestamp).
-        _EPOCH = datetime.datetime.utcfromtimestamp(0)
+        _EPOCH = datetime.datetime(1970, 1, 1)
         # This is awkward but there seems to be no faster way to inspect
         # what union member is present.  datastore_types.FromPropertyPb(),
         # the undisputed authority, has the same series of if-elif blocks.
@@ -3933,7 +3944,7 @@ class DateTimeProperty(Property):
 
         Subclasses will override this to return different forms of "now".
         """
-        return datetime.datetime.utcnow()
+        return _utcnow()
 
     def _prepare_for_put(self, entity):
         """Sets the current timestamp when "auto" is set.
@@ -4055,7 +4066,7 @@ class DateProperty(DateTimeProperty):
     @staticmethod
     def _now():
         """datetime.datetime: Return current date."""
-        return datetime.datetime.utcnow().date()
+        return _utcnow().date()
 
 
 class TimeProperty(DateTimeProperty):
@@ -4124,7 +4135,7 @@ class TimeProperty(DateTimeProperty):
     @staticmethod
     def _now():
         """datetime.datetime: Return current time."""
-        return datetime.datetime.utcnow().time()
+        return _utcnow().time()
 
 
 class StructuredProperty(Property):

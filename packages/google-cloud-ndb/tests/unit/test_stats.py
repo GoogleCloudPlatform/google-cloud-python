@@ -21,7 +21,7 @@ from . import utils
 DEFAULTS = {
     "bytes": 4,
     "count": 2,
-    "timestamp": datetime.datetime.utcfromtimestamp(40),
+    "timestamp": datetime.datetime(1970, 1, 1, 0, 0, 40),
 }
 
 

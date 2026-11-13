@@ -1411,7 +1411,7 @@ def test_insert_datetime_property_with_tz(dispose_of):
     now = datetime.datetime.now(pytz.utc)
     entity = SomeKind(
         alarm1=now,
-        alarm2=datetime.datetime.utcnow(),  # naive
+        alarm2=now.replace(tzinfo=None),  # same instant, naive
     )
     key = entity.put()
     dispose_of(key._key)
