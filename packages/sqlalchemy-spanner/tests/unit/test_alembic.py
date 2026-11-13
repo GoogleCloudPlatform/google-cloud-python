@@ -13,11 +13,25 @@
 # limitations under the License.
 
 import importlib.util
+import io
 import sys
 from unittest import mock
 
+import pytest
 from alembic.ddl import base as ddl_base
-from sqlalchemy import String, TextClause, event
+from sqlalchemy import (
+    Column,
+    Index,
+    Integer,
+    MetaData,
+    String,
+    Table,
+    TextClause,
+    event,
+    exc,
+    schema,
+    text,
+)
 from sqlalchemy.testing import eq_
 from sqlalchemy.testing.plugin.plugin_base import fixtures
 
@@ -130,3 +144,147 @@ class TestAlembicTest(fixtures.TestBase):
             event.remove(sqlalchemy_spanner.Pool, "reset", module.reset_connection)
             assert not module.HAS_ALEMBIC_INSTALLED
             assert not hasattr(module, "visit_column_nullable")
+            assert not hasattr(module, "SpannerImpl")
+
+    def test_visit_create_index_with_storing_columns(self):
+        compiler = sqlalchemy_spanner.SpannerDDLCompiler(
+            sqlalchemy_spanner.SpannerDialect(), None
+        )
+        t = Table("tbl", MetaData(), Column("c1", Integer), Column("c2", String(50)))
+        idx = Index("ix_test", t.c.c1, spanner_storing=["c2"])
+        ddl = compiler.visit_create_index(schema.CreateIndex(idx))
+        eq_(ddl, "CREATE INDEX ix_test ON tbl (c1) STORING (c2)")
+
+    def test_visit_create_index_with_storing_columns_missing_from_table(self):
+        compiler = sqlalchemy_spanner.SpannerDDLCompiler(
+            sqlalchemy_spanner.SpannerDialect(), None
+        )
+        # Mimics Alembic's op.create_index where table only has indexed columns
+        t = Table("tbl", MetaData(), Column("c1", Integer))
+        idx = Index("ix_test", t.c.c1, spanner_storing=["c2"])
+        ddl = compiler.visit_create_index(schema.CreateIndex(idx))
+        eq_(ddl, "CREATE INDEX ix_test ON tbl (c1) STORING (c2)")
+
+    def test_spanner_impl_create_index_appends_missing_columns(self):
+        from alembic.migration import MigrationContext
+
+        dialect = sqlalchemy_spanner.SpannerDialect()
+        impl = MigrationContext.configure(
+            dialect=dialect, opts={"as_sql": True, "output_buffer": io.StringIO()}
+        ).impl
+
+        t = Table("tbl", MetaData(), Column("c1", Integer))
+        idx = Index("ix_test", t.c.c1, spanner_storing=["c2", "c3"])
+        assert "c2" not in t.c
+        assert "c3" not in t.c
+
+        impl.create_index(idx)
+        assert "c2" in t.c
+        assert "c3" in t.c
+
+    def test_spanner_impl_compare_indexes(self):
+        from alembic.migration import MigrationContext
+
+        dialect = sqlalchemy_spanner.SpannerDialect()
+        impl = MigrationContext.configure(dialect=dialect).impl
+
+        t = Table(
+            "tbl",
+            MetaData(),
+            Column("c1", Integer),
+            Column("c2", String(50)),
+            Column("c3", String(50)),
+        )
+        ix_no_storing = Index("ix", t.c.c1)
+        ix_storing = Index("ix", t.c.c1, spanner_storing=["c2", "c3"])
+        ix_reordered = Index("ix", t.c.c1, spanner_storing=["c3", "c2"])
+        ix_different = Index("ix", t.c.c1, spanner_storing=["c2"])
+
+        # Identical or reordered storing columns compare equal
+        eq_(impl.compare_indexes(ix_no_storing, Index("ix", t.c.c1)).is_equal, True)
+        eq_(
+            impl.compare_indexes(
+                ix_storing, Index("ix", t.c.c1, spanner_storing=["c2", "c3"])
+            ).is_equal,
+            True,
+        )
+        eq_(impl.compare_indexes(ix_storing, ix_reordered).is_equal, True)
+
+        # Added, removed, or changed storing columns return is_different
+        eq_(impl.compare_indexes(ix_storing, ix_no_storing).is_different, True)
+        eq_(impl.compare_indexes(ix_no_storing, ix_storing).is_different, True)
+        eq_(impl.compare_indexes(ix_storing, ix_different).is_different, True)
+
+    def test_visit_create_index_with_column_objects_in_storing(self):
+        compiler = sqlalchemy_spanner.SpannerDDLCompiler(
+            sqlalchemy_spanner.SpannerDialect(), None
+        )
+        t = Table("tbl", MetaData(), Column("c1", Integer), Column("c2", String(50)))
+        idx = Index("ix_test", t.c.c1, spanner_storing=[t.c.c2])
+        ddl = compiler.visit_create_index(schema.CreateIndex(idx))
+        eq_(ddl, "CREATE INDEX ix_test ON tbl (c1) STORING (c2)")
+
+    def test_spanner_impl_compare_indexes_super_different(self):
+        from alembic.migration import MigrationContext
+
+        dialect = sqlalchemy_spanner.SpannerDialect()
+        impl = MigrationContext.configure(dialect=dialect).impl
+
+        t = Table(
+            "tbl",
+            MetaData(),
+            Column("c1", Integer),
+            Column("c2", Integer),
+        )
+        # Key column differs
+        ix1 = Index("ix", t.c.c1)
+        ix2 = Index("ix", t.c.c2)
+        eq_(impl.compare_indexes(ix1, ix2).is_different, True)
+
+        # Uniqueness differs
+        ix_unique = Index("ix", t.c.c1, unique=True)
+        ix_non_unique = Index("ix", t.c.c1, unique=False)
+        eq_(impl.compare_indexes(ix_unique, ix_non_unique).is_different, True)
+
+    def test_spanner_impl_compare_indexes_with_column_objects(self):
+        from alembic.migration import MigrationContext
+
+        dialect = sqlalchemy_spanner.SpannerDialect()
+        impl = MigrationContext.configure(dialect=dialect).impl
+
+        t = Table(
+            "tbl",
+            MetaData(),
+            Column("c1", Integer),
+            Column("c2", Integer),
+        )
+        ix1 = Index("ix", t.c.c1, spanner_storing=[t.c.c2])
+        ix2 = Index("ix", t.c.c1, spanner_storing=["c2"])
+        eq_(impl.compare_indexes(ix1, ix2).is_equal, True)
+
+    def test_spanner_impl_create_index_edge_cases(self):
+        from alembic.migration import MigrationContext
+
+        dialect = sqlalchemy_spanner.SpannerDialect()
+        impl = MigrationContext.configure(
+            dialect=dialect, opts={"as_sql": True, "output_buffer": io.StringIO()}
+        ).impl
+
+        # 1. col already exists in table.c
+        t1 = Table("tbl1", MetaData(), Column("c1", Integer), Column("c2", Integer))
+        idx1 = Index("ix_test1", t1.c.c1, spanner_storing=["c2"])
+        impl.create_index(idx1)
+        eq_(len([c for c in t1.c if c.name == "c2"]), 1)
+
+        # 2. col is a Column object not in table.c
+        t2 = Table("tbl2", MetaData(), Column("c1", Integer))
+        c_ext = Column("c_ext", Integer)
+        idx2 = Index("ix_test2", t2.c.c1, spanner_storing=[c_ext])
+        impl.create_index(idx2)
+        assert "c_ext" in t2.c
+
+        # 3. index.table is None
+        idx3 = Index("ix_test3", text("c1"), spanner_storing=["c2"])
+        idx3.table = None
+        with pytest.raises(exc.CompileError):
+            impl.create_index(idx3)

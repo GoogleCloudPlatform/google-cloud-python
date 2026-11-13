@@ -20,7 +20,7 @@ from google.api_core.client_options import ClientOptions
 from google.auth.credentials import AnonymousCredentials
 from google.cloud.spanner_v1 import Client, TransactionOptions
 from google.cloud.spanner_v1.data_types import JsonObject
-from sqlalchemy import ForeignKeyConstraint, PickleType, TypeDecorator, types
+from sqlalchemy import Column, ForeignKeyConstraint, PickleType, TypeDecorator, types
 from sqlalchemy.engine.base import Engine
 from sqlalchemy.engine.default import DefaultDialect, DefaultExecutionContext
 from sqlalchemy.event import listens_for
@@ -59,6 +59,7 @@ try:
         format_server_default,
         format_type,
     )
+    from alembic.ddl.impl import ComparisonResult, DefaultImpl
 
     HAS_ALEMBIC_INSTALLED = True
 except ImportError:
@@ -874,12 +875,11 @@ class SpannerDDLCompiler(DDLCompiler):
             options = index.dialect_options["spanner"]
             if "storing" in options:
                 storing = options["storing"]
-                storing_columns = [
-                    index.table.c[col] if isinstance(col, str) else col
-                    for col in storing
+                storing_col_names = [
+                    c if isinstance(c, str) else c.name for c in storing
                 ]
                 text += " STORING (%s)" % ", ".join(
-                    [self.preparer.quote(c.name) for c in storing_columns]
+                    [self.preparer.quote(name) for name in storing_col_names]
                 )
 
             interleave_in = options.get("interleave_in")
@@ -2093,3 +2093,36 @@ if HAS_ALEMBIC_INSTALLED:
                 else f" DEFAULT {format_server_default(compiler, server_default)}"
             ),
         )
+
+    class SpannerImpl(DefaultImpl):
+        """Alembic DDL implementation for Google Cloud Spanner."""
+
+        __dialect__ = "spanner+spanner"
+
+        def compare_indexes(self, metadata_index, reflected_index) -> ComparisonResult:
+            result = super().compare_indexes(metadata_index, reflected_index)
+            if not result.is_equal:
+                return result
+
+            def _get_storing_columns(index):
+                storing = index.dialect_options.get("spanner", {}).get("storing")
+                if not storing:
+                    return []
+                return [col if isinstance(col, str) else col.name for col in storing]
+
+            m_storing = _get_storing_columns(metadata_index)
+            r_storing = _get_storing_columns(reflected_index)
+            if set(m_storing) != set(r_storing):
+                return ComparisonResult.Different(
+                    [f"spanner_storing columns {r_storing} to {m_storing}"]
+                )
+            return result
+
+        def create_index(self, index, **kw):
+            storing = index.dialect_options.get("spanner", {}).get("storing") or ()
+            if index.table is not None:
+                for col in storing:
+                    col_name = col if isinstance(col, str) else col.name
+                    if col_name not in index.table.c:
+                        index.table.append_column(Column(col_name, types.NullType))
+            super().create_index(index, **kw)
