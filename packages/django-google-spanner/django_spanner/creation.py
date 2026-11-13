@@ -48,7 +48,11 @@ class DatabaseCreation(BaseDatabaseCreation):
         # by a developer running the tests locally.
         if os.environ.get("RUNNING_SPANNER_BACKEND_TESTS") == "1":
             self.mark_skips()
-        super().create_test_db(*args, **kwargs)
+        self.connection._batch_ddl_in_schema_editor = True
+        try:
+            return super().create_test_db(*args, **kwargs)
+        finally:
+            self.connection._batch_ddl_in_schema_editor = False
 
     def _create_test_db(self, verbosity, autoclobber, keepdb=False):
         """

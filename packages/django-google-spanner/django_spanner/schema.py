@@ -57,6 +57,30 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
     # sql_create_inline_fk = "CONSTRAINT FK_%(to_table)s_%(to_column)s_%(from_table)s_%(from_column)s FOREIGN KEY (%(from_column_norm)s) REFERENCES %(to_table_norm)s  (%(to_column_norm)s)"  # noqa
     sql_create_inline_fk = None
 
+    def __enter__(self):
+        super().__enter__()
+        self._restore_autocommit = False
+        if (
+            getattr(self.connection, "_batch_ddl_in_schema_editor", False)
+            and not self.collect_sql
+            and not self.connection.in_atomic_block
+            and self.connection.get_autocommit()
+        ):
+            self.connection.set_autocommit(False)
+            self._restore_autocommit = True
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        try:
+            super().__exit__(exc_type, exc_value, traceback)
+        finally:
+            if getattr(self, "_restore_autocommit", False):
+                try:
+                    if exc_type is not None:
+                        self.connection.rollback()
+                finally:
+                    self.connection.set_autocommit(True)
+
     def create_model(self, model):
         """
         Create a table and any accompanying indexes or unique constraints for

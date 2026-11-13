@@ -16,9 +16,15 @@ import uuid
 from decimal import Decimal
 from unittest import mock
 
+import django
 import google.cloud.spanner_v1.types.result_set as result_set
 import google.cloud.spanner_v1.types.type as spanner_type
-from django.db import connection, models
+from django.core.management.commands.migrate import Command as MigrateCommand
+from django.db import connection, models, transaction
+from django.db.migrations.migration import Migration
+from django.db.migrations.operations.models import CreateModel
+from django.db.migrations.operations.special import RunPython
+from django.db.migrations.state import ProjectState
 from google.cloud.spanner_v1 import (
     BatchCreateSessionsRequest,
     CommitRequest,
@@ -404,3 +410,142 @@ class TestBasics(MockServerTestBase):
         # filter(value=None) request -> also queries JSON null ("null", TypeCode.JSON)
         self.assertEqual(exec_requests[14].param_types["a0"].code, TypeCode.JSON)
         self.assertEqual(exec_requests[14].params["a0"], "null")
+
+    def test_sync_apps_batches_ddl_when_create_test_db_flag_enabled(self):
+        cmd = MigrateCommand()
+        cmd.verbosity = 0
+        with mock.patch.object(
+            connection.introspection, "table_names", return_value=[]
+        ):
+            connection._batch_ddl_in_schema_editor = True
+            try:
+                cmd.sync_apps(connection, ["auth", "contenttypes", "sessions", "sites"])
+            finally:
+                connection._batch_ddl_in_schema_editor = False
+
+        ddl_requests = self.database_admin_service.requests
+        self.assertEqual(len(ddl_requests), 1)
+        self.assertEqual(len(ddl_requests[0].statements), 32)
+        self.assertTrue(transaction.get_autocommit())
+        self.assertTrue(connection.connection.autocommit)
+
+    def test_default_schema_editor_executes_ddl_per_statement(self):
+        class LocalAuthor(models.Model):
+            name = models.CharField(max_length=100, unique=True)
+
+            class Meta:
+                app_label = "tests"
+
+        with connection.schema_editor() as editor:
+            editor.create_model(LocalAuthor)
+
+        # Without _batch_ddl_in_schema_editor, CREATE TABLE and CREATE UNIQUE INDEX
+        # execute as 2 separate UpdateDatabaseDdlRequest calls.
+        ddl_requests = self.database_admin_service.requests
+        self.assertEqual(len(ddl_requests), 2)
+        self.assertTrue(transaction.get_autocommit())
+
+    def test_migration_with_runpython_and_deferred_sql_under_create_test_db_flag(self):
+        add_select1_result()
+
+        def run_query(apps, schema_editor):
+            with schema_editor.connection.cursor() as cursor:
+                cursor.execute("select 1")
+
+        mig = Migration("0001_batch_runpython", "tests")
+        mig.operations = [
+            CreateModel(
+                name="BatchModelOne",
+                fields=[
+                    ("id", models.BigAutoField(primary_key=True)),
+                    ("code", models.CharField(max_length=50, unique=True)),
+                ],
+            ),
+            RunPython(run_query),
+            CreateModel(
+                name="BatchModelTwo",
+                fields=[
+                    ("id", models.BigAutoField(primary_key=True)),
+                    ("title", models.CharField(max_length=50, unique=True)),
+                ],
+            ),
+        ]
+        state = ProjectState()
+
+        connection._batch_ddl_in_schema_editor = True
+        try:
+            with connection.schema_editor(atomic=mig.atomic) as editor:
+                mig.apply(state, editor)
+        finally:
+            connection._batch_ddl_in_schema_editor = False
+
+        ddl_requests = self.database_admin_service.requests
+        self.assertEqual(len(ddl_requests), 2)
+        self.assertEqual(len(ddl_requests[0].statements), 1)
+        self.assertEqual(len(ddl_requests[1].statements), 3)
+        self.assertTrue(
+            any(isinstance(r, CommitRequest) for r in self.spanner_service.requests)
+        )
+        self.assertTrue(transaction.get_autocommit())
+
+    def test_schema_editor_exception_discards_queued_ddl_when_batching(self):
+        class BrokenModel(models.Model):
+            name = models.CharField(max_length=100)
+
+            class Meta:
+                app_label = "tests"
+
+        connection._batch_ddl_in_schema_editor = True
+        try:
+            with self.assertRaises(RuntimeError):
+                with connection.schema_editor() as editor:
+                    editor.create_model(BrokenModel)
+                    raise RuntimeError("abort schema block")
+        finally:
+            connection._batch_ddl_in_schema_editor = False
+
+        self.assertEqual(len(self.database_admin_service.requests), 0)
+        self.assertTrue(transaction.get_autocommit())
+        self.assertTrue(connection.connection.autocommit)
+
+    def test_create_test_db_end_to_end_batches_syncdb_ddls(self):
+        orig_name = connection.settings_dict["NAME"]
+
+        def fake_migrate_syncdb(*args, **kwargs):
+            cmd = MigrateCommand()
+            cmd.verbosity = 0
+            with mock.patch.object(
+                connection.introspection, "table_names", return_value=[]
+            ):
+                cmd.sync_apps(connection, ["sites", "sessions"])
+
+        def fake_call_command(name, *args, **kwargs):
+            if name == "migrate":
+                fake_migrate_syncdb(*args, **kwargs)
+
+        try:
+            with (
+                mock.patch.object(
+                    connection.creation,
+                    "_create_test_db",
+                    return_value="test_django_test_db",
+                ),
+                mock.patch(
+                    "django.core.management.call_command",
+                    side_effect=fake_call_command,
+                ),
+            ):
+                create_kwargs = {"verbosity": 0, "autoclobber": True}
+                if django.VERSION < (6, 0):
+                    create_kwargs["serialize"] = False
+                db_name = connection.creation.create_test_db(**create_kwargs)
+
+            self.assertEqual(db_name, "django_test_db")
+            self.assertFalse(getattr(connection, "_batch_ddl_in_schema_editor", False))
+            ddl_requests = self.database_admin_service.requests
+            self.assertEqual(len(ddl_requests), 1)
+            # sites (table + unique index) + sessions (table + expire_date index) = 4 DDLs
+            self.assertEqual(len(ddl_requests[0].statements), 4)
+            self.assertTrue(transaction.get_autocommit())
+        finally:
+            connection.settings_dict["NAME"] = orig_name

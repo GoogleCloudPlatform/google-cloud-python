@@ -517,3 +517,93 @@ class TestUtils(SpannerSimpleTestClass):
 
         normal_field = mock.MagicMock(generated=False, db_default=None)
         self.assertTrue(schema_editor.skip_default(normal_field))
+
+    def test_schema_editor_batches_ddl_when_flag_enabled(self):
+        """Toggles set_autocommit(False) -> set_autocommit(True) around deferred_sql."""
+        events = []
+        mock_conn = mock.MagicMock()
+        mock_conn.in_atomic_block = False
+        mock_conn.features.can_rollback_ddl = False
+        mock_conn.get_autocommit.return_value = True
+        mock_conn._batch_ddl_in_schema_editor = True
+        mock_conn.set_autocommit.side_effect = lambda val: events.append(
+            ("set_autocommit", val)
+        )
+
+        editor = DatabaseSchemaEditor(mock_conn)
+        editor.execute = mock.MagicMock(
+            side_effect=lambda sql, params=None: events.append(("execute", sql))
+        )
+
+        with editor:
+            editor.execute("CREATE TABLE t1 (id INT64 NOT NULL) PRIMARY KEY(id)", None)
+            editor.deferred_sql.append("CREATE INDEX idx_t1 ON t1 (id)")
+
+        self.assertEqual(
+            events,
+            [
+                ("set_autocommit", False),
+                ("execute", "CREATE TABLE t1 (id INT64 NOT NULL) PRIMARY KEY(id)"),
+                ("execute", "CREATE INDEX idx_t1 ON t1 (id)"),
+                ("set_autocommit", True),
+            ],
+        )
+
+    def test_schema_editor_rolls_back_on_exception_when_batching(self):
+        """Rolls back queued DDLs before restoring autocommit on exception."""
+        events = []
+        mock_conn = mock.MagicMock()
+        mock_conn.in_atomic_block = False
+        mock_conn.features.can_rollback_ddl = False
+        mock_conn.get_autocommit.return_value = True
+        mock_conn._batch_ddl_in_schema_editor = True
+        mock_conn.rollback.side_effect = lambda: events.append("rollback")
+        mock_conn.set_autocommit.side_effect = lambda val: events.append(
+            ("set_autocommit", val)
+        )
+
+        with self.assertRaises(ValueError):
+            with DatabaseSchemaEditor(mock_conn):
+                raise ValueError("ddl failure")
+
+        self.assertEqual(
+            events,
+            [
+                ("set_autocommit", False),
+                "rollback",
+                ("set_autocommit", True),
+            ],
+        )
+
+    def test_schema_editor_skips_autocommit_toggle_by_default(self):
+        """Does not toggle autocommit when _batch_ddl_in_schema_editor is False/unset."""
+        mock_conn = mock.MagicMock()
+        mock_conn.in_atomic_block = False
+        mock_conn.features.can_rollback_ddl = False
+        mock_conn.get_autocommit.return_value = True
+        mock_conn._batch_ddl_in_schema_editor = False
+
+        with DatabaseSchemaEditor(mock_conn):
+            pass
+
+        mock_conn.set_autocommit.assert_not_called()
+
+    def test_schema_editor_skips_autocommit_toggle_for_collect_sql_or_atomic_or_manual(
+        self,
+    ):
+        """Skips toggling when collect_sql=True, in_atomic_block=True, or autocommit=False."""
+        for collect_sql, in_atomic, is_autocommit in [
+            (True, False, True),
+            (False, True, True),
+            (False, False, False),
+        ]:
+            mock_conn = mock.MagicMock()
+            mock_conn.in_atomic_block = in_atomic
+            mock_conn.features.can_rollback_ddl = False
+            mock_conn.get_autocommit.return_value = is_autocommit
+            mock_conn._batch_ddl_in_schema_editor = True
+
+            with DatabaseSchemaEditor(mock_conn, collect_sql=collect_sql):
+                pass
+
+            mock_conn.set_autocommit.assert_not_called()
