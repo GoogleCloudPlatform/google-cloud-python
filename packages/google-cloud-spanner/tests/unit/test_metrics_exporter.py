@@ -382,6 +382,53 @@ if HAS_OPENTELEMETRY_INSTALLED:
             timeseries = batch_args[0]
             self.assertEqual(len(timeseries), 2)
 
+        def test_export_groups_time_series_by_project_id(self):
+            """Each project's series is sent in its own CreateTimeSeries request."""
+            from google.cloud.monitoring_v3 import MetricServiceClient
+
+            meter = self.provider.get_meter("gax-python")
+            counter = meter.create_counter(
+                name="attempt_count", description="A test counter", unit="count"
+            )
+
+            attributes_a = dict(self.metric_attributes)
+            attributes_a["project_id"] = "project-a"
+            attributes_b = dict(self.metric_attributes)
+            attributes_b["project_id"] = "project-b"
+            counter.add(1, attributes=attributes_a)
+            counter.add(1, attributes=attributes_b)
+
+            metrics = self.metric_reader.get_metrics_data()
+            mock_client = MagicMock(spec=MetricServiceClient)
+            mock_client.common_project_path.side_effect = lambda project: (
+                f"projects/{project}"
+            )
+            mock_client.create_service_time_series = Mock(return_value=None)
+
+            exporter = CloudMonitoringMetricsExporter("project-a", mock_client)
+            exporter.export(metrics)
+
+            calls = mock_client.create_service_time_series.call_args_list
+            self.assertEqual(len(calls), 2)
+
+            requests_by_name = {}
+            for call in calls:
+                request = call.kwargs.get("request")
+                if request is None and call.args:
+                    request = call.args[0]
+                self.assertIsNotNone(request)
+                requests_by_name[request.name] = request
+
+            self.assertEqual(
+                set(requests_by_name),
+                {"projects/project-a", "projects/project-b"},
+            )
+            for name, request in requests_by_name.items():
+                project_id = name.split("/")[-1]
+                self.assertGreater(len(request.time_series), 0)
+                for series in request.time_series:
+                    self.assertEqual(series.resource.labels["project_id"], project_id)
+
         def test_force_flush(self):
             """Verify that the unimplemented force flush can be called."""
             exporter = CloudMonitoringMetricsExporter(

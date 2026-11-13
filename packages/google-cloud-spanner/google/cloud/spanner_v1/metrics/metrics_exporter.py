@@ -149,7 +149,6 @@ class CloudMonitoringMetricsExporter(MetricExporter):
         :param series: ProtoBuf TimeSeries
         :return:
         """
-        write_ind = 0
         timeout = timeout_millis / MILLIS_PER_SECOND
 
         retry = Retry(
@@ -166,21 +165,37 @@ class CloudMonitoringMetricsExporter(MetricExporter):
             deadline=timeout,
         )
 
-        while write_ind < len(series):
-            request = CreateTimeSeriesRequest(
-                name=self.project_name,
-                time_series=series[write_ind : write_ind + MAX_BATCH_WRITE],
-            )
+        # Group by resource project so mixed-project batches are not
+        # rejected (resource.labels.project_id must match name).
+        series_by_project: Dict[str, List["TimeSeries"]] = {}
+        for ts in series:
+            project_id = self.project_id
+            resource = getattr(ts, "resource", None)
+            labels = getattr(resource, "labels", None) if resource is not None else None
+            if labels:
+                label_project = labels.get("project_id")
+                if label_project:
+                    project_id = label_project
+            series_by_project.setdefault(project_id, []).append(ts)
 
-            try:
-                retry(self.client.create_service_time_series)(
-                    request=request,
-                    timeout=timeout,
+        for project_id, project_series in series_by_project.items():
+            project_name = self.client.common_project_path(project_id)
+            write_ind = 0
+            while write_ind < len(project_series):
+                request = CreateTimeSeriesRequest(
+                    name=project_name,
+                    time_series=project_series[write_ind : write_ind + MAX_BATCH_WRITE],
                 )
-            except Exception as e:
-                logger.error("Failed to export metrics to Cloud Monitoring: %s", e)
 
-            write_ind += MAX_BATCH_WRITE
+                try:
+                    retry(self.client.create_service_time_series)(
+                        request=request,
+                        timeout=timeout,
+                    )
+                except Exception as e:
+                    logger.error("Failed to export metrics to Cloud Monitoring: %s", e)
+
+                write_ind += MAX_BATCH_WRITE
 
     @staticmethod
     def _resource_to_monitored_resource_pb(
