@@ -22,6 +22,7 @@ from . import data_client_snippets as data_snippets
 PROJECT = os.environ["GOOGLE_CLOUD_PROJECT"]
 BIGTABLE_INSTANCE = os.environ["BIGTABLE_INSTANCE"]
 TABLE_ID = f"data-client-sync-{str(uuid.uuid4())[:16]}"
+AUTHORIZED_VIEW_ID = f"view-{str(uuid.uuid4())[:16]}"
 
 
 @pytest.fixture(scope="session")
@@ -46,6 +47,30 @@ def column_family_config():
 def table_id(column_family_config):
     with create_table_cm(PROJECT, BIGTABLE_INSTANCE, TABLE_ID, column_family_config):
         yield TABLE_ID
+
+
+@pytest.fixture(scope="session")
+def authorized_view_id(table_id):
+    from google.cloud import bigtable_admin_v2
+
+    admin_client = bigtable_admin_v2.BigtableTableAdminClient()
+    table_path = admin_client.table_path(PROJECT, BIGTABLE_INSTANCE, table_id)
+    # A view over every row, restricted to the stats_summary column family
+    subset_view = bigtable_admin_v2.AuthorizedView.SubsetView(
+        row_prefixes=[b""],
+        family_subsets={
+            "stats_summary": bigtable_admin_v2.AuthorizedView.FamilySubsets(
+                qualifier_prefixes=[b""]
+            )
+        },
+    )
+    admin_client.create_authorized_view(
+        parent=table_path,
+        authorized_view_id=AUTHORIZED_VIEW_ID,
+        authorized_view=bigtable_admin_v2.AuthorizedView(subset_view=subset_view),
+    ).result()
+    # the view is deleted along with the table
+    yield AUTHORIZED_VIEW_ID
 
 
 @pytest.fixture
@@ -107,3 +132,21 @@ def test_read_with_filter(table):
 
 def test_execute_query(table):
     data_snippets.execute_query(table)
+
+
+def test_authorized_view_write_rows(capsys, table, authorized_view_id):
+    data_snippets.authorized_view_write_rows(table, authorized_view_id)
+    out, _ = capsys.readouterr()
+    assert "Hello World!" in out
+
+
+def test_authorized_view_get_by_key(capsys, table, authorized_view_id):
+    data_snippets.authorized_view_get_by_key(table, authorized_view_id)
+    out, _ = capsys.readouterr()
+    assert "Hello World!" in out
+
+
+def test_authorized_view_scan_with_filter(capsys, table, authorized_view_id):
+    data_snippets.authorized_view_scan_with_filter(table, authorized_view_id)
+    out, _ = capsys.readouterr()
+    assert "Hello Python!" in out

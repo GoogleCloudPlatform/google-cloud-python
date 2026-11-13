@@ -369,3 +369,76 @@ def print_row(row):
 
 
 # [END bigtable_async_reads_print]
+
+
+async def authorized_view_write_rows(table, authorized_view_id):
+    # [START bigtable_async_authorized_view_write_rows]
+    from google.cloud.bigtable.data import BigtableDataClientAsync, SetCell
+
+    async def write_rows(project_id, instance_id, table_id, authorized_view_id):
+        async with BigtableDataClientAsync(project=project_id) as client:
+            async with client.get_authorized_view(
+                instance_id, table_id, authorized_view_id
+            ) as authorized_view:
+                family_id = "stats_summary"
+                for i, name in enumerate(["World", "Bigtable", "Python"]):
+                    greeting = f"Hello {name}!"
+                    row_key = f"greeting{i}"
+                    await authorized_view.mutate_row(
+                        row_key,
+                        [
+                            SetCell(family_id, "name", name),
+                            SetCell(family_id, "greeting", greeting),
+                        ],
+                    )
+                    print(greeting)
+
+    # [END bigtable_async_authorized_view_write_rows]
+    await write_rows(
+        table.client.project, table.instance_id, table.table_id, authorized_view_id
+    )
+
+
+async def authorized_view_get_by_key(table, authorized_view_id):
+    # [START bigtable_async_authorized_view_get_by_key]
+    from google.cloud.bigtable.data import BigtableDataClientAsync
+
+    async def get_by_key(project_id, instance_id, table_id, authorized_view_id):
+        async with BigtableDataClientAsync(project=project_id) as client:
+            async with client.get_authorized_view(
+                instance_id, table_id, authorized_view_id
+            ) as authorized_view:
+                row_key = "greeting0"
+                row = await authorized_view.read_row(row_key)
+                print(row)
+
+    # [END bigtable_async_authorized_view_get_by_key]
+    await get_by_key(
+        table.client.project, table.instance_id, table.table_id, authorized_view_id
+    )
+
+
+async def authorized_view_scan_with_filter(table, authorized_view_id):
+    # [START bigtable_async_authorized_view_scan_with_filter]
+    from google.cloud.bigtable.data import (
+        BigtableDataClientAsync,
+        ReadRowsQuery,
+        row_filters,
+    )
+
+    async def scan_with_filter(project_id, instance_id, table_id, authorized_view_id):
+        async with BigtableDataClientAsync(project=project_id) as client:
+            async with client.get_authorized_view(
+                instance_id, table_id, authorized_view_id
+            ) as authorized_view:
+                # Only return the most recent version of each cell
+                row_filter = row_filters.CellsColumnLimitFilter(1)
+                query = ReadRowsQuery(row_filter=row_filter)
+
+                async for row in await authorized_view.read_rows_stream(query):
+                    print(row)
+
+    # [END bigtable_async_authorized_view_scan_with_filter]
+    await scan_with_filter(
+        table.client.project, table.instance_id, table.table_id, authorized_view_id
+    )
