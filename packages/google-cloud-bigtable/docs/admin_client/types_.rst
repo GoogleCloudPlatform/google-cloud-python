@@ -5,6 +5,14 @@ Types for Google Cloud Bigtable Admin v2 API
     :members:
     :show-inheritance:
 
-.. automodule:: google.cloud.bigtable_admin_v2.overlay.types
+.. autoclass:: google.cloud.bigtable_admin_v2.AsyncRestoreTableOperation
+    :members:
+    :show-inheritance:
+
+.. autoclass:: google.cloud.bigtable_admin_v2.RestoreTableOperation
+    :members:
+    :show-inheritance:
+
+.. autoclass:: google.cloud.bigtable_admin_v2.WaitForConsistencyRequest
     :members:
     :show-inheritance:

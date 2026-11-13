@@ -1,6 +1,6 @@
 Mutations Batcher Async
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-.. automodule:: google.cloud.bigtable.data._async.mutations_batcher
+.. autoclass:: google.cloud.bigtable.data.MutationsBatcherAsync
   :members:
   :show-inheritance:
