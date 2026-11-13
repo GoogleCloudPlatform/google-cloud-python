@@ -322,3 +322,76 @@ class TestLookups(SpannerSimpleTestClass):
         compiler = SQLCompiler(qs.query, self.connection, "default")
         sql, params = compiler.as_sql()
         self.assertEqual(params, ("User: ", "", "", "(?i)^john"))
+
+    def test_json_key_transforms_and_has_key(self):
+        from unittest.mock import MagicMock
+
+        from django.db.models import JSONField
+        from django.db.models.expressions import Col
+        from django.db.models.fields.json import (
+            HasKey,
+            KeyTextTransform,
+            KeyTransform,
+        )
+
+        field = JSONField()
+        field.set_attributes_from_name("value")
+        col = Col("tests_detail", field)
+        compiler = MagicMock()
+        compiler.compile.return_value = ("tests_detail.value", [])
+
+        kt = KeyTransform("name", col)
+        sql, params = kt.as_spanner(compiler, self.connection)
+        self.assertEqual(
+            sql,
+            "JSON_QUERY(tests_detail.value, '$.\"name\"')",
+        )
+        self.assertEqual(params, ())
+
+        ktt = KeyTextTransform("name", col)
+        sql, params = ktt.as_spanner(compiler, self.connection)
+        self.assertEqual(
+            sql,
+            "JSON_VALUE(tests_detail.value, '$.\"name\"')",
+        )
+        self.assertEqual(params, ())
+
+        kt_nested = KeyTransform("b", KeyTransform("0", KeyTransform("a", col)))
+        sql, params = kt_nested.as_spanner(compiler, self.connection)
+        self.assertEqual(
+            sql,
+            'JSON_QUERY(tests_detail.value, \'$."a"[0]."b"\')',
+        )
+        self.assertEqual(params, ())
+
+        kt_escaped = KeyTransform("a'b%s", col)
+        sql, params = kt_escaped.as_spanner(compiler, self.connection)
+        self.assertEqual(
+            sql,
+            "JSON_QUERY(tests_detail.value, '$.\"a\\'b%%s\"')",
+        )
+        self.assertEqual(params, ())
+
+        hk = HasKey(col, "name")
+        sql, params = hk.as_spanner(compiler, self.connection)
+        self.assertEqual(
+            sql,
+            "JSON_QUERY(tests_detail.value, '$.\"name\"') IS NOT NULL",
+        )
+        self.assertEqual(params, ())
+
+        hk_nested_int = HasKey(KeyTransform("nested", col), "0")
+        sql, params = hk_nested_int.as_spanner(compiler, self.connection)
+        self.assertEqual(
+            sql,
+            'JSON_QUERY(tests_detail.value, \'$."nested"."0"\') IS NOT NULL',
+        )
+        self.assertEqual(params, ())
+
+    def test_json_field_get_prep_value(self):
+        from django.db.models import JSONField
+
+        field = JSONField()
+        val = {"key": "value"}
+        res = field.get_prep_value(val)
+        self.assertEqual(res, val)

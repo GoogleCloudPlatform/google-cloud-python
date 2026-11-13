@@ -5,6 +5,7 @@
 # https://developers.google.com/open-source/licenses/bsd
 
 from django.core.exceptions import EmptyResultSet
+from django.db.models.fields.json import JSONField
 from django.db.models.sql.compiler import (
     SQLAggregateCompiler as BaseSQLAggregateCompiler,
 )
@@ -30,6 +31,28 @@ class SQLCompiler(BaseSQLCompiler):
     A variation of the Django SQL compiler, adjusted for Spanner-specific
     functionality.
     """
+
+    def get_converters(self, expressions):
+        converters = {}
+        for i, expression in enumerate(expressions):
+            if expression:
+                backend_converters = self.connection.ops.get_db_converters(expression)
+                field_converters = expression.get_db_converters(self.connection)
+                output_field = getattr(expression, "output_field", None)
+                if (
+                    self.connection.ops.convert_jsonfield_value in backend_converters
+                    and isinstance(output_field, JSONField)
+                    and type(output_field).from_db_value is JSONField.from_db_value
+                ):
+                    field_converters = [
+                        converter
+                        for converter in field_converters
+                        if converter != output_field.from_db_value
+                    ]
+                convs = backend_converters + field_converters
+                if convs:
+                    converters[i] = (convs, expression)
+        return converters
 
     def get_combinator_sql(self, combinator, all):
         """Override the native Django method.

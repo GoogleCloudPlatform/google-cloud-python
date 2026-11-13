@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-ads-datamanager/#history
 
+## [0.9.5](https://github.com/googleapis/google-cloud-python/compare/google-ads-datamanager-v0.9.4...google-ads-datamanager-v0.9.5) (2026-11-12)
+
+
+### Features
+
+* update API sources and regenerate ([#19036](https://github.com/googleapis/google-cloud-python/issues/19036)) ([b64a9e5](https://github.com/googleapis/google-cloud-python/commit/b64a9e51a22810d4e3b4c44b13847eb96c604628))
+
 ## [0.9.4](https://github.com/googleapis/google-cloud-python/compare/google-ads-datamanager-v0.9.3...google-ads-datamanager-v0.9.4) (2026-10-01)
 
 

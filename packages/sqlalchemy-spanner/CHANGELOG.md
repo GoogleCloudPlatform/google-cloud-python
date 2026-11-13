@@ -4,6 +4,23 @@
 
 [1]: https://pypi.org/project/sqlalchemy-spanner/#history
 
+## [1.21.0](https://github.com/googleapis/google-cloud-python/compare/sqlalchemy-spanner-v1.20.1...sqlalchemy-spanner-v1.21.0) (2026-11-12)
+
+
+### Features
+
+* declare support for Python 3.15 ([#18737](https://github.com/googleapis/google-cloud-python/issues/18737)) ([65c8767](https://github.com/googleapis/google-cloud-python/commit/65c87678e7a63aa4c8115c9273581aa5db82fbe9))
+* **sqlalchemy-spanner:** wire timeout execution option through to DBAPI Cursor.timeout ([#18485](https://github.com/googleapis/google-cloud-python/issues/18485)) ([1de2e3f](https://github.com/googleapis/google-cloud-python/commit/1de2e3f0831fa0b24b2a458956b3d96739bd191c))
+
+
+### Bug Fixes
+
+* repair broken and stale repository URLs in package metadata ([#18498](https://github.com/googleapis/google-cloud-python/issues/18498)) ([54dbd12](https://github.com/googleapis/google-cloud-python/commit/54dbd12056abcfc007b5b76006751c3b11bea99f)), refs [#18497](https://github.com/googleapis/google-cloud-python/issues/18497)
+* **spanner-sqlalchemy:** add WHERE 1=1 to unqualified DELETE and UPDATE ([#19024](https://github.com/googleapis/google-cloud-python/issues/19024)) ([5a2b34e](https://github.com/googleapis/google-cloud-python/commit/5a2b34ecf0d7799784c03a6fb094795d170dccdb))
+* **sqlalchemy-spanner:** isolate literal round trip test tables with unique naming and teardown ([#18623](https://github.com/googleapis/google-cloud-python/issues/18623)) ([75cdf3b](https://github.com/googleapis/google-cloud-python/commit/75cdf3bcef819b9b68055e6e0abc2f7dd486df09))
+* **sqlalchemy-spanner:** prevent SQL injection via JSON key indexing ([#18982](https://github.com/googleapis/google-cloud-python/issues/18982)) ([c0dba72](https://github.com/googleapis/google-cloud-python/commit/c0dba727744713f51da581e01c97c6bccd61abaa))
+* **sqlalchemy-spanner:** resolve compliance and migration failures with Alembic 1.20 and SQLAlchemy 2.1 ([#18570](https://github.com/googleapis/google-cloud-python/issues/18570)) ([873ef99](https://github.com/googleapis/google-cloud-python/commit/873ef9980dee9cd518733dec164f4ae42d25afbe))
+
 ## [1.20.1](https://github.com/googleapis/google-cloud-python/compare/sqlalchemy-spanner-v1.20.0...sqlalchemy-spanner-v1.20.1) (2026-09-03)
 
 

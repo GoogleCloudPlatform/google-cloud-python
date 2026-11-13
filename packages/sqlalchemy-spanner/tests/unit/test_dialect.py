@@ -146,12 +146,11 @@ class TestSpannerDialect(fixtures.TestBase):
             "FROM records",
         )
 
-        # 3. Direct call to _generate_generic_binary
+        # 3. Verify OPERATORS is not polluted and direct binary dispatch works
+        assert json_getitem_op not in OPERATORS
         binary_expr = records.c.data[malicious_key]
         direct_compiler = dialect.statement_compiler(dialect, sa.select(records.c.data))
-        direct_sql = direct_compiler._generate_generic_binary(
-            binary_expr, OPERATORS[json_getitem_op]
-        )
+        direct_sql = direct_compiler.process(binary_expr)
         eq_(direct_sql, "JSON_VALUE(records.data, :data_1)")
 
     def test_json_getitem_adversarial_keys_and_types(self):
@@ -201,7 +200,7 @@ class TestSpannerDialect(fixtures.TestBase):
                 "FROM records",
             )
 
-        # Also test non-ClauseElement fallback in _generate_generic_binary
+        # Also test non-ClauseElement fallback in visit_json_getitem_op_binary
         compiler = dialect.statement_compiler(dialect, sa.select(records.c.data))
         for right_obj in (
             SimpleNamespace(value='display") --'),
@@ -213,9 +212,7 @@ class TestSpannerDialect(fixtures.TestBase):
                 operator=json_getitem_op,
             )
             eq_(
-                compiler._generate_generic_binary(
-                    fake_binary, OPERATORS[json_getitem_op]
-                ),
+                compiler.visit_json_getitem_op_binary(fake_binary, json_getitem_op),
                 'JSON_VALUE(records.data, "$.\\"display\\\\\\") --\\"")',
             )
 
@@ -502,4 +499,52 @@ class TestSpannerDialect(fixtures.TestBase):
         eq_(
             str(update_stmt.compile(dialect=dialect)),
             "UPDATE my_table SET id=:id WHERE 1=1",
+        )
+
+    def test_json_binary_dispatch_and_operators_table_integrity(self):
+        """Test that JSON binary dispatch uses visitor methods and OPERATORS is pure."""
+        dialect = SpannerDialect()
+        records = sa.Table(
+            "records",
+            sa.MetaData(),
+            sa.Column("id", sa.Integer),
+            sa.Column("data", sa.JSON),
+        )
+
+        # 1. Global OPERATORS table is not mutated and only contains str values
+        assert json_getitem_op not in OPERATORS
+        assert all(isinstance(value, str) for value in OPERATORS.values())
+
+        # 2. JSON indexing dispatches cleanly via visit_binary ->
+        # visit_json_getitem_op_binary
+        compiler = dialect.statement_compiler(dialect, sa.select(records))
+        json_binary = records.c.data["key"]
+        eq_(compiler.visit_binary(json_binary), "JSON_VALUE(records.data, :data_1)")
+
+        # 3. Standard binary operators that rely on base
+        # _generate_generic_binary still work
+        compiler = dialect.statement_compiler(dialect, sa.select(records))
+        generic_binary = records.c.id + 10
+        eq_(compiler.visit_binary(generic_binary), "records.id + :id_1")
+
+        compiler = dialect.statement_compiler(dialect, sa.select(records))
+        comparison_binary = records.c.id == 5
+        eq_(compiler.visit_binary(comparison_binary), "records.id = :id_1")
+
+        # 4. Comparison operators with JSON subscript (exercises both
+        # base _generate_generic_binary and visit_json_getitem_op_binary)
+        stmt_where = sa.select(records).where(records.c.data["type"] == "Stadium")
+        eq_(
+            str(stmt_where.compile(dialect=dialect)),
+            "SELECT records.id, records.data \n"
+            "FROM records \n"
+            "WHERE JSON_VALUE(records.data, :data_1) = :param_1",
+        )
+
+        stmt_is_null = sa.select(records).where(records.c.data["type"].is_(None))
+        eq_(
+            str(stmt_is_null.compile(dialect=dialect)),
+            "SELECT records.id, records.data \n"
+            "FROM records \n"
+            "WHERE JSON_VALUE(records.data, :data_1) IS NULL",
         )

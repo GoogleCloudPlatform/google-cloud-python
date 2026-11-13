@@ -202,6 +202,8 @@ async def _restart_on_unavailable(
                     if item.resume_token:
                         resume_token = item.resume_token
                         break
+                else:
+                    stream_finished = True
 
             except ServiceUnavailable:
                 del item_buffer[:]
@@ -237,12 +239,21 @@ async def _restart_on_unavailable(
                 iterator = None
                 break
 
+            if stream_finished and metrics_tracer is not None:
+                try:
+                    metrics_tracer.record_operation_completion()
+                except Exception:
+                    pass
+                finally:
+                    metrics_tracer = None
+
             for item in item_buffer:
                 yield item
 
             del item_buffer[:]
 
             if stream_finished:
+                iterator = None
                 break
     finally:
         try:

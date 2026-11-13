@@ -29,7 +29,6 @@ from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.pool import Pool
 from sqlalchemy.sql import elements, expression
 from sqlalchemy.sql.compiler import (
-    OPERATORS,
     RESERVED_WORDS,
     DDLCompiler,
     GenericTypeCompiler,
@@ -37,8 +36,7 @@ from sqlalchemy.sql.compiler import (
     SQLCompiler,
     selectable,
 )
-from sqlalchemy.sql.default_comparator import operator_lookup
-from sqlalchemy.sql.operators import json_getitem_op, json_path_getitem_op
+from sqlalchemy.sql.operators import json_path_getitem_op
 
 from google.cloud import spanner_dbapi
 from google.cloud.sqlalchemy_spanner import version as sqlalchemy_spanner_version
@@ -83,10 +81,6 @@ def reset_connection(dbapi_conn, connection_record, reset_state=None):
 
         dbapi_conn.staleness = None
         dbapi_conn.read_only = False
-
-
-# register a method to get a single value of a JSON object
-OPERATORS[json_getitem_op] = operator_lookup["json_getitem_op"]
 
 
 _SPANNER_STRING_ESCAPE_TABLE = str.maketrans(
@@ -485,14 +479,6 @@ class SpannerSQLCompiler(SQLCompiler):
             )
 
         return "JSON_VALUE(%s, %s)" % (left_text, right_text)
-
-    def _generate_generic_binary(self, binary, opstring, eager_grouping=False, **kw):
-        """The method is overriden to process JSON data type cases."""
-        if isinstance(opstring, str):
-            return super()._generate_generic_binary(
-                binary, opstring, eager_grouping=eager_grouping, **kw
-            )
-        return self._json_value_binary(binary, eager_grouping=eager_grouping, **kw)
 
     def visit_json_getitem_op_binary(self, binary, operator, **kw):
         """Build a JSON_VALUE() function call for single-key JSON indexing."""
