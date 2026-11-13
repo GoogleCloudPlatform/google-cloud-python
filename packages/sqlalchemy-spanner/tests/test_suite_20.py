@@ -1137,11 +1137,60 @@ class ComponentReflectionTest(_ComponentReflectionTest):
                 result.pop((schema, t), None)
             self._check_table_dict(result, exp, self._required_column_keys)
 
-    @pytest.mark.skip(
-        "Requires an introspection method to be implemented in SQLAlchemy first"
-    )
-    def test_get_multi_unique_constraints(self):
-        pass
+    def test_get_multi_unique_constraints(self, metadata, connection):
+        """
+        SPANNER OVERRIDE:
+
+        Spanner doesn't support unique constraints, so the tables of the
+        original test have none. Instead, a foreign key that refers to columns
+        other than the primary key gets a backing unique constraint from Spanner.
+        Checks that it is reflected as one constraint with all its columns, also
+        when more than one foreign key refers to the same columns.
+        """
+        Table(
+            "uq_parent",
+            metadata,
+            Column("id", sqlalchemy.Integer, primary_key=True),
+            Column("a", sqlalchemy.String(10)),
+            Column("b", sqlalchemy.String(10)),
+        )
+        for child in ("uq_child", "uq_child2"):
+            Table(
+                child,
+                metadata,
+                Column("id", sqlalchemy.Integer, primary_key=True),
+                Column("x", sqlalchemy.String(10)),
+                Column("y", sqlalchemy.String(10)),
+                sqlalchemy.ForeignKeyConstraint(
+                    ["x", "y"], ["uq_parent.a", "uq_parent.b"]
+                ),
+            )
+        metadata.create_all(connection)
+        connection.connection.commit()
+
+        insp = inspect(connection)
+        constraints = insp.get_multi_unique_constraints(
+            filter_names=["uq_parent", "uq_child", "uq_child2"]
+        )
+        eq_(constraints.get((None, "uq_child"), []), [])
+        eq_(constraints.get((None, "uq_child2"), []), [])
+        eq_(len(constraints[(None, "uq_parent")]), 1)
+        constraint = constraints[(None, "uq_parent")][0]
+        eq_(constraint["column_names"], ["a", "b"])
+
+        insp.clear_cache()
+        eq_(insp.get_unique_constraints("uq_parent"), [constraint])
+        eq_(insp.get_unique_constraints("uq_child"), [])
+
+        reflected = Table("uq_parent", MetaData(), autoload_with=connection)
+        eq_(
+            [
+                [col.name for col in uq.columns]
+                for uq in reflected.constraints
+                if isinstance(uq, sqlalchemy.UniqueConstraint)
+            ],
+            [["a", "b"]],
+        )
 
     @pytest.mark.skip(
         "Requires an introspection method to be implemented in SQLAlchemy first"

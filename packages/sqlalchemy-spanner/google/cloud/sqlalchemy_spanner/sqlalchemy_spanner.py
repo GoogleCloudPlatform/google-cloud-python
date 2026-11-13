@@ -1793,6 +1793,82 @@ WHERE table_type = 'BASE TABLE' AND table_schema = '{schema}'
         return table_names
 
     @engine_to_connection
+    def get_multi_unique_constraints(
+        self, connection, schema=None, filter_names=None, scope=None, kind=None, **kw
+    ):
+        """
+        Return information about unique constraints in all tables
+        in the given schema.
+
+        The method is used by SQLAlchemy introspection systems.
+
+        Args:
+            connection (sqlalchemy.engine.base.Connection):
+                SQLAlchemy connection or engine object.
+            schema (str): Optional. Schema name
+            filter_names (Sequence[str]): Optional. Optionally return information
+                only for the objects listed here.
+            scope (sqlalchemy.engine.reflection.ObjectScope): Optional. Specifies
+                if constraints of default, temporary or any tables
+                should be reflected. Spanner does not support temporary.
+            kind (sqlalchemy.engine.reflection.ObjectKind): Optional. Specifies the
+                type of objects to reflect.
+
+        Returns:
+            dictionary: a dictionary where the keys are two-tuple schema,table-name
+                and the values are list of dictionaries, each representing
+                a unique constraint definition. The columns of each constraint
+                are listed in the order of the constraint.
+                The schema is ``None`` if no schema is provided.
+        """
+        table_filter_query = self._get_table_filter_query(filter_names, "tc", True)
+        schema_filter_query = " tc.TABLE_SCHEMA = '{schema}' AND ".format(
+            schema=schema or ""
+        )
+        table_type_query = self._get_table_type_query(kind, True)
+
+        sql = """
+            SELECT
+                tc.TABLE_SCHEMA,
+                tc.TABLE_NAME,
+                tc.CONSTRAINT_NAME,
+                ARRAY_AGG(kcu.COLUMN_NAME ORDER BY kcu.ORDINAL_POSITION)
+            FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS tc
+            JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE AS kcu
+                ON  kcu.CONSTRAINT_CATALOG = tc.CONSTRAINT_CATALOG
+                AND kcu.CONSTRAINT_SCHEMA = tc.CONSTRAINT_SCHEMA
+                AND kcu.CONSTRAINT_NAME = tc.CONSTRAINT_NAME
+            JOIN INFORMATION_SCHEMA.TABLES AS t
+                ON  t.TABLE_CATALOG = tc.TABLE_CATALOG
+                AND t.TABLE_SCHEMA = tc.TABLE_SCHEMA
+                AND t.TABLE_NAME = tc.TABLE_NAME
+            WHERE
+                {table_filter_query}
+                {table_type_query}
+                {schema_filter_query}
+                tc.CONSTRAINT_TYPE = "UNIQUE"
+                AND tc.CONSTRAINT_NAME IS NOT NULL
+            GROUP BY tc.TABLE_SCHEMA, tc.TABLE_NAME, tc.CONSTRAINT_NAME
+        """.format(
+            table_filter_query=table_filter_query,
+            table_type_query=table_type_query,
+            schema_filter_query=schema_filter_query,
+        )
+
+        with connection.connection.database.snapshot() as snap:
+            rows = list(snap.execute_sql(sql))
+            result_dict = {}
+
+            for row in rows:
+                table_info = result_dict.setdefault((row[0] or None, row[1]), [])
+                # The emulator lists the backing unique constraint of a foreign
+                # key once per referencing foreign key, which repeats its columns.
+                column_names = list(dict.fromkeys(row[3]))
+                table_info.append({"name": row[2], "column_names": column_names})
+
+        return result_dict
+
+    @engine_to_connection
     def get_unique_constraints(self, connection, table_name, schema=None, **kw):
         """Get the table unique constraints.
 
@@ -1805,28 +1881,14 @@ WHERE table_type = 'BASE TABLE' AND table_schema = '{schema}'
             schema (str): Optional. Schema name
 
         Returns:
-            dict: Dict with the unique constraints' descriptions.
+            list: Dicts, each of which describes a unique constraint.
         """
-        sql = """
-SELECT ccu.CONSTRAINT_NAME, ccu.COLUMN_NAME
-FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS tc
-JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE AS ccu
-    USING (TABLE_CATALOG, TABLE_SCHEMA, CONSTRAINT_NAME)
-WHERE
-    tc.TABLE_NAME="{table_name}"
-    AND tc.TABLE_SCHEMA="{table_schema}"
-    AND tc.CONSTRAINT_TYPE = "UNIQUE"
-    AND tc.CONSTRAINT_NAME IS NOT NULL
-""".format(table_schema=schema or "", table_name=table_name)
-
-        cols = []
-        with connection.connection.database.snapshot() as snap:
-            rows = snap.execute_sql(sql)
-
-            for row in rows:
-                cols.append({"name": row[0], "column_names": [row[1]]})
-
-        return cols
+        kind = None if not USING_SQLACLCHEMY_20 else ObjectKind.ANY
+        constraints = self.get_multi_unique_constraints(
+            connection, schema=schema, filter_names=[table_name], kind=kind
+        )
+        schema = schema or None
+        return constraints.get((schema, table_name), [])
 
     @engine_to_connection
     def has_table(self, connection, table_name, schema=None, **kw):
