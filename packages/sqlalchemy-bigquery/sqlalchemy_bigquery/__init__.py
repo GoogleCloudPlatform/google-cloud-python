@@ -20,9 +20,6 @@
 SQLAlchemy dialect for Google BigQuery
 """
 
-import sys
-import warnings
-
 from ._types import (
     ARRAY,
     BIGNUMERIC,
@@ -44,19 +41,6 @@ from ._types import (
 )
 from .base import BigQueryDialect, SafeCast, dialect, safe_cast
 from .version import __version__
-
-# Now that support for Python 3.7, 3.8 and 3.9 has been removed, we don't expect the
-# following check to succeed. The warning is only included for robustness.
-if sys.version_info < (3, 10):  # pragma: NO COVER
-    warnings.warn(
-        "The python-bigquery-sqlalchemy library no longer supports Python 3.7, "
-        "3.8 and 3.9. "
-        f"Your Python version is {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}. We "
-        "recommend that you update soon to ensure ongoing support. For "
-        "more details, see: [Google Cloud Client Libraries Supported Python Versions policy](https://cloud.google.com/python/docs/supported-python-versions)",
-        FutureWarning,
-    )
-
 
 __all__ = [
     "__version__",
