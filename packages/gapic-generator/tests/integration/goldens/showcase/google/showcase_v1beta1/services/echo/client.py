@@ -1522,6 +1522,9 @@ class EchoClient(metaclass=EchoClientMeta):
             timeout=timeout,
             metadata=metadata,
         )
+        lro_metadata = None
+        if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+            lro_metadata = [version_header.to_api_version_header("v1_20240408")]
 
         # Wrap the response in an operation future.
         response = operation.from_gapic(
@@ -1529,6 +1532,7 @@ class EchoClient(metaclass=EchoClientMeta):
             self._transport.operations_client,
             gs_echo.WaitResponse,
             metadata_type=gs_echo.WaitMetadata,
+            grpc_metadata=lro_metadata,
         )
 
         # Done; return the response.
@@ -1673,6 +1677,10 @@ class EchoClient(metaclass=EchoClientMeta):
             gapic_v1.routing_header.to_grpc_metadata(
                 (("name", request_pb.name),)),
         )
+        if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+            metadata = tuple(metadata) + (
+                version_header.to_api_version_header("v1_20240408"),
+            )
 
         # Validate the universe domain.
         self._validate_universe_domain()
@@ -1733,6 +1741,10 @@ class EchoClient(metaclass=EchoClientMeta):
             gapic_v1.routing_header.to_grpc_metadata(
                 (("name", request_pb.name),)),
         )
+        if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+            metadata = tuple(metadata) + (
+                version_header.to_api_version_header("v1_20240408"),
+            )
 
         # Validate the universe domain.
         self._validate_universe_domain()
@@ -1797,6 +1809,10 @@ class EchoClient(metaclass=EchoClientMeta):
             gapic_v1.routing_header.to_grpc_metadata(
                 (("name", request_pb.name),)),
         )
+        if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+            metadata = tuple(metadata) + (
+                version_header.to_api_version_header("v1_20240408"),
+            )
 
         # Validate the universe domain.
         self._validate_universe_domain()
@@ -1852,6 +1868,10 @@ class EchoClient(metaclass=EchoClientMeta):
             gapic_v1.routing_header.to_grpc_metadata(
                 (("name", request_pb.name),)),
         )
+        if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+            metadata = tuple(metadata) + (
+                version_header.to_api_version_header("v1_20240408"),
+            )
 
         # Validate the universe domain.
         self._validate_universe_domain()
@@ -1970,6 +1990,10 @@ class EchoClient(metaclass=EchoClientMeta):
             gapic_v1.routing_header.to_grpc_metadata(
                 (("resource", request_pb.resource),)),
         )
+        if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+            metadata = tuple(metadata) + (
+                version_header.to_api_version_header("v1_20240408"),
+            )
 
         # Validate the universe domain.
         self._validate_universe_domain()
@@ -2097,6 +2121,10 @@ class EchoClient(metaclass=EchoClientMeta):
             gapic_v1.routing_header.to_grpc_metadata(
                 (("resource", request_pb.resource),)),
         )
+        if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+            metadata = tuple(metadata) + (
+                version_header.to_api_version_header("v1_20240408"),
+            )
 
         # Validate the universe domain.
         self._validate_universe_domain()
@@ -2162,6 +2190,10 @@ class EchoClient(metaclass=EchoClientMeta):
             gapic_v1.routing_header.to_grpc_metadata(
                 (("resource", request_pb.resource),)),
         )
+        if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+            metadata = tuple(metadata) + (
+                version_header.to_api_version_header("v1_20240408"),
+            )
 
         # Validate the universe domain.
         self._validate_universe_domain()
@@ -2222,6 +2254,10 @@ class EchoClient(metaclass=EchoClientMeta):
             gapic_v1.routing_header.to_grpc_metadata(
                 (("name", request_pb.name),)),
         )
+        if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+            metadata = tuple(metadata) + (
+                version_header.to_api_version_header("v1_20240408"),
+            )
 
         # Validate the universe domain.
         self._validate_universe_domain()
@@ -2282,6 +2318,10 @@ class EchoClient(metaclass=EchoClientMeta):
             gapic_v1.routing_header.to_grpc_metadata(
                 (("name", request_pb.name),)),
         )
+        if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+            metadata = tuple(metadata) + (
+                version_header.to_api_version_header("v1_20240408"),
+            )
 
         # Validate the universe domain.
         self._validate_universe_domain()

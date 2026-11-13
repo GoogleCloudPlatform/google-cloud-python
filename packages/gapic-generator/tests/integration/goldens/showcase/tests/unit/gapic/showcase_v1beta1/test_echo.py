@@ -407,7 +407,7 @@ def test_wait_api_version_header(transport_name):
                 '__call__'
             ) as call:
                 call.return_value = operations_pb2.Operation()
-                client.wait()
+                response = client.wait()
 
         # Establish that the api version header was sent.
         _, _, kw = call.mock_calls[0]
@@ -415,6 +415,14 @@ def test_wait_api_version_header(transport_name):
             version_header.API_VERSION_METADATA_KEY,
             "v1_20240408",
         ) in kw['metadata']
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in response._refresh.keywords["metadata"]
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in response._cancel.keywords["metadata"]
     else:
         pytest.skip("google-api-core>=2.19.0 is required for `google.api_core.version_header`")
 @pytest.mark.parametrize("transport_name", [
@@ -8206,6 +8214,11 @@ def test_delete_operation_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in kw["metadata"]
 
 @pytest.mark.asyncio
 async def test_delete_operation_field_headers_async():
@@ -8232,6 +8245,11 @@ async def test_delete_operation_field_headers_async():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in kw["metadata"]
 
 
 def test_delete_operation_from_dict():
@@ -8373,6 +8391,11 @@ def test_cancel_operation_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in kw["metadata"]
 
 @pytest.mark.asyncio
 async def test_cancel_operation_field_headers_async():
@@ -8399,6 +8422,11 @@ async def test_cancel_operation_field_headers_async():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in kw["metadata"]
 
 
 def test_cancel_operation_from_dict():
@@ -8540,6 +8568,11 @@ def test_get_operation_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in kw["metadata"]
 
 @pytest.mark.asyncio
 async def test_get_operation_field_headers_async():
@@ -8566,6 +8599,11 @@ async def test_get_operation_field_headers_async():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in kw["metadata"]
 
 
 def test_get_operation_from_dict():
@@ -8707,6 +8745,11 @@ def test_list_operations_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in kw["metadata"]
 
 @pytest.mark.asyncio
 async def test_list_operations_field_headers_async():
@@ -8733,6 +8776,11 @@ async def test_list_operations_field_headers_async():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in kw["metadata"]
 
 
 def test_list_operations_from_dict():
@@ -8874,6 +8922,11 @@ def test_list_locations_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in kw["metadata"]
 
 @pytest.mark.asyncio
 async def test_list_locations_field_headers_async():
@@ -8900,6 +8953,11 @@ async def test_list_locations_field_headers_async():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in kw["metadata"]
 
 
 def test_list_locations_from_dict():
@@ -9040,6 +9098,11 @@ def test_get_location_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations/abc",) in kw["metadata"]
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in kw["metadata"]
 
 @pytest.mark.asyncio
 async def test_get_location_field_headers_async():
@@ -9066,6 +9129,11 @@ async def test_get_location_field_headers_async():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations/abc",) in kw["metadata"]
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in kw["metadata"]
 
 
 def test_get_location_from_dict():
@@ -9219,6 +9287,11 @@ def test_set_iam_policy_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in kw["metadata"]
 
 @pytest.mark.asyncio
 async def test_set_iam_policy_field_headers_async():
@@ -9245,6 +9318,11 @@ async def test_set_iam_policy_field_headers_async():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in kw["metadata"]
 
 
 def test_set_iam_policy_from_dict():
@@ -9411,6 +9489,11 @@ def test_get_iam_policy_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
@@ -9440,6 +9523,11 @@ async def test_get_iam_policy_field_headers_async():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in kw["metadata"]
 
 
 def test_get_iam_policy_from_dict():
@@ -9607,6 +9695,11 @@ def test_test_iam_permissions_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
@@ -9638,6 +9731,11 @@ async def test_test_iam_permissions_field_headers_async():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
+        assert (
+            version_header.API_VERSION_METADATA_KEY,
+            "v1_20240408",
+        ) in kw["metadata"]
 
 
 def test_test_iam_permissions_from_dict():
