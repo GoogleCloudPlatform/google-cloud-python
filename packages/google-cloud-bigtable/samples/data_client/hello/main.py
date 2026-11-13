@@ -31,7 +31,6 @@ from google.cloud import bigtable
 from google.cloud.bigtable.data import row_filters
 
 # [END bigtable_hw_imports]
-from ...utils import wait_for_table
 
 # use to ignore warnings
 row_filters
@@ -73,8 +72,6 @@ def main(project_id, instance_id, table_id):
     # [END bigtable_hw_create_table]
 
     try:
-        # let table creation complete
-        wait_for_table(table)
         # [START bigtable_hw_write_rows]
         print("Writing some greetings to the table.")
         greetings = [b"Hello World!", b"Hello Cloud Bigtable!", b"Hello Python!"]
