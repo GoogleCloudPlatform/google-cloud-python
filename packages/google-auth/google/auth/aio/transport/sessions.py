@@ -443,7 +443,19 @@ class AsyncAuthorizedSession:
                 actual_timeout = float(timeout)
             # Workaround issue in python 3.9 related to code coverage by adding `# pragma: no branch`
             # See https://github.com/googleapis/gapic-generator-python/pull/1174#issuecomment-1025132372
+            response = None
             async for _ in retries:  # pragma: no branch
+                if response is not None and hasattr(response, "close"):
+                    # Release the previous response before retrying so an
+                    # unread body does not keep its connection checked out
+                    # of the connector pool.
+                    try:
+                        res = response.close()
+                        if inspect.isawaitable(res):
+                            await res
+                    except Exception:
+                        pass
+
                 response = await with_timeout(
                     self._auth_request(
                         url, method, data, request_headers, actual_timeout, **kwargs

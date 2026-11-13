@@ -365,6 +365,41 @@ class TestAsyncAuthorizedSession(object):
             assert auth_request.call_count == DEFAULT_MAX_RETRY_ATTEMPTS
 
     @pytest.mark.asyncio
+    async def test_request_closes_previous_response_before_retry(self):
+        retry_response = MockResponse(status_code=503)
+        success_response = MockResponse(status_code=200)
+
+        class _SequenceMockRequest(MockRequest):
+            def __init__(self, responses):
+                super().__init__(response=None)
+                self._responses = responses
+
+            async def __call__(self, *args, **kwargs):
+                self.call_count += 1
+                return self._responses[self.call_count - 1]
+
+        auth_request = _SequenceMockRequest([retry_response, success_response])
+        with patch("asyncio.sleep", return_value=None):
+            authed_session = sessions.AsyncAuthorizedSession(
+                self.credentials, auth_request
+            )
+            response = await authed_session.request(
+                "GET",
+                self.TEST_URL,
+                max_allowed_time=float("inf"),
+                total_attempts=2,
+            )
+            assert response is success_response
+            assert auth_request.call_count == 2
+            # The initial retryable response must be closed before the retry
+            # so its connection is released back to the pool.
+            assert retry_response._close
+            # The final response is left open for the caller to close.
+            assert not success_response._close
+
+        await authed_session.close()
+
+    @pytest.mark.asyncio
     async def test_http_get_method_success(self):
         expected_payload = b"content is retrieved."
         authed_session = sessions.AsyncAuthorizedSession(self.credentials)
