@@ -304,7 +304,9 @@ class _Transactional(_BaseTransactional):
             ValueError: If the transaction does not succeed in
                 ``max_attempts``.
         """
-        self._reset()
+        # Each invocation needs its own retry IDs, including concurrent and
+        # reentrant calls to the same decorated callable.
+        runner = self.__class__(self.to_wrap)
         retryable_exceptions = (
             (exceptions.Aborted) if not transaction._read_only else ()
         )
@@ -312,7 +314,7 @@ class _Transactional(_BaseTransactional):
 
         try:
             for attempt in range(transaction._max_attempts):
-                result = self._pre_commit(transaction, *args, **kwargs)
+                result = runner._pre_commit(transaction, *args, **kwargs)
                 try:
                     transaction._commit()
                     return result

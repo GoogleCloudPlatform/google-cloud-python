@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import asyncio
 import datetime
 
 import mock
@@ -592,8 +593,8 @@ async def test_asynctransactional___call__success_first_attempt():
     assert result is mock.sentinel.result
 
     assert transaction._id is None
-    assert wrapped.current_id == txn_id
-    assert wrapped.retry_id == txn_id
+    assert wrapped.current_id is None
+    assert wrapped.retry_id is None
 
     # Verify mocks.
     to_wrap.assert_called_once_with(transaction, "a", b="c")
@@ -638,8 +639,8 @@ async def test_asynctransactional___call__success_second_attempt():
     assert result is mock.sentinel.result
 
     assert transaction._id is None
-    assert wrapped.current_id == txn_id
-    assert wrapped.retry_id == txn_id
+    assert wrapped.current_id is None
+    assert wrapped.retry_id is None
 
     # Verify mocks.
     wrapped_call = mock.call(transaction, "a", b="c")
@@ -700,8 +701,8 @@ async def test_asynctransactional___call__failure_max_attempts(max_attempts):
     assert exc_info.value.__cause__ == exc
 
     assert transaction._id is None
-    assert wrapped.current_id == txn_id
-    assert wrapped.retry_id == txn_id
+    assert wrapped.current_id is None
+    assert wrapped.retry_id is None
 
     # Verify mocks.
     assert to_wrap.call_count == max_attempts
@@ -767,8 +768,8 @@ async def test_asynctransactional___call__failure_readonly(max_attempts):
     assert exc_info.value == exc
 
     assert transaction._id is None
-    assert wrapped.current_id == txn_id
-    assert wrapped.retry_id == txn_id
+    assert wrapped.current_id is None
+    assert wrapped.retry_id is None
 
     # Verify mocks.
     to_wrap.assert_called_once_with(transaction, "here", there=1.5)
@@ -825,7 +826,7 @@ async def test_asynctransactional___call__failure_with_non_retryable(max_attempt
     assert exc_info.value == exc
 
     assert transaction._id is None
-    assert wrapped.current_id == txn_id
+    assert wrapped.current_id is None
 
     # Verify mocks.
     to_wrap.assert_called_once_with(transaction, "here", there=1.5)
@@ -884,7 +885,7 @@ async def test_asynctransactional___call__failure_with_rollback_failure():
     assert exc_info.value.__context__ == exc
 
     assert transaction._id is None
-    assert wrapped.current_id == txn_id
+    assert wrapped.current_id is None
 
     # Verify mocks.
     to_wrap.assert_called_once_with(transaction, "here", there=1.5)
@@ -909,6 +910,127 @@ async def test_asynctransactional___call__failure_with_rollback_failure():
             "transaction": txn_id,
         },
         metadata=transaction._client._rpc_metadata,
+    )
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("aborted_commits", [1, 2])
+async def test_async_transactional_concurrent_calls_keep_retry_ids_separate(
+    aborted_commits,
+):
+    from google.api_core import exceptions
+
+    from google.cloud.firestore_v1.async_transaction import async_transactional
+    from google.cloud.firestore_v1.types import common
+
+    first = _make_transaction(b"first")
+    second = _make_transaction(b"second")
+    first._client._firestore_api.commit.side_effect = [
+        exceptions.Aborted("Contention")
+    ] * aborted_commits + [mock.Mock(write_results=[])]
+    first_started = asyncio.Event()
+    second_started = asyncio.Event()
+    first_finished = asyncio.Event()
+
+    @async_transactional
+    async def update(transaction, *, result):
+        if transaction is first:
+            first_started.set()
+            await asyncio.wait_for(second_started.wait(), timeout=5)
+        else:
+            second_started.set()
+            await asyncio.wait_for(first_finished.wait(), timeout=5)
+        return result
+
+    first_call = asyncio.create_task(update(first, result="first result"))
+    await asyncio.wait_for(first_started.wait(), timeout=5)
+    second_call = asyncio.create_task(update(second, result="second result"))
+    try:
+        assert await asyncio.wait_for(first_call, timeout=5) == "first result"
+    finally:
+        first_finished.set()
+        second_result = await asyncio.wait_for(second_call, timeout=5)
+    assert second_result == "second result"
+
+    requests = first._client._firestore_api.begin_transaction.call_args_list
+    assert requests[0].kwargs["request"]["options"] is None
+    for call in requests[1:]:
+        assert call.kwargs["request"]["options"] == common.TransactionOptions(
+            read_write=common.TransactionOptions.ReadWrite(retry_transaction=b"first")
+        )
+    second._client._firestore_api.begin_transaction.assert_called_once()
+    assert (
+        second._client._firestore_api.begin_transaction.call_args.kwargs["request"][
+            "options"
+        ]
+        is None
+    )
+    first._client._firestore_api.rollback.assert_not_called()
+    second._client._firestore_api.rollback.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_async_transactional_reentrant_calls_keep_retry_ids_separate():
+    from google.api_core import exceptions
+
+    from google.cloud.firestore_v1.async_transaction import async_transactional
+
+    outer = _make_transaction(b"outer")
+    inner = _make_transaction(b"inner")
+    outer._client._firestore_api.commit.side_effect = [
+        exceptions.Aborted("Contention"),
+        mock.Mock(write_results=[]),
+    ]
+
+    @async_transactional
+    async def update(transaction):
+        if transaction is outer:
+            return await update(inner)
+        return "result"
+
+    assert await update(outer) == "result"
+    calls = outer._client._firestore_api.begin_transaction.call_args_list
+    assert (
+        calls[1].kwargs["request"]["options"].read_write.retry_transaction == b"outer"
+    )
+
+
+@pytest.mark.asyncio
+async def test_async_transaction_preserves_subclass_pre_commit():
+    from google.api_core import exceptions
+
+    from google.cloud.firestore_v1.async_transaction import _AsyncTransactional
+
+    runners = []
+
+    class CustomTransactional(_AsyncTransactional):
+        async def _pre_commit(self, transaction, *args, **kwargs):
+            runners.append(self)
+            return await super()._pre_commit(transaction, *args, **kwargs)
+
+    to_wrap = AsyncMock(return_value=mock.sentinel.result, spec=[])
+    wrapped = CustomTransactional(to_wrap)
+    first = _make_transaction(b"first")
+    second = _make_transaction(b"second")
+    first._client._firestore_api.commit.side_effect = [
+        exceptions.Aborted("Contention"),
+        mock.Mock(write_results=[]),
+    ]
+
+    assert await wrapped(first, "pos", key="word") is mock.sentinel.result
+    assert await wrapped(second, "pos", key="word") is mock.sentinel.result
+    assert len(runners) == 3
+    assert runners[0] is runners[1]
+    assert runners[0] is not runners[2]
+    assert all(runner is not wrapped for runner in runners)
+    assert runners[0].retry_id == b"first"
+    assert runners[2].retry_id == b"second"
+    to_wrap.assert_has_calls(
+        [
+            mock.call(first, "pos", key="word"),
+            mock.call(first, "pos", key="word"),
+            mock.call(second, "pos", key="word"),
+        ]
     )
 
 
