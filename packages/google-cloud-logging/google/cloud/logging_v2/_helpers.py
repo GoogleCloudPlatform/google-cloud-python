@@ -15,6 +15,7 @@
 """Common logging helpers."""
 
 import logging
+import re
 from datetime import datetime, timedelta, timezone
 
 import requests
@@ -55,6 +56,13 @@ _NORMALIZED_SEVERITIES = {
 
 _TIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%f%z"
 """Time format for timestamps used in API"""
+
+_FILTER_TOKENS = re.compile(
+    r'--[^\r\n]*|"(?:\\.|[^"\\])*(?:"|$)|[<>!=:~]+'
+    r'|(?:[^\s().,<>!=:~"-]|-(?!-))+|[^\s]',
+    re.DOTALL,
+)
+"""Comments, quoted strings, operators, bare values, and punctuation in filters."""
 
 METADATA_URL = "http://metadata.google.internal./computeMetadata/v1/"
 METADATA_HEADERS = {"Metadata-Flavor": "Google"}
@@ -144,8 +152,38 @@ def _add_defaults_to_filter(filter_):
     # By default, requests should only return logs in the last 24 hours
     yesterday = datetime.now(timezone.utc) - timedelta(days=1)
     time_filter = f'timestamp>="{yesterday.strftime(_TIME_FORMAT)}"'
-    if filter_ is None:
-        filter_ = time_filter
-    elif "timestamp" not in filter_.lower():
-        filter_ = f"{filter_} AND {time_filter}"
-    return filter_
+    if filter_ is None or not filter_.strip():
+        return time_filter
+
+    # Look for comparisons on timestamp or casts of timestamp, not occurrences
+    # inside strings, comments, or another field's path. Keep three tokens to
+    # recognize cast(timestamp, ...) without parsing the whole expression.
+    previous_tokens = ("", "", "")
+    timestamp_field = False
+    trailing_comment = False
+    for match in _FILTER_TOKENS.finditer(filter_):
+        token = match.group()
+        if token.startswith("--"):
+            trailing_comment = True
+            continue
+        trailing_comment = False
+        if timestamp_field and (
+            token in ("=", "!=", "<", "<=", ">", ">=", ":", "=~", "!~")
+            or (
+                token == ","
+                and previous_tokens[0] in ("cast", "-cast")
+                and previous_tokens[1] == "("
+            )
+        ):
+            return filter_
+        timestamp_field = (
+            token.lower() in ("timestamp", "-timestamp", '"timestamp"')
+            and previous_tokens[-1] != "."
+        )
+        previous_tokens = (*previous_tokens[1:], token.lower())
+
+    # A final line comment must not swallow the default time constraint.
+    separator = "\n" if trailing_comment else " "
+    if trailing_comment and not previous_tokens[-1]:
+        return f"{filter_}{separator}{time_filter}"
+    return f"{filter_}{separator}AND {time_filter}"

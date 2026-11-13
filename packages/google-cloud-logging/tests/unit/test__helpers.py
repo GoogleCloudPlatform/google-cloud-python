@@ -176,32 +176,61 @@ class Test__add_defaults_to_filter(unittest.TestCase):
 
     def test_filter_defaults_empty_input(self):
         """Filter should default to return logs < 24 hours old"""
-        out_filter = self._add_defaults_to_filter(None)
-        timestamp = datetime.strptime(
-            out_filter, 'timestamp>="' + self._time_format() + '"'
-        )
-        yesterday = datetime.now(timezone.utc) - timedelta(days=1)
-        self.assertLess(yesterday - timestamp, timedelta(minutes=1))
+        for in_filter in (None, "", "  ", "\t", "\r\n", " \t\r\n "):
+            with self.subTest(filter_=in_filter):
+                out_filter = self._add_defaults_to_filter(in_filter)
+                timestamp = datetime.strptime(
+                    out_filter, 'timestamp>="' + self._time_format() + '"'
+                )
+                yesterday = datetime.now(timezone.utc) - timedelta(days=1)
+                self.assertLess(yesterday - timestamp, timedelta(minutes=1))
 
     def test_filter_defaults_no_timestamp(self):
         """Filter should append 24 hour timestamp filter to input string"""
         test_inputs = [
-            "",
-            "  ",
             "logName=/projects/test/test",
             "test1 AND test2 AND test3",
             "time AND stamp  ",
+            "jsonPayload.timestamp_ms>0",
+            'textPayload:"timestamp"',
+            'labels.event_timestamp="x"',
+            'receiveTimestamp>="2024-01-01"',
+            'jsonPayload.timestamp>="2024-01-01"',
+            'jsonPayload . timestamp >= "2024-01-01"',
+            'jsonPayload."nested.field".timestamp="2024-01-01"',
+            'jsonPayload."timestamp"="2024-01-01"',
+            'jsonPayload.timestamp-other="x"',
+            'labels.foo-timestamp="x"',
+            'labels."foo\\".timestamp"="x"',
+            'textPayload="timestamp>=2024-01-01"',
+            r'textPayload="escaped \" timestamp >= \"2024-01-01"',
+            r'textPayload="backslash \\" AND textPayload="timestamp>=2024-01-01"',
+            '"timestamp>=2024-01-01"',
+            '"timestamp"',
+            "timestamp",
+            'SEARCH("timestamp")',
+            '-- timestamp>="2024-01-01"\nseverity>=ERROR',
+            'jsonPayload -- field\n . timestamp="2024-01-01"',
+            'textPayload="-- timestamp>=2024-01-01"',
+            'cast(jsonPayload.timestamp, STRING)="2024-01-01"',
+            'cast(jsonPayload . "timestamp", STRING)="2024-01-01"',
+            'cast(jsonPayload.timestamp_ms, STRING)="0"',
+            'cast(jsonPayload.time, TIMESTAMP)>="2024-01-01"',
+            'cast(jsonPayload.cast, TIMESTAMP, TIME_ZONE("UTC"))>="2024-01-01"',
+            'textPayload="cast(timestamp, STRING)"',
         ]
         for in_filter in test_inputs:
-            out_filter = self._add_defaults_to_filter(in_filter)
-            self.assertTrue(in_filter in out_filter)
-            self.assertTrue("timestamp" in out_filter)
+            with self.subTest(filter_=in_filter):
+                out_filter = self._add_defaults_to_filter(in_filter)
+                self.assertTrue(in_filter in out_filter)
+                self.assertTrue("timestamp" in out_filter)
 
-            timestamp = datetime.strptime(
-                out_filter, in_filter + ' AND timestamp>="' + self._time_format() + '"'
-            )
-            yesterday = datetime.now(timezone.utc) - timedelta(days=1)
-            self.assertLess(yesterday - timestamp, timedelta(minutes=1))
+                timestamp = datetime.strptime(
+                    out_filter,
+                    in_filter + ' AND timestamp>="' + self._time_format() + '"',
+                )
+                yesterday = datetime.now(timezone.utc) - timedelta(days=1)
+                self.assertLess(yesterday - timestamp, timedelta(minutes=1))
 
     def test_filter_defaults_only_timestamp(self):
         """If user inputs a timestamp filter, don't add default"""
@@ -214,6 +243,69 @@ class Test__add_defaults_to_filter(unittest.TestCase):
         in_filter = "TIMESTAMP=test"
         out_filter = self._add_defaults_to_filter(in_filter)
         self.assertEqual(in_filter, out_filter)
+
+    def test_filter_defaults_timestamp_comparisons(self):
+        """Only comparisons on the timestamp field replace the default."""
+        test_inputs = [
+            'timestamp>="2024-01-01"',
+            'TiMeStAmP \t >= \n "2024-01-01"',
+            '(timestamp >= "2024-01-01" AND timestamp < "2024-01-02")',
+            'severity>=ERROR timestamp<"2024-01-02"',
+            'NOT timestamp<"2024-01-01"',
+            '-timestamp<"2024-01-01"',
+            '"timestamp">="2024-01-01"',
+            '-"timestamp"<"2024-01-01"',
+            'timestamp -- lower bound\n >= "2024-01-01"',
+            r'textPayload="escaped \" quote" timestamp>="2024-01-01"',
+            r'textPayload="backslash \\" timestamp>="2024-01-01"',
+        ]
+        test_inputs.extend(
+            f'timestamp {operator} "2024-01-01"'
+            for operator in ("=", "!=", "<", "<=", ">", ">=", ":", "=~", "!~")
+        )
+        test_inputs.append("timestamp:*")
+        for in_filter in test_inputs:
+            with self.subTest(filter_=in_filter):
+                self.assertEqual(in_filter, self._add_defaults_to_filter(in_filter))
+
+    def test_filter_defaults_timestamp_casts(self):
+        """Casts of the timestamp field can provide a time constraint too."""
+        test_inputs = [
+            'cast(timestamp, STRING) =~ "^2024-01-01.*"',
+            '-CAST(timestamp, STRING) =~ "^2024-01-01.*"',
+            'CAST ( "TiMeStAmP" , STRING ) = "2024-01-01"',
+            'cast(timestamp, STRING, TIME_ZONE("America/New_York")) =~ "^2024"',
+            'REGEXP_EXTRACT(cast(timestamp, STRING), "(.*)") = "2024-01-01"',
+            'cast -- function\n ( timestamp -- field\n, STRING ) =~ "^2024"',
+        ]
+        for in_filter in test_inputs:
+            with self.subTest(filter_=in_filter):
+                self.assertEqual(in_filter, self._add_defaults_to_filter(in_filter))
+
+    def test_filter_defaults_after_trailing_comment(self):
+        """A trailing comment must not consume the appended time bound."""
+        for in_filter in (
+            'severity>=ERROR -- timestamp>="2024-01-01"',
+            'severity>=ERROR--timestamp>="2024-01-01"',
+        ):
+            with self.subTest(filter_=in_filter):
+                out_filter = self._add_defaults_to_filter(in_filter)
+                timestamp = datetime.strptime(
+                    out_filter,
+                    in_filter + '\nAND timestamp>="' + self._time_format() + '"',
+                )
+                yesterday = datetime.now(timezone.utc) - timedelta(days=1)
+                self.assertLess(yesterday - timestamp, timedelta(minutes=1))
+
+    def test_filter_defaults_only_comments(self):
+        """A comment-only filter does not need AND before the time bound."""
+        in_filter = '-- timestamp>="2024-01-01"\n-- old time bound'
+        out_filter = self._add_defaults_to_filter(in_filter)
+        timestamp = datetime.strptime(
+            out_filter, in_filter + '\ntimestamp>="' + self._time_format() + '"'
+        )
+        yesterday = datetime.now(timezone.utc) - timedelta(days=1)
+        self.assertLess(yesterday - timestamp, timedelta(minutes=1))
 
 
 class EntryMock(object):
