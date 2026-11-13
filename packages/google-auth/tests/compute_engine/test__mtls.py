@@ -326,3 +326,15 @@ def test_mds_mtls_adapter_send_no_fallback_strict_mode(
         request = requests.Request(method="GET", url="https://fake-mds.com").prepare()
         with pytest.raises(requests.exceptions.SSLError):
             adapter.send(request)
+
+
+@mock.patch("requests.adapters.HTTPAdapter.close")
+@mock.patch("google.auth.compute_engine._mtls.ssl.create_default_context")
+def test_mds_mtls_adapter_close(
+    mock_ssl_context, mock_super_close, mock_mds_mtls_config
+):
+    adapter = _mtls.MdsMtlsAdapter(mock_mds_mtls_config)
+    with mock.patch.object(adapter._fallback_adapter, "close") as mock_fallback_close:
+        adapter.close()
+        mock_fallback_close.assert_called_once()
+        mock_super_close.assert_called_once()

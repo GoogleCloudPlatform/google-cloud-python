@@ -181,15 +181,15 @@ class TestMTLS:
 
     @pytest.mark.asyncio
     async def test_get_client_cert_and_key_callback_sync(self):
-        """Tests that a sync callback is handled via the TypeError fallback."""
+        """Tests that a sync callback is handled via inspect.isawaitable."""
         callback = mock.Mock(return_value=(CERT_DATA, KEY_DATA))
 
         success, cert, key = await mtls.get_client_cert_and_key(callback)
 
         assert success is True
         assert cert == CERT_DATA
-        # Note: In the source, the first 'await' will call the function.
-        # When it fails to await, the exception handler uses the result already obtained.
+        # When the callback is synchronous, inspect.isawaitable() is False
+        # and the result is returned directly without awaiting.
         assert callback.call_count == 1
 
     @pytest.mark.asyncio

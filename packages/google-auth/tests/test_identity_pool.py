@@ -1003,6 +1003,27 @@ class TestCredentials(object):
 
         assert subject_token == JSON_FILE_SUBJECT_TOKEN
 
+    def test_retrieve_subject_token_supplier_leaf_cert_callback_error(self):
+        def failing_callback():
+            raise RuntimeError("Read error")
+
+        supplier = identity_pool._X509Supplier(
+            trust_chain_path=None,
+            leaf_cert_callback=failing_callback,
+        )
+        with pytest.raises(exceptions.RefreshError) as excinfo:
+            supplier.get_subject_token(None, None)
+        assert "Failed to retrieve leaf certificate." in str(excinfo.value)
+
+    def test_retrieve_subject_token_supplier_leaf_cert_parse_error(self):
+        supplier = identity_pool._X509Supplier(
+            trust_chain_path=None,
+            leaf_cert_callback=lambda: b"invalid-non-pem-data",
+        )
+        with pytest.raises(exceptions.RefreshError) as excinfo:
+            supplier.get_subject_token(None, None)
+        assert "Failed to parse leaf certificate." in str(excinfo.value)
+
     @mock.patch(
         "google.auth.transport._mtls_helper._get_workload_cert_and_key_paths",
         return_value=(CERT_FILE, KEY_FILE, None),
@@ -1099,6 +1120,34 @@ class TestCredentials(object):
             credentials.retrieve_subject_token(None)
 
         assert excinfo.match("Trust chain file 'fake.pem' was not found.")
+
+    @mock.patch.object(
+        identity_pool.Credentials,
+        "_get_cert_bytes",
+        side_effect=Exception("Read error"),
+    )
+    def test_retrieve_subject_token_leaf_cert_callback_error(self, mock_get_cert_bytes):
+        credentials = self.make_credentials(
+            credential_source=self.CREDENTIAL_SOURCE_CERTIFICATE
+        )
+        with pytest.raises(
+            exceptions.RefreshError, match="Failed to retrieve leaf certificate."
+        ):
+            credentials.retrieve_subject_token(None)
+
+    @mock.patch.object(
+        identity_pool.Credentials,
+        "_get_cert_bytes",
+        return_value=b"invalid-pem-data",
+    )
+    def test_retrieve_subject_token_leaf_cert_parse_error(self, mock_get_cert_bytes):
+        credentials = self.make_credentials(
+            credential_source=self.CREDENTIAL_SOURCE_CERTIFICATE
+        )
+        with pytest.raises(
+            exceptions.RefreshError, match="Failed to parse leaf certificate."
+        ):
+            credentials.retrieve_subject_token(None)
 
     @mock.patch(
         "google.auth.transport._mtls_helper._get_workload_cert_and_key_paths",
