@@ -1,0 +1,143 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+"""Differential read/write correctness tests for the Cloud Bigtable accelerator."""
+
+import uuid
+
+import pytest
+
+from google.cloud.bigtable.data._cross_sync import CrossSync
+from google.cloud.bigtable.data.mutations import DeleteRangeFromColumn, SetCell
+from google.cloud.bigtable.data.row_filters import CellsRowLimitFilter
+
+from . import _harness
+
+if CrossSync.is_async:
+    from ._base_async import AcceleratorTestBaseAsync as AcceleratorTestBase
+else:
+    from ._base_autogen import AcceleratorTestBase
+
+__CROSS_SYNC_OUTPUT__ = "tests.system.data.accelerator.test_fuzz_correctness_autogen"
+
+
+@CrossSync.convert_class(sync_name="TestFuzzCorrectness")
+class TestFuzzCorrectnessAsync(AcceleratorTestBase):
+    NUM_OPS = 500
+
+    @CrossSync.convert
+    async def _verify_key(self, accel_table, native_table, expected_state, key):
+        accel_row = await accel_table.read_row(key)
+        native_row = await native_table.read_row(key)
+        expected = expected_state.expected_cells(key)
+        accel_cells = _harness.normalize_row(accel_row)
+        native_cells = _harness.normalize_row(native_row)
+        _harness.assert_rows_equivalent(
+            "accelerator", accel_cells, "expected", expected
+        )
+        _harness.assert_rows_equivalent(
+            "accelerator", accel_cells, "native", native_cells
+        )
+
+    @pytest.mark.parametrize("seed", [0, 1])
+    @CrossSync.pytest
+    async def test_random_mutations_match_model_and_native(
+        self, accel_table, native_table, janitor, seed
+    ):
+        prefix = f"fuzz-{seed}-{uuid.uuid4().hex[:8]}-".encode()
+        ops = _harness.RandomOps(seed, key_prefix=prefix, include_aggregate=True)
+        expected_state = _harness.ExpectedState()
+        touched: set[bytes] = set()
+
+        for i in range(self.NUM_OPS):
+            key, mutation = ops.build_mutation(expected_state)
+            await accel_table.mutate_row(key, mutation)
+            janitor.track(key)
+            touched.add(key)
+            if touched and i % 10 == 9:
+                vkey = ops._rand.choice(sorted(touched))
+                await self._verify_key(accel_table, native_table, expected_state, vkey)
+
+        for key in sorted(touched):
+            await self._verify_key(accel_table, native_table, expected_state, key)
+
+    @CrossSync.pytest
+    async def test_multiple_versions_range_delete_and_row_filter(
+        self, accel_table, native_table, janitor
+    ):
+        key = janitor.track(f"versions-{uuid.uuid4().hex}".encode())
+        family = _harness.TEST_FAMILY
+        qualifier = b"q0"
+        expected_state = _harness.ExpectedState()
+
+        for ts_ms, value in [(1000, b"v1"), (2000, b"v2"), (3000, b"v3")]:
+            ts = ts_ms * _harness.MS
+            await accel_table.mutate_row(
+                key, expected_state.set_cell(key, family, qualifier, value, ts)
+            )
+        await self._verify_key(accel_table, native_table, expected_state, key)
+
+        # Verify row_filter parity (latest cell only).
+        row_filter = CellsRowLimitFilter(1)
+        accel_filtered = await accel_table.read_row(key, row_filter=row_filter)
+        native_filtered = await native_table.read_row(key, row_filter=row_filter)
+        _harness.assert_rows_equivalent(
+            "accel-filtered",
+            _harness.normalize_row(accel_filtered),
+            "native-filtered",
+            _harness.normalize_row(native_filtered),
+        )
+        assert len(accel_filtered.cells) == 1
+        assert accel_filtered.cells[0].value == b"v3"
+
+        # Delete middle version [2000ms, 3000ms).
+        expected_state.delete_range_from_column(
+            key, family, qualifier, 2000 * _harness.MS, 3000 * _harness.MS
+        )
+        await accel_table.mutate_row(
+            key,
+            DeleteRangeFromColumn(
+                family, qualifier, 2000 * _harness.MS, 3000 * _harness.MS
+            ),
+        )
+        await self._verify_key(accel_table, native_table, expected_state, key)
+
+    @CrossSync.pytest
+    async def test_shared_daemon_across_multiple_tables(
+        self, accel_client, instance_id, table_id, native_table, janitor
+    ):
+        async with (
+            accel_client.get_table(instance_id, table_id) as table_a,
+            accel_client.get_table(instance_id, table_id) as table_b,
+        ):
+            self.assert_accelerator_active(table_a)
+            self.assert_accelerator_active(table_b)
+            assert _harness.daemon_pid(table_a) == _harness.daemon_pid(table_b)
+
+            key_a = janitor.track(f"shared-a-{uuid.uuid4().hex}".encode())
+            key_b = janitor.track(f"shared-b-{uuid.uuid4().hex}".encode())
+            ts = 1000 * _harness.MS
+
+            await table_a.mutate_row(
+                key_a, SetCell(_harness.TEST_FAMILY, b"qa", b"va", timestamp_micros=ts)
+            )
+            await table_b.mutate_row(
+                key_b, SetCell(_harness.TEST_FAMILY, b"qb", b"vb", timestamp_micros=ts)
+            )
+
+            row_a = await table_b.read_row(key_a)
+            row_b = await table_a.read_row(key_b)
+            assert row_a is not None and row_a.cells[0].value == b"va"
+            assert row_b is not None and row_b.cells[0].value == b"vb"
+            assert (await native_table.read_row(key_a)).cells[0].value == b"va"
+            assert (await native_table.read_row(key_b)).cells[0].value == b"vb"

@@ -1,0 +1,197 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import concurrent.futures
+import functools
+import multiprocessing
+import os
+import queue
+import time
+import uuid
+
+from google.cloud.bigtable.data._accelerator import _daemon
+from google.cloud.bigtable.data._cross_sync import CrossSync
+
+from . import _harness
+
+if CrossSync.is_async:
+    from ._base_async import AcceleratorTestBaseAsync as AcceleratorTestBase
+else:
+    from ._base_autogen import AcceleratorTestBase
+
+__CROSS_SYNC_OUTPUT__ = "tests.system.data.accelerator.test_concurrency_autogen"
+
+
+def _run_worker(table, worker_id, ops_per_worker):
+    prefix = f"conc-{worker_id}-{uuid.uuid4().hex[:8]}-".encode()
+    ops = _harness.RandomOps(worker_id, key_prefix=prefix)
+    expected_state = _harness.ExpectedState()
+    touched = set()
+    for _ in range(ops_per_worker):
+        key, mutation = ops.build_mutation(expected_state)
+        table.mutate_row(key, mutation)
+        touched.add(key)
+    for key in touched:
+        row = table.read_row(key)
+        _harness.assert_rows_equivalent(
+            f"worker-{worker_id}",
+            _harness.normalize_row(row),
+            "model",
+            expected_state.expected_cells(key),
+        )
+    return sorted(touched)
+
+
+def _spawn_worker(
+    project,
+    instance_id,
+    table_id,
+    app_profile_id,
+    base_worker_id,
+    workers_per_process,
+    ops_per_worker,
+    result_queue,
+):
+    from google.cloud.bigtable.data import BigtableDataClient
+
+    try:
+        override = os.environ.get(_harness.BIN_ENV_VAR)
+        if override:
+            _daemon._resolve_binary_path = lambda: override
+        with BigtableDataClient(project=project, use_accelerator=True) as client:
+            table_kwargs = {"app_profile_id": app_profile_id} if app_profile_id else {}
+            with client.get_table(instance_id, table_id, **table_kwargs) as table:
+                if table._accelerator_client is None:
+                    result_queue.put((False, [], "accelerator fell back to native"))
+                    return
+                with concurrent.futures.ThreadPoolExecutor(
+                    max_workers=workers_per_process
+                ) as executor:
+                    futures = [
+                        executor.submit(
+                            _run_worker, table, base_worker_id + w, ops_per_worker
+                        )
+                        for w in range(workers_per_process)
+                    ]
+                    touched = []
+                    for future in futures:
+                        touched.extend(future.result())
+        result_queue.put((True, touched, None))
+    except BaseException as exc:  # noqa: BLE001 - reported to the parent process
+        result_queue.put((False, [], repr(exc)))
+
+
+@CrossSync.convert_class(sync_name="TestConcurrency")
+class TestConcurrencyAsync(AcceleratorTestBase):
+    NUM_WORKERS = 16
+    OPS_PER_WORKER = 50
+    NUM_PROCESSES = 4
+    WORKERS_PER_PROCESS = 8
+
+    @CrossSync.convert
+    async def _worker(self, table, worker_id):
+        prefix = f"conc-{worker_id}-{uuid.uuid4().hex[:8]}-".encode()
+        ops = _harness.RandomOps(worker_id, key_prefix=prefix)
+        expected_state = _harness.ExpectedState()
+        touched = set()
+        for _ in range(self.OPS_PER_WORKER):
+            key, mutation = ops.build_mutation(expected_state)
+            await table.mutate_row(key, mutation)
+            touched.add(key)
+        for key in touched:
+            row = await table.read_row(key)
+            _harness.assert_rows_equivalent(
+                f"worker-{worker_id}",
+                _harness.normalize_row(row),
+                "model",
+                expected_state.expected_cells(key),
+            )
+        return sorted(touched)
+
+    @CrossSync.pytest
+    async def test_concurrent_workers_stay_consistent(self, accel_table, janitor):
+        executor = (
+            concurrent.futures.ThreadPoolExecutor(max_workers=self.NUM_WORKERS)
+            if not CrossSync.is_async
+            else None
+        )
+        try:
+            partials = [
+                functools.partial(self._worker, accel_table, i)
+                for i in range(self.NUM_WORKERS)
+            ]
+            results = await CrossSync.gather_partials(
+                partials, return_exceptions=True, sync_executor=executor
+            )
+        finally:
+            if executor is not None:
+                executor.shutdown(wait=True)
+
+        for i, result in enumerate(results):
+            assert not isinstance(result, BaseException), (
+                f"worker {i} failed: {result!r}"
+            )
+            for key in result:
+                janitor.track(key)
+
+    @CrossSync.pytest
+    async def test_multiprocess_concurrent_clients_stay_consistent(
+        self, instance_id, table_id, janitor
+    ):
+        project = self._project_id()
+        app_profile_id = os.getenv("BIGTABLE_TEST_APP_PROFILE") or os.getenv(
+            "CBT_APP_PROFILE_ID"
+        )
+        ctx = multiprocessing.get_context("spawn")
+        result_queue = ctx.Queue()
+        procs = []
+        for p in range(self.NUM_PROCESSES):
+            proc = ctx.Process(
+                target=_spawn_worker,
+                args=(
+                    project,
+                    instance_id,
+                    table_id,
+                    app_profile_id,
+                    p * self.WORKERS_PER_PROCESS,
+                    self.WORKERS_PER_PROCESS,
+                    self.OPS_PER_WORKER,
+                    result_queue,
+                ),
+            )
+            proc.start()
+            procs.append(proc)
+        results = []
+        deadline = time.monotonic() + 300.0
+        try:
+            while len(results) < self.NUM_PROCESSES and time.monotonic() < deadline:
+                try:
+                    results.append(result_queue.get(timeout=0.2))
+                except queue.Empty:
+                    if not any(p.is_alive() for p in procs) and result_queue.empty():
+                        break
+        finally:
+            for proc in procs:
+                proc.join(timeout=30)
+                if proc.is_alive():
+                    proc.kill()
+                    proc.join()
+
+        assert len(results) == self.NUM_PROCESSES, (
+            f"expected {self.NUM_PROCESSES} results, got {len(results)}"
+        )
+        for ok, touched, error in results:
+            assert ok, f"a worker process failed: {error}"
+            for key in touched:
+                janitor.track(key)
