@@ -250,7 +250,13 @@ class TestOperations(SpannerSimpleTestClass):
 
     def test_quote_name_invalid_types(self):
         for invalid in (None, 123, True, False, 1.5, b"abc", ["abc"], {"a": 1}):
-            with self.subTest(invalid=invalid), self.assertRaises(TypeError):
+            expected_message = (
+                rf"^Identifier must be a string, got {type(invalid).__name__}$"
+            )
+            with (
+                self.subTest(invalid=invalid),
+                self.assertRaisesRegex(TypeError, expected_message),
+            ):
                 self.db_operations.quote_name(invalid)
 
     def test_quote_name_running_spanner_backend_tests(self):

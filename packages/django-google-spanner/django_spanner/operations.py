@@ -125,7 +125,7 @@ class DatabaseOperations(BaseDatabaseOperations):
         """
         return 128
 
-    def quote_name(self, name):
+    def quote_name(self, name: str) -> str:
         """
         Return a quoted version of the given table, index, or column name.
 
@@ -157,9 +157,10 @@ class DatabaseOperations(BaseDatabaseOperations):
             name = name.replace(" ", "_").replace("-", "_")
         if _QUOTED_IDENTIFIER_RE.match(name):
             return name
-        # TODO: Unconditionally quote all identifiers in a follow-up PR (after
-        # fixing schema.py check-constraint/trace quoting and updating SQL tests)
-        # so reserved keyword tracking is no longer required.
+        # TODO(https://github.com/googleapis/google-cloud-python/issues/19072):
+        # Unconditionally quote all identifiers in a follow-up PR (after fixing
+        # schema.py check-constraint/trace quoting and updating SQL tests) so
+        # reserved keyword tracking is no longer required.
         if (
             _REGULAR_IDENTIFIER_RE.match(name)
             and name.upper() not in SPANNER_RESERVED_KEYWORDS
