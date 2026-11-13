@@ -6,5 +6,5 @@
 # e.g., if setup.py has "foo >= 1.14.0, < 2.0.0dev",
 # Then this file should have foo==1.14.0
 pyasn1-modules==0.2.1
-cryptography==41.0.5
+cryptography==50.0.1
 aiohttp==3.9.0

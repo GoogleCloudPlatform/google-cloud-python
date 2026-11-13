@@ -7,7 +7,7 @@
 # Then this file should have foo==1.14.0
 pyasn1-modules==0.2.1
 setuptools==40.3.0
-cryptography==38.0.3
+cryptography==46.0.5
 aiohttp==3.8.0
 requests==2.30.0
 pyjwt==2.0
