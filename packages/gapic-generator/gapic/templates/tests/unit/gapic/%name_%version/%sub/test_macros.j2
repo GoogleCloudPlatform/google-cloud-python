@@ -743,10 +743,9 @@ def test_{{ method_name }}_pager(transport_name: str = "grpc"):
         )
         {% endif %}
         {% if service.version %}
-        if HAS_GOOGLE_API_CORE_VERSION_HEADER:
-            expected_metadata = tuple(expected_metadata) + (
-                version_header.to_api_version_header("{{ service.version }}"),
-            )
+        expected_metadata = tuple(expected_metadata) + (
+            version_header.to_api_version_header("{{ service.version }}"),
+        )
         {% endif %}
         pager = client.{{ method_name }}(request={}, retry=retry, timeout=timeout)
 
