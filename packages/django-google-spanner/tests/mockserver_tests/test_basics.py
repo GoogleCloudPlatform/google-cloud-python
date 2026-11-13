@@ -549,3 +549,39 @@ class TestBasics(MockServerTestBase):
             self.assertTrue(transaction.get_autocommit())
         finally:
             connection.settings_dict["NAME"] = orig_name
+
+    def test_schema_editor_deferred_sql_exception_discards_queued_ddl(self):
+        connection._batch_ddl_in_schema_editor = True
+        try:
+            with self.assertRaises(ValueError):
+                with connection.schema_editor() as editor:
+                    editor.create_model(Singer)
+                    editor.deferred_sql.append(
+                        "CREATE INDEX idx_s ON tests_singer (first_name); SELECT 1"
+                    )
+        finally:
+            connection._batch_ddl_in_schema_editor = False
+
+        self.assertEqual(len(self.database_admin_service.requests), 0)
+        self.assertTrue(transaction.get_autocommit())
+        self.assertTrue(connection.connection.autocommit)
+
+    def test_schema_editor_server_side_ddl_error_restores_autocommit(self):
+        from google.api_core.exceptions import InvalidArgument
+
+        connection.ensure_connection()
+        connection._batch_ddl_in_schema_editor = True
+        try:
+            with mock.patch.object(
+                connection.connection.database,
+                "update_ddl",
+                side_effect=InvalidArgument("400 Invalid DDL syntax"),
+            ):
+                with self.assertRaises(InvalidArgument):
+                    with connection.schema_editor() as editor:
+                        editor.create_model(Singer)
+        finally:
+            connection._batch_ddl_in_schema_editor = False
+
+        self.assertTrue(transaction.get_autocommit())
+        self.assertTrue(connection.connection.autocommit)

@@ -71,12 +71,17 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
+        clean_exit = False
         try:
-            super().__exit__(exc_type, exc_value, traceback)
+            res = super().__exit__(exc_type, exc_value, traceback)
+            clean_exit = (exc_type is None) or bool(res)
+            return res
         finally:
             if getattr(self, "_restore_autocommit", False):
                 try:
-                    if exc_type is not None:
+                    if clean_exit:
+                        self.connection.commit()
+                    else:
                         self.connection.rollback()
                 finally:
                     self.connection.set_autocommit(True)
