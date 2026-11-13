@@ -28,7 +28,7 @@ from google.protobuf.json_format import MessageToDict
 from test__helpers import FIRESTORE_EMULATOR, FIRESTORE_ENTERPRISE_DB, system_test_lock
 
 from google.cloud.firestore import AsyncClient, Client, GeoPoint
-from google.cloud.firestore_v1 import pipeline_expressions
+from google.cloud.firestore_v1 import pipeline_expressions, pipeline_types
 from google.cloud.firestore_v1 import pipeline_expressions as expr
 from google.cloud.firestore_v1 import pipeline_stages as stages
 from google.cloud.firestore_v1.vector import Vector
@@ -318,7 +318,7 @@ def _parse_expressions(client, yaml_element: Any):
         elif len(yaml_element) == 1 and _is_stage_string(next(iter(yaml_element))):
             # build pipeline stage if possible (eg, for SampleOptions)
             cls_str = next(iter(yaml_element))
-            cls = getattr(stages, cls_str)
+            cls = getattr(pipeline_types, cls_str)
             yaml_args = yaml_element[cls_str]
             return _apply_yaml_args_to_callable(cls, client, yaml_args)
         elif len(yaml_element) == 1 and list(yaml_element)[0] == "Pipeline":
@@ -399,7 +399,7 @@ def _is_stage_string(yaml_str):
     return (
         isinstance(yaml_str, str)
         and yaml_str[0].isupper()
-        and hasattr(stages, yaml_str)
+        and hasattr(pipeline_types, yaml_str)
     )
 
 

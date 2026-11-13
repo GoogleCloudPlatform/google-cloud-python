@@ -1,0 +1,458 @@
+tests:
+  - description: "testAddWindowFields - partition, sort, documents frame, and multiple accumulators"
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal_any:
+              - Field: genre
+              - [Science Fiction, Dystopian]
+      - AddWindowFields:
+          window:
+            WindowSpec:
+              partition:
+                - Field: genre
+              sort:
+                - Ordering:
+                    - Field: published
+                    - ASCENDING
+              documents:
+                DocumentWindowFrame:
+                  preceding: unbounded
+                  following: current
+          fields:
+            - AliasedExpression:
+                - FunctionExpression.sum:
+                    - Field: rating
+                - "running_rating"
+            - AliasedExpression:
+                - Count
+                - "running_count"
+      - Sort:
+          - Ordering:
+              - Field: published
+              - ASCENDING
+      - Select:
+          - title
+          - genre
+          - running_rating
+          - running_count
+    assert_results:
+      - title: "1984"
+        genre: "Dystopian"
+        running_rating: 4.2
+        running_count: 1
+      - title: "Dune"
+        genre: "Science Fiction"
+        running_rating: 4.6
+        running_count: 1
+      - title: "The Hitchhiker's Guide to the Galaxy"
+        genre: "Science Fiction"
+        running_rating: 8.8
+        running_count: 2
+      - title: "The Handmaid's Tale"
+        genre: "Dystopian"
+        running_rating: 8.3
+        running_count: 2
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: genre
+              - functionValue:
+                  args:
+                  - stringValue: Science Fiction
+                  - stringValue: Dystopian
+                  name: array
+              name: equal_any
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                documents:
+                  mapValue:
+                    fields:
+                      following:
+                        stringValue: current
+                      preceding:
+                        stringValue: unbounded
+                partition:
+                  arrayValue:
+                    values:
+                    - fieldReferenceValue: genre
+                sort:
+                  arrayValue:
+                    values:
+                    - mapValue:
+                        fields:
+                          direction:
+                            stringValue: ascending
+                          expression:
+                            fieldReferenceValue: published
+          - mapValue:
+              fields:
+                running_count:
+                  functionValue:
+                    name: count
+                running_rating:
+                  functionValue:
+                    args:
+                    - fieldReferenceValue: rating
+                    name: sum
+          name: add_window_fields
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: published
+          name: sort
+        - args:
+          - mapValue:
+              fields:
+                genre:
+                  fieldReferenceValue: genre
+                running_count:
+                  fieldReferenceValue: running_count
+                running_rating:
+                  fieldReferenceValue: running_rating
+                title:
+                  fieldReferenceValue: title
+          name: select
+  - description: "testAddWindowFields - rank with ties"
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal_any:
+              - Field: genre
+              - [Science Fiction, Dystopian]
+      - AddWindowFields:
+          window:
+            WindowSpec:
+              sort:
+                - Ordering:
+                    - Field: rating
+                    - ASCENDING
+          fields:
+            - AliasedExpression:
+                - Rank
+                - "rating_rank"
+      - Sort:
+          - Ordering:
+              - Field: rating
+              - ASCENDING
+          - Ordering:
+              - Field: title
+              - ASCENDING
+      - Select:
+          - title
+          - rating
+          - rating_rank
+    assert_results:
+      - title: "The Handmaid's Tale"
+        rating: 4.1
+        rating_rank: 1
+      - title: "1984"
+        rating: 4.2
+        rating_rank: 2
+      - title: "The Hitchhiker's Guide to the Galaxy"
+        rating: 4.2
+        rating_rank: 2
+      - title: "Dune"
+        rating: 4.6
+        rating_rank: 4
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: genre
+              - functionValue:
+                  args:
+                  - stringValue: Science Fiction
+                  - stringValue: Dystopian
+                  name: array
+              name: equal_any
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                sort:
+                  arrayValue:
+                    values:
+                    - mapValue:
+                        fields:
+                          direction:
+                            stringValue: ascending
+                          expression:
+                            fieldReferenceValue: rating
+          - mapValue:
+              fields:
+                rating_rank:
+                  functionValue:
+                    name: rank
+          name: add_window_fields
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: rating
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: title
+          name: sort
+        - args:
+          - mapValue:
+              fields:
+                rating:
+                  fieldReferenceValue: rating
+                rating_rank:
+                  fieldReferenceValue: rating_rank
+                title:
+                  fieldReferenceValue: title
+          name: select
+  - description: "testAddWindowFields - accumulator-level over() frames"
+    pipeline:
+      - Collection: books
+      - Where:
+          - FunctionExpression.equal_any:
+              - Field: genre
+              - [Science Fiction, Dystopian]
+      - AddWindowFields:
+          window:
+            WindowSpec:
+              sort:
+                - Ordering:
+                    - Field: published
+                    - ASCENDING
+          fields:
+            - AliasedExpression:
+                - WindowFunction.over:
+                    - Count
+                    - WindowSpec:
+                        range:
+                          RangeWindowFrame:
+                            preceding: 20
+                            following: current
+                - "books_within_20_years"
+            - AliasedExpression:
+                - WindowFunction.over:
+                    - FunctionExpression.array_agg:
+                        - Field: title
+                    - WindowSpec:
+                        documents:
+                          DocumentWindowFrame:
+                            preceding: 1
+                            following: 1
+                - "nearby_titles"
+      - Sort:
+          - Ordering:
+              - Field: published
+              - ASCENDING
+      - Select:
+          - title
+          - published
+          - books_within_20_years
+          - nearby_titles
+    assert_results:
+      - title: "1984"
+        published: 1949
+        books_within_20_years: 1
+        nearby_titles:
+          - "1984"
+          - "Dune"
+      - title: "Dune"
+        published: 1965
+        books_within_20_years: 2
+        nearby_titles:
+          - "1984"
+          - "Dune"
+          - "The Hitchhiker's Guide to the Galaxy"
+      - title: "The Hitchhiker's Guide to the Galaxy"
+        published: 1979
+        books_within_20_years: 2
+        nearby_titles:
+          - "Dune"
+          - "The Hitchhiker's Guide to the Galaxy"
+          - "The Handmaid's Tale"
+      - title: "The Handmaid's Tale"
+        published: 1985
+        books_within_20_years: 3
+        nearby_titles:
+          - "The Hitchhiker's Guide to the Galaxy"
+          - "The Handmaid's Tale"
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /books
+          name: collection
+        - args:
+          - functionValue:
+              args:
+              - fieldReferenceValue: genre
+              - functionValue:
+                  args:
+                  - stringValue: Science Fiction
+                  - stringValue: Dystopian
+                  name: array
+              name: equal_any
+          name: where
+        - args:
+          - mapValue:
+              fields:
+                sort:
+                  arrayValue:
+                    values:
+                    - mapValue:
+                        fields:
+                          direction:
+                            stringValue: ascending
+                          expression:
+                            fieldReferenceValue: published
+          - mapValue:
+              fields:
+                books_within_20_years:
+                  functionValue:
+                    args:
+                    - functionValue:
+                        name: count
+                    - mapValue:
+                        fields:
+                          range:
+                            mapValue:
+                              fields:
+                                following:
+                                  stringValue: current
+                                preceding:
+                                  integerValue: '20'
+                    name: over
+                nearby_titles:
+                  functionValue:
+                    args:
+                    - functionValue:
+                        args:
+                        - fieldReferenceValue: title
+                        name: array_agg
+                    - mapValue:
+                        fields:
+                          documents:
+                            mapValue:
+                              fields:
+                                following:
+                                  integerValue: '1'
+                                preceding:
+                                  integerValue: '1'
+                    name: over
+          name: add_window_fields
+        - args:
+          - mapValue:
+              fields:
+                direction:
+                  stringValue: ascending
+                expression:
+                  fieldReferenceValue: published
+          name: sort
+        - args:
+          - mapValue:
+              fields:
+                books_within_20_years:
+                  fieldReferenceValue: books_within_20_years
+                nearby_titles:
+                  fieldReferenceValue: nearby_titles
+                published:
+                  fieldReferenceValue: published
+                title:
+                  fieldReferenceValue: title
+          name: select
+  - description: "testAddWindowFields - range frame with time unit"
+    pipeline:
+      - Collection: timestamps
+      - AddWindowFields:
+          window:
+            WindowSpec:
+              sort:
+                - Ordering:
+                    - Field: time
+                    - ASCENDING
+              range:
+                RangeWindowFrame:
+                  preceding: 12
+                  following: current
+                  unit: hour
+          fields:
+            - AliasedExpression:
+                - Count
+                - "window_count"
+      - Select:
+          - window_count
+    assert_results:
+      - window_count: 1
+    assert_proto:
+      pipeline:
+        stages:
+        - args:
+          - referenceValue: /timestamps
+          name: collection
+        - args:
+          - mapValue:
+              fields:
+                range:
+                  mapValue:
+                    fields:
+                      following:
+                        stringValue: current
+                      preceding:
+                        integerValue: '12'
+                      unit:
+                        stringValue: hour
+                sort:
+                  arrayValue:
+                    values:
+                    - mapValue:
+                        fields:
+                          direction:
+                            stringValue: ascending
+                          expression:
+                            fieldReferenceValue: time
+          - mapValue:
+              fields:
+                window_count:
+                  functionValue:
+                    name: count
+          name: add_window_fields
+        - args:
+          - mapValue:
+              fields:
+                window_count:
+                  fieldReferenceValue: window_count
+          name: select
+  - description: "testAddWindowFields - error on range frame without sort"
+    pipeline:
+      - Collection: books
+      - AddWindowFields:
+          window:
+            WindowSpec:
+              range:
+                RangeWindowFrame:
+                  preceding: unbounded
+                  following: current
+          fields:
+            - AliasedExpression:
+                - Count
+                - "window_count"
+    assert_error: ".*range.*"

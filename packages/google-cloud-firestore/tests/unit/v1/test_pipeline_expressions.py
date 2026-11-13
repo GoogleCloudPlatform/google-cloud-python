@@ -22,12 +22,17 @@ import google.cloud.firestore_v1.pipeline_expressions as expr
 from google.cloud.firestore_v1 import _helpers
 from google.cloud.firestore_v1._helpers import GeoPoint
 from google.cloud.firestore_v1.pipeline_expressions import (
+    AggregateFunction,
     BooleanExpression,
     Constant,
     Expression,
     Field,
     Ordering,
+    Rank,
+    WindowFunction,
+    WindowSpec,
 )
+from google.cloud.firestore_v1.pipeline_types import DocumentWindowFrame, WindowBound
 from google.cloud.firestore_v1.types import document as document_pb
 from google.cloud.firestore_v1.types import query as query_pb
 from google.cloud.firestore_v1.types.document import Value
@@ -2262,3 +2267,39 @@ class TestExpressionessionMethods:
         assert repr(instance) == "Value.array_index_of_all(Constant.of('comedy'))"
         infix_instance = arg1.array_index_of_all(value)
         assert infix_instance == instance
+
+
+class TestWindowExpressions:
+    def test_window_function_hierarchy(self):
+        assert issubclass(AggregateFunction, WindowFunction)
+        assert not issubclass(Expression, WindowFunction)
+        assert not hasattr(Field.of("rating"), "over")
+
+    def test_over_repr_and_equality(self):
+        agg = Field.of("rating").sum()
+        window = WindowSpec(documents=DocumentWindowFrame(1, WindowBound.CURRENT))
+        win_fn = agg.over(window)
+        assert isinstance(win_fn, WindowFunction)
+        assert not isinstance(win_fn, AggregateFunction)
+        assert (
+            repr(win_fn)
+            == "Field.of('rating').sum().over(WindowSpec(documents=DocumentWindowFrame(preceding=1, following=<WindowBound.CURRENT: 'current'>)))"
+        )
+        assert win_fn == agg.over(
+            WindowSpec(documents=DocumentWindowFrame(1, WindowBound.CURRENT))
+        )
+        assert win_fn != agg.over(WindowSpec())
+        assert win_fn != agg
+
+    def test_over_to_pb(self):
+        agg = Field.of("rating").sum()
+        window = WindowSpec(documents=DocumentWindowFrame(-1, WindowBound.CURRENT))
+        pb = agg.over(window)._to_pb()
+        assert pb.function_value.name == "over"
+        assert list(pb.function_value.args) == [agg._to_pb(), window._to_pb()]
+
+    def test_rank(self):
+        rank = Rank()
+        assert isinstance(rank, WindowFunction)
+        assert repr(rank) == "Rank()"
+        assert rank._to_pb() == Value(function_value={"name": "rank", "args": []})

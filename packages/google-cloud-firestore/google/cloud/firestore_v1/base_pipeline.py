@@ -27,6 +27,7 @@ from google.cloud.firestore_v1.pipeline_expressions import (
     Field,
     FunctionExpression,
     Selectable,
+    WindowFunction,
     _PipelineValueExpression,
 )
 from google.cloud.firestore_v1.types.pipeline import (
@@ -175,6 +176,41 @@ class _BasePipeline:
             A new Pipeline object with this stage appended to the stage list
         """
         return self._append(stages.AddFields(*fields))
+
+    def add_window_fields(
+        self,
+        *fields: AliasedExpression[WindowFunction],
+        window: types.WindowSpec | None = None,
+    ) -> "_BasePipeline":
+        """
+        Adds new fields computed by window functions over a window of documents.
+
+        .. note::
+            This feature is currently in beta and is subject to change.
+
+        Example:
+            >>> from google.cloud.firestore_v1.pipeline_expressions import Field, Rank
+            >>> from google.cloud.firestore_v1.pipeline_types import WindowSpec
+            >>> pipeline = client.pipeline().collection("books")
+            >>> pipeline = pipeline.add_window_fields(
+            ...     Rank().as_("genre_rank"),
+            ...     Field.of("price").sum().as_("genre_total_price"),
+            ...     window=WindowSpec(
+            ...         partition=["genre"],
+            ...         sort=[Field.of("rating").descending()],
+            ...     ),
+            ... )
+
+        Args:
+            *fields: Aliased `AggregateFunction` or `WindowFunction` expressions defining
+                the window calculations and their output field aliases.
+            window: Optional `WindowSpec` specifying the baseline window configuration
+                for this stage.
+
+        Returns:
+            A new Pipeline object with this stage appended to the stage list.
+        """
+        return self._append(stages.AddWindowFields(*fields, window=window))
 
     def remove_fields(self, *fields: Field | str) -> "_BasePipeline":
         """

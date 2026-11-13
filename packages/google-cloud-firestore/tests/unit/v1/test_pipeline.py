@@ -17,6 +17,7 @@ import pytest
 
 from google.cloud.firestore_v1 import pipeline_stages as stages
 from google.cloud.firestore_v1.pipeline_expressions import Field
+from google.cloud.firestore_v1.pipeline_types import WindowSpec
 from tests.unit.v1._test_helpers import make_client
 
 
@@ -417,6 +418,11 @@ def test_pipeline_execute_stream_equivalence():
         ("offset", (1,), stages.Offset),
         ("limit", (1,), stages.Limit),
         ("aggregate", (Field.of("n").as_("alias"),), stages.Aggregate),
+        (
+            "add_window_fields",
+            (Field.of("n").sum().as_("alias"),),
+            stages.AddWindowFields,
+        ),
         ("distinct", ("field_name",), stages.Distinct),
         ("distinct", (Field.of("n"), "second"), stages.Distinct),
     ],
@@ -439,6 +445,18 @@ def test_pipeline_aggregate_with_groups():
     assert isinstance(result_ppl.stages[0], stages.Aggregate)
     assert list(result_ppl.stages[0].groups) == [Field.of("author")]
     assert list(result_ppl.stages[0].accumulators) == [Field.of("title")]
+
+
+def test_pipeline_add_window_fields_with_window():
+    start_ppl = _make_pipeline()
+    window = WindowSpec(partition="genre", sort=Field.of("rating").descending())
+    expr = Field.of("rating").sum().as_("sum_rating")
+    result_ppl = start_ppl.add_window_fields(expr, window=window)
+    assert len(start_ppl.stages) == 0
+    assert len(result_ppl.stages) == 1
+    assert isinstance(result_ppl.stages[0], stages.AddWindowFields)
+    assert result_ppl.stages[0].fields == [expr]
+    assert result_ppl.stages[0].window == window
 
 
 def test_pipeline_raw_stage_with_options():

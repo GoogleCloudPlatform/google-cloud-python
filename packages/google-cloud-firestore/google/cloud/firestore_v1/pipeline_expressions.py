@@ -36,6 +36,7 @@ from google.cloud.firestore_v1.pipeline_types import (
     TimeGranularity,
     TimePart,
     TimeUnit,
+    WindowSpec,
 )
 from google.cloud.firestore_v1.types.document import Pipeline as Pipeline_pb
 from google.cloud.firestore_v1.types.document import Value
@@ -2394,7 +2395,7 @@ class Expression(ABC):
         """
         return Ordering(self, Ordering.Direction.DESCENDING)
 
-    def as_(self, alias: str) -> "AliasedExpression":
+    def as_(self: T, alias: str) -> "AliasedExpression[T]":
         """Assigns an alias to this expression.
 
         Aliases are useful for renaming fields in the output of a stage or for giving meaningful
@@ -2682,7 +2683,50 @@ class FunctionExpression(Expression):
         )
 
 
-class AggregateFunction(FunctionExpression):
+class WindowFunction(FunctionExpression):
+    """A base class for window functions that operate over a window of documents."""
+
+    def over(
+        self,
+        window: WindowSpec,
+    ) -> "WindowFunction":
+        """Configures a window over which this function is evaluated.
+
+        Args:
+            window: A `WindowSpec` specifying the window override for this function.
+
+        Returns:
+            A `WindowFunction` with the specified window override.
+        """
+        return _OverExpression(self, window)
+
+
+class _OverExpression(WindowFunction):
+    """Internal expression binding a WindowFunction to a WindowSpec."""
+
+    def __init__(self, func: WindowFunction, window: WindowSpec):
+        super().__init__(
+            "over",
+            [func],
+            repr_function=lambda expr: f"{expr.params[0]!r}.over({self._window!r})",
+        )
+        self._window = window
+
+    def __eq__(self, other):
+        if not isinstance(other, _OverExpression):
+            return False
+        return super().__eq__(other) and self._window == other._window
+
+    def _to_pb(self) -> Value:
+        return Value(
+            function_value={
+                "name": self.name,
+                "args": [self.params[0]._to_pb(), self._window._to_pb()],
+            }
+        )
+
+
+class AggregateFunction(WindowFunction):
     """A base class for aggregation functions that operate across multiple inputs."""
 
 
@@ -2722,7 +2766,7 @@ class Selectable(Expression):
         )
 
 
-T = TypeVar("T", bound=Expression)
+T = TypeVar("T", bound=Expression, covariant=True)
 
 
 class AliasedExpression(Selectable, Generic[T]):
@@ -3194,6 +3238,31 @@ class CurrentDocument(FunctionExpression):
     def __init__(self):
         super().__init__(
             "current_document",
+            [],
+            repr_function=FunctionExpression._build_standalone_repr(),
+        )
+
+
+class Rank(WindowFunction):
+    """Creates a window function that computes the rank of each document within a window.
+
+    Documents with equal sort values receive the same rank, with gaps in the subsequent
+    ranking numbers.
+
+    Example:
+        >>> # Rank documents by price descending within each category
+        >>> db.pipeline().collection("products").add_window_fields(
+        ...     Rank().as_("price_rank"),
+        ...     window=WindowSpec(
+        ...         partition=["category"],
+        ...         sort=[Field.of("price").descending()],
+        ...     ),
+        ... )
+    """
+
+    def __init__(self):
+        super().__init__(
+            "rank",
             [],
             repr_function=FunctionExpression._build_standalone_repr(),
         )

@@ -25,6 +25,15 @@ from google.cloud.firestore_v1.pipeline_expressions import (
     DocumentMatches,
     Field,
     Ordering,
+    Rank,
+)
+from google.cloud.firestore_v1.pipeline_types import (
+    DocumentWindowFrame,
+    RangeWindowFrame,
+    TimeGranularity,
+    TimeUnit,
+    WindowBound,
+    WindowSpec,
 )
 from google.cloud.firestore_v1.types.document import Value
 from google.cloud.firestore_v1.vector import Vector
@@ -1064,3 +1073,144 @@ class TestUpdate:
         assert "score" in result.args[0].map_value.fields
         assert "status" in result.args[0].map_value.fields
         assert len(result.options) == 0
+
+
+class TestWindowTypes:
+    def test_document_window_frame_to_pb(self):
+        assert DocumentWindowFrame()._to_pb().map_value.fields == {}
+        pb = DocumentWindowFrame(1, WindowBound.CURRENT)._to_pb()
+        assert pb.map_value.fields == {
+            "preceding": Value(integer_value=1),
+            "following": Value(string_value="current"),
+        }
+        expr_pb = DocumentWindowFrame(Field.of("offset"), "unbounded")._to_pb()
+        assert expr_pb.map_value.fields == {
+            "preceding": Value(field_reference_value="offset"),
+            "following": Value(string_value="unbounded"),
+        }
+
+    @pytest.mark.parametrize(
+        "unit,expected_unit",
+        [
+            (TimeUnit.DAY, "day"),
+            (TimeGranularity.MONTH, "month"),
+            ("hour", "hour"),
+            (Constant.of("minute"), "minute"),
+        ],
+    )
+    def test_range_window_frame_to_pb(self, unit, expected_unit):
+        assert RangeWindowFrame()._to_pb().map_value.fields == {}
+        pb = RangeWindowFrame(10.5, WindowBound.UNBOUNDED, unit)._to_pb()
+        assert pb.map_value.fields == {
+            "preceding": Value(double_value=10.5),
+            "following": Value(string_value="unbounded"),
+            "unit": Value(string_value=expected_unit),
+        }
+
+    def test_window_spec_coercions(self):
+        order = Field.of("rating").descending()
+        assert WindowSpec().partition == []
+        assert WindowSpec().sort == []
+        assert WindowSpec(partition="genre").partition == [Field.of("genre")]
+        assert WindowSpec(partition=Field.of("genre")).partition == [Field.of("genre")]
+        assert WindowSpec(partition=["genre", Field.of("author")]).partition == [
+            Field.of("genre"),
+            Field.of("author"),
+        ]
+        assert WindowSpec(sort=order).sort == [order]
+        assert WindowSpec(sort=[order]).sort == [order]
+
+    def test_window_spec_repr_and_equality(self):
+        empty = WindowSpec()
+        assert repr(empty) == "WindowSpec()"
+        spec = WindowSpec(
+            partition="genre",
+            sort=Field.of("rating").descending(),
+            documents=DocumentWindowFrame(-1, WindowBound.CURRENT),
+            range=RangeWindowFrame(-5, 5, "day"),
+        )
+        assert repr(spec) == (
+            "WindowSpec("
+            "partition=[Field.of('genre')], "
+            "sort=[Field.of('rating').descending()], "
+            "documents=DocumentWindowFrame(preceding=-1, following=<WindowBound.CURRENT: 'current'>), "
+            "range=RangeWindowFrame(preceding=-5, following=5, unit='day')"
+            ")"
+        )
+        assert spec == WindowSpec(
+            partition=[Field.of("genre")],
+            sort=[Field.of("rating").descending()],
+            documents=DocumentWindowFrame(-1, WindowBound.CURRENT),
+            range=RangeWindowFrame(-5, 5, "day"),
+        )
+        assert spec != empty
+        assert spec != object()
+
+    def test_window_spec_to_pb(self):
+        assert WindowSpec()._to_pb().map_value.fields == {}
+        order = Field.of("rating").descending()
+        doc_frame = DocumentWindowFrame(-1, WindowBound.CURRENT)
+        range_frame = RangeWindowFrame(-5, 5, "day")
+        spec = WindowSpec(
+            partition="genre", sort=order, documents=doc_frame, range=range_frame
+        )
+        assert spec._to_pb().map_value.fields == {
+            "partition": Value(
+                array_value={"values": [Value(field_reference_value="genre")]}
+            ),
+            "sort": Value(array_value={"values": [order._to_pb()]}),
+            "documents": doc_frame._to_pb(),
+            "range": range_frame._to_pb(),
+        }
+
+
+class TestAddWindowFields:
+    def _make_one(self, *args, **kwargs):
+        return stages.AddWindowFields(*args, **kwargs)
+
+    def test_ctor_positional(self):
+        expr1 = Field.of("rating").sum().as_("sum_rating")
+        expr2 = Rank().as_("rank_val")
+        stage = self._make_one(expr1, expr2)
+        assert stage.fields == [expr1, expr2]
+        assert stage.window == WindowSpec()
+        assert stage.name == "add_window_fields"
+
+    def test_ctor_keyword(self):
+        expr1 = Field.of("rating").sum().as_("sum_rating")
+        window = WindowSpec(partition=["genre"], sort=[Field.of("rating").descending()])
+        stage = self._make_one(fields=[expr1], window=window)
+        assert stage.fields == [expr1]
+        assert stage.window == window
+
+    def test_ctor_combined_raises(self):
+        expr1 = Field.of("rating").sum().as_("sum_rating")
+        with pytest.raises(
+            ValueError,
+            match="AddWindowFields stage contains both positional and keyword fields",
+        ):
+            self._make_one(expr1, fields=[expr1])
+
+    def test_repr(self):
+        stage = self._make_one(
+            Rank().as_("pub_rank"), window=WindowSpec(partition="genre")
+        )
+        assert repr(stage) == (
+            "AddWindowFields("
+            "fields=[Rank().as_('pub_rank')], "
+            "window=WindowSpec(partition=[Field.of('genre')])"
+            ")"
+        )
+
+    def test_to_pb(self):
+        expr1 = Field.of("rating").sum().as_("sum_rating")
+        expr2 = Rank().as_("pub_rank")
+        window = WindowSpec(partition="genre")
+        pb = self._make_one(expr1, expr2, window=window)._to_pb()
+        assert pb.name == "add_window_fields"
+        assert len(pb.options) == 0
+        assert pb.args[0] == window._to_pb()
+        assert pb.args[1].map_value.fields == {
+            "sum_rating": expr1.expr._to_pb(),
+            "pub_rank": expr2.expr._to_pb(),
+        }

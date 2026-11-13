@@ -27,6 +27,7 @@ from google.cloud.firestore_v1.pipeline_expressions import (
     Expression,
     Field,
     Selectable,
+    WindowFunction,
 )
 from google.cloud.firestore_v1.types.document import Pipeline as Pipeline_pb
 from google.cloud.firestore_v1.types.document import Value
@@ -42,6 +43,7 @@ from google.cloud.firestore_v1.pipeline_types import (
     SampleOptions,
     SearchOptions,
     UnnestOptions,
+    WindowSpec,
 )
 
 
@@ -84,6 +86,30 @@ class AddFields(Stage):
 
     def _pb_args(self):
         return [Selectable._to_value(self.fields)]
+
+
+class AddWindowFields(Stage):
+    """Adds new fields computed by window functions over a window of documents."""
+
+    def __init__(
+        self,
+        *args: AliasedExpression[WindowFunction],
+        fields: Sequence[AliasedExpression[WindowFunction]] = (),
+        window: WindowSpec | None = None,
+    ):
+        super().__init__("add_window_fields")
+        if args and fields:
+            raise ValueError(
+                "AddWindowFields stage contains both positional and keyword fields"
+            )
+        self.fields = list(args or fields)
+        self.window: WindowSpec = window if window is not None else WindowSpec()
+
+    def _pb_args(self) -> list[Value]:
+        return [
+            self.window._to_pb(),
+            Selectable._to_value(self.fields),
+        ]
 
 
 class Aggregate(Stage):
