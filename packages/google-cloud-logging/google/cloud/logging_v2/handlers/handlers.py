@@ -281,14 +281,19 @@ def _format_and_parse_message(record, formatter_handler):
     except (json.decoder.JSONDecodeError, IndexError):
         # log string is not valid json
         pass
+    # A record whose ``msg`` is the Python object ``None`` is treated as
+    # having no content. ``logging.Formatter`` renders such a record as the
+    # string ``"None"``; detect that case from ``record.msg`` directly so that
+    # a legitimate user message of the literal string ``"None"`` is preserved.
+    is_empty_message = record.msg is None and message == "None"
     # if json_fields was set, create a dictionary using that
     if passed_json_fields and isinstance(passed_json_fields, collections.abc.Mapping):
         passed_json_fields = passed_json_fields.copy()
-        if message != "None":
+        if not is_empty_message:
             passed_json_fields["message"] = message
         return passed_json_fields
     # if formatted message contains no content, return None
-    return message if message != "None" else None
+    return None if is_empty_message else message
 
 
 def setup_logging(

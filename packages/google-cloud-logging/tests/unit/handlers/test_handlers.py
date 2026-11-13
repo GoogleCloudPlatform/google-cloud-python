@@ -922,6 +922,34 @@ class TestFormatAndParseMessage(unittest.TestCase):
         result = _format_and_parse_message(record, handler)
         self.assertEqual(result, None)
 
+    def test_literal_none_string_preserved(self):
+        """
+        A literal string message of "None" should be preserved, not dropped.
+        Only a record whose msg is the Python object None is treated as empty.
+        """
+        from google.cloud.logging_v2.handlers.handlers import _format_and_parse_message
+
+        message = "None"
+        record = logging.LogRecord("logname", None, None, None, message, None, None)
+        handler = logging.StreamHandler()
+        result = _format_and_parse_message(record, handler)
+        self.assertEqual(result, "None")
+
+    def test_literal_none_string_preserved_with_json_fields(self):
+        """
+        A literal string message of "None" should populate the message field
+        even when json_fields are present.
+        """
+        from google.cloud.logging_v2.handlers.handlers import _format_and_parse_message
+
+        message = "None"
+        json_fields = {"key": "val"}
+        record = logging.LogRecord("logname", None, None, None, message, None, None)
+        setattr(record, "json_fields", json_fields)
+        handler = logging.StreamHandler()
+        result = _format_and_parse_message(record, handler)
+        self.assertEqual(result, {"message": "None", "key": "val"})
+
     def test_none_formatted(self):
         """
         None messages with formatting rules should return formatted string
