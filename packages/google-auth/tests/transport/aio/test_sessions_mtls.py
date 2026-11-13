@@ -83,6 +83,173 @@ class TestSessionsMtls:
             await session.close()
 
     @pytest.mark.asyncio
+    async def test_configure_mtls_channel_preserves_existing_session_config(self):
+        """
+        Tests that configure_mtls_channel preserves connector and session settings
+        from an existing aiohttp.ClientSession across initial configuration and rotation.
+        """
+        import aiohttp
+
+        orig_connector = aiohttp.TCPConnector(
+            limit=50,
+            limit_per_host=10,
+            force_close=True,
+            local_addr=("127.0.0.1", 8080),
+        )
+        custom_cookie_jar = aiohttp.CookieJar(unsafe=True)
+        custom_auth = aiohttp.BasicAuth("user", "pass")
+        custom_timeout = aiohttp.ClientTimeout(total=42.0)
+        trace_config = aiohttp.TraceConfig()
+
+        def custom_json_serialize(obj):
+            return json.dumps(obj)  # pragma: NO COVER
+
+        orig_session = aiohttp.ClientSession(
+            connector=orig_connector,
+            headers={"X-Custom-Header": "custom-value"},
+            cookie_jar=custom_cookie_jar,
+            auth=custom_auth,
+            timeout=custom_timeout,
+            trust_env=True,
+            auto_decompress=False,
+            trace_configs=[trace_config],
+            json_serialize=custom_json_serialize,
+        )
+        auth_request = sessions.AiohttpRequest(session=orig_session)
+        mock_creds = mock.AsyncMock(spec=credentials.Credentials)
+        session = sessions.AsyncAuthorizedSession(mock_creds, auth_request=auth_request)
+
+        mock_context_1 = ssl.create_default_context()
+        mock_context_2 = ssl.create_default_context()
+
+        with (
+            mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}),
+            mock.patch(
+                "google.auth.transport._mtls_helper.check_use_client_cert",
+                return_value=True,
+            ),
+            mock.patch(
+                "google.auth.aio.transport.mtls.get_client_cert_and_key",
+                side_effect=[
+                    (True, b"fake_cert_1", b"fake_key_1"),
+                    (True, b"fake_cert_2", b"fake_key_2"),
+                ],
+            ),
+            mock.patch(
+                "google.auth.aio.transport.mtls.make_client_cert_ssl_context",
+                side_effect=[mock_context_1, mock_context_2],
+            ),
+        ):
+            await session.configure_mtls_channel()
+
+            new_session_1 = session._auth_request._session
+            assert new_session_1 is not orig_session
+            new_connector_1 = new_session_1.connector
+            assert isinstance(new_connector_1, aiohttp.TCPConnector)
+            assert new_connector_1 is not orig_connector
+            assert new_connector_1._ssl is mock_context_1
+            assert new_connector_1.limit == 50
+            assert new_connector_1.limit_per_host == 10
+            assert new_connector_1.force_close is True
+            assert sessions._helpers_async._get_local_addr(new_connector_1) == (
+                "127.0.0.1",
+                8080,
+            )
+            assert new_session_1.headers["X-Custom-Header"] == "custom-value"
+            assert new_session_1.cookie_jar is custom_cookie_jar
+            assert new_session_1._default_auth == custom_auth
+            assert new_session_1.timeout == custom_timeout
+            assert new_session_1.trust_env is True
+            assert new_session_1.auto_decompress is False
+            assert new_session_1._trace_configs == [trace_config]
+            assert new_session_1._trace_configs is not orig_session._trace_configs
+            assert new_session_1._json_serialize is custom_json_serialize
+
+            # Simulate certificate rotation by resetting _mtls_init_task and reconfiguring
+            session._mtls_init_task = None
+            await session.configure_mtls_channel()
+
+            new_session_2 = session._auth_request._session
+            assert new_session_2 is not new_session_1
+            new_connector_2 = new_session_2.connector
+            assert isinstance(new_connector_2, aiohttp.TCPConnector)
+            assert new_connector_2._ssl is mock_context_2
+            assert new_connector_2.limit == 50
+            assert new_connector_2.limit_per_host == 10
+            assert new_connector_2.force_close is True
+            assert sessions._helpers_async._get_local_addr(new_connector_2) == (
+                "127.0.0.1",
+                8080,
+            )
+            assert new_session_2.headers["X-Custom-Header"] == "custom-value"
+            assert new_session_2.cookie_jar is custom_cookie_jar
+            assert new_session_2._default_auth == custom_auth
+            assert new_session_2.timeout == custom_timeout
+            assert new_session_2.trust_env is True
+            assert new_session_2.auto_decompress is False
+            assert new_session_2._trace_configs == [trace_config]
+            assert new_session_2._json_serialize is custom_json_serialize
+
+        await session.close()
+
+    @pytest.mark.asyncio
+    async def test_configure_mtls_channel_with_minimal_existing_session(self):
+        """
+        Tests that configure_mtls_channel handles an existing session whose
+        connector is not a TCPConnector and optional attributes are None/empty.
+        """
+        mock_orig_session = mock.MagicMock()
+        mock_orig_session._connector = None
+        mock_orig_session._auto_decompress = True
+        mock_orig_session._trust_env = False
+        mock_orig_session._trace_configs = []
+        mock_orig_session._default_headers = None
+        mock_orig_session._cookie_jar = None
+        mock_orig_session._default_auth = None
+        mock_orig_session._timeout = None
+        mock_orig_session._json_serialize = None
+        mock_orig_session.close = mock.AsyncMock()
+
+        auth_request = sessions.AiohttpRequest(session=mock_orig_session)
+        mock_creds = mock.AsyncMock(spec=credentials.Credentials)
+        session = sessions.AsyncAuthorizedSession(mock_creds, auth_request=auth_request)
+
+        mock_context = ssl.create_default_context()
+        with (
+            mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "true"}),
+            mock.patch(
+                "google.auth.transport._mtls_helper.check_use_client_cert",
+                return_value=True,
+            ),
+            mock.patch(
+                "google.auth.aio.transport.mtls.get_client_cert_and_key",
+                return_value=(True, b"fake_cert_data", b"fake_key_data"),
+            ),
+            mock.patch(
+                "google.auth.aio.transport.mtls.make_client_cert_ssl_context",
+                return_value=mock_context,
+            ),
+            mock.patch("aiohttp.ClientSession") as mock_session,
+        ):
+            mock_session.return_value.close = mock.AsyncMock()
+            await session.configure_mtls_channel()
+
+            mock_session.assert_called_once()
+            _, session_kwargs = mock_session.call_args
+            assert session_kwargs["connector"]._ssl is mock_context
+            assert session_kwargs["auto_decompress"] is True
+            assert session_kwargs["trust_env"] is False
+            assert "trace_configs" not in session_kwargs
+            assert "headers" not in session_kwargs
+            assert "cookie_jar" not in session_kwargs
+            assert "auth" not in session_kwargs
+            assert "timeout" not in session_kwargs
+            assert "json_serialize" not in session_kwargs
+            await session_kwargs["connector"].close()
+
+        await session.close()
+
+    @pytest.mark.asyncio
     async def test_configure_mtls_channel_disabled(self):
         """
         Tests behavior when the config file does not exist.

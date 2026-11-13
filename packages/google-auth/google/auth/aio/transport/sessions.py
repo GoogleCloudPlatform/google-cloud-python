@@ -26,6 +26,7 @@ from typing import TYPE_CHECKING, Mapping, Optional, Union
 import google.auth.credentials
 import google.auth.transport._mtls_helper
 from google.auth import _exponential_backoff, _helpers, exceptions
+from google.auth.aio import _helpers as _helpers_async
 from google.auth.aio import transport
 from google.auth.aio.credentials import Credentials
 from google.auth.aio.transport import mtls
@@ -321,8 +322,58 @@ class AsyncAuthorizedSession:
                             ssl_context = await mtls._run_in_executor(
                                 mtls.make_client_cert_ssl_context, cert, key
                             )
-                            connector = aiohttp.TCPConnector(ssl=ssl_context)
-                            new_session = aiohttp.ClientSession(connector=connector)
+                            connector_kwargs: dict = {"ssl": ssl_context}
+                            session_kwargs: dict = {}
+                            orig_session = getattr(self._auth_request, "_session", None)
+                            if orig_session is not None:
+                                orig_connector = getattr(
+                                    orig_session, "_connector", None
+                                )
+                                if isinstance(orig_connector, aiohttp.TCPConnector):
+                                    connector_kwargs.update(
+                                        {
+                                            "limit": getattr(
+                                                orig_connector, "_limit", 100
+                                            ),
+                                            "limit_per_host": getattr(
+                                                orig_connector, "_limit_per_host", 0
+                                            ),
+                                            "force_close": getattr(
+                                                orig_connector, "_force_close", False
+                                            ),
+                                            "local_addr": _helpers_async._get_local_addr(
+                                                orig_connector
+                                            ),
+                                        }
+                                    )
+                                session_kwargs["auto_decompress"] = getattr(
+                                    orig_session, "_auto_decompress", True
+                                )
+                                session_kwargs["trust_env"] = getattr(
+                                    orig_session, "_trust_env", False
+                                )
+                                trace_configs = getattr(
+                                    orig_session, "_trace_configs", None
+                                )
+                                if trace_configs:
+                                    session_kwargs["trace_configs"] = list(
+                                        trace_configs
+                                    )
+                                for attr_name, kwarg_name in [
+                                    ("_default_headers", "headers"),
+                                    ("_cookie_jar", "cookie_jar"),
+                                    ("_default_auth", "auth"),
+                                    ("_timeout", "timeout"),
+                                    ("_json_serialize", "json_serialize"),
+                                ]:
+                                    val = getattr(orig_session, attr_name, None)
+                                    if val is not None:
+                                        session_kwargs[kwarg_name] = val
+
+                            connector = aiohttp.TCPConnector(**connector_kwargs)
+                            new_session = aiohttp.ClientSession(
+                                connector=connector, **session_kwargs
+                            )
 
                             old_auth_request = self._auth_request
                             self._auth_request = AiohttpRequest(session=new_session)
