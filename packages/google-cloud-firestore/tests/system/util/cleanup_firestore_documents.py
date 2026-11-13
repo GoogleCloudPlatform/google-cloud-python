@@ -90,10 +90,11 @@ def _get_credentials_and_project(project_override: str | None):
     creds_path = os.environ.get("FIRESTORE_APPLICATION_CREDENTIALS")
     if creds_path:
         credentials = service_account.Credentials.from_service_account_file(creds_path)
+        # Match test_system.py: use GCLOUD_PROJECT or the Firebase key's project_id,
+        # ignoring GOOGLE_CLOUD_PROJECT (which Kokoro sets to precise-truck-742).
         project = (
             project_override
             or os.environ.get("GCLOUD_PROJECT")
-            or os.environ.get("GOOGLE_CLOUD_PROJECT")
             or credentials.project_id
         )
     else:
