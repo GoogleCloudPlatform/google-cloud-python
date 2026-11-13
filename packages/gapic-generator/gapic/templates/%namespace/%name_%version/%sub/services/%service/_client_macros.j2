@@ -174,11 +174,6 @@
             {% endif %}
         )
         {% if method.lro %}
-        {% if service.version %}
-        lro_metadata = None
-        if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-            lro_metadata = [version_header.to_api_version_header("{{ service.version }}")]
-        {% endif %}
 
         # Wrap the response in an operation future.
         response = {{ method.client_output.ident.module_alias or method.client_output.ident.module }}.from_gapic(
@@ -187,7 +182,7 @@
             {{ method.lro.response_type.ident }},
             metadata_type={{ method.lro.metadata_type.ident }},
             {% if service.version %}
-            grpc_metadata=lro_metadata,
+            grpc_metadata=[version_header.to_api_version_header("{{ service.version }}")],
             {% endif %}
         )
         {% elif method.paged_result_field %}

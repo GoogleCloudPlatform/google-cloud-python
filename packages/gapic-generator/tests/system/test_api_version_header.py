@@ -11,20 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import pytest
-
-try:
-    from google.api_core import version_header
-except ImportError:
-    version_header = None
+from google.api_core import version_header
 
 
 def test_api_version_in_grpc_trailing_metadata(echo):
-    if not version_header:
-        pytest.skip(
-            "google-api-core>=2.19.0 is required for `google.api_core.version_header`"
-        )
-
     # This feature requires version 0.35.0 of `gapic-showcase` or newer which has the
     # ability to echo request headers
     content = "The hail in Wales falls mainly on the snails."

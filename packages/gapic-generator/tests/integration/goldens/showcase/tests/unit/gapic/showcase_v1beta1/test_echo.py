@@ -71,11 +71,7 @@ import google.protobuf.any_pb2 as any_pb2  # type: ignore
 import google.protobuf.duration_pb2 as duration_pb2  # type: ignore
 import google.protobuf.timestamp_pb2 as timestamp_pb2  # type: ignore
 import google.rpc.status_pb2 as status_pb2  # type: ignore
-try:
-    from google.api_core import version_header
-    HAS_GOOGLE_API_CORE_VERSION_HEADER = True  # pragma: NO COVER
-except ImportError:  # pragma: NO COVER
-    HAS_GOOGLE_API_CORE_VERSION_HEADER = False
+from google.api_core import version_header
 
 
 
@@ -163,294 +159,228 @@ def test__get_client_cert_source():
 ])
 def test_echo_api_version_header(transport_name):
     client = EchoClient(credentials=ga_credentials.AnonymousCredentials(), transport=transport_name)
-    # TODO: Make this test unconditional once the minimum supported version of
-    # google-api-core becomes 2.19.0 or higher.
-    api_core_major, api_core_minor = [int(part) for part in api_core_version.__version__.split(".")[0:2]]
-    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
-        # Mock the actual call within the gRPC stub, and fake the request.
-        with mock.patch.object(
-                type(client.transport.echo),
-                '__call__'
-            ) as call:
-                call.return_value = gs_echo.EchoResponse()
-                client.echo()
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.echo),
+            '__call__'
+        ) as call:
+            call.return_value = gs_echo.EchoResponse()
+            client.echo()
 
-        # Establish that the api version header was sent.
-        _, _, kw = call.mock_calls[0]
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw['metadata']
-    else:
-        pytest.skip("google-api-core>=2.19.0 is required for `google.api_core.version_header`")
+    # Establish that the api version header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw['metadata']
 @pytest.mark.parametrize("transport_name", [
     ("grpc"),
     ("rest"),
 ])
 def test_echo_error_details_api_version_header(transport_name):
     client = EchoClient(credentials=ga_credentials.AnonymousCredentials(), transport=transport_name)
-    # TODO: Make this test unconditional once the minimum supported version of
-    # google-api-core becomes 2.19.0 or higher.
-    api_core_major, api_core_minor = [int(part) for part in api_core_version.__version__.split(".")[0:2]]
-    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
-        # Mock the actual call within the gRPC stub, and fake the request.
-        with mock.patch.object(
-                type(client.transport.echo_error_details),
-                '__call__'
-            ) as call:
-                call.return_value = gs_echo.EchoErrorDetailsResponse()
-                client.echo_error_details()
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.echo_error_details),
+            '__call__'
+        ) as call:
+            call.return_value = gs_echo.EchoErrorDetailsResponse()
+            client.echo_error_details()
 
-        # Establish that the api version header was sent.
-        _, _, kw = call.mock_calls[0]
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw['metadata']
-    else:
-        pytest.skip("google-api-core>=2.19.0 is required for `google.api_core.version_header`")
+    # Establish that the api version header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw['metadata']
 @pytest.mark.parametrize("transport_name", [
     ("grpc"),
     ("rest"),
 ])
 def test_fail_echo_with_details_api_version_header(transport_name):
     client = EchoClient(credentials=ga_credentials.AnonymousCredentials(), transport=transport_name)
-    # TODO: Make this test unconditional once the minimum supported version of
-    # google-api-core becomes 2.19.0 or higher.
-    api_core_major, api_core_minor = [int(part) for part in api_core_version.__version__.split(".")[0:2]]
-    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
-        # Mock the actual call within the gRPC stub, and fake the request.
-        with mock.patch.object(
-                type(client.transport.fail_echo_with_details),
-                '__call__'
-            ) as call:
-                call.return_value = gs_echo.FailEchoWithDetailsResponse()
-                client.fail_echo_with_details()
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.fail_echo_with_details),
+            '__call__'
+        ) as call:
+            call.return_value = gs_echo.FailEchoWithDetailsResponse()
+            client.fail_echo_with_details()
 
-        # Establish that the api version header was sent.
-        _, _, kw = call.mock_calls[0]
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw['metadata']
-    else:
-        pytest.skip("google-api-core>=2.19.0 is required for `google.api_core.version_header`")
+    # Establish that the api version header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw['metadata']
 @pytest.mark.parametrize("transport_name", [
     ("grpc"),
     ("rest"),
 ])
 def test_expand_api_version_header(transport_name):
     client = EchoClient(credentials=ga_credentials.AnonymousCredentials(), transport=transport_name)
-    # TODO: Make this test unconditional once the minimum supported version of
-    # google-api-core becomes 2.19.0 or higher.
-    api_core_major, api_core_minor = [int(part) for part in api_core_version.__version__.split(".")[0:2]]
-    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
-        # Mock the actual call within the gRPC stub, and fake the request.
-        with mock.patch.object(
-                type(client.transport.expand),
-                '__call__'
-            ) as call:
-                call.return_value = gs_echo.EchoResponse()
-                client.expand()
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.expand),
+            '__call__'
+        ) as call:
+            call.return_value = gs_echo.EchoResponse()
+            client.expand()
 
-        # Establish that the api version header was sent.
-        _, _, kw = call.mock_calls[0]
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw['metadata']
-    else:
-        pytest.skip("google-api-core>=2.19.0 is required for `google.api_core.version_header`")
+    # Establish that the api version header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw['metadata']
 @pytest.mark.parametrize("transport_name", [
     ("grpc"),
     ("rest"),
 ])
 def test_collect_api_version_header(transport_name):
     client = EchoClient(credentials=ga_credentials.AnonymousCredentials(), transport=transport_name)
-    # TODO: Make this test unconditional once the minimum supported version of
-    # google-api-core becomes 2.19.0 or higher.
-    api_core_major, api_core_minor = [int(part) for part in api_core_version.__version__.split(".")[0:2]]
-    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
-        # Mock the actual call within the gRPC stub, and fake the request.
-        with mock.patch.object(
-                type(client.transport.collect),
-                '__call__'
-            ) as call:
-                call.return_value = gs_echo.EchoResponse()
-                client.collect()
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.collect),
+            '__call__'
+        ) as call:
+            call.return_value = gs_echo.EchoResponse()
+            client.collect()
 
-        # Establish that the api version header was sent.
-        _, _, kw = call.mock_calls[0]
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw['metadata']
-    else:
-        pytest.skip("google-api-core>=2.19.0 is required for `google.api_core.version_header`")
+    # Establish that the api version header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw['metadata']
 @pytest.mark.parametrize("transport_name", [
     ("grpc"),
     ("rest"),
 ])
 def test_chat_api_version_header(transport_name):
     client = EchoClient(credentials=ga_credentials.AnonymousCredentials(), transport=transport_name)
-    # TODO: Make this test unconditional once the minimum supported version of
-    # google-api-core becomes 2.19.0 or higher.
-    api_core_major, api_core_minor = [int(part) for part in api_core_version.__version__.split(".")[0:2]]
-    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
-        # Mock the actual call within the gRPC stub, and fake the request.
-        with mock.patch.object(
-                type(client.transport.chat),
-                '__call__'
-            ) as call:
-                call.return_value = gs_echo.EchoResponse()
-                client.chat()
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.chat),
+            '__call__'
+        ) as call:
+            call.return_value = gs_echo.EchoResponse()
+            client.chat()
 
-        # Establish that the api version header was sent.
-        _, _, kw = call.mock_calls[0]
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw['metadata']
-    else:
-        pytest.skip("google-api-core>=2.19.0 is required for `google.api_core.version_header`")
+    # Establish that the api version header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw['metadata']
 @pytest.mark.parametrize("transport_name", [
     ("grpc"),
     ("rest"),
 ])
 def test_paged_expand_api_version_header(transport_name):
     client = EchoClient(credentials=ga_credentials.AnonymousCredentials(), transport=transport_name)
-    # TODO: Make this test unconditional once the minimum supported version of
-    # google-api-core becomes 2.19.0 or higher.
-    api_core_major, api_core_minor = [int(part) for part in api_core_version.__version__.split(".")[0:2]]
-    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
-        # Mock the actual call within the gRPC stub, and fake the request.
-        with mock.patch.object(
-                type(client.transport.paged_expand),
-                '__call__'
-            ) as call:
-                call.return_value = gs_echo.PagedExpandResponse()
-                client.paged_expand()
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.paged_expand),
+            '__call__'
+        ) as call:
+            call.return_value = gs_echo.PagedExpandResponse()
+            client.paged_expand()
 
-        # Establish that the api version header was sent.
-        _, _, kw = call.mock_calls[0]
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw['metadata']
-    else:
-        pytest.skip("google-api-core>=2.19.0 is required for `google.api_core.version_header`")
+    # Establish that the api version header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw['metadata']
 @pytest.mark.parametrize("transport_name", [
     ("grpc"),
     ("rest"),
 ])
 def test_paged_expand_legacy_api_version_header(transport_name):
     client = EchoClient(credentials=ga_credentials.AnonymousCredentials(), transport=transport_name)
-    # TODO: Make this test unconditional once the minimum supported version of
-    # google-api-core becomes 2.19.0 or higher.
-    api_core_major, api_core_minor = [int(part) for part in api_core_version.__version__.split(".")[0:2]]
-    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
-        # Mock the actual call within the gRPC stub, and fake the request.
-        with mock.patch.object(
-                type(client.transport.paged_expand_legacy),
-                '__call__'
-            ) as call:
-                call.return_value = gs_echo.PagedExpandResponse()
-                client.paged_expand_legacy()
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.paged_expand_legacy),
+            '__call__'
+        ) as call:
+            call.return_value = gs_echo.PagedExpandResponse()
+            client.paged_expand_legacy()
 
-        # Establish that the api version header was sent.
-        _, _, kw = call.mock_calls[0]
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw['metadata']
-    else:
-        pytest.skip("google-api-core>=2.19.0 is required for `google.api_core.version_header`")
+    # Establish that the api version header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw['metadata']
 @pytest.mark.parametrize("transport_name", [
     ("grpc"),
     ("rest"),
 ])
 def test_paged_expand_legacy_mapped_api_version_header(transport_name):
     client = EchoClient(credentials=ga_credentials.AnonymousCredentials(), transport=transport_name)
-    # TODO: Make this test unconditional once the minimum supported version of
-    # google-api-core becomes 2.19.0 or higher.
-    api_core_major, api_core_minor = [int(part) for part in api_core_version.__version__.split(".")[0:2]]
-    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
-        # Mock the actual call within the gRPC stub, and fake the request.
-        with mock.patch.object(
-                type(client.transport.paged_expand_legacy_mapped),
-                '__call__'
-            ) as call:
-                call.return_value = gs_echo.PagedExpandLegacyMappedResponse()
-                client.paged_expand_legacy_mapped()
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.paged_expand_legacy_mapped),
+            '__call__'
+        ) as call:
+            call.return_value = gs_echo.PagedExpandLegacyMappedResponse()
+            client.paged_expand_legacy_mapped()
 
-        # Establish that the api version header was sent.
-        _, _, kw = call.mock_calls[0]
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw['metadata']
-    else:
-        pytest.skip("google-api-core>=2.19.0 is required for `google.api_core.version_header`")
+    # Establish that the api version header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw['metadata']
 @pytest.mark.parametrize("transport_name", [
     ("grpc"),
     ("rest"),
 ])
 def test_wait_api_version_header(transport_name):
     client = EchoClient(credentials=ga_credentials.AnonymousCredentials(), transport=transport_name)
-    # TODO: Make this test unconditional once the minimum supported version of
-    # google-api-core becomes 2.19.0 or higher.
-    api_core_major, api_core_minor = [int(part) for part in api_core_version.__version__.split(".")[0:2]]
-    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
-        # Mock the actual call within the gRPC stub, and fake the request.
-        with mock.patch.object(
-                type(client.transport.wait),
-                '__call__'
-            ) as call:
-                call.return_value = operations_pb2.Operation()
-                response = client.wait()
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.wait),
+            '__call__'
+        ) as call:
+            call.return_value = operations_pb2.Operation()
+            response = client.wait()
 
-        # Establish that the api version header was sent.
-        _, _, kw = call.mock_calls[0]
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw['metadata']
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in response._refresh.keywords["metadata"]
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in response._cancel.keywords["metadata"]
-    else:
-        pytest.skip("google-api-core>=2.19.0 is required for `google.api_core.version_header`")
+    # Establish that the api version header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw['metadata']
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in response._refresh.keywords["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in response._cancel.keywords["metadata"]
 @pytest.mark.parametrize("transport_name", [
     ("grpc"),
     ("rest"),
 ])
 def test_block_api_version_header(transport_name):
     client = EchoClient(credentials=ga_credentials.AnonymousCredentials(), transport=transport_name)
-    # TODO: Make this test unconditional once the minimum supported version of
-    # google-api-core becomes 2.19.0 or higher.
-    api_core_major, api_core_minor = [int(part) for part in api_core_version.__version__.split(".")[0:2]]
-    if api_core_major > 2 or (api_core_major == 2 and api_core_minor >= 19):
-        # Mock the actual call within the gRPC stub, and fake the request.
-        with mock.patch.object(
-                type(client.transport.block),
-                '__call__'
-            ) as call:
-                call.return_value = gs_echo.BlockResponse()
-                client.block()
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+            type(client.transport.block),
+            '__call__'
+        ) as call:
+            call.return_value = gs_echo.BlockResponse()
+            client.block()
 
-        # Establish that the api version header was sent.
-        _, _, kw = call.mock_calls[0]
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw['metadata']
-    else:
-        pytest.skip("google-api-core>=2.19.0 is required for `google.api_core.version_header`")
+    # Establish that the api version header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw['metadata']
 
 
 @pytest.mark.parametrize("error_code,cred_info_json,show_cred_info", [
@@ -2584,10 +2514,9 @@ def test_paged_expand_pager(transport_name: str = "grpc"):
         expected_metadata = ()
         retry = retries.Retry()
         timeout = 5
-        if HAS_GOOGLE_API_CORE_VERSION_HEADER:
-            expected_metadata = tuple(expected_metadata) + (
-                version_header.to_api_version_header("v1_20240408"),
-            )
+        expected_metadata = tuple(expected_metadata) + (
+            version_header.to_api_version_header("v1_20240408"),
+        )
         pager = client.paged_expand(request={}, retry=retry, timeout=timeout)
 
         assert pager._metadata == expected_metadata
@@ -2949,10 +2878,9 @@ def test_paged_expand_legacy_pager(transport_name: str = "grpc"):
         expected_metadata = ()
         retry = retries.Retry()
         timeout = 5
-        if HAS_GOOGLE_API_CORE_VERSION_HEADER:
-            expected_metadata = tuple(expected_metadata) + (
-                version_header.to_api_version_header("v1_20240408"),
-            )
+        expected_metadata = tuple(expected_metadata) + (
+            version_header.to_api_version_header("v1_20240408"),
+        )
         pager = client.paged_expand_legacy(request={}, retry=retry, timeout=timeout)
 
         assert pager._metadata == expected_metadata
@@ -8214,11 +8142,10 @@ def test_delete_operation_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
-    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw["metadata"]
 
 @pytest.mark.asyncio
 async def test_delete_operation_field_headers_async():
@@ -8245,11 +8172,10 @@ async def test_delete_operation_field_headers_async():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
-    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw["metadata"]
 
 
 def test_delete_operation_from_dict():
@@ -8391,11 +8317,10 @@ def test_cancel_operation_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
-    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw["metadata"]
 
 @pytest.mark.asyncio
 async def test_cancel_operation_field_headers_async():
@@ -8422,11 +8347,10 @@ async def test_cancel_operation_field_headers_async():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
-    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw["metadata"]
 
 
 def test_cancel_operation_from_dict():
@@ -8568,11 +8492,10 @@ def test_get_operation_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
-    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw["metadata"]
 
 @pytest.mark.asyncio
 async def test_get_operation_field_headers_async():
@@ -8599,11 +8522,10 @@ async def test_get_operation_field_headers_async():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
-    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw["metadata"]
 
 
 def test_get_operation_from_dict():
@@ -8745,11 +8667,10 @@ def test_list_operations_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
-    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw["metadata"]
 
 @pytest.mark.asyncio
 async def test_list_operations_field_headers_async():
@@ -8776,11 +8697,10 @@ async def test_list_operations_field_headers_async():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
-    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw["metadata"]
 
 
 def test_list_operations_from_dict():
@@ -8922,11 +8842,10 @@ def test_list_locations_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
-    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw["metadata"]
 
 @pytest.mark.asyncio
 async def test_list_locations_field_headers_async():
@@ -8953,11 +8872,10 @@ async def test_list_locations_field_headers_async():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations",) in kw["metadata"]
-    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw["metadata"]
 
 
 def test_list_locations_from_dict():
@@ -9098,11 +9016,10 @@ def test_get_location_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations/abc",) in kw["metadata"]
-    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw["metadata"]
 
 @pytest.mark.asyncio
 async def test_get_location_field_headers_async():
@@ -9129,11 +9046,10 @@ async def test_get_location_field_headers_async():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "name=locations/abc",) in kw["metadata"]
-    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw["metadata"]
 
 
 def test_get_location_from_dict():
@@ -9287,11 +9203,10 @@ def test_set_iam_policy_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
-    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw["metadata"]
 
 @pytest.mark.asyncio
 async def test_set_iam_policy_field_headers_async():
@@ -9318,11 +9233,10 @@ async def test_set_iam_policy_field_headers_async():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
-    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw["metadata"]
 
 
 def test_set_iam_policy_from_dict():
@@ -9489,11 +9403,10 @@ def test_get_iam_policy_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
-    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
@@ -9523,11 +9436,10 @@ async def test_get_iam_policy_field_headers_async():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
-    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw["metadata"]
 
 
 def test_get_iam_policy_from_dict():
@@ -9695,11 +9607,10 @@ def test_test_iam_permissions_field_headers():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
-    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
@@ -9731,11 +9642,10 @@ async def test_test_iam_permissions_field_headers_async():
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
     assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
-    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "v1_20240408",
-        ) in kw["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "v1_20240408",
+    ) in kw["metadata"]
 
 
 def test_test_iam_permissions_from_dict():

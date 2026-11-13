@@ -1,11 +1,10 @@
 {% macro assert_api_version_header(service_version) -%}
 {% if service_version %}
 
-    if HAS_GOOGLE_API_CORE_VERSION_HEADER:  # pragma: NO COVER
-        assert (
-            version_header.API_VERSION_METADATA_KEY,
-            "{{ service_version }}",
-        ) in kw["metadata"]
+    assert (
+        version_header.API_VERSION_METADATA_KEY,
+        "{{ service_version }}",
+    ) in kw["metadata"]
 {%- endif -%}
 {% endmacro -%}
 {% if api.has_operations_mixin and ('grpc' in opts.transport or 'grpc_asyncio' in opts.transport) %}
