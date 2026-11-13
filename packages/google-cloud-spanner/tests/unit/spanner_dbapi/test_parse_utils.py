@@ -15,7 +15,11 @@
 import sys
 import unittest
 
-from google.cloud.spanner_dbapi.parse_utils import classify_statement
+from google.cloud.spanner_dbapi.parse_utils import (
+    SPANNER_RESERVED_KEYWORDS,
+    classify_statement,
+    escape_name,
+)
 from google.cloud.spanner_dbapi.parsed_statement import (
     ClientSideStatementType,
     ParsedStatement,
@@ -501,27 +505,32 @@ class TestParseUtils(unittest.TestCase):
 
     @unittest.skipIf(skip_condition, skip_message)
     def test_escape_name(self):
-        from google.cloud.spanner_dbapi.parse_utils import escape_name
-
         cases = (
             ("SELECT", "`SELECT`"),
             ("dashed-value", "`dashed-value`"),
             ("with space", "`with space`"),
-            ("name", "name"),
+            ("name", "`name`"),
             ("", ""),
+            ("``", "``"),
             ("col`; DROP TABLE t; -- x", "`col\\`; DROP TABLE t; -- x`"),
             ("table`name", "`table\\`name`"),
             ("`", "`\\``"),
             ("col/*comment*/name", "`col/*comment*/name`"),
             ("123column", "`123column`"),
             ("col;select", "`col;select`"),
-            ("col\nname", "`col\nname`"),
             ("test\\", "`test\\\\`"),
-            ("my_schema.my_table", "my_schema.my_table"),
+            ("my_schema.my_table", "`my_schema`.`my_table`"),
             ("my-schema.my-table", "`my-schema`.`my-table`"),
+            ("catalog.schema.table.column", "`catalog`.`schema`.`table`.`column`"),
             ("`my_table`", "`my_table`"),
             ("`my_schema`.`my_table`", "`my_schema`.`my_table`"),
             ("`table.with.dots`", "`table.with.dots`"),
+            ("`table.with.dots`.col", "`table.with.dots`.`col`"),
+            ("col.`table.with.dots`", "`col`.`table.with.dots`"),
+            ("`my.schema`.`my.table`", "`my.schema`.`my.table`"),
+            ("café", "`café`"),
+            ("col_ñ", "`col_ñ`"),
+            ("`col\\`name`", "`col\\`name`"),
             ("`col\\`; DROP TABLE users; --`", "`col\\`; DROP TABLE users; --`"),
             (
                 "`col\\\\`; DROP TABLE users; --`",
@@ -532,3 +541,52 @@ class TestParseUtils(unittest.TestCase):
             with self.subTest(name=name):
                 got = escape_name(name)
                 self.assertEqual(got, want)
+                # Verify idempotency: escaping an already-escaped output returns the same result.
+                self.assertEqual(escape_name(got), want)
+
+    @unittest.skipIf(skip_condition, skip_message)
+    def test_escape_name_invalid_control_characters(self):
+        invalid_identifiers = (
+            "table\nname",
+            "table\rname",
+            "table\0name",
+            "table\tname",
+            "table\x1fname",
+            "table\x7fname",
+            "schema\n.table",
+            "schema.table\0",
+        )
+        for identifier in invalid_identifiers:
+            with self.subTest(identifier=identifier):
+                with self.assertRaises(ValueError):
+                    escape_name(identifier)
+
+    @unittest.skipIf(skip_condition, skip_message)
+    def test_escape_name_invalid_qualified_identifiers(self):
+        invalid_qualified = (
+            ".",
+            "...",
+            "table.",
+            ".table",
+            "schema..table",
+            "schema.`unclosed.table.`other",
+        )
+        for identifier in invalid_qualified:
+            with self.subTest(identifier=identifier):
+                with self.assertRaises(ValueError):
+                    escape_name(identifier)
+
+    @unittest.skipIf(skip_condition, skip_message)
+    def test_escape_name_invalid_types(self):
+        invalid_types = (None, 123, 45.67, b"bytes_name", ["list"])
+        for identifier in invalid_types:
+            with self.subTest(identifier=identifier):
+                with self.assertRaises(TypeError):
+                    escape_name(identifier)
+
+    @unittest.skipIf(skip_condition, skip_message)
+    def test_spanner_reserved_keywords_compatibility(self):
+        # Verify that SPANNER_RESERVED_KEYWORDS is exported with recent additions
+        # for backwards compatibility with downstream consumers (e.g. sqlalchemy-spanner).
+        self.assertIn("GRAPH_TABLE", SPANNER_RESERVED_KEYWORDS)
+        self.assertIn("QUALIFY", SPANNER_RESERVED_KEYWORDS)
