@@ -688,6 +688,97 @@ def test__transactional___call__success_second_attempt(database):
 
 
 @pytest.mark.parametrize("database", [None, "somedb"])
+def test__transactional___call__success_second_attempt_expired_transaction(database):
+    from google.api_core import exceptions
+
+    from google.cloud.firestore_v1.types import common, firestore, write
+
+    to_wrap = mock.Mock(return_value=mock.sentinel.result, spec=[])
+    wrapped = _make__transactional(to_wrap)
+
+    txn_id = b"whole-enchilada"
+    transaction = _make_transaction_pb(txn_id, database=database)
+
+    # An expired transaction id is InvalidArgument, not Aborted.
+    exc = exceptions.InvalidArgument(
+        "The referenced transaction has expired or is no longer valid."
+    )
+    firestore_api = transaction._client._firestore_api
+    firestore_api.commit.side_effect = [
+        exc,
+        firestore.CommitResponse(write_results=[write.WriteResult()]),
+    ]
+
+    result = wrapped(transaction, "a", b="c")
+    assert result is mock.sentinel.result
+
+    assert transaction._id is None
+    assert wrapped.current_id == txn_id
+    assert wrapped.retry_id == txn_id
+
+    wrapped_call = mock.call(transaction, "a", b="c")
+    assert to_wrap.mock_calls == [wrapped_call, wrapped_call]
+    db_str = transaction._client._database_string
+    options_ = common.TransactionOptions(
+        read_write=common.TransactionOptions.ReadWrite(retry_transaction=txn_id)
+    )
+    expected_calls = [
+        mock.call(
+            request={"database": db_str, "options": None},
+            metadata=transaction._client._rpc_metadata,
+        ),
+        mock.call(
+            request={"database": db_str, "options": options_},
+            metadata=transaction._client._rpc_metadata,
+        ),
+    ]
+    assert firestore_api.begin_transaction.mock_calls == expected_calls
+    firestore_api.rollback.assert_not_called()
+    commit_call = mock.call(
+        request={"database": db_str, "writes": [], "transaction": txn_id},
+        metadata=transaction._client._rpc_metadata,
+    )
+    assert firestore_api.commit.mock_calls == [commit_call, commit_call]
+
+
+@pytest.mark.parametrize("database", [None, "somedb"])
+def test__transactional___call__invalid_argument_not_expired_does_not_retry(database):
+    from google.api_core import exceptions
+
+    to_wrap = mock.Mock(return_value=mock.sentinel.result, spec=[])
+    wrapped = _make__transactional(to_wrap)
+
+    txn_id = b"not-expired"
+    transaction = _make_transaction_pb(txn_id, database=database)
+
+    exc = exceptions.InvalidArgument("other")
+    firestore_api = transaction._client._firestore_api
+    firestore_api.commit.side_effect = exc
+
+    with pytest.raises(exceptions.InvalidArgument) as exc_info:
+        wrapped(transaction, "a", b="c")
+
+    assert exc_info.value is exc
+    to_wrap.assert_called_once_with(transaction, "a", b="c")
+    firestore_api.commit.assert_called_once_with(
+        request={
+            "database": transaction._client._database_string,
+            "writes": [],
+            "transaction": txn_id,
+        },
+        metadata=transaction._client._rpc_metadata,
+    )
+    firestore_api.rollback.assert_called_once_with(
+        request={
+            "database": transaction._client._database_string,
+            "transaction": txn_id,
+        },
+        metadata=transaction._client._rpc_metadata,
+    )
+    firestore_api.begin_transaction.assert_called_once()
+
+
+@pytest.mark.parametrize("database", [None, "somedb"])
 @pytest.mark.parametrize("max_attempts", [1, 5])
 def test_transactional___call__failure_max_attempts(database, max_attempts):
     """

@@ -44,6 +44,7 @@ from google.cloud.firestore_v1.base_transaction import (
     MAX_ATTEMPTS,
     BaseTransaction,
     _BaseTransactional,
+    _is_retryable_commit_error,
 )
 
 # Types needed only for Type Hints
@@ -329,9 +330,6 @@ class _AsyncTransactional(_BaseTransactional, Generic[T, P]):
                 ``max_attempts``.
         """
         self._reset()
-        retryable_exceptions = (
-            (exceptions.Aborted) if not transaction._read_only else ()
-        )
         last_exc = None
 
         try:
@@ -340,7 +338,11 @@ class _AsyncTransactional(_BaseTransactional, Generic[T, P]):
                 try:
                     await transaction._commit()
                     return result
-                except retryable_exceptions as exc:
+                except (exceptions.Aborted, exceptions.InvalidArgument) as exc:
+                    # Read-only transactions are never retried. InvalidArgument
+                    # restarts the transaction only when the id has expired.
+                    if transaction._read_only or not _is_retryable_commit_error(exc):
+                        raise
                     last_exc = exc
                 # Retry attempts that result in retryable exceptions
                 # Subsequent requests will use the failed transaction ID as part of

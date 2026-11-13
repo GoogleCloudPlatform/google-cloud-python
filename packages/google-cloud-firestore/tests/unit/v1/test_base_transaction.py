@@ -115,3 +115,18 @@ def test__basetransactional_reset():
 
     assert wrapped.current_id is None
     assert wrapped.retry_id is None
+
+
+def test_is_retryable_commit_error():
+    from google.api_core import exceptions
+
+    from google.cloud.firestore_v1.base_transaction import _is_retryable_commit_error
+
+    assert _is_retryable_commit_error(exceptions.Aborted("Contention."))
+    assert _is_retryable_commit_error(
+        exceptions.InvalidArgument(
+            "The referenced transaction has expired or is no longer valid."
+        )
+    )
+    assert not _is_retryable_commit_error(exceptions.InvalidArgument("other"))
+    assert not _is_retryable_commit_error(ValueError("transaction has expired"))
