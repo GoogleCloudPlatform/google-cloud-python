@@ -28,8 +28,6 @@ from functools import wraps
 
 import nox
 
-BLACK_VERSION = "black==23.7.0"
-ISORT_VERSION = "isort==5.10.1"
 RUFF_VERSION = "ruff==0.14.14"
 LINT_PATHS = ["docs", "pandas_gbq", "tests", "noxfile.py", "setup.py"]
 
@@ -151,7 +149,7 @@ def lint(session):
         "check",
         "--select",
         "I",
-        f"--target-version=py{UNIT_TEST_PYTHON_VERSIONS[0].replace('.', '')}",
+        f"--target-version=py{ALL_PYTHON[0].replace('.', '')}",
         "--line-length=88",
         *LINT_PATHS,
     )
@@ -160,7 +158,7 @@ def lint(session):
         "ruff",
         "format",
         "--check",
-        f"--target-version=py{UNIT_TEST_PYTHON_VERSIONS[0].replace('.', '')}",
+        f"--target-version=py{ALL_PYTHON[0].replace('.', '')}",
         "--line-length=88",
         *LINT_PATHS,
     )
@@ -170,10 +168,18 @@ def lint(session):
 @nox.session(python=DEFAULT_PYTHON_VERSION)
 @_calculate_duration
 def blacken(session):
-    """Run black. Format code to uniform standard."""
-    session.install(BLACK_VERSION)
+    """(Deprecated) Legacy session. Please use 'nox -s format'."""
+    session.log(
+        "WARNING: The 'blacken' session is deprecated and will be removed in a future release. Please use 'nox -s format' in the future."
+    )
+
+    # Just run the ruff formatter (keeping legacy behavior of only formatting, not sorting imports)
+    session.install(RUFF_VERSION)
     session.run(
-        "black",
+        "ruff",
+        "format",
+        f"--target-version=py{ALL_PYTHON[0].replace('.', '')}",
+        "--line-length=88",
         *LINT_PATHS,
     )
 
@@ -194,7 +200,7 @@ def format(session):
         "--select",
         "I",
         "--fix",
-        f"--target-version=py{UNIT_TEST_PYTHON_VERSIONS[0].replace('.', '')}",
+        f"--target-version=py{ALL_PYTHON[0].replace('.', '')}",
         "--line-length=88",
         *LINT_PATHS,
     )
@@ -203,7 +209,7 @@ def format(session):
     session.run(
         "ruff",
         "format",
-        f"--target-version=py{UNIT_TEST_PYTHON_VERSIONS[0].replace('.', '')}",
+        f"--target-version=py{ALL_PYTHON[0].replace('.', '')}",
         "--line-length=88",
         *LINT_PATHS,
     )
