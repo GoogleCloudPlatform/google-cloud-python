@@ -35,9 +35,13 @@ from tests.mockserver_tests.mock_database_admin import DatabaseAdminServicer
 class MockSpanner:
     def __init__(self):
         self.results = {}
+        self.errors = {}
 
     def add_result(self, sql: str, result: result_set.ResultSet):
         self.results[sql.lower().strip()] = result
+
+    def add_error(self, sql: str, code: grpc.StatusCode, details: str):
+        self.errors[sql.lower().strip()] = (code, details)
 
     def get_result(self, sql: str) -> result_set.ResultSet:
         result = self.results.get(sql.lower().strip())
@@ -135,6 +139,9 @@ class SpannerServicer(spanner_grpc.SpannerServicer):
             started_transaction = self.__create_transaction(
                 request.session, request.transaction.begin
             )
+        error = self.mock_spanner.errors.get(request.sql.lower().strip())
+        if error is not None:
+            context.abort(error[0], error[1])
         partials = self.mock_spanner.get_result_as_partial_result_sets(
             request.sql, started_transaction
         )

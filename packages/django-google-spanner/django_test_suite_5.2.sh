@@ -47,12 +47,18 @@ DATABASES = {
        'PROJECT': "$PROJECT",
        'INSTANCE': "$INSTANCE",
        'NAME': "$TEST_DBNAME",
+       'OPTIONS': {
+           'batch_ddl': True,
+       },
    },
    'other': {
        'ENGINE': 'django_spanner',
        'PROJECT': "$PROJECT",
        'INSTANCE': "$INSTANCE",
        'NAME': "$TEST_DBNAME_OTHER",
+       'OPTIONS': {
+           'batch_ddl': True,
+       },
    },
 }
 USE_TZ = False

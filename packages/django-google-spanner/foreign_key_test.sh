@@ -44,6 +44,9 @@ DATABASES = {
         'PROJECT': '$GOOGLE_CLOUD_PROJECT',
         'INSTANCE': '$SPANNER_TEST_INSTANCE',
         'NAME': 'test_foreign_keys',
+        'OPTIONS': {
+            'batch_ddl': True,
+        },
     }
 }
 " >> foreign_keys/settings.py

@@ -63,7 +63,7 @@ UNIT_TEST_DEPENDENCIES = [
 ]
 
 UNIT_TEST_MOCKSERVER_DEPENDENCIES = [
-    "google-cloud-spanner>=3.70.0",
+    "google-cloud-spanner>=3.72.0",
     "sqlparse>=0.4.4",
 ]
 

@@ -46,12 +46,12 @@ class TestBase(SpannerSimpleTestClass):
     def test_get_new_connection(self):
         self.db_wrapper.Database = mock_database = mock.MagicMock()
         mock_database.connect = mock_connection = mock.MagicMock()
-        conn_params = {"test_param": "dummy"}
+        conn_params = {"test_param": "dummy", "batch_ddl": True}
         self.db_wrapper.get_new_connection(conn_params)
         mock_connection.assert_called_once_with(
             self.INSTANCE_ID,
             client=mock_database.connect.call_args[1]["client"],
-            **conn_params,
+            test_param="dummy",
         )
 
     def test_init_connection_state(self):

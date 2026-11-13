@@ -170,6 +170,30 @@ A transaction is automatically started if you define an
 To disable transactions in autocommit mode, set the flag `ALLOW_TRANSACTIONS_IN_AUTO_COMMIT` to False in your ``settings.py`` file.
 
 
+DDL batching
+~~~~~~~~~~~~
+
+By default, ``DatabaseSchemaEditor`` executes each DDL statement individually.
+To batch DDL statements generated within a ``schema_editor()`` context (such as
+during ``manage.py migrate`` or test database creation) into batched
+``UpdateDatabaseDdl`` requests, set ``'batch_ddl': True`` in ``OPTIONS``
+(defaults to ``False``):
+
+.. code:: python
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django_spanner',
+            'PROJECT': '$PROJECT',
+            'INSTANCE': '$INSTANCE',
+            'NAME': '$DATABASE',
+            'OPTIONS': {
+                'batch_ddl': True,
+            },
+        }
+    }
+
+
 Set credentials and project environment variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 You'll need to download a service account JSON key file and point to it using an environment variable:

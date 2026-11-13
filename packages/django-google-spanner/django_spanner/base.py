@@ -182,6 +182,7 @@ class DatabaseWrapper(BaseDatabaseWrapper):
         conn_params.pop("instance", None)
         conn_params.pop("instance_id", None)
         conn_params.pop("client", None)
+        conn_params.pop("batch_ddl", None)
         # Ensure client is initialized
         instance = self.instance
         return self.Database.connect(
@@ -208,6 +209,17 @@ class DatabaseWrapper(BaseDatabaseWrapper):
         :returns: The Cursor for this connection.
         """
         return self.connection.cursor()
+
+    def set_autocommit(
+        self, autocommit, force_begin_transaction_with_broken_autocommit=False
+    ):
+        editor = getattr(self, "_active_ddl_batch_editor", None)
+        if editor is not None and editor._ddl_batch_active:
+            editor._exit_ddl_batch(clean=True)
+        super().set_autocommit(
+            autocommit,
+            force_begin_transaction_with_broken_autocommit=force_begin_transaction_with_broken_autocommit,
+        )
 
     def _set_autocommit(self, autocommit):
         """Set the Spanner transaction autocommit flag.
