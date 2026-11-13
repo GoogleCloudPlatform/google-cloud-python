@@ -571,3 +571,274 @@ def test_sqlalchemy_try_cast_compiles_to_safe_cast(
         "FROM `table1`"
     )
     assert found_sql == expected_sql
+
+
+@pytest.fixture
+def json_events_table(metadata):
+    return sqlalchemy.Table(
+        "events",
+        metadata,
+        sqlalchemy.Column("id", sqlalchemy.Integer),
+        sqlalchemy.Column("payload", sqlalchemy.JSON),
+        sqlalchemy.Column("k", sqlalchemy.String),
+        sqlalchemy.Column("idx", sqlalchemy.Integer),
+    )
+
+
+def test_json_getitem_string_key(faux_conn, json_events_table):
+    stmt = sqlalchemy.select(json_events_table.c.payload["key"].label("val"))
+    compiled = stmt.compile(faux_conn)
+    assert (
+        compiled.string
+        == "SELECT `events`.`payload`[%(payload_1:STRING)s] AS `val` \nFROM `events`"
+    )
+    assert compiled.construct_params() == {"payload_1": "key"}
+
+    literal_sql = stmt.compile(faux_conn, compile_kwargs={"literal_binds": True}).string
+    assert literal_sql == "SELECT `events`.`payload`['key'] AS `val` \nFROM `events`"
+
+
+def test_json_getitem_integer_index(faux_conn, json_events_table):
+    stmt = sqlalchemy.select(json_events_table.c.payload[0].label("val"))
+    compiled = stmt.compile(faux_conn)
+    assert (
+        compiled.string
+        == "SELECT `events`.`payload`[%(payload_1:INT64)s] AS `val` \nFROM `events`"
+    )
+    assert compiled.construct_params() == {"payload_1": 0}
+
+    literal_sql = stmt.compile(faux_conn, compile_kwargs={"literal_binds": True}).string
+    assert literal_sql == "SELECT `events`.`payload`[0] AS `val` \nFROM `events`"
+
+
+def test_json_getitem_chained_subscripts(faux_conn, json_events_table):
+    stmt = sqlalchemy.select(json_events_table.c.payload["a"][0]["b"].label("val"))
+    compiled = stmt.compile(faux_conn)
+    assert compiled.string in (
+        "SELECT `events`.`payload`[%(payload_1:STRING)s]"
+        "[%(param_1:INT64)s][%(param_2:STRING)s] AS `val` \n"
+        "FROM `events`",
+        "SELECT ((`events`.`payload`[%(payload_1:STRING)s])"
+        "[%(param_1:INT64)s])[%(param_2:STRING)s] AS `val` \n"
+        "FROM `events`",
+    )
+    assert compiled.construct_params() == {
+        "payload_1": "a",
+        "param_1": 0,
+        "param_2": "b",
+    }
+
+    literal_sql = stmt.compile(faux_conn, compile_kwargs={"literal_binds": True}).string
+    assert literal_sql in (
+        "SELECT `events`.`payload`['a'][0]['b'] AS `val` \nFROM `events`",
+        "SELECT ((`events`.`payload`['a'])[0])['b'] AS `val` \nFROM `events`",
+    )
+
+
+@pytest.mark.parametrize(
+    "malicious_key",
+    [
+        "a` FROM `events`; DROP TABLE `x`; --",
+        "a') FROM `events`; DROP TABLE `x`; --",
+        'a" FROM `events`; --',
+        "a\\') OR 1=1 --",
+        "$[0]",
+        "a.b[0]",
+        "pct%s",
+    ],
+)
+def test_json_getitem_sql_injection_prevented(
+    faux_conn, json_events_table, malicious_key
+):
+    stmt = sqlalchemy.select(json_events_table.c.payload[malicious_key])
+    compiled = stmt.compile(faux_conn)
+    assert (
+        compiled.string
+        == "SELECT `events`.`payload`[%(payload_1:STRING)s] AS `anon_1` \nFROM `events`"
+    )
+    assert "DROP TABLE" not in compiled.string
+    assert compiled.construct_params() == {"payload_1": malicious_key}
+
+    literal_sql = stmt.compile(faux_conn, compile_kwargs={"literal_binds": True}).string
+    expected_literal = repr(malicious_key.replace("%", "%%"))
+    assert (
+        literal_sql
+        == f"SELECT `events`.`payload`[{expected_literal}] AS `anon_1` \nFROM `events`"
+    )
+
+
+def test_json_getitem_boolean_key(faux_conn, json_events_table):
+    stmt = sqlalchemy.select(json_events_table.c.payload[True])
+    compiled = stmt.compile(faux_conn)
+    assert (
+        compiled.string
+        == "SELECT `events`.`payload`[%(payload_1:STRING)s] AS `anon_1` \nFROM `events`"
+    )
+    assert compiled.construct_params() == {"payload_1": "True"}
+
+    literal_sql = stmt.compile(faux_conn, compile_kwargs={"literal_binds": True}).string
+    assert (
+        literal_sql == "SELECT `events`.`payload`['True'] AS `anon_1` \nFROM `events`"
+    )
+
+
+def test_json_getitem_bindparam_and_column_expressions(faux_conn, json_events_table):
+    # Untyped bindparam (SQLAlchemy sets bindparam.type = JSONStrIndexType class)
+    stmt_untyped = sqlalchemy.select(
+        json_events_table.c.payload[sqlalchemy.bindparam("k")]
+    )
+    compiled_untyped = stmt_untyped.compile(faux_conn)
+    assert (
+        compiled_untyped.string
+        == "SELECT `events`.`payload`[%(k:STRING)s] AS `anon_1` \nFROM `events`"
+    )
+
+    # JSONIndexType (base class)
+    bp_idx = sqlalchemy.bindparam(
+        "idx_k", "v", type_=sqlalchemy.sql.sqltypes.JSON.JSONIndexType()
+    )
+    assert (
+        sqlalchemy.select(bp_idx).compile(faux_conn).string
+        == "SELECT %(idx_k:STRING)s AS `anon_1`"
+    )
+    assert (
+        sqlalchemy.select(bp_idx)
+        .compile(faux_conn, compile_kwargs={"literal_binds": True})
+        .string
+        == "SELECT 'v' AS `anon_1`"
+    )
+
+    # Column expressions
+    stmt_col = sqlalchemy.select(
+        json_events_table.c.payload[json_events_table.c.k],
+        json_events_table.c.payload[json_events_table.c.idx],
+    )
+    assert stmt_col.compile(faux_conn).string == (
+        "SELECT `events`.`payload`[`events`.`k`] AS `anon_1`, "
+        "`events`.`payload`[`events`.`idx`] AS `anon_2` \n"
+        "FROM `events`"
+    )
+
+
+def test_json_path_getitem(faux_conn, json_events_table):
+    stmt = sqlalchemy.select(
+        json_events_table.c.payload[("a", 0, 'b"c\\d', True)].label("val")
+    )
+    compiled = stmt.compile(faux_conn)
+    assert (
+        compiled.string
+        == "SELECT JSON_QUERY(`events`.`payload`, %(payload_1:STRING)s) AS `val` \nFROM `events`"
+    )
+    raw_params = compiled.construct_params()
+    assert (
+        compiled._bind_processors["payload_1"](raw_params["payload_1"])
+        == '$."a"[0]."b\\"c\\\\d"."True"'
+    )
+
+    literal_sql = stmt.compile(faux_conn, compile_kwargs={"literal_binds": True}).string
+    assert literal_sql == (
+        "SELECT JSON_QUERY(`events`.`payload`, "
+        + repr('$."a"[0]."b\\"c\\\\d"."True"')
+        + ") AS `val` \nFROM `events`"
+    )
+
+
+def test_json_getitem_direct_operator_edge_cases(faux_conn, json_events_table):
+    from sqlalchemy.sql import operators
+    from sqlalchemy.sql.elements import BinaryExpression
+
+    # 1. json_getitem_op with sequence value routes to json_path_getitem_op
+    bp_seq = sqlalchemy.sql.elements.BindParameter(
+        "p", value=["a", 1], type_=sqlalchemy.sql.sqltypes.NullType()
+    )
+    expr_seq = BinaryExpression(
+        json_events_table.c.payload, bp_seq, operators.json_getitem_op
+    )
+    compiled_seq = sqlalchemy.select(expr_seq).compile(faux_conn)
+    assert (
+        compiled_seq.string
+        == "SELECT JSON_QUERY(`events`.`payload`, %(p:STRING)s) AS `anon_1` \nFROM `events`"
+    )
+    raw_seq_params = compiled_seq.construct_params()
+    assert compiled_seq._bind_processors["p"](raw_seq_params["p"]) == '$."a"[1]'
+
+    # 2. json_getitem_op with NullType bindparam (int and str)
+    bp_null_int = sqlalchemy.sql.elements.BindParameter(
+        "p_int", value=2, type_=sqlalchemy.sql.sqltypes.NullType()
+    )
+    expr_null_int = BinaryExpression(
+        json_events_table.c.payload, bp_null_int, operators.json_getitem_op
+    )
+    assert (
+        sqlalchemy.select(expr_null_int).compile(faux_conn).string
+        == "SELECT `events`.`payload`[%(p_int:INT64)s] AS `anon_1` \nFROM `events`"
+    )
+
+    bp_null_str = sqlalchemy.sql.elements.BindParameter(
+        "p_str", value="k", type_=sqlalchemy.sql.sqltypes.NullType()
+    )
+    expr_null_str = BinaryExpression(
+        json_events_table.c.payload, bp_null_str, operators.json_getitem_op
+    )
+    assert (
+        sqlalchemy.select(expr_null_str).compile(faux_conn).string
+        == "SELECT `events`.`payload`[%(p_str:STRING)s] AS `anon_1` \nFROM `events`"
+    )
+
+    # 3. json_path_getitem_op with non-JSONPathType BindParameter (str) and ColumnElement
+    bp_str_path = sqlalchemy.bindparam("p_path", "$.a")
+    expr_str_path = BinaryExpression(
+        json_events_table.c.payload, bp_str_path, operators.json_path_getitem_op
+    )
+    assert (
+        sqlalchemy.select(expr_str_path).compile(faux_conn).string
+        == "SELECT JSON_QUERY(`events`.`payload`, %(p_path:STRING)s) AS `anon_1` \nFROM `events`"
+    )
+
+    expr_col_path = BinaryExpression(
+        json_events_table.c.payload,
+        json_events_table.c.k,
+        operators.json_path_getitem_op,
+    )
+    assert (
+        sqlalchemy.select(expr_col_path).compile(faux_conn).string
+        == "SELECT JSON_QUERY(`events`.`payload`, `events`.`k`) AS `anon_1` \nFROM `events`"
+    )
+
+    # 4. Unbound bindparam with JSONPathType (both as class on .type and via subscript)
+    bp_unbound_cls = sqlalchemy.bindparam("p_cls")
+    bp_unbound_cls.type = sqlalchemy.sql.sqltypes.JSON.JSONPathType
+    expr_unbound_cls = BinaryExpression(
+        json_events_table.c.payload, bp_unbound_cls, operators.json_path_getitem_op
+    )
+    compiled_unbound_cls = sqlalchemy.select(expr_unbound_cls).compile(faux_conn)
+    assert (
+        compiled_unbound_cls.string
+        == "SELECT JSON_QUERY(`events`.`payload`, %(p_cls:STRING)s) AS `anon_1` \nFROM `events`"
+    )
+    assert compiled_unbound_cls._bind_processors["p_cls"](("a", 0)) == '$."a"[0]'
+
+    stmt_unbound_sub = sqlalchemy.select(
+        json_events_table.c.payload[
+            sqlalchemy.bindparam("p_sub", type_=sqlalchemy.JSON.JSONPathType)
+        ]
+    )
+    compiled_unbound_sub = stmt_unbound_sub.compile(faux_conn)
+    assert (
+        compiled_unbound_sub.string
+        == "SELECT JSON_QUERY(`events`.`payload`, %(p_sub:STRING)s) AS `anon_1` \nFROM `events`"
+    )
+    assert compiled_unbound_sub._bind_processors["p_sub"](("a", 0)) == '$."a"[0]'
+
+
+def test_identifier_preparer_escape_unescape():
+    import sqlalchemy_bigquery
+
+    dialect_pyformat = sqlalchemy_bigquery.BigQueryDialect(paramstyle="pyformat")
+    prep_pyformat = dialect_pyformat.identifier_preparer
+    assert prep_pyformat.quote_identifier("a`b\\c%d") == "`a\\`b\\\\c%%d`"
+    assert prep_pyformat._unescape_identifier("a\\`b\\\\c") == "a`b\\c"
+
+    dialect_named = sqlalchemy_bigquery.BigQueryDialect(paramstyle="named")
+    prep_named = dialect_named.identifier_preparer
+    assert prep_named.quote_identifier("a`b\\c%d") == "`a\\`b\\\\c%d`"

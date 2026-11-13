@@ -91,6 +91,11 @@ class STRUCT(sqlalchemy.sql.sqltypes.Indexable, sqlalchemy.types.UserDefinedType
             subtype = self.expr.type._STRUCT_byname.get(name.lower())
             if subtype is None:
                 raise KeyError(name)
+            # Reuse `operators.json_getitem_op` to represent STRUCT subfield
+            # access. `BigQueryCompiler.visit_json_getitem_op_binary` in
+            # `base.py` checks whether the left operand is a `STRUCT` (vs. a
+            # `sqlalchemy.JSON` column) and compiles STRUCT subfields as
+            # backtick-quoted SQL identifiers (`struct_col.`field``).
             operator = operators.json_getitem_op
             index = _field_index(self, name, operator)
             return operator, index, subtype
@@ -112,9 +117,3 @@ def _field_index(self, name, operator):
         operator=operator,
         bindparam_type=sqlalchemy.types.String(),
     )
-
-
-# class SQLCompiler:
-#     def visit_json_getitem_op_binary(self, binary, operator_, **kw):
-#         left = self.process(binary.left, **kw)
-#         return f"{left}.{binary.right.value}"
