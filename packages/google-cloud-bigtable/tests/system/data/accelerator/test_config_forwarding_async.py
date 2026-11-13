@@ -1,0 +1,64 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import os
+import uuid
+
+from google.cloud.bigtable.data._cross_sync import CrossSync
+from google.cloud.bigtable.data.mutations import DeleteAllFromRow, SetCell
+
+from . import _harness
+
+if CrossSync.is_async:
+    from ._base_async import AcceleratorTestBaseAsync as AcceleratorTestBase
+else:
+    from ._base_autogen import AcceleratorTestBase
+
+__CROSS_SYNC_OUTPUT__ = "tests.system.data.accelerator.test_config_forwarding_autogen"
+
+
+@CrossSync.convert_class(sync_name="TestConfigForwarding")
+class TestConfigForwardingAsync(AcceleratorTestBase):
+    @CrossSync.pytest
+    async def test_endpoint_and_app_profile_round_trip(self, instance_id, table_id):
+        ep = "bigtable.googleapis.com:443"
+        app_profile = os.getenv("BIGTABLE_TEST_APP_PROFILE") or os.getenv(
+            "CBT_APP_PROFILE_ID"
+        )
+        async with self._make_client(
+            use_accelerator=True,
+            client_options={"api_endpoint": ep},
+        ) as client:
+            async with client.get_table(
+                instance_id, table_id, app_profile_id=app_profile
+            ) as table:
+                self.assert_accelerator_active(table)
+                assert _harness.pid_alive(_harness.daemon_pid(table))
+                flags = table._accelerator_daemon._cli_flags
+                assert flags[flags.index("--project") + 1] == client.project
+                assert flags[flags.index("--data-endpoint") + 1] == ep
+
+                key = f"cfg-{uuid.uuid4().hex}".encode()
+                await table.mutate_row(
+                    key,
+                    SetCell(
+                        _harness.TEST_FAMILY,
+                        b"q",
+                        b"v",
+                        timestamp_micros=1000 * _harness.MS,
+                    ),
+                )
+                row = await table.read_row(key)
+                assert row is not None and row.cells[0].value == b"v"
+                await table.mutate_row(key, DeleteAllFromRow())
