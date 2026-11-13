@@ -594,6 +594,62 @@ class TestOperations(SpannerSimpleTestClass):
         )
         settings.USE_TZ = True  # reset changes.
 
+    def test_datetime_extract_sql_escapes_tzname(self):
+        settings.USE_TZ = True
+        self.assertEqual(
+            self.db_operations.datetime_extract_sql(
+                "year", "dummy_field", None, 'X" OR "a"="a'
+            ),
+            (
+                'EXTRACT(year FROM dummy_field AT TIME ZONE "X\\" OR \\"a\\"=\\"a")',
+                None,
+            ),
+        )
+
+    def test_datetime_trunc_sql_escapes_tzname(self):
+        settings.USE_TZ = True
+        self.assertEqual(
+            self.db_operations.datetime_trunc_sql(
+                "day", "dummy_field", None, 'X" OR "a"="a'
+            ),
+            (
+                'TIMESTAMP_TRUNC(dummy_field, day, "X\\" OR \\"a\\"=\\"a")',
+                None,
+            ),
+        )
+
+    def test_time_trunc_sql_escapes_tzname(self):
+        settings.USE_TZ = True
+        self.assertEqual(
+            self.db_operations.time_trunc_sql(
+                "day", "dummy_field", None, 'X" OR "a"="a'
+            ),
+            (
+                'TIMESTAMP_TRUNC(dummy_field, day, "X\\" OR \\"a\\"=\\"a")',
+                None,
+            ),
+        )
+
+    def test_datetime_cast_date_sql_escapes_tzname(self):
+        settings.USE_TZ = True
+        self.assertEqual(
+            self.db_operations.datetime_cast_date_sql(
+                "dummy_field", None, 'X" OR "a"="a'
+            ),
+            ('DATE(dummy_field, "X\\" OR \\"a\\"=\\"a")', None),
+        )
+
+    def test_datetime_cast_time_sql_escapes_tzname(self):
+        settings.USE_TZ = True
+        self.assertEqual(
+            self.db_operations.datetime_cast_time_sql("dummy_field", None, "X' || 'a"),
+            (
+                "TIMESTAMP(FORMAT_TIMESTAMP('%Y-%m-%d %R:%E9S %Z', "
+                "dummy_field, 'X\\' || \\'a'))",
+                None,
+            ),
+        )
+
     def test_date_interval_sql(self):
         self.assertEqual(
             self.db_operations.date_interval_sql(timedelta(days=1)),
