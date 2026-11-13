@@ -139,12 +139,15 @@ class TestRequestMiddleware(DjangoBase):
         worker_request = object()
         middleware(main_request)
 
-        with ThreadPoolExecutor(max_workers=1) as executor:
-            self.assertIsNone(executor.submit(request._get_django_request).result())
-            executor.submit(middleware, worker_request).result()
+        def worker():
+            self.assertIsNone(request._get_django_request())
+            middleware(worker_request)
             self.assertIs(
-                executor.submit(request._get_django_request).result(), worker_request
+                request._get_django_request(), worker_request
             )
+
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            executor.submit(worker).result()
 
         self.assertIs(request._get_django_request(), main_request)
 
