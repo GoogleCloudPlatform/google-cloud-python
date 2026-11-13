@@ -34,11 +34,11 @@ for more detailed instructions.
     ```
     source <your-venv>/bin/activate
     ```
-3. To run samples for [Rapid Buckets](https://github.com/googleapis/python-storage/tree/main/samples/snippets/zonal_buckets)
+3. To run samples for [Rapid Buckets](https://github.com/GoogleCloudPlatform/python-docs-samples/tree/main/storage/samples/snippets/bidi)
 
     ```
     pip install "google-cloud-storage[grpc]"
-    python samples/snippets/zonal_buckets/storage_create_and_write_appendable_object.py --bucket_name <BUCKET_NAME> --object_name <OBJECT_NAME>
+    python storage/samples/snippets/bidi/storage_create_and_write_appendable_object.py --bucket_name <BUCKET_NAME> --object_name <OBJECT_NAME>
 
     ```
 
