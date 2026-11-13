@@ -41,6 +41,17 @@ _FINISHED = (
 KEY_PROPERTY_NAME = "__key__"
 
 
+def _validate_key_filter_value(operator, value):
+    """Validate filter value when filtering on ``__key__``."""
+    if operator in ("IN", "NOT_IN"):
+        if not isinstance(value, list) or not all(
+            isinstance(item, Key) for item in value
+        ):
+            raise ValueError('Invalid key: "%s"' % value)
+    elif not isinstance(value, Key):
+        raise ValueError('Invalid key: "%s"' % value)
+
+
 class BaseFilter(ABC):
     """Base class for Filters"""
 
@@ -53,12 +64,12 @@ class PropertyFilter(BaseFilter):
     """Class representation of a Property Filter"""
 
     def __init__(self, property_name, operator, value):
-        if property_name == KEY_PROPERTY_NAME and not isinstance(value, Key):
-            raise ValueError('Invalid key: "%s"' % value)
         if Query.OPERATORS.get(operator) is None:
             error_message = 'Invalid expression: "%s"' % (operator,)
             choices_message = "Please use one of: =, <, <=, >, >=, !=, IN, NOT_IN."
             raise ValueError(error_message, choices_message)
+        if property_name == KEY_PROPERTY_NAME:
+            _validate_key_filter_value(operator, value)
         self.property_name = property_name
         self.operator = operator
         self.value = value
@@ -67,11 +78,7 @@ class PropertyFilter(BaseFilter):
         """Build the protobuf representation based on values in the Property Filter."""
         container_pb.op = Query.OPERATORS.get(self.operator)
         container_pb.property.name = self.property_name
-        if self.property_name == KEY_PROPERTY_NAME:
-            key_pb = self.value.to_protobuf()
-            container_pb.value.key_value.CopyFrom(key_pb._pb)
-        else:
-            helpers._set_protobuf_value(container_pb.value, self.value)
+        helpers._set_protobuf_value(container_pb.value, self.value)
         return container_pb
 
     def __repr__(self):
@@ -396,7 +403,8 @@ class Query(object):
         :type value: :class:`int`, :class:`str`, :class:`bool`,
                      :class:`float`, :class:`NoneType`,
                      :class:`datetime.datetime`,
-                     :class:`google.cloud.datastore.key.Key`
+                     :class:`google.cloud.datastore.key.Key`,
+                     list
         :param value: The value to filter on.
 
         :type filter: :class:`CompositeFilter`, :class:`PropertyFiler`
@@ -407,7 +415,8 @@ class Query(object):
 
         :raises: :class:`ValueError` if ``operation`` is not one of the
                  specified values, or if a filter names ``'__key__'`` but
-                 passes an invalid value (a key is required).
+                 passes an invalid value (a key is required, or a list of
+                 keys for ``'IN'`` and ``'NOT_IN'``).
         """
         if isinstance(property_name, PropertyFilter):
             raise ValueError(
@@ -424,13 +433,13 @@ class Query(object):
                     "Can't pass in both the positional arguments and 'filter' at the same time"
                 )
 
-            if property_name == KEY_PROPERTY_NAME and not isinstance(value, Key):
-                raise ValueError('Invalid key: "%s"' % value)
-
             if self.OPERATORS.get(operator) is None:
                 error_message = 'Invalid expression: "%s"' % (operator,)
                 choices_message = "Please use one of: =, <, <=, >, >=, !=, IN, NOT_IN."
                 raise ValueError(error_message, choices_message)
+
+            if property_name == KEY_PROPERTY_NAME:
+                _validate_key_filter_value(operator, value)
 
             warnings.warn(
                 "Detected filter using positional arguments. Prefer using the 'filter' keyword argument instead.",
@@ -472,8 +481,9 @@ class Query(object):
     def key_filter(self, key, operator="="):
         """Filter on a key.
 
-        :type key: :class:`google.cloud.datastore.key.Key`
-        :param key: The key to filter on.
+        :type key: :class:`google.cloud.datastore.key.Key` or list of
+                   :class:`google.cloud.datastore.key.Key`
+        :param key: The key (or list of keys for ``IN`` or ``NOT_IN``) to filter on.
 
         :type operator: str
         :param operator: (Optional) One of ``=``, ``<``, ``<=``, ``>``, ``>=``, ``!=``, ``IN``, ``NOT_IN``.
