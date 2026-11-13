@@ -2,6 +2,12 @@ common:
   bucket_types:
     - "regional"
     - "rapid"
+  zero_copy:
+    - false
+    - true
+  accepts_memoryview:
+    - false
+    - true
   file_sizes_mib:
     - 10240 # 10GiB
   chunk_sizes_kib: [64] # 16KiB

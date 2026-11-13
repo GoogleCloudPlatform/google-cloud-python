@@ -19,3 +19,5 @@ from ..parameters import IOBenchmarkParameters
 @dataclass
 class ReadParameters(IOBenchmarkParameters):
     pattern: str
+    zero_copy: bool = False
+    accepts_memoryview: bool = False

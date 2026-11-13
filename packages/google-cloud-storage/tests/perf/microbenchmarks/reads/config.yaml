@@ -2,6 +2,12 @@ common:
   bucket_types:
     - "regional"
     - "rapid"
+  zero_copy:
+    - false
+    - true
+  accepts_memoryview:
+    - false
+    - true
   file_sizes_mib:
     - 1024 # 1GiB
   chunk_sizes_mib: [100]
@@ -46,4 +52,4 @@ workload:
 
 defaults:
   DEFAULT_RAPID_BUCKET: "chandrasiri-benchmarks-zb"
-  DEFAULT_STANDARD_BUCKET: "chandrasiri-benchmarks-rb" 
+  DEFAULT_STANDARD_BUCKET: "chandrasiri-benchmarks-rb"

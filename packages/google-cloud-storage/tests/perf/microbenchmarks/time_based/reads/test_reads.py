@@ -29,8 +29,10 @@ from google.cloud.storage.asyncio.async_multi_range_downloader import (
     AsyncMultiRangeDownloader,
 )
 from tests.perf.microbenchmarks._utils import (
+    _ZERO_COPY_ENV_VAR,
     get_irq_affinity,
     publish_benchmark_extra_info,
+    zero_copy_env,
 )
 from tests.perf.microbenchmarks.conftest import (
     publish_resource_metrics,
@@ -100,7 +102,7 @@ worker_json_client = None
 
 
 # TODO: b/479135274 close clients properly.
-def _worker_init(bucket_type):
+def _worker_init(bucket_type, zero_copy=False):
     """Initializes a persistent event loop and client for each worker process."""
     cpu_affinity = get_irq_affinity()
     if cpu_affinity:
@@ -110,6 +112,7 @@ def _worker_init(bucket_type):
 
     global worker_loop, worker_client, worker_json_client
     if bucket_type == "rapid":
+        os.environ[_ZERO_COPY_ENV_VAR] = "1" if zero_copy else "0"
         worker_loop = asyncio.new_event_loop()
         asyncio.set_event_loop(worker_loop)
         worker_client = worker_loop.run_until_complete(create_client())
@@ -224,7 +227,9 @@ async def _download_time_based_async(client, filename, params):
                     if offset + params.chunk_size_bytes > params.file_size_bytes:
                         offset = 0  # Reset offset if end of file is reached
 
-            await mrd.download_ranges(ranges)
+            await mrd.download_ranges(
+                ranges, accepts_memoryview=params.accepts_memoryview
+            )
 
             bytes_in_buffers = sum(r[2].size for r in ranges)
             assert bytes_in_buffers == params.chunk_size_bytes * params.num_ranges
@@ -273,45 +278,46 @@ def test_downloads_multi_proc_multi_coro(
     logging.info(f"num files: {len(files_names)}")
 
     ctx = multiprocessing.get_context("spawn")
-    pool = ctx.Pool(
-        processes=params.num_processes,
-        initializer=_worker_init,
-        initargs=(params.bucket_type,),
-    )
-
-    download_bytes_list = []
-    download_elapsed_times = []
-
-    def target_wrapper(*args, **kwargs):
-        total_bytes, measured_elapsed_time = download_files_mp_mc_wrapper(
-            pool, *args, **kwargs
+    with zero_copy_env(params.zero_copy):
+        pool = ctx.Pool(
+            processes=params.num_processes,
+            initializer=_worker_init,
+            initargs=(params.bucket_type, params.zero_copy),
         )
-        download_bytes_list.append(total_bytes)
-        download_elapsed_times.append(measured_elapsed_time)
-        return
 
-    try:
-        with monitor() as m:
-            benchmark.pedantic(
-                target=target_wrapper,
-                iterations=1,
-                rounds=params.rounds,
-                args=(files_names, params, params.bucket_type),
+        download_bytes_list = []
+        download_elapsed_times = []
+
+        def target_wrapper(*args, **kwargs):
+            total_bytes, measured_elapsed_time = download_files_mp_mc_wrapper(
+                pool, *args, **kwargs
             )
-    finally:
-        pool.close()
-        pool.join()
-        throughput_mib_s = _calculate_average_throughput_mib_s(
-            download_bytes_list, download_elapsed_times
-        )
-        benchmark.extra_info["avg_throughput_mib_s"] = f"{throughput_mib_s:.2f}"
-        print(
-            f"Avg Throughput of {params.rounds} round(s): {throughput_mib_s:.2f} MiB/s"
-        )
-        publish_benchmark_extra_info(
-            benchmark,
-            params,
-            download_bytes_list=download_bytes_list,
-            duration=download_elapsed_times,
-        )
-        publish_resource_metrics(benchmark, m)
+            download_bytes_list.append(total_bytes)
+            download_elapsed_times.append(measured_elapsed_time)
+            return
+
+        try:
+            with monitor() as m:
+                benchmark.pedantic(
+                    target=target_wrapper,
+                    iterations=1,
+                    rounds=params.rounds,
+                    args=(files_names, params, params.bucket_type),
+                )
+        finally:
+            pool.close()
+            pool.join()
+            throughput_mib_s = _calculate_average_throughput_mib_s(
+                download_bytes_list, download_elapsed_times
+            )
+            benchmark.extra_info["avg_throughput_mib_s"] = f"{throughput_mib_s:.2f}"
+            print(
+                f"Avg Throughput of {params.rounds} round(s): {throughput_mib_s:.2f} MiB/s"
+            )
+            publish_benchmark_extra_info(
+                benchmark,
+                params,
+                download_bytes_list=download_bytes_list,
+                duration=download_elapsed_times,
+            )
+            publish_resource_metrics(benchmark, m)

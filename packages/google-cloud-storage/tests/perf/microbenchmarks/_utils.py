@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import contextlib
 import io
 import os
 import socket
@@ -19,7 +20,24 @@ from typing import Any, List, Optional, Union
 
 import psutil
 
+from google.cloud.storage.asyncio import _zero_copy_bidi_read
+
 _C4_STANDARD_192_NIC = "ens3"  # can be fetched via ip link show
+_ZERO_COPY_ENV_VAR = "GCS_PYTHON_CLIENT_ZERO_COPY_BIDI_READ"
+
+
+@contextlib.contextmanager
+def zero_copy_env(enabled: bool):
+    """Sets GCS_PYTHON_CLIENT_ZERO_COPY_BIDI_READ for the duration of a block."""
+    previous = os.environ.get(_ZERO_COPY_ENV_VAR)
+    os.environ[_ZERO_COPY_ENV_VAR] = "1" if enabled else "0"
+    try:
+        yield
+    finally:
+        if previous is None:
+            os.environ.pop(_ZERO_COPY_ENV_VAR, None)
+        else:
+            os.environ[_ZERO_COPY_ENV_VAR] = previous
 
 
 def publish_benchmark_extra_info(
@@ -41,6 +59,13 @@ def publish_benchmark_extra_info(
         benchmark.extra_info["pattern"] = "seq"
     else:
         benchmark.extra_info["pattern"] = params.pattern
+        benchmark.extra_info["zero_copy"] = getattr(params, "zero_copy", False)
+        benchmark.extra_info["accepts_memoryview"] = getattr(
+            params, "accepts_memoryview", False
+        )
+        benchmark.extra_info["crc32c_memoryview_supported"] = (
+            _zero_copy_bidi_read.is_supported()
+        )
     benchmark.extra_info["coros"] = params.num_coros
     benchmark.extra_info["rounds"] = params.rounds
     benchmark.extra_info["bucket_name"] = params.bucket_name
