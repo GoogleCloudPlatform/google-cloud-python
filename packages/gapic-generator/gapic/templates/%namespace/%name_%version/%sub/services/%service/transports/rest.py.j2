@@ -303,7 +303,11 @@ class {{service.name}}RestTransport(_Base{{ service.name }}RestTransport):
             resp = self._interceptor.post_{{ method.name|snake_case }}(resp)
             response_metadata = [(k, str(v)) for k, v in response.headers.items()]
             resp, _ = self._interceptor.post_{{ method.name|snake_case }}_with_metadata(resp, response_metadata)
-            if CLIENT_LOGGING_SUPPORTED and _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: NO COVER
+            if (
+                CLIENT_LOGGING_SUPPORTED
+                and _LOGGER.isEnabledFor(logging.DEBUG)
+                and _LOGGER.hasHandlers()
+            ):  # pragma: NO COVER
                 {# TODO(https://github.com/googleapis/gapic-generator-python/issues/2389): #}
                 {# Depending how we want to log (a) receiving a streaming response vs (b) exposing the next streamed item to the user, we could possibly want to log something here #}
                 {# (a) should always happen in api-core #}
