@@ -25,6 +25,34 @@ from google.cloud.sqlalchemy_spanner.sqlalchemy_spanner import SpannerDialect
 
 
 class TestSpannerDialect(fixtures.TestBase):
+    def test_get_table_filter_query(self):
+        """Test the WHERE condition rendered for filter_names."""
+        dialect = SpannerDialect()
+        eq_(dialect._get_table_filter_query(None, "col", True), "")
+        eq_(
+            dialect._get_table_filter_query(["t1", "t2"], "col", True),
+            "(col.table_name = 't1' OR col.table_name = 't2')  AND ",
+        )
+        # An empty filter_names matches no tables instead of rendering "()".
+        eq_(dialect._get_table_filter_query([], "col", True), "(FALSE)  AND ")
+        eq_(dialect._get_table_filter_query((), "col"), "(FALSE) ")
+
+    def test_get_multi_columns_with_empty_filter_names(self):
+        """Test get_multi_* with an empty filter_names returns no tables."""
+        dialect = SpannerDialect()
+        connection = MagicMock()
+        mock_snapshot = MagicMock()
+        mock_snapshot.execute_sql.return_value = []
+        connection.connection.database.snapshot.return_value.__enter__.return_value = (
+            mock_snapshot
+        )
+
+        eq_(dialect.get_multi_columns(connection, filter_names=[]), {})
+
+        executed_sql = mock_snapshot.execute_sql.call_args[0][0]
+        assert "(FALSE)" in executed_sql
+        assert "()" not in executed_sql
+
     def test_get_multi_indexes_excludes_search_indexes_sql(self):
         """Test that get_multi_indexes SQL query excludes SEARCH indexes."""
         dialect = SpannerDialect()

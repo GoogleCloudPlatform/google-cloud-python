@@ -1131,7 +1131,9 @@ class SpannerDialect(DefaultDialect):
                     table_filter_query = table_filter_query + " OR " + query
                 else:
                     table_filter_query = query
-            table_filter_query = "(" + table_filter_query + ") "
+            # An empty filter_names selects no tables. "()" is not valid SQL,
+            # so render a condition that is always false.
+            table_filter_query = "(" + (table_filter_query or "FALSE") + ") "
             if append_query:
                 table_filter_query = table_filter_query + " AND "
 

@@ -1297,6 +1297,28 @@ class ComponentReflectionTest(_ComponentReflectionTest):
 
         Table("bytes_table", metadata, autoload=True)
 
+    def test_reflect_with_empty_filter_names(self, connection):
+        """
+        SPANNER SPECIFIC TEST:
+
+        An empty filter_names selects no tables. Checks that multi-table
+        reflection returns nothing for it instead of running invalid SQL, as
+        MetaData.reflect() does when it has no tables left to load.
+        """
+        insp = inspect(connection)
+        eq_(insp.get_multi_columns(filter_names=[]), {})
+        eq_(insp.get_multi_pk_constraint(filter_names=[]), {})
+        eq_(insp.get_multi_foreign_keys(filter_names=[]), {})
+        eq_(insp.get_multi_indexes(filter_names=[]), {})
+
+        metadata = MetaData()
+        metadata.reflect(connection, only=[])
+        eq_(list(metadata.tables), [])
+        metadata.reflect(connection, only=["users"])
+        # The table is already in the metadata, so this loads no tables.
+        metadata.reflect(connection, only=["users"])
+        eq_(list(metadata.tables), ["users"])
+
     @testing.requires.unique_constraint_reflection
     def test_get_unique_constraints(self, metadata, connection, use_schema=False):
         # SQLite dialect needs to parse the names of the constraints
