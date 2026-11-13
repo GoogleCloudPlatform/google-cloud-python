@@ -13,7 +13,6 @@ from uuid import uuid4
 
 import django
 from django.db import DEFAULT_DB_ALIAS
-from django.db.models import JSONField
 from django.db.models.fields import (
     NOT_PROVIDED,
     AutoField,
@@ -27,7 +26,6 @@ from django.db.models.fields import (
 from google.api_core.datetime_helpers import (
     DatetimeWithNanoseconds,
 )
-from google.cloud.spanner_v1 import JsonObject
 
 from .functions import register_functions
 from .lookups import register_lookups
@@ -83,17 +81,6 @@ AutoField.__init__ = autofield_init
 
 SmallAutoField.__init__ = autofield_init
 BigAutoField.__init__ = autofield_init
-
-
-def get_prep_value(self, value):
-    # Json encoding and decoding for spanner is done in python-spanner.
-    if not isinstance(value, JsonObject) and isinstance(value, dict):
-        return JsonObject(value)
-
-    return value
-
-
-JSONField.get_prep_value = get_prep_value
 
 old_datetimewithnanoseconds_eq = getattr(DatetimeWithNanoseconds, "__eq__", None)
 

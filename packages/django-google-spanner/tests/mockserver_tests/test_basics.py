@@ -11,8 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import datetime
+import uuid
+from decimal import Decimal
 from unittest import mock
 
+import google.cloud.spanner_v1.types.result_set as result_set
+import google.cloud.spanner_v1.types.type as spanner_type
 from django.db import connection, models
 from google.cloud.spanner_v1 import (
     BatchCreateSessionsRequest,
@@ -24,12 +29,13 @@ from google.cloud.spanner_v1 import (
 
 from tests.mockserver_tests.mock_server_test_base import (
     MockServerTestBase,
+    add_result,
     add_select1_result,
     add_singer_query_result,
     add_single_result,
     add_update_count,
 )
-from tests.mockserver_tests.models import Singer
+from tests.mockserver_tests.models import Detail, Singer
 from tests.settings import DATABASES
 
 
@@ -183,3 +189,218 @@ class TestBasics(MockServerTestBase):
                 requests[0].sql,
                 "DELETE FROM tests_singer WHERE 1=1",
             )
+
+    def _make_detail_result_set(self, rows):
+        select_result = result_set.ResultSet(
+            dict(
+                metadata=result_set.ResultSetMetadata(
+                    dict(
+                        row_type=spanner_type.StructType(
+                            dict(
+                                fields=[
+                                    spanner_type.StructType.Field(
+                                        dict(
+                                            name="id",
+                                            type=spanner_type.Type(
+                                                dict(code=TypeCode.INT64)
+                                            ),
+                                        )
+                                    ),
+                                    spanner_type.StructType.Field(
+                                        dict(
+                                            name="value",
+                                            type=spanner_type.Type(
+                                                dict(code=TypeCode.JSON)
+                                            ),
+                                        )
+                                    ),
+                                ]
+                            )
+                        )
+                    )
+                ),
+            )
+        )
+        select_result.rows.extend(rows)
+        return select_result
+
+    def test_insert_and_fetch_json_field(self):
+        add_single_result(
+            "INSERT INTO tests_detail (id, value) VALUES (@a0, @a1) THEN RETURN id",
+            "id",
+            TypeCode.INT64,
+            [("1",)],
+        )
+        add_result(
+            "INSERT INTO tests_detail (id, value) VALUES (@a0, @a1) THEN RETURN id, value",
+            self._make_detail_result_set([("1", "null")]),
+        )
+        add_single_result(
+            "INSERT INTO tests_detail (id, value) VALUES (@a0, @a1), (@a2, @a3)",
+            "id",
+            TypeCode.INT64,
+            [("10",), ("11",)],
+        )
+        add_single_result(
+            "UPDATE tests_detail SET value = @a0 WHERE tests_detail.id = @a1",
+            "id",
+            TypeCode.INT64,
+            [("1",)],
+        )
+        add_result(
+            "SELECT tests_detail.id, tests_detail.value FROM tests_detail",
+            self._make_detail_result_set(
+                [
+                    ("1", '{"age": "26", "name": "Jakob"}'),
+                    ("2", "[1, 2, 3]"),
+                    ("3", None),
+                    ("4", '"hello"'),
+                    ("5", "42"),
+                    ("6", "true"),
+                    ("7", "3.14"),
+                    ("8", "null"),
+                ]
+            ),
+        )
+        add_result(
+            "SELECT tests_detail.id, tests_detail.value FROM tests_detail WHERE JSON_QUERY(tests_detail.value, '$.\"name\"') = @a0",
+            self._make_detail_result_set([("1", '{"age": "26", "name": "Jakob"}')]),
+        )
+        add_result(
+            "SELECT tests_detail.id, tests_detail.value FROM tests_detail WHERE JSON_QUERY(tests_detail.value, '$.\"name\"') IS NOT NULL",
+            self._make_detail_result_set([("1", '{"age": "26", "name": "Jakob"}')]),
+        )
+        add_result(
+            "SELECT tests_detail.id, tests_detail.value FROM tests_detail WHERE tests_detail.value = @a0",
+            self._make_detail_result_set([("8", "null")]),
+        )
+        add_result(
+            "SELECT tests_detail.id, tests_detail.value FROM tests_detail WHERE tests_detail.value IS NULL",
+            self._make_detail_result_set([("3", None)]),
+        )
+
+        # 1. Dict insert
+        detail = Detail(value={"name": "Jakob", "age": "26"})
+        detail.save()
+        self.assertEqual(1, detail.id)
+
+        # 2. SQL NULL insert
+        detail_sql_null = Detail(value=None)
+        detail_sql_null.save()
+
+        # 3. JSON null insert via Value(None, JSONField())
+        detail_json_null = Detail(value=models.Value(None, models.JSONField()))
+        detail_json_null.save()
+
+        # 4. Primitives insert (str, int, bool, float)
+        for primitive in ("hello", 42, True, 3.14):
+            Detail(value=primitive).save()
+
+        # 5. Custom encoder (DjangoJSONEncoder) insert with UUID, Decimal, date
+        custom_uuid = uuid.UUID("12345678-1234-5678-1234-567812345678")
+        Detail(
+            value={
+                "uuid": custom_uuid,
+                "amount": Decimal("19.99"),
+                "date": datetime.date(2026, 4, 8),
+            }
+        ).save()
+
+        # 6. bulk_create and QuerySet.update
+        Detail.objects.bulk_create(
+            [
+                Detail(id=10, value={"bulk": 1}),
+                Detail(id=11, value=None),
+            ]
+        )
+        Detail.objects.filter(id=1).update(value={"name": "Updated"})
+
+        # 7. Fetch all (dict, list, SQL NULL, primitives, JSON null)
+        details = list(Detail.objects.all())
+        self.assertEqual(len(details), 8)
+        self.assertEqual(details[0].value, {"name": "Jakob", "age": "26"})
+        self.assertIs(type(details[0].value), dict)
+        self.assertEqual(details[1].value, [1, 2, 3])
+        self.assertIs(type(details[1].value), list)
+        self.assertIsNone(details[2].value)
+        self.assertEqual(details[3].value, "hello")
+        self.assertEqual(details[4].value, 42)
+        self.assertIs(details[5].value, True)
+        self.assertEqual(details[6].value, 3.14)
+        self.assertIsNone(details[7].value)
+
+        # 8. Filter by JSON key, has_key, JSON null (Value(None, JSONField()) & None), and SQL NULL (value__isnull=True)
+        by_key = list(Detail.objects.filter(value__name="Jakob"))
+        self.assertEqual(len(by_key), 1)
+        self.assertEqual(by_key[0].value, {"name": "Jakob", "age": "26"})
+
+        by_has_key = list(Detail.objects.filter(value__has_key="name"))
+        self.assertEqual(len(by_has_key), 1)
+
+        by_json_null_expr = list(
+            Detail.objects.filter(value=models.Value(None, models.JSONField()))
+        )
+        self.assertEqual(len(by_json_null_expr), 1)
+        self.assertIsNone(by_json_null_expr[0].value)
+
+        by_json_null_direct = list(Detail.objects.filter(value=None))
+        self.assertEqual(len(by_json_null_direct), 1)
+        self.assertIsNone(by_json_null_direct[0].value)
+
+        by_sql_null = list(Detail.objects.filter(value__isnull=True))
+        self.assertEqual(len(by_sql_null), 1)
+        self.assertIsNone(by_sql_null[0].value)
+
+        exec_requests = [
+            req
+            for req in self.spanner_service.requests
+            if isinstance(req, ExecuteSqlRequest)
+        ]
+
+        # Dict insert -> JSON string
+        self.assertEqual(exec_requests[0].param_types["a1"].code, TypeCode.JSON)
+        self.assertEqual(
+            exec_requests[0].params["a1"],
+            '{"name": "Jakob", "age": "26"}',
+        )
+
+        # SQL NULL insert -> None (NULL_VALUE in proto Struct)
+        self.assertIsNone(exec_requests[1].params["a1"])
+
+        # JSON null insert -> "null" with TypeCode.JSON
+        self.assertEqual(exec_requests[2].param_types["a1"].code, TypeCode.JSON)
+        self.assertEqual(exec_requests[2].params["a1"], "null")
+
+        # Primitives insert
+        self.assertEqual(exec_requests[3].params["a1"], '"hello"')
+        self.assertEqual(exec_requests[4].params["a1"], "42")
+        self.assertEqual(exec_requests[5].params["a1"], "true")
+        self.assertEqual(exec_requests[6].params["a1"], "3.14")
+
+        # Custom encoder insert
+        self.assertEqual(
+            exec_requests[7].params["a1"],
+            '{"uuid": "12345678-1234-5678-1234-567812345678", "amount": "19.99", "date": "2026-04-08"}',
+        )
+
+        # bulk_create request
+        self.assertEqual(exec_requests[8].params["a1"], '{"bulk": 1}')
+        self.assertIsNone(exec_requests[8].params["a3"])
+
+        # update request
+        self.assertEqual(
+            exec_requests[9].params["a0"],
+            '{"name": "Updated"}',
+        )
+
+        # filter(value__name="Jakob") request (JSONPath is inlined as a literal, @a0 is JSON "Jakob")
+        self.assertEqual(exec_requests[11].param_types["a0"].code, TypeCode.JSON)
+        self.assertEqual(exec_requests[11].params["a0"], '"Jakob"')
+
+        # filter(value=Value(None, JSONField())) request
+        self.assertEqual(exec_requests[13].param_types["a0"].code, TypeCode.JSON)
+        self.assertEqual(exec_requests[13].params["a0"], "null")
+
+        # filter(value=None) request -> also queries JSON null ("null", TypeCode.JSON)
+        self.assertEqual(exec_requests[14].param_types["a0"].code, TypeCode.JSON)
+        self.assertEqual(exec_requests[14].params["a0"], "null")

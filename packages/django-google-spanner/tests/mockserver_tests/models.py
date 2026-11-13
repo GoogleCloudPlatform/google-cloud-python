@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 
 
@@ -24,3 +25,7 @@ class Event(models.Model):
     name = models.CharField(max_length=200)
     start_time = models.DateTimeField()
     start_time_of_day = models.TimeField(null=True)
+
+
+class Detail(models.Model):
+    value = models.JSONField(null=True, encoder=DjangoJSONEncoder)

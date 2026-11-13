@@ -29,7 +29,6 @@ from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.pool import Pool
 from sqlalchemy.sql import elements, expression
 from sqlalchemy.sql.compiler import (
-    OPERATORS,
     RESERVED_WORDS,
     DDLCompiler,
     GenericTypeCompiler,
@@ -37,8 +36,7 @@ from sqlalchemy.sql.compiler import (
     SQLCompiler,
     selectable,
 )
-from sqlalchemy.sql.default_comparator import operator_lookup
-from sqlalchemy.sql.operators import json_getitem_op, json_path_getitem_op
+from sqlalchemy.sql.operators import json_path_getitem_op
 
 from google.cloud import spanner_dbapi
 from google.cloud.sqlalchemy_spanner import version as sqlalchemy_spanner_version
@@ -83,10 +81,6 @@ def reset_connection(dbapi_conn, connection_record, reset_state=None):
 
         dbapi_conn.staleness = None
         dbapi_conn.read_only = False
-
-
-# register a method to get a single value of a JSON object
-OPERATORS[json_getitem_op] = operator_lookup["json_getitem_op"]
 
 
 _SPANNER_STRING_ESCAPE_TABLE = str.maketrans(
@@ -394,6 +388,34 @@ class SpannerSQLCompiler(SQLCompiler):
         self.tablealiases = {}
         super().__init__(*args, **kwargs)
 
+    def _ensure_where_clause(self, statement):
+        where_criteria = getattr(statement, "_where_criteria", None)
+        where_clause = getattr(statement, "whereclause", None)
+        has_where = bool(where_criteria) or (where_clause is not None)
+        if not has_where:
+            return statement.where(expression.literal_column("1=1"))
+        return statement
+
+    def visit_delete(self, delete_stmt, **kw):
+        """Compile a DELETE statement.
+
+        Cloud Spanner requires a WHERE clause for all DELETE statements.
+        For SQLAlchemy Core/ORM AST delete statements (e.g. sa.delete(table)),
+        automatically inject 'WHERE 1=1' if no WHERE criteria were supplied.
+        """
+        delete_stmt = self._ensure_where_clause(delete_stmt)
+        return super().visit_delete(delete_stmt, **kw)
+
+    def visit_update(self, update_stmt, **kw):
+        """Compile an UPDATE statement.
+
+        Cloud Spanner requires a WHERE clause for all UPDATE statements.
+        For SQLAlchemy Core/ORM AST update statements (e.g. sa.update(table)),
+        automatically inject 'WHERE 1=1' if no WHERE criteria were supplied.
+        """
+        update_stmt = self._ensure_where_clause(update_stmt)
+        return super().visit_update(update_stmt, **kw)
+
     def get_from_hint_text(self, _, text):
         """Return a hint text.
 
@@ -457,14 +479,6 @@ class SpannerSQLCompiler(SQLCompiler):
             )
 
         return "JSON_VALUE(%s, %s)" % (left_text, right_text)
-
-    def _generate_generic_binary(self, binary, opstring, eager_grouping=False, **kw):
-        """The method is overriden to process JSON data type cases."""
-        if isinstance(opstring, str):
-            return super()._generate_generic_binary(
-                binary, opstring, eager_grouping=eager_grouping, **kw
-            )
-        return self._json_value_binary(binary, eager_grouping=eager_grouping, **kw)
 
     def visit_json_getitem_op_binary(self, binary, operator, **kw):
         """Build a JSON_VALUE() function call for single-key JSON indexing."""
@@ -562,9 +576,9 @@ class SpannerSQLCompiler(SQLCompiler):
             for c in expression._select_iterables(
                 filter(
                     lambda col: (
-                        not col.dialect_options.get("spanner", {}).get(
-                            "exclude_from_returning", False
-                        )
+                        not (getattr(col, "dialect_options", None) or {})
+                        .get("spanner", {})
+                        .get("exclude_from_returning", False)
                     ),
                     returning_cols,
                 )

@@ -11,10 +11,14 @@ from decimal import Decimal
 from unittest import mock
 
 from django.core.management.color import no_style
+from django.core.serializers.json import DjangoJSONEncoder
+from django.db.models import JSONField
 from django.db.utils import DatabaseError, OperationalError
 from django.test import override_settings
 from google.cloud.spanner_dbapi.types import DateStr
+from google.cloud.spanner_v1 import JsonObject
 
+from django_spanner.operations import _JsonString
 from tests.unit.django_spanner.simple_test import SpannerSimpleTestClass
 
 
@@ -29,6 +33,43 @@ class TestOperations(SpannerSimpleTestClass):
     def test_quote_name_spanner_reserved_keyword_escaped(self):
         quoted_name = self.db_operations.quote_name("ALL")
         self.assertEqual(quoted_name, "`ALL`")
+
+    def test_quote_name_edge_cases(self):
+        cases = (
+            ("", ""),
+            ("``", "``"),
+            ("abc", "abc"),
+            ("my_schema.my_table", "my_schema.my_table"),
+            ("my-schema.my-table", "`my-schema`.`my-table`"),
+            ("`table.with.dots`.col", "`table.with.dots`.col"),
+            ("col.`table.with.dots`", "col.`table.with.dots`"),
+            ("table`name", "`table\\`name`"),
+            ("test\\", "`test\\\\`"),
+            ("`col\\`; DROP TABLE users; --`", "`col\\`; DROP TABLE users; --`"),
+            ("café", "`café`"),
+        )
+        for name, expected in cases:
+            with self.subTest(name=name):
+                quoted_name = self.db_operations.quote_name(name)
+                self.assertEqual(quoted_name, expected)
+                self.assertEqual(self.db_operations.quote_name(quoted_name), expected)
+
+    def test_quote_name_invalid_inputs(self):
+        for invalid_name in (
+            "table\nname",
+            "table\0name",
+            "schema..table",
+            "table.",
+            ".",
+        ):
+            with self.subTest(invalid_name=invalid_name):
+                with self.assertRaises(ValueError):
+                    self.db_operations.quote_name(invalid_name)
+
+        for invalid_type in (None, 123, b"bytes_name"):
+            with self.subTest(invalid_type=invalid_type):
+                with self.assertRaises(TypeError):
+                    self.db_operations.quote_name(invalid_type)
 
     def test_bulk_batch_size(self):
         self.assertEqual(
@@ -110,6 +151,141 @@ class TestOperations(SpannerSimpleTestClass):
                 value=None, expression=None, connection=None
             ),
         )
+
+    def test_json_field_feature_flags(self):
+        self.assertTrue(self.connection.features.has_native_json_field)
+        self.assertTrue(self.connection.features.supports_json_field)
+        self.assertTrue(self.connection.features.supports_primitives_in_json_field)
+        self.assertFalse(self.connection.features.supports_json_field_contains)
+
+    def test_adapt_json_value_dict(self):
+        value = {"a": 1, "b": "test"}
+        res = self.db_operations.adapt_json_value(value, None)
+        self.assertIsInstance(res, _JsonString)
+        self.assertIsInstance(res, JsonObject)
+        self.assertFalse(res._is_null)
+        self.assertFalse(res._is_array)
+        self.assertFalse(res._is_scalar_value)
+        self.assertEqual(dict(res), {})
+        self.assertEqual(repr(res), f"_JsonString({res.serialize()!r})")
+        self.assertEqual(res.serialize(), '{"a": 1, "b": "test"}')
+        self.assertNotEqual(res, None)
+
+    def test_adapt_json_value_list(self):
+        value = [1, 2, 3]
+        res = self.db_operations.adapt_json_value(value, None)
+        self.assertIsInstance(res, _JsonString)
+        self.assertEqual(res.serialize(), "[1, 2, 3]")
+
+    def test_adapt_json_value_none_becomes_json_null(self):
+        res = self.db_operations.adapt_json_value(None, None)
+        self.assertIsInstance(res, _JsonString)
+        self.assertFalse(res._is_null)
+        self.assertEqual(dict(res), {})
+        self.assertEqual(res.serialize(), "null")
+        self.assertNotEqual(res, None)
+
+    def test_adapt_json_value_primitives(self):
+        for primitive, expected in [
+            ("hello", '"hello"'),
+            (42, "42"),
+            (True, "true"),
+            (3.14, "3.14"),
+        ]:
+            res = self.db_operations.adapt_json_value(primitive, None)
+            self.assertIsInstance(res, _JsonString)
+            self.assertEqual(res.serialize(), expected)
+
+    def test_adapt_json_value_custom_encoder(self):
+        u = uuid.UUID("12345678-1234-5678-1234-567812345678")
+        res = self.db_operations.adapt_json_value(
+            {"id": u, "amount": Decimal("12.34")}, DjangoJSONEncoder
+        )
+        self.assertIsInstance(res, _JsonString)
+        self.assertEqual(
+            res.serialize(),
+            '{"id": "12345678-1234-5678-1234-567812345678", "amount": "12.34"}',
+        )
+
+    def test_get_db_converters_jsonfield(self):
+        expression = mock.MagicMock()
+        expression.output_field = JSONField()
+        converters = self.db_operations.get_db_converters(expression)
+        self.assertIn(self.db_operations.convert_jsonfield_value, converters)
+
+    def test_convert_jsonfield_value_dict(self):
+        obj = JsonObject({"a": 1})
+        res = self.db_operations.convert_jsonfield_value(obj, None, None)
+        self.assertEqual(res, {"a": 1})
+
+    def test_convert_jsonfield_value_list(self):
+        obj = JsonObject([1, "two", {"three": 3}])
+        res = self.db_operations.convert_jsonfield_value(obj, None, None)
+        self.assertEqual(res, [1, "two", {"three": 3}])
+
+    def test_convert_jsonfield_value_primitives(self):
+        for raw, expected in [
+            ('"hello"', "hello"),
+            ("42", 42),
+            ("true", True),
+            ("3.14", 3.14),
+        ]:
+            obj = JsonObject.from_str(raw)
+            res = self.db_operations.convert_jsonfield_value(obj, None, None)
+            self.assertEqual(res, expected)
+
+    def test_convert_jsonfield_value_null_json_object(self):
+        obj = JsonObject.from_str("null")
+        res = self.db_operations.convert_jsonfield_value(obj, None, None)
+        self.assertIsNone(res)
+
+    def test_convert_jsonfield_value_custom_decoder(self):
+        import json
+
+        class CustomDecoder(json.JSONDecoder):
+            def decode(self, s):
+                data = super().decode(s)
+                if isinstance(data, dict):
+                    data["decoded"] = True
+                return data
+
+        expr = mock.MagicMock()
+        expr.output_field = JSONField(decoder=CustomDecoder)
+        obj = JsonObject({"a": 1})
+        res = self.db_operations.convert_jsonfield_value(obj, expr, None)
+        self.assertEqual(res, {"a": 1, "decoded": True})
+
+        null_obj = JsonObject.from_str("null")
+        self.assertIsNone(
+            self.db_operations.convert_jsonfield_value(null_obj, expr, None)
+        )
+
+    def test_convert_jsonfield_value_subclass_with_custom_from_db_value(self):
+        class TaggedJSONField(JSONField):
+            def from_db_value(self, value, expression, connection):
+                return {"wrapped": super().from_db_value(value, expression, connection)}
+
+        expr = mock.MagicMock()
+        expr.output_field = TaggedJSONField()
+        obj = JsonObject({"a": 1})
+        raw = self.db_operations.convert_jsonfield_value(obj, expr, None)
+        self.assertEqual(raw, '{"a":1}')
+        self.assertEqual(
+            expr.output_field.from_db_value(raw, expr, None),
+            {"wrapped": {"a": 1}},
+        )
+
+    def test_convert_jsonfield_value_none(self):
+        res = self.db_operations.convert_jsonfield_value(None, None, None)
+        self.assertIsNone(res)
+
+    def test_convert_jsonfield_value_other(self):
+        res = self.db_operations.convert_jsonfield_value('{"a": 1}', None, None)
+        self.assertEqual(res, {"a": 1})
+        invalid_res = self.db_operations.convert_jsonfield_value(
+            "{invalid json", None, None
+        )
+        self.assertEqual(invalid_res, "{invalid json")
 
     def test_date_extract_sql(self):
         self.assertEqual(

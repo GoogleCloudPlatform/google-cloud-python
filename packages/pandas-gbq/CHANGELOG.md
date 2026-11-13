@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/pandas-gbq/#history
 
+## [0.35.4](https://github.com/googleapis/google-cloud-python/compare/pandas-gbq-v0.35.3...pandas-gbq-v0.35.4) (2026-11-12)
+
+
+### Bug Fixes
+
+* drop support for end-of-life Python 3.10 ([#19015](https://github.com/googleapis/google-cloud-python/issues/19015)) ([13d691b](https://github.com/googleapis/google-cloud-python/commit/13d691b251654de7ca58687b60c3ecefb37e8278))
+
 ## [0.35.3](https://github.com/googleapis/google-cloud-python/compare/pandas-gbq-v0.35.2...pandas-gbq-v0.35.3) (2026-10-23)
 
 

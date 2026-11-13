@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-cloud-run/#history
 
+## [0.16.3](https://github.com/googleapis/google-cloud-python/compare/google-cloud-run-v0.16.2...google-cloud-run-v0.16.3) (2026-11-12)
+
+
+### Features
+
+* update API sources and regenerate ([#19036](https://github.com/googleapis/google-cloud-python/issues/19036)) ([b64a9e5](https://github.com/googleapis/google-cloud-python/commit/b64a9e51a22810d4e3b4c44b13847eb96c604628))
+
 ## [0.16.2](https://github.com/googleapis/google-cloud-python/compare/google-cloud-run-v0.16.1...google-cloud-run-v0.16.2) (2026-10-01)
 
 

@@ -4,6 +4,7 @@
 # license that can be found in the LICENSE file or at
 # https://developers.google.com/open-source/licenses/bsd
 
+import json
 import os
 import re
 from base64 import b64decode
@@ -12,15 +13,85 @@ from uuid import UUID
 
 from django.conf import settings
 from django.db.backends.base.operations import BaseDatabaseOperations
+from django.db.models.fields.json import JSONField
 from django.db.utils import DatabaseError, OperationalError
 from django.utils import timezone
 from django.utils.duration import duration_microseconds
 from django.utils.regex_helper import _lazy_re_compile
 from google.cloud.spanner_dbapi.parse_utils import (
+    SPANNER_RESERVED_KEYWORDS,
+    TYPES_MAP,
     DateStr,
     TimestampStr,
-    escape_name,
 )
+from google.cloud.spanner_v1 import JsonObject, param_types
+
+_QUOTED_IDENTIFIER_RE = re.compile(r"\A`(\\.|[^`\\])*`\Z", re.DOTALL)
+_QUALIFIED_PART_RE = re.compile(r"`(?:\\.|[^`\\])*`|[^.]+")
+_CONTROL_CHAR_RE = re.compile(r"[\x00-\x1f\x7f]")
+
+
+# TODO: Remove this local selective-quoting helper in a follow-up PR and
+# delegate back to google.cloud.spanner_dbapi.parse_utils.escape_name once
+# a version of google-cloud-spanner containing unconditional backtick quoting
+# (PR #19054) is released and the minimum dependency is bumped, and update the
+# django-google-spanner tests to expect unconditionally quoted identifiers.
+def _quote_identifier(name):
+    """Apply GoogleSQL backticks selectively when quoting is required."""
+    if not isinstance(name, str):
+        raise TypeError(f"Identifier must be a string, got {type(name).__name__}")
+    if not name:
+        return name
+
+    if _CONTROL_CHAR_RE.search(name):
+        raise ValueError(f"Invalid identifier: {name!r}")
+
+    if _QUOTED_IDENTIFIER_RE.match(name):
+        return name
+
+    if "." in name:
+        parts = _QUALIFIED_PART_RE.findall(name)
+        if not parts or ".".join(parts) != name:
+            raise ValueError(f"Invalid qualified identifier: {name!r}")
+        return ".".join(_quote_identifier(part) for part in parts)
+
+    is_valid_regular_identifier = (
+        (name[0].isalpha() or name[0] == "_")
+        and all(c.isalnum() or c == "_" for c in name)
+        and name.isascii()
+    )
+
+    if not is_valid_regular_identifier or name.upper() in SPANNER_RESERVED_KEYWORDS:
+        escaped = name.replace("\\", "\\\\").replace("`", "\\`")
+        return f"`{escaped}`"
+
+    return name
+
+
+class _JsonString(JsonObject):
+    """Wrap a pre-serialized JSON string for spanner_dbapi without re-parsing."""
+
+    def __init__(self, raw_json):
+        self._is_null = False
+        self._is_array = False
+        self._is_scalar_value = False
+        self._raw_json = raw_json
+
+    def serialize(self):
+        return self._raw_json
+
+    def __repr__(self):
+        return f"_JsonString({self._raw_json!r})"
+
+    def __eq__(self, other):
+        if isinstance(other, _JsonString):
+            return self._raw_json == other._raw_json
+        if isinstance(other, JsonObject):
+            return self._raw_json == other.serialize()
+        return False
+
+
+TYPES_MAP[_JsonString] = param_types.JSON
 
 
 class DatabaseOperations(BaseDatabaseOperations):
@@ -102,9 +173,11 @@ class DatabaseOperations(BaseDatabaseOperations):
         :rtype: :class:`str`
         :returns: Name escaped if it has to be escaped.
         """
+        if not isinstance(name, str):
+            raise TypeError(f"Identifier must be a string, got {type(name).__name__}")
         if os.environ.get("RUNNING_SPANNER_BACKEND_TESTS") == "1":
             name = name.replace(" ", "_").replace("-", "_")
-        return escape_name(name)
+        return _quote_identifier(name)
 
     def bulk_batch_size(self, fields, objs):
         """
@@ -298,6 +371,13 @@ class DatabaseOperations(BaseDatabaseOperations):
             "0001-01-01T" + value.isoformat(timespec="microseconds") + "Z"
         )
 
+    def adapt_json_value(self, value, encoder):
+        """Wrap Django's serialized JSON string for Spanner JSON parameter binding."""
+        raw_json = super().adapt_json_value(value, encoder)
+        if raw_json is None:
+            return None
+        return _JsonString(raw_json)
+
     def get_db_converters(self, expression):
         """Get a list of functions needed to convert field data.
 
@@ -317,6 +397,8 @@ class DatabaseOperations(BaseDatabaseOperations):
             converters.append(self.convert_binaryfield_value)
         elif internal_type == "UUIDField":
             converters.append(self.convert_uuidfield_value)
+        elif internal_type == "JSONField":
+            converters.append(self.convert_jsonfield_value)
         return converters
 
     def convert_binaryfield_value(self, value, expression, connection):
@@ -411,6 +493,35 @@ class DatabaseOperations(BaseDatabaseOperations):
         """
         if value is not None:
             value = UUID(value)
+        return value
+
+    def convert_jsonfield_value(self, value, expression, connection):
+        """Convert Spanner JsonObject received from DB to a Python value for Django."""
+        if value is None:
+            return None
+        output_field = getattr(expression, "output_field", None)
+        has_custom_from_db_value = (
+            isinstance(output_field, JSONField)
+            and type(output_field).from_db_value is not JSONField.from_db_value
+        )
+        decoder = getattr(output_field, "decoder", None)
+        if isinstance(value, JsonObject):
+            if value._is_null:
+                return None
+            if has_custom_from_db_value:
+                return value.serialize()
+            if decoder is not None:
+                return json.loads(value.serialize(), cls=decoder)
+            if value._is_array:
+                return value._array_value
+            if value._is_scalar_value:
+                return value._simple_value
+            return dict(value)
+        if isinstance(value, str) and not has_custom_from_db_value:
+            try:
+                return json.loads(value, cls=decoder)
+            except json.JSONDecodeError:
+                return value
         return value
 
     def _prepare_tzname_delta(self, tzname):
