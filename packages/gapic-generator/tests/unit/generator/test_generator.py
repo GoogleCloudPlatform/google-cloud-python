@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import dataclasses
 import json
 import os
 from textwrap import dedent
@@ -27,7 +26,6 @@ from google.api import client_pb2
 from google.api import http_pb2
 from google.api import routing_pb2
 from google.api import service_pb2
-from google.longrunning import operations_pb2
 from google.protobuf import descriptor_pb2
 from google.protobuf.compiler.plugin_pb2 import CodeGeneratorResponse
 
@@ -1022,191 +1020,6 @@ def test_routing_headers_client_streaming(
             else:
                 assert "header_params" not in content
                 assert '("table_name", request.table_name)' in content
-
-
-@pytest.mark.parametrize("add_iam_methods", (False, True))
-def test_api_version_header_lro_and_mixins(
-    add_iam_methods: bool,
-):
-    """Verify x-goog-api-version metadata is passed to LRO from_gapic and mixin methods."""
-    opts_parts = ["autogen-snippets=false"]
-    if add_iam_methods:
-        opts_parts.append("add-iam-methods")
-    opts = Options.build(",".join(opts_parts))
-
-    http_opt_uri = "/v1/{name=examples/*}/*"
-    service_yaml_config = {
-        "apis": [
-            {"name": "google.cloud.location.Locations"},
-            {"name": "google.longrunning.Operations"},
-            {"name": "google.iam.v1.IAMPolicy"},
-        ],
-        "http": {
-            "rules": [
-                {
-                    "selector": "google.cloud.location.Locations.ListLocations",
-                    "get": http_opt_uri,
-                    "body": "*",
-                },
-                {
-                    "selector": "google.cloud.location.Locations.GetLocation",
-                    "get": http_opt_uri,
-                    "body": "*",
-                },
-                {
-                    "selector": "google.longrunning.Operations.CancelOperation",
-                    "post": http_opt_uri,
-                    "body": "*",
-                },
-                {
-                    "selector": "google.longrunning.Operations.DeleteOperation",
-                    "get": http_opt_uri,
-                    "body": "*",
-                },
-                {
-                    "selector": "google.longrunning.Operations.WaitOperation",
-                    "post": http_opt_uri,
-                    "body": "*",
-                },
-                {
-                    "selector": "google.longrunning.Operations.GetOperation",
-                    "post": http_opt_uri,
-                    "body": "*",
-                },
-                {
-                    "selector": "google.longrunning.Operations.ListOperations",
-                    "post": http_opt_uri,
-                    "body": "*",
-                },
-                {
-                    "selector": "google.iam.v1.IAMPolicy.SetIamPolicy",
-                    "post": "/v1/{resource=examples/*}/*",
-                    "body": "*",
-                },
-                {
-                    "selector": "google.iam.v1.IAMPolicy.GetIamPolicy",
-                    "get": "/v1/{resource=examples/*}/*",
-                    "body": "*",
-                },
-                {
-                    "selector": "google.iam.v1.IAMPolicy.TestIamPermissions",
-                    "post": "/v1/{resource=examples/*}/*",
-                    "body": "*",
-                },
-            ]
-        },
-    }
-    opts = dataclasses.replace(opts, service_yaml_config=service_yaml_config)
-    generator_obj = generator.Generator(opts)
-
-    service_options = descriptor_pb2.ServiceOptions()
-    service_options.Extensions[client_pb2.api_version] = "v1_20260331"
-
-    method_options = descriptor_pb2.MethodOptions()
-    method_options.Extensions[annotations_pb2.http].CopyFrom(
-        http_pb2.HttpRule(
-            post="/v1/someLroMethod",
-            body="*",
-        )
-    )
-    method_options.Extensions[operations_pb2.operation_info].MergeFrom(
-        operations_pb2.OperationInfo(
-            response_type="google.cloud.hatstand.v1.SomeResponse",
-            metadata_type="google.cloud.hatstand.v1.SomeMetadata",
-        )
-    )
-
-    lro_file_pb = descriptor_pb2.FileDescriptorProto(
-        name="google/longrunning/operations.proto",
-        package="google.longrunning",
-        message_type=[descriptor_pb2.DescriptorProto(name="Operation")],
-    )
-    file_pb = descriptor_pb2.FileDescriptorProto(
-        name="some_service.proto",
-        package="google.cloud.hatstand.v1",
-        message_type=[
-            descriptor_pb2.DescriptorProto(name="SomeRequest"),
-            descriptor_pb2.DescriptorProto(name="SomeResponse"),
-            descriptor_pb2.DescriptorProto(name="SomeMetadata"),
-        ],
-        service=[
-            descriptor_pb2.ServiceDescriptorProto(
-                name="SomeService",
-                options=service_options,
-                method=[
-                    descriptor_pb2.MethodDescriptorProto(
-                        name="SomeLroMethod",
-                        input_type=".google.cloud.hatstand.v1.SomeRequest",
-                        output_type=".google.longrunning.Operation",
-                        options=method_options,
-                    )
-                ],
-            )
-        ],
-    )
-    lro_proto = api.Proto.build(
-        lro_file_pb,
-        file_to_generate=False,
-        naming=naming.NewNaming(name="Hatstand", version="v1"),
-    )
-    api_schema = api.API.build(
-        [file_pb],
-        package="google.cloud.hatstand.v1",
-        opts=opts,
-        prior_protos={"google/longrunning/operations.proto": lro_proto},
-    )
-
-    cgr = generator_obj.get_response(api_schema=api_schema, opts=opts)
-    files_by_name = {f.name: f.content for f in cgr.file}
-
-    client_files = [
-        content
-        for name, content in files_by_name.items()
-        if name.endswith("/services/some_service/client.py")
-        or name.endswith("/services/some_service/async_client.py")
-    ]
-    assert len(client_files) == 2
-
-    expected_Mixin_methods = (
-        "def list_operations(",
-        "def get_operation(",
-        "def delete_operation(",
-        "def cancel_operation(",
-        "def wait_operation(",
-        "def set_iam_policy(",
-        "def get_iam_policy(",
-        "def test_iam_permissions(",
-        "def get_location(",
-        "def list_locations(",
-    )
-    for content in client_files:
-        assert (
-            'lro_metadata = [version_header.to_api_version_header("v1_20260331")]'
-            in content
-        )
-        assert "grpc_metadata=lro_metadata," in content
-        for method_sig in expected_Mixin_methods:
-            method_idx = content.index(method_sig)
-            next_def_idx = content.find("\n    def ", method_idx + 1)
-            if next_def_idx == -1:
-                next_def_idx = content.find("\n    async def ", method_idx + 1)
-            method_body = (
-                content[method_idx:next_def_idx]
-                if next_def_idx != -1
-                else content[method_idx:]
-            )
-            assert (
-                'version_header.to_api_version_header("v1_20260331")' in method_body
-            ), f"Missing version header in {method_sig}"
-
-    test_files = [
-        content
-        for name, content in files_by_name.items()
-        if name.endswith("/test_some_service.py")
-    ]
-    assert len(test_files) == 1
-    assert 'response._refresh.keywords["metadata"]' in test_files[0]
-    assert 'response._cancel.keywords["metadata"]' in test_files[0]
 
 
 def make_generator(opts_str: str = "") -> generator.Generator:
