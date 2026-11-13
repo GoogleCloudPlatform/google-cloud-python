@@ -21,5 +21,11 @@ class Singer(models.Model):
     last_name = models.CharField(max_length=200)
 
 
+class Event(models.Model):
+    name = models.CharField(max_length=200)
+    start_time = models.DateTimeField()
+    start_time_of_day = models.TimeField(null=True)
+
+
 class Detail(models.Model):
     value = models.JSONField(null=True, encoder=DjangoJSONEncoder)

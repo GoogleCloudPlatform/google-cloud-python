@@ -27,6 +27,8 @@ class Number(models.Model):
 class Event(models.Model):
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
+    event_date = models.DateField(null=True)
+    event_time = models.TimeField(null=True)
 
     class Meta:
         constraints = [
