@@ -18,12 +18,33 @@ from django.db.utils import DatabaseError
 from django.utils import timezone
 from django.utils.duration import duration_microseconds
 from google.cloud.spanner_dbapi.parse_utils import (
+    SPANNER_RESERVED_KEYWORDS,
     TYPES_MAP,
     DateStr,
     TimestampStr,
-    escape_name,
 )
 from google.cloud.spanner_v1 import JsonObject, param_types
+
+_QUOTED_IDENTIFIER_RE = re.compile(
+    r"\A`(?:\\\\|\\[abfnrtv]|\\x[0-9a-fA-F]{2}|[^`\\\x00-\x1f\x7f])+`\Z"
+)
+_REGULAR_IDENTIFIER_RE = re.compile(r"\A[A-Za-z_][A-Za-z0-9_]*\Z")
+_IDENTIFIER_ESCAPE_TABLE = str.maketrans(
+    {
+        **{chr(code): f"\\x{code:02x}" for code in (*range(0x20), 0x7F)},
+        "\\": r"\\",
+        # Escape backticks as \x60 rather than \` so both Spanner DDL and
+        # spanner_dbapi's sqlparse comment-stripping treat the identifier as intact.
+        "`": r"\x60",
+        "\a": r"\a",
+        "\b": r"\b",
+        "\f": r"\f",
+        "\n": r"\n",
+        "\r": r"\r",
+        "\t": r"\t",
+        "\v": r"\v",
+    }
+)
 
 
 class _JsonString(JsonObject):
@@ -104,30 +125,49 @@ class DatabaseOperations(BaseDatabaseOperations):
         """
         return 128
 
-    def quote_name(self, name):
+    def quote_name(self, name: str) -> str:
         """
-        Return a quoted version of the given table or column name. Also,
-        applies backticks to the name that either contain '-' or ' ', or is a
-        Cloud Spanner's reserved keyword.
+        Return a quoted version of the given table, index, or column name.
 
-        Spanner says "column name not valid" if spaces or hyphens are present
-        (although according to the documantation, any character should be
-        allowed in quoted identifiers). Replace problematic characters when
-        running the Django tests to prevent crashes. (Don't modify names in
-        normal operation to prevent the possibility of colliding with another
-        column.)
+        Valid unreserved regular ASCII identifiers are returned unquoted, and
+        single identifiers already validly quoted using safe GoogleSQL escapes
+        are returned unchanged. All other identifiers (including reserved
+        keywords and names containing dots, spaces, hyphens, embedded
+        backticks, backslashes, or ASCII control characters) are escaped and
+        wrapped in backticks as a single identifier.
 
-        See: https://github.com/googleapis/python-spanner-django/issues/204
+        Spanner does not allow spaces or hyphens in table or index names, even
+        when quoted. Only when running Django's own backend test suite
+        (``RUNNING_SPANNER_BACKEND_TESTS=1``) are spaces and hyphens replaced
+        with underscores so Django test models that use such names can run.
 
         :type name: str
-        :param name: The Quota name.
+        :param name: The table, index, or column name to quote.
 
         :rtype: :class:`str`
-        :returns: Name escaped if it has to be escaped.
+        :returns: Quoted identifier, or the identifier unchanged if it is
+                  already quoted or a valid unreserved regular identifier.
+        :raises TypeError: If ``name`` is not a string.
         """
+        if not isinstance(name, str):
+            raise TypeError(f"Identifier must be a string, got {type(name).__name__}")
+        if not name:
+            return name
         if os.environ.get("RUNNING_SPANNER_BACKEND_TESTS") == "1":
             name = name.replace(" ", "_").replace("-", "_")
-        return escape_name(name)
+        if _QUOTED_IDENTIFIER_RE.match(name):
+            return name
+        # TODO(https://github.com/googleapis/google-cloud-python/issues/19072):
+        # Unconditionally quote all identifiers in a follow-up PR (after fixing
+        # schema.py check-constraint/trace quoting and updating SQL tests) so
+        # reserved keyword tracking is no longer required.
+        if (
+            _REGULAR_IDENTIFIER_RE.match(name)
+            and name.upper() not in SPANNER_RESERVED_KEYWORDS
+        ):
+            return name
+        escaped = name.translate(_IDENTIFIER_ESCAPE_TABLE)
+        return f"`{escaped}`"
 
     def bulk_batch_size(self, fields, objs):
         """
